@@ -14,6 +14,7 @@ import { HtmlValidate } from "html-validate";
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const htmlValidateConfig = JSON.parse(fs.readFileSync(path.join(root, ".htmlvalidate.json"), "utf8"));
 const pages = [
+  "index.html",
   "Home.dc.html",
   "Manifesto.dc.html",
   "Learn.dc.html",
@@ -56,6 +57,27 @@ function findChromium() {
   return undefined; // let Playwright resolve its own install
 }
 
+// GitHub Pages always serves index.html at the root — this site's real
+// homepage content lives in Home.dc.html, so index.html has to be an
+// exact copy or the bare domain silently drifts out of sync with the
+// page every nav link actually points to. This caught a real incident:
+// index.html was once overwritten with an unrelated site's boilerplate.
+function checkIndexMatchesHome() {
+  const home = fs.readFileSync(path.join(root, "Home.dc.html"), "utf8");
+  const index = fs.readFileSync(path.join(root, "index.html"), "utf8");
+  if (home === index) {
+    console.log("✓ index.html matches Home.dc.html");
+    return 0;
+  }
+  console.log("\n✗ index.html — 1 problem(s)");
+  console.log("    index.html does not match Home.dc.html byte-for-byte.");
+  console.log("    GitHub Pages serves index.html at the site's root — if it's out of");
+  console.log("    sync with (or isn't a copy of) Home.dc.html, visitors hitting the");
+  console.log("    bare domain see something other than the real homepage.");
+  console.log("    Fix: cp Home.dc.html index.html");
+  return 1;
+}
+
 async function main() {
   const server = await serve();
   const { port } = server.address();
@@ -65,7 +87,7 @@ async function main() {
   const browser = await chromium.launch(executablePath ? { executablePath } : {});
   const htmlValidate = new HtmlValidate(htmlValidateConfig);
 
-  let problems = 0;
+  let problems = checkIndexMatchesHome();
 
   for (const pg of pages) {
     const context = await browser.newContext();
