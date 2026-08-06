@@ -1,0 +1,39 @@
+# Relational Sovereignty — crawler policy
+# Opacity is owed to the crawler and the market, never to the disabled reader.
+# Everything disallowed here remains fully available to assistive technology,
+# to any person who asks, and to anyone who forks the repository.
+
+# The reading material is public. Find it, index it, pass it on.
+User-agent: *
+Allow: /Home.dc.html
+Allow: /Manifesto.dc.html
+Allow: /Learn.dc.html
+Allow: /Archive.dc.html
+Allow: /Colophon.dc.html
+
+# The workshop is not for the index. What a person marks about their own
+# relationships is not material for a register, a snapshot, or a training set.
+Disallow: /Practise.dc.html
+
+# Contributor material is governed by the terms each contributor chose,
+# not by discovery. Ask, or read the Colophon.
+Disallow: /Contribute.dc.html
+Disallow: /uploads/
+Disallow: /extracted/
+
+# No training on this site's contributor material. This is a request with no
+# technical force, stated so that ignoring it is a choice on the record.
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /

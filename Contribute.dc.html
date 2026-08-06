@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  a{color:#2B4C9B;text-underline-offset:3px;text-decoration-thickness:1px}
+  a:hover{color:#3F7A4E}
+  *{box-sizing:border-box}
+  :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
+  @media print{body{background:#fff}.noprint{display:none!important}}
+</style>
+</helmet>
+
+<header style="border-bottom:1px solid #C9C6BA">
+  <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
+    <a href="Home.dc.html" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.01em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
+    <nav style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+      <a href="Manifesto.dc.html" style="color:#585B4F;text-decoration:none">Manifesto</a>
+      <a href="Learn.dc.html" style="color:#585B4F;text-decoration:none">Learn</a>
+      <a href="Practise.dc.html" style="color:#585B4F;text-decoration:none">Practise</a>
+      <a href="Archive.dc.html" style="color:#585B4F;text-decoration:none">Archive</a>
+      <a href="Contribute.dc.html" style="color:#3F7A4E;text-decoration:none">Contribute</a>
+      <a href="Colophon.dc.html" style="color:#585B4F;text-decoration:none">Colophon</a>
+    </nav>
+  </div>
+</header>
+
+<section style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Contribute — on terms you set, and can withdraw · about 5 minutes</p>
+    <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.2rem,6vw,4rem);line-height:.98;letter-spacing:-.02em;margin:0 0 1.4rem;max-width:16ch">Contribute without disclosing yourself.</h1>
+    <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">The most useful contributions are rarely accounts of perfect relationships. They concern uncertainty, contradiction, breakdown, accountability, and gradual change.</p>
+    <p style="max-width:52ch;margin:0;color:#3C3E38">Nothing is published without the terms you choose below, and you can revise or remove your work later. The archive should practise the consent it argues for.</p>
+  </div>
+</section>
+
+<section style="padding:0 0 clamp(3rem,6vw,4.5rem)">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:3rem;align-items:start">
+    <div>
+      <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0 0 1rem;line-height:1.1">What can be sent</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem">
+        <sc-for list="{{ kinds }}" as="k" hint-placeholder-count="10">
+          <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;border:1px solid #C9C6BA;padding:.35rem .65rem;border-radius:2px;color:#585B4F">{{ k }}</span>
+        </sc-for>
+      </div>
+      <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0 0 1rem;line-height:1.1">Every submission chooses its own terms</h2>
+      <ul style="list-style:none;margin:0 0 1.2rem;padding:0;display:flex;flex-direction:column;gap:.55rem">
+        <sc-for list="{{ terms }}" as="t" hint-placeholder-count="9">
+          <li style="border-top:1px solid #C9C6BA;padding-top:.55rem;font-size:16px;line-height:1.5;color:#3C3E38">{{ t }}</li>
+        </sc-for>
+      </ul>
+      <p style="margin:0 0 2rem;font-size:16px;line-height:1.55;color:#3C3E38">The project's side of the agreement is written down too, and carries a version number: <a href="Colophon.dc.html">reuse terms v0.2</a>. No unilateral amendment, no arbitration clause, and no change applies retroactively to work already given under earlier terms.</p>
+      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:0;max-width:56ch">⌖ Do not send material that belongs to a community rather than to you. Cultural knowledge, ceremony, and restricted teachings require permission from the people who hold them, not from us.</p>
+    </div>
+
+    <div>
+      <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+        <div style="border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;padding:1.6rem 1.5rem;background:rgba(63,122,78,.06)">
+          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#3F7A4E;margin:0 0 .6rem">received</p>
+          <p style="margin:0 0 .8rem;font-size:17px;line-height:1.5">Thank you. Nothing will be published, quoted, or archived beyond the terms you chose here, and you can change them later.</p>
+          <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F">This launch page has no server attached yet, so nothing was transmitted. The form is here so you can see exactly what would be asked — and what would not.</p>
+          <button type="button" onClick="{{ edit }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.45rem .8rem;margin-top:1.2rem;cursor:pointer;border-radius:2px">edit what I sent</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ submit }}" style="border:1px solid #C9C6BA;padding:1.7rem 1.6rem 1.9rem;background:rgba(15,42,46,.03);border-radius:3px">
+          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1.2rem">Join the dispatch, offer something, or both</p>
+          <label style="display:block;margin-bottom:1.3rem">
+            <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">Email</span>
+            <input type="email" value="{{ email }}" onChange="{{ setEmail }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.75rem .8rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
+          </label>
+          <label style="display:block;margin-bottom:1.3rem">
+            <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">Name or pseudonym</span>
+            <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#7A7D70;margin-bottom:.5rem;line-height:1.5">Optional. Any characters, any script, no validator. Anonymity is a legitimate choice, not a lesser one.</span>
+            <input type="text" value="{{ name }}" onChange="{{ setName }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.75rem .8rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
+          </label>
+          <fieldset style="border:none;margin:0 0 1.4rem;padding:0">
+            <legend style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;padding:0;margin-bottom:.4rem">What brought you here</legend>
+            <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#7A7D70;margin:0 0 .7rem;line-height:1.5">Optional. Choose none, one, or all.</p>
+            <div style="display:grid;gap:.5rem">
+              <sc-for list="{{ interests }}" as="it" hint-placeholder-count="5">
+                <label style="display:flex;gap:.7rem;align-items:flex-start;cursor:pointer;border-radius:2px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.4;padding:.7rem .75rem;min-height:44px;border:1px solid {{ it.border }};background:{{ it.bg }};color:{{ it.fg }}">
+                  <input type="checkbox" checked="{{ it.on }}" onChange="{{ it.toggle }}" style="margin:.1rem 0 0;width:18px;height:18px;flex:0 0 auto;accent-color:#3F7A4E">
+                  <span>{{ it.label }}</span>
+                </label>
+              </sc-for>
+            </div>
+          </fieldset>
+          <label style="display:block;margin-bottom:1.4rem">
+            <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">What you might offer</span>
+            <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#7A7D70;margin-bottom:.5rem;line-height:1.5">Optional. A sentence is enough. Do not put anything here you would not want read by a stranger.</span>
+            <textarea rows="4" value="{{ offer }}" onChange="{{ setOffer }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.7rem .8rem;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;line-height:1.5;color:#191B18;resize:vertical"></textarea>
+          </label>
+          <button type="submit" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px">Send</button>
+          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.6;color:#7A7D70;margin:1rem 0 0">No tracking pixels. No third parties. No schedule promised. Leave with one click, any time.</p>
+        </form>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<section style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">Community agreements</p>
+    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.01em;margin:0 0 2rem;max-width:24ch;color:#E7E5DC">What the commons refuses.</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2.6rem;max-width:1000px">
+      <div>
+        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#5C7A72;margin:0 0 .9rem;border-bottom:1px solid #2A4C4C;padding-bottom:.5rem">The obvious</p>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#B8C7C1">Racism. Colonial appropriation. Misogyny. Homophobia. Transphobia. Ableism. Coercion. Harassment. Stalking. Threats. Non-consensual disclosure. Punitive pile-ons.</p>
+      </div>
+      <div>
+        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#DB9E2A;margin:0 0 .9rem;border-bottom:1px solid #2A4C4C;padding-bottom:.5rem">The subtler patterns</p>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;font-size:16px;line-height:1.5;color:#B8C7C1">
+          <li>— Using radical language to avoid accountability.</li>
+          <li>— Treating polyamory as inherently more evolved than monogamy.</li>
+          <li>— Treating family estrangement as universally liberating.</li>
+          <li>— Treating Indigenous thought as spiritual content available for extraction.</li>
+          <li>— Demanding emotional education from marginalized participants.</li>
+          <li>— Using public confession as a substitute for repair.</li>
+        </ul>
+      </div>
+    </div>
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#5C7A72;border-left:2px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:2.4rem 0 0;max-width:58ch">⌖ Moderation prioritizes safety, context, proportional response, and survivor autonomy. This project will not promise a perfectly non-carceral community while lacking the capacity to address serious danger.</p>
+  </div>
+</section>
+
+<section style="padding:clamp(3rem,6vw,4.5rem) 0">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1rem">Governance — in the open</p>
+    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.01em;margin:0 0 1.2rem;max-width:26ch">A site about non-domination cannot be governed by invisible authority.</h2>
+    <p style="max-width:54ch;margin:0 0 2rem;color:#3C3E38">These structures do not exist yet. Naming them before there is a community is the only way they can be built with one, rather than announced to one.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.6rem 2.4rem;max-width:1000px">
+      <sc-for list="{{ governance }}" as="g" hint-placeholder-count="6">
+        <div>
+          <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15">{{ g.q }}</h3>
+          <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">{{ g.a }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section style="padding:0 0 clamp(3rem,6vw,4.5rem)">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <div style="border-top:1px solid #C9C6BA;padding-top:2.4rem;max-width:640px">
+      <p style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(1.3rem,3.2vw,2rem);line-height:1.14;letter-spacing:-.01em;margin:0">You inherited relationship structures you did not design. You are allowed to examine them. You are allowed to refuse them. <span style="color:#3F7A4E">You are responsible for what you build in their place.</span></p>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
+    <p style="margin:0;max-width:46ch">v0.2 · no third-party requests, including fonts · this page is disallowed to search crawlers · <a href="Colophon.dc.html" style="color:#DB9E2A">what changed</a> · <a href="robots.txt" style="color:#8FA9A2">crawler policy</a></p>
+    <nav style="display:flex;flex-wrap:wrap;gap:1.1rem">
+      <a href="Home.dc.html" style="color:#8FA9A2;text-decoration:none">Home</a>
+      <a href="Manifesto.dc.html" style="color:#8FA9A2;text-decoration:none">Manifesto</a>
+      <a href="Learn.dc.html" style="color:#8FA9A2;text-decoration:none">Learn</a>
+      <a href="Practise.dc.html" style="color:#8FA9A2;text-decoration:none">Practise</a>
+      <a href="Archive.dc.html" style="color:#8FA9A2;text-decoration:none">Archive</a>
+      <a href="Colophon.dc.html" style="color:#8FA9A2;text-decoration:none">Colophon</a>
+    </nav>
+  </div>
+</footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { sent: false, email: "", name: "", offer: "", interests: [] };
+
+  interestList = [
+    "The printable zine when it exists",
+    "The eight-week reading circle",
+    "Events and workshops",
+    "I want to contribute something",
+    "Occasional dispatch, nothing more"
+  ];
+
+  kinds = ["essays", "short reflections", "questions", "interviews", "visual art", "poetry", "practical tools", "relationship agreements", "audio", "local resources"];
+
+  terms = [
+    "Real name, pseudonym, or full anonymity",
+    "Whether it is public at all",
+    "Whether it may be quoted",
+    "Whether it may be reproduced",
+    "Whether it may be used in teaching",
+    "Whether it may be translated",
+    "How much editing is permitted",
+    "How long it stays in the archive",
+    "Withdrawal — at any point, where feasible"
+  ];
+
+  governance = [
+    ["Who makes decisions?", "To be published as a named editorial charter, with a community advisory group rather than a private founder."],
+    ["Who gets paid?", "Indigenous review, disability-access review, and facilitation are paid work. Contributor payment terms will be stated openly, including when the answer is nothing yet."],
+    ["Who owns the archive?", "Contributors keep their own work. The project holds a licence on the terms each contributor chose, and nothing more."],
+    ["Who controls your data?", "Data collection is minimised by design. No behavioural analytics, no surveillance advertising, no intimate relationship data collected because it is technically possible."],
+    ["Who can remove material?", "The contributor, first. Moderation removal is appealable, and appeals are logged."],
+    ["What happens if the project closes?", "A stated wind-down: contributors are notified, material is returned or deleted according to their terms, and nothing is sold."]
+  ];
+
+  renderVals() {
+    const chosen = this.state.interests;
+    return {
+      kinds: this.kinds,
+      terms: this.terms,
+      governance: this.governance.map(g => ({ q: g[0], a: g[1] })),
+      sent: this.state.sent,
+      notSent: !this.state.sent,
+      email: this.state.email,
+      name: this.state.name,
+      offer: this.state.offer,
+      setEmail: (ev) => this.setState({ email: ev.target.value }),
+      setName: (ev) => this.setState({ name: ev.target.value }),
+      setOffer: (ev) => this.setState({ offer: ev.target.value }),
+      submit: (ev) => { ev.preventDefault(); this.setState({ sent: true }); },
+      edit: () => this.setState({ sent: false }),
+      interests: this.interestList.map((label) => {
+        const on = chosen.indexOf(label) > -1;
+        return {
+          label, on,
+          border: on ? "#3F7A4E" : "#C9C6BA",
+          bg: on ? "rgba(63,122,78,.1)" : "transparent",
+          fg: on ? "#2C5A38" : "#585B4F",
+          toggle: () => this.setState(s => ({ interests: on ? s.interests.filter(x => x !== label) : s.interests.concat([label]) }))
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

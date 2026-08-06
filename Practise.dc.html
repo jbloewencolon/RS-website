@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  a{color:#2B4C9B;text-underline-offset:3px;text-decoration-thickness:1px}
+  a:hover{color:#3F7A4E}
+  *{box-sizing:border-box}
+  :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
+  @media print{
+    body{background:#fff}
+    .noprint{display:none!important}
+  }
+</style>
+</helmet>
+
+<header class="noprint" style="border-bottom:1px solid #C9C6BA">
+  <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
+    <a href="Home.dc.html" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
+    <nav style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+      <a href="Manifesto.dc.html" style="color:#585B4F;text-decoration:none">Manifesto</a>
+      <a href="Learn.dc.html" style="color:#585B4F;text-decoration:none">Learn</a>
+      <a href="Practise.dc.html" style="color:#3F7A4E;text-decoration:none">Practise</a>
+      <a href="Archive.dc.html" style="color:#585B4F;text-decoration:none">Archive</a>
+      <a href="Contribute.dc.html" style="color:#585B4F;text-decoration:none">Contribute</a>
+      <a href="Colophon.dc.html" style="color:#585B4F;text-decoration:none">Colophon</a>
+    </nav>
+  </div>
+</header>
+
+<section style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Practise — tool 01 of 09 · about 20 minutes to fill in</p>
+    <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.2rem,6vw,4rem);line-height:1;letter-spacing:-.035em;margin:0 0 1.4rem;max-width:15ch">The Consent Domains Map</h1>
+    <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:46ch;margin:0 0 1.2rem">A relationship label is not blanket permission. This map separates consent into seventeen domains so that yes in one is not read as yes in all of them.</p>
+    <p style="max-width:52ch;margin:0 0 1.6rem;color:#3C3E38">Mark where you stand in each domain, add a condition where it matters, then print it or read it aloud with the other person. There is no score and no correct pattern.</p>
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:0;max-width:58ch">⌖ Safety — this tool is not appropriate when one participant is violent, coercive, retaliatory, or controlling. A written record of your limits can be used against you. If you are being controlled, reach a local domestic-violence or transformative-justice service before starting a joint conversation. Communication does not resolve every form of abuse.</p>
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #3F7A4E;padding:.3rem 0 .3rem .9rem;margin:1rem 0 0;max-width:58ch">⌖ Privacy — everything you type stays in this browser tab. Nothing is sent anywhere, nothing is stored, nothing is counted, and this page is disallowed to search crawlers. Closing the tab erases it.</p>
+  </div>
+</section>
+
+<section class="noprint" style="padding:0 0 1.4rem">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.4rem 2.4rem;align-items:flex-end;justify-content:space-between;border-bottom:1px solid #C9C6BA;padding-bottom:1.4rem">
+    <label style="display:block;flex:1 1 260px;max-width:360px">
+      <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">This map is about my relationship with</span>
+      <input type="text" value="{{ who }}" onChange="{{ setWho }}" placeholder="a name, a role, or nothing at all" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.7rem .75rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
+    </label>
+    <div style="display:flex;flex-wrap:wrap;gap:.7rem">
+      <button type="button" onClick="{{ print }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.75rem 1rem;min-height:44px;cursor:pointer;border-radius:2px">Print this map</button>
+      <button type="button" onClick="{{ reset }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.75rem 1rem;min-height:44px;cursor:pointer;border-radius:2px">Clear everything</button>
+    </div>
+  </div>
+</section>
+
+<section style="padding:1.6rem 0 clamp(3rem,6vw,4.5rem)">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .6rem">The seventeen domains</h2>
+    <p style="max-width:56ch;margin:0 0 1.4rem;color:#3C3E38;font-size:16px">Each answer is a word as well as a colour, so the map still reads if colour is unavailable to you, and still reads on a photocopy.</p>
+
+    <div style="display:flex;flex-direction:column;gap:1px;background:#C9C6BA;border:1px solid #C9C6BA">
+      <sc-for list="{{ domains }}" as="d" hint-placeholder-count="17">
+        <div style="background:#E7E5DC;padding:1.2rem 1.2rem 1.3rem">
+          <fieldset style="border:none;margin:0;padding:0">
+            <legend style="padding:0;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;line-height:1.15;letter-spacing:-.01em;color:#191B18;margin-bottom:.3rem">{{ d.name }}</legend>
+            <div style="display:flex;flex-wrap:wrap;gap:.6rem 1.8rem;align-items:flex-start">
+              <div style="flex:1 1 230px;min-width:0">
+                <p style="margin:0 0 .35rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.5;color:#7A7D70">{{ d.hint }}</p>
+                <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:{{ d.stateColor }}">marked: {{ d.stateLabel }}</p>
+              </div>
+              <div style="flex:2 1 340px;min-width:0;display:flex;flex-direction:column;gap:.6rem">
+                <div style="display:flex;gap:.4rem;flex-wrap:wrap">
+                  <sc-for list="{{ d.options }}" as="o" hint-placeholder-count="5">
+                    <label style="display:flex;align-items:center;gap:.45rem;cursor:pointer;border-radius:2px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.2;padding:.5rem .65rem;min-height:44px;border:1px solid {{ o.border }};background:{{ o.bg }};color:{{ o.fg }}">
+                      <input type="radio" name="{{ o.group }}" checked="{{ o.on }}" onChange="{{ o.pick }}" style="width:15px;height:15px;margin:0;flex:0 0 auto;accent-color:{{ o.accent }}">
+                      <span style="width:10px;height:10px;border-radius:2px;background:{{ o.accent }};display:inline-block;flex:0 0 auto"></span>
+                      <span style="white-space:nowrap">{{ o.short }}</span>
+                    </label>
+                  </sc-for>
+                </div>
+                <label style="display:block">
+                  <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#7A7D70;margin-bottom:.3rem">Condition, in your own words</span>
+                  <input type="text" value="{{ d.note }}" onChange="{{ d.setNote }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.55rem .6rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:15px;color:#191B18">
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="margin-top:2rem;border:1px solid #C9C6BA;border-left:4px solid #3F7A4E;padding:1.4rem 1.5rem;max-width:700px;background:rgba(63,122,78,.05)">
+      <h2 style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#3F7A4E;margin:0 0 .7rem;font-weight:400">After you fill it in</h2>
+      <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;font-size:16px;line-height:1.5">
+        <li>— Which domain did you hesitate longest over? That hesitation is the useful part, not the answer.</li>
+        <li>— Where did you assume a yes because of the relationship's name rather than an actual conversation?</li>
+        <li>— What would it cost you to move one domain to <em>no</em>? If the answer is housing, money, or access to children, the consent in that domain is not yet free.</li>
+        <li>— Set a date to look at this again. Consent is ongoing; a map is a snapshot.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="noprint" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">The rest of the toolkit</p>
+    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1rem;max-width:22ch;color:#E7E5DC">Eight more tools, not yet built.</h2>
+    <p style="max-width:52ch;margin:0 0 2rem;color:#B8C7C1">Each will work the same way: in your browser, printable, nothing transmitted, crawler disallowed. No dates are given, because a date we could not keep would be its own small domination.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:#2A4C4C;border:1px solid #2A4C4C">
+      <sc-for list="{{ tools }}" as="t" hint-placeholder-count="8">
+        <div style="background:#0F2A2E;padding:1.3rem 1.3rem 1.5rem">
+          <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ t.color }}">{{ t.status }}</span>
+          <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;margin:.5rem 0 .4rem;line-height:1.15;color:#E7E5DC">{{ t.name }}</h3>
+          <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">{{ t.body }}</p>
+        </div>
+      </sc-for>
+    </div>
+    <p style="margin:2rem 0 0"><a href="Home.dc.html#dispatch" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;border:1px solid #5C7A72;color:#8FA9A2;padding:.8rem 1.1rem;text-decoration:none;border-radius:2px;display:inline-block">Tell me when a tool opens</a></p>
+  </div>
+</section>
+
+<section class="noprint" style="padding:clamp(2.5rem,5vw,3.5rem) 0">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <div style="border-top:1px solid #C9C6BA;padding-top:2rem;max-width:640px">
+      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#3F7A4E;margin:0 0 .8rem">You have reached the end of this page</p>
+      <p style="margin:0;font-size:17px;line-height:1.55">Print what you made, or close the tab and let it go. The map is only worth the conversation that follows it, and that conversation does not happen here.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="noprint" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0;border-top:1px solid #2A4C4C">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
+    <p style="margin:0;max-width:44ch">v0.2 · nothing you type here leaves your device · <a href="Colophon.dc.html" style="color:#DB9E2A">what changed</a> · <a href="robots.txt" style="color:#8FA9A2">crawler policy</a></p>
+    <nav style="display:flex;flex-wrap:wrap;gap:1.1rem">
+      <a href="Home.dc.html" style="color:#8FA9A2;text-decoration:none">Home</a>
+      <a href="Manifesto.dc.html" style="color:#8FA9A2;text-decoration:none">Manifesto</a>
+      <a href="Learn.dc.html" style="color:#8FA9A2;text-decoration:none">Learn</a>
+      <a href="Archive.dc.html" style="color:#8FA9A2;text-decoration:none">Archive</a>
+      <a href="Contribute.dc.html" style="color:#8FA9A2;text-decoration:none">Contribute</a>
+      <a href="Colophon.dc.html" style="color:#8FA9A2;text-decoration:none">Colophon</a>
+    </nav>
+  </div>
+</footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { who: "", picks: {}, notes: {} };
+
+  domainList = [
+    ["Physical touch", "hugs, hands, proximity, waking someone"],
+    ["Sexuality", "acts, frequency, initiation, recording"],
+    ["Contraception", "methods, who carries the cost and risk"],
+    ["Sexual health", "testing, disclosure, results, timing"],
+    ["Emotional disclosure", "what must be told, and how soon"],
+    ["Public identification", "being named as partner, kin, or carer"],
+    ["Social media", "tagging, posting, following, replying"],
+    ["Photographs", "taking, keeping, sharing, deleting"],
+    ["Location sharing", "live tracking, check-ins, arrival times"],
+    ["Passwords & devices", "phones, accounts, unlocked screens"],
+    ["Money", "income visibility, spending, debt, lending"],
+    ["Shared property", "keys, vehicles, tools, the home itself"],
+    ["Caregiving", "who provides it, how, and on whose terms"],
+    ["Family involvement", "who is told, who is invited, who intervenes"],
+    ["Contact with former partners", "friendship, co-parenting, silence"],
+    ["Cultural knowledge", "teachings, language, ceremony, protocol"],
+    ["Community events", "attending together, being seen, being spoken for"]
+  ];
+
+  options = [
+    ["yes, freely", "yes", "#3F7A4E"],
+    ["yes, with conditions", "conditions", "#DB9E2A"],
+    ["not yet — ask me", "not yet", "#2B4C9B"],
+    ["no", "no", "#8B3A2F"],
+    ["mine to withhold", "withheld", "#0F2A2E"]
+  ];
+
+  tools = [
+    ["Relationship Constellation Map", "Map the people, places, animals, and living systems that hold your life — without a romantic partner automatically at the centre.", 1],
+    ["Power & Dependency Audit", "Income, housing, citizenship, healthcare, ability to leave. No score, only questions about where power sits and whether it can be challenged.", 1],
+    ["Care Labour Inventory", "Who notices the task, who initiates it, who completes it, who is thanked, who holds authority over the outcome.", 1],
+    ["Decision Taxonomy", "Sort decisions into personal, consultative, joint, and collective — and find where a shared decision is being treated as a private one.", 0],
+    ["Boundary & Refusal Builder", "A template that distinguishes a request from an agreement, a boundary from an ultimatum, and an ultimatum from a threat.", 0],
+    ["The Relational Review", "A seasonal check-in: what feels alive, what feels assumed, where resentment is accumulating, what needs revision.", 0],
+    ["The Repair Map", "What happened, who was affected, what conditions made it possible, what would repair actually require. Repair does not guarantee reconciliation.", 0],
+    ["Exit & Transition Plan", "Safety, housing, finances, children, animals, digital access, confidentiality. Endings deserve the same care as beginnings.", 0]
+  ];
+
+  renderVals() {
+    const picks = this.state.picks, notes = this.state.notes;
+    return {
+      who: this.state.who,
+      setWho: (ev) => this.setState({ who: ev.target.value }),
+      print: () => window.print(),
+      reset: () => this.setState({ who: "", picks: {}, notes: {} }),
+      tools: this.tools.map(t => ({
+        name: t[0], body: t[1],
+        status: t[2] ? "in progress" : "not started",
+        color: t[2] ? "#DB9E2A" : "#5C7A72"
+      })),
+      domains: this.domainList.map((d, i) => {
+        const chosen = picks[i];
+        const has = chosen !== undefined;
+        return {
+          name: d[0], hint: d[1],
+          note: notes[i] || "",
+          setNote: (ev) => { const v = ev.target.value; this.setState(s => { const n = Object.assign({}, s.notes); n[i] = v; return { notes: n }; }); },
+          stateLabel: has ? this.options[chosen][0] : "nothing yet",
+          stateColor: has ? this.options[chosen][2] : "#83867A",
+          options: this.options.map((o, j) => ({
+            group: "domain-" + i,
+            short: o[1],
+            accent: o[2],
+            on: chosen === j,
+            border: chosen === j ? o[2] : "#C9C6BA",
+            bg: chosen === j ? "rgba(15,42,46,.09)" : "transparent",
+            fg: chosen === j ? "#191B18" : "#585B4F",
+            pick: () => this.setState(s => { const p = Object.assign({}, s.picks); p[i] = j; return { picks: p }; })
+          }))
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>
