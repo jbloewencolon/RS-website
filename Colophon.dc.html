@@ -1,38 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Colophon — How This Site Is Made</title>
+<meta name="description" content="The substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
 <script src="./support.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
 <style>
+  html{scroll-behavior:smooth}
   body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
   a{color:#2B4C9B;text-underline-offset:3px;text-decoration-thickness:1px}
   a:hover{color:#3F7A4E}
   *{box-sizing:border-box}
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
   @media print{body{background:#fff}.noprint{display:none!important}}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+  .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
+  .skip-link:focus{left:1rem;top:1rem}
 </style>
 </helmet>
 
+<a href="#main-content" class="skip-link">Skip to content</a>
 <header style="border-bottom:1px solid #C9C6BA">
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="Home.dc.html" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
-    <nav style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+    <nav aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
       <a href="Manifesto.dc.html" style="color:#585B4F;text-decoration:none">Manifesto</a>
       <a href="Learn.dc.html" style="color:#585B4F;text-decoration:none">Learn</a>
       <a href="Practise.dc.html" style="color:#585B4F;text-decoration:none">Practise</a>
       <a href="Archive.dc.html" style="color:#585B4F;text-decoration:none">Archive</a>
       <a href="Contribute.dc.html" style="color:#585B4F;text-decoration:none">Contribute</a>
-      <a href="Colophon.dc.html" style="color:#3F7A4E;text-decoration:none">Colophon</a>
+      <a href="Colophon.dc.html" style="color:#366943;text-decoration:none">Colophon</a>
     </nav>
   </div>
 </header>
 
-<section style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
+<main>
+<section id="main-content" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Colophon · exposed structure · about 6 minutes</p>
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.1rem,5.6vw,3.8rem);line-height:1;letter-spacing:-.03em;margin:0 0 1.4rem;max-width:17ch">How this site is made, including where it fails.</h1>
@@ -66,14 +75,14 @@
         <p style="margin:0;max-width:46ch;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F">Display · ui-sans-serif, system-ui, Helvetica Neue, Helvetica, Arial<br>Reading · Georgia, Iowan Old Style, Palatino Linotype, Palatino<br>Structure · ui-monospace, SF Mono, Cascadia Mono, Menlo, Consolas</p>
       </div>
       <div style="border:1px solid #C9C6BA;border-left:4px solid #3F7A4E;padding:1.3rem 1.4rem;background:rgba(63,122,78,.05)">
-        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#3F7A4E;margin:0 0 .8rem">Coverage, checked not assumed</p>
+        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 .8rem">Coverage, checked not assumed</p>
         <p style="margin:0 0 .9rem;font-size:15.5px;line-height:1.5">A font that turns a nation's name into boxes makes a people unwritable in their own name. Every diacritic this site carries was measured against the notdef box in each stack, rather than trusted.</p>
         <ul style="list-style:none;margin:0 0 .9rem;padding:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.7;color:#3C3E38">
           <sc-for list="{{ glyphs }}" as="g" hint-placeholder-count="8">
             <li><span style="color:{{ g.color }}">{{ g.mark }}</span> {{ g.text }}</li>
           </sc-for>
         </ul>
-        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.55;color:#7A7D70">Measured 2026 on Chrome / Windows. Results vary by platform, which is why each stack names several faces. The check itself is <a href="glyph-check.html">viewable and re-runnable</a>.</p>
+        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.55;color:#5A5D53">Measured 2026 on Chrome / Windows. Results vary by platform, which is why each stack names several faces. The check itself is <a href="glyph-check.html">viewable and re-runnable</a>.</p>
       </div>
     </div>
   </div>
@@ -93,7 +102,7 @@
         </div>
       </sc-for>
     </div>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#5C7A72;border-left:2px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:0 0 1.6rem;max-width:58ch">⌖ The caveat that governs all of this: opacity is owed to the crawler and the market, never to the disabled reader. Nothing here is hidden from assistive technology, and no semantic structure is removed to look less legible. Withhold from extraction; disclose fully to those who need access to participate.</p>
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#73968D;border-left:2px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:0 0 1.6rem;max-width:58ch">⌖ The caveat that governs all of this: opacity is owed to the crawler and the market, never to the disabled reader. Nothing here is hidden from assistive technology, and no semantic structure is removed to look less legible. Withhold from extraction; disclose fully to those who need access to participate.</p>
     <p style="max-width:54ch;margin:0;color:#B8C7C1">Protocol-gated access — where a community, not this project, sets who may see what and under which relationship — is not built yet. When it is, it will follow work that already exists rather than a scheme invented here: <a href="https://mukurtu.org" style="color:#DB9E2A">Mukurtu CMS</a>, built with the Warumungu community; <a href="https://localcontexts.org" style="color:#DB9E2A">Local Contexts</a> TK and BC Labels; and the <a href="https://www.gida-global.org/care" style="color:#DB9E2A">CARE Principles</a> for Indigenous data governance.</p>
   </div>
 </section>
@@ -140,7 +149,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;color:#DB9E2A;margin:0 0 .7rem;border-bottom:1px solid #2A4C4C;padding-bottom:.4rem">{{ v.version }}</p>
           <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.65">
             <sc-for list="{{ v.entries }}" as="e" hint-placeholder-count="4">
-              <li style="color:#B8C7C1"><del style="color:#5C7A72">{{ e.was }}</del> <span style="color:#3F7A4E">{{ e.now }}</span></li>
+              <li style="color:#B8C7C1"><del style="color:#73968D">{{ e.was }}</del> <span style="color:#509C64">{{ e.now }}</span></li>
             </sc-for>
           </ul>
         </div>
@@ -184,10 +193,12 @@
   </div>
 </section>
 
+</main>
+
 <footer style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:44ch">v0.2 · no fonts, scripts, or requests from third parties · <a href="robots.txt" style="color:#8FA9A2">crawler policy</a></p>
-    <nav style="display:flex;flex-wrap:wrap;gap:1.1rem">
+    <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
       <a href="Home.dc.html" style="color:#8FA9A2;text-decoration:none">Home</a>
       <a href="Manifesto.dc.html" style="color:#8FA9A2;text-decoration:none">Manifesto</a>
       <a href="Learn.dc.html" style="color:#8FA9A2;text-decoration:none">Learn</a>
@@ -204,12 +215,12 @@ class Component extends DCLogic {
   substrate = [
     ["Server location", "Not yet known — the site is unhosted at v0.2. Before launch this field states the city, the operator, and whose territory the machine sits on.", "#8B3A2F"],
     ["Watershed", "Not yet known. The data centre cooling a site is drawn from someone's water; that water has a name.", "#8B3A2F"],
-    ["Page weight", "Under 60 KB per page, uncompressed, including all markup and logic. No images, no icon fonts, no video.", "#3F7A4E"],
-    ["Third-party requests", "Zero. No fonts, analytics, embeds, tag managers, CDNs, or ad tech. Nothing on this site phones anywhere.", "#3F7A4E"],
-    ["Cookies and storage", "None set. Nothing is written to your device, so nothing needs consenting to and there is no banner to recite at you.", "#3F7A4E"],
-    ["What is logged", "Whatever the eventual host logs by default, which will be reduced as far as the host allows and stated here plainly.", "#DB9E2A"],
-    ["Build", "Hand-written markup, no build step, no framework churn. Runs from plain files you can save and open offline.", "#3F7A4E"],
-    ["Durability", "Partial. These pages need a small runtime to draw, so they do not meet the standard of markup that will still render in twenty years. Fault 4 below.", "#DB9E2A"]
+    ["Page weight", "Under 60 KB per page, uncompressed, including all markup and logic. No images, no icon fonts, no video.", "#366943"],
+    ["Third-party requests", "Zero. No fonts, analytics, embeds, tag managers, CDNs, or ad tech. Nothing on this site phones anywhere.", "#366943"],
+    ["Cookies and storage", "None set. Nothing is written to your device, so nothing needs consenting to and there is no banner to recite at you.", "#366943"],
+    ["What is logged", "Whatever the eventual host logs by default, which will be reduced as far as the host allows and stated here plainly.", "#7D5915"],
+    ["Build", "Hand-written markup, no build step, no framework churn. Runs from plain files you can save and open offline.", "#366943"],
+    ["Durability", "Partial. These pages need a small runtime to draw, so they do not meet the standard of markup that will still render in twenty years. Fault 4 below.", "#7D5915"]
   ];
 
   glyphs = [
@@ -223,10 +234,10 @@ class Component extends DCLogic {
   ];
 
   crawler = [
-    ["indexed", "Manifesto, Learn, Archive, Colophon", "Public reading material. Find it, index it, pass it on. Refusing discovery for its own sake would just be obscurity.", "#3F7A4E"],
+    ["indexed", "Manifesto, Learn, Archive, Colophon", "Public reading material. Find it, index it, pass it on. Refusing discovery for its own sake would just be obscurity.", "#509C64"],
     ["disallowed", "Practise", "What a person marks about their own relationships is not material for a register, a snapshot, or a training set — even though nothing they type ever leaves their browser.", "#DB9E2A"],
     ["disallowed", "Contribute", "Contributor material is reachable by relationship and request, governed by the terms each contributor chose, not by discovery.", "#DB9E2A"],
-    ["refused", "Training crawlers", "Named model crawlers are disallowed site-wide. This request has no technical force; it is stated so that ignoring it is a choice on the record.", "#8B3A2F"]
+    ["refused", "Training crawlers", "Named model crawlers are disallowed site-wide. This request has no technical force; it is stated so that ignoring it is a choice on the record.", "#D07F75"]
   ];
 
   terms = [
@@ -275,7 +286,7 @@ class Component extends DCLogic {
       substrate: this.substrate.map(s => ({ k: s[0], v: s[1], rule: s[2] })),
       glyphs: this.glyphs.map(g => ({
         mark: g[2] ? "ok" : "!!",
-        color: g[2] ? "#3F7A4E" : "#8B3A2F",
+        color: g[2] ? "#366943" : "#8B3A2F",
         text: g[1]
       })),
       crawler: this.crawler.map(c => ({ state: c[0], what: c[1], why: c[2], color: c[3] })),
