@@ -23,3 +23,19 @@ jobs:
 
       - name: HTML validation + accessibility (axe-core) check
         run: npm run check
+
+  worker-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # The tests only use Node built-ins (no wrangler, no live accounts
+      # needed) — wrangler in worker/package.json is for deploying, not
+      # for testing.
+      - name: Dispatch worker tests (crypto + full signup flow)
+        run: npm test
+        working-directory: worker

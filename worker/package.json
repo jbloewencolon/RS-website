@@ -1,0 +1,13 @@
+{
+  "name": "rs-dispatch-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node test/crypto.test.mjs && node test/flow.test.mjs",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^3.78.0"
+  }
+}
