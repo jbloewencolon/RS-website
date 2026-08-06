@@ -1,0 +1,56 @@
+name: Deploy to GitHub Pages
+
+# Replaces the classic "Deploy from a branch" pipeline, which got stuck
+# repeatedly (deployments stalling ~15 minutes then auto-cancelling,
+# while ordinary Actions runs on this repo — see check-pages.yml —
+# complete normally). This workflow uses the same, working runner pool,
+# so it's not subject to whatever's wrong with that separate pipeline.
+#
+# One-time setup required: Settings → Pages → Build and deployment →
+# Source → switch to "GitHub Actions". Nothing here takes effect until
+# that's done.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one deployment at a time; a new push cancels an in-flight one
+# rather than queuing behind it.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Publish only the actual site — not the worker/ backend source,
+      # dev tooling, or config files that classic branch-deploy would
+      # otherwise have served as plain browsable files under the domain.
+      - name: Assemble site
+        run: |
+          mkdir _site
+          cp Home.dc.html Manifesto.dc.html Learn.dc.html Practise.dc.html \
+             Archive.dc.html Contribute.dc.html Colophon.dc.html \
+             index.html glyph-check.html support.js robots.txt CNAME LICENSE \
+             _site/
+          cp -r vendor _site/vendor
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
