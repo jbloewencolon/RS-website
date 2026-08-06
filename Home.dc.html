@@ -203,6 +203,10 @@
       </sc-if>
       <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
         <form onSubmit="{{ submit }}" style="border:1px solid #C9C6BA;padding:1.7rem 1.6rem 1.9rem;background:rgba(15,42,46,.03);border-radius:3px">
+          <label aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">
+            <span>Leave this field empty</span>
+            <input type="text" name="website" tabindex="-1" autocomplete="off" value="{{ hp }}" onChange="{{ setHp }}">
+          </label>
           <label style="display:block;margin-bottom:1.3rem">
             <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">Email</span>
             <input type="email" autocomplete="email" value="{{ email }}" onChange="{{ setEmail }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.75rem .8rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
@@ -275,7 +279,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
 class Component extends DCLogic {
-  state = { qi: 0, sent: false, email: "", name: "", interests: [] };
+  state = { qi: 0, sent: false, email: "", name: "", interests: [], hp: "" };
 
   questions = [
     "Where does care end and control begin?",
@@ -310,7 +314,8 @@ class Component extends DCLogic {
     "The printable zine when it exists",
     "The eight-week reading circle",
     "Events and workshops",
-    "I want to contribute something"
+    "I want to contribute something",
+    "I'm looking for support and resources"
   ];
 
   renderVals() {
@@ -324,8 +329,15 @@ class Component extends DCLogic {
       email: this.state.email,
       name: this.state.name,
       setEmail: (ev) => this.setState({ email: ev.target.value }),
+      hp: this.state.hp,
+      setHp: (ev) => this.setState({ hp: ev.target.value }),
       setName: (ev) => this.setState({ name: ev.target.value }),
-      submit: (ev) => { ev.preventDefault(); this.setState({ sent: true }); },
+      // `hp` is a honeypot: real visitors never see or fill it (it's
+      // hidden from sight and skipped by screen readers/keyboard tab
+      // order), so a non-empty value means a bot filled every field it
+      // could find. The real backend must reject on this too — a client
+      // check alone doesn't stop anything once there's a server involved.
+      submit: (ev) => { ev.preventDefault(); if (this.state.hp) return; this.setState({ sent: true }); },
       edit: () => this.setState({ sent: false }),
       interests: this.interestList.map((label) => {
         const on = chosen.indexOf(label) > -1;
