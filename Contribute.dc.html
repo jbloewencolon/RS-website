@@ -1,38 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contribute — Relational Sovereignty</title>
+<meta name="description" content="Share a story, tool, question, or artwork on terms you set, and can withdraw.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
 <script src="./support.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
 <style>
+  html{scroll-behavior:smooth}
   body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
   a{color:#2B4C9B;text-underline-offset:3px;text-decoration-thickness:1px}
   a:hover{color:#3F7A4E}
   *{box-sizing:border-box}
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
   @media print{body{background:#fff}.noprint{display:none!important}}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+  .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
+  .skip-link:focus{left:1rem;top:1rem}
 </style>
 </helmet>
 
+<a href="#main-content" class="skip-link">Skip to content</a>
 <header style="border-bottom:1px solid #C9C6BA">
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="Home.dc.html" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.01em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
-    <nav style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+    <nav aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
       <a href="Manifesto.dc.html" style="color:#585B4F;text-decoration:none">Manifesto</a>
       <a href="Learn.dc.html" style="color:#585B4F;text-decoration:none">Learn</a>
       <a href="Practise.dc.html" style="color:#585B4F;text-decoration:none">Practise</a>
       <a href="Archive.dc.html" style="color:#585B4F;text-decoration:none">Archive</a>
-      <a href="Contribute.dc.html" style="color:#3F7A4E;text-decoration:none">Contribute</a>
+      <a href="Contribute.dc.html" style="color:#366943;text-decoration:none">Contribute</a>
       <a href="Colophon.dc.html" style="color:#585B4F;text-decoration:none">Colophon</a>
     </nav>
   </div>
 </header>
 
-<section style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
+<main>
+<section id="main-content" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Contribute — on terms you set, and can withdraw · about 5 minutes</p>
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.2rem,6vw,4rem);line-height:.98;letter-spacing:-.02em;margin:0 0 1.4rem;max-width:16ch">Contribute without disclosing yourself.</h1>
@@ -62,8 +71,8 @@
 
     <div>
       <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
-        <div style="border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;padding:1.6rem 1.5rem;background:rgba(63,122,78,.06)">
-          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#3F7A4E;margin:0 0 .6rem">received</p>
+        <div role="status" aria-live="polite" style="border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;padding:1.6rem 1.5rem;background:rgba(63,122,78,.06)">
+          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 .6rem">received</p>
           <p style="margin:0 0 .8rem;font-size:17px;line-height:1.5">Thank you. Nothing will be published, quoted, or archived beyond the terms you chose here, and you can change them later.</p>
           <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F">This launch page has no server attached yet, so nothing was transmitted. The form is here so you can see exactly what would be asked — and what would not.</p>
           <button type="button" onClick="{{ edit }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.45rem .8rem;margin-top:1.2rem;cursor:pointer;border-radius:2px">edit what I sent</button>
@@ -71,19 +80,19 @@
       </sc-if>
       <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
         <form onSubmit="{{ submit }}" style="border:1px solid #C9C6BA;padding:1.7rem 1.6rem 1.9rem;background:rgba(15,42,46,.03);border-radius:3px">
-          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1.2rem">Join the dispatch, offer something, or both</p>
+          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#7D5915;margin:0 0 1.2rem">Join the dispatch, offer something, or both</p>
           <label style="display:block;margin-bottom:1.3rem">
             <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">Email</span>
-            <input type="email" value="{{ email }}" onChange="{{ setEmail }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.75rem .8rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
+            <input type="email" autocomplete="email" value="{{ email }}" onChange="{{ setEmail }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.75rem .8rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
           </label>
           <label style="display:block;margin-bottom:1.3rem">
             <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">Name or pseudonym</span>
-            <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#7A7D70;margin-bottom:.5rem;line-height:1.5">Optional. Any characters, any script, no validator. Anonymity is a legitimate choice, not a lesser one.</span>
-            <input type="text" value="{{ name }}" onChange="{{ setName }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.75rem .8rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
+            <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin-bottom:.5rem;line-height:1.5">Optional. Any characters, any script, no validator. Anonymity is a legitimate choice, not a lesser one.</span>
+            <input type="text" autocomplete="name" value="{{ name }}" onChange="{{ setName }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.75rem .8rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
           </label>
           <fieldset style="border:none;margin:0 0 1.4rem;padding:0">
             <legend style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;padding:0;margin-bottom:.4rem">What brought you here</legend>
-            <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#7A7D70;margin:0 0 .7rem;line-height:1.5">Optional. Choose none, one, or all.</p>
+            <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:0 0 .7rem;line-height:1.5">Optional. Choose none, one, or all.</p>
             <div style="display:grid;gap:.5rem">
               <sc-for list="{{ interests }}" as="it" hint-placeholder-count="5">
                 <label style="display:flex;gap:.7rem;align-items:flex-start;cursor:pointer;border-radius:2px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.4;padding:.7rem .75rem;min-height:44px;border:1px solid {{ it.border }};background:{{ it.bg }};color:{{ it.fg }}">
@@ -95,11 +104,11 @@
           </fieldset>
           <label style="display:block;margin-bottom:1.4rem">
             <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">What you might offer</span>
-            <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#7A7D70;margin-bottom:.5rem;line-height:1.5">Optional. A sentence is enough. Do not put anything here you would not want read by a stranger.</span>
+            <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin-bottom:.5rem;line-height:1.5">Optional. A sentence is enough. Do not put anything here you would not want read by a stranger.</span>
             <textarea rows="4" value="{{ offer }}" onChange="{{ setOffer }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.7rem .8rem;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;line-height:1.5;color:#191B18;resize:vertical"></textarea>
           </label>
           <button type="submit" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px">Send</button>
-          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.6;color:#7A7D70;margin:1rem 0 0">No tracking pixels. No third parties. No schedule promised. Leave with one click, any time.</p>
+          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.6;color:#5A5D53;margin:1rem 0 0">No tracking pixels. No third parties. No schedule promised. Leave with one click, any time.</p>
         </form>
       </sc-if>
     </div>
@@ -112,7 +121,7 @@
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.01em;margin:0 0 2rem;max-width:24ch;color:#E7E5DC">What the commons refuses.</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2.6rem;max-width:1000px">
       <div>
-        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#5C7A72;margin:0 0 .9rem;border-bottom:1px solid #2A4C4C;padding-bottom:.5rem">The obvious</p>
+        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#73968D;margin:0 0 .9rem;border-bottom:1px solid #2A4C4C;padding-bottom:.5rem">The obvious</p>
         <p style="margin:0;font-size:16px;line-height:1.6;color:#B8C7C1">Racism. Colonial appropriation. Misogyny. Homophobia. Transphobia. Ableism. Coercion. Harassment. Stalking. Threats. Non-consensual disclosure. Punitive pile-ons.</p>
       </div>
       <div>
@@ -127,7 +136,7 @@
         </ul>
       </div>
     </div>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#5C7A72;border-left:2px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:2.4rem 0 0;max-width:58ch">⌖ Moderation prioritizes safety, context, proportional response, and survivor autonomy. This project will not promise a perfectly non-carceral community while lacking the capacity to address serious danger.</p>
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#73968D;border-left:2px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:2.4rem 0 0;max-width:58ch">⌖ Moderation prioritizes safety, context, proportional response, and survivor autonomy. This project will not promise a perfectly non-carceral community while lacking the capacity to address serious danger.</p>
   </div>
 </section>
 
@@ -155,10 +164,12 @@
   </div>
 </section>
 
+</main>
+
 <footer style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:46ch">v0.2 · no third-party requests, including fonts · this page is disallowed to search crawlers · <a href="Colophon.dc.html" style="color:#DB9E2A">what changed</a> · <a href="robots.txt" style="color:#8FA9A2">crawler policy</a></p>
-    <nav style="display:flex;flex-wrap:wrap;gap:1.1rem">
+    <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
       <a href="Home.dc.html" style="color:#8FA9A2;text-decoration:none">Home</a>
       <a href="Manifesto.dc.html" style="color:#8FA9A2;text-decoration:none">Manifesto</a>
       <a href="Learn.dc.html" style="color:#8FA9A2;text-decoration:none">Learn</a>

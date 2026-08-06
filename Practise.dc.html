@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Consent Domains Map — Relational Sovereignty</title>
+<meta name="description" content="A private, in-browser tool for mapping consent across seventeen domains of a relationship. Nothing you enter leaves this page.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
 <script src="./support.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
 <style>
+  html{scroll-behavior:smooth}
   body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
   a{color:#2B4C9B;text-underline-offset:3px;text-decoration-thickness:1px}
   a:hover{color:#3F7A4E}
@@ -18,16 +22,20 @@
     body{background:#fff}
     .noprint{display:none!important}
   }
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+  .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
+  .skip-link:focus{left:1rem;top:1rem}
 </style>
 </helmet>
 
+<a href="#main-content" class="skip-link">Skip to content</a>
 <header class="noprint" style="border-bottom:1px solid #C9C6BA">
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="Home.dc.html" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
-    <nav style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+    <nav aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
       <a href="Manifesto.dc.html" style="color:#585B4F;text-decoration:none">Manifesto</a>
       <a href="Learn.dc.html" style="color:#585B4F;text-decoration:none">Learn</a>
-      <a href="Practise.dc.html" style="color:#3F7A4E;text-decoration:none">Practise</a>
+      <a href="Practise.dc.html" style="color:#366943;text-decoration:none">Practise</a>
       <a href="Archive.dc.html" style="color:#585B4F;text-decoration:none">Archive</a>
       <a href="Contribute.dc.html" style="color:#585B4F;text-decoration:none">Contribute</a>
       <a href="Colophon.dc.html" style="color:#585B4F;text-decoration:none">Colophon</a>
@@ -35,7 +43,8 @@
   </div>
 </header>
 
-<section style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
+<main>
+<section id="main-content" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Practise — tool 01 of 09 · about 20 minutes to fill in</p>
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.2rem,6vw,4rem);line-height:1;letter-spacing:-.035em;margin:0 0 1.4rem;max-width:15ch">The Consent Domains Map</h1>
@@ -71,7 +80,7 @@
             <legend style="padding:0;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;line-height:1.15;letter-spacing:-.01em;color:#191B18;margin-bottom:.3rem">{{ d.name }}</legend>
             <div style="display:flex;flex-wrap:wrap;gap:.6rem 1.8rem;align-items:flex-start">
               <div style="flex:1 1 230px;min-width:0">
-                <p style="margin:0 0 .35rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.5;color:#7A7D70">{{ d.hint }}</p>
+                <p style="margin:0 0 .35rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.5;color:#5A5D53">{{ d.hint }}</p>
                 <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:{{ d.stateColor }}">marked: {{ d.stateLabel }}</p>
               </div>
               <div style="flex:2 1 340px;min-width:0;display:flex;flex-direction:column;gap:.6rem">
@@ -85,7 +94,7 @@
                   </sc-for>
                 </div>
                 <label style="display:block">
-                  <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#7A7D70;margin-bottom:.3rem">Condition, in your own words</span>
+                  <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#5A5D53;margin-bottom:.3rem">Condition, in your own words</span>
                   <input type="text" value="{{ d.note }}" onChange="{{ d.setNote }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.55rem .6rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:15px;color:#191B18">
                 </label>
               </div>
@@ -96,7 +105,7 @@
     </div>
 
     <div style="margin-top:2rem;border:1px solid #C9C6BA;border-left:4px solid #3F7A4E;padding:1.4rem 1.5rem;max-width:700px;background:rgba(63,122,78,.05)">
-      <h2 style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#3F7A4E;margin:0 0 .7rem;font-weight:400">After you fill it in</h2>
+      <h2 style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 .7rem;font-weight:400">After you fill it in</h2>
       <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;font-size:16px;line-height:1.5">
         <li>— Which domain did you hesitate longest over? That hesitation is the useful part, not the answer.</li>
         <li>— Where did you assume a yes because of the relationship's name rather than an actual conversation?</li>
@@ -128,16 +137,18 @@
 <section class="noprint" style="padding:clamp(2.5rem,5vw,3.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <div style="border-top:1px solid #C9C6BA;padding-top:2rem;max-width:640px">
-      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#3F7A4E;margin:0 0 .8rem">You have reached the end of this page</p>
+      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 .8rem">You have reached the end of this page</p>
       <p style="margin:0;font-size:17px;line-height:1.55">Print what you made, or close the tab and let it go. The map is only worth the conversation that follows it, and that conversation does not happen here.</p>
     </div>
   </div>
 </section>
 
+</main>
+
 <footer class="noprint" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0;border-top:1px solid #2A4C4C">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:44ch">v0.2 · nothing you type here leaves your device · <a href="Colophon.dc.html" style="color:#DB9E2A">what changed</a> · <a href="robots.txt" style="color:#8FA9A2">crawler policy</a></p>
-    <nav style="display:flex;flex-wrap:wrap;gap:1.1rem">
+    <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
       <a href="Home.dc.html" style="color:#8FA9A2;text-decoration:none">Home</a>
       <a href="Manifesto.dc.html" style="color:#8FA9A2;text-decoration:none">Manifesto</a>
       <a href="Learn.dc.html" style="color:#8FA9A2;text-decoration:none">Learn</a>
@@ -174,8 +185,8 @@ class Component extends DCLogic {
   ];
 
   options = [
-    ["yes, freely", "yes", "#3F7A4E"],
-    ["yes, with conditions", "conditions", "#DB9E2A"],
+    ["yes, freely", "yes", "#366943"],
+    ["yes, with conditions", "conditions", "#7D5915"],
     ["not yet — ask me", "not yet", "#2B4C9B"],
     ["no", "no", "#8B3A2F"],
     ["mine to withhold", "withheld", "#0F2A2E"]
@@ -202,7 +213,7 @@ class Component extends DCLogic {
       tools: this.tools.map(t => ({
         name: t[0], body: t[1],
         status: t[2] ? "in progress" : "not started",
-        color: t[2] ? "#DB9E2A" : "#5C7A72"
+        color: t[2] ? "#DB9E2A" : "#73968D"
       })),
       domains: this.domainList.map((d, i) => {
         const chosen = picks[i];
@@ -212,7 +223,7 @@ class Component extends DCLogic {
           note: notes[i] || "",
           setNote: (ev) => { const v = ev.target.value; this.setState(s => { const n = Object.assign({}, s.notes); n[i] = v; return { notes: n }; }); },
           stateLabel: has ? this.options[chosen][0] : "nothing yet",
-          stateColor: has ? this.options[chosen][2] : "#83867A",
+          stateColor: has ? this.options[chosen][2] : "#64665D",
           options: this.options.map((o, j) => ({
             group: "domain-" + i,
             short: o[1],

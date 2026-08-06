@@ -18,8 +18,6 @@ Disallow: /Practise.dc.html
 # Contributor material is governed by the terms each contributor chose,
 # not by discovery. Ask, or read the Colophon.
 Disallow: /Contribute.dc.html
-Disallow: /uploads/
-Disallow: /extracted/
 
 # No training on this site's contributor material. This is a request with no
 # technical force, stated so that ignoring it is a choice on the record.
