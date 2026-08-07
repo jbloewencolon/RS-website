@@ -14,7 +14,7 @@ async function loadStore(content, encryptionKey) {
   return decryptJSON(content, encryptionKey);
 }
 
-export async function confirmSubscriber(env, email, interests) {
+export async function confirmSubscriber(env, email, interests, name) {
   await updateWithRetry(
     env.STORE_OWNER,
     env.STORE_REPO,
@@ -25,7 +25,14 @@ export async function confirmSubscriber(env, email, interests) {
       const store = await loadStore(content, env.ENCRYPTION_KEY);
       const key = email.trim().toLowerCase();
       if (store.subscribers[key]) return null; // already confirmed
-      store.subscribers[key] = { email: key, confirmedAt: new Date().toISOString() };
+      store.subscribers[key] = {
+        email: key,
+        // Only what the person typed for themselves. Interests are never
+        // recorded here — they go to the aggregate counters below, so a
+        // leaked store cannot say who is interested in what.
+        name: name || "",
+        confirmedAt: new Date().toISOString(),
+      };
       for (const interest of interests || []) {
         store.interestCounts[interest] = (store.interestCounts[interest] || 0) + 1;
       }

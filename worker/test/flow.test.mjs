@@ -5,6 +5,7 @@
 // Run with: node worker/test/flow.test.mjs
 import assert from "node:assert/strict";
 import worker from "../src/index.js";
+import { decryptJSON } from "../src/crypto.js";
 
 // --- fake GitHub contents API (one file, in memory) ---
 let fakeRepoFile = { content: null, sha: null };
@@ -60,11 +61,11 @@ function extractLink(text) {
   return text.match(/https:\/\/\S+/)[0];
 }
 
-function subscribeRequest(email, interests, hp = "") {
+function subscribeRequest(email, interests, hp = "", name = "") {
   return new Request("https://worker.example/api/subscribe", {
     method: "POST",
     headers: { "Content-Type": "application/json", Origin: env.SITE_URL },
-    body: JSON.stringify({ email, interests, hp }),
+    body: JSON.stringify({ email, name, interests, hp }),
   });
 }
 
@@ -123,6 +124,29 @@ async function run() {
   assert.equal(badRes.status, 400);
   assert.equal(commitCount, 2, "a bad token must never touch storage");
   console.log("ok: invalid confirm tokens are rejected without touching storage");
+
+  // 8. A chosen name (or pseudonym) survives the round trip and is stored,
+  //    while the interests picked alongside it stay aggregate-only — the
+  //    store must never say which person is interested in what.
+  lastEmail = null;
+  await worker.fetch(
+    subscribeRequest("Named@Example.com", ["I'm looking for support and resources"], "", "a pseudonym"),
+    env
+  );
+  await worker.fetch(new Request(extractLink(lastEmail.text), { method: "GET" }), env);
+  const stored = await decryptJSON(
+    Buffer.from(fakeRepoFile.content, "base64").toString(),
+    env.ENCRYPTION_KEY
+  );
+  const rec = stored.subscribers["named@example.com"];
+  assert.equal(rec.name, "a pseudonym", "chosen name should be stored as given");
+  assert.equal(rec.email, "named@example.com", "email should be normalised to lowercase");
+  assert.equal("interests" in rec, false, "interests must not be stored against a person");
+  // 2, not 1: the subscriber in step 1 picked the same interest. The
+  // counter accumulating across people is exactly the point — it records
+  // how many are interested, never which ones.
+  assert.equal(stored.interestCounts["I'm looking for support and resources"], 2);
+  console.log("ok: chosen name is stored; interests stay aggregate-only, never per-person");
 
   console.log("\nAll flow tests passed.");
   globalThis.fetch = originalFetch;

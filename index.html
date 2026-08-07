@@ -203,9 +203,9 @@
       <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
         <div role="status" aria-live="polite" style="border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;padding:1.6rem 1.5rem;background:rgba(63,122,78,.06)">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 .6rem">received</p>
-          <p style="margin:0 0 .8rem;font-size:17px;line-height:1.5">Thank you. You will hear from us when there is something worth sending, and not before.</p>
-          <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F">This launch page has no server attached yet, so nothing was transmitted — the form is here so you can see exactly what would be asked, and what would not.</p>
-          <button type="button" onClick="{{ edit }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.7rem 1rem;min-height:44px;margin-top:1.2rem;cursor:pointer;border-radius:2px">edit what I sent</button>
+          <p style="margin:0 0 .8rem;font-size:17px;line-height:1.5">Check your email. There is a confirmation link waiting, and nothing is recorded until you click it.</p>
+          <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F">The link expires in 48 hours. If it never arrives, check the spam folder, or simply do nothing — an address that is never confirmed is never stored. Every letter after that carries a one-click unsubscribe.</p>
+          <button type="button" onClick="{{ edit }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.7rem 1rem;min-height:44px;margin-top:1.2rem;cursor:pointer;border-radius:2px">use a different address</button>
         </div>
       </sc-if>
       <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
@@ -235,8 +235,11 @@
               </sc-for>
             </div>
           </fieldset>
-          <button type="submit" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px">Join the dispatch</button>
-          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.6;color:#5A5D53;margin:1rem 0 0">No tracking pixels. No third parties. Leave with one click, any time.</p>
+          <button type="submit" disabled="{{ sending }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px;opacity:{{ sendingOpacity }}">{{ submitLabel }}</button>
+          <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
+            <p role="alert" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:1rem 0 0">{{ error }}</p>
+          </sc-if>
+          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.6;color:#5A5D53;margin:1rem 0 0">No tracking pixels. No third parties. Your address is confirmed by email before anything is stored, and one link in every letter removes you.</p>
         </form>
       </sc-if>
     </div>
@@ -286,7 +289,11 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
 class Component extends DCLogic {
-  state = { qi: 0, sent: false, email: "", name: "", interests: [], hp: "" };
+  state = { qi: 0, sent: false, email: "", name: "", interests: [], hp: "", sending: false, error: "" };
+
+  // The dispatch signup endpoint. Nothing is stored there until the
+  // reader clicks the confirmation link this call triggers.
+  static ENDPOINT = "https://rs-dispatch-worker.rssite.workers.dev/api/subscribe";
 
   questions = [
     "Where does care end and control begin?",
@@ -339,13 +346,52 @@ class Component extends DCLogic {
       hp: this.state.hp,
       setHp: (ev) => this.setState({ hp: ev.target.value }),
       setName: (ev) => this.setState({ name: ev.target.value }),
+      sending: this.state.sending,
+      sendingOpacity: this.state.sending ? "0.6" : "1",
+      submitLabel: this.state.sending ? "Sending…" : "Join the dispatch",
+      error: this.state.error,
+      hasError: !!this.state.error,
       // `hp` is a honeypot: real visitors never see or fill it (it's
       // hidden from sight and skipped by screen readers/keyboard tab
       // order), so a non-empty value means a bot filled every field it
-      // could find. The real backend must reject on this too — a client
-      // check alone doesn't stop anything once there's a server involved.
-      submit: (ev) => { ev.preventDefault(); if (this.state.hp) return; this.setState({ sent: true }); },
-      edit: () => this.setState({ sent: false }),
+      // could find. The worker rejects on it too — a client-side check
+      // alone stops nothing, since a bot can post straight to the API.
+      submit: async (ev) => {
+        ev.preventDefault();
+        if (this.state.sending) return;
+        if (this.state.hp) { this.setState({ sent: true }); return; }
+        const email = this.state.email.trim();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          this.setState({ error: "That address does not look complete. Check it and try again." });
+          return;
+        }
+        this.setState({ sending: true, error: "" });
+        try {
+          const res = await fetch(Component.ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email,
+              name: this.state.name,
+              interests: this.state.interests,
+              hp: this.state.hp,
+            }),
+          });
+          if (!res.ok) {
+            const body = await res.json().catch(() => null);
+            throw new Error(body && body.error ? body.error : "request failed");
+          }
+          this.setState({ sent: true, sending: false });
+        } catch (err) {
+          // Never lose what they typed — the form stays filled in so the
+          // only cost of a failure is pressing the button again.
+          this.setState({
+            sending: false,
+            error: "That did not send. Check your connection and try again, or write to the address in the colophon.",
+          });
+        }
+      },
+      edit: () => this.setState({ sent: false, error: "" }),
       interests: this.interestList.map((label) => {
         const on = chosen.indexOf(label) > -1;
         return {

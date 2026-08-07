@@ -12,6 +12,7 @@ import { confirmSubscriber, removeSubscriber } from "./store.js";
 const CONFIRM_TTL_MS = 48 * 60 * 60 * 1000; // confirm links expire after 48 hours
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_INTERESTS = 20;
+const MAX_NAME = 200;
 
 function json(obj, status = 200) {
   return new Response(JSON.stringify(obj), {
@@ -34,7 +35,7 @@ function withCors(res, origin) {
 async function handleSubscribe(req, env) {
   const body = await req.json().catch(() => null);
   if (!body) return json({ error: "bad request" }, 400);
-  const { email, interests, hp } = body;
+  const { email, name, interests, hp } = body;
 
   // Honeypot: real visitors never see or fill this field. A non-empty
   // value means a bot filled every field it could find. Pretend success
@@ -47,9 +48,13 @@ async function handleSubscribe(req, env) {
   const cleanInterests = Array.isArray(interests)
     ? interests.filter((i) => typeof i === "string").slice(0, MAX_INTERESTS)
     : [];
+  // Whatever the person chose to be called — real name, pseudonym, or
+  // nothing. Stored as given, never validated against anything, only
+  // used to address a letter. Optional by design.
+  const cleanName = typeof name === "string" ? name.trim().slice(0, MAX_NAME) : "";
 
   const token = await signToken(
-    { e: email.trim().toLowerCase(), i: cleanInterests, t: Date.now() },
+    { e: email.trim().toLowerCase(), n: cleanName, i: cleanInterests, t: Date.now() },
     env.TOKEN_SECRET
   );
   const confirmUrl = `${env.WORKER_URL}/api/confirm?token=${encodeURIComponent(token)}`;
@@ -77,7 +82,7 @@ async function handleConfirm(req, env) {
     return text("This confirmation link is invalid or has expired. Please sign up again.", 400);
   }
 
-  await confirmSubscriber(env, payload.e, payload.i);
+  await confirmSubscriber(env, payload.e, payload.i, payload.n);
 
   const unsubToken = await signToken({ e: payload.e }, env.TOKEN_SECRET);
   const unsubUrl = `${env.WORKER_URL}/api/unsubscribe?token=${encodeURIComponent(unsubToken)}`;
