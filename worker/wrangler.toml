@@ -26,7 +26,7 @@ FROM_EMAIL = "dispatch@relationalsovereignty.com"
 
 # Where the encrypted subscriber list lives: a SEPARATE, PRIVATE GitHub
 # repo — never this public website repo.
-STORE_OWNER = "CHANGE_ME_github_username"
-STORE_REPO = "CHANGE_ME_private_storage_repo_name"
+STORE_OWNER = "jbloewencolon"
+STORE_REPO = "rs-dispatch-worker"
 STORE_PATH = "subscribers.enc"
 STORE_BRANCH = "main"
