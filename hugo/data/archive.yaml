@@ -58,6 +58,13 @@ groups:
         use: "open access"
         link: "https://arxiv.org/abs/2603.07737"
         linkLabel: "read on arXiv"
+      - title: "Sovereignty Matters: Locations of Contestation and Possibility in Indigenous Struggles for Self-Determination"
+        by: "Joanne Barker (Lenape), ed."
+        tags: ["book"]
+        why: "Barker traces sovereignty's European juridical and theological genealogy. Taiaiake Alfred's chapter argues the concept is inseparable from colonisation — the strongest case against this site's own master term, and it belongs here, not just cited from a distance."
+        use: "edited collection"
+        link: "https://www.nebraskapress.unl.edu/nebraska-paperback/9780803262515"
+        linkLabel: "University of Nebraska Press"
 
   - title: "Decolonization, possession, land, kinship, intimacy"
     note: "Including the limit on how far this vocabulary can be stretched."
@@ -343,10 +350,10 @@ sequence:
   - "Kuokkanen — It's About All Relations"
   - "TallBear — Caretaking Relations, Not American Dreaming"
   - "Tuck and Yang — Decolonization Is Not a Metaphor"
-  - "Mackenzie and Stoljar — Relational Autonomy"
+  - "Spillers — Mama's Baby, Papa's Maybe"
+  - "Stanford Encyclopedia — Feminist Perspectives on Autonomy"
   - "Mingus — Access Intimacy"
-  - "Nordgren — Relationship Anarchy Manifesto"
-  - "Brake — Minimizing Marriage"
+  - "Malatino — Trans Care"
   - "Stark — Coercive Control"
   - "Creative Interventions — Toolkit"
 
