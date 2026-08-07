@@ -57,8 +57,7 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 | ID | Task | Tags | Files | Effort | Notes |
 |---|---|---|---|---|---|
 | **RS-022** | Hosting decision (FLAG-02) + fill the blank colophon substrate fields: server location/operator/territory, watershed, actual logging config (minimized), cost + funding source. Colophon note on the single-region trade-off if D6 is taken as-is. | `[DEV]` `[DECISION]` | `BehindTheScenes.dc.html`, hosting config | M | FLAG-02 |
-| **RS-024** | Extend the glyph coverage matrix beyond Chrome/Windows: Safari/macOS+iOS, Firefox/Windows+Linux, Chrome/Android, Edge/Windows. Publish per-platform results. Resolve or document the `x̂` (Unangax̂) at-risk flag specifically. | `[DEV]` | `glyph-check.html`, `BehindTheScenes.dc.html` | S | — |
-| **RS-027** | Async mode + export for the Practise tool. Off by default, non-dismissible findability warning (draft in `addendum-a.md`), no `localStorage` resume (re-import a saved file instead), neutral user-editable filename, print offered before file download (D14), print stylesheet carries no site name/URL. | `[DEV]` | `Practise.dc.html` | M | RS-001/032 sequence should exist first (shares the tool's safety framing) |
+| **RS-024 (residual)** | ~~Extend the glyph coverage matrix beyond Chrome/Windows: Safari/macOS+iOS, Firefox/Windows+Linux, Chrome/Android, Edge/Windows. Publish per-platform results. Resolve or document the `x̂` (Unangax̂) at-risk flag specifically.~~ **Partially done, see `completed.tasks.md`** — the check itself had a real defect (width comparison can't detect a missing glyph in a monospace font), now fixed and re-verified clean on Chrome/Linux, the one platform this environment can reach. Genuine multi-platform testing (real Safari/macOS+iOS, Windows ClearType fonts, Chrome/Android, Edge) still needs a person with access to that hardware — same shape of gap as RS-023's screen-reader residual. | `[DEV]` (needs real devices) | `glyph-check.html`, `BehindTheScenes.dc.html` | S | — |
 
 ---
 
@@ -67,10 +66,8 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 
 | ID | Task | Tags | Files | Effort | Notes |
 |---|---|---|---|---|---|
-| **RS-006** | Thesis 01 insertion: second genealogy of possession (chattel slavery / natal alienation vs. settler land-to-property). New archive group. | `[COPY]` `[DEV]` | `Manifesto.dc.html`, `Archive.dc.html` | M | **Blocked on FLAG-03** (Patterson/Collins metadata gap) for full completion; Spillers/Hartman/Roberts/Bridges entries can ship now |
-| **RS-007** | Trans studies archive entry (Malatino, *Trans Care* — link already verified in source doc). Revise principle 08 body + add second question on compelled legibility. | `[COPY]` `[DEV]` | `Learn.dc.html`, `Archive.dc.html` | S | — |
-| **RS-008** | New Learn section disambiguating the four senses of "sovereignty" (political / jurisdictional / relational / rhetorical), plus the Alfred-critique closing paragraph (D9). Reading-ten list: substitute three (drop Mackenzie & Stoljar, Brake, Nordgren; add Spillers, SEP autonomy entry, Malatino — D8), keep count at ten, revised standfirst noting 6/10 are free to read. | `[COPY]` | `Learn.dc.html`, `Archive.dc.html` | S–M | Shares entries with RS-006/RS-007 |
-| **RS-016** | Bulk archive additions — P0 set (Coulthard, Malatino, Spillers, Hartman, Roberts, Bridges, Cohen), P1 set (Barker, Kuokkanen et al. 2025, Povinelli, Rifkin, Lugones, Kelly & Johnson, Feeney, Freeman, Spade, brown, Kaba), P2 set (Noël, Rambukkana, Borrows). New filter facets (`clinical`, `process`) if warranted. | `[DEV]` `[COPY]` `[VERIFY]` | `Archive.dc.html` | M | Large `[VERIFY]` batch — see Verification queue below |
+| **RS-006 (residual)** | ~~Thesis 01 insertion: second genealogy of possession (chattel slavery / natal alienation vs. settler land-to-property). New archive group.~~ **Thesis 01 insertion and the archive group both shipped, see `completed.tasks.md`** — Spillers, Hartman, Roberts, and Bridges are in. What's left: adding Patterson and Collins once FLAG-03 (which two books, exactly) is answered. | `[COPY]` `[VERIFY]` | `Archive.dc.html` | S | **Still blocked on FLAG-03** |
+| **RS-016** | Bulk archive additions — P0 set (~~Coulthard, Malatino,~~ ~~Spillers, Hartman, Roberts, Bridges,~~ Cohen — Malatino shipped via RS-007, Spillers/Hartman/Roberts/Bridges shipped via RS-006; Coulthard and Cohen remain), P1 set (~~Barker,~~ Kuokkanen et al. 2025, Povinelli, Rifkin, Lugones, Kelly & Johnson, Feeney, Freeman, Spade, brown, Kaba — Barker shipped via RS-008), P2 set (Noël, Rambukkana, Borrows). New filter facets (`clinical`, `process`) if warranted. | `[DEV]` `[COPY]` `[VERIFY]` | `Archive.dc.html` | M | Large `[VERIFY]` batch — see Verification queue below |
 | **RS-026** | Non-verbal/low-language check-in mode for the Practise tool: labelled states with colour as secondary cue only (not primary — regression risk against the v0.2 colour-only fix), inline SVG/CSS shapes with `aria-label` (not emoji), reduced-language version of the RS-001 safety questions. Document tap-count signalling as practice, not a built input method. | `[DEV]` `[COPY]` | `Practise.dc.html` | M | Extends RS-001's reduced-language requirement |
 | **RS-033** | Archive additions: Hemphill (*What It Takes to Heal*), Menakem (*My Grandmother's Hands*). New archive group "Bodies, regulation, and what happens before words." **Omit polyvagal theory entirely** (D13 — do not shelve with caveat). | `[DEV]` `[COPY]` `[VERIFY]` | `Archive.dc.html` | S | — |
 | **RS-034** | New thesis 16, "The house is not a rehearsal" — prefigurative claim without the "picking up your bundle" metaphor (that framing is **rejected**, see Rejected section below). Sixteen theses total — global find-replace "fifteen theses and a refusal." Link to *The Revolution Starts at Home*. | `[COPY]` | `Manifesto.dc.html`, Home nav card, meta descriptions | S | — |
@@ -142,7 +139,7 @@ Bulk list, independent of phase, so link/citation verification can be worked in 
 
 **Other verifications:**
 - BATJC pod-mapping worksheet URL (RS-029)
-- Kafer *Feminist, Queer, Crip* + Samuels "Six Ways of Looking at Crip Time" citations (RS-027)
+~~Kafer *Feminist, Queer, Crip* + Samuels "Six Ways of Looking at Crip Time" citations (RS-027)~~ — done, both verified and added to `Archive.dc.html`; see `completed.tasks.md`.
 - Native Land Digital's terms/disclaimer, for the outbound-link-only territory reference (RS-031/D15)
 - Outbound link target for Home limit #3 (D10) — Indigenous-led org/land-defence fund/policy institute, confirmed comfortable being linked
 - Hugo current version + cross-platform availability (RS-004/D2)
@@ -173,7 +170,7 @@ Applies to every page, every release — from `docs/spec/base-work-order.md` §7
 **Practise page specifically:**
 - [ ] RS-001/032 sequence cannot be bypassed by disabling JavaScript once RS-004 principles apply here too, or is explicitly documented as the one page still requiring the runtime
 - [ ] Resources link present on every interstitial step
-- [ ] Nothing typed is transmitted or persisted (except an explicit, warned RS-027 export action)
+- [x] Nothing typed is transmitted or persisted (except an explicit, warned RS-027 export action) — RS-027 shipped: export is a direct user click only (no auto-save, no timer), a non-dismissible warning sits above the control, there is no `localStorage` anywhere in the file, and resume works only by re-importing a file the user chose to keep. Verified with real Playwright interaction (mouse and keyboard-triggered export, a round-trip import, and a malformed-file import that errors without wiping existing state), not just read off the markup.
 - [ ] Back-navigation leaves no partial state visible
 - [ ] Still disallowed in robots.txt, and `noindex`'d (SUGGEST-02)
 

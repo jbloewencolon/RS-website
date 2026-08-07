@@ -22,16 +22,37 @@ const samples = {
   "□ U+25A1": "□",
   "— U+2014": "—"
 };
-const c = document.createElement('canvas').getContext('2d');
-function widthIn(font, ch){ c.font = '64px ' + font; return c.measureText(ch).width; }
-let out = 'platform: ' + navigator.platform + ' / ' + navigator.userAgent + '\n\n';
+// Advance-width comparison against the .notdef box is unreliable for
+// monospace stacks: every character in a true monospace font shares one
+// fixed advance width by design, so a present glyph and a missing one
+// measure identically and width alone can never tell them apart. This
+// compares actual rendered pixels instead, which works for any font.
+const size = 96;
+const canvas = document.createElement('canvas');
+canvas.width = size; canvas.height = size;
+const ctx = canvas.getContext('2d');
+function render(font, ch) {
+  ctx.clearRect(0, 0, size, size);
+  ctx.font = (size * 0.6) + 'px ' + font;
+  ctx.textBaseline = 'top';
+  ctx.fillText(ch, 0, 0);
+  return ctx.getImageData(0, 0, size, size).data;
+}
+function isMissing(font, ch) {
+  const notdef = render(font, '￿');
+  const glyph = render(font, ch);
+  for (let i = 0; i < notdef.length; i++) {
+    if (notdef[i] !== glyph[i]) return false;
+  }
+  return true;
+}
+let out = 'platform: ' + navigator.platform + ' / ' + navigator.userAgent + '\n';
+out += 'method: pixel comparison against the .notdef glyph (U+FFFF), not advance width\n\n';
 for (const [name, stack] of Object.entries(stacks)) {
   out += '=== ' + name + ' :: ' + stack + '\n';
-  const notdef = widthIn(stack, '￿');
   for (const [label, ch] of Object.entries(samples)) {
-    const w = widthIn(stack, ch);
-    const missing = Math.abs(w - notdef) < 0.01;
-    out += (missing ? '  MISSING  ' : '  ok       ') + label + '   w=' + w.toFixed(2) + ' notdef=' + notdef.toFixed(2) + '\n';
+    const missing = isMissing(stack, ch);
+    out += (missing ? '  MISSING  ' : '  ok       ') + label + '\n';
   }
   out += '\n';
 }

@@ -87,7 +87,7 @@
           <li><span style="color:{{ cond .ok "#366943" "#8B3A2F" }}">{{ cond .ok "ok" "!!" }}</span> {{ .text }}</li>
           {{ end }}
         </ul>
-        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.55;color:#5A5D53">Measured 2026 on Chrome / Windows. Results vary by platform, which is why each stack names several faces. The check itself is <a href="glyph-check.html">viewable and re-runnable</a>.</p>
+        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.55;color:#5A5D53">Re-measured 2026 with a pixel-comparison check: the previous method compared advance widths against the .notdef box, which cannot detect a missing glyph in a monospace face at all — every character there shares one fixed advance width by design, present or not. That was a real gap in "checked, not assumed," not a platform-coverage gap, and it's fixed now. Confirmed clean this session on Chrome / Linux, the one platform available to re-verify it on. Windows, macOS, iOS, and Android — and Safari, Firefox, and Edge — have not been independently re-checked and are a known gap. Results can vary by platform, which is why each stack names several faces. The check itself is <a href="glyph-check.html">viewable and re-runnable</a>.</p>
       </div>
     </div>
   </div>

@@ -58,6 +58,13 @@ groups:
         use: "open access"
         link: "https://arxiv.org/abs/2603.07737"
         linkLabel: "read on arXiv"
+      - title: "Sovereignty Matters: Locations of Contestation and Possibility in Indigenous Struggles for Self-Determination"
+        by: "Joanne Barker (Lenape), ed."
+        tags: ["book"]
+        why: "Barker traces sovereignty's European juridical and theological genealogy. Taiaiake Alfred's chapter argues the concept is inseparable from colonisation — the strongest case against this site's own master term, and it belongs here, not just cited from a distance."
+        use: "edited collection"
+        link: "https://www.nebraskapress.unl.edu/nebraska-paperback/9780803262515"
+        linkLabel: "University of Nebraska Press"
 
   - title: "Decolonization, possession, land, kinship, intimacy"
     note: "Including the limit on how far this vocabulary can be stretched."
@@ -112,6 +119,38 @@ groups:
         link: "https://journal.culanth.org/index.php/ca/article/view/ca31.3.02"
         linkLabel: "read it free, Cultural Anthropology"
 
+  - title: "Possession, the person, and kinship made void"
+    note: "A second genealogy of ownership, with its own mechanism and its own afterlife."
+    items:
+      - title: "Mama's Baby, Papa's Maybe: An American Grammar Book"
+        by: "Hortense Spillers"
+        tags: ["article"]
+        why: "The grammar of possession has a second road into it. Kinship rendered legally void is a different mechanism from territory enclosed, with a different afterlife."
+        use: "Diacritics 17(2), 1987"
+        link: "https://www.jstor.org/stable/464747"
+        linkLabel: "Diacritics, JSTOR"
+      - title: "Scenes of Subjection"
+        by: "Saidiya Hartman"
+        tags: ["book"]
+        why: "Freedom as burdened individuality — what it means to be released into self-ownership by a system that made ownership of persons thinkable."
+        use: "book"
+        link: "https://global.oup.com/academic/product/scenes-of-subjection-9780195089837"
+        linkLabel: "Oxford University Press"
+      - title: "Torn Apart"
+        by: "Dorothy Roberts"
+        tags: ["book"]
+        why: "The family policing system. Required reading against thesis 11: the demand that a household account for itself is already, for some families, the state's demand."
+        use: "book"
+        link: "https://www.hachettebookgroup.com/titles/dorothy-roberts/torn-apart/9781541675445/"
+        linkLabel: "Basic Books"
+      - title: "The Poverty of Privacy Rights"
+        by: "Khiara M. Bridges"
+        tags: ["book"]
+        why: "Privacy is distributed unequally. Poor mothers are subject to state inquiry that wealthier families are shielded from — which is why \"no private empires\" cannot be stated without saying who may ask."
+        use: "book"
+        link: "https://www.sup.org/books/law/poverty-privacy-rights"
+        linkLabel: "Stanford University Press"
+
   - title: "Relation, opacity, refusal, survivance"
     note: "Where the right to remain unlegible comes from."
     items:
@@ -143,6 +182,13 @@ groups:
         use: "book"
         link: "https://www.nebraskapress.unl.edu/bison-books/9780803296213/manifest-manners/"
         linkLabel: "University of Nebraska Press"
+      - title: "Trans Care"
+        by: "Hil Malatino"
+        tags: ["start", "book", "free"]
+        why: "Dominant framings of care ethics entrench cisnormative family arrangements. Trans care webs are the most developed live practice of what this site theorises, and the strongest correction to principle 08 — opacity is not available against people with power to compel disclosure."
+        use: "open access, Forerunners: Ideas First"
+        link: "https://www.upress.umn.edu/9781517911188/trans-care/"
+        linkLabel: "read it free, University of Minnesota Press"
 
   - title: "Relational autonomy, interdependence, care"
     note: "Autonomy does not require isolation or self-sufficiency."
@@ -189,6 +235,20 @@ groups:
         use: "free"
         link: "https://sinsinvalid.org/10-principles-of-disability-justice/"
         linkLabel: "the 10 principles, Sins Invalid"
+      - title: "Feminist, Queer, Crip"
+        by: "Alison Kafer"
+        tags: ["book"]
+        why: "Names crip time: the argument that flexible, non-linear time is a design and political question, not a personal accommodation. The basis for treating pace itself as something a framework can get wrong."
+        use: "book"
+        link: "https://iupress.org/9780253009340/feminist-queer-crip/"
+        linkLabel: "Indiana University Press"
+      - title: "Six Ways of Looking at Crip Time"
+        by: "Ellen Samuels"
+        tags: ["article", "free"]
+        why: "Crip time from lived experience rather than theory alone — six concrete senses in which disabled and chronically ill time does not match the clock most systems, including this one's tools, are built around."
+        use: "Disability Studies Quarterly 37(3), 2017"
+        link: "https://doi.org/10.18061/dsq.v37i3.5824"
+        linkLabel: "read it free, Disability Studies Quarterly"
       - title: "Access Intimacy: The Missing Link"
         by: "Mia Mingus"
         tags: ["start", "free"]
@@ -290,10 +350,10 @@ sequence:
   - "Kuokkanen — It's About All Relations"
   - "TallBear — Caretaking Relations, Not American Dreaming"
   - "Tuck and Yang — Decolonization Is Not a Metaphor"
-  - "Mackenzie and Stoljar — Relational Autonomy"
+  - "Spillers — Mama's Baby, Papa's Maybe"
+  - "Stanford Encyclopedia — Feminist Perspectives on Autonomy"
   - "Mingus — Access Intimacy"
-  - "Nordgren — Relationship Anarchy Manifesto"
-  - "Brake — Minimizing Marriage"
+  - "Malatino — Trans Care"
   - "Stark — Coercive Control"
   - "Creative Interventions — Toolkit"
 
