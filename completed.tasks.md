@@ -276,4 +276,22 @@ Notes:
 - Verified with a real headless browser, JavaScript disabled: `Learn.dc.html` contains the revised principle 08 body and the new second question; `Archive.dc.html` contains the Trans Care entry and Malatino's name — not just confirmed in the source YAML.
 - `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
 
+### RS-006 (partial) — the second genealogy of possession
+**Shipped:** 2026-08-07 · **Commit/PR:** (pending)
+
+~~was: thesis 01 derived possession from a single road — settler colonialism enclosing land, then bodies, then the home — for a manifesto whose opening thesis is specifically about the grammar of possession, with no Black feminist theory of kinship and property anywhere in the archive~~
+now: thesis 01 names the second road, inserted exactly where `base-work-order.md`'s draft places it — directly after "The grammar was never innocent," before the thesis's closing line: "There is more than one road into that grammar. Settler sovereignty made land into property and then made people into holdings. Chattel slavery made the person into property directly, and made kinship legally void — a different mechanism, a different afterlife, and one that still shapes which households are permitted a closed door. Both are here. Neither stands in for the other." A new archive group, "Possession, the person, and kinship made void," carries four entries: Hortense Spillers' "Mama's Baby, Papa's Maybe," Saidiya Hartman's *Scenes of Subjection*, Dorothy Roberts' *Torn Apart*, and Khiara M. Bridges' *The Poverty of Privacy Rights* — placed between "Decolonization, possession, land, kinship, intimacy" and "Relation, opacity, refusal, survivance," exactly as the spec directs.
+
+**Every link was independently found and verified, not copied from the source doc's `[VERIFY]` placeholders** (all four entries in `base-work-order.md` §5 were literally unfilled — `link: "[VERIFY]"` or `link: "[VERIFY: ...]"`, deliberately left for implementation to resolve, not drafted guesses). Spillers' JSTOR stable link (`jstor.org/stable/464747`) was corroborated via a WebSearch result whose title snippet matches the exact citation (journal, volume, issue, pages) — JSTOR itself returns 403 to automated fetches, the same bot-blocking pattern hit repeatedly this session on academic-publisher sites, so this is cross-referenced confirmation rather than a direct render, disclosed as such rather than presented as equally certain to a directly-fetched page. Hartman's Oxford University Press page and Bridges' Stanford University Press page were confirmed the same way (both blocked automated fetches directly; both corroborated via independent search-result title matches against the exact URL). Roberts' Hachette/Basic Books page was fetched directly and confirmed clean.
+
+**Patterson and Collins are not in this group, and stay out.** The source doc names both (`base-work-order.md` §5's entry list: "Spillers, Hartman, Patterson, Collins, Roberts, Bridges") but supplies zero metadata for either — no title, no `why`, no link, nothing to verify against — a gap the base-work-order.md's own familiarization note already flagged (tasks.md FLAG-03) as likely referring to Orlando Patterson's *Slavery and Social Death* and Patricia Hill Collins, but explicitly unconfirmed. Guessing which specific books belong here would repeat the exact error this site's own accountability practice exists to avoid — publishing an attribution nobody actually checked. The group ships with four verified names instead of a placeholder for six.
+
+**Resolves the overlap this created with RS-016's P0 batch list** (which named Spillers/Hartman/Roberts/Bridges again, plus Malatino, already shipped via RS-007) — `tasks.md`'s RS-016 row is struck down to what's actually still unshipped from that set: Coulthard and Cohen.
+
+Verified with a real headless browser, JavaScript disabled: `Manifesto.dc.html` contains the second-genealogy insertion; `Archive.dc.html` contains the new group heading and all four author names.
+
+Notes:
+- `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
+- FLAG-03 itself is not resolved by this — it's the reason this group ships partial rather than complete, and stays open in `tasks.md`'s Phase 0 flags until the author confirms the two missing works.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*

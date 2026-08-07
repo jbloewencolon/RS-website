@@ -112,6 +112,38 @@ groups:
         link: "https://journal.culanth.org/index.php/ca/article/view/ca31.3.02"
         linkLabel: "read it free, Cultural Anthropology"
 
+  - title: "Possession, the person, and kinship made void"
+    note: "A second genealogy of ownership, with its own mechanism and its own afterlife."
+    items:
+      - title: "Mama's Baby, Papa's Maybe: An American Grammar Book"
+        by: "Hortense Spillers"
+        tags: ["article"]
+        why: "The grammar of possession has a second road into it. Kinship rendered legally void is a different mechanism from territory enclosed, with a different afterlife."
+        use: "Diacritics 17(2), 1987"
+        link: "https://www.jstor.org/stable/464747"
+        linkLabel: "Diacritics, JSTOR"
+      - title: "Scenes of Subjection"
+        by: "Saidiya Hartman"
+        tags: ["book"]
+        why: "Freedom as burdened individuality — what it means to be released into self-ownership by a system that made ownership of persons thinkable."
+        use: "book"
+        link: "https://global.oup.com/academic/product/scenes-of-subjection-9780195089837"
+        linkLabel: "Oxford University Press"
+      - title: "Torn Apart"
+        by: "Dorothy Roberts"
+        tags: ["book"]
+        why: "The family policing system. Required reading against thesis 11: the demand that a household account for itself is already, for some families, the state's demand."
+        use: "book"
+        link: "https://www.hachettebookgroup.com/titles/dorothy-roberts/torn-apart/9781541675445/"
+        linkLabel: "Basic Books"
+      - title: "The Poverty of Privacy Rights"
+        by: "Khiara M. Bridges"
+        tags: ["book"]
+        why: "Privacy is distributed unequally. Poor mothers are subject to state inquiry that wealthier families are shielded from — which is why \"no private empires\" cannot be stated without saying who may ask."
+        use: "book"
+        link: "https://www.sup.org/books/law/poverty-privacy-rights"
+        linkLabel: "Stanford University Press"
+
   - title: "Relation, opacity, refusal, survivance"
     note: "Where the right to remain unlegible comes from."
     items:
