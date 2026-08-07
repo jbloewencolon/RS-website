@@ -57,6 +57,36 @@ function findChromium() {
   return undefined; // let Playwright resolve its own install
 }
 
+// The deployed pages must carry their content as real HTML, not only as
+// JS arrays rendered at runtime: that is what readers with scripting off
+// and AI/search crawlers (which don't execute JS) actually receive. If
+// _site/ has been built, verify the prerender actually took — a silent
+// regression here is invisible in a browser and total for a crawler.
+function checkPrerender() {
+  const siteDir = path.join(root, "_site");
+  if (!fs.existsSync(siteDir)) {
+    console.log("• _site/ not built — skipping prerender check (run `npm run build` first)");
+    return 0;
+  }
+  let problems = 0;
+  for (const pg of fs.readdirSync(siteDir).filter((f) => f.endsWith(".html"))) {
+    const html = fs.readFileSync(path.join(siteDir, pg), "utf8");
+    // glyph-check.html is a plain diagnostic page with no <x-dc> template,
+    // so it has nothing to prerender and is correctly exempt.
+    if (!html.includes("<x-dc>")) continue;
+    if (!html.includes('<div id="dc-root">')) {
+      console.log(`\n✗ _site/${pg} — missing prerendered #dc-root; crawlers would see an empty shell`);
+      problems++;
+    }
+    if (!html.includes("<style>x-dc{display:none}</style>")) {
+      console.log(`\n✗ _site/${pg} — raw template not hidden; unrendered {{ }} placeholders would be indexed`);
+      problems++;
+    }
+  }
+  if (!problems) console.log("✓ _site/ prerender intact");
+  return problems;
+}
+
 // GitHub Pages always serves index.html at the root — this site's real
 // homepage content lives in Home.dc.html, so index.html has to be an
 // exact copy or the bare domain silently drifts out of sync with the
@@ -87,7 +117,7 @@ async function main() {
   const browser = await chromium.launch(executablePath ? { executablePath } : {});
   const htmlValidate = new HtmlValidate(htmlValidateConfig);
 
-  let problems = checkIndexMatchesHome();
+  let problems = checkIndexMatchesHome() + checkPrerender();
 
   for (const pg of pages) {
     const context = await browser.newContext();

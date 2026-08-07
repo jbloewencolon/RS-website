@@ -19,8 +19,16 @@ Disallow: /Practise.dc.html
 # not by discovery. Ask, or read the Colophon.
 Disallow: /Contribute.dc.html
 
-# No training on this site's contributor material. This is a request with no
-# technical force, stated so that ignoring it is a choice on the record.
+Sitemap: https://relationalsovereignty.com/sitemap.xml
+
+# ---------------------------------------------------------------------
+# Training and retrieval are different acts, and this policy treats them
+# differently. Refusing to become training data is not the same as
+# refusing to be read, cited, or found by a person who is looking.
+# ---------------------------------------------------------------------
+
+# No training on this site's material. This is a request with no technical
+# force, stated so that ignoring it is a choice on the record.
 User-agent: GPTBot
 Disallow: /
 
@@ -35,3 +43,35 @@ Disallow: /
 
 User-agent: ClaudeBot
 Disallow: /
+
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+# Retrieval for a person who asked a question is welcome on the public
+# reading pages, and carries a citation back. The workshop and the
+# contribution page stay closed to it, on the same terms as any crawler.
+User-agent: OAI-SearchBot
+Disallow: /Practise.dc.html
+Disallow: /Contribute.dc.html
+
+User-agent: ChatGPT-User
+Disallow: /Practise.dc.html
+Disallow: /Contribute.dc.html
+
+User-agent: Claude-SearchBot
+Disallow: /Practise.dc.html
+Disallow: /Contribute.dc.html
+
+User-agent: Claude-User
+Disallow: /Practise.dc.html
+Disallow: /Contribute.dc.html
+
+User-agent: PerplexityBot
+Disallow: /Practise.dc.html
+Disallow: /Contribute.dc.html

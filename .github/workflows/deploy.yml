@@ -35,17 +35,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Publish only the actual site — not the worker/ backend source,
-      # dev tooling, or config files that classic branch-deploy would
-      # otherwise have served as plain browsable files under the domain.
-      - name: Assemble site
-        run: |
-          mkdir _site
-          cp Home.dc.html Manifesto.dc.html Learn.dc.html Practise.dc.html \
-             Archive.dc.html Contribute.dc.html Colophon.dc.html \
-             index.html glyph-check.html support.js robots.txt CNAME LICENSE \
-             _site/
-          cp -r vendor _site/vendor
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+
+      # Renders each page in a headless browser and bakes the result into
+      # the HTML, then assembles _site/. This is what makes the content
+      # visible to readers with scripting off and to AI/search crawlers,
+      # which parse the initial HTML and do not run JavaScript. It also
+      # publishes only the actual site — not worker/ backend source or dev
+      # tooling, which classic branch-deploy served as browsable files.
+      - name: Prerender and assemble site
+        run: npm run build
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

@@ -163,7 +163,14 @@
       });
     }
     const dc = doc.querySelector("x-dc");
-    const hostEl = doc.createElement("div");
+    // Hand-patched (see the cdn.ts note above for why this file carries
+    // local patches): reuse a prerendered #dc-root if the build step
+    // produced one, instead of always creating an empty div. Static HTML
+    // baked in at build time then stays on screen until React's first
+    // commit replaces it — so the page paints real content immediately,
+    // and non-JS readers plus AI/search crawlers (which do not run JS)
+    // get the full page instead of an empty shell. See scripts/prerender.mjs.
+    const hostEl = doc.getElementById("dc-root") || doc.createElement("div");
     hostEl.id = "dc-root";
     dc.replaceWith(hostEl);
     if (!parsed.preview) {
