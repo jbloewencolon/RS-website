@@ -56,7 +56,6 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 
 | ID | Task | Tags | Files | Effort | Notes |
 |---|---|---|---|---|---|
-| **RS-015** | Archive link-quality pass — resolve publisher-homepage links to actual work pages per the table in `base-work-order.md` §4. Fix the change-log overstatement about "every entry links…". Verify external `it.link` values render as absolute URLs, not resolved against site root. | `[DEV]` `[VERIFY]` | `Archive.dc.html` | M | ~20 individual link verifications |
 | **RS-022** | Hosting decision (FLAG-02) + fill the blank colophon substrate fields: server location/operator/territory, watershed, actual logging config (minimized), cost + funding source. Colophon note on the single-region trade-off if D6 is taken as-is. | `[DEV]` `[DECISION]` | `BehindTheScenes.dc.html`, hosting config | M | FLAG-02 |
 | **RS-024** | Extend the glyph coverage matrix beyond Chrome/Windows: Safari/macOS+iOS, Firefox/Windows+Linux, Chrome/Android, Edge/Windows. Publish per-platform results. Resolve or document the `x̂` (Unangax̂) at-risk flag specifically. | `[DEV]` | `glyph-check.html`, `BehindTheScenes.dc.html` | S | — |
 | **RS-027** | Async mode + export for the Practise tool. Off by default, non-dismissible findability warning (draft in `addendum-a.md`), no `localStorage` resume (re-import a saved file instead), neutral user-editable filename, print offered before file download (D14), print stylesheet carries no site name/URL. | `[DEV]` | `Practise.dc.html` | M | RS-001/032 sequence should exist first (shares the tool's safety framing) |
@@ -137,7 +136,7 @@ Not in any spec document — surfaced from reading `support.js`, the build scrip
 
 Bulk list, independent of phase, so link/citation verification can be worked in parallel with dev/copy work. **Never guess — leave blank and named per the site's existing practice if a stable link can't be found.**
 
-**Archive link corrections (RS-015)** — ~20 entries, full list in `docs/spec/base-work-order.md` §4. Highest-priority single item: Kuokkanen *It's About All Relations* currently links to a paywalled index while tagged "open access" — verified replacement URLs already supplied in the source doc.
+~~**Archive link corrections (RS-015)** — ~20 entries, full list in `docs/spec/base-work-order.md` §4. Highest-priority single item: Kuokkanen *It's About All Relations* currently links to a paywalled index while tagged "open access" — verified replacement URLs already supplied in the source doc.~~ — **done, see `completed.tasks.md`.** All entries resolved to the specific work's own page (or DOI), each fetched and confirmed before use; two previously-empty links now hold verified URLs; one paywalled Wiley mirror replaced with the journal's own open-access copy.
 
 **New archive entries needing a link (RS-006/007/016/033)** — from `docs/spec/base-work-order.md` §5 and `docs/spec/addendum-a.md` §RS-033: Coulthard, Spillers, Hartman, Roberts, Bridges, Cohen, Kuokkanen/Lightfoot/Starblanket/Wildcat 2025, Povinelli, Rifkin, Lugones, Freeman, Spade, brown, Kaba, Noël, Rambukkana, Borrows, Hemphill, Menakem. (Malatino, Barker, Kelly & Johnson, Feeney already verified in the source doc.)
 
