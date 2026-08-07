@@ -51,4 +51,15 @@ Notes:
 - **Deviation from the literal draft flow:** RS-001's original draft offered "[Open the tool] [Go to resources instead]" from the safety stage. Since RS-032 merges in a second stage (grounding) ahead of the tool, "Open the tool" was split into two buttons instead — "Continue" (→ grounding, the default path) and "Skip straight to the tool" (→ tool directly) — so that the "no forced completion" requirement holds at the first gate too, not only after grounding. Judgment call, not drawn from either draft verbatim.
 - **Not done in this pass:** RS-026's reduced-language/non-verbal variant of the five questions (explicitly Phase 3 scope) was not built. RS-023's full accessibility acceptance pass (screen-reader pass, print stylesheet test on the new stages) has not run yet — `npm run check`'s axe-core pass is clean, but that's automated coverage only, not the manual SR pass the QA checklist calls for.
 
+### RS-030 — Continuity of care clause
+**Shipped:** 2026-08-07 · **Commit/PR:** (pending)
+
+~~was: no clause governed the conflict between principle 06 (relational accountability) and principle 07 (refusal) — sovereignty language was available, unopposed, to justify abandoning a dependant~~
+now: a new "Continuity of care" section on `Learn.dc.html`, placed directly after the principles grid, using the author-approved draft from `docs/spec/addendum-a.md` RS-030 verbatim (not the earlier, rejected Non-Abandonment Clause draft, which created a duty to stay and hold a community process before leaving — a sentence that would have been quotable by a controlling partner against someone trying to leave). Distinguishes dependants from partners, states plainly that sudden departure is sometimes the only safe departure, and closes with the clause's own built-in defense against being weaponized: *"it is not available to anyone who wants to use it to keep you."* Links to Resources for anyone unsure whether leaving is safe.
+
+Notes:
+- **Shipped in the current JS-array template format, ahead of RS-004.** The Phase 1 sequencing note in `tasks.md` originally grouped RS-030 with RS-028+005 as "after RS-004." Revised that note: RS-030 is one self-contained clause (a single new section, no existing array touched), so the authored-twice risk the sequencing note exists to avoid doesn't really apply here the way it does to RS-028+005, which edits the Practise tool's domain array and the Learn principles array both.
+- Placement (`Learn.dc.html`, directly after the principles grid) was a judgment call — the draft said "Manifesto or Learn" without specifying where on either page. Chosen because the clause explicitly functions as a tiebreaker between two of the principles just above it, and burying it lower on the page (e.g. in the closing "cautions" section) seemed likely to bury a P0-priority safety clause with everything else.
+- `npm run check` passes clean on the updated page.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*
