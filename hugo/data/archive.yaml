@@ -189,6 +189,20 @@ groups:
         use: "free"
         link: "https://sinsinvalid.org/10-principles-of-disability-justice/"
         linkLabel: "the 10 principles, Sins Invalid"
+      - title: "Feminist, Queer, Crip"
+        by: "Alison Kafer"
+        tags: ["book"]
+        why: "Names crip time: the argument that flexible, non-linear time is a design and political question, not a personal accommodation. The basis for treating pace itself as something a framework can get wrong."
+        use: "book"
+        link: "https://iupress.org/9780253009340/feminist-queer-crip/"
+        linkLabel: "Indiana University Press"
+      - title: "Six Ways of Looking at Crip Time"
+        by: "Ellen Samuels"
+        tags: ["article", "free"]
+        why: "Crip time from lived experience rather than theory alone — six concrete senses in which disabled and chronically ill time does not match the clock most systems, including this one's tools, are built around."
+        use: "Disability Studies Quarterly 37(3), 2017"
+        link: "https://doi.org/10.18061/dsq.v37i3.5824"
+        linkLabel: "read it free, Disability Studies Quarterly"
       - title: "Access Intimacy: The Missing Link"
         by: "Mia Mingus"
         tags: ["start", "free"]

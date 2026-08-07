@@ -116,14 +116,40 @@
 
 <sc-if value="{{ atTool }}" hint-placeholder-val="{{ false }}">
 <section class="noprint" style="padding:0 0 1.4rem">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.4rem 2.4rem;align-items:flex-end;justify-content:space-between;border-bottom:1px solid #C9C6BA;padding-bottom:1.4rem">
-    <label style="display:block;flex:1 1 260px;max-width:360px">
-      <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">This map is about my relationship with</span>
-      <input type="text" value="{{ who }}" onChange="{{ setWho }}" placeholder="a name, a role, or nothing at all" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.7rem .75rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
-    </label>
-    <div style="display:flex;flex-wrap:wrap;gap:.7rem">
-      <button type="button" onClick="{{ print }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.75rem 1rem;min-height:44px;cursor:pointer;border-radius:2px">Print this map</button>
-      <button type="button" onClick="{{ reset }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.75rem 1rem;min-height:44px;cursor:pointer;border-radius:2px">Clear everything</button>
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);border-bottom:1px solid #C9C6BA;padding-bottom:1.4rem">
+    <div style="display:flex;flex-wrap:wrap;gap:1.4rem 2.4rem;align-items:flex-end;justify-content:space-between">
+      <label style="display:block;flex:1 1 260px;max-width:360px">
+        <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">This map is about my relationship with</span>
+        <input type="text" value="{{ who }}" onChange="{{ setWho }}" placeholder="a name, a role, or nothing at all" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.7rem .75rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
+      </label>
+      <div style="display:flex;flex-wrap:wrap;gap:.7rem">
+        <button type="button" onClick="{{ print }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.75rem 1rem;min-height:44px;cursor:pointer;border-radius:2px">Print this map</button>
+        <button type="button" onClick="{{ reset }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.75rem 1rem;min-height:44px;cursor:pointer;border-radius:2px">Clear everything</button>
+      </div>
+    </div>
+
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;margin:1.4rem 0 0;max-width:62ch">Working across more than one sitting is not a lesser way to do this — a framework has no business demanding stamina it doesn't need (crip time, after Alison Kafer; see the <a href="Archive.dc.html">archive</a>). Save to a file and pick it back up later, or print and write by hand instead.</p>
+
+    <div style="margin-top:1rem;border:1px solid #C9C6BA;border-left:4px solid #8B3A2F;padding:1.2rem 1.3rem 1.3rem;max-width:640px;background:rgba(139,58,47,.04);border-radius:3px">
+      <p style="margin:0 0 1rem;font-size:15px;line-height:1.55;color:#3C3E38"><strong style="color:#8B3A2F">Saving this makes it findable.</strong> Nothing you type leaves your browser, but a downloaded file or a printout is an object in the world, and objects can be found. It will also appear in your browser's download history. If someone checks your devices, do not export. Nothing is lost by working in one sitting and closing the tab.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:.8rem;align-items:flex-end">
+        <label style="display:block;flex:1 1 220px;max-width:320px">
+          <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#5A5D53;margin-bottom:.35rem">File name</span>
+          <input type="text" value="{{ filename }}" onChange="{{ setFilename }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.6rem .65rem;min-height:44px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#191B18">
+        </label>
+        <button type="button" onClick="{{ doExport }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.75rem 1rem;min-height:44px;cursor:pointer;border-radius:2px">Save to a file</button>
+      </div>
+      <p style="margin:1rem 0 0;font-size:13px;line-height:1.5;color:#5A5D53">Your browser may add its own header or footer to a printed page, including this page's address. If that matters, check your print dialog's header and footer setting before printing.</p>
+    </div>
+
+    <div style="margin-top:1rem">
+      <label style="display:inline-flex;flex-direction:column;gap:.35rem;max-width:360px">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#5A5D53">Resume from a file you saved earlier</span>
+        <input type="file" accept="application/json,.json" onChange="{{ importFile }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F">
+      </label>
+      <sc-if value="{{ importError }}" hint-placeholder-val="{{ false }}">
+        <p role="alert" style="margin:.6rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#8B3A2F">{{ importError }}</p>
+      </sc-if>
     </div>
   </div>
 </section>
@@ -269,7 +295,17 @@ class Component extends DCLogic {
   // reload or navigation. See docs/spec/base-work-order.md RS-001 and
   // docs/spec/addendum-a.md RS-032 for why this sequence exists and why
   // it is not diagnostic — it asks, it does not classify.
-  state = { who: "", picks: {}, notes: {}, stage: "safety" };
+  //
+  // filename/importError support RS-027 (export/import, addendum-a.md):
+  // resuming across sessions works only by re-importing a file the user
+  // chose to save, never by silently persisting to the device — the same
+  // risk as an export, without the warning that makes it a choice.
+  state = { who: "", picks: {}, notes: {}, stage: "safety", filename: this.defaultFilename(), importError: "" };
+
+  defaultFilename() {
+    const d = new Date().toISOString().slice(0, 10);
+    return "notes-" + d + ".json";
+  }
 
   domainList = [
     ["Physical touch", "hugs, hands, proximity, waking someone"],
@@ -361,8 +397,72 @@ class Component extends DCLogic {
       toTool: () => this.setState({ stage: "tool" }),
       who: this.state.who,
       setWho: (ev) => this.setState({ who: ev.target.value }),
-      print: () => window.print(),
-      reset: () => this.setState({ who: "", picks: {}, notes: {} }),
+      // Blanking the document title around print keeps this tool's name
+      // and the site name out of the one part of a browser's print
+      // header that page code can actually influence — the URL/date
+      // portion some browsers add is not something a page can suppress,
+      // which is why the on-page copy says so rather than claiming this
+      // is complete. afterprint restores it; the timeout is a fallback
+      // for browsers that don't fire afterprint reliably.
+      print: () => {
+        const prevTitle = document.title;
+        document.title = "";
+        const restore = () => { document.title = prevTitle; window.removeEventListener("afterprint", restore); };
+        window.addEventListener("afterprint", restore);
+        window.print();
+        setTimeout(restore, 4000);
+      },
+      reset: () => this.setState({ who: "", picks: {}, notes: {}, filename: this.defaultFilename(), importError: "" }),
+      filename: this.state.filename,
+      setFilename: (ev) => this.setState({ filename: ev.target.value }),
+      importError: this.state.importError,
+      // Export is only ever a direct response to clicking this button —
+      // no auto-save, nothing on a timer. RS-027 (addendum-a.md): an
+      // exported file is a discoverable artifact, which is why the
+      // warning sits directly above this control rather than in a
+      // dismissible tooltip a person could close and forget.
+      doExport: () => {
+        const data = { v: 1, who: this.state.who, picks: this.state.picks, notes: this.state.notes };
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        let name = (this.state.filename || "").trim() || this.defaultFilename();
+        if (!/\.json$/i.test(name)) name += ".json";
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      },
+      // No localStorage anywhere in this file. Resuming across sessions
+      // works only by re-importing a file the user chose to save — the
+      // same risk as exporting, made a deliberate choice each time
+      // rather than something the device does to a person silently.
+      importFile: (ev) => {
+        const file = ev.target.files && ev.target.files[0];
+        ev.target.value = "";
+        if (!file) return;
+        file.text().then(text => {
+          let data;
+          try { data = JSON.parse(text); } catch (e) {
+            this.setState({ importError: "That file isn't readable as a saved map. Nothing was changed." });
+            return;
+          }
+          if (!data || typeof data !== "object" || typeof data.picks !== "object" || typeof data.notes !== "object") {
+            this.setState({ importError: "That file doesn't look like a saved map from this tool. Nothing was changed." });
+            return;
+          }
+          this.setState({
+            who: typeof data.who === "string" ? data.who : "",
+            picks: data.picks || {},
+            notes: data.notes || {},
+            importError: ""
+          });
+        }).catch(() => {
+          this.setState({ importError: "That file couldn't be read. Nothing was changed." });
+        });
+      },
       tools: this.tools.map(t => ({
         name: t[0], body: t[1],
         status: t[2] ? "in progress" : "not started",

@@ -58,7 +58,6 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 |---|---|---|---|---|---|
 | **RS-022** | Hosting decision (FLAG-02) + fill the blank colophon substrate fields: server location/operator/territory, watershed, actual logging config (minimized), cost + funding source. Colophon note on the single-region trade-off if D6 is taken as-is. | `[DEV]` `[DECISION]` | `BehindTheScenes.dc.html`, hosting config | M | FLAG-02 |
 | **RS-024 (residual)** | ~~Extend the glyph coverage matrix beyond Chrome/Windows: Safari/macOS+iOS, Firefox/Windows+Linux, Chrome/Android, Edge/Windows. Publish per-platform results. Resolve or document the `x̂` (Unangax̂) at-risk flag specifically.~~ **Partially done, see `completed.tasks.md`** — the check itself had a real defect (width comparison can't detect a missing glyph in a monospace font), now fixed and re-verified clean on Chrome/Linux, the one platform this environment can reach. Genuine multi-platform testing (real Safari/macOS+iOS, Windows ClearType fonts, Chrome/Android, Edge) still needs a person with access to that hardware — same shape of gap as RS-023's screen-reader residual. | `[DEV]` (needs real devices) | `glyph-check.html`, `BehindTheScenes.dc.html` | S | — |
-| **RS-027** | Async mode + export for the Practise tool. Off by default, non-dismissible findability warning (draft in `addendum-a.md`), no `localStorage` resume (re-import a saved file instead), neutral user-editable filename, print offered before file download (D14), print stylesheet carries no site name/URL. | `[DEV]` | `Practise.dc.html` | M | RS-001/032 sequence should exist first (shares the tool's safety framing) |
 
 ---
 
@@ -142,7 +141,7 @@ Bulk list, independent of phase, so link/citation verification can be worked in 
 
 **Other verifications:**
 - BATJC pod-mapping worksheet URL (RS-029)
-- Kafer *Feminist, Queer, Crip* + Samuels "Six Ways of Looking at Crip Time" citations (RS-027)
+~~Kafer *Feminist, Queer, Crip* + Samuels "Six Ways of Looking at Crip Time" citations (RS-027)~~ — done, both verified and added to `Archive.dc.html`; see `completed.tasks.md`.
 - Native Land Digital's terms/disclaimer, for the outbound-link-only territory reference (RS-031/D15)
 - Outbound link target for Home limit #3 (D10) — Indigenous-led org/land-defence fund/policy institute, confirmed comfortable being linked
 - Hugo current version + cross-platform availability (RS-004/D2)
@@ -173,7 +172,7 @@ Applies to every page, every release — from `docs/spec/base-work-order.md` §7
 **Practise page specifically:**
 - [ ] RS-001/032 sequence cannot be bypassed by disabling JavaScript once RS-004 principles apply here too, or is explicitly documented as the one page still requiring the runtime
 - [ ] Resources link present on every interstitial step
-- [ ] Nothing typed is transmitted or persisted (except an explicit, warned RS-027 export action)
+- [x] Nothing typed is transmitted or persisted (except an explicit, warned RS-027 export action) — RS-027 shipped: export is a direct user click only (no auto-save, no timer), a non-dismissible warning sits above the control, there is no `localStorage` anywhere in the file, and resume works only by re-importing a file the user chose to keep. Verified with real Playwright interaction (mouse and keyboard-triggered export, a round-trip import, and a malformed-file import that errors without wiping existing state), not just read off the markup.
 - [ ] Back-navigation leaves no partial state visible
 - [ ] Still disallowed in robots.txt, and `noindex`'d (SUGGEST-02)
 

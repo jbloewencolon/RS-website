@@ -239,4 +239,27 @@ Notes:
 - The residual — real Safari/macOS+iOS, Windows ClearType, Chrome/Android, Edge testing — stays open in `tasks.md`, framed the same way as RS-023's screen-reader residual: it needs a person with access to that hardware, not more work in this environment.
 - `npm run build:hugo && npm run build && npm run check` all pass clean, including `glyph-check.html` itself (console-error capture confirms the rewritten pixel-comparison script runs without error).
 
+### RS-027 (+ D14) — async mode and export for the Consent Domains Map
+**Shipped:** 2026-08-07 · **Commit/PR:** (pending)
+
+~~was: the Consent Domains Map had to be completed in one browser sitting — no way to save progress and pick it back up, a stamina requirement addendum-a.md's RS-027 draft argues the framework has no standing to impose~~
+now: an explicit, file-based save and resume, built to the safety condition addendum-a.md says the original spec omitted — export is a discoverable artifact, and the feature has to say so before it creates one, not after. "Save to a file" sits below Print (D14: print offered before file download) and is never triggered automatically; a non-dismissible warning in the site's rust warning color sits directly above the button, using the spec's own draft copy verbatim (*"Saving this makes it findable..."*), not a dismissible tooltip a person could close and forget. The exported file is plain JSON — `who`, `picks`, `notes` — downloaded via a `Blob`/`URL.createObjectURL`, never sent anywhere. Resuming works only by re-importing that file; there is no `localStorage` anywhere in `Practise.dc.html`, so the same risk the export warning names never exists silently, without the warning attached to it.
+
+**Filenames are neutral by default and user-editable**: `notes-YYYY-MM-DD.json`, computed from the real date, containing none of "relationship," "consent," or the site name, per the spec's explicit requirement — and a missing `.json` extension is appended automatically if the person retypes the field. **Print title is blanked around the print call** (`document.title` cleared before `window.print()`, restored on the `afterprint` event with a 4-second timeout fallback for browsers that don't fire it reliably) — the one part of a browser's print header page code can actually influence. The one part it genuinely can't (the URL/date a browser may add to a print footer) is disclosed on the page itself rather than silently left as an implied guarantee: *"Your browser may add its own header or footer to a printed page, including this page's address. If that matters, check your print dialog's header and footer setting before printing."*
+
+**"Crip time" is attributed, not used as ambient vocabulary**, per the spec's explicit instruction. Both citations were verified before use, the same way as RS-015's archive pass: Alison Kafer's *Feminist, Queer, Crip* (Indiana University Press, confirmed via the press's own page) and Ellen Samuels' "Six Ways of Looking at Crip Time" (*Disability Studies Quarterly* 37(3), 2017 — the live journal page is bot-walled against automated fetches, so the citation was cross-checked against Crossref's DOI registry directly rather than assumed from a search snippet). Both are new Archive entries, grouped with Kittay/Piepzna-Samarasinha/Sins Invalid. The on-page copy names Kafer inline and links to the archive rather than treating "crip time" as if it needed no source.
+
+**Every interactive path was actually exercised, not just read off the markup** — real Playwright sessions against a local HTTP server (this dc-runtime app doesn't hydrate correctly from a bare `file://` URL, unlike the fully-static Hugo pages):
+- **Export**: confirmed the non-dismissible warning renders, the default filename is neutral, a real download fires with the exact JSON content the tool state holds, and a filename typed without `.json` gets it appended.
+- **Keyboard reachability** (the specific check addendum-a.md's RS-023 cross-reference calls for): tabbed from the "who" field through Print → Clear everything → the archive link → the filename field → "Save to a file," and pressing Enter on the button triggers a real download — not simulated, an actual `download` event captured by Playwright.
+- **Import**: a valid exported file round-trips correctly (who/picks/notes all restored); a deliberately malformed file produces the on-page error message without crashing or silently wiping the state already in the tool.
+- **Reset**: "Clear everything" also regenerates a fresh dated filename and clears any import error, not just the domain picks.
+- **Print title**: stubbed `window.print` to observe `document.title` mid-call — confirmed blank during the call, confirmed restored once `afterprint` fires.
+
+One mouse-click attempt against the export button hit a Playwright actionability timeout on the first try; a keyboard-driven activation of the same button worked immediately and a forced mouse click also worked and produced a correct download, which points to a Playwright scroll/timing quirk in this specific harness rather than a real defect — recorded here rather than silently retried into looking clean.
+
+Notes:
+- Full screen-reader listening (does AT actually announce the warning before the button, not just "is it in DOM order before it") has not been done by a person — same residual as RS-023, not claimed as verified here.
+- `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*
