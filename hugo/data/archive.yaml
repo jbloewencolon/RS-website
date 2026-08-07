@@ -1,0 +1,307 @@
+# Archive.dc.html's ~30 entries, single source of truth (D2's stated
+# reason for migrating this page first among the data-heavy ones:
+# attribution accuracy is the project's central ethical commitment, and
+# one file beats the same citation living in a JS array no one else can
+# find). Every field transcribed verbatim from the prior JS `data` array
+# — do not "clean up" wording here without checking it against the
+# archive's own why/use copy, which is deliberately exact.
+filters:
+  - value: "all"
+    label: "everything"
+  - value: "start"
+    label: "★ start here"
+  - value: "free"
+    label: "free to read"
+  - value: "book"
+    label: "books"
+  - value: "article"
+    label: "articles"
+  - value: "toolkit"
+    label: "toolkits"
+
+groups:
+  - title: "Relational sovereignty & Indigenous relational freedom"
+    note: "The most direct foundations for the term itself."
+    items:
+      - title: "Replacing Exclusive Sovereignty with a Relational Sovereignty"
+        by: "Matthew Wildcat"
+        tags: ["start", "article", "free"]
+        why: "Contrasts sovereignty organized through exclusion and separation with sovereignty built by weaving together relationships, authorities, jurisdictions, and Indigenous political orders."
+        use: "Borderlands 19(2), 2020"
+        link: "https://doi.org/10.21307/borderlands-2020-014"
+        linkLabel: "read it free, Borderlands 19(2)"
+      - title: "It's About All Relations: Indigenous Feminist Theory of Relational Freedom"
+        by: "Rauna Kuokkanen (Sámi)"
+        tags: ["start", "article", "free"]
+        why: "Joins relationality to freedom as non-domination, while warning that family, community, tradition, and Indigenous governance can contain internal gendered and other inequalities."
+        use: "open access"
+        link: "https://www.cambridge.org/core/journals/review-of-international-studies/article/its-about-all-relations-indigenous-feminist-theory-of-relational-freedom/3B1CC4CEBF20925E835EB4C1A7E3E5EF"
+        linkLabel: "read it free, Review of International Studies"
+      - title: "Indigenous Relationality: Definitions and Methods"
+        by: "Matthew Wildcat and Daniel Voth"
+        tags: ["article", "free"]
+        why: "Distinguishes global Indigenous relationality, nation-specific relational systems, and inter-Indigenous relations — essential for avoiding vague or pan-Indigenous uses of the word."
+        use: "AlterNative 19(2): 475–483, 2023"
+        link: "https://doi.org/10.1177/11771801231168380"
+        linkLabel: "read it free, AlterNative"
+      - title: "Restructuring Relations: Indigenous Self-Determination, Governance, and Gender"
+        by: "Rauna Kuokkanen (Sámi)"
+        tags: ["book"]
+        why: "Why political self-determination is incomplete when gendered power, violence, resource access, and participation inside Indigenous societies are ignored."
+        use: "book"
+        link: "https://global.oup.com/academic/product/restructuring-relations-9780190913281"
+        linkLabel: "Oxford University Press"
+      - title: "From Autonomy to Sovereignty: A New Telos for Socially Assistive Technology"
+        by: "JiWoong Jang, Patrick Carrington, Andrew Begel"
+        tags: ["article", "free"]
+        why: "Defines sovereignty as the power to choose between independence and interdependence, shifting the question from can someone do it alone to do they get to decide."
+        use: "open access"
+        link: "https://arxiv.org/abs/2603.07737"
+        linkLabel: "read on arXiv"
+
+  - title: "Decolonization, possession, land, kinship, intimacy"
+    note: "Including the limit on how far this vocabulary can be stretched."
+    items:
+      - title: "Caretaking Relations, Not American Dreaming"
+        by: "Kim TallBear (Sisseton-Wahpeton Oyate)"
+        tags: ["start", "article"]
+        why: "Proposes caretaking relations among human and more-than-human beings as an alternative to settler narratives of progress, hierarchy, possession, and exceptionalism."
+        use: "Kalfou 6(1), 2019"
+        link: "https://tupjournals.temple.edu/index.php/kalfou/article/view/228"
+        linkLabel: "Kalfou, Temple University Press"
+      - title: "Identity Is a Poor Substitute for Relating"
+        by: "Kim TallBear (Sisseton-Wahpeton Oyate)"
+        tags: ["start", "book"]
+        why: "Connects Indigenous critiques of identity and property with critical polyamory and the active practice of maintaining relations."
+        use: "book chapter"
+        link: "https://kimtallbear.com/pubs/identity-is-a-poor-substitute-for-relating-genetic-ancestry-critical-polyamory-property-and-relations/"
+        linkLabel: "the author's writing"
+      - title: "Decolonization Is Not a Metaphor"
+        by: "Eve Tuck (Unangax̂) and K. Wayne Yang"
+        tags: ["start", "article", "free"]
+        why: "A necessary limit on this site's own language. Decolonization cannot mean improving communication, rejecting social conventions, or developing healthier relationships. It centrally concerns Indigenous land and life."
+        use: "open access"
+        link: "https://jps.library.utoronto.ca/index.php/des/article/view/18630"
+        linkLabel: "read the full text"
+      - title: "As We Have Always Done: Indigenous Freedom through Radical Resistance"
+        by: "Leanne Betasamosake Simpson (Michi Saagiig Nishnaabeg)"
+        tags: ["start", "book"]
+        why: "Grounds Indigenous resurgence in land-based practices, embodied freedom, refusal, queer and gendered relations, and community."
+        use: "book"
+        link: "https://www.upress.umn.edu/9781517903879/as-we-have-always-done/"
+        linkLabel: "University of Minnesota Press"
+      - title: "The White Possessive: Property, Power, and Indigenous Sovereignty"
+        by: "Aileen Moreton-Robinson (Goenpul, Quandamooka)"
+        tags: ["book"]
+        why: "The political theory behind the critique of possession: how settler sovereignty operates through a possessive logic involving land, bodies, institutions, knowledge, and national identity."
+        use: "book"
+        link: "https://www.upress.umn.edu/9780816692163/the-white-possessive/"
+        linkLabel: "University of Minnesota Press"
+      - title: "Mohawk Interruptus: Political Life Across the Borders of Settler States"
+        by: "Audra Simpson (Kahnawà:ke Mohawk)"
+        tags: ["book"]
+        why: "A politics of refusal, sovereignty, membership, and self-representation — supporting the distinction between recognition granted by dominant powers and sovereignty enacted through refusal."
+        use: "book"
+        link: "https://www.dukeupress.edu/mohawk-interruptus"
+        linkLabel: "Duke University Press"
+      - title: "Consent's Revenge"
+        by: "Audra Simpson (Kahnawà:ke Mohawk)"
+        tags: ["article", "free"]
+        why: "Challenges contractual fantasies in which consent is abstracted from history, coercion, dispossession, and power. Formal agreement alone does not make a relationship just."
+        use: "open access"
+        link: "https://journal.culanth.org/index.php/ca/article/view/ca31.3.02"
+        linkLabel: "read it free, Cultural Anthropology"
+
+  - title: "Relation, opacity, refusal, survivance"
+    note: "Where the right to remain unlegible comes from."
+    items:
+      - title: "Poetics of Relation"
+        by: "Édouard Glissant, trans. Betsy Wing"
+        tags: ["start", "book"]
+        why: "Identity formed through relation rather than isolation. The right to opacity supports the principle that intimacy does not require making another person completely transparent."
+        use: "book, in translation"
+        link: "https://press.umich.edu/Books/P/Poetics-of-Relation"
+        linkLabel: "University of Michigan Press"
+      - title: "Imaginary Spaces of Conciliation and Reconciliation"
+        by: "David Garneau (Métis)"
+        tags: ["book"]
+        why: "Indigenous spaces not organized for settler access, interpretation, or consumption — the defence of protocol, withholding, and culturally governed knowledge."
+        use: "book chapter"
+        link: "https://www.wlupress.wlu.ca/Books/A/Arts-of-Engagement"
+        linkLabel: "in Arts of Engagement, Wilfrid Laurier University Press"
+      - title: "Visualizing Sovereignty in the Time of Biometric Sensors"
+        by: "Jolene Rickard (Tuscarora / Skarù·ręʔ)"
+        tags: ["article"]
+        why: "Indigenous visual production as an exercise of sovereignty and political continuity — sovereignty includes control over the conditions under which one is seen."
+        use: "peer-reviewed"
+        link: "https://doi.org/10.1215/00382876-1162543"
+        linkLabel: "South Atlantic Quarterly, Duke"
+      - title: "Manifest Manners: Narratives on Postindian Survivance"
+        by: "Gerald Vizenor (White Earth Nation)"
+        tags: ["book"]
+        why: "Survivance as active presence and continuance rather than victimhood or disappearance. Read for what it argues, not for what it evokes."
+        use: "book"
+        link: "https://www.nebraskapress.unl.edu/bison-books/9780803296213/manifest-manners/"
+        linkLabel: "University of Nebraska Press"
+
+  - title: "Relational autonomy, interdependence, care"
+    note: "Autonomy does not require isolation or self-sufficiency."
+    items:
+      - title: "Relational Autonomy: Feminist Perspectives on Autonomy, Agency, and the Social Self"
+        by: "Catriona Mackenzie and Natalie Stoljar, eds."
+        tags: ["start", "book"]
+        why: "The foundational philosophical collection on how autonomy is socially formed, supported, or impaired."
+        use: "edited collection"
+        link: "https://global.oup.com/academic/product/relational-autonomy-9780195123340"
+        linkLabel: "Oxford University Press"
+      - title: "Feminist Perspectives on Autonomy"
+        by: "Stanford Encyclopedia of Philosophy"
+        tags: ["article", "free"]
+        why: "The best accessible overview of relational autonomy, oppressive socialization, adaptive preferences, self-trust, and the social conditions needed for meaningful choice."
+        use: "free reference"
+        link: "https://plato.stanford.edu/entries/feminism-autonomy/"
+        linkLabel: "read the entry"
+      - title: "Caring Democracy: Markets, Equality, and Justice"
+        by: "Joan Tronto"
+        tags: ["book"]
+        why: "Care as a public and political responsibility rather than private feminine labour — make it visible, distribute it fairly, connect freedom to collective responsibility."
+        use: "book"
+        link: "https://nyupress.org/9780814782781/caring-democracy/"
+        linkLabel: "NYU Press"
+      - title: "Love's Labor: Essays on Women, Equality and Dependency"
+        by: "Eva Feder Kittay"
+        tags: ["book"]
+        why: "Dependency, equality, disability, caregiving, and the injustice created when care labour is treated as natural, private, or economically insignificant."
+        use: "book"
+        link: "https://www.routledge.com/Loves-Labor-Essays-on-Women-Equality-and-Dependency/Kittay/p/book/9781138089921"
+        linkLabel: "Routledge"
+      - title: "Care Work: Dreaming Disability Justice"
+        by: "Leah Lakshmi Piepzna-Samarasinha"
+        tags: ["start", "book"]
+        why: "Care webs, collective access, emotional labour, mutual aid, and communities built beyond compulsory independence."
+        use: "essay collection"
+        link: "https://arsenalpulp.com/Books/C/Care-Work"
+        linkLabel: "Arsenal Pulp Press"
+      - title: "10 Principles of Disability Justice"
+        by: "Sins Invalid"
+        tags: ["free"]
+        why: "Intersectionality, leadership by those most affected, anti-capitalism, recognition of wholeness, interdependence, collective access, collective liberation."
+        use: "free"
+        link: "https://sinsinvalid.org/10-principles-of-disability-justice/"
+        linkLabel: "the 10 principles, Sins Invalid"
+      - title: "Access Intimacy: The Missing Link"
+        by: "Mia Mingus"
+        tags: ["start", "free"]
+        why: "The intimacy created when someone understands and responds to another's access needs without making that support humiliating, charitable, or a source of ownership."
+        use: "free"
+        link: "https://leavingevidence.wordpress.com/2011/05/05/access-intimacy-the-missing-link/"
+        linkLabel: "read on Leaving Evidence"
+
+  - title: "Hierarchy, custom commitments, possession"
+    note: "Why ranking relationships by category fails, and how control actually operates."
+    items:
+      - title: "The Short Instructional Manifesto for Relationship Anarchy"
+        by: "Andie Nordgren"
+        tags: ["start", "free"]
+        why: "Abundant love, customized commitments, trust, autonomy, rejection of entitlement, and resistance to automatically ranking romantic relationships above others."
+        use: "free"
+        link: "https://theanarchistlibrary.org/library/andie-nordgren-the-short-instructional-manifesto-for-relationship-anarchy"
+        linkLabel: "read the manifesto"
+      - title: "Minimizing Marriage: Marriage, Morality, and the Law"
+        by: "Elizabeth Brake"
+        tags: ["book"]
+        why: "Develops amatonormativity: the assumption that exclusive romantic couplehood should be universal and superior to friendship, chosen kinship, and collective care."
+        use: "book"
+        link: "https://global.oup.com/academic/product/minimizing-marriage-9780199774135"
+        linkLabel: "Oxford University Press"
+      - title: "Coercive Control: How Men Entrap Women in Personal Life"
+        by: "Evan Stark"
+        tags: ["book"]
+        why: "Domination within relationships often operates through surveillance, isolation, economic restriction, and control of ordinary life, not only through incidents of physical violence."
+        use: "book"
+        link: "https://global.oup.com/academic/product/coercive-control-9780197639986"
+        linkLabel: "Oxford University Press"
+      - title: "Privacy Threats in Intimate Relationships"
+        by: "Karen Levy and Bruce Schneier"
+        tags: ["article", "free"]
+        why: "Why privacy remains necessary within families, friendships, caregiving, and partnership. Intimacy creates distinctive risks because close others hold access, knowledge, and coercive power."
+        use: "open access"
+        link: "https://www.schneier.com/academic/archives/2020/06/privacy_threats_in_i.html"
+        linkLabel: "the authors' copy"
+
+  - title: "Accountability, repair, transformative justice"
+    note: "What happens after harm, without relying on punishment or disposal."
+    items:
+      - title: "Toolkit: A Practical Guide to Stop Interpersonal Violence"
+        by: "Creative Interventions"
+        tags: ["start", "toolkit", "free"]
+        why: "One of the most extensive practical resources for community accountability and non-carceral responses to harm: processes, worksheets, stories, safety planning."
+        use: "free"
+        link: "https://www.creative-interventions.org/toolkit/"
+        linkLabel: "download the toolkit"
+      - title: "The Four Parts of Accountability and How to Give a Genuine Apology"
+        by: "Mia Mingus"
+        tags: ["free"]
+        why: "Self-reflection, apology, repair, and changed behaviour. Apology without material or behavioural change is not repair."
+        use: "free"
+        link: "https://leavingevidence.wordpress.com/2019/12/18/how-to-give-a-good-apology-part-1-the-four-parts-of-accountability/"
+        linkLabel: "read on Leaving Evidence"
+      - title: "The Revolution Starts at Home: Confronting Intimate Violence Within Activist Communities"
+        by: "Ching-In Chen, Jai Dulani, Leah Lakshmi Piepzna-Samarasinha, eds."
+        tags: ["book"]
+        why: "The contradiction between public commitments to justice and private violence. Radical politics does not automatically produce ethical relationships."
+        use: "edited collection"
+        link: "https://www.akpress.org/revolutionstartsathome.html"
+        linkLabel: "AK Press"
+      - title: "Beyond Survival: Strategies and Stories from the Transformative Justice Movement"
+        by: "Ejeris Dixon and Leah Lakshmi Piepzna-Samarasinha, eds."
+        tags: ["book"]
+        why: "Practical models for responding to violence without relying exclusively on punishment, policing, incarceration, or social disposal."
+        use: "edited collection"
+        link: "https://www.akpress.org/beyond-survival.html"
+        linkLabel: "AK Press"
+
+trackA:
+  - "Coulthard — Red Skin, White Masks"
+  - "Simpson — Mohawk Interruptus"
+  - "Vizenor — Manifest Manners"
+  - "Wildcat — Replacing Exclusive Sovereignty"
+  - "Rickard — Visualizing Sovereignty"
+
+trackB:
+  - "Tronto — Caring Democracy"
+  - "Kittay — Love's Labor"
+  - "Brake — Minimizing Marriage"
+  - "Stark — Coercive Control"
+  - "Dixon & Piepzna-Samarasinha — Beyond Survival"
+
+shared:
+  - title: "It's About All Relations"
+    by: "Rauna Kuokkanen — Indigenous feminist relational freedom is a sovereignty argument and a care argument in the same sentence, and refuses to be filed as either."
+  - title: "Caretaking Relations, Not American Dreaming"
+    by: "Kim TallBear — caretaking is kinship obligation and land relation at once; splitting them produces the settler version of both."
+  - title: "Care Work: Dreaming Disability Justice"
+    by: "Leah Lakshmi Piepzna-Samarasinha — collective access as self-determination; the care webs are also a politics of refusal."
+  - title: "Access Intimacy: The Missing Link"
+    by: "Mia Mingus — support that does not create ownership. Belongs equally to the ethics of care and to the refusal of possession."
+
+sequence:
+  - "Wildcat — Replacing Exclusive Sovereignty"
+  - "Kuokkanen — It's About All Relations"
+  - "TallBear — Caretaking Relations, Not American Dreaming"
+  - "Tuck and Yang — Decolonization Is Not a Metaphor"
+  - "Mackenzie and Stoljar — Relational Autonomy"
+  - "Mingus — Access Intimacy"
+  - "Nordgren — Relationship Anarchy Manifesto"
+  - "Brake — Minimizing Marriage"
+  - "Stark — Coercive Control"
+  - "Creative Interventions — Toolkit"
+
+accessStates:
+  - "public — read freely"
+  - "contributor-controlled"
+  - "community-specific"
+  - "temporarily restricted"
+  - "excerpt only, no full document"
+  - "metadata only"
+  - "exists, not available publicly"

@@ -11,6 +11,12 @@ Allow: /Learn.dc.html
 Allow: /Archive.dc.html
 Allow: /BehindTheScenes.dc.html
 
+# Resources is the one page on this site that should be indexed by
+# everything, no exceptions, including the training crawlers refused
+# below. A person who needs this page matters more than the extraction
+# refusal.
+Allow: /Resources.dc.html
+
 # The workshop is not for the index. What a person marks about their own
 # relationships is not material for a register, a snapshot, or a training set.
 Disallow: /Practise.dc.html
@@ -29,29 +35,34 @@ Sitemap: https://relationalsovereignty.com/sitemap.xml
 
 # No training on this site's material. This is a request with no technical
 # force, stated so that ignoring it is a choice on the record.
+# Agent list last reviewed 2026-08-07.
 User-agent: GPTBot
 Disallow: /
+Allow: /Resources.dc.html
 
 User-agent: CCBot
 Disallow: /
+Allow: /Resources.dc.html
 
 User-agent: Google-Extended
 Disallow: /
+Allow: /Resources.dc.html
 
 User-agent: anthropic-ai
 Disallow: /
+Allow: /Resources.dc.html
 
 User-agent: ClaudeBot
 Disallow: /
+Allow: /Resources.dc.html
 
 User-agent: Meta-ExternalAgent
 Disallow: /
-
-User-agent: Applebot-Extended
-Disallow: /
+Allow: /Resources.dc.html
 
 User-agent: Bytespider
 Disallow: /
+Allow: /Resources.dc.html
 
 # Retrieval for a person who asked a question is welcome on the public
 # reading pages, and carries a citation back. The workshop and the

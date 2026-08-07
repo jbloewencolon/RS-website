@@ -5,7 +5,9 @@
   "description": "Static site checks: HTML validation and automated accessibility (axe-core) audit.",
   "scripts": {
     "build": "node scripts/prerender.mjs",
-    "check": "node scripts/check-pages.mjs",
+    "build:hugo": "node scripts/build-hugo.mjs",
+    "check": "node scripts/check-origins.mjs && node scripts/check-pages.mjs",
+    "check:origins": "node scripts/check-origins.mjs",
     "check:responsive": "node responsive-audit.mjs"
   },
   "devDependencies": {

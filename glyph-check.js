@@ -1,0 +1,38 @@
+const stacks = {
+  display: 'ui-sans-serif, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif',
+  body: 'Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif',
+  mono: 'ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace'
+};
+const samples = {
+  "ʔ U+0294 glottal stop": "ʔ",
+  "à U+00E0": "à",
+  "· U+00B7 middle dot": "·",
+  "ù U+00F9": "ù",
+  "x̂ x + U+0302 combining circumflex": "x̂",
+  "ê U+00EA": "ê",
+  "ę U+0119 ogonek": "ę",
+  "ř U+0159 caron": "ř",
+  "î U+00EE": "î",
+  "É U+00C9": "É",
+  "ʼ U+02BC modifier apostrophe": "ʼ",
+  "’ U+2019": "’",
+  "★ U+2605": "★",
+  "⌖ U+2316": "⌖",
+  "▪ U+25AA": "▪",
+  "□ U+25A1": "□",
+  "— U+2014": "—"
+};
+const c = document.createElement('canvas').getContext('2d');
+function widthIn(font, ch){ c.font = '64px ' + font; return c.measureText(ch).width; }
+let out = 'platform: ' + navigator.platform + ' / ' + navigator.userAgent + '\n\n';
+for (const [name, stack] of Object.entries(stacks)) {
+  out += '=== ' + name + ' :: ' + stack + '\n';
+  const notdef = widthIn(stack, '￿');
+  for (const [label, ch] of Object.entries(samples)) {
+    const w = widthIn(stack, ch);
+    const missing = Math.abs(w - notdef) < 0.01;
+    out += (missing ? '  MISSING  ' : '  ok       ') + label + '   w=' + w.toFixed(2) + ' notdef=' + notdef.toFixed(2) + '\n';
+  }
+  out += '\n';
+}
+document.getElementById('out').textContent = out;

@@ -10,6 +10,7 @@ import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
 import { HtmlValidate } from "html-validate";
+import { buildHugo, HUGO_PAGES } from "./build-hugo.mjs";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const htmlValidateConfig = JSON.parse(fs.readFileSync(path.join(root, ".htmlvalidate.json"), "utf8"));
@@ -22,6 +23,7 @@ const pages = [
   "Archive.dc.html",
   "Contribute.dc.html",
   "BehindTheScenes.dc.html",
+  "Resources.dc.html",
   "glyph-check.html",
 ];
 
@@ -108,6 +110,36 @@ function checkIndexMatchesHome() {
   return 1;
 }
 
+// hugo/ is the source of truth for the pages listed in HUGO_PAGES (see
+// hugo/README.md and RS-004) — the committed root-level file is Hugo's
+// output, not hand-authored. If someone edits the root file directly, or
+// edits hugo/ without regenerating, the two drift silently: the site
+// keeps serving the stale committed copy. Regenerate (without writing)
+// and diff, the same pattern checkIndexMatchesHome() uses for index.html.
+function checkHugoPagesInSync() {
+  if (HUGO_PAGES.length === 0) return 0;
+  let results;
+  try {
+    results = buildHugo({ write: false });
+  } catch (e) {
+    console.log(`• Hugo pages not checked — ${e.message}`);
+    return 0;
+  }
+  let problems = 0;
+  for (const r of results) {
+    if (r.inSync) {
+      console.log(`✓ ${r.page} matches its Hugo-generated output`);
+    } else {
+      console.log(`\n✗ ${r.page} — 1 problem(s)`);
+      console.log(`    Committed file does not match what \`hugo\` currently generates from hugo/.`);
+      console.log(`    Either the committed file was hand-edited, or hugo/ changed without`);
+      console.log(`    regenerating. Fix: npm run build:hugo`);
+      problems++;
+    }
+  }
+  return problems;
+}
+
 async function main() {
   const server = await serve();
   const { port } = server.address();
@@ -117,7 +149,7 @@ async function main() {
   const browser = await chromium.launch(executablePath ? { executablePath } : {});
   const htmlValidate = new HtmlValidate(htmlValidateConfig);
 
-  let problems = checkIndexMatchesHome() + checkPrerender();
+  let problems = checkIndexMatchesHome() + checkPrerender() + checkHugoPagesInSync();
 
   for (const pg of pages) {
     const context = await browser.newContext();
