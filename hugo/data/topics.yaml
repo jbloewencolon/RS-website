@@ -1,0 +1,41 @@
+# "The conceptual map" section on Learn.dc.html. `drafted: true` renders
+# as "drafted" in green; false renders as "not yet written" in grey.
+# Nothing links anywhere yet — see the section's own copy for why.
+- name: "What is relational sovereignty?"
+  drafted: true
+- name: "Relational sovereignty and Indigenous sovereignty"
+  drafted: true
+- name: "Relational freedom"
+  drafted: true
+- name: "Relational autonomy"
+  drafted: false
+- name: "Relationship anarchy"
+  drafted: false
+- name: "Amatonormativity"
+  drafted: false
+- name: "Consent and coercion"
+  drafted: true
+- name: "Care ethics"
+  drafted: false
+- name: "Disability justice and interdependence"
+  drafted: false
+- name: "Chosen family"
+  drafted: false
+- name: "Kinship and community"
+  drafted: false
+- name: "Refusal and opacity"
+  drafted: true
+- name: "Power and non-domination"
+  drafted: true
+- name: "Transformative justice"
+  drafted: false
+- name: "Land-based relationships"
+  drafted: false
+- name: "More-than-human kinship"
+  drafted: false
+- name: "Colonial family structures"
+  drafted: false
+- name: "Gender, sexuality, and property"
+  drafted: false
+- name: "Survivance and relational futurity"
+  drafted: false

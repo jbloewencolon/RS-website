@@ -2,15 +2,15 @@
 // with that rendered HTML baked in, into _site/.
 //
 // Why this exists. The page source is a template — the visible copy for
-// the Archive's ~30 entries, Learn's principles, the Consent Domains
-// Map's 17 domains, and Behind the Scenes' tables all live in JS arrays and
-// only become HTML once React runs. Anything that does not run
-// JavaScript therefore sees an almost-empty page: measured at 79% of the
-// Archive's text missing, 59% of Learn and Practise, 52% of
-// Behind the Scenes. That is exactly what AI/search crawlers see (they parse the
-// raw HTML of the initial response and do not execute scripts), and what
-// a reader with scripting off sees. It is also the project's own
-// published Fault 04.
+// the Archive's ~30 entries, the Consent Domains Map's 17 domains, and
+// Behind the Scenes' tables all live in JS arrays and only become HTML
+// once React runs. Anything that does not run JavaScript therefore sees
+// an almost-empty page: measured at 79% of the Archive's text missing,
+// 59% of Practise, 52% of Behind the Scenes. That is exactly what
+// AI/search crawlers see (they parse the raw HTML of the initial
+// response and do not execute scripts), and what a reader with scripting
+// off sees. It is also the project's own published Fault 04 — Manifesto
+// and Learn no longer need this treatment; see hugo/README.md (RS-004).
 //
 // This does not change how the site is authored: the .dc.html files
 // stay hand-editable templates. The prerendered copies are build output.
@@ -36,7 +36,6 @@ const outDir = path.join(root, "_site");
 const PAGES = [
   "index.html",
   "Home.dc.html",
-  "Learn.dc.html",
   "Practise.dc.html",
   "Archive.dc.html",
   "Contribute.dc.html",
@@ -45,7 +44,7 @@ const PAGES = [
 // Pages Hugo generates (see hugo/README.md and RS-004) are already plain
 // HTML with no <x-dc> runtime to render — they're copied as-is, same as
 // Resources.dc.html.
-const COPY_AS_IS = ["glyph-check.html", "Resources.dc.html", "Manifesto.dc.html", "support.js", "robots.txt", "CNAME", "LICENSE"];
+const COPY_AS_IS = ["glyph-check.html", "Resources.dc.html", "Manifesto.dc.html", "Learn.dc.html", "support.js", "robots.txt", "CNAME", "LICENSE"];
 
 const MIME = { ".html": "text/html", ".js": "application/javascript", ".txt": "text/plain" };
 

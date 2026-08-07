@@ -20,7 +20,7 @@ const publicDir = path.join(hugoDir, "public");
 // Every page Hugo is currently responsible for. Add a filename here only
 // once it has a real content/layout pair in hugo/ — see completed.tasks.md
 // for which pages have migrated so far.
-export const HUGO_PAGES = ["Manifesto.dc.html"];
+export const HUGO_PAGES = ["Manifesto.dc.html", "Learn.dc.html"];
 
 function findHugo() {
   try {
