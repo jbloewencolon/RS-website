@@ -41,7 +41,7 @@ The Decision Record flags three assumptions as unconfirmed; a fourth (mailing li
 ## Phase 1 — Safety, access, and the framework's deepest gap
 *(Decision Record Cycle 1 — nothing in Phase 2+ ships before this phase is done)*
 
-**Sequencing note (mine, not in the source docs):** RS-004 (the Hugo migration) is **done — see `completed.tasks.md`.** All four reading pages (Manifesto, Learn, Archive, BehindTheScenes) are Hugo-generated, fault 04 is retired, and every page is confirmed rendering fully with JavaScript disabled against a real headless browser. `Practise.dc.html` keeps the `dc-runtime` permanently — it's an interactive tool, not a reading page. RS-028+RS-005 was sequenced to land *after* RS-004 specifically so its Learn-page content wouldn't be authored twice; that condition is now met. RS-020 and RS-023 run alongside as cross-cutting concerns.
+**Sequencing note (mine, not in the source docs):** RS-004 (the Hugo migration) and RS-028+RS-005 are both **done — see `completed.tasks.md`.** All four reading pages are Hugo-generated, fault 04 is retired, thirteen principles, and the Consent Domains Map's Access Intimacy domain has shipped. `Practise.dc.html` keeps the `dc-runtime` permanently — it's an interactive tool, not a reading page. RS-020 and RS-023 are what's left in Phase 1.
 
 Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (merged into this branch 2026-08-07) — reflected throughout.
 
@@ -49,7 +49,6 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 |---|---|---|---|---|---|
 | **RS-020** | CSP + security headers, machine-enforced (CI fails build on any non-self origin in `src`/`href`/`@import`/`url()`, outbound prose links exempt). | `[DEV]` | hosting config, CI | S | RS-022 (header delivery mechanism depends on host) |
 | **RS-023** | Accessibility acceptance pass: regression-test existing wins (44px targets, labelled radios, skip link), fix focus order/visibility on the RS-001 interstitial, reflow at 320px with a text equivalent for the Archive diagram, screen-reader pass (≥2 of NVDA/JAWS/VoiceOver/TalkBack), honeypot a11y correctness, print stylesheet test. Include RS-026's state-control standard once RS-026 lands (Phase 3). Automated axe-core coverage is already clean on every page (`npm run check`) — this item is the manual SR/print/reflow pass that automation can't do. | `[DEV]` | all pages | M | — |
-| **RS-028 + RS-005** | Access Intimacy & Body Support domain (three sub-domains: body support / admin-logistical / emotional, both-positions framing) in the Practise tool; revise principle 03 (drop "chosen," fold in unchosen-dependency content per D3); add new principle 13 ("The carer is inside the relationship"). Thirteen principles total — global find-replace "twelve principles." | `[DEV]` `[COPY]` | `Practise.dc.html`, `hugo/data/principles.yaml` + `hugo/layouts/learn.html`, Home nav card, meta descriptions | M | — (RS-004 done; author directly against the Hugo data file, not a JS array) |
 
 ---
 

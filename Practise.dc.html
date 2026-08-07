@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Consent Domains Map — Relational Sovereignty</title>
-<meta name="description" content="A private, in-browser tool for mapping consent across seventeen domains of a relationship. Nothing you enter leaves this page.">
+<meta name="description" content="A private, in-browser tool for mapping consent across twenty domains of a relationship. Nothing you enter leaves this page.">
 <meta name="robots" content="noindex">
 <link rel="canonical" href="https://relationalsovereignty.com/Practise.dc.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Relational Sovereignty">
 <meta property="og:url" content="https://relationalsovereignty.com/Practise.dc.html">
 <meta property="og:title" content="The Consent Domains Map — Relational Sovereignty">
-<meta property="og:description" content="A private, in-browser tool for mapping consent across seventeen domains of a relationship. Nothing you enter leaves this page.">
+<meta property="og:description" content="A private, in-browser tool for mapping consent across twenty domains of a relationship. Nothing you enter leaves this page.">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
 <script src="./support.js"></script>
@@ -57,7 +57,7 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Practise — tool 01 of 09 · about 20 minutes to fill in</p>
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.2rem,6vw,4rem);line-height:1;letter-spacing:-.035em;margin:0 0 1.4rem;max-width:15ch">The Consent Domains Map</h1>
-    <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:46ch;margin:0 0 1.2rem">A relationship label is not blanket permission. This map separates consent into seventeen domains so that yes in one is not read as yes in all of them.</p>
+    <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:46ch;margin:0 0 1.2rem">A relationship label is not blanket permission. This map separates consent into twenty domains so that yes in one is not read as yes in all of them.</p>
     <p style="max-width:52ch;margin:0 0 1.6rem;color:#3C3E38">Mark where you stand in each domain, add a condition where it matters, then print it or read it aloud with the other person. There is no score and no correct pattern.</p>
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:0;max-width:58ch">⌖ Safety — written relationship exercises are not safe for everyone, and joint exercises are not safe where one person controls the other. This is not always visible from inside a relationship. Before the tool, there are five questions and a way out.</p>
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #3F7A4E;padding:.3rem 0 .3rem .9rem;margin:1rem 0 0;max-width:58ch">⌖ Privacy — everything you type stays in this browser tab. Nothing is sent anywhere, nothing is stored, nothing is counted, and this page is disallowed to search crawlers. Closing the tab erases it.</p>
@@ -134,6 +134,43 @@
 
     <div style="display:flex;flex-direction:column;gap:1px;background:#C9C6BA;border:1px solid #C9C6BA">
       <sc-for list="{{ domains }}" as="d" hint-placeholder-count="17">
+        <div style="background:#E7E5DC;padding:1.2rem 1.2rem 1.3rem">
+          <fieldset style="border:none;margin:0;padding:0">
+            <legend style="padding:0;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;line-height:1.15;letter-spacing:-.01em;color:#191B18;margin-bottom:.3rem">{{ d.name }}</legend>
+            <div style="display:flex;flex-wrap:wrap;gap:.6rem 1.8rem;align-items:flex-start">
+              <div style="flex:1 1 230px;min-width:0">
+                <p style="margin:0 0 .35rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.5;color:#5A5D53">{{ d.hint }}</p>
+                <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:{{ d.stateColor }}">marked: {{ d.stateLabel }}</p>
+              </div>
+              <div style="flex:2 1 340px;min-width:0;display:flex;flex-direction:column;gap:.6rem">
+                <div style="display:flex;gap:.4rem;flex-wrap:wrap">
+                  <sc-for list="{{ d.options }}" as="o" hint-placeholder-count="5">
+                    <label style="display:flex;align-items:center;gap:.45rem;cursor:pointer;border-radius:2px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.2;padding:.5rem .65rem;min-height:44px;border:1px solid {{ o.border }};background:{{ o.bg }};color:{{ o.fg }}">
+                      <input type="radio" name="{{ o.group }}" checked="{{ o.on }}" onChange="{{ o.pick }}" style="width:15px;height:15px;margin:0;flex:0 0 auto;accent-color:{{ o.accent }}">
+                      <span style="width:10px;height:10px;border-radius:2px;background:{{ o.accent }};display:inline-block;flex:0 0 auto"></span>
+                      <span style="white-space:nowrap">{{ o.short }}</span>
+                    </label>
+                  </sc-for>
+                </div>
+                <label style="display:block">
+                  <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#5A5D53;margin-bottom:.3rem">Condition, in your own words</span>
+                  <input type="text" value="{{ d.note }}" onChange="{{ d.setNote }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.55rem .6rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:15px;color:#191B18">
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="margin-top:2.6rem;padding-top:.4rem">
+      <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .8rem">Access Intimacy &amp; Body Support</h2>
+      <p style="max-width:58ch;margin:0 0 .8rem;color:#3C3E38;font-size:16px;line-height:1.55">Some care keeps a person alive. Some care keeps a person's paperwork alive. Some care keeps a person company. They are not the same thing, and refusing them does not cost the same thing.</p>
+      <p style="max-width:58ch;margin:0 0 1.4rem;color:#3C3E38;font-size:16px;line-height:1.55">Needing care does not hand anyone authority over you. Giving care does not make you the relationship's staff. This domain is for both positions, and both of you should fill it in.</p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:1px;background:#C9C6BA;border:1px solid #C9C6BA">
+      <sc-for list="{{ accessDomains }}" as="d" hint-placeholder-count="3">
         <div style="background:#E7E5DC;padding:1.2rem 1.2rem 1.3rem">
           <fieldset style="border:none;margin:0;padding:0">
             <legend style="padding:0;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;line-height:1.15;letter-spacing:-.01em;color:#191B18;margin-bottom:.3rem">{{ d.name }}</legend>
@@ -250,7 +287,18 @@ class Component extends DCLogic {
     ["Family involvement", "who is told, who is invited, who intervenes"],
     ["Contact with former partners", "friendship, co-parenting, silence"],
     ["Cultural knowledge", "teachings, language, ceremony, protocol"],
-    ["Community events", "attending together, being seen, being spoken for"]
+    ["Community events", "attending together, being seen, being spoken for"],
+    // Access Intimacy & Body Support (RS-028), three sub-domains, added
+    // 2026-08-07 alongside Learn's principle 03 revision and new
+    // principle 13 — see docs/spec/addendum-a.md RS-028. This domain is
+    // meant to be filled in from either position: the person receiving
+    // care and the person providing it. The same five-option scale below
+    // works for both — a carer marking "not yet — ask me" and a
+    // care-receiver marking it mean different things, and that
+    // difference is the point of the free-text condition field.
+    ["Body support", "feeding, hygiene, transfers, medication, pain, mobility"],
+    ["Administrative & logistical care", "appointments, forms, benefits, insurance, advocacy, interpretation"],
+    ["Emotional & relational care", "reassurance, companionship, conflict work, romantic and sexual availability"]
   ];
 
   options = [
@@ -274,6 +322,31 @@ class Component extends DCLogic {
 
   renderVals() {
     const picks = this.state.picks, notes = this.state.notes;
+    // One flat picks/notes state across all twenty domains — the Access
+    // Intimacy sub-domains (indices 17-19) are just the tail of the same
+    // array, rendered in their own section (see the template) so
+    // print/clear apply uniformly to both.
+    const renderedDomains = this.domainList.map((d, i) => {
+      const chosen = picks[i];
+      const has = chosen !== undefined;
+      return {
+        name: d[0], hint: d[1],
+        note: notes[i] || "",
+        setNote: (ev) => { const v = ev.target.value; this.setState(s => { const n = Object.assign({}, s.notes); n[i] = v; return { notes: n }; }); },
+        stateLabel: has ? this.options[chosen][0] : "nothing yet",
+        stateColor: has ? this.options[chosen][2] : "#64665D",
+        options: this.options.map((o, j) => ({
+          group: "domain-" + i,
+          short: o[1],
+          accent: o[2],
+          on: chosen === j,
+          border: chosen === j ? o[2] : "#C9C6BA",
+          bg: chosen === j ? "rgba(15,42,46,.09)" : "transparent",
+          fg: chosen === j ? "#191B18" : "#585B4F",
+          pick: () => this.setState(s => { const p = Object.assign({}, s.picks); p[i] = j; return { picks: p }; })
+        }))
+      };
+    });
     return {
       atSafety: this.state.stage === "safety",
       atGrounding: this.state.stage === "grounding",
@@ -294,27 +367,8 @@ class Component extends DCLogic {
         status: t[2] ? "in progress" : "not started",
         color: t[2] ? "#DB9E2A" : "#73968D"
       })),
-      domains: this.domainList.map((d, i) => {
-        const chosen = picks[i];
-        const has = chosen !== undefined;
-        return {
-          name: d[0], hint: d[1],
-          note: notes[i] || "",
-          setNote: (ev) => { const v = ev.target.value; this.setState(s => { const n = Object.assign({}, s.notes); n[i] = v; return { notes: n }; }); },
-          stateLabel: has ? this.options[chosen][0] : "nothing yet",
-          stateColor: has ? this.options[chosen][2] : "#64665D",
-          options: this.options.map((o, j) => ({
-            group: "domain-" + i,
-            short: o[1],
-            accent: o[2],
-            on: chosen === j,
-            border: chosen === j ? o[2] : "#C9C6BA",
-            bg: chosen === j ? "rgba(15,42,46,.09)" : "transparent",
-            fg: chosen === j ? "#191B18" : "#585B4F",
-            pick: () => this.setState(s => { const p = Object.assign({}, s.picks); p[i] = j; return { picks: p }; })
-          }))
-        };
-      })
+      domains: renderedDomains.slice(0, 17),
+      accessDomains: renderedDomains.slice(17)
     };
   }
 }
