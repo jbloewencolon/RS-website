@@ -9,14 +9,14 @@ Allow: /Home.dc.html
 Allow: /Manifesto.dc.html
 Allow: /Learn.dc.html
 Allow: /Archive.dc.html
-Allow: /Colophon.dc.html
+Allow: /BehindTheScenes.dc.html
 
 # The workshop is not for the index. What a person marks about their own
 # relationships is not material for a register, a snapshot, or a training set.
 Disallow: /Practise.dc.html
 
 # Contributor material is governed by the terms each contributor chose,
-# not by discovery. Ask, or read the Colophon.
+# not by discovery. Ask, or read Behind the Scenes.
 Disallow: /Contribute.dc.html
 
 Sitemap: https://relationalsovereignty.com/sitemap.xml
