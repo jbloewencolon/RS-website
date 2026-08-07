@@ -21,6 +21,19 @@ jobs:
       - name: Install Chromium for Playwright
         run: npx playwright install --with-deps chromium
 
+      # Pinned exact version — see hugo/README.md for why (RS-004, D2:
+      # Hugo is a single static binary, deliberately not an npm
+      # dependency). This is what npm run check's Hugo-pages-in-sync
+      # check needs to run for real here instead of soft-skipping.
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+
+      - name: Install Hugo v0.164.0
+        run: |
+          go install github.com/gohugoio/hugo@v0.164.0
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+
       - name: HTML validation + accessibility (axe-core) check
         run: npm run check
 

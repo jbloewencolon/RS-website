@@ -1,3 +1,6 @@
 node_modules/
 audit-screenshots/
 _site/
+hugo/public/
+hugo/resources/
+hugo/.hugo_build.lock

@@ -1,0 +1,24 @@
+# Relational Sovereignty — Hugo build config (RS-004).
+#
+# This generator reads the data files in data/ and writes plain HTML,
+# committed to the repo root as the artifact that ships. The generator
+# exists for whoever maintains this site, not for whoever reads it —
+# a reader is never asked to run anything. See BehindTheScenes.dc.html's
+# Build field and docs/spec/decision-record-d1-d15.md D2.
+#
+# Output filenames must match the site's existing flat *.dc.html scheme
+# exactly (e.g. Manifesto.dc.html, not manifesto/index.html), because
+# every internal link, robots.txt rule, and sitemap.xml entry on the
+# rest of the site already targets those exact paths. uglyURLs plus an
+# explicit `url:` front matter field per page is what makes that work —
+# see each content/*.md file.
+baseURL = "https://relationalsovereignty.com/"
+locale = "en"
+title = "Relational Sovereignty"
+uglyURLs = true
+disableKinds = ["taxonomy", "term", "RSS", "sitemap", "home", "404", "section"]
+enableRobotsTXT = false
+timeout = "30s"
+
+[build]
+  writeStats = false
