@@ -57,7 +57,6 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 | ID | Task | Tags | Files | Effort | Notes |
 |---|---|---|---|---|---|
 | **RS-015** | Archive link-quality pass — resolve publisher-homepage links to actual work pages per the table in `base-work-order.md` §4. Fix the change-log overstatement about "every entry links…". Verify external `it.link` values render as absolute URLs, not resolved against site root. | `[DEV]` `[VERIFY]` | `Archive.dc.html` | M | ~20 individual link verifications |
-| **RS-021 (rescoped)** | ~~Replace mailing list with RSS+mailto~~ → **Disclose the existing dispatch Worker architecture in the Colophon.** New substrate rows naming: the Worker as the processor (self-operated, Cloudflare), Resend's role (transactional send only — no list held there), where the encrypted list lives (private GitHub repo, AES-GCM at rest, keyed material never in the repo), and exactly what data each party can see. Update the footer/Home copy that says addresses are "never given to a third party" so it accurately describes Resend's transactional role rather than implying no processor exists at all. | `[COPY]` `[DEV]` | `BehindTheScenes.dc.html`, `Home.dc.html`, `Contribute.dc.html` | S | See resolved-decisions log above |
 | **RS-022** | Hosting decision (FLAG-02) + fill the blank colophon substrate fields: server location/operator/territory, watershed, actual logging config (minimized), cost + funding source. Colophon note on the single-region trade-off if D6 is taken as-is. | `[DEV]` `[DECISION]` | `BehindTheScenes.dc.html`, hosting config | M | FLAG-02 |
 | **RS-024** | Extend the glyph coverage matrix beyond Chrome/Windows: Safari/macOS+iOS, Firefox/Windows+Linux, Chrome/Android, Edge/Windows. Publish per-platform results. Resolve or document the `x̂` (Unangax̂) at-risk flag specifically. | `[DEV]` | `glyph-check.html`, `BehindTheScenes.dc.html` | S | — |
 | **RS-027** | Async mode + export for the Practise tool. Off by default, non-dismissible findability warning (draft in `addendum-a.md`), no `localStorage` resume (re-import a saved file instead), neutral user-editable filename, print offered before file download (D14), print stylesheet carries no site name/URL. | `[DEV]` | `Practise.dc.html` | M | RS-001/032 sequence should exist first (shares the tool's safety framing) |
@@ -186,7 +185,7 @@ Applies to every page, every release — from `docs/spec/base-work-order.md` §7
 - [ ] Allowed to every crawler, in sitemap, reachable from the footer
 
 **Dispatch form specifically (both instances — Home + Contribute):**
-- [ ] Colophon discloses the Worker/Resend/GitHub-storage architecture accurately (RS-021 rescoped)
+- [x] Colophon discloses the Worker/Resend/GitHub-storage architecture accurately (RS-021 rescoped, done) — four substrate rows name the Worker as self-operated processor, Resend's transactional-only role, the private-repo/AES-256-GCM storage, and the aggregate-only interest data; Home/Contribute copy no longer claims no processor exists
 - [ ] Honeypot remains `aria-hidden`, `tabindex="-1"`, `autocomplete="off"`, doesn't trip password managers
 - [ ] Confirm/unsubscribe links resist prefetch-triggered false actions (SUGGEST-04, once implemented)
 

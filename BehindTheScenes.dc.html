@@ -78,7 +78,27 @@
       
       <div style="border-top:2px solid #366943;padding-top:.7rem">
         <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Third-party requests</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">Zero. No fonts, analytics, embeds, tag managers, CDNs, or ad tech. Nothing on this site phones anywhere.</dd>
+        <dd style="margin:0;font-size:16px;line-height:1.5">Zero, with one deliberate, disclosed exception: submitting the dispatch signup form on Home or Contribute sends the address you typed to the Worker described below. No fonts, analytics, embeds, tag managers, CDNs, or ad tech — and nothing fires until you submit that one form.</dd>
+      </div>
+      
+      <div style="border-top:2px solid #366943;padding-top:.7rem">
+        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Mailing-list processor</dt>
+        <dd style="margin:0;font-size:16px;line-height:1.5">A Cloudflare Worker — self-operated, not a third-party mailing-list platform — is the one piece of this site&#39;s infrastructure that isn&#39;t purely static. It receives the two signup forms (Home, Contribute), sends the confirmation and unsubscribe emails, and writes the encrypted subscriber file. Source: worker/ in this repository.</dd>
+      </div>
+      
+      <div style="border-top:2px solid #366943;padding-top:.7rem">
+        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Transactional email</dt>
+        <dd style="margin:0;font-size:16px;line-height:1.5">Sent through Resend&#39;s API — confirmation and unsubscribe messages only, plain text, no tracking pixel, no click-tracking redirect. Resend receives an address and the text of that one message; it never receives the interests picked at signup, is never handed the subscriber list, and is never used to send anything else.</dd>
+      </div>
+      
+      <div style="border-top:2px solid #366943;padding-top:.7rem">
+        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Where the list lives</dt>
+        <dd style="margin:0;font-size:16px;line-height:1.5">A private, operator-controlled GitHub repository — separate from this public one — holding a single file encrypted with AES-256-GCM. The decryption key exists only as a Cloudflare Worker secret; it is never written to any repository, public or private. That file, taken on its own, decrypts to nothing.</dd>
+      </div>
+      
+      <div style="border-top:2px solid #366943;padding-top:.7rem">
+        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">What&#39;s actually stored</dt>
+        <dd style="margin:0;font-size:16px;line-height:1.5">Per subscriber: the address they confirmed and the time they confirmed it. What they were interested in — the zine, the reading circle, a workshop — is recorded only as a site-wide count, never attached to an address. A leaked or subpoenaed copy of the file can say how many people want what; it cannot say who.</dd>
       </div>
       
       <div style="border-top:2px solid #366943;padding-top:.7rem">
@@ -281,6 +301,8 @@
       <div>
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;color:#DB9E2A;margin:0 0 .7rem;border-bottom:1px solid #2A4C4C;padding-bottom:.4rem">v0.2 — current</p>
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.65">
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the dispatch signup forms said an address is &#34;never given to a third party&#34; and &#34;no third parties&#34; with no further detail, while a live Cloudflare Worker, a Resend transactional-email account, and a private GitHub repository were all already part of how a signup actually gets processed</del> <span style="color:#509C64">the substrate table names all three: the Worker as the self-operated processor, Resend&#39;s role limited to sending the confirmation and unsubscribe emails (never handed the list, never told what someone was interested in), and the encrypted file&#39;s home in a private repository this one doesn&#39;t touch, keyed by a secret that is never written to any repository at all. The dispatch copy on Home and Contribute now points to that disclosure instead of asserting no processor exists</span></li>
           
           <li style="color:#B8C7C1"><del style="color:#73968D">thesis 14 titled &#34;Survivance, not &#39;no future&#39;&#34;, using a Nation-specific concept for injuries it was not written about</del> <span style="color:#509C64">the term removed until there is paid review that could say whether the extension holds. The archive still carries Vizenor. The debt was real; the borrowing was not ours to make</span></li>
           

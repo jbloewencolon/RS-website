@@ -187,4 +187,21 @@ Notes:
 - Fault 03 (unreviewed claims about Indigenous concepts) is not retired by this change — it's the reason this change exists. The fault stays open until the paid review D4 anticipates actually happens; if it does, D4 explicitly leaves Option A revisitable.
 - `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
 
+### RS-021 (rescoped, per D5 amended) — Disclose the dispatch Worker architecture
+**Shipped:** 2026-08-07 · **Commit/PR:** (pending)
+
+~~was: the dispatch signup forms on Home and Contribute told readers an address is "never sold, traded, or given to a third party" and "no third parties," full stop — while a live Cloudflare Worker, a Resend transactional-email account, and a private GitHub repository were already the real infrastructure behind every signup, none of it named anywhere on the site~~
+now: four new rows in the substrate table on `BehindTheScenes.dc.html` name the whole chain plainly: **Mailing-list processor** (a self-operated Cloudflare Worker, not a third-party platform, pointing to `worker/` in this repo as the source), **Transactional email** (Resend sends the confirmation and unsubscribe messages only — plain text, no tracking pixel, no click-tracking redirect — and never receives the interests picked at signup or the list itself), **Where the list lives** (a private, operator-controlled GitHub repository, separate from this public one, holding one file encrypted with AES-256-GCM; the key exists only as a Worker secret and is never written to any repository), and **What's actually stored** (per subscriber: the confirmed address and confirmation time; interests are recorded only as a site-wide count, never attached to an address). The existing **Third-party requests** row is amended too — it claimed "zero... nothing on this site phones anywhere," which stopped being true the moment the dispatch endpoint existed; it now names the one exception explicitly rather than leaving a blanket claim standing next to its own contradiction three rows down.
+
+**This is disclosure, not a rebuild.** Per the D5 amendment already logged in `tasks.md`'s resolved-decisions log (2026-08-07, explicit author instruction to keep the existing processor rather than replace it with RSS+mailto), the underlying system doesn't change — it was already closer to D5's own "self-hosted list + own SMTP" option than to the email-service-provider pattern D5 was originally written against. Reading `worker/src/store.js` and `worker/src/email.js` directly (not just the architecture description in `tasks.md`) confirmed the claims made here are literally true of the code that runs: `store.js`'s own comment states interests are "never stored next to their email... a leaked or subpoenaed copy of this file should say '43 people are interested in X' and nothing about who," and `email.js` sends via Resend's bare HTTP API with no HTML, no tracking parameters.
+
+Home's dispatch section and Contribute's dispatch form both replace their absolute "never... third party" claims with a shorter, accurate statement plus a pointer to the colophon for the full picture, rather than trying to compress four paragraphs of real architecture into a footer line.
+
+Verified with a real headless browser, JavaScript disabled: `Home.dc.html` no longer contains the string "never sold, traded, or given to a third party" and does contain the replacement sentence naming the transactional email service; `BehindTheScenes.dc.html` contains all four new row headings and the string "AES-256-GCM" — not just a source-file diff, confirmation of what actually reaches a no-JS reader.
+
+Notes:
+- `index.html` was re-synced byte-for-byte from `Home.dc.html` after the edit (the established pattern for every change touching Home) — `npm run check`'s "index.html matches Home.dc.html" comparison confirms it.
+- The Worker's operator Cloudflare-account email and other credential-adjacent operational detail from `worker/README.md` were deliberately left out of the public substrate copy — the disclosure obligation D5 identifies is about what happens to a reader's data and who can see it, not about publishing operational secrets.
+- `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*

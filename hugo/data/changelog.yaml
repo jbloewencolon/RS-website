@@ -7,6 +7,8 @@
 # error to fix).
 - version: "v0.2 — current"
   entries:
+    - was: "the dispatch signup forms said an address is \"never given to a third party\" and \"no third parties\" with no further detail, while a live Cloudflare Worker, a Resend transactional-email account, and a private GitHub repository were all already part of how a signup actually gets processed"
+      now: "the substrate table names all three: the Worker as the self-operated processor, Resend's role limited to sending the confirmation and unsubscribe emails (never handed the list, never told what someone was interested in), and the encrypted file's home in a private repository this one doesn't touch, keyed by a secret that is never written to any repository at all. The dispatch copy on Home and Contribute now points to that disclosure instead of asserting no processor exists"
     - was: "thesis 14 titled \"Survivance, not 'no future'\", using a Nation-specific concept for injuries it was not written about"
       now: "the term removed until there is paid review that could say whether the extension holds. The archive still carries Vizenor. The debt was real; the borrowing was not ours to make"
     - was: "three faces loaded from a font CDN on every page"
