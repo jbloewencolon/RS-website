@@ -1,6 +1,12 @@
+name = "rs-dispatch-worker"
+main = "src/index.js"
+compatibility_date = "2024-09-23"
+
+[vars]
 SITE_URL = "https://relationalsovereignty.com"
 WORKER_URL = "https://rs-dispatch-worker.rssite.workers.dev"
 FROM_EMAIL = "dispatch@relationalsovereignty.com"
+
 STORE_OWNER = "jbloewencolon"
 STORE_REPO = "rs-dispatch-storage"
 STORE_PATH = "subscribers.enc"
