@@ -6,7 +6,8 @@
   "scripts": {
     "build": "node scripts/prerender.mjs",
     "build:hugo": "node scripts/build-hugo.mjs",
-    "check": "node scripts/check-pages.mjs",
+    "check": "node scripts/check-origins.mjs && node scripts/check-pages.mjs",
+    "check:origins": "node scripts/check-origins.mjs",
     "check:responsive": "node responsive-audit.mjs"
   },
   "devDependencies": {

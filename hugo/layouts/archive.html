@@ -13,6 +13,7 @@
 <meta property="og:description" content="Thirty-odd texts on relational sovereignty, Indigenous relationality, care ethics, and transformative justice, each linking away to the people who wrote them.">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <style>
   html{scroll-behavior:smooth}
   body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
@@ -197,37 +198,6 @@
   </div>
 </footer>
 
-<script>
-// Progressive enhancement only: every entry above is already fully
-// rendered, unfiltered, in the HTML this script attaches to. This code
-// never draws content — it only narrows what's already there — so a
-// reader with scripting off, or a crawler that never runs it, still
-// gets the complete archive, just without the filter convenience.
-(function () {
-  var buttons = document.querySelectorAll("[data-filter]");
-  var items = document.querySelectorAll("[data-tags]");
-  var groups = document.querySelectorAll("[data-group]");
-  if (!buttons.length) return;
-
-  function apply(filter) {
-    items.forEach(function (it) {
-      var tags = (it.getAttribute("data-tags") || "").split(" ");
-      it.hidden = !(filter === "all" || tags.indexOf(filter) > -1);
-    });
-    groups.forEach(function (g) {
-      g.hidden = g.querySelectorAll("[data-tags]:not([hidden])").length === 0;
-    });
-    buttons.forEach(function (b) {
-      var active = b.getAttribute("data-filter") === filter;
-      b.setAttribute("aria-pressed", active ? "true" : "false");
-      b.classList.toggle("is-active", active);
-    });
-  }
-
-  buttons.forEach(function (b) {
-    b.addEventListener("click", function () { apply(b.getAttribute("data-filter")); });
-  });
-})();
-</script>
+<script src="archive-filter.js"></script>
 </body>
 </html>

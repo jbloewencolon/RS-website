@@ -23,3 +23,6 @@
 - n: "05"
   title: "There is no community, so governance is a promise"
   body: "An editorial charter, advisory group, and appeals process are described in the future tense on the Contribute page. Until people exist to hold them, they are intentions, and this site says so rather than implying otherwise."
+- n: "06"
+  title: "No clickjacking protection"
+  body: "The CSP is delivered as a <meta> tag because the current host cannot set response headers — and frame-ancestors, the directive that would stop this site being framed inside someone else's page, is one of a small number the CSP specification refuses to honour outside a real header, on any browser, no matter how it's written. There is currently no way to close this gap without changing host. Same root cause as fault 01."
