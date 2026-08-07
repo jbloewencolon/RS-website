@@ -3,11 +3,11 @@
 //
 // Why this exists. The page source is a template — the visible copy for
 // the Archive's ~30 entries, Learn's principles, the Consent Domains
-// Map's 17 domains, and the Colophon's tables all live in JS arrays and
+// Map's 17 domains, and Behind the Scenes' tables all live in JS arrays and
 // only become HTML once React runs. Anything that does not run
 // JavaScript therefore sees an almost-empty page: measured at 79% of the
-// Archive's text missing, 59% of Learn and Practise, 52% of the
-// Colophon. That is exactly what AI/search crawlers see (they parse the
+// Archive's text missing, 59% of Learn and Practise, 52% of
+// Behind the Scenes. That is exactly what AI/search crawlers see (they parse the
 // raw HTML of the initial response and do not execute scripts), and what
 // a reader with scripting off sees. It is also the project's own
 // published Fault 04.
@@ -41,7 +41,7 @@ const PAGES = [
   "Practise.dc.html",
   "Archive.dc.html",
   "Contribute.dc.html",
-  "Colophon.dc.html",
+  "BehindTheScenes.dc.html",
 ];
 const COPY_AS_IS = ["glyph-check.html", "Resources.dc.html", "support.js", "robots.txt", "CNAME", "LICENSE"];
 

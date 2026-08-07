@@ -9,7 +9,7 @@ Allow: /Home.dc.html
 Allow: /Manifesto.dc.html
 Allow: /Learn.dc.html
 Allow: /Archive.dc.html
-Allow: /Colophon.dc.html
+Allow: /BehindTheScenes.dc.html
 
 # Resources is the one page on this site that should be indexed by
 # everything, no exceptions, including the training crawlers refused
@@ -22,7 +22,7 @@ Allow: /Resources.dc.html
 Disallow: /Practise.dc.html
 
 # Contributor material is governed by the terms each contributor chose,
-# not by discovery. Ask, or read the Colophon.
+# not by discovery. Ask, or read Behind the Scenes.
 Disallow: /Contribute.dc.html
 
 Sitemap: https://relationalsovereignty.com/sitemap.xml
