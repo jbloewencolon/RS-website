@@ -262,4 +262,18 @@ Notes:
 - Full screen-reader listening (does AT actually announce the warning before the button, not just "is it in DOM order before it") has not been done by a person — same residual as RS-023, not claimed as verified here.
 - `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
 
+### RS-007 — trans studies archive entry + principle 08 revision
+**Shipped:** 2026-08-07 · **Commit/PR:** (pending)
+
+~~was: principle 08 (Opacity) stated "intimacy does not require complete access or total legibility" with no distinction between a person declining to be known and a person being compelled to disclose themselves — to a clinician, a court, an employer, an insurer, a border agent — in order to receive care, money, status, or documents. The archive held no trans scholarship at all, despite trans care webs being, per the source doc's own framing, the most developed live practice of the relational-care argument this site makes~~
+now: principle 08's body states the limit explicitly — opacity is a right against people who want more of you than they are owed, not against institutions that compel disclosure to release care, money, status, or documents; refusing to be read is a privilege unevenly distributed, and the framework should not mistake one for the other. A second question, appended to the existing one: "And where is this person already required to be legible to someone with power over them?" Both are `base-work-order.md`'s own draft text, used verbatim rather than paraphrased. Hil Malatino's *Trans Care* joins the archive in the "Relation, opacity, refusal, survivance" group — the placement, not just the citation, is the point: this is filed as the strongest correction to principle 08, not as a separate trans-studies afterthought bolted onto the end of an unrelated list.
+
+**Re-verified rather than trusted on the source doc's own checkmark.** `base-work-order.md` §5 marks this entry "✓ verified," but this session's practice all along has been not to carry forward an unverified — or previously-verified-but-unrechecked — claim without checking it again. Fetched the University of Minnesota Press page directly: confirmed title, author, and that it's genuinely open access — the book is published in UMN Press's "Forerunners: Ideas First" series, whose whole model is a free Manifold digital edition alongside a paid print one, not just a marketing claim of openness. Tagged `free` in `archive.yaml` accordingly.
+
+Notes:
+- `question` in `principles.yaml`/the Learn layout is a single string field, not a list — the second question was appended to the first as a second sentence rather than dropped in as a separate list item the template doesn't support, since the spec offered "second question, or replacement" as the author's choice and appending preserves the original question's content rather than discarding it.
+- This does not touch the `sequence` (reading-ten) list in `archive.yaml` — RS-008 is where Malatino's addition to that specific list is scoped, and that task hasn't shipped yet.
+- Verified with a real headless browser, JavaScript disabled: `Learn.dc.html` contains the revised principle 08 body and the new second question; `Archive.dc.html` contains the Trans Care entry and Malatino's name — not just confirmed in the source YAML.
+- `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*

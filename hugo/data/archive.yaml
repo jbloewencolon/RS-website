@@ -143,6 +143,13 @@ groups:
         use: "book"
         link: "https://www.nebraskapress.unl.edu/bison-books/9780803296213/manifest-manners/"
         linkLabel: "University of Nebraska Press"
+      - title: "Trans Care"
+        by: "Hil Malatino"
+        tags: ["start", "book", "free"]
+        why: "Dominant framings of care ethics entrench cisnormative family arrangements. Trans care webs are the most developed live practice of what this site theorises, and the strongest correction to principle 08 — opacity is not available against people with power to compel disclosure."
+        use: "open access, Forerunners: Ideas First"
+        link: "https://www.upress.umn.edu/9781517911188/trans-care/"
+        linkLabel: "read it free, University of Minnesota Press"
 
   - title: "Relational autonomy, interdependence, care"
     note: "Autonomy does not require isolation or self-sufficiency."
