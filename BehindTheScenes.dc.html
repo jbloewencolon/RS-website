@@ -13,11 +13,6 @@
 <meta property="og:description" content="The substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
-<script src="./support.js"></script>
-</head>
-<body>
-<x-dc>
-<helmet>
 <style>
   html{scroll-behavior:smooth}
   body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
@@ -30,7 +25,8 @@
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
   .skip-link:focus{left:1rem;top:1rem}
 </style>
-</helmet>
+</head>
+<body>
 
 <a href="#main-content" class="skip-link">Skip to content</a>
 <header style="border-bottom:1px solid #C9C6BA">
@@ -63,12 +59,47 @@
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">The substrate</h2>
     <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">A land acknowledgement in a footer is decoration. These are the material facts of the machine you are reading on, as far as they are currently known.</p>
     <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem 2.4rem">
-      <sc-for list="{{ substrate }}" as="s" hint-placeholder-count="8">
-        <div style="border-top:2px solid {{ s.rule }};padding-top:.7rem">
-          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ s.rule }};margin:0 0 .35rem">{{ s.k }}</dt>
-          <dd style="margin:0;font-size:16px;line-height:1.5">{{ s.v }}</dd>
-        </div>
-      </sc-for>
+      
+      <div style="border-top:2px solid #8B3A2F;padding-top:.7rem">
+        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8B3A2F;margin:0 0 .35rem">Server location</dt>
+        <dd style="margin:0;font-size:16px;line-height:1.5">Not yet known — the site is unhosted at v0.2. Before launch this field states the city, the operator, and whose territory the machine sits on.</dd>
+      </div>
+      
+      <div style="border-top:2px solid #8B3A2F;padding-top:.7rem">
+        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8B3A2F;margin:0 0 .35rem">Watershed</dt>
+        <dd style="margin:0;font-size:16px;line-height:1.5">Not yet known. The data centre cooling a site is drawn from someone&#39;s water; that water has a name.</dd>
+      </div>
+      
+      <div style="border-top:2px solid #366943;padding-top:.7rem">
+        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Page weight</dt>
+        <dd style="margin:0;font-size:16px;line-height:1.5">Under 60 KB per page, uncompressed, including all markup and logic. No images, no icon fonts, no video.</dd>
+      </div>
+      
+      <div style="border-top:2px solid #366943;padding-top:.7rem">
+        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Third-party requests</dt>
+        <dd style="margin:0;font-size:16px;line-height:1.5">Zero. No fonts, analytics, embeds, tag managers, CDNs, or ad tech. Nothing on this site phones anywhere.</dd>
+      </div>
+      
+      <div style="border-top:2px solid #366943;padding-top:.7rem">
+        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Cookies and storage</dt>
+        <dd style="margin:0;font-size:16px;line-height:1.5">None set. Nothing is written to your device, so nothing needs consenting to and there is no banner to recite at you.</dd>
+      </div>
+      
+      <div style="border-top:2px solid #7D5915;padding-top:.7rem">
+        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .35rem">What is logged</dt>
+        <dd style="margin:0;font-size:16px;line-height:1.5">Whatever the eventual host logs by default, which will be reduced as far as the host allows and stated here plainly.</dd>
+      </div>
+      
+      <div style="border-top:2px solid #7D5915;padding-top:.7rem">
+        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .35rem">Build</dt>
+        <dd style="margin:0;font-size:16px;line-height:1.5">Partial, in progress. Manifesto, Learn, and this page are generated from plain data files into plain HTML by Hugo (a single static binary, no dependency tree) — the output is committed and is what ships: no runtime, no framework, opens offline from a saved file. The generator exists for whoever maintains this, not for whoever reads it. Archive is the one reading page not migrated yet, still hand-written against the runtime described below.</dd>
+      </div>
+      
+      <div style="border-top:2px solid #7D5915;padding-top:.7rem">
+        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .35rem">Durability</dt>
+        <dd style="margin:0;font-size:16px;line-height:1.5">Partial. Manifesto, Learn, and this page now meet the standard of markup that will still render in twenty years. Archive still needs a small runtime to draw. Fault 4 below.</dd>
+      </div>
+      
     </dl>
   </div>
 </section>
@@ -86,9 +117,21 @@
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 .8rem">Coverage, checked not assumed</p>
         <p style="margin:0 0 .9rem;font-size:15.5px;line-height:1.5">A font that turns a nation's name into boxes makes a people unwritable in their own name. Every diacritic this site carries was measured against the notdef box in each stack, rather than trusted.</p>
         <ul style="list-style:none;margin:0 0 .9rem;padding:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.7;color:#3C3E38">
-          <sc-for list="{{ glyphs }}" as="g" hint-placeholder-count="8">
-            <li><span style="color:{{ g.color }}">{{ g.mark }}</span> {{ g.text }}</li>
-          </sc-for>
+          
+          <li><span style="color:#366943">ok</span> ʔ  U&#43;0294 glottal stop — Skarù·ręʔ</li>
+          
+          <li><span style="color:#366943">ok</span> ·  U&#43;00B7 middle dot — Skarù·ręʔ</li>
+          
+          <li><span style="color:#366943">ok</span> à ù ê î é  precomposed diacritics — Kahnawà:ke, nêhiyawêwin</li>
+          
+          <li><span style="color:#366943">ok</span> ę ř  ogonek, caron</li>
+          
+          <li><span style="color:#366943">ok</span> ʼ  U&#43;02BC modifier apostrophe — Kwakwaka&#39;wakw</li>
+          
+          <li><span style="color:#8B3A2F">!!</span> x̂  x &#43; U&#43;0302 combining circumflex — Unangax̂ renders, but width measurement is inconclusive on some faces; treated as at-risk and re-checked per platform.</li>
+          
+          <li><span style="color:#366943">ok</span> ★ ⌖ ▪ □ —  interface marks</li>
+          
         </ul>
         <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.55;color:#5A5D53">Measured 2026 on Chrome / Windows. Results vary by platform, which is why each stack names several faces. The check itself is <a href="glyph-check.html">viewable and re-runnable</a>.</p>
       </div>
@@ -102,13 +145,37 @@
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.2rem;max-width:24ch;color:#E7E5DC">What this site refuses to the crawler.</h2>
     <p style="max-width:54ch;margin:0 0 1.6rem;color:#B8C7C1">Discovery by a third party is not a condition of existing. A publisher can decline the index, and this one does, selectively. The policy is a real file, not a claim: <a href="robots.txt" style="color:#DB9E2A">read robots.txt</a>.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:#2A4C4C;border:1px solid #2A4C4C;margin-bottom:1.8rem">
-      <sc-for list="{{ crawler }}" as="c" hint-placeholder-count="4">
-        <div style="background:#0F2A2E;padding:1.2rem 1.3rem 1.4rem">
-          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ c.color }};margin:0 0 .5rem">{{ c.state }}</p>
-          <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">{{ c.what }}</h3>
-          <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">{{ c.why }}</p>
-        </div>
-      </sc-for>
+      
+      <div style="background:#0F2A2E;padding:1.2rem 1.3rem 1.4rem">
+        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#509C64;margin:0 0 .5rem">indexed</p>
+        <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">Manifesto, Learn, Archive, Behind the Scenes</h3>
+        <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">Public reading material. Find it, index it, pass it on. Refusing discovery for its own sake would just be obscurity.</p>
+      </div>
+      
+      <div style="background:#0F2A2E;padding:1.2rem 1.3rem 1.4rem">
+        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#DB9E2A;margin:0 0 .5rem">disallowed</p>
+        <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">Practise</h3>
+        <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">What a person marks about their own relationships is not material for a register, a snapshot, or a training set — even though nothing they type ever leaves their browser.</p>
+      </div>
+      
+      <div style="background:#0F2A2E;padding:1.2rem 1.3rem 1.4rem">
+        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#DB9E2A;margin:0 0 .5rem">disallowed</p>
+        <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">Contribute</h3>
+        <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">Contributor material is reachable by relationship and request, governed by the terms each contributor chose, not by discovery.</p>
+      </div>
+      
+      <div style="background:#0F2A2E;padding:1.2rem 1.3rem 1.4rem">
+        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#D07F75;margin:0 0 .5rem">refused</p>
+        <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">Training crawlers</h3>
+        <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">GPTBot, CCBot, Google-Extended, ClaudeBot and their kin are disallowed site-wide. This request has no technical force; it is stated so that ignoring it is a choice on the record.</p>
+      </div>
+      
+      <div style="background:#0F2A2E;padding:1.2rem 1.3rem 1.4rem">
+        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#509C64;margin:0 0 .5rem">allowed, with limits</p>
+        <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">Retrieval crawlers</h3>
+        <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">Training and retrieval are different acts. A crawler fetching this page to answer a person&#39;s question, and citing it back, may read the public pages — it is refused the workshop and the contribution page like anyone else. Refusing to become training data is not the same as refusing to be found.</p>
+      </div>
+      
     </div>
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#73968D;border-left:2px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:0 0 1.6rem;max-width:58ch">⌖ The caveat that governs all of this: opacity is owed to the crawler and the market, never to the disabled reader. Nothing here is hidden from assistive technology, and no semantic structure is removed to look less legible. Withhold from extraction; disclose fully to those who need access to participate.</p>
     <p style="max-width:54ch;margin:0;color:#B8C7C1">Protocol-gated access — where a community, not this project, sets who may see what and under which relationship — is not built yet. When it is, it will follow work that already exists rather than a scheme invented here: <a href="https://mukurtu.org" style="color:#DB9E2A">Mukurtu CMS</a>, built with the Warumungu community; <a href="https://localcontexts.org" style="color:#DB9E2A">Local Contexts</a> TK and BC Labels; and the <a href="https://www.gida-global.org/care" style="color:#DB9E2A">CARE Principles</a> for Indigenous data governance.</p>
@@ -120,9 +187,21 @@
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Reuse terms, version 0.2</h2>
     <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">Terms that only bind the reader are not terms; they are imposed law. These bind the project too.</p>
     <ul style="list-style:none;margin:0 0 1.4rem;padding:0;max-width:760px;display:flex;flex-direction:column;gap:.7rem">
-      <sc-for list="{{ terms }}" as="t" hint-placeholder-count="7">
-        <li style="border-top:1px solid #C9C6BA;padding-top:.7rem;font-size:16px;line-height:1.5">{{ t }}</li>
-      </sc-for>
+      
+      <li style="border-top:1px solid #C9C6BA;padding-top:.7rem;font-size:16px;line-height:1.5">Fork, translate, reprint, adapt, and teach from this site freely, with attribution travelling with the fragment.</li>
+      
+      <li style="border-top:1px solid #C9C6BA;padding-top:.7rem;font-size:16px;line-height:1.5">Do not extract Indigenous cultural material without permission from the communities it belongs to. A citation on this site is not that permission.</li>
+      
+      <li style="border-top:1px solid #C9C6BA;padding-top:.7rem;font-size:16px;line-height:1.5">Contributors keep their own work. The project holds only the licence each contributor chose, and holds it for only as long as they say.</li>
+      
+      <li style="border-top:1px solid #C9C6BA;padding-top:.7rem;font-size:16px;line-height:1.5">No unilateral amendment. Terms carry a version; changes are logged with the prior wording left legible, and never apply retroactively.</li>
+      
+      <li style="border-top:1px solid #C9C6BA;padding-top:.7rem;font-size:16px;line-height:1.5">No arbitration clause, no forum selection, no waiver of your own courts.</li>
+      
+      <li style="border-top:1px solid #C9C6BA;padding-top:.7rem;font-size:16px;line-height:1.5">No sale of the archive. If the project closes, contributors are notified and material is returned or deleted on their terms.</li>
+      
+      <li style="border-top:1px solid #C9C6BA;padding-top:.7rem;font-size:16px;line-height:1.5">This site claims no jurisdiction over anyone who reads it.</li>
+      
     </ul>
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #3F7A4E;padding:.3rem 0 .3rem .9rem;margin:0;max-width:58ch">⌖ No unilateral amendment. These terms carry a version number; changes are published as a dated entry in the log below, with the previous wording left legible. A change cannot apply retroactively to material already contributed under earlier terms.</p>
   </div>
@@ -133,15 +212,55 @@
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .5rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">The fault list</h2>
     <p style="max-width:56ch;margin:1rem 0 1.6rem;color:#3C3E38">Known and unfixed, published rather than quietly carried. Naming them is not absolution; it is the work list.</p>
     <ol style="list-style:none;counter-reset:f;margin:0;padding:0;display:flex;flex-direction:column;gap:1.2rem;max-width:820px">
-      <sc-for list="{{ faults }}" as="f" hint-placeholder-count="5">
-        <li style="counter-increment:f;display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;border-top:1px solid #C9C6BA;padding-top:1rem">
-          <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#8B3A2F">{{ f.n }}</span>
-          <div>
-            <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .3rem;line-height:1.2">{{ f.title }}</h3>
-            <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">{{ f.body }}</p>
-          </div>
-        </li>
-      </sc-for>
+      
+      <li style="counter-increment:f;display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;border-top:1px solid #C9C6BA;padding-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#8B3A2F">01</span>
+        <div>
+          <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .3rem;line-height:1.2">The server has no declared territory yet</h3>
+          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">The site is unhosted, so the most material field in the colophon is blank. Naming the machine&#39;s location and watershed is a launch condition, not an optional extra.</p>
+        </div>
+      </li>
+      
+      <li style="counter-increment:f;display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;border-top:1px solid #C9C6BA;padding-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#8B3A2F">02</span>
+        <div>
+          <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .3rem;line-height:1.2">Protocol-gated access is not built</h3>
+          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">Opacity is currently expressed as a crawler policy and as honest absence. Community-defined access rules — the Mukurtu and TK Label model — are not implemented, so no material that genuinely needs protocol is held here yet.</p>
+        </div>
+      </li>
+      
+      <li style="counter-increment:f;display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;border-top:1px solid #C9C6BA;padding-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#8B3A2F">03</span>
+        <div>
+          <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .3rem;line-height:1.2">The archive notes are unreviewed</h3>
+          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">Every source note, nation attribution, and reuse line was written by one person and is awaiting paid Indigenous review. Errors are likely. Corrections will appear in the log, struck rather than erased.</p>
+        </div>
+      </li>
+      
+      <li style="counter-increment:f;display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;border-top:1px solid #C9C6BA;padding-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#8B3A2F">04</span>
+        <div>
+          <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .3rem;line-height:1.2">The pages need a runtime to draw</h3>
+          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">Plain semantic markup with no build step is the durability, accessibility, and sovereignty choice all at once. This build partially meets it: Manifesto, Learn, and this page now render and read fully with scripting off, generated by Hugo from data files and committed as plain HTML (see the Build field above). Archive does not yet — turn off scripting and it still doesn&#39;t render. Practise keeps the runtime regardless; it is a tool, not a reading page.</p>
+        </div>
+      </li>
+      
+      <li style="counter-increment:f;display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;border-top:1px solid #C9C6BA;padding-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#8B3A2F">05</span>
+        <div>
+          <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .3rem;line-height:1.2">The layout still parcels space</h3>
+          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">One section of the archive now expresses shared jurisdiction — two themes claiming the same texts in the same cells. The rest of the site is a conventional grid of exclusive parcels. Whether that matters more than legibility is an open question, not a settled one.</p>
+        </div>
+      </li>
+      
+      <li style="counter-increment:f;display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;border-top:1px solid #C9C6BA;padding-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#8B3A2F">06</span>
+        <div>
+          <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .3rem;line-height:1.2">There is no community, so governance is a promise</h3>
+          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">An editorial charter, advisory group, and appeals process are described in the future tense on the Contribute page. Until people exist to hold them, they are intentions, and this site says so rather than implying otherwise.</p>
+        </div>
+      </li>
+      
     </ol>
   </div>
 </section>
@@ -152,16 +271,51 @@
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.2rem;max-width:24ch;color:#E7E5DC">Corrections are shown, not overwritten.</h2>
     <p style="max-width:54ch;margin:0 0 2rem;color:#B8C7C1">Struck text is what the site used to say or do. The seam of the mend stays visible; that is the point.</p>
     <div style="display:flex;flex-direction:column;gap:1.6rem;max-width:820px">
-      <sc-for list="{{ log }}" as="v" hint-placeholder-count="2">
-        <div>
-          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;color:#DB9E2A;margin:0 0 .7rem;border-bottom:1px solid #2A4C4C;padding-bottom:.4rem">{{ v.version }}</p>
-          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.65">
-            <sc-for list="{{ v.entries }}" as="e" hint-placeholder-count="4">
-              <li style="color:#B8C7C1"><del style="color:#73968D">{{ e.was }}</del> <span style="color:#509C64">{{ e.now }}</span></li>
-            </sc-for>
-          </ul>
-        </div>
-      </sc-for>
+      
+      <div>
+        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;color:#DB9E2A;margin:0 0 .7rem;border-bottom:1px solid #2A4C4C;padding-bottom:.4rem">v0.2 — current</p>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.65">
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">three faces loaded from a font CDN on every page</del> <span style="color:#509C64">system font stack, zero third-party requests, reader addresses disclosed to nobody</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">orthographic coverage assumed</del> <span style="color:#509C64">every diacritic on the site measured against the notdef box, check published and re-runnable</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">opacity demonstrated as a reveal button</del> <span style="color:#509C64">a real crawler policy, an honest account of what is not built, and the existing protocol tools named</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">34-pixel colour-only swatches in the Consent Domains Map</del> <span style="color:#509C64">labelled radio controls, 44-pixel targets, colour never the only signal</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">&#39;points outward&#39; with no outbound links</del> <span style="color:#509C64">every archive entry links to the author, publisher, or open-access source</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">no colophon, no changelog, no reuse terms, no crawler file</del> <span style="color:#509C64">this page, plus robots.txt</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">&#39;not a substitute for decolonization&#39; as the only limit</del> <span style="color:#509C64">the limit stated plainly — a website returns no land; this is anti-colonial design</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the dispatch card visually privileged above the other five entry points</del> <span style="color:#509C64">equal weight, and the ask named as an ask</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">nothing on this site pointed anywhere for a reader in danger</del> <span style="color:#509C64">Resources.dc.html — crisis lines, coercive-control and shelter services, legal, immigration, housing, disability, 2SLGBTQ&#43;, and Indigenous-led directories, each checked against the organisation&#39;s own site and dated. Ships as plain static HTML, no runtime, allowed to every crawler including the ones this site otherwise refuses training access to. Partial: the local/regional tier is not built yet, stated on the page rather than guessed at</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">a single safety-notice paragraph sat beside the Consent Domains Map, and the tool itself had no gate at all</del> <span style="color:#509C64">the tool sits behind a real sequence — five non-diagnostic safety questions, then optional rewritten grounding, then the tool — held in page state only, never stored or sent anywhere, with a Resources link at every step and no stage that can only be passed one way</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">principles 06 and 07 could conflict with no tiebreaker, leaving sovereignty language available to justify walking away from a dependant</del> <span style="color:#509C64">a Continuity of care clause on the Learn page — leaving is not abandonment, but it moves an unmet need rather than dissolving it; the clause is explicit that it is not available to anyone using it to keep a person who needs to leave</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">every reading page needed the runtime described below just to draw its text</del> <span style="color:#509C64">Manifesto is generated from plain data files by Hugo and committed as plain HTML — confirmed rendering with scripting off, not just claimed. Learn, Archive, and this page have not migrated yet; fault 4 stays open until they do</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">Learn&#39;s twelve principles, the opacity table, and the topics list lived in a JS array and needed scripting to draw</del> <span style="color:#509C64">Learn is generated by Hugo from plain YAML data files — confirmed rendering fully with scripting off. Archive and this page remain</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">this page (Behind the Scenes) needed the same runtime as every other reading page to draw its substrate, glyph, crawler, fault, and change-log tables</del> <span style="color:#509C64">generated by Hugo from six plain YAML data files, this page included — confirmed rendering fully with scripting off. Archive is the one reading page left; fault 4 stays open until it lands too</span></li>
+          
+        </ul>
+      </div>
+      
+      <div>
+        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;color:#DB9E2A;margin:0 0 .7rem;border-bottom:1px solid #2A4C4C;padding-bottom:.4rem">v0.1 — first draft</p>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.65">
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D"></del> <span style="color:#509C64">Five pages: Home, Manifesto, Learn, Practise, Archive, Contribute. Twelve principles, fifteen theses, a working Consent Domains Map, a starter reading shelf.</span></li>
+          
+        </ul>
+      </div>
+      
     </div>
   </div>
 </section>
@@ -218,99 +372,5 @@
   </div>
 </footer>
 
-</x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
-class Component extends DCLogic {
-  substrate = [
-    ["Server location", "Not yet known — the site is unhosted at v0.2. Before launch this field states the city, the operator, and whose territory the machine sits on.", "#8B3A2F"],
-    ["Watershed", "Not yet known. The data centre cooling a site is drawn from someone's water; that water has a name.", "#8B3A2F"],
-    ["Page weight", "Under 60 KB per page, uncompressed, including all markup and logic. No images, no icon fonts, no video.", "#366943"],
-    ["Third-party requests", "Zero. No fonts, analytics, embeds, tag managers, CDNs, or ad tech. Nothing on this site phones anywhere.", "#366943"],
-    ["Cookies and storage", "None set. Nothing is written to your device, so nothing needs consenting to and there is no banner to recite at you.", "#366943"],
-    ["What is logged", "Whatever the eventual host logs by default, which will be reduced as far as the host allows and stated here plainly.", "#7D5915"],
-    ["Build", "Partial, in progress. Manifesto and Learn are generated from plain data files into plain HTML by Hugo (a single static binary, no dependency tree) — the output is committed and is what ships: no runtime, no framework, opens offline from a saved file. The generator exists for whoever maintains this, not for whoever reads it. Archive and this page are not migrated yet and still hand-written against the runtime described below.", "#7D5915"],
-    ["Durability", "Partial. Manifesto and Learn now meet the standard of markup that will still render in twenty years. Archive and this page still need a small runtime to draw. Fault 4 below.", "#7D5915"]
-  ];
-
-  glyphs = [
-    ["ok", "ʔ  U+0294 glottal stop — Skarù·ręʔ", 1],
-    ["ok", "·  U+00B7 middle dot — Skarù·ręʔ", 1],
-    ["ok", "à ù ê î é  precomposed diacritics — Kahnawà:ke, nêhiyawêwin", 1],
-    ["ok", "ę ř  ogonek, caron", 1],
-    ["ok", "ʼ  U+02BC modifier apostrophe — Kwakwaka'wakw", 1],
-    ["check", "x̂  x + U+0302 combining circumflex — Unangax̂ renders, but width measurement is inconclusive on some faces; treated as at-risk and re-checked per platform.", 0],
-    ["ok", "★ ⌖ ▪ □ —  interface marks", 1]
-  ];
-
-  crawler = [
-    ["indexed", "Manifesto, Learn, Archive, Behind the Scenes", "Public reading material. Find it, index it, pass it on. Refusing discovery for its own sake would just be obscurity.", "#509C64"],
-    ["disallowed", "Practise", "What a person marks about their own relationships is not material for a register, a snapshot, or a training set — even though nothing they type ever leaves their browser.", "#DB9E2A"],
-    ["disallowed", "Contribute", "Contributor material is reachable by relationship and request, governed by the terms each contributor chose, not by discovery.", "#DB9E2A"],
-    ["refused", "Training crawlers", "GPTBot, CCBot, Google-Extended, ClaudeBot and their kin are disallowed site-wide. This request has no technical force; it is stated so that ignoring it is a choice on the record.", "#D07F75"],
-    ["allowed, with limits", "Retrieval crawlers", "Training and retrieval are different acts. A crawler fetching this page to answer a person's question, and citing it back, may read the public pages — it is refused the workshop and the contribution page like anyone else. Refusing to become training data is not the same as refusing to be found.", "#509C64"]
-  ];
-
-  terms = [
-    "Fork, translate, reprint, adapt, and teach from this site freely, with attribution travelling with the fragment.",
-    "Do not extract Indigenous cultural material without permission from the communities it belongs to. A citation on this site is not that permission.",
-    "Contributors keep their own work. The project holds only the licence each contributor chose, and holds it for only as long as they say.",
-    "No unilateral amendment. Terms carry a version; changes are logged with the prior wording left legible, and never apply retroactively.",
-    "No arbitration clause, no forum selection, no waiver of your own courts.",
-    "No sale of the archive. If the project closes, contributors are notified and material is returned or deleted on their terms.",
-    "This site claims no jurisdiction over anyone who reads it."
-  ];
-
-  faults = [
-    ["01", "The server has no declared territory yet", "The site is unhosted, so the most material field in the colophon is blank. Naming the machine's location and watershed is a launch condition, not an optional extra."],
-    ["02", "Protocol-gated access is not built", "Opacity is currently expressed as a crawler policy and as honest absence. Community-defined access rules — the Mukurtu and TK Label model — are not implemented, so no material that genuinely needs protocol is held here yet."],
-    ["03", "The archive notes are unreviewed", "Every source note, nation attribution, and reuse line was written by one person and is awaiting paid Indigenous review. Errors are likely. Corrections will appear in the log, struck rather than erased."],
-    ["04", "The pages need a runtime to draw", "Plain semantic markup with no build step is the durability, accessibility, and sovereignty choice all at once. This build partially meets it: Manifesto and Learn now render and read fully with scripting off, generated by Hugo from data files and committed as plain HTML (see the Build field below). Archive and this page do not yet — turn off scripting and they still don't render. Practise keeps the runtime regardless; it is a tool, not a reading page."],
-    ["05", "The layout still parcels space", "One section of the archive now expresses shared jurisdiction — two themes claiming the same texts in the same cells. The rest of the site is a conventional grid of exclusive parcels. Whether that matters more than legibility is an open question, not a settled one."],
-    ["06", "There is no community, so governance is a promise", "An editorial charter, advisory group, and appeals process are described in the future tense on the Contribute page. Until people exist to hold them, they are intentions, and this site says so rather than implying otherwise."]
-  ];
-
-  log = [
-    {
-      version: "v0.2 — current",
-      entries: [
-        ["was: three faces loaded from a font CDN on every page", "now: system font stack, zero third-party requests, reader addresses disclosed to nobody"],
-        ["was: orthographic coverage assumed", "now: every diacritic on the site measured against the notdef box, check published and re-runnable"],
-        ["was: opacity demonstrated as a reveal button", "now: a real crawler policy, an honest account of what is not built, and the existing protocol tools named"],
-        ["was: 34-pixel colour-only swatches in the Consent Domains Map", "now: labelled radio controls, 44-pixel targets, colour never the only signal"],
-        ["was: 'points outward' with no outbound links", "now: every archive entry links to the author, publisher, or open-access source"],
-        ["was: no colophon, no changelog, no reuse terms, no crawler file", "now: this page, plus robots.txt"],
-        ["was: 'not a substitute for decolonization' as the only limit", "now: the limit stated plainly — a website returns no land; this is anti-colonial design"],
-        ["was: the dispatch card visually privileged above the other five entry points", "now: equal weight, and the ask named as an ask"],
-        ["was: nothing on this site pointed anywhere for a reader in danger", "now: Resources.dc.html — crisis lines, coercive-control and shelter services, legal, immigration, housing, disability, 2SLGBTQ+, and Indigenous-led directories, each checked against the organisation's own site and dated. Ships as plain static HTML, no runtime, allowed to every crawler including the ones this site otherwise refuses training access to. Partial: the local/regional tier is not built yet, stated on the page rather than guessed at"],
-        ["was: a single safety-notice paragraph sat beside the Consent Domains Map, and the tool itself had no gate at all", "now: the tool sits behind a real sequence — five non-diagnostic safety questions, then optional rewritten grounding, then the tool — held in page state only, never stored or sent anywhere, with a Resources link at every step and no stage that can only be passed one way"],
-        ["was: principles 06 and 07 could conflict with no tiebreaker, leaving sovereignty language available to justify walking away from a dependant", "now: a Continuity of care clause on the Learn page — leaving is not abandonment, but it moves an unmet need rather than dissolving it; the clause is explicit that it is not available to anyone using it to keep a person who needs to leave"],
-        ["was: every reading page needed the runtime described below just to draw its text", "now: Manifesto is generated from plain data files by Hugo and committed as plain HTML — confirmed rendering with scripting off, not just claimed. Learn, Archive, and this page have not migrated yet; fault 4 stays open until they do"],
-        ["was: Learn's twelve principles, the opacity table, and the topics list lived in a JS array and needed scripting to draw", "now: Learn is generated by Hugo from plain YAML data files — confirmed rendering fully with scripting off. Archive and this page remain"]
-      ]
-    },
-    {
-      version: "v0.1 — first draft",
-      entries: [
-        ["", "Five pages: Home, Manifesto, Learn, Practise, Archive, Contribute. Twelve principles, fifteen theses, a working Consent Domains Map, a starter reading shelf."]
-      ]
-    }
-  ];
-
-  renderVals() {
-    return {
-      substrate: this.substrate.map(s => ({ k: s[0], v: s[1], rule: s[2] })),
-      glyphs: this.glyphs.map(g => ({
-        mark: g[2] ? "ok" : "!!",
-        color: g[2] ? "#366943" : "#8B3A2F",
-        text: g[1]
-      })),
-      crawler: this.crawler.map(c => ({ state: c[0], what: c[1], why: c[2], color: c[3] })),
-      terms: this.terms,
-      faults: this.faults.map(f => ({ n: f[0], title: f[1], body: f[2] })),
-      log: this.log.map(v => ({ version: v.version, entries: v.entries.map(e => ({ was: e[0], now: e[1] })) }))
-    };
-  }
-}
-</script>
 </body>
 </html>

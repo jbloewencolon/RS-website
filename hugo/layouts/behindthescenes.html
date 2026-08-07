@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Behind the Scenes — How This Site Is Made</title>
+<meta name="description" content="The substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.">
+<link rel="canonical" href="https://relationalsovereignty.com/BehindTheScenes.dc.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Relational Sovereignty">
+<meta property="og:url" content="https://relationalsovereignty.com/BehindTheScenes.dc.html">
+<meta property="og:title" content="Behind the Scenes — How This Site Is Made">
+<meta property="og:description" content="The substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+<style>
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  a{color:#2B4C9B;text-underline-offset:3px;text-decoration-thickness:1px}
+  a:hover{color:#3F7A4E}
+  *{box-sizing:border-box}
+  :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
+  @media print{body{background:#fff}.noprint{display:none!important}}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+  .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
+  .skip-link:focus{left:1rem;top:1rem}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+<header style="border-bottom:1px solid #C9C6BA">
+  <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
+    <a href="Home.dc.html" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
+    <nav aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+      <a href="Manifesto.dc.html" style="color:#585B4F;text-decoration:none">Manifesto</a>
+      <a href="Learn.dc.html" style="color:#585B4F;text-decoration:none">Learn</a>
+      <a href="Practise.dc.html" style="color:#585B4F;text-decoration:none">Practise</a>
+      <a href="Archive.dc.html" style="color:#585B4F;text-decoration:none">Archive</a>
+      <a href="Contribute.dc.html" style="color:#585B4F;text-decoration:none">Contribute</a>
+      <a href="Resources.dc.html" style="color:#585B4F;text-decoration:none">Resources</a>
+      <a href="BehindTheScenes.dc.html" style="color:#366943;text-decoration:none">Behind the Scenes</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section id="main-content" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Behind the Scenes · exposed structure · about 6 minutes</p>
+    <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.1rem,5.6vw,3.8rem);line-height:1;letter-spacing:-.03em;margin:0 0 1.4rem;max-width:17ch">How this site is made, including where it fails.</h1>
+    <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">A site arguing against domination cannot keep its own workings private. What follows is the substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.</p>
+    <p style="max-width:52ch;margin:0;color:#3C3E38">Some of these fields are marked <em>not yet known</em>. That is the accurate answer at v0.2, and a blank is more honest than a placeholder.</p>
+  </div>
+</section>
+
+<section style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">The substrate</h2>
+    <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">A land acknowledgement in a footer is decoration. These are the material facts of the machine you are reading on, as far as they are currently known.</p>
+    <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem 2.4rem">
+      {{ range hugo.Data.substrate }}
+      <div style="border-top:2px solid {{ .rule }};padding-top:.7rem">
+        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ .rule }};margin:0 0 .35rem">{{ .k }}</dt>
+        <dd style="margin:0;font-size:16px;line-height:1.5">{{ .v }}</dd>
+      </div>
+      {{ end }}
+    </dl>
+  </div>
+</section>
+
+<section style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Type, and why it changed</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem 2.6rem">
+      <div>
+        <p style="margin:0 0 1rem;max-width:46ch">Version 0.1 loaded three faces from a font CDN. That disclosed every reader's address to a third party on page load, while the footer claimed no third parties. The claim was false, so the fonts went.</p>
+        <p style="margin:0 0 1rem;max-width:46ch">What replaced them is a system stack: no request leaves your device for type, and the faces already on your machine carry far wider orthographic coverage than the display faces did. The identity is quieter. That is the correct trade.</p>
+        <p style="margin:0;max-width:46ch;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F">Display · ui-sans-serif, system-ui, Helvetica Neue, Helvetica, Arial<br>Reading · Georgia, Iowan Old Style, Palatino Linotype, Palatino<br>Structure · ui-monospace, SF Mono, Cascadia Mono, Menlo, Consolas</p>
+      </div>
+      <div style="border:1px solid #C9C6BA;border-left:4px solid #3F7A4E;padding:1.3rem 1.4rem;background:rgba(63,122,78,.05)">
+        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 .8rem">Coverage, checked not assumed</p>
+        <p style="margin:0 0 .9rem;font-size:15.5px;line-height:1.5">A font that turns a nation's name into boxes makes a people unwritable in their own name. Every diacritic this site carries was measured against the notdef box in each stack, rather than trusted.</p>
+        <ul style="list-style:none;margin:0 0 .9rem;padding:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.7;color:#3C3E38">
+          {{ range hugo.Data.glyphs }}
+          <li><span style="color:{{ cond .ok "#366943" "#8B3A2F" }}">{{ cond .ok "ok" "!!" }}</span> {{ .text }}</li>
+          {{ end }}
+        </ul>
+        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.55;color:#5A5D53">Measured 2026 on Chrome / Windows. Results vary by platform, which is why each stack names several faces. The check itself is <a href="glyph-check.html">viewable and re-runnable</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">Opacity as governance, not as a button</p>
+    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.2rem;max-width:24ch;color:#E7E5DC">What this site refuses to the crawler.</h2>
+    <p style="max-width:54ch;margin:0 0 1.6rem;color:#B8C7C1">Discovery by a third party is not a condition of existing. A publisher can decline the index, and this one does, selectively. The policy is a real file, not a claim: <a href="robots.txt" style="color:#DB9E2A">read robots.txt</a>.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:#2A4C4C;border:1px solid #2A4C4C;margin-bottom:1.8rem">
+      {{ range hugo.Data.crawler }}
+      <div style="background:#0F2A2E;padding:1.2rem 1.3rem 1.4rem">
+        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ .color }};margin:0 0 .5rem">{{ .state }}</p>
+        <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">{{ .what }}</h3>
+        <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">{{ .why }}</p>
+      </div>
+      {{ end }}
+    </div>
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#73968D;border-left:2px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:0 0 1.6rem;max-width:58ch">⌖ The caveat that governs all of this: opacity is owed to the crawler and the market, never to the disabled reader. Nothing here is hidden from assistive technology, and no semantic structure is removed to look less legible. Withhold from extraction; disclose fully to those who need access to participate.</p>
+    <p style="max-width:54ch;margin:0;color:#B8C7C1">Protocol-gated access — where a community, not this project, sets who may see what and under which relationship — is not built yet. When it is, it will follow work that already exists rather than a scheme invented here: <a href="https://mukurtu.org" style="color:#DB9E2A">Mukurtu CMS</a>, built with the Warumungu community; <a href="https://localcontexts.org" style="color:#DB9E2A">Local Contexts</a> TK and BC Labels; and the <a href="https://www.gida-global.org/care" style="color:#DB9E2A">CARE Principles</a> for Indigenous data governance.</p>
+  </div>
+</section>
+
+<section style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(2.5rem,5vw,3.5rem)">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Reuse terms, version 0.2</h2>
+    <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">Terms that only bind the reader are not terms; they are imposed law. These bind the project too.</p>
+    <ul style="list-style:none;margin:0 0 1.4rem;padding:0;max-width:760px;display:flex;flex-direction:column;gap:.7rem">
+      {{ range hugo.Data.terms }}
+      <li style="border-top:1px solid #C9C6BA;padding-top:.7rem;font-size:16px;line-height:1.5">{{ . }}</li>
+      {{ end }}
+    </ul>
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #3F7A4E;padding:.3rem 0 .3rem .9rem;margin:0;max-width:58ch">⌖ No unilateral amendment. These terms carry a version number; changes are published as a dated entry in the log below, with the previous wording left legible. A change cannot apply retroactively to material already contributed under earlier terms.</p>
+  </div>
+</section>
+
+<section style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .5rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">The fault list</h2>
+    <p style="max-width:56ch;margin:1rem 0 1.6rem;color:#3C3E38">Known and unfixed, published rather than quietly carried. Naming them is not absolution; it is the work list.</p>
+    <ol style="list-style:none;counter-reset:f;margin:0;padding:0;display:flex;flex-direction:column;gap:1.2rem;max-width:820px">
+      {{ range hugo.Data.faults }}
+      <li style="counter-increment:f;display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;border-top:1px solid #C9C6BA;padding-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#8B3A2F">{{ .n }}</span>
+        <div>
+          <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .3rem;line-height:1.2">{{ .title }}</h3>
+          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">{{ .body }}</p>
+        </div>
+      </li>
+      {{ end }}
+    </ol>
+  </div>
+</section>
+
+<section style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">Change log — repair in view</p>
+    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.2rem;max-width:24ch;color:#E7E5DC">Corrections are shown, not overwritten.</h2>
+    <p style="max-width:54ch;margin:0 0 2rem;color:#B8C7C1">Struck text is what the site used to say or do. The seam of the mend stays visible; that is the point.</p>
+    <div style="display:flex;flex-direction:column;gap:1.6rem;max-width:820px">
+      {{ range hugo.Data.changelog }}
+      <div>
+        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;color:#DB9E2A;margin:0 0 .7rem;border-bottom:1px solid #2A4C4C;padding-bottom:.4rem">{{ .version }}</p>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.65">
+          {{ range .entries }}
+          <li style="color:#B8C7C1"><del style="color:#73968D">{{ .was }}</del> <span style="color:#509C64">{{ .now }}</span></li>
+          {{ end }}
+        </ul>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+<section style="padding:clamp(3rem,6vw,4.5rem) 0">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Labour and money</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.6rem 2.4rem;max-width:1000px">
+      <div>
+        <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.05rem;margin:0 0 .4rem">Who has worked on this</h3>
+        <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">At v0.2: one unpaid person, writing and building. Every future contributor, translator, reviewer, and maintainer will be named here individually, not aggregated into a credit line.</p>
+      </div>
+      <div>
+        <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.05rem;margin:0 0 .4rem">What is paid</h3>
+        <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">Nothing yet, which is why the archive's source notes are marked provisional. Indigenous review, disability-access review, and facilitation are paid work; until there is money for them, they are listed as owed rather than described as done.</p>
+      </div>
+      <div>
+        <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.05rem;margin:0 0 .4rem">What it costs to run</h3>
+        <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">Static pages, no database, no analytics, no CDN. Once hosted, the running cost and its funding source will be published as a figure here.</p>
+      </div>
+      <div>
+        <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.05rem;margin:0 0 .4rem">Sources this site is built from</h3>
+        <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">Four research documents and a manifesto held by the project, and the writers named in the <a href="Archive.dc.html">archive</a> — who are owed the credit, and to whom this site is only a door.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:0 0 clamp(3rem,6vw,4.5rem)">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <div style="border-top:2px solid #8B3A2F;padding-top:1.6rem;max-width:700px">
+      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#8B3A2F;margin:0 0 1rem">The limit</p>
+      <p style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(1.3rem,3.2vw,1.9rem);line-height:1.14;letter-spacing:-.02em;margin:0 0 1.2rem">A website returns no land.</p>
+      <p style="margin:0 0 1rem;max-width:52ch">Everything on this page is more accurately called anti-colonial design: a refusal to reproduce colonial form. That is a real but modest achievement, and it is not the repatriation of territory or life. Sufficiently thoughtful design is not decolonization.</p>
+      <p style="margin:0;max-width:52ch;color:#3C3E38">The substrate is not exited either — a naming registry, two browser engines, corporate networks, and a physical data centre remain. Where this work touches actual sovereignty it is jurisdictional: whose law governs a community's data, on whose territory the servers sit, who holds deletion authority, who may crawl and train. That is a question about land, not layout.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
+    <p style="margin:0;max-width:44ch">v0.2 · no fonts, scripts, or requests from third parties · <a href="robots.txt" style="color:#8FA9A2">crawler policy</a></p>
+    <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
+      <a href="Home.dc.html" style="color:#8FA9A2;text-decoration:none">Home</a>
+      <a href="Manifesto.dc.html" style="color:#8FA9A2;text-decoration:none">Manifesto</a>
+      <a href="Learn.dc.html" style="color:#8FA9A2;text-decoration:none">Learn</a>
+      <a href="Practise.dc.html" style="color:#8FA9A2;text-decoration:none">Practise</a>
+      <a href="Archive.dc.html" style="color:#8FA9A2;text-decoration:none">Archive</a>
+      <a href="Contribute.dc.html" style="color:#8FA9A2;text-decoration:none">Contribute</a>
+      <a href="Resources.dc.html" style="color:#8FA9A2;text-decoration:none">Resources</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
