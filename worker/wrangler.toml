@@ -1,31 +1,6 @@
-# Cloudflare Worker config. See worker/README.md for full setup steps.
-#
-# Only non-secret settings live here. The four real secrets
-# (RESEND_API_KEY, GITHUB_TOKEN, TOKEN_SECRET, ENCRYPTION_KEY) are set
-# with `wrangler secret put <NAME>` and are never written to this file
-# or committed anywhere.
-
-name = "rs-dispatch-worker"
-main = "src/index.js"
-compatibility_date = "2024-09-23"
-
-[vars]
-# The public site this Worker accepts signups from. Used both to build
-# links in emails and to restrict which site is allowed to call
-# /api/subscribe.
 SITE_URL = "https://relationalsovereignty.com"
-
-# This Worker's own URL, used to build confirm/unsubscribe links. Starts
-# as the free workers.dev address; update after the first deploy if you
-# later move it to a custom domain.
-WORKER_URL = "[https://rs-dispatch-worker.my-subdomain.workers.dev](https://rs-dispatch-worker.my-subdomain.workers.dev)"
-
-# The address confirmation/unsubscribe emails are sent from. Must be on a
-# domain verified in Resend (see README.md).
+WORKER_URL = "https://rs-dispatch-worker.rssite.workers.dev"
 FROM_EMAIL = "dispatch@relationalsovereignty.com"
-
-# Where the encrypted subscriber list lives: a SEPARATE, PRIVATE GitHub
-# repo — never this public website repo.
 STORE_OWNER = "jbloewencolon"
 STORE_REPO = "rs-dispatch-storage"
 STORE_PATH = "subscribers.enc"
