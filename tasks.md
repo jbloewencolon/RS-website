@@ -41,13 +41,13 @@ The Decision Record flags three assumptions as unconfirmed; a fourth (mailing li
 ## Phase 1 — Safety, access, and the framework's deepest gap
 *(Decision Record Cycle 1 — nothing in Phase 2+ ships before this phase is done)*
 
-**Sequencing note (mine, not in the source docs):** RS-004, RS-028+RS-005, and RS-020 are all **done — see `completed.tasks.md`.** All four reading pages are Hugo-generated, fault 04 is retired, thirteen principles, the Consent Domains Map's Access Intimacy domain has shipped, and every page carries a scoped, machine-checked CSP. `Practise.dc.html` keeps the `dc-runtime` permanently — it's an interactive tool, not a reading page. RS-023 is what's left in Phase 1.
+**Sequencing note (mine, not in the source docs):** RS-004, RS-028+RS-005, and RS-020 are all **done — see `completed.tasks.md`.** All four reading pages are Hugo-generated, fault 04 is retired, thirteen principles, the Consent Domains Map's Access Intimacy domain has shipped, and every page carries a scoped, machine-checked CSP. `Practise.dc.html` keeps the `dc-runtime` permanently — it's an interactive tool, not a reading page. RS-023 is **partially done** — see `completed.tasks.md` for what shipped (the automatable half) and what's below (the part that needs a person).
 
 Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (merged into this branch 2026-08-07) — reflected throughout.
 
 | ID | Task | Tags | Files | Effort | Depends on |
 |---|---|---|---|---|---|
-| **RS-023** | Accessibility acceptance pass: regression-test existing wins (44px targets, labelled radios, skip link), fix focus order/visibility on the RS-001 interstitial, reflow at 320px with a text equivalent for the Archive diagram, screen-reader pass (≥2 of NVDA/JAWS/VoiceOver/TalkBack), honeypot a11y correctness, print stylesheet test. Include RS-026's state-control standard once RS-026 lands (Phase 3). Automated axe-core coverage is already clean on every page (`npm run check`) — this item is the manual SR/print/reflow pass that automation can't do. | `[DEV]` | all pages | M | — |
+| **RS-023 (residual)** | The screen-reader pass genuinely needs a person: ≥2 of NVDA/Firefox, JAWS/Chrome, VoiceOver/Safari, TalkBack/Chrome, actually listened to, not simulated. Also residual: print stylesheet test on real paper/PDF output (Playwright's print-media emulation can check `@media print` rules apply, but not that the result reads well printed), and — deliberately deferred, not forgotten — RS-026's non-verbal state-control standard, which doesn't exist yet (Phase 3). | `[DEV]` (needs a human tester) | all pages | S (down from M — the automatable parts are done) | RS-026 for the state-control-standard piece specifically |
 
 ---
 
@@ -166,11 +166,11 @@ Applies to every page, every release — from `docs/spec/base-work-order.md` §7
 - [ ] Page weight stated accurately in the colophon (see SUGGEST-01 — don't just re-assert "under 60 KB" without checking)
 - [ ] All outbound links resolve; no external link resolved relative to site root
 - [ ] Prints cleanly
-- [ ] Skip link reaches `#main-content`
+- [x] Skip link reaches `#main-content` — verified with a real keyboard-navigation test (Practise): first Tab focuses it, activating it lands the very next Tab on the interstitial's first button, not somewhere in the header nav
 - [ ] Heading order sequential, no skipped levels
 - [ ] `prefers-reduced-motion` honoured
-- [ ] Reflow at 320px, no horizontal scroll except the documented Archive diagram (with text equivalent)
-- [ ] Screen-reader pass on ≥2 of NVDA/Firefox, JAWS/Chrome, VoiceOver/Safari, TalkBack/Chrome
+- [x] Reflow at 320px, no horizontal scroll except the documented Archive diagram (with text equivalent) — checked via `responsive-audit.mjs` across 320/375/768/1280/1920px on every page; the Archive diagram's three lists now carry `aria-labelledby`/a hidden label naming their category, verified by resolving the reference in a live DOM, not just present in markup
+- [ ] Screen-reader pass on ≥2 of NVDA/Firefox, JAWS/Chrome, VoiceOver/Safari, TalkBack/Chrome — **not done, needs a human tester with real assistive technology; nothing in this session substitutes for it**
 - [ ] Every diacritic checked against the notdef box on the target platform
 
 **Practise page specifically:**

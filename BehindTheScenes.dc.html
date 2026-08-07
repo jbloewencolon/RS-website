@@ -34,13 +34,13 @@
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="Home.dc.html" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
     <nav aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
-      <a href="Manifesto.dc.html" style="color:#585B4F;text-decoration:none">Manifesto</a>
-      <a href="Learn.dc.html" style="color:#585B4F;text-decoration:none">Learn</a>
-      <a href="Practise.dc.html" style="color:#585B4F;text-decoration:none">Practise</a>
-      <a href="Archive.dc.html" style="color:#585B4F;text-decoration:none">Archive</a>
-      <a href="Contribute.dc.html" style="color:#585B4F;text-decoration:none">Contribute</a>
-      <a href="Resources.dc.html" style="color:#585B4F;text-decoration:none">Resources</a>
-      <a href="BehindTheScenes.dc.html" style="color:#366943;text-decoration:none">Behind the Scenes</a>
+      <a href="Manifesto.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
+      <a href="Learn.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
+      <a href="Practise.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
+      <a href="Archive.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
+      <a href="Contribute.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
+      <a href="Resources.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
+      <a href="BehindTheScenes.dc.html" style="color:#366943;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
     </nav>
   </div>
 </header>
@@ -316,6 +316,8 @@
           
           <li style="color:#B8C7C1"><del style="color:#73968D">no Content-Security-Policy anywhere, and two inline &lt;script&gt; blocks (the archive filter, the glyph check) that a strict one would have had to carve an exception for</del> <span style="color:#509C64">every page carries a CSP scoped to what that specific page actually does — no script execution at all on Resources, same-origin-only on the four reading pages and glyph-check, a narrow eval allowance only where the page template runtime still runs, connect-src naming the dispatch Worker only on the two pages that call it. Machine-enforced: a new CI check fails the build if any page ever loads a script, stylesheet, or CSS import/url() from off this domain. The two inline scripts were moved to their own files first, specifically so script-src never needed unsafe-inline anywhere. One real gap, disclosed rather than hidden: frame-ancestors can&#39;t be delivered via &lt;meta&gt; at all — a genuine CSP-specification limit, not a choice — so there is no clickjacking protection until this site moves off a host that can set response headers. Fault 06</span></li>
           
+          <li style="color:#B8C7C1"><del style="color:#73968D">the site&#39;s own 44-pixel touch-target standard held for the Consent Domains Map&#39;s radio controls but not for the primary or footer navigation, whose links were roughly 20 pixels tall everywhere; the Archive&#39;s Held in Common diagram had no way for a screen-reader user to know which visual column a list belonged to; Archive&#39;s 31 per-entry citation links (the page&#39;s actual purpose) were the same 20-pixel links as the nav</del> <span style="color:#509C64">every navigation link and every Archive citation link site-wide now meets 44 pixels, verified against real rendered layout at 320/375px, not just read off the markup. The three Held in Common lists carry aria-labelledby (or a visually-hidden label for the middle one, since it had no visible heading to point to) naming their category, verified by resolving the reference in a live DOM rather than assuming the markup was right — a first attempt (aria-label directly on a &lt;ul&gt;) failed html-validate&#39;s aria-label-misuse check, and the fix (a hidden label element plus aria-labelledby) was re-verified, not just applied. Keyboard focus order confirmed end to end on the Practise safety/grounding/tool sequence, including that the skip link genuinely lands the very next Tab on &#34;Continue&#34; — not just present, exercised. Honeypot field confirmed already correct (aria-hidden, tabindex=-1, autocomplete=off). This is the automatable half of RS-023: what a real screen reader (NVDA, JAWS, VoiceOver, TalkBack) actually announces has not been tested by a person and is not claimed here</span></li>
+          
         </ul>
       </div>
       
@@ -373,13 +375,13 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:44ch">v0.2 · no fonts, scripts, or requests from third parties · <a href="robots.txt" style="color:#8FA9A2">crawler policy</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
-      <a href="Home.dc.html" style="color:#8FA9A2;text-decoration:none">Home</a>
-      <a href="Manifesto.dc.html" style="color:#8FA9A2;text-decoration:none">Manifesto</a>
-      <a href="Learn.dc.html" style="color:#8FA9A2;text-decoration:none">Learn</a>
-      <a href="Practise.dc.html" style="color:#8FA9A2;text-decoration:none">Practise</a>
-      <a href="Archive.dc.html" style="color:#8FA9A2;text-decoration:none">Archive</a>
-      <a href="Contribute.dc.html" style="color:#8FA9A2;text-decoration:none">Contribute</a>
-      <a href="Resources.dc.html" style="color:#8FA9A2;text-decoration:none">Resources</a>
+      <a href="Home.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>
+      <a href="Manifesto.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
+      <a href="Learn.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
+      <a href="Practise.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
+      <a href="Archive.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
+      <a href="Contribute.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
+      <a href="Resources.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
     </nav>
   </div>
 </footer>

@@ -40,13 +40,13 @@
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="Home.dc.html" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
     <nav aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
-      <a href="Manifesto.dc.html" style="color:#585B4F;text-decoration:none">Manifesto</a>
-      <a href="Learn.dc.html" style="color:#585B4F;text-decoration:none">Learn</a>
-      <a href="Practise.dc.html" style="color:#585B4F;text-decoration:none">Practise</a>
-      <a href="Archive.dc.html" style="color:#366943;text-decoration:none">Archive</a>
-      <a href="Contribute.dc.html" style="color:#585B4F;text-decoration:none">Contribute</a>
-      <a href="Resources.dc.html" style="color:#585B4F;text-decoration:none">Resources</a>
-      <a href="BehindTheScenes.dc.html" style="color:#585B4F;text-decoration:none">Behind the Scenes</a>
+      <a href="Manifesto.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
+      <a href="Learn.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
+      <a href="Practise.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
+      <a href="Archive.dc.html" style="color:#366943;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
+      <a href="Contribute.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
+      <a href="Resources.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
+      <a href="BehindTheScenes.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
     </nav>
   </div>
 </header>
@@ -90,7 +90,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">{{ .by }}</p>
           <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">{{ .why }}</p>
           {{ if .link }}
-          <p style="margin:0"><a href="{{ .link }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5">{{ .linkLabel }} →</a></p>
+          <p style="margin:0 0 0 -.4rem"><a href="{{ .link }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">{{ .linkLabel }} →</a></p>
           {{ else }}
           <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;color:#5A5D53">{{ .linkLabel }}</p>
           {{ end }}
@@ -106,22 +106,23 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .5rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Held in common</h2>
     <p style="max-width:60ch;margin:1rem 0 .6rem;color:#3C3E38">A shelf is a cadastre: one parcel per book, no overlaps, every text assigned to exactly one owner. Some of these texts refuse that. The four in the centre below are claimed fully by both traditions at once — not shared out, not split, not filed under one and cross-referenced from the other. Two jurisdictions, one holding.</p>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:0 0 1.4rem">Reading order is left to right; on a narrow screen this diagram scrolls sideways.</p>
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:0 0 1.4rem">Reading order is left to right; on a narrow screen this diagram scrolls sideways. The three lists below are titled for anyone not reading them by their visual position — this is a Venn diagram made of real list text, not an image, so nothing here needs a separate text alternative.</p>
     <div style="overflow-x:auto;padding-bottom:.5rem">
       <div style="min-width:700px;display:grid;grid-template-columns:1fr 1.15fr 1fr;grid-template-rows:auto minmax(240px,auto);gap:0">
-        <p style="grid-column:1;grid-row:1;margin:0 0 .7rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B">Sovereignty, refusal, relation</p>
-        <p style="grid-column:3;grid-row:1;margin:0 0 .7rem;text-align:right;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915">Care, access, accountability</p>
+        <p id="held-common-track-a-label" style="grid-column:1;grid-row:1;margin:0 0 .7rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B">Sovereignty, refusal, relation</p>
+        <p id="held-common-track-b-label" style="grid-column:3;grid-row:1;margin:0 0 .7rem;text-align:right;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915">Care, access, accountability</p>
 
         <div style="grid-column:1 / 3;grid-row:2;background:rgba(43,76,155,.09);border:1px solid #2B4C9B;border-radius:2px;z-index:0" aria-hidden="true"></div>
         <div style="grid-column:2 / 4;grid-row:2;background:rgba(219,158,42,.16);border:1px solid #DB9E2A;border-radius:2px;z-index:0" aria-hidden="true"></div>
 
-        <ul style="grid-column:1;grid-row:2;z-index:1;list-style:none;margin:0;padding:1.2rem 1.2rem;display:flex;flex-direction:column;gap:.7rem;font-size:15px;line-height:1.4">
+        <ul aria-labelledby="held-common-track-a-label" style="grid-column:1;grid-row:2;z-index:1;list-style:none;margin:0;padding:1.2rem 1.2rem;display:flex;flex-direction:column;gap:.7rem;font-size:15px;line-height:1.4">
           {{ range hugo.Data.archive.trackA }}
           <li>{{ . }}</li>
           {{ end }}
         </ul>
 
-        <ul style="grid-column:2;grid-row:2;z-index:2;list-style:none;margin:1.1rem .8rem;padding:1.1rem 1.1rem;background:rgba(231,229,220,.72);border:2px solid #3F7A4E;border-radius:2px;display:flex;flex-direction:column;gap:.8rem">
+        <p id="held-common-shared-label" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">Held in common by both traditions</p>
+        <ul aria-labelledby="held-common-shared-label" style="grid-column:2;grid-row:2;z-index:2;list-style:none;margin:1.1rem .8rem;padding:1.1rem 1.1rem;background:rgba(231,229,220,.72);border:2px solid #3F7A4E;border-radius:2px;display:flex;flex-direction:column;gap:.8rem">
           {{ range hugo.Data.archive.shared }}
           <li>
             <p style="margin:0 0 .15rem;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:.98rem;line-height:1.2;letter-spacing:-.01em">{{ .title }}</p>
@@ -130,7 +131,7 @@
           {{ end }}
         </ul>
 
-        <ul style="grid-column:3;grid-row:2;z-index:1;list-style:none;margin:0;padding:1.2rem 1.2rem;display:flex;flex-direction:column;gap:.7rem;font-size:15px;line-height:1.4;text-align:right">
+        <ul aria-labelledby="held-common-track-b-label" style="grid-column:3;grid-row:2;z-index:1;list-style:none;margin:0;padding:1.2rem 1.2rem;display:flex;flex-direction:column;gap:.7rem;font-size:15px;line-height:1.4;text-align:right">
           {{ range hugo.Data.archive.trackB }}
           <li>{{ . }}</li>
           {{ end }}
@@ -187,13 +188,13 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:46ch">v0.2 · every note provisional, awaiting paid Indigenous review · corrections are shown, not overwritten — <a href="Contribute.dc.html" style="color:#DB9E2A">send one</a> · <a href="BehindTheScenes.dc.html" style="color:#8FA9A2">what changed</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
-      <a href="Home.dc.html" style="color:#8FA9A2;text-decoration:none">Home</a>
-      <a href="Manifesto.dc.html" style="color:#8FA9A2;text-decoration:none">Manifesto</a>
-      <a href="Learn.dc.html" style="color:#8FA9A2;text-decoration:none">Learn</a>
-      <a href="Practise.dc.html" style="color:#8FA9A2;text-decoration:none">Practise</a>
-      <a href="Contribute.dc.html" style="color:#8FA9A2;text-decoration:none">Contribute</a>
-      <a href="Resources.dc.html" style="color:#8FA9A2;text-decoration:none">Resources</a>
-      <a href="BehindTheScenes.dc.html" style="color:#8FA9A2;text-decoration:none">Behind the Scenes</a>
+      <a href="Home.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>
+      <a href="Manifesto.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
+      <a href="Learn.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
+      <a href="Practise.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
+      <a href="Contribute.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
+      <a href="Resources.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
+      <a href="BehindTheScenes.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
     </nav>
   </div>
 </footer>
