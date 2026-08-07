@@ -43,7 +43,7 @@ const PAGES = [
   "Contribute.dc.html",
   "Colophon.dc.html",
 ];
-const COPY_AS_IS = ["glyph-check.html", "support.js", "robots.txt", "CNAME", "LICENSE"];
+const COPY_AS_IS = ["glyph-check.html", "Resources.dc.html", "support.js", "robots.txt", "CNAME", "LICENSE"];
 
 const MIME = { ".html": "text/html", ".js": "application/javascript", ".txt": "text/plain" };
 

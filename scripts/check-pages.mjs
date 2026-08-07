@@ -22,6 +22,7 @@ const pages = [
   "Archive.dc.html",
   "Contribute.dc.html",
   "Colophon.dc.html",
+  "Resources.dc.html",
   "glyph-check.html",
 ];
 

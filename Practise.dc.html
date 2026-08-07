@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Consent Domains Map — Relational Sovereignty</title>
 <meta name="description" content="A private, in-browser tool for mapping consent across seventeen domains of a relationship. Nothing you enter leaves this page.">
+<meta name="robots" content="noindex">
 <link rel="canonical" href="https://relationalsovereignty.com/Practise.dc.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Relational Sovereignty">
@@ -45,6 +46,7 @@
       <a href="Practise.dc.html" style="color:#366943;text-decoration:none">Practise</a>
       <a href="Archive.dc.html" style="color:#585B4F;text-decoration:none">Archive</a>
       <a href="Contribute.dc.html" style="color:#585B4F;text-decoration:none">Contribute</a>
+      <a href="Resources.dc.html" style="color:#585B4F;text-decoration:none">Resources</a>
       <a href="Colophon.dc.html" style="color:#585B4F;text-decoration:none">Colophon</a>
     </nav>
   </div>
@@ -57,11 +59,61 @@
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.2rem,6vw,4rem);line-height:1;letter-spacing:-.035em;margin:0 0 1.4rem;max-width:15ch">The Consent Domains Map</h1>
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:46ch;margin:0 0 1.2rem">A relationship label is not blanket permission. This map separates consent into seventeen domains so that yes in one is not read as yes in all of them.</p>
     <p style="max-width:52ch;margin:0 0 1.6rem;color:#3C3E38">Mark where you stand in each domain, add a condition where it matters, then print it or read it aloud with the other person. There is no score and no correct pattern.</p>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:0;max-width:58ch">⌖ Safety — this tool is not appropriate when one participant is violent, coercive, retaliatory, or controlling. A written record of your limits can be used against you. If you are being controlled, reach a local domestic-violence or transformative-justice service before starting a joint conversation. Communication does not resolve every form of abuse.</p>
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:0;max-width:58ch">⌖ Safety — written relationship exercises are not safe for everyone, and joint exercises are not safe where one person controls the other. This is not always visible from inside a relationship. Before the tool, there are five questions and a way out.</p>
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #3F7A4E;padding:.3rem 0 .3rem .9rem;margin:1rem 0 0;max-width:58ch">⌖ Privacy — everything you type stays in this browser tab. Nothing is sent anywhere, nothing is stored, nothing is counted, and this page is disallowed to search crawlers. Closing the tab erases it.</p>
   </div>
 </section>
 
+<sc-if value="{{ atSafety }}" hint-placeholder-val="{{ true }}">
+<section class="noprint" style="padding:0 0 clamp(3rem,6vw,4.5rem)">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <div style="border:1px solid #C9C6BA;border-left:4px solid #8B3A2F;padding:1.7rem 1.6rem 1.9rem;max-width:700px;background:rgba(139,58,47,.04);border-radius:3px">
+      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#8B3A2F;margin:0 0 1rem">Before you open this</p>
+      <p style="margin:0 0 1.2rem;font-size:17px;line-height:1.55">This tool asks you to describe a relationship in writing. For most people that is useful. For some people it is not safe, and the difference is not always obvious from inside.</p>
+      <p style="margin:0 0 1rem;font-size:16px;line-height:1.5;color:#3C3E38">Sit with these for a moment. There is no score and no answer to give anyone.</p>
+      <ul style="list-style:none;margin:0 0 1.4rem;padding:0;display:flex;flex-direction:column;gap:.7rem;font-size:16px;line-height:1.5">
+        <li>— When you disagree, what happens afterwards?</li>
+        <li>— Do you have your own access to money, documents, and a way to leave the house?</li>
+        <li>— Does the other person know where you are most of the time, and did you agree to that?</li>
+        <li>— Have you thought about leaving? If you have said so out loud, what was the response?</li>
+        <li>— Is there anyone who knows the whole of what is happening?</li>
+      </ul>
+      <p style="margin:0 0 1.4rem;font-size:16px;line-height:1.5">If any of those were difficult to sit with, the most useful thing this page can do is point you elsewhere. These same five questions are also published on their own, so you can read or send them without opening a tool.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:.8rem">
+        <button type="button" onClick="{{ toGrounding }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px">Continue</button>
+        <button type="button" onClick="{{ toTool }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.85rem 1.1rem;min-height:44px;cursor:pointer;border-radius:2px">Skip straight to the tool</button>
+        <a href="Resources.dc.html" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;border:1px solid #8B3A2F;color:#8B3A2F;padding:.85rem 1.1rem;text-decoration:none;border-radius:2px;display:inline-flex;align-items:center">Go to resources instead →</a>
+      </div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ atGrounding }}" hint-placeholder-val="{{ false }}">
+<section class="noprint" style="padding:0 0 clamp(3rem,6vw,4.5rem)">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <div style="border:1px solid #C9C6BA;border-left:4px solid #3F7A4E;padding:1.7rem 1.6rem 1.9rem;max-width:700px;background:rgba(63,122,78,.05);border-radius:3px">
+      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 1rem">Before you start</p>
+      <p style="margin:0 0 1.2rem;font-size:17px;line-height:1.55">This goes better when you are not at your worst. Not calm — just not at your worst.</p>
+      <p style="margin:0 0 1rem;font-size:16px;line-height:1.5;color:#3C3E38">Some people find one of these helps. Some find they make things worse, which is also worth knowing. None of it is required.</p>
+      <ul style="list-style:none;margin:0 0 1.4rem;padding:0;display:flex;flex-direction:column;gap:.7rem;font-size:16px;line-height:1.5">
+        <li>— Name five things you can see, without moving.</li>
+        <li>— Push your feet into the floor and notice the floor pushing back.</li>
+        <li>— Hold something with texture — fabric, a cup, a rail — and describe it to yourself in words.</li>
+        <li>— Breathe however you normally breathe. If counting helps you, count. If paying attention to your breathing makes things worse, skip this one.</li>
+      </ul>
+      <p style="margin:0 0 1.4rem;font-size:16px;line-height:1.5">If none of that appeals, skip it. Going straight to the tool is a legitimate choice. So is closing the tab.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:.8rem">
+        <button type="button" onClick="{{ toTool }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px">Start the tool</button>
+        <button type="button" onClick="{{ toTool }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.85rem 1.1rem;min-height:44px;cursor:pointer;border-radius:2px">Skip this</button>
+        <a href="Resources.dc.html" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;border:1px solid #366943;color:#366943;padding:.85rem 1.1rem;text-decoration:none;border-radius:2px;display:inline-flex;align-items:center">Resources →</a>
+      </div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ atTool }}" hint-placeholder-val="{{ false }}">
 <section class="noprint" style="padding:0 0 1.4rem">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.4rem 2.4rem;align-items:flex-end;justify-content:space-between;border-bottom:1px solid #C9C6BA;padding-bottom:1.4rem">
     <label style="display:block;flex:1 1 260px;max-width:360px">
@@ -122,6 +174,7 @@
     </div>
   </div>
 </section>
+</sc-if>
 
 <section class="noprint" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
@@ -141,14 +194,17 @@
   </div>
 </section>
 
+<sc-if value="{{ atTool }}" hint-placeholder-val="{{ false }}">
 <section class="noprint" style="padding:clamp(2.5rem,5vw,3.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <div style="border-top:1px solid #C9C6BA;padding-top:2rem;max-width:640px">
-      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 .8rem">You have reached the end of this page</p>
-      <p style="margin:0;font-size:17px;line-height:1.55">Print what you made, or close the tab and let it go. The map is only worth the conversation that follows it, and that conversation does not happen here.</p>
+      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 .8rem">You have finished, or stopped</p>
+      <p style="margin:0 0 1rem;font-size:17px;line-height:1.55">Either is complete. If this surfaced more than you expected, that is common and is not a sign you did it wrong. Nothing has been saved.</p>
+      <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">Print what you made, or close the tab and let it go. The map is only worth the conversation that follows it, and that conversation does not happen here. <a href="Resources.dc.html">Resources</a>, if you want somewhere to take it.</p>
     </div>
   </div>
 </section>
+</sc-if>
 
 </main>
 
@@ -161,6 +217,7 @@
       <a href="Learn.dc.html" style="color:#8FA9A2;text-decoration:none">Learn</a>
       <a href="Archive.dc.html" style="color:#8FA9A2;text-decoration:none">Archive</a>
       <a href="Contribute.dc.html" style="color:#8FA9A2;text-decoration:none">Contribute</a>
+      <a href="Resources.dc.html" style="color:#8FA9A2;text-decoration:none">Resources</a>
       <a href="Colophon.dc.html" style="color:#8FA9A2;text-decoration:none">Colophon</a>
     </nav>
   </div>
@@ -169,7 +226,12 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
 class Component extends DCLogic {
-  state = { who: "", picks: {}, notes: {} };
+  // stage: "safety" -> "grounding" -> "tool". Nothing here is stored,
+  // scored, or transmitted; it is only ever component state, gone on
+  // reload or navigation. See docs/spec/base-work-order.md RS-001 and
+  // docs/spec/addendum-a.md RS-032 for why this sequence exists and why
+  // it is not diagnostic — it asks, it does not classify.
+  state = { who: "", picks: {}, notes: {}, stage: "safety" };
 
   domainList = [
     ["Physical touch", "hugs, hands, proximity, waking someone"],
@@ -213,6 +275,16 @@ class Component extends DCLogic {
   renderVals() {
     const picks = this.state.picks, notes = this.state.notes;
     return {
+      atSafety: this.state.stage === "safety",
+      atGrounding: this.state.stage === "grounding",
+      atTool: this.state.stage === "tool",
+      // Both "Continue" (safety -> grounding) and the two ways of leaving
+      // grounding ("Start the tool" / "Skip this") are one click each —
+      // no stage can only be passed one way. See RS-001 acceptance
+      // criterion 4: a gate that can only be passed one way trains
+      // people to lie to it.
+      toGrounding: () => this.setState({ stage: "grounding" }),
+      toTool: () => this.setState({ stage: "tool" }),
       who: this.state.who,
       setWho: (ev) => this.setState({ who: ev.target.value }),
       print: () => window.print(),
