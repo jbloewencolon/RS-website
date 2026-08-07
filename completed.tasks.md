@@ -166,4 +166,25 @@ Notes — **what this is not**:
 - RS-026 (non-verbal/reduced-language state-control standard) doesn't exist yet — deliberately deferred to Phase 3, not silently dropped.
 - `npm run build:hugo && npm run build && npm run check` and `node responsive-audit.mjs` all pass clean on the final state.
 
+### RS-003 (+ D4) — Drop "survivance" from thesis 14
+**Shipped:** 2026-08-07 · **Commit/PR:** (pending)
+
+~~was: Manifesto thesis 14 titled "Survivance, not 'no future'," transposing Gerald Vizenor's Nation-specific concept of Native active presence onto the site's own claim about relational futures, with the Archive's Vizenor entry captioning the book itself as "the answer to punk's no future"~~
+now: thesis 14 retitled "Regeneration, not endurance," body revised to match — "We are not here only to outlast damaged forms of connection. We are here to make new ones" replaces the earlier "survive... regenerate it" language that leaned on the borrowed term without saying so. Pull-line ("There is a future, and it will be relational.") is unchanged, since it never used the term. Both the heading and body match `decision-record-d1-d15.md` D4's draft text verbatim, not a paraphrase.
+
+**D4 resolves this in favor of Option B (remove), not Option A (argue the transposition)** — the base work order called the two options "either is defensible," but D4's reasoning is that arguing the transposition would require the site to make a public claim about the proper extension of a Nation-specific concept, which is exactly the category of claim fault 03 already names as unreviewed and awaiting paid Indigenous review. Removal costs nothing if the replacement holds on its own terms, and it does — the new thesis argues the same structural point (colonial relationships reproduce by claiming there's no alternative) without needing anyone else's specific vocabulary to make it.
+
+Vizenor stays in the Archive on his own terms: the entry's `why` field drops "The answer to punk's no future" (the line doing the actual borrowing) and is replaced with `base-work-order.md`'s own suggested text, "Read for what it argues, not for what it evokes" — same citation, same book, no longer captioned as a metaphor for this site's argument.
+
+**One item beyond the two files D4 and the base work order name directly:** the not-yet-drafted Learn topic "Survivance and relational futurity" (`hugo/data/topics.yaml`) used the same borrowed term for the same undecided claim. The base work order says to update it "if its status changes" (i.e. when it moves from undrafted to drafted) — but leaving the placeholder title itself carrying the term seemed like leaving the borrowing in place under a different heading, just deferred rather than resolved. Renamed to "Regeneration and relational futurity" to match the thesis's own replacement language. No content exists yet at this topic, so nothing else needed to change.
+
+**Logged in the changelog per D4's own suggested wording** (adapted only to match the site's established was/now format rather than the inline strikethrough D4 drafted it in): "was: thesis 14 titled 'Survivance, not "no future"', using a Nation-specific concept for injuries it was not written about" / "now: the term removed until there is paid review that could say whether the extension holds. The archive still carries Vizenor. The debt was real; the borrowing was not ours to make."
+
+Verified with a real headless browser, JavaScript disabled, reading both regenerated pages directly: `Manifesto.dc.html` contains "Regeneration, not endurance" and "outlast damaged forms" and does not contain the string "Survivance" anywhere; `Archive.dc.html` contains "Read for what it argues" and does not contain "punk's no future" — not just a text diff against the source data files, but confirmation of what a no-JS reader actually receives.
+
+Notes:
+- This does not touch `docs/spec/base-work-order.md` or `docs/spec/decision-record-d1-d15.md` — both are historical source documents recording the original problem and its resolution, and stay as written, same as every other spec reference this session.
+- Fault 03 (unreviewed claims about Indigenous concepts) is not retired by this change — it's the reason this change exists. The fault stays open until the paid review D4 anticipates actually happens; if it does, D4 explicitly leaves Option A revisitable.
+- `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*

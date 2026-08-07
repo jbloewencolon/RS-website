@@ -7,6 +7,8 @@
 # error to fix).
 - version: "v0.2 — current"
   entries:
+    - was: "thesis 14 titled \"Survivance, not 'no future'\", using a Nation-specific concept for injuries it was not written about"
+      now: "the term removed until there is paid review that could say whether the extension holds. The archive still carries Vizenor. The debt was real; the borrowing was not ours to make"
     - was: "three faces loaded from a font CDN on every page"
       now: "system font stack, zero third-party requests, reader addresses disclosed to nobody"
     - was: "orthographic coverage assumed"
