@@ -22,7 +22,7 @@ const pages = [
   "Practise.dc.html",
   "Archive.dc.html",
   "Contribute.dc.html",
-  "Colophon.dc.html",
+  "BehindTheScenes.dc.html",
 ];
 
 const VIEWPORTS = [
