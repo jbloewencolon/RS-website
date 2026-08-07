@@ -154,12 +154,12 @@
           
           <li><span style="color:#366943">ok</span> ʼ  U&#43;02BC modifier apostrophe — Kwakwaka&#39;wakw</li>
           
-          <li><span style="color:#8B3A2F">!!</span> x̂  x &#43; U&#43;0302 combining circumflex — Unangax̂ renders, but width measurement is inconclusive on some faces; treated as at-risk and re-checked per platform.</li>
+          <li><span style="color:#366943">ok</span> x̂  x &#43; U&#43;0302 combining circumflex — Unangax̂, rendered live in the mono stack (Archive&#39;s by-line). Previously flagged at-risk because advance-width measurement was inconclusive on some faces; the check now compares rendered pixels instead and gives a definite answer. Confirmed present on the one platform re-verified this session.</li>
           
           <li><span style="color:#366943">ok</span> ★ ⌖ ▪ □ —  interface marks</li>
           
         </ul>
-        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.55;color:#5A5D53">Measured 2026 on Chrome / Windows. Results vary by platform, which is why each stack names several faces. The check itself is <a href="glyph-check.html">viewable and re-runnable</a>.</p>
+        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.55;color:#5A5D53">Re-measured 2026 with a pixel-comparison check: the previous method compared advance widths against the .notdef box, which cannot detect a missing glyph in a monospace face at all — every character there shares one fixed advance width by design, present or not. That was a real gap in "checked, not assumed," not a platform-coverage gap, and it's fixed now. Confirmed clean this session on Chrome / Linux, the one platform available to re-verify it on. Windows, macOS, iOS, and Android — and Safari, Firefox, and Edge — have not been independently re-checked and are a known gap. Results can vary by platform, which is why each stack names several faces. The check itself is <a href="glyph-check.html">viewable and re-runnable</a>.</p>
       </div>
     </div>
   </div>
@@ -301,6 +301,8 @@
       <div>
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;color:#DB9E2A;margin:0 0 .7rem;border-bottom:1px solid #2A4C4C;padding-bottom:.4rem">v0.2 — current</p>
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.65">
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the glyph check compared advance widths against the .notdef box — a method that cannot detect a missing glyph in a monospace face at all, since every character in a true monospace font shares one fixed advance width whether it&#39;s present or not. The x̂ (Unangax̂) combining character, which renders live in that exact stack on Archive&#39;s by-lines, was flagged &#34;at-risk&#34; because the check itself couldn&#39;t give a real answer, not because anyone had confirmed a problem</del> <span style="color:#509C64">the check compares actual rendered pixels against the .notdef glyph instead, which works for any font. Re-run this session on the one platform available to test it (Chrome / Linux): every character in all three font stacks, including x̂, is confirmed present, not assumed. Windows, macOS, iOS, and Android — and Safari, Firefox, and Edge — remain unverified and are named as a known gap rather than left implied</span></li>
           
           <li style="color:#B8C7C1"><del style="color:#73968D">&#34;every archive entry links to the author, publisher, or open-access source&#34; — true of the destination domain, not always true of the page: roughly twenty entries linked to a publisher&#39;s homepage rather than the specific book or article, and two entries had no link at all</del> <span style="color:#509C64">every one of the 31 entries checked individually and, where possible, repointed to the actual work: a specific book page, a specific article page, or a DOI. Two entries that previously had no link recorded now do — one turned out to be genuinely open access where nobody had checked before. One paywalled mirror (a Wiley reprint of an article the journal itself publishes open access) was replaced with the journal&#39;s own free copy. Nothing was guessed: every replacement was fetched and its title and author confirmed before it went in</span></li>
           

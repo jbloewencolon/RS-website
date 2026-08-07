@@ -11,7 +11,7 @@
   ok: true
 - text: "ʼ  U+02BC modifier apostrophe — Kwakwaka'wakw"
   ok: true
-- text: "x̂  x + U+0302 combining circumflex — Unangax̂ renders, but width measurement is inconclusive on some faces; treated as at-risk and re-checked per platform."
-  ok: false
+- text: "x̂  x + U+0302 combining circumflex — Unangax̂, rendered live in the mono stack (Archive's by-line). Previously flagged at-risk because advance-width measurement was inconclusive on some faces; the check now compares rendered pixels instead and gives a definite answer. Confirmed present on the one platform re-verified this session."
+  ok: true
 - text: "★ ⌖ ▪ □ —  interface marks"
   ok: true
