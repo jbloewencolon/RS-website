@@ -28,8 +28,8 @@ groups:
         tags: ["start", "article", "free"]
         why: "Contrasts sovereignty organized through exclusion and separation with sovereignty built by weaving together relationships, authorities, jurisdictions, and Indigenous political orders."
         use: "Borderlands 19(2), 2020"
-        link: "https://mattwildcat.ca/academic-publications/"
-        linkLabel: "the author's publications"
+        link: "https://doi.org/10.21307/borderlands-2020-014"
+        linkLabel: "read it free, Borderlands 19(2)"
       - title: "It's About All Relations: Indigenous Feminist Theory of Relational Freedom"
         by: "Rauna Kuokkanen (Sámi)"
         tags: ["start", "article", "free"]
@@ -109,8 +109,8 @@ groups:
         tags: ["article", "free"]
         why: "Challenges contractual fantasies in which consent is abstracted from history, coercion, dispossession, and power. Formal agreement alone does not make a relationship just."
         use: "open access"
-        link: "https://anthrosource.onlinelibrary.wiley.com/doi/abs/10.14506/ca31.3.02"
-        linkLabel: "Cultural Anthropology"
+        link: "https://journal.culanth.org/index.php/ca/article/view/ca31.3.02"
+        linkLabel: "read it free, Cultural Anthropology"
 
   - title: "Relation, opacity, refusal, survivance"
     note: "Where the right to remain unlegible comes from."
