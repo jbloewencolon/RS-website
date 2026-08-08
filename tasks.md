@@ -47,7 +47,7 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 
 | ID | Task | Tags | Files | Effort | Depends on |
 |---|---|---|---|---|---|
-| **RS-023 (residual)** | The screen-reader pass genuinely needs a person: ≥2 of NVDA/Firefox, JAWS/Chrome, VoiceOver/Safari, TalkBack/Chrome, actually listened to, not simulated. Also residual: print stylesheet test on real paper/PDF output (Playwright's print-media emulation can check `@media print` rules apply, but not that the result reads well printed), and — deliberately deferred, not forgotten — RS-026's non-verbal state-control standard, which doesn't exist yet (Phase 3). | `[DEV]` (needs a human tester) | all pages | S (down from M — the automatable parts are done) | RS-026 for the state-control-standard piece specifically |
+| **RS-023 (residual)** | The screen-reader pass genuinely needs a person: ≥2 of NVDA/Firefox, JAWS/Chrome, VoiceOver/Safari, TalkBack/Chrome, actually listened to, not simulated. Also residual: print stylesheet test on real paper/PDF output (Playwright's print-media emulation can check `@media print` rules apply, but not that the result reads well printed). | `[DEV]` (needs a human tester) | all pages | S (down from M — the automatable parts are done) | RS-026 shipped 2026-08-08, see `completed.tasks.md` — no longer a residual dependency here |
 
 ---
 
@@ -80,7 +80,6 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 |---|---|---|---|---|---|
 | **RS-006 (residual)** | ~~Thesis 01 insertion: second genealogy of possession (chattel slavery / natal alienation vs. settler land-to-property). New archive group.~~ **Thesis 01 insertion and the archive group both shipped, see `completed.tasks.md`** — Spillers, Hartman, Roberts, and Bridges are in. What's left: adding Patterson and Collins once FLAG-03 (which two books, exactly) is answered. | `[COPY]` `[VERIFY]` | `Archive.dc.html` | S | **Still blocked on FLAG-03** |
 | **RS-016** | Bulk archive additions — P0 set (~~Coulthard, Malatino,~~ ~~Spillers, Hartman, Roberts, Bridges,~~ Cohen — Malatino shipped via RS-007, Spillers/Hartman/Roberts/Bridges shipped via RS-006; Coulthard and Cohen remain), P1 set (~~Barker,~~ Kuokkanen et al. 2025, Povinelli, Rifkin, Lugones, Kelly & Johnson, Feeney, Freeman, Spade, brown, Kaba — Barker shipped via RS-008), P2 set (Noël, Rambukkana, Borrows). New filter facets (`clinical`, `process`) if warranted. | `[DEV]` `[COPY]` `[VERIFY]` | `Archive.dc.html` | M | Large `[VERIFY]` batch — see Verification queue below |
-| **RS-026** | Non-verbal/low-language check-in mode for the Practise tool: labelled states with colour as secondary cue only (not primary — regression risk against the v0.2 colour-only fix), inline SVG/CSS shapes with `aria-label` (not emoji), reduced-language version of the RS-001 safety questions. Document tap-count signalling as practice, not a built input method. | `[DEV]` `[COPY]` | `Practise.dc.html` | M | Extends RS-001's reduced-language requirement |
 
 ---
 

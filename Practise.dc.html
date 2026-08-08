@@ -72,13 +72,23 @@
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#8B3A2F;margin:0 0 1rem">Before you open this</p>
       <p style="margin:0 0 1.2rem;font-size:17px;line-height:1.55">This tool asks you to describe a relationship in writing. For most people that is useful. For some people it is not safe, and the difference is not always obvious from inside.</p>
       <p style="margin:0 0 1rem;font-size:16px;line-height:1.5;color:#3C3E38">Sit with these for a moment. There is no score and no answer to give anyone.</p>
-      <ul style="list-style:none;margin:0 0 1.4rem;padding:0;display:flex;flex-direction:column;gap:.7rem;font-size:16px;line-height:1.5">
+      <ul style="list-style:none;margin:0 0 1rem;padding:0;display:flex;flex-direction:column;gap:.7rem;font-size:16px;line-height:1.5">
         <li>— When you disagree, what happens afterwards?</li>
         <li>— Do you have your own access to money, documents, and a way to leave the house?</li>
         <li>— Does the other person know where you are most of the time, and did you agree to that?</li>
         <li>— Have you thought about leaving? If you have said so out loud, what was the response?</li>
         <li>— Is there anyone who knows the whole of what is happening?</li>
       </ul>
+      <details style="margin:0 0 1.4rem">
+        <summary style="cursor:pointer;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:#8B3A2F;min-height:44px;display:flex;align-items:center;padding:.2rem 0">Read these in shorter sentences</summary>
+        <ul style="list-style:none;margin:.6rem 0 0;padding:0;display:flex;flex-direction:column;gap:.7rem;font-size:16px;line-height:1.5">
+          <li>— After a disagreement, what happens?</li>
+          <li>— Money. ID. A way out. Do you have your own?</li>
+          <li>— Does someone always know where you are? Did you agree to that?</li>
+          <li>— Have you said you might leave? What happened when you did?</li>
+          <li>— Does anyone else know everything that's happening?</li>
+        </ul>
+      </details>
       <p style="margin:0 0 1.4rem;font-size:16px;line-height:1.5">If any of those were difficult to sit with, the most useful thing this page can do is point you elsewhere. These same five questions are also published on their own, so you can read or send them without opening a tool.</p>
       <div style="display:flex;flex-wrap:wrap;gap:.8rem">
         <button type="button" onClick="{{ toGrounding }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px">Continue</button>
@@ -161,7 +171,8 @@
 <section style="padding:1.6rem 0 clamp(3rem,6vw,4.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .6rem">Seventeen general consent domains</h2>
-    <p style="max-width:56ch;margin:0 0 1.4rem;color:#3C3E38;font-size:16px">Each answer is a word as well as a colour, so the map still reads if colour is unavailable to you, and still reads on a photocopy.</p>
+    <p style="max-width:56ch;margin:0 0 .8rem;color:#3C3E38;font-size:16px">Each answer is a word as well as a colour, so the map still reads if colour is unavailable to you, and still reads on a photocopy.</p>
+    <p style="max-width:56ch;margin:0 0 1.4rem;color:#3C3E38;font-size:16px">Consent is not always spoken. Use the labels here, or agree on your own signals with the person you're mapping this with — a tap, a card, a gesture, a colour. This tool doesn't build those signals in; what matters is that whatever you use can be given, changed, and withdrawn by whoever is using it, without having to explain.</p>
 
     <div style="display:flex;flex-direction:column;gap:1px;background:#C9C6BA;border:1px solid #C9C6BA">
       <sc-for list="{{ domains }}" as="d" hint-placeholder-count="17">
