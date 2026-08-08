@@ -10,7 +10,7 @@
 # that's the changelog's job, and it still has the record.
 - n: "01"
   title: "The server has no declared territory yet"
-  body: "The site is unhosted, so the most material field in the colophon is blank. Naming the machine's location and watershed is a launch condition, not an optional extra."
+  body: "The site is hosted — GitHub Pages, live at this domain — but the most material fields in the colophon (server location, watershed) are blank for a different reason than this fault used to say: not because nothing exists yet, but because the current host doesn't disclose which facility it uses. Naming the actual machine's location and watershed, on a host that can name them, is a launch condition this project has not met, not an optional extra."
 - n: "02"
   title: "Protocol-gated access is not built"
   body: "Opacity is currently expressed as a crawler policy and as honest absence. Community-defined access rules — the Mukurtu and TK Label model — are not implemented, so no material that genuinely needs protocol is held here yet."
