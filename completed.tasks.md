@@ -715,4 +715,14 @@ now: each category is a native `<details>/<summary>` disclosure — the same zer
 
 Verified: `npm run build && npm run check` pass clean. Real headless-browser testing, JavaScript disabled entirely (this page is `script-src 'none'` regardless): confirmed only crisis-lines starts open; confirmed a real mouse click and a real keyboard `Enter` on a focused `<summary>` both toggle a closed section; confirmed print media forces every section's content to genuine non-zero rendered dimensions; confirmed the existing `#anchor` contents-index links still scroll each collapsed section into view (they don't auto-expand it — the HTML spec's fragment-triggered auto-open only fires when the id is on a descendant of the `<details>`, not on the `<details>` element itself — landing on a collapsed, but visible and clickable, section header is consistent with what was asked for, not a bug).
 
+### Direct instruction — BehindTheScenes' substrate made collapsible
+**Shipped:** 2026-08-08 · **Commit/PR:** (pending)
+
+~~was: the substrate's thirteen fields (server location, watershed, page weight, third-party requests, mailing-list processor, transactional email, where the list lives, what's stored, cookies, security headers, what's logged, build, durability) rendered as one long grid under "The substrate" heading, all visible at once~~
+now: the field-by-field grid sits inside a `<details>`, summary reading "Show the 13 substrate fields." The section heading and its framing sentence stay outside the disclosure and visible either way — only the grid itself collapses. The count in the summary comes from `{{ len hugo.Data.substrate }}` in the Hugo template, not a typed number, specifically so it can't join the two count-drift bugs this session already found and fixed elsewhere on this same page (the topic count and reading-time estimate, both caught during RS-010 and RS-014).
+
+Same print-open fix applied as Resources: `details:not([open])>*{display:block!important}` added to this page's `@media print` block, so a printed colophon still carries every substrate fact rather than silently dropping them because the section happened to be collapsed on screen.
+
+Verified: `npm run build:hugo && npm run build && npm run check` all pass clean. A real headless browser confirmed, with JavaScript disabled: the disclosure starts closed, all thirteen `<dt>` fields are present in the DOM regardless, a real click opens it, and print media forces the grid to genuine non-zero rendered dimensions.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*

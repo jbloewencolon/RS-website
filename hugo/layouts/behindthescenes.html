@@ -21,7 +21,7 @@
   a:hover{color:#3F7A4E}
   *{box-sizing:border-box}
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
-  @media print{body{background:#fff}.noprint{display:none!important}}
+  @media print{body{background:#fff}.noprint{display:none!important}details:not([open])>*{display:block!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
   .skip-link:focus{left:1rem;top:1rem}
@@ -72,14 +72,17 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">The substrate</h2>
     <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">A land acknowledgement in a footer is decoration. These are the material facts of the machine you are reading on, as far as they are currently known.</p>
-    <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem 2.4rem">
-      {{ range hugo.Data.substrate }}
-      <div style="border-top:2px solid {{ .rule }};padding-top:.7rem">
-        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ .rule }};margin:0 0 .35rem">{{ .k }}</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">{{ .v }}</dd>
-      </div>
-      {{ end }}
-    </dl>
+    <details>
+      <summary style="cursor:pointer;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:#585B4F;min-height:44px;display:flex;align-items:center;padding:.2rem 0">Show the {{ len hugo.Data.substrate }} substrate fields</summary>
+      <dl style="margin:1.2rem 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem 2.4rem">
+        {{ range hugo.Data.substrate }}
+        <div style="border-top:2px solid {{ .rule }};padding-top:.7rem">
+          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ .rule }};margin:0 0 .35rem">{{ .k }}</dt>
+          <dd style="margin:0;font-size:16px;line-height:1.5">{{ .v }}</dd>
+        </div>
+        {{ end }}
+      </dl>
+    </details>
   </div>
 </section>
 

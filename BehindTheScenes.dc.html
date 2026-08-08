@@ -21,7 +21,7 @@
   a:hover{color:#3F7A4E}
   *{box-sizing:border-box}
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
-  @media print{body{background:#fff}.noprint{display:none!important}}
+  @media print{body{background:#fff}.noprint{display:none!important}details:not([open])>*{display:block!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
   .skip-link:focus{left:1rem;top:1rem}
@@ -72,74 +72,77 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">The substrate</h2>
     <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">A land acknowledgement in a footer is decoration. These are the material facts of the machine you are reading on, as far as they are currently known.</p>
-    <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem 2.4rem">
-      
-      <div style="border-top:2px solid #8B3A2F;padding-top:.7rem">
-        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8B3A2F;margin:0 0 .35rem">Server location</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">Hosted on GitHub Pages (GitHub, Inc.) — this project&#39;s actual current host, not a future plan; see the security-headers row below for why that matters. GitHub does not publish which physical data centre or region serves a given Pages deployment, so the city, operator, and territory this field is meant to name are genuinely unstated, not merely undocumented. Moving to a host that discloses this is what RS-022/FLAG-02 would resolve.</dd>
-      </div>
-      
-      <div style="border-top:2px solid #8B3A2F;padding-top:.7rem">
-        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8B3A2F;margin:0 0 .35rem">Watershed</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">Not statable for the same reason as server location: the current host doesn&#39;t disclose which facility serves this site, so there is no watershed to name yet — not because nobody looked, but because the information isn&#39;t published anywhere to find.</dd>
-      </div>
-      
-      <div style="border-top:2px solid #7D5915;padding-top:.7rem">
-        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .35rem">Page weight</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">Ranges from about 15 KB (the Invitation) to about 118 KB (the Archive) per page, uncompressed HTML — no images, no icon fonts, no video. Three pages (Home, Practise, Contribute) additionally load a shared ~70 KB script once per browser session, cached rather than re-downloaded on every page view. A flat &#34;under 60 KB&#34; figure was stated here before this project&#39;s content had grown to its current size; corrected to the real current range rather than left to quietly stop being true.</dd>
-      </div>
-      
-      <div style="border-top:2px solid #366943;padding-top:.7rem">
-        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Third-party requests</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">Zero, with one deliberate, disclosed exception: submitting the dispatch signup form on Home or Contribute sends the address you typed to the Worker described below. No fonts, analytics, embeds, tag managers, CDNs, or ad tech — and nothing fires until you submit that one form.</dd>
-      </div>
-      
-      <div style="border-top:2px solid #366943;padding-top:.7rem">
-        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Mailing-list processor</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">A Cloudflare Worker — self-operated, not a third-party mailing-list platform — is the one piece of this site&#39;s infrastructure that isn&#39;t purely static. It receives the two signup forms (Home, Contribute), sends the confirmation and unsubscribe emails, and writes the encrypted subscriber file. Source: worker/ in this repository.</dd>
-      </div>
-      
-      <div style="border-top:2px solid #366943;padding-top:.7rem">
-        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Transactional email</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">Sent through Resend&#39;s API — confirmation and unsubscribe messages only, plain text, no tracking pixel, no click-tracking redirect. Resend receives an address and the text of that one message; it never receives the interests picked at signup, is never handed the subscriber list, and is never used to send anything else.</dd>
-      </div>
-      
-      <div style="border-top:2px solid #366943;padding-top:.7rem">
-        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Where the list lives</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">A private, operator-controlled GitHub repository — separate from this public one — holding a single file encrypted with AES-256-GCM. The decryption key exists only as a Cloudflare Worker secret; it is never written to any repository, public or private. That file, taken on its own, decrypts to nothing.</dd>
-      </div>
-      
-      <div style="border-top:2px solid #366943;padding-top:.7rem">
-        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">What&#39;s actually stored</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">Per subscriber: the address they confirmed and the time they confirmed it. What they were interested in — the zine, the reading circle, a workshop — is recorded only as a site-wide count, never attached to an address. A leaked or subpoenaed copy of the file can say how many people want what; it cannot say who.</dd>
-      </div>
-      
-      <div style="border-top:2px solid #366943;padding-top:.7rem">
-        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Cookies and storage</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">None set. Nothing is written to your device, so nothing needs consenting to and there is no banner to recite at you.</dd>
-      </div>
-      
-      <div style="border-top:2px solid #7D5915;padding-top:.7rem">
-        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .35rem">Security headers</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">A Content-Security-Policy on every page, machine-checked in CI (a build fails if any page loads a script, stylesheet, or CSS import/url() from off this domain — outbound prose links are exempt on purpose, that&#39;s citation, not a subresource load). Each page&#39;s policy is only as permissive as that specific page needs: the four reading pages allow no script execution beyond their own same-origin file, Practise/Home/Contribute need a narrow eval allowance for the page-template runtime they still run on, and only Home and Contribute&#39;s connect-src includes the dispatch Worker&#39;s origin. Delivered as a &lt;meta&gt; tag, not a response header, because GitHub Pages — this site&#39;s current host — cannot set response headers. That has one real consequence: frame-ancestors (clickjacking protection) cannot be delivered via &lt;meta&gt; at all, by the CSP specification itself, so this site currently has none. Fault below.</dd>
-      </div>
-      
-      <div style="border-top:2px solid #7D5915;padding-top:.7rem">
-        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .35rem">What is logged</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">Whatever GitHub Pages, this project&#39;s current host, logs by default — not yet audited or reduced, and not yet stated here in specific terms. This project inherited a host before confirming its logging practices meet the minimisation this page states as a goal, which is backwards, and this row says so rather than implying the sequencing went the other way.</dd>
-      </div>
-      
-      <div style="border-top:2px solid #366943;padding-top:.7rem">
-        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Build</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">Every reading page — Manifesto, Learn, Archive, this page — is generated from plain data files into plain HTML by Hugo (a single static binary, no dependency tree): the output is committed and is what ships, no runtime, no framework, opens offline from a saved file. The generator exists for whoever maintains this, not for whoever reads it. Practise keeps a small runtime, because it is a tool rather than something to read — its filter-by-tag convenience on Archive is the one piece of client-side JavaScript left on a reading page, and it is a plain progressive enhancement: every entry renders regardless, the script only ever narrows what is already there.</dd>
-      </div>
-      
-      <div style="border-top:2px solid #366943;padding-top:.7rem">
-        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Durability</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">Met, for the reading pages — all four now render and read fully with scripting off, not asserted but verified against a real headless browser with JavaScript disabled. Practise is the one page that still needs its runtime, deliberately: it is interactive by nature, not a reading page.</dd>
-      </div>
-      
-    </dl>
+    <details>
+      <summary style="cursor:pointer;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:#585B4F;min-height:44px;display:flex;align-items:center;padding:.2rem 0">Show the 13 substrate fields</summary>
+      <dl style="margin:1.2rem 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem 2.4rem">
+        
+        <div style="border-top:2px solid #8B3A2F;padding-top:.7rem">
+          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8B3A2F;margin:0 0 .35rem">Server location</dt>
+          <dd style="margin:0;font-size:16px;line-height:1.5">Hosted on GitHub Pages (GitHub, Inc.) — this project&#39;s actual current host, not a future plan; see the security-headers row below for why that matters. GitHub does not publish which physical data centre or region serves a given Pages deployment, so the city, operator, and territory this field is meant to name are genuinely unstated, not merely undocumented. Moving to a host that discloses this is what RS-022/FLAG-02 would resolve.</dd>
+        </div>
+        
+        <div style="border-top:2px solid #8B3A2F;padding-top:.7rem">
+          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8B3A2F;margin:0 0 .35rem">Watershed</dt>
+          <dd style="margin:0;font-size:16px;line-height:1.5">Not statable for the same reason as server location: the current host doesn&#39;t disclose which facility serves this site, so there is no watershed to name yet — not because nobody looked, but because the information isn&#39;t published anywhere to find.</dd>
+        </div>
+        
+        <div style="border-top:2px solid #7D5915;padding-top:.7rem">
+          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .35rem">Page weight</dt>
+          <dd style="margin:0;font-size:16px;line-height:1.5">Ranges from about 15 KB (the Invitation) to about 118 KB (the Archive) per page, uncompressed HTML — no images, no icon fonts, no video. Three pages (Home, Practise, Contribute) additionally load a shared ~70 KB script once per browser session, cached rather than re-downloaded on every page view. A flat &#34;under 60 KB&#34; figure was stated here before this project&#39;s content had grown to its current size; corrected to the real current range rather than left to quietly stop being true.</dd>
+        </div>
+        
+        <div style="border-top:2px solid #366943;padding-top:.7rem">
+          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Third-party requests</dt>
+          <dd style="margin:0;font-size:16px;line-height:1.5">Zero, with one deliberate, disclosed exception: submitting the dispatch signup form on Home or Contribute sends the address you typed to the Worker described below. No fonts, analytics, embeds, tag managers, CDNs, or ad tech — and nothing fires until you submit that one form.</dd>
+        </div>
+        
+        <div style="border-top:2px solid #366943;padding-top:.7rem">
+          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Mailing-list processor</dt>
+          <dd style="margin:0;font-size:16px;line-height:1.5">A Cloudflare Worker — self-operated, not a third-party mailing-list platform — is the one piece of this site&#39;s infrastructure that isn&#39;t purely static. It receives the two signup forms (Home, Contribute), sends the confirmation and unsubscribe emails, and writes the encrypted subscriber file. Source: worker/ in this repository.</dd>
+        </div>
+        
+        <div style="border-top:2px solid #366943;padding-top:.7rem">
+          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Transactional email</dt>
+          <dd style="margin:0;font-size:16px;line-height:1.5">Sent through Resend&#39;s API — confirmation and unsubscribe messages only, plain text, no tracking pixel, no click-tracking redirect. Resend receives an address and the text of that one message; it never receives the interests picked at signup, is never handed the subscriber list, and is never used to send anything else.</dd>
+        </div>
+        
+        <div style="border-top:2px solid #366943;padding-top:.7rem">
+          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Where the list lives</dt>
+          <dd style="margin:0;font-size:16px;line-height:1.5">A private, operator-controlled GitHub repository — separate from this public one — holding a single file encrypted with AES-256-GCM. The decryption key exists only as a Cloudflare Worker secret; it is never written to any repository, public or private. That file, taken on its own, decrypts to nothing.</dd>
+        </div>
+        
+        <div style="border-top:2px solid #366943;padding-top:.7rem">
+          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">What&#39;s actually stored</dt>
+          <dd style="margin:0;font-size:16px;line-height:1.5">Per subscriber: the address they confirmed and the time they confirmed it. What they were interested in — the zine, the reading circle, a workshop — is recorded only as a site-wide count, never attached to an address. A leaked or subpoenaed copy of the file can say how many people want what; it cannot say who.</dd>
+        </div>
+        
+        <div style="border-top:2px solid #366943;padding-top:.7rem">
+          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Cookies and storage</dt>
+          <dd style="margin:0;font-size:16px;line-height:1.5">None set. Nothing is written to your device, so nothing needs consenting to and there is no banner to recite at you.</dd>
+        </div>
+        
+        <div style="border-top:2px solid #7D5915;padding-top:.7rem">
+          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .35rem">Security headers</dt>
+          <dd style="margin:0;font-size:16px;line-height:1.5">A Content-Security-Policy on every page, machine-checked in CI (a build fails if any page loads a script, stylesheet, or CSS import/url() from off this domain — outbound prose links are exempt on purpose, that&#39;s citation, not a subresource load). Each page&#39;s policy is only as permissive as that specific page needs: the four reading pages allow no script execution beyond their own same-origin file, Practise/Home/Contribute need a narrow eval allowance for the page-template runtime they still run on, and only Home and Contribute&#39;s connect-src includes the dispatch Worker&#39;s origin. Delivered as a &lt;meta&gt; tag, not a response header, because GitHub Pages — this site&#39;s current host — cannot set response headers. That has one real consequence: frame-ancestors (clickjacking protection) cannot be delivered via &lt;meta&gt; at all, by the CSP specification itself, so this site currently has none. Fault below.</dd>
+        </div>
+        
+        <div style="border-top:2px solid #7D5915;padding-top:.7rem">
+          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .35rem">What is logged</dt>
+          <dd style="margin:0;font-size:16px;line-height:1.5">Whatever GitHub Pages, this project&#39;s current host, logs by default — not yet audited or reduced, and not yet stated here in specific terms. This project inherited a host before confirming its logging practices meet the minimisation this page states as a goal, which is backwards, and this row says so rather than implying the sequencing went the other way.</dd>
+        </div>
+        
+        <div style="border-top:2px solid #366943;padding-top:.7rem">
+          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Build</dt>
+          <dd style="margin:0;font-size:16px;line-height:1.5">Every reading page — Manifesto, Learn, Archive, this page — is generated from plain data files into plain HTML by Hugo (a single static binary, no dependency tree): the output is committed and is what ships, no runtime, no framework, opens offline from a saved file. The generator exists for whoever maintains this, not for whoever reads it. Practise keeps a small runtime, because it is a tool rather than something to read — its filter-by-tag convenience on Archive is the one piece of client-side JavaScript left on a reading page, and it is a plain progressive enhancement: every entry renders regardless, the script only ever narrows what is already there.</dd>
+        </div>
+        
+        <div style="border-top:2px solid #366943;padding-top:.7rem">
+          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Durability</dt>
+          <dd style="margin:0;font-size:16px;line-height:1.5">Met, for the reading pages — all four now render and read fully with scripting off, not asserted but verified against a real headless browser with JavaScript disabled. Practise is the one page that still needs its runtime, deliberately: it is interactive by nature, not a reading page.</dd>
+        </div>
+        
+      </dl>
+    </details>
   </div>
 </section>
 
@@ -476,6 +479,8 @@
       <div>
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;color:#DB9E2A;margin:0 0 .7rem;border-bottom:1px solid #2A4C4C;padding-bottom:.4rem">v0.2 — current</p>
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.65">
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the colophon&#39;s substrate table — thirteen fields, from server location to build process — rendered fully expanded under its own heading, a long grid to scroll past before reaching the rest of the page</del> <span style="color:#509C64">the same thirteen fields sit behind a &#34;Show the 13 substrate fields&#34; disclosure — the field count reads from the data file directly rather than being typed by hand, so it can&#39;t go stale the way this page&#39;s own topic and reading-time counts already have twice this session. The section heading and its framing paragraph (&#34;A land acknowledgement in a footer is decoration...&#34;) stay visible either way; only the field-by-field list collapses. Forces open when printed, same fix as Resources</span></li>
           
           <li style="color:#B8C7C1"><del style="color:#73968D">Resources listed all eleven categories fully expanded, one after another — a long page to scroll past even with the &#34;Choose what you need&#34; contents index (RS-043) offering a jump-to-section shortcut, since jumping still landed on a page where everything else was already open too</del> <span style="color:#509C64">each category is a native &lt;details&gt;/&lt;summary&gt; disclosure, closed by default so a reader sees the list of what&#39;s available before committing to reading all of it — except &#34;Immediate safety and crisis lines,&#34; left open by default since this site does not hide safety-critical information behind a click. Works identically with JavaScript on or off, since this page carries none by design (script-src &#39;none&#39;). Printing the page force-opens every section regardless of its on-screen state, so a printout is never missing a phone number someone meant to bring with them</span></li>
           
