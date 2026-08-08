@@ -14,6 +14,28 @@
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://rs-dispatch-worker.rssite.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://relationalsovereignty.com/#website",
+      "name": "Relational Sovereignty",
+      "url": "https://relationalsovereignty.com/"
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://relationalsovereignty.com/#term",
+      "name": "Relational Sovereignty",
+      "description": "Relational sovereignty asks how we can build relationships that protect self-determination while recognizing interdependence, care, responsibility, and the living worlds to which we belong.",
+      "url": "https://relationalsovereignty.com/",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://relationalsovereignty.com/#website" }
+    }
+  ]
+}
+</script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -33,6 +55,7 @@
   @media (max-width:700px){
     #primary-nav{display:none!important}
     .nav-toggle{display:block;width:100%}
+    .drift-wrap{opacity:.3}
   }
   *{box-sizing:border-box}
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
@@ -75,7 +98,7 @@
 
 <main>
 <section id="main-content" style="position:relative;overflow:hidden;padding:clamp(2.2rem,5vw,3.5rem) 0 clamp(2rem,4vw,3rem)">
-  <div style="position:absolute;inset:-14% -8% auto auto;pointer-events:none;z-index:0">{{ drift }}</div>
+  <div class="drift-wrap" style="position:absolute;inset:-14% -8% auto auto;pointer-events:none;z-index:0">{{ drift }}</div>
   <div style="position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.4rem;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center"><span style="width:7px;height:7px;border-radius:50%;background:#3F7A4E;display:inline-block"></span> v0.2 · a commons under construction · about 4 minutes to read this page</p>
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.1rem,6.4vw,4.4rem);line-height:1;letter-spacing:-.035em;margin:0 0 1.6rem;max-width:18ch">NO OWNERS. NO OBJECTS. NO COLONIES IN OUR RELATIONSHIPS.</h1>
@@ -138,7 +161,7 @@
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">Roadmap — honest about what does not exist yet</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.6rem,4vw,2.6rem);line-height:1.03;letter-spacing:-.03em;margin:0 0 1rem;max-width:20ch;color:#E7E5DC">A draft that stays a draft.</h2>
     <p style="max-width:56ch;margin:0 0 2.2rem;color:#B8C7C1">No launch dates, because promising one would be a lie. Each item moves when the work and the consent are in place, and the <a href="BehindTheScenes.dc.html" style="color:#DB9E2A">change log</a> stays visible when it does.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2.4rem">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2.4rem">
       <div>
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#509C64;margin:0 0 .9rem;border-bottom:1px solid #2A4C4C;padding-bottom:.5rem">Open now</p>
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.7rem;font-size:16px;line-height:1.45">
@@ -213,13 +236,16 @@
           </label>
           <label style="display:block;margin-bottom:1.3rem">
             <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">Email</span>
-            <input type="email" autocomplete="email" value="{{ email }}" onChange="{{ setEmail }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.75rem .8rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
+            <input type="email" id="dispatch-email" autocomplete="email" aria-invalid="{{ emailInvalid }}" aria-describedby="dispatch-email-error" value="{{ email }}" onChange="{{ setEmail }}" style="width:100%;background:#EFEEE7;border:1px solid {{ emailBorderColor }};border-radius:2px;padding:.75rem .8rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
           </label>
-          <label style="display:block;margin-bottom:1.3rem">
+          <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
+            <p role="alert" id="dispatch-email-error" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem">{{ error }}</p>
+          </sc-if>
+          <label for="dispatch-name" style="display:block;margin-bottom:.4rem">
             <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">Name or pseudonym</span>
-            <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin-bottom:.5rem;line-height:1.5">Optional. Any characters, any script, no validator. We do not check.</span>
-            <input type="text" autocomplete="name" value="{{ name }}" onChange="{{ setName }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.75rem .8rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
           </label>
+          <p id="name-hint" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:0 0 .5rem;line-height:1.5">Optional. Any characters, any script, no validator. We do not check.</p>
+          <input type="text" id="dispatch-name" autocomplete="name" aria-describedby="name-hint" value="{{ name }}" onChange="{{ setName }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.75rem .8rem;min-height:44px;margin-bottom:1.3rem;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
           <fieldset style="border:none;margin:0 0 1.4rem;padding:0">
             <legend style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;padding:0;margin-bottom:.4rem">What brought you here</legend>
             <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:0 0 .7rem;line-height:1.5">Optional. Choose none, one, or all.</p>
@@ -233,10 +259,6 @@
             </div>
           </fieldset>
           <button type="submit" disabled="{{ sending }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px;opacity:{{ sendingOpacity }}">{{ submitLabel }}</button>
-          <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
-            <p role="alert" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:1rem 0 0">{{ error }}</p>
-          </sc-if>
-          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.6;color:#5A5D53;margin:1rem 0 0">No tracking pixels. No third parties. Your address is confirmed by email before anything is stored, and one link in every letter removes you.</p>
         </form>
       </sc-if>
     </div>
@@ -248,6 +270,7 @@
     <div style="border-top:1px solid #C9C6BA;padding-top:2rem;max-width:640px">
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 .8rem">You have reached the end of this page</p>
       <p style="margin:0 0 1rem;font-size:17px;line-height:1.55">There is no more here. Nothing loads if you keep scrolling, nothing will follow you, and the most useful thing this page can do now is send you away from it.</p>
+      <p style="margin:0 0 1rem;font-size:15px;line-height:1.5;color:#585B4F">If what you need is <a href="Resources.dc.html">Resources</a>, it doesn't wait for the end of a page.</p>
       <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">Go to the <a href="Archive.dc.html">writers themselves</a>, take a <a href="Practise.dc.html">tool</a> into a conversation you are actually having, or close the tab. All three are correct.</p>
     </div>
   </div>
@@ -256,7 +279,7 @@
 </main>
 
 <footer style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2.5rem,5vw,3.5rem) 0">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7">
     <div>
       <p style="margin:0 0 .5rem;color:#E7E5DC;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em">Relational Sovereignty</p>
       <p style="margin:0">v0.2 · a commons under construction · <a href="BehindTheScenes.dc.html" style="color:#DB9E2A">what changed</a></p>
@@ -288,7 +311,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
 class Component extends DCLogic {
-  state = { qi: 0, sent: false, email: "", name: "", interests: [], hp: "", sending: false, error: "" };
+  state = { qi: 0, sent: false, email: "", name: "", interests: [], hp: "", sending: false, error: "", emailInvalid: false };
 
   // The dispatch signup endpoint. Nothing is stored there until the
   // reader clicks the confirmation link this call triggers.
@@ -350,6 +373,8 @@ class Component extends DCLogic {
       submitLabel: this.state.sending ? "Sending…" : "Join the dispatch",
       error: this.state.error,
       hasError: !!this.state.error,
+      emailInvalid: this.state.emailInvalid,
+      emailBorderColor: this.state.emailInvalid ? "#8B3A2F" : "#C9C6BA",
       // `hp` is a honeypot: real visitors never see or fill it (it's
       // hidden from sight and skipped by screen readers/keyboard tab
       // order), so a non-empty value means a bot filled every field it
@@ -361,10 +386,11 @@ class Component extends DCLogic {
         if (this.state.hp) { this.setState({ sent: true }); return; }
         const email = this.state.email.trim();
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          this.setState({ error: "That address does not look complete. Check it and try again." });
+          this.setState({ error: "That address does not look complete. Check it and try again.", emailInvalid: true });
+          document.getElementById("dispatch-email")?.focus();
           return;
         }
-        this.setState({ sending: true, error: "" });
+        this.setState({ sending: true, error: "", emailInvalid: false });
         try {
           const res = await fetch(Component.ENDPOINT, {
             method: "POST",

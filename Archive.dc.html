@@ -14,6 +14,30 @@
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://relationalsovereignty.com/#website",
+      "name": "Relational Sovereignty",
+      "url": "https://relationalsovereignty.com/"
+    },
+    {
+      "@type": "Article",
+      "@id": "https://relationalsovereignty.com/Archive.dc.html#article",
+      "headline": "Archive — Relational Sovereignty",
+      "name": "Archive — Relational Sovereignty",
+      "description": "Thirty-odd texts on relational sovereignty, Indigenous relationality, care ethics, and transformative justice, each linking away to the people who wrote them.",
+      "url": "https://relationalsovereignty.com/Archive.dc.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://relationalsovereignty.com/#website" },
+      "about": { "@id": "https://relationalsovereignty.com/#term" }
+    }
+  ]
+}
+</script>
 <style>
   html{scroll-behavior:smooth}
   body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
@@ -38,6 +62,8 @@
    
   [data-filter]{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.03em;padding:.6rem .8rem;min-height:44px;cursor:pointer;border-radius:2px;border:1px solid #C9C6BA;background:transparent;color:#585B4F}
   [data-filter].is-active{border-color:#3F7A4E;background:rgba(63,122,78,.1);color:#2C5A38}
+  .venn-scroll{position:relative}
+  .venn-scroll::after{content:"";position:absolute;top:0;right:0;bottom:.5rem;width:32px;background:linear-gradient(to right,rgba(231,229,220,0),#E7E5DC 90%);pointer-events:none}
 </style>
 </head>
 <body>
@@ -935,7 +961,7 @@
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .5rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Held in common</h2>
     <p style="max-width:60ch;margin:1rem 0 .6rem;color:#3C3E38">A shelf is a cadastre: one parcel per book, no overlaps, every text assigned to exactly one owner. Some of these texts refuse that. The four in the centre below are claimed fully by both traditions at once — not shared out, not split, not filed under one and cross-referenced from the other. Two jurisdictions, one holding.</p>
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:0 0 1.4rem">Reading order is left to right; on a narrow screen this diagram scrolls sideways. The three lists below are titled for anyone not reading them by their visual position — this is a Venn diagram made of real list text, not an image, so nothing here needs a separate text alternative.</p>
-    <div style="overflow-x:auto;padding-bottom:.5rem">
+    <div class="venn-scroll" style="overflow-x:auto;padding-bottom:.5rem">
       <div style="min-width:700px;display:grid;grid-template-columns:1fr 1.15fr 1fr;grid-template-rows:auto minmax(240px,auto);gap:0">
         <p id="held-common-track-a-label" style="grid-column:1;grid-row:1;margin:0 0 .7rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B">Sovereignty, refusal, relation</p>
         <p id="held-common-track-b-label" style="grid-column:3;grid-row:1;margin:0 0 .7rem;text-align:right;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915">Care, access, accountability</p>
