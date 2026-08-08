@@ -521,4 +521,15 @@ Verified: `npm run build:hugo && npm run build && npm run check` all pass clean.
 Notes:
 - Placed as the last substantive Learn section before the existing "What's planned, not what's built" roadmap pointer, since it's new content added under this initiative rather than a rewrite of something already there.
 
+### RS-037 — "Before you bring this up with someone"
+**Shipped:** 2026-08-08 · **Commit/PR:** (pending)
+
+~~was: nothing on the site addressed the moment right before someone tries to introduce this framework to a partner — no guidance on how to raise it without it landing as a test or an indictment, and no warning that the same vocabulary built to name coercion is exactly as usable to apply it~~
+now: a `<details>` disclosure on `Practise.dc.html`, titled "Before you bring this up with someone," placed in the always-visible intro area above the safety/grounding stage gate rather than inside it — this content is about a conversation with someone who hasn't engaged with the tool at all, a different moment from the existing pre-tool sequence, so it's offered alongside that flow rather than merged into or gating it. Five concrete suggestions from `warm-register-review-v2.md` §3.1, reproduced verbatim, closing on the one paragraph the review calls the guard and states must ship with it or not at all: raising this to pressure someone who's already declined isn't what the tool is for, and using this vocabulary to do it makes it worse, not better.
+
+Verified: `npm run build:hugo && npm run build && npm run check` all pass clean. A real headless browser confirmed the guard paragraph's exact text is present in the DOM with JavaScript disabled entirely (native `<details>`, no script required to read it), and that a real mouse click opens the disclosure with JavaScript on.
+
+Notes:
+- Placed above, not inside, the existing `atSafety`/`atGrounding` stage gate — someone deciding how to bring this up with a partner is a different reader, at a different moment, from someone already committed to filling in their own map, and gating this behind "Continue" would have hidden it from exactly the person most likely to need it before ever opening the tool.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*
