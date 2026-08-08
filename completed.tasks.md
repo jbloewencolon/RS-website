@@ -309,4 +309,16 @@ Verified with a real headless browser, JavaScript disabled: `Learn.dc.html` cont
 Notes:
 - `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
 
+### RS-042 — Practise domain-label correction
+**Shipped:** 2026-08-08 · **Commit/PR:** (pending)
+
+~~was: the Consent Domains Map's two section headings — "The seventeen domains" and "Access Intimacy & Body Support" — never stated that they add to twenty, leaving a reader to do the arithmetic against the page's own meta description ("mapping consent across twenty domains") instead of being told directly on the page~~
+now: "Seventeen general consent domains" and "Three care and access domains: Access Intimacy & Body Support" — the split and the total are both explicit in the headings themselves. The Access Intimacy name (Mia Mingus's term, tied to principle 13 via RS-028) stays rather than being replaced outright by a purely numeric label — the second heading leads with the count, matching the first heading's structure, and keeps the named concept after it rather than losing it.
+
+Verified with a real Playwright session against a local server (this dc-runtime page doesn't hydrate from a bare `file://` URL): navigated to the tool stage, confirmed both exact heading strings render, zero console errors.
+
+Notes:
+- First of Phase 2.5's priority items (implementation order 1 of the author's own sequence: RS-042 → RS-043 → RS-044 → RS-045 → RS-046 → RS-047/RS-048).
+- `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*
