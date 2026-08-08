@@ -6,7 +6,7 @@
 
 ## How to use this file
 
-- Every task keeps its source ID (`RS-0xx`) so it can be cross-referenced against the docs in `docs/spec/`. Tasks with no source ID are prefixed `SUGGEST-` (raised during codebase familiarization, not in any spec doc), `FLAG-` (a gap or contradiction found in the spec docs themselves that needs author input before work can proceed), or `HUGO2-` (Phase 5, a direct author instruction with no `docs/spec/` origin — see that phase's header).
+- Every task keeps its source ID (`RS-0xx`) so it can be cross-referenced against the docs in `docs/spec/`. Tasks with no source ID are prefixed `SUGGEST-` (raised during codebase familiarization, not in any spec doc), `FLAG-` (a gap or contradiction found in the spec docs themselves that needs author input before work can proceed), `HUGO2-` (Phase 5, a direct author instruction with no `docs/spec/` origin — see that phase's header), or `UX-` (Phase 6, IDs kept identical to `docs/audits/ux-audit-2026-08-08.html`'s own numbering).
 - Tags: `[DEV]` buildable now · `[COPY]` blocked on author-approved text (drafts exist in `docs/spec/`, not final) · `[VERIFY]` requires checking a live source before publish — never guess a URL, number, or DOI · `[DECISION]` blocked on a human call.
 - Phases mirror the Decision Record's "Consolidated build order" (Cycles 1–4), with one Phase 0 for blockers that gate everything else, and my own resequencing note on where the Hugo migration (RS-004) should actually land within Phase 1 — see that phase's header.
 - **Draft copy lives in `docs/spec/`, not here.** This file tracks status, files touched, effort, and dependencies so it stays a working checklist instead of a second copy of 1,900 lines of markdown.
@@ -150,6 +150,69 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 
 ---
 
+## Phase 6 — UX/UI audit findings (2026-08-08)
+
+*(Source: `docs/audits/ux-audit-2026-08-08.html`, a separate session's browser-verified audit — 9 pages, 5 breakpoints, axe-core WCAG 2.1 AA + best-practice, zero automated violations found. 22 findings, copy treated as fixed throughout — every recommendation is about placement, hierarchy, disclosure, or visual treatment, not wording. IDs below (`UX-01`…`UX-22`) are the audit's own, kept as-is so a task row and its full reasoning/observed-data in the audit doc stay one lookup apart. Effort ratings are the audit's own (XS/S/M/L).)*
+
+**Two findings concern this session's own most recent work and are treated as first priority for that reason, not just severity.** UX-01 and UX-02 are both about `Resources.dc.html`'s collapsible categories (Phase 2.5's direct-instruction task, shipped and later migrated to Hugo this same session): the disclosure marker never renders because `summary{display:flex}` suppresses it, so nine populated-but-closed categories are visually identical to nine empty headings, and the page's own jump menu doesn't open its target. This is exactly the "never hide safety-critical information" practice this project has held to all session — the practice held on the crisis-lines default, but the *other ten* categories genuinely became invisible, which the practice was supposed to prevent too. Fix first, not because the audit says Critical, but because it's this project's own standard not currently being met.
+
+**One deliberate departure from the audit's literal recommendation.** UX-01's "Change" section lists three options and calls (a) — ship every category open by default — "the strongest." That's a real, defensible position, but it would reverse the direct author instruction earlier in this same session that asked specifically for Resources to be collapsible ("not all content appears immediately, but users can choose to reveal"). Resolving this as options (b) + (c) instead — a visible chevron plus a working jump-menu (auto-expand the fragment target) — fixes both actual defects (invisible affordance, broken navigation) without silently overriding a direct, recent instruction. Crisis-lines stays open by default, as it already is. If the author wants full-open instead, that's a one-line change once this row ships; either way the affordance and jump-menu bugs need fixing regardless of which resting state wins.
+
+**A cross-cutting wrinkle the audit doesn't name but the fixes below run into immediately.** UX-04, UX-06, UX-11, and UX-16 all touch the header, footer, or global hover style — and that markup is currently duplicated verbatim across nine separate source files (six `hugo/layouts/*.html` templates plus `Home.dc.html`, `Practise.dc.html`, `Contribute.dc.html`), none of which share a Hugo partial today. Every one of those four fixes therefore means the same edit applied identically nine times, with the drift risk that implies. Introducing `hugo/layouts/partials/header.html` and `footer.html` for the six already-Hugo pages is a natural, low-risk companion to doing UX-04/06 properly — noted on those rows below rather than filed as its own task, since it's small enough to fold in and pointless to defer once the same nine files are open anyway. It does not reach Home/Practise/Contribute until Phase 5 (`HUGO2-01`–`03`) migrates them onto Hugo; until then those three keep taking the fix by hand, same as every other direct edit to them this session.
+
+**Suggested implementation order: severity, as grouped below (6.1 → 6.4).** The audit's own "quick wins" list cuts across severity by effort instead and is worth having open as a checklist while working — it spans all four groups (UX-01's chevron half and UX-03 in 6.1, UX-06 and UX-08 in 6.2, UX-10/11/12/14/16 in 6.3) — but two of three Criticals are a safety-visibility bug and an unrecoverable data-loss bug, and those come first regardless of how small some Medium-tier CSS fixes are.
+
+### 6.1 — Critical
+
+| ID | Finding | Page(s) | Effort | Fix | Files |
+|---|---|---|---|---|---|
+| **UX-01** | Collapsed Resources categories show no disclosure cue; jump-menu links don't open them | Resources | S | Give `summary` a visible chevron (swap `display:flex` for `display:block` + marker, or add a chevron child) so all closed categories look openable; add a small fragment-navigation handler that sets `open = true` on the target `<details>` at load and on `hashchange`, so the "Choose what you need" menu actually opens what it links to. Keep `crisis-lines` open by default, as now. See the two notes above on why this isn't full-open. | `hugo/layouts/resources.html` (+ `npm run build:hugo`) |
+| **UX-02** | "Not yet built" categories look identical to populated-but-collapsed ones | Resources | S | Stop rendering `mutual-aid` as a `<details>` at all — a plain dimmed row with its status inline beside the heading. Give populated categories an entry count in the same position (`3 organisations`) so the label always answers "is there anything in here" without opening it. | `hugo/layouts/resources.html`, `hugo/data/resources.yaml` (add an `open`-independent empty-state flag or just branch on `entries` being empty, which the template already does) |
+| **UX-03** | "Clear everything" wipes an unsaved ~20-minute session with no confirmation, undo, or persistence to fall back on | Practise | S | Two-step in-place confirm (first press swaps the label to a confirm state, reverts after a few seconds or on any other interaction). Move the button away from "Print this map" — bottom of the tool, after all twenty domains, not the top beside the other top-of-tool actions. | `Practise.dc.html` |
+
+### 6.2 — High impact
+
+| ID | Finding | Page(s) | Effort | Fix | Files |
+|---|---|---|---|---|---|
+| **UX-04** | Mobile header is a fixed 247px (30–43% of a mobile viewport) and never collapses | All 9 | M | Below ~700px, collapse the eight nav links behind a single 44px `<details>`-based toggle (no JS needed) with the wordmark on the same row. Do this via the header-partial extraction noted above, so the fix ships once for the six Hugo pages instead of six times. | `hugo/layouts/partials/header.html` (new) + the six `hugo/layouts/*.html` call sites, plus `Home.dc.html`, `Practise.dc.html`, `Contribute.dc.html` by hand |
+| **UX-05** | Home's six doors sit below the fold at every breakpoint; the only above-fold control (the rotating question) leads nowhere | Home | M | Reduce the hero's vertical padding and place the rotating question beside the standfirst on wide viewports (the hero currently uses only the left 42ch of a 1120px container). Restyle "another question" as a quiet text control so its visual weight matches that it isn't a real action. | `Home.dc.html` (+ `index.html` copy) |
+| **UX-06** | Current page is signalled by colour alone; no `aria-current` anywhere on the site | All 9 | S | Add `aria-current="page"` to the active nav link, plus a non-colour cue (underline or weight change) using one semantic token that resolves per theme. Fold into the same header-partial work as UX-04 for the six Hugo pages. | Same file set as UX-04 |
+| **UX-07** | Learn and Archive — the two longest pages (22,700px / 23,900px mobile) — have no contents nav; Behind the Scenes already has one | Learn, Archive | M | Reuse the Behind the Scenes contents-nav pattern (`<nav aria-label="Contents">`) on both. Since both are Hugo-generated from `principles.yaml`/`archive.yaml`, build the anchor list from the same data the content renders from (matching how `resources.yaml`'s categories already drive Resources' own contents menu), so it can't drift the way a hand-typed list could. | `hugo/layouts/learn.html`, `hugo/layouts/archive.html` |
+| **UX-08** | Archive's "the fastest honest route in" numbered reading order is plain text — none of its 7+ entries link to the shelf entry it names | Archive | S | Turn each numbered item into an anchor to its shelf entry's id. Once UX-07 adds stable per-entry ids, this is template-only, no new markup. | `hugo/layouts/archive.html` |
+| **UX-09** | Form validation error never marks the offending field — no `aria-invalid`, no border change, no focus move | Home, Contribute | S | On failed submit: set `aria-invalid="true"` and the existing error-red border on the email input, move focus to it, and render the error message directly beneath the field instead of after the submit button. | `Home.dc.html`, `Contribute.dc.html` |
+
+### 6.3 — Medium
+
+| ID | Finding | Page(s) | Effort | Fix | Files |
+|---|---|---|---|---|---|
+| **UX-10** | Four-item grids (roadmap, footer) wrap 3+1 at every desktop width, breaking a meaningful left-to-right sequence | Home | XS | Lower `minmax(240px,…)` to `minmax(200px,…)` on both grids. | `Home.dc.html` |
+| **UX-11** | Mobile footer runs 931px — taller than the viewport | All 9 | XS | Two-column grid for the footer nav on mobile, keeping the existing 44px targets. Same partial-extraction opportunity as UX-04/06. | Same file set as UX-04 |
+| **UX-12** | The dispatch privacy promise is stated 4× on Home, 2× more on Contribute | Home, Contribute | XS | Keep the four left-column bullets as canonical; drop the form footnote (repeats two bullets 400px away) and let the door card's one-line summary stand alone. | `Home.dc.html`, `Contribute.dc.html` |
+| **UX-13** | Two dispatch forms (Home, Contribute) post to the same list with identical copy and no stated relationship between them | Home, Contribute | S | Extract one shared dispatch component with an optional note field so Contribute reads as "the same form, plus one field" rather than a second, unrelated signup; add a line acknowledging the shared list. | `Home.dc.html`, `Contribute.dc.html` |
+| **UX-14** | Field hints live inside `<label>`, so the accessible name includes the entire hint sentence | Home, Contribute | XS | Move each hint to its own `id`, reference via `aria-describedby` instead of nesting inside the label. | `Home.dc.html`, `Contribute.dc.html` |
+| **UX-15** | Resources has no presence on the homepage at all — reachable only from header/footer nav | Home | XS | Add a quiet route to Resources near the page's existing "you've reached the end" block (which already points to Archive and Practise) rather than adding a seventh door. | `Home.dc.html` |
+| **UX-16** | Link hover state drops contrast to 4.05:1, below AA | All 9 | XS | Darken `a:hover` from `#3F7A4E` to `#2C5A38` (already in the palette) — turns hover into a contrast *increase*. Appears in every page's own inline `<style>` block; no shared stylesheet exists, so this is nine edits regardless of the header-partial work. | All nine page sources |
+| **UX-17** | All 20 Consent Domains Map condition fields render open from the start; no progress indicator on a ~20-minute task | Practise | M | Reveal the condition field only once "yes, with conditions" or "not yet — ask me" is chosen (and keep it visible once it holds text). Add an `n of 20 marked` count near the top actions, mirrored in the print output. | `Practise.dc.html` |
+| **UX-18** | Practise's second tool ("An ending, prepared for") is never announced — the eyebrow still says "tool 01 of 09" | Practise | S | Update the eyebrow to reflect both tools and add a two-item contents list under the intro; give the endings tool's trigger its own section heading instead of a floating button visible during the first tool's gate. | `Practise.dc.html` |
+
+### 6.4 — Polish
+
+| ID | Finding | Page(s) | Effort | Fix | Files |
+|---|---|---|---|---|---|
+| **UX-19** | Decorative drift-circle SVG sits behind the H1 on mobile, reducing contrast on the site's single most important line | Home | XS | Below ~700px, drop the SVG's opacity or reposition it above the headline. | `Home.dc.html` |
+| **UX-20** | ~40% of the desktop container sits permanently empty on several pages | Home, Learn, Practise, Invitation | L | Strategic, not a quick fix — see the "Strategic opportunities" note below. Not an isolated task on its own. | — |
+| **UX-21** | Archive's sideways-scrolling Venn diagram has no visual edge cue that more content exists off-screen | Archive | XS | Add a soft fade/hairline shadow on the scroll container's trailing edge while more content remains. | `hugo/layouts/archive.html` |
+| **UX-22** | Home's dispatch section's two columns end at very different heights, orphaning trailing text | Home | XS | Largely resolved by UX-12's consolidation; align both columns to the top of the form rather than the top of the section. | `Home.dc.html` |
+
+**Strategic opportunities named in the audit, not filed as individual rows** (each is a larger design decision the granular fixes above only partially address — worth reading the audit's own §5 before scoping any of these as real tasks):
+- A single site-wide disclosure rule ("collapse things a reader may want to skip; never collapse things a reader may need to find") would settle UX-01/02's underlying question once rather than per-page.
+- A real navigation layer for long-form pages (UX-07 is the seed, not the whole of it) — matters more as Learn/Archive/Practise keep growing.
+- Recomposing Home's hero to show the six doors and the idea in one screen (UX-05 done properly, not just patched).
+- Resolving the two dispatch forms (Home, Contribute) into one deliberate relationship rather than two hand-maintained copies (UX-13 done properly).
+- Treating the Consent Domains Map as a session with connective tissue (progress count, a save prompt before leaving, confirm-on-destroy) rather than a page (UX-03/17/18 as one coherent redesign instead of three separate patches).
+
+---
+
 ## Parked / backlog
 
 | ID | Task | Reason parked |
@@ -257,3 +320,4 @@ Applies to every page, every release — from `docs/spec/base-work-order.md` §7
 - `docs/spec/decision-record-d1-d15.md` — authoritative resolution of every `[DECISION]`, consolidated build order
 - `docs/spec/warm-register-review-v2.md` — RS-035–RS-041, the Invitation as a second door alongside the Manifesto, plus the Phase 2.5 IA/navigation review delivered alongside it (see that phase for details; no separate file for the latter)
 - `docs/spec/README.md` — how the docs relate (does not yet mention the warm-register review; update if this file's own description of itself goes stale)
+- `docs/audits/ux-audit-2026-08-08.html` — the UX/UI audit behind Phase 6, above: 22 findings, full observed data and reasoning per finding
