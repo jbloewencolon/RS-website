@@ -7,6 +7,8 @@
 # error to fix).
 - version: "v0.2 — current"
   entries:
+    - was: "Resources listed eleven categories in page order with no way to jump straight to the one a reader needed — crisis lines first, Indigenous-led services near the bottom, nothing in between named until scrolled to"
+      now: "a \"Choose what you need\" list of same-page anchor links, placed after the immediate-safety questions rather than before them — a reader in danger sees those first, not a menu. Ordinary anchors only: no geolocation, no questionnaire, no filtering, no storage of what anyone clicked. Every urgent line on the page stays exactly where it was"
     - was: "the Consent Domains Map's two section headings — \"The seventeen domains\" and \"Access Intimacy & Body Support\" — never stated that they add to twenty, leaving a reader to do the arithmetic against the page's own meta description instead of being told"
       now: "\"Seventeen general consent domains\" and \"Three care and access domains: Access Intimacy & Body Support\" — the split and the total are both explicit in the headings themselves, and the Access Intimacy name (Mia Mingus's term, tied to principle 13) stays rather than being replaced outright"
     - was: "the site used \"sovereignty\" in at least four different senses — political, jurisdictional, relational, rhetorical — without ever marking which one was doing the work in a given sentence, and never engaged the strongest objection to using the word at all"

@@ -321,4 +321,19 @@ Notes:
 - First of Phase 2.5's priority items (implementation order 1 of the author's own sequence: RS-042 → RS-043 → RS-044 → RS-045 → RS-046 → RS-047/RS-048).
 - `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
 
+### RS-043 — Resources contents index
+**Shipped:** 2026-08-08 · **Commit/PR:** (pending)
+
+~~was: Resources listed eleven categories in strict page order with no way to jump directly to the one a reader needed — crisis lines came first, Indigenous-led services sat near the bottom, and everything between was unnamed until a reader scrolled to it~~
+now: a "Choose what you need" list of eleven ordinary same-page anchor links (`#crisis-lines`, `#coercive-control`, `#legal-aid`, `#immigration`, `#housing`, `#income`, `#disability`, `#lgbtq`, `#indigenous`, `#mutual-aid`, `#international`), placed **after** the immediate-safety questions rather than before them — a reader in danger sees those first, on their own, exactly as the page already presented them, not gated behind a menu. Every category on the actual page got its own anchor, not a condensed subset — the task's own gloss grouped "legal/immigration" and "housing/income/food" together, but the page already headed them as four separate sections, so the index mirrors the page's real structure rather than inventing a coarser one.
+
+No geolocation, no questionnaire, no filtering, no storage of what anyone clicked — plain `<a href="#id">` links, nothing else. This page has zero script by design (`script-src 'none'` in its CSP) and stayed that way; the index needed none.
+
+Verified with a real headless browser, JavaScript disabled (this page has no JS to disable, but the check confirms nothing here silently depends on any): all eleven anchor hrefs resolve to a real `id` on the page — checked programmatically, not eyeballed — and the safety-questions section still precedes the new index, which still precedes "Immediate safety and crisis lines."
+
+Notes:
+- Second of Phase 2.5's priority items (implementation order 2).
+- `Resources.dc.html` is hand-authored, not Hugo-generated (no `hugo/layouts/resources.html` exists) — edited directly, consistent with how the page has always been maintained.
+- `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*
