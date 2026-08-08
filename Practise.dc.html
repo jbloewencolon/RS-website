@@ -274,13 +274,88 @@
 </section>
 </sc-if>
 
+<section style="padding:clamp(3rem,6vw,4.5rem) 0;border-top:1px solid #C9C6BA">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Practise — tool 02 of 09 · about 10 minutes to fill in</p>
+
+    <sc-if value="{{ endingsClosed }}" hint-placeholder-val="{{ true }}">
+    <div class="noprint">
+      <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1rem;max-width:20ch">An ending, prepared for.</h2>
+      <p style="max-width:52ch;margin:0 0 .8rem;font-size:16.5px;line-height:1.55">Not a plan for whether to leave. A place to put the logistics down before you need them, and somewhere to put down what isn't logistics at all.</p>
+      <p style="max-width:52ch;margin:0 0 1.6rem;color:#3C3E38">Three parts: what lands where, what's owed on the way out, and after. Only the first one asks you to fill anything in.</p>
+      <button type="button" onClick="{{ toEndingsGate }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px">Open this tool</button>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ atEndingsGate }}" hint-placeholder-val="{{ false }}">
+    <div class="noprint" style="border:1px solid #C9C6BA;border-left:4px solid #8B3A2F;padding:1.7rem 1.6rem 1.9rem;max-width:700px;background:rgba(139,58,47,.04);border-radius:3px">
+      <p style="margin:0 0 1.2rem;font-size:17px;line-height:1.55;font-weight:700">If leaving safely means leaving suddenly — close this and go. Nothing on this page is worth staying for.</p>
+      <p style="margin:0 0 1.4rem;font-size:16px;line-height:1.5;color:#3C3E38">This tool is for someone with time to prepare, not someone who needs to leave right now. If that's not you, the next click should go to resources, not to this.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:.8rem">
+        <button type="button" onClick="{{ toEndingsTool }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px">Continue</button>
+        <button type="button" onClick="{{ closeEndings }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.85rem 1.1rem;min-height:44px;cursor:pointer;border-radius:2px">Not now</button>
+        <a href="Resources.dc.html" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;border:1px solid #8B3A2F;color:#8B3A2F;padding:.85rem 1.1rem;text-decoration:none;border-radius:2px;display:inline-flex;align-items:center">Go to resources instead →</a>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ atEndingsTool }}" hint-placeholder-val="{{ false }}">
+    <div id="endings-tool-view">
+      <div class="noprint" style="display:flex;flex-wrap:wrap;gap:.7rem;margin-bottom:1.8rem">
+        <button type="button" onClick="{{ printEndings }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.75rem 1rem;min-height:44px;cursor:pointer;border-radius:2px">Print this</button>
+        <button type="button" onClick="{{ resetEndings }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.75rem 1rem;min-height:44px;cursor:pointer;border-radius:2px">Clear the audit</button>
+        <button type="button" onClick="{{ closeEndings }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.75rem 1rem;min-height:44px;cursor:pointer;border-radius:2px">Close this tool</button>
+      </div>
+
+      <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.2rem,2.6vw,1.5rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .6rem">Part one — what lands where.</h3>
+      <p style="max-width:56ch;margin:0 0 1.2rem;color:#3C3E38;font-size:15.5px;line-height:1.55">Not feelings. Logistics. For each of these, who holds it after you — and do they know they're holding it.</p>
+      <div style="display:flex;flex-direction:column;gap:1px;background:#C9C6BA;border:1px solid #C9C6BA;margin-bottom:2.2rem">
+        <sc-for list="{{ auditRows }}" as="r" hint-placeholder-count="8">
+          <div style="background:#E7E5DC;padding:1rem 1.2rem 1.1rem;display:flex;flex-wrap:wrap;gap:.8rem 1.6rem;align-items:flex-end">
+            <p style="margin:0;flex:1 1 140px;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1rem;color:#191B18">{{ r.label }}</p>
+            <label style="display:block;flex:2 1 220px;min-width:0">
+              <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#5A5D53;margin-bottom:.3rem">Who holds this after</span>
+              <input type="text" value="{{ r.holder }}" onChange="{{ r.setHolder }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.55rem .6rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:15px;color:#191B18">
+            </label>
+            <label style="display:flex;align-items:center;gap:.5rem;flex:0 0 auto;cursor:pointer;min-height:44px;padding:.3rem 0">
+              <input type="checkbox" checked="{{ r.knows }}" onChange="{{ r.toggleKnows }}" style="width:18px;height:18px;margin:0;accent-color:#3F7A4E">
+              <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#585B4F">they know</span>
+            </label>
+          </div>
+        </sc-for>
+      </div>
+
+      <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.2rem,2.6vw,1.5rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .6rem">Part two — what you owe on the way out.</h3>
+      <div style="max-width:58ch;margin:0 0 2.2rem;font-size:15.5px;line-height:1.6;color:#3C3E38">
+        <p style="margin:0 0 .9rem">What you owe someone at the end isn't a reason. It's:</p>
+        <ul style="list-style:none;margin:0 0 .9rem;padding:0;display:flex;flex-direction:column;gap:.5rem">
+          <li>— telling them, rather than making them work it out</li>
+          <li>— not taking back the good parts on the way out, as though loving them had been a mistake you're now correcting</li>
+          <li>— making sure whatever they depended on you for lands somewhere before you go, if you can go safely</li>
+          <li>— letting them grieve at their own speed, which will not be yours</li>
+        </ul>
+        <p style="margin:0;font-weight:700;color:#191B18">And if going safely means going suddenly — go. Nothing in any of this is a reason to stay.</p>
+        <p style="margin:.8rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F">From the <a href="Invitation.dc.html">Invitation</a>'s "On goodbyes," in full.</p>
+      </div>
+
+      <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.2rem,2.6vw,1.5rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .6rem">Part three — after.</h3>
+      <div style="max-width:56ch;font-size:15.5px;line-height:1.6;color:#3C3E38">
+        <p style="margin:0 0 .9rem">Nothing below asks anything of you. No fields, no prompts, nothing that counts as finished.</p>
+        <p style="margin:0 0 .9rem">Grief for a relationship that's ending, or one that's over, doesn't run on the logic of the rest of this page. It doesn't resolve because the logistics are handled. It can show up long after the audit above is irrelevant, for someone whose name you no longer say out loud.</p>
+        <p style="margin:0">That's not a problem this tool is built to fix. It isn't a problem. Close the tab whenever you want to — there's nothing left to do here, and there was never going to be.</p>
+      </div>
+    </div>
+    </sc-if>
+  </div>
+</section>
+
 <section class="noprint" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">The rest of the toolkit</p>
-    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1rem;max-width:22ch;color:#E7E5DC">Eight more tools, not yet built.</h2>
+    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1rem;max-width:22ch;color:#E7E5DC">Seven more tools, not yet built.</h2>
     <p style="max-width:52ch;margin:0 0 2rem;color:#B8C7C1">Each will work the same way: in your browser, printable, nothing transmitted, crawler disallowed. No dates are given, because a date we could not keep would be its own small domination.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:#2A4C4C;border:1px solid #2A4C4C">
-      <sc-for list="{{ tools }}" as="t" hint-placeholder-count="8">
+      <sc-for list="{{ tools }}" as="t" hint-placeholder-count="7">
         <div style="background:#0F2A2E;padding:1.3rem 1.3rem 1.5rem">
           <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ t.color }}">{{ t.status }}</span>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;margin:.5rem 0 .4rem;line-height:1.15;color:#E7E5DC">{{ t.name }}</h3>
@@ -335,7 +410,7 @@ class Component extends DCLogic {
   // resuming across sessions works only by re-importing a file the user
   // chose to save, never by silently persisting to the device — the same
   // risk as an export, without the warning that makes it a choice.
-  state = { who: "", picks: {}, notes: {}, stage: "safety", filename: this.defaultFilename(), importError: "" };
+  state = { who: "", picks: {}, notes: {}, stage: "safety", filename: this.defaultFilename(), importError: "", endingsStage: "closed", endingsAudit: {} };
 
   defaultFilename() {
     const d = new Date().toISOString().slice(0, 10);
@@ -388,9 +463,13 @@ class Component extends DCLogic {
     ["Decision Taxonomy", "Sort decisions into personal, consultative, joint, and collective — and find where a shared decision is being treated as a private one.", 0],
     ["Boundary & Refusal Builder", "A template that distinguishes a request from an agreement, a boundary from an ultimatum, and an ultimatum from a threat.", 0],
     ["The Relational Review", "A seasonal check-in: what feels alive, what feels assumed, where resentment is accumulating, what needs revision.", 0],
-    ["The Repair Map", "What happened, who was affected, what conditions made it possible, what would repair actually require. Repair does not guarantee reconciliation.", 0],
-    ["Exit & Transition Plan", "Safety, housing, finances, children, animals, digital access, confidentiality. Endings deserve the same care as beginnings.", 0]
+    ["The Repair Map", "What happened, who was affected, what conditions made it possible, what would repair actually require. Repair does not guarantee reconciliation.", 0]
   ];
+
+  // Endings tool (RS-039, warm-register-review-v2.md §3.3): the audit
+  // items are logistics, in the source review's own order, not an
+  // exhaustive list — "who holds this after" is the point, not coverage.
+  auditItems = ["Money", "Medication", "The school run", "Paperwork", "The lease", "A visa or immigration status", "A pet", "A phone plan"];
 
   renderVals() {
     const picks = this.state.picks, notes = this.state.notes;
@@ -504,7 +583,39 @@ class Component extends DCLogic {
         color: t[2] ? "#DB9E2A" : "#73968D"
       })),
       domains: renderedDomains.slice(0, 17),
-      accessDomains: renderedDomains.slice(17)
+      accessDomains: renderedDomains.slice(17),
+
+      // Endings tool (RS-039). A separate state field from the Consent
+      // Domains Map's own "stage" — this is a second, independent tool
+      // on the same page, not another step in the map's own flow.
+      endingsClosed: this.state.endingsStage === "closed",
+      atEndingsGate: this.state.endingsStage === "gate",
+      atEndingsTool: this.state.endingsStage === "tool",
+      toEndingsGate: () => this.setState({ endingsStage: "gate" }),
+      toEndingsTool: () => this.setState({ endingsStage: "tool" }),
+      closeEndings: () => this.setState({ endingsStage: "closed" }),
+      resetEndings: () => this.setState({ endingsAudit: {} }),
+      printEndings: () => {
+        const prevTitle = document.title;
+        document.title = "";
+        const restore = () => { document.title = prevTitle; window.removeEventListener("afterprint", restore); };
+        window.addEventListener("afterprint", restore);
+        window.print();
+        setTimeout(restore, 4000);
+      },
+      auditRows: this.auditItems.map((label, i) => {
+        const row = this.state.endingsAudit[i] || {};
+        return {
+          label,
+          holder: row.holder || "",
+          setHolder: (ev) => {
+            const v = ev.target.value;
+            this.setState(s => { const a = Object.assign({}, s.endingsAudit); a[i] = Object.assign({}, a[i], { holder: v }); return { endingsAudit: a }; });
+          },
+          knows: !!row.knows,
+          toggleKnows: () => this.setState(s => { const a = Object.assign({}, s.endingsAudit); a[i] = Object.assign({}, a[i], { knows: !(a[i] && a[i].knows) }); return { endingsAudit: a }; })
+        };
+      })
     };
   }
 }
