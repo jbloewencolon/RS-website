@@ -17,10 +17,20 @@ const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const hugoDir = path.join(root, "hugo");
 const publicDir = path.join(hugoDir, "public");
 
-// Every page Hugo is currently responsible for. Add a filename here only
+// Every page Hugo is currently responsible for. Add an entry here only
 // once it has a real content/layout pair in hugo/ — see completed.tasks.md
-// for which pages have migrated so far.
-export const HUGO_PAGES = ["Manifesto.dc.html", "Invitation.dc.html", "Learn.dc.html", "BehindTheScenes.dc.html", "Archive.dc.html", "Resources.dc.html"];
+// for which pages have migrated so far. `path` is relative to both
+// hugo/public/ (Hugo's output) and the repo root (where it's committed) —
+// pretty URLs (BUG-03) mean the two now always match exactly, since each
+// page's `url:` front matter is the single source of truth for both.
+export const HUGO_PAGES = [
+  { name: "Manifesto", path: "manifesto/index.html" },
+  { name: "Invitation", path: "invitation/index.html" },
+  { name: "Learn", path: "learn/index.html" },
+  { name: "BehindTheScenes", path: "behind-the-scenes/index.html" },
+  { name: "Archive", path: "archive/index.html" },
+  { name: "Resources", path: "resources/index.html" },
+];
 
 function findHugo() {
   try {
@@ -38,16 +48,26 @@ export function buildHugo({ write = true } = {}) {
       "hugo binary not found on PATH. Install the pinned version — see hugo/README.md — then re-run."
     );
   }
+  // Hugo doesn't clean stale output between runs by default — without this,
+  // a page removed or renamed in hugo/content/ would leave its old output
+  // sitting in public/ indefinitely, silently readable by anything that
+  // doesn't know to check HUGO_PAGES first (found while migrating to
+  // pretty URLs: the old flat *.dc.html files stayed in public/ alongside
+  // the new nested ones after the first rebuild).
+  fs.rmSync(publicDir, { recursive: true, force: true });
   execFileSync(bin, ["--minify=false"], { cwd: hugoDir, stdio: "pipe" });
 
   const results = [];
-  for (const pg of HUGO_PAGES) {
-    const generated = fs.readFileSync(path.join(publicDir, pg), "utf8");
-    const committedPath = path.join(root, pg);
+  for (const { name, path: relPath } of HUGO_PAGES) {
+    const generated = fs.readFileSync(path.join(publicDir, relPath), "utf8");
+    const committedPath = path.join(root, relPath);
     const committed = fs.existsSync(committedPath) ? fs.readFileSync(committedPath, "utf8") : null;
     const inSync = generated === committed;
-    if (write && !inSync) fs.writeFileSync(committedPath, generated);
-    results.push({ page: pg, inSync, generated });
+    if (write && !inSync) {
+      fs.mkdirSync(path.dirname(committedPath), { recursive: true });
+      fs.writeFileSync(committedPath, generated);
+    }
+    results.push({ page: name, inSync, generated });
   }
   return results;
 }

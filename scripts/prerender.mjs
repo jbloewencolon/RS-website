@@ -37,13 +37,20 @@ const outDir = path.join(root, "_site");
 const PAGES = [
   "index.html",
   "Home.dc.html",
-  "Practise.dc.html",
-  "Contribute.dc.html",
+  "practise/index.html",
+  "contribute/index.html",
 ];
 // Pages Hugo generates (see hugo/README.md and RS-004) are already plain
 // HTML with no <x-dc> runtime to render — they're copied as-is, same as
-// Resources.dc.html.
-const COPY_AS_IS = ["glyph-check.html", "glyph-check.js", "Resources.dc.html", "Manifesto.dc.html", "Invitation.dc.html", "Learn.dc.html", "BehindTheScenes.dc.html", "Archive.dc.html", "archive-filter.js", "support.js", "robots.txt", "CNAME", "LICENSE"];
+// resources/index.html. The eight *.dc.html entries are BUG-03's redirect
+// stubs, left at the old flat paths so an already-indexed or bookmarked
+// link still lands somewhere real; they're plain static HTML too.
+const COPY_AS_IS = [
+  "glyph-check.html", "glyph-check.js",
+  "resources/index.html", "manifesto/index.html", "invitation/index.html", "learn/index.html", "behind-the-scenes/index.html", "archive/index.html",
+  "Manifesto.dc.html", "Invitation.dc.html", "Learn.dc.html", "Archive.dc.html", "Resources.dc.html", "BehindTheScenes.dc.html", "Practise.dc.html", "Contribute.dc.html",
+  "archive-filter.js", "print.js", "support.js", "robots.txt", "CNAME", "LICENSE",
+];
 
 const MIME = { ".html": "text/html", ".js": "application/javascript", ".txt": "text/plain" };
 
@@ -69,8 +76,8 @@ function findChromium() {
 }
 
 const HEAD_INJECT = `<style>x-dc{display:none}</style>
-<link rel="preload" as="script" href="./vendor/react.production.min.js" crossorigin="anonymous">
-<link rel="preload" as="script" href="./vendor/react-dom.production.min.js" crossorigin="anonymous">
+<link rel="preload" as="script" href="/vendor/react.production.min.js" crossorigin="anonymous">
+<link rel="preload" as="script" href="/vendor/react-dom.production.min.js" crossorigin="anonymous">
 `;
 
 async function main() {
@@ -119,12 +126,19 @@ async function main() {
     let src = fs.readFileSync(path.join(root, pg), "utf8");
     src = src.replace("</head>", `${HEAD_INJECT}</head>`);
     src = src.replace("<x-dc>", `<div id="dc-root">${rendered}</div>\n<x-dc>`);
-    fs.writeFileSync(path.join(outDir, pg), src);
+    const destPath = path.join(outDir, pg);
+    fs.mkdirSync(path.dirname(destPath), { recursive: true });
+    fs.writeFileSync(destPath, src);
     console.log(`✓ ${pg} — ${rendered.length.toLocaleString()} chars prerendered`);
   }
 
   for (const f of COPY_AS_IS) {
-    if (fs.existsSync(path.join(root, f))) fs.copyFileSync(path.join(root, f), path.join(outDir, f));
+    const srcPath = path.join(root, f);
+    if (fs.existsSync(srcPath)) {
+      const destPath = path.join(outDir, f);
+      fs.mkdirSync(path.dirname(destPath), { recursive: true });
+      fs.copyFileSync(srcPath, destPath);
+    }
   }
   fs.cpSync(path.join(root, "vendor"), path.join(outDir, "vendor"), { recursive: true });
   if (fs.existsSync(path.join(root, "sitemap.xml"))) {

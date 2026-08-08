@@ -14,18 +14,39 @@ import { buildHugo, HUGO_PAGES } from "./build-hugo.mjs";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const htmlValidateConfig = JSON.parse(fs.readFileSync(path.join(root, ".htmlvalidate.json"), "utf8"));
+// BUG-03: every page but Home now lives at a pretty, directory-style URL
+// (manifesto/index.html served at /manifesto/, etc.) — checked by that
+// URL, not the file path, so this test exercises the same resolution a
+// real visitor's browser does (see serve()'s directory-index handling
+// below), not just "does this file happen to contain valid HTML."
 const pages = [
   "index.html",
   "Home.dc.html",
-  "Manifesto.dc.html",
-  "Invitation.dc.html",
-  "Learn.dc.html",
-  "Practise.dc.html",
-  "Archive.dc.html",
-  "Contribute.dc.html",
-  "BehindTheScenes.dc.html",
-  "Resources.dc.html",
+  "manifesto/",
+  "invitation/",
+  "learn/",
+  "practise/",
+  "archive/",
+  "contribute/",
+  "behind-the-scenes/",
+  "resources/",
   "glyph-check.html",
+];
+// The eight redirect stubs left at the old flat *.dc.html paths (BUG-03).
+// Checked separately, by raw fetch rather than browser navigation — each
+// carries a <meta http-equiv="refresh">, and navigating to one in a real
+// browser context immediately follows it, so a page.goto() here would
+// silently end up testing the redirect *target* a second time rather
+// than the stub itself.
+const redirectStubs = [
+  { path: "Manifesto.dc.html", target: "/manifesto/" },
+  { path: "Invitation.dc.html", target: "/invitation/" },
+  { path: "Learn.dc.html", target: "/learn/" },
+  { path: "Archive.dc.html", target: "/archive/" },
+  { path: "Resources.dc.html", target: "/resources/" },
+  { path: "BehindTheScenes.dc.html", target: "/behind-the-scenes/" },
+  { path: "Practise.dc.html", target: "/practise/" },
+  { path: "Contribute.dc.html", target: "/contribute/" },
 ];
 
 const MIME = { ".html": "text/html", ".js": "application/javascript" };
@@ -34,7 +55,14 @@ function serve() {
   return new Promise((resolve) => {
     const server = http.createServer((req, res) => {
       const reqPath = decodeURIComponent(req.url.split("?")[0]);
-      const filePath = path.join(root, reqPath === "/" ? "/Home.dc.html" : reqPath);
+      let filePath = path.join(root, reqPath === "/" ? "/Home.dc.html" : reqPath);
+      // Mimic GitHub Pages' directory-index resolution: /manifesto/ (or
+      // /manifesto) serves manifesto/index.html. Without this, every
+      // pretty-URL page in `pages` above would 404 against this local
+      // server despite working correctly once actually deployed.
+      if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
+        filePath = path.join(filePath, "index.html");
+      }
       fs.readFile(filePath, (err, data) => {
         if (err) {
           res.writeHead(404);
@@ -47,6 +75,35 @@ function serve() {
     });
     server.listen(0, "127.0.0.1", () => resolve(server));
   });
+}
+
+// Confirms each old flat-path file is a real, working soft-redirect —
+// not just present, but actually pointing at the page it claims to.
+function checkRedirectStubs(base) {
+  return Promise.all(
+    redirectStubs.map(async ({ path: p, target }) => {
+      const res = await fetch(base + p);
+      const problems = [];
+      if (res.status !== 200) problems.push(`HTTP ${res.status}`);
+      const html = await res.text();
+      if (!html.includes(`content="0; url=${target}"`)) {
+        problems.push(`missing/incorrect meta refresh to ${target}`);
+      }
+      if (!html.includes(`href="https://relationalsovereignty.com${target}"`)) {
+        problems.push(`missing/incorrect canonical link to ${target}`);
+      }
+      if (!/name="robots"\s+content="noindex"/.test(html)) {
+        problems.push("missing noindex");
+      }
+      if (problems.length) {
+        console.log(`\n✗ ${p} — ${problems.length} problem(s)`);
+        for (const prob of problems) console.log(`    ${prob}`);
+      } else {
+        console.log(`✓ ${p} redirects to ${target}`);
+      }
+      return problems.length;
+    })
+  ).then((counts) => counts.reduce((a, b) => a + b, 0));
 }
 
 function findChromium() {
@@ -151,6 +208,7 @@ async function main() {
   const htmlValidate = new HtmlValidate(htmlValidateConfig);
 
   let problems = checkIndexMatchesHome() + checkPrerender() + checkHugoPagesInSync();
+  problems += await checkRedirectStubs(base);
 
   for (const pg of pages) {
     const context = await browser.newContext();
@@ -201,10 +259,10 @@ async function main() {
   server.close();
 
   if (problems > 0) {
-    console.log(`\n${problems} total problem(s) across ${pages.length} pages.`);
+    console.log(`\n${problems} total problem(s) across ${pages.length} pages and ${redirectStubs.length} redirect stubs.`);
     process.exit(1);
   }
-  console.log(`\nAll ${pages.length} pages passed HTML validation, accessibility, and console checks.`);
+  console.log(`\nAll ${pages.length} pages passed HTML validation, accessibility, and console checks; all ${redirectStubs.length} redirect stubs resolve correctly.`);
 }
 
 main();

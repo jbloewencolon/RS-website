@@ -1,4 +1,4 @@
 ---
-url: "/Learn.dc.html"
+url: "/learn/"
 layout: "learn"
 ---

@@ -125,14 +125,98 @@
 <section id="principles" style="padding:0 0 clamp(3rem,6vw,4.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:#C9C6BA;border:1px solid #C9C6BA">
-      {{ range hugo.Data.principles }}
-      <li id="principle-{{ .n }}" style="background:#E7E5DC;padding:1.7rem 1.6rem 1.8rem;display:flex;flex-direction:column;gap:.55rem;scroll-margin-top:1rem">
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#2B4C9B;font-weight:500">{{ .n }}</span>
-        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.28rem;line-height:1.1;letter-spacing:-.02em;margin:0">{{ .title }}</h2>
-        <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">{{ .body }}</p>
-        <p style="margin:.4rem 0 0;padding-left:.9rem;border-left:2px solid #DB9E2A;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.55;color:#585B4F">{{ .question }}</p>
+      
+      <li id="principle-01" style="background:#E7E5DC;padding:1.7rem 1.6rem 1.8rem;display:flex;flex-direction:column;gap:.55rem;scroll-margin-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#2B4C9B;font-weight:500">01</span>
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.28rem;line-height:1.1;letter-spacing:-.02em;margin:0">No ownership</h2>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">People do not become property through romance, marriage, sexuality, family, caregiving, or shared history.</p>
+        <p style="margin:.4rem 0 0;padding-left:.9rem;border-left:2px solid #DB9E2A;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.55;color:#585B4F">What access am I treating as an entitlement?</p>
       </li>
-      {{ end }}
+      
+      <li id="principle-02" style="background:#E7E5DC;padding:1.7rem 1.6rem 1.8rem;display:flex;flex-direction:column;gap:.55rem;scroll-margin-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#2B4C9B;font-weight:500">02</span>
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.28rem;line-height:1.1;letter-spacing:-.02em;margin:0">Self-determination</h2>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">Each person should retain meaningful authority over their body, identity, beliefs, associations, and life direction.</p>
+        <p style="margin:.4rem 0 0;padding-left:.9rem;border-left:2px solid #DB9E2A;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.55;color:#585B4F">Which decisions belong primarily to me, and which genuinely require shared governance?</p>
+      </li>
+      
+      <li id="principle-03" style="background:#E7E5DC;padding:1.7rem 1.6rem 1.8rem;display:flex;flex-direction:column;gap:.55rem;scroll-margin-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#2B4C9B;font-weight:500">03</span>
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.28rem;line-height:1.1;letter-spacing:-.02em;margin:0">Interdependence</h2>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">Needing people does not eliminate sovereignty. The problem is not dependence but dependence controlled by someone else. And some dependence is not chosen and cannot be left — guardianship, congregate care, a body that needs another body to get through the day. Sovereignty there is not exit. It is who else is in the room, what can be contested, and whether anyone outside would know.</p>
+        <p style="margin:.4rem 0 0;padding-left:.9rem;border-left:2px solid #DB9E2A;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.55;color:#585B4F">Do I have meaningful influence over the conditions under which I receive or provide care?</p>
+      </li>
+      
+      <li id="principle-04" style="background:#E7E5DC;padding:1.7rem 1.6rem 1.8rem;display:flex;flex-direction:column;gap:.55rem;scroll-margin-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#2B4C9B;font-weight:500">04</span>
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.28rem;line-height:1.1;letter-spacing:-.02em;margin:0">Consent</h2>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">Consent must be specific, informed, ongoing, and materially possible. A label is not blanket permission.</p>
+        <p style="margin:.4rem 0 0;padding-left:.9rem;border-left:2px solid #DB9E2A;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.55;color:#585B4F">What would happen if someone said no?</p>
+      </li>
+      
+      <li id="principle-05" style="background:#E7E5DC;padding:1.7rem 1.6rem 1.8rem;display:flex;flex-direction:column;gap:.55rem;scroll-margin-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#2B4C9B;font-weight:500">05</span>
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.28rem;line-height:1.1;letter-spacing:-.02em;margin:0">Non-domination</h2>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">Power should not be arbitrary, hidden, or impossible to challenge. Difference is real; domination is not inevitable.</p>
+        <p style="margin:.4rem 0 0;padding-left:.9rem;border-left:2px solid #DB9E2A;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.55;color:#585B4F">Who controls the resources, information, recognition, or access in this relationship?</p>
+      </li>
+      
+      <li id="principle-06" style="background:#E7E5DC;padding:1.7rem 1.6rem 1.8rem;display:flex;flex-direction:column;gap:.55rem;scroll-margin-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#2B4C9B;font-weight:500">06</span>
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.28rem;line-height:1.1;letter-spacing:-.02em;margin:0">Relational accountability</h2>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">Freedom does not remove responsibility for foreseeable effects on others.</p>
+        <p style="margin:.4rem 0 0;padding-left:.9rem;border-left:2px solid #DB9E2A;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.55;color:#585B4F">Who bears the cost of my choices?</p>
+      </li>
+      
+      <li id="principle-07" style="background:#E7E5DC;padding:1.7rem 1.6rem 1.8rem;display:flex;flex-direction:column;gap:.55rem;scroll-margin-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#2B4C9B;font-weight:500">07</span>
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.28rem;line-height:1.1;letter-spacing:-.02em;margin:0">Refusal</h2>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">A relationship should contain space for disagreement, boundaries, withdrawal, and change.</p>
+        <p style="margin:.4rem 0 0;padding-left:.9rem;border-left:2px solid #DB9E2A;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.55;color:#585B4F">Can refusal occur without retaliation?</p>
+      </li>
+      
+      <li id="principle-08" style="background:#E7E5DC;padding:1.7rem 1.6rem 1.8rem;display:flex;flex-direction:column;gap:.55rem;scroll-margin-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#2B4C9B;font-weight:500">08</span>
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.28rem;line-height:1.1;letter-spacing:-.02em;margin:0">Opacity</h2>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">Intimacy does not require complete access or total legibility. But opacity is a right against people who want more of you than they are owed — it is not available against institutions that compel disclosure to release care, money, status, or documents. Refusing to be read is a privilege unevenly distributed, and the framework should not mistake one for the other.</p>
+        <p style="margin:.4rem 0 0;padding-left:.9rem;border-left:2px solid #DB9E2A;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.55;color:#585B4F">What parts of another person am I assuming I have a right to know? And where is this person already required to be legible to someone with power over them?</p>
+      </li>
+      
+      <li id="principle-09" style="background:#E7E5DC;padding:1.7rem 1.6rem 1.8rem;display:flex;flex-direction:column;gap:.55rem;scroll-margin-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#2B4C9B;font-weight:500">09</span>
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.28rem;line-height:1.1;letter-spacing:-.02em;margin:0">Reciprocity</h2>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">Relationships involve giving and receiving, but reciprocity does not require identical contributions.</p>
+        <p style="margin:.4rem 0 0;padding-left:.9rem;border-left:2px solid #DB9E2A;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.55;color:#585B4F">Are care, effort, risk, and benefit distributed in a way people experience as fair?</p>
+      </li>
+      
+      <li id="principle-10" style="background:#E7E5DC;padding:1.7rem 1.6rem 1.8rem;display:flex;flex-direction:column;gap:.55rem;scroll-margin-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#2B4C9B;font-weight:500">10</span>
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.28rem;line-height:1.1;letter-spacing:-.02em;margin:0">Repair</h2>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">Accountability requires more than apology. Repair does not guarantee reconciliation.</p>
+        <p style="margin:.4rem 0 0;padding-left:.9rem;border-left:2px solid #DB9E2A;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.55;color:#585B4F">What material or behavioural change would repair require?</p>
+      </li>
+      
+      <li id="principle-11" style="background:#E7E5DC;padding:1.7rem 1.6rem 1.8rem;display:flex;flex-direction:column;gap:.55rem;scroll-margin-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#2B4C9B;font-weight:500">11</span>
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.28rem;line-height:1.1;letter-spacing:-.02em;margin:0">Transformation</h2>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">Relationships may change form without becoming meaningless.</p>
+        <p style="margin:.4rem 0 0;padding-left:.9rem;border-left:2px solid #DB9E2A;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.55;color:#585B4F">Are we preserving the relationship, or merely preserving its current category?</p>
+      </li>
+      
+      <li id="principle-12" style="background:#E7E5DC;padding:1.7rem 1.6rem 1.8rem;display:flex;flex-direction:column;gap:.55rem;scroll-margin-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#2B4C9B;font-weight:500">12</span>
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.28rem;line-height:1.1;letter-spacing:-.02em;margin:0">Relational futurity</h2>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">The purpose is not simply to reject harmful relationships, but to create forms of connection in which people and communities can flourish.</p>
+        <p style="margin:.4rem 0 0;padding-left:.9rem;border-left:2px solid #DB9E2A;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.55;color:#585B4F">What kind of relational world are our present practices creating?</p>
+      </li>
+      
+      <li id="principle-13" style="background:#E7E5DC;padding:1.7rem 1.6rem 1.8rem;display:flex;flex-direction:column;gap:.55rem;scroll-margin-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#2B4C9B;font-weight:500">13</span>
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.28rem;line-height:1.1;letter-spacing:-.02em;margin:0">The carer is inside the relationship</h2>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">The person providing care is a party to the relation, not staff administering it. Their refusal is constrained by someone else&#39;s survival, which is a real constraint and not a moral failing. A framework that protects only the cared-for has built another caste.</p>
+        <p style="margin:.4rem 0 0;padding-left:.9rem;border-left:2px solid #DB9E2A;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.55;color:#585B4F">Who relieves this person, and what happens if no one does?</p>
+      </li>
+      
     </ol>
   </div>
 </section>
@@ -295,13 +379,31 @@
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1.2rem;max-width:22ch;color:#E7E5DC">Total legibility is a form of domination.</h2>
     <p style="max-width:54ch;margin:0 0 1.6rem;color:#B8C7C1">Opacity in a principle is easy. Opacity in software is a governance decision, so here is what it actually amounts to on this site — the parts that are real, and the parts that are not built.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:#2A4C4C;border:1px solid #2A4C4C;margin-bottom:1.8rem">
-      {{ range hugo.Data.opacity }}
+      
       <div style="background:#0F2A2E;padding:1.3rem 1.3rem 1.5rem">
-        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ .color }};margin:0 0 .5rem">{{ .state }}</p>
-        <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">{{ .what }}</h3>
-        <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">{{ .why }}</p>
+        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#509C64;margin:0 0 .5rem">real, one line of config</p>
+        <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">The crawler is refused, selectively</h3>
+        <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">The workshop and the contribution pages are disallowed in robots.txt. Discovery by a third party is not a condition of existing, and a publisher can decline the register.</p>
       </div>
-      {{ end }}
+      
+      <div style="background:#0F2A2E;padding:1.3rem 1.3rem 1.5rem">
+        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#509C64;margin:0 0 .5rem">real, by having nothing</p>
+        <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">There is no consent banner</h3>
+        <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">Not because consent was waived, but because nothing is tracked, no cookie is set, and nothing is stored. The strongest refusal of consent theatre is having nothing to recite at you.</p>
+      </div>
+      
+      <div style="background:#0F2A2E;padding:1.3rem 1.3rem 1.5rem">
+        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#509C64;margin:0 0 .5rem">real, as absence</p>
+        <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">Some things are simply not here</h3>
+        <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">No intimate data is collected because it is technically possible. The tools keep their answers in your browser. An archive record can exist while its content does not — absence is not incompleteness.</p>
+      </div>
+      
+      <div style="background:#0F2A2E;padding:1.3rem 1.3rem 1.5rem">
+        <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#DB9E2A;margin:0 0 .5rem">not built</p>
+        <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">Community-set access rules</h3>
+        <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">Protocol-gated material, where a community rather than this project decides who may see what, is unimplemented. Until it is, nothing that genuinely requires protocol is held here.</p>
+      </div>
+      
     </div>
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#73968D;border-left:2px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:0 0 1.6rem;max-width:58ch">⌖ The caveat that governs all of it: opacity is owed to the crawler and the market, never to the disabled reader. Nothing here is hidden from assistive technology and no semantic structure is stripped to look less legible. Withhold from extraction; disclose fully to those who need access to participate. Getting this backwards produces a site that is self-congratulatory and practically exclusionary.</p>
     <p style="max-width:54ch;margin:0;color:#B8C7C1">Protocol-gated access — where a community, not this project, decides who may see what and under which relationship — already exists in <a href="https://mukurtu.org" style="color:#DB9E2A">Mukurtu CMS</a>, the <a href="https://localcontexts.org" style="color:#DB9E2A">Local Contexts</a> TK and BC Labels, and the <a href="https://www.gida-global.org/care" style="color:#DB9E2A">CARE Principles</a>. It is not implemented here. <a href="/behind-the-scenes/" style="color:#DB9E2A">The fault list</a> says so.</p>

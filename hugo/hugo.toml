@@ -6,16 +6,18 @@
 # a reader is never asked to run anything. See BehindTheScenes.dc.html's
 # Build field and docs/spec/decision-record-d1-d15.md D2.
 #
-# Output filenames must match the site's existing flat *.dc.html scheme
-# exactly (e.g. Manifesto.dc.html, not manifesto/index.html), because
-# every internal link, robots.txt rule, and sitemap.xml entry on the
-# rest of the site already targets those exact paths. uglyURLs plus an
-# explicit `url:` front matter field per page is what makes that work —
-# see each content/*.md file.
+# Pretty URLs (BUG-03): each page's output path is set explicitly via
+# an unambiguous `url:` front matter field in its content/*.md file
+# (e.g. url: "/manifesto/"), not derived from uglyURLs or the filename.
+# That field is the single source of truth for a page's path — change
+# it there, not here, and update every internal link, robots.txt rule,
+# and sitemap.xml entry that targets the old path (see completed.tasks.md,
+# BUG-03, for what still pointed at the old flat *.dc.html scheme and
+# the redirect stubs left behind at those paths).
 baseURL = "https://relationalsovereignty.com/"
 locale = "en"
 title = "Relational Sovereignty"
-uglyURLs = true
+uglyURLs = false
 disableKinds = ["taxonomy", "term", "RSS", "sitemap", "home", "404", "section"]
 enableRobotsTXT = false
 timeout = "30s"

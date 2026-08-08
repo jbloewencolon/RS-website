@@ -1,4 +1,4 @@
 ---
-url: "/BehindTheScenes.dc.html"
+url: "/behind-the-scenes/"
 layout: "behindthescenes"
 ---
