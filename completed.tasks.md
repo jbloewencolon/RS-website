@@ -416,4 +416,21 @@ Notes:
 - `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
 - **This closes Phase 2.5** — RS-042 through RS-048 have all shipped, six as directly specified and RS-048 rescoped, with the reasoning for that deviation documented above rather than silently absorbed into a "done" checkmark.
 
+### RS-034 (+ D11) — thesis 16, "The house is not a rehearsal"
+**Shipped:** 2026-08-08 · **Commit/PR:** (pending)
+
+~~was: fifteen theses, all about relationships, with no thesis linking the dyad to collective struggle — the base review's own finding that the manifesto has no political economy and no bridge from private practice to public movement~~
+now: thesis 16, using `addendum-a.md`'s exact draft text (author-approved via `decision-record-d1-d15.md` D11, which resolves the thesis count at sixteen and names this exact draft as what ships): "We will not build a world without police, borders, and extraction while running small versions of all three at home. Not because the private is where politics begins — it is not, and treating it that way has kept a great many people busy and harmless. Because they are the same fight at different scales, and a movement that cannot survive its own kitchen will not survive anything else." Closing line: "Do both. Neither one is waiting for the other to finish." — deliberately load-bearing, per the source doc's own note, foreclosing the deferral reading ("fix yourself first, then organize") the original rejected draft invited.
+
+**This is the salvage, not the original.** The base spec's draft for this thesis used "picking up your bundle" — an unsourced, nation-specific ceremonial term repurposed as a general metaphor for settler self-work — and was rejected outright (see the Rejected section of this file). RS-034 does the same conceptual work (linking interpersonal practice to collective struggle) without the metaphor, without deferral, and without borrowing.
+
+**"A movement that cannot survive its own kitchen" links to the Archive**, per the source doc's explicit instruction ("link it from the thesis") — pointing to *The Revolution Starts at Home*, already on the shelf, rather than asserting the connection with nothing to back it.
+
+**Global count update**: "fifteen theses and a refusal" → "sixteen theses and a refusal" everywhere the count is stated — both Manifesto meta tags (description, og:description), Home's nav card, and `index.html` (re-synced byte-for-byte from `Home.dc.html`, the established pattern). **Not touched**: `BehindTheScenes.dc.html`'s v0.1 changelog entry, which still says "fifteen theses" — correctly, since it's a struck historical record of what shipped at v0.1, and this site's own practice is that past changelog entries are never edited even once superseded.
+
+Verified with a real headless browser, JavaScript disabled: thesis 16's heading and closing line render on `Manifesto.dc.html`; the meta description reads "Sixteen theses"; the Archive link is present; both `Home.dc.html` and `index.html` show the updated count.
+
+Notes:
+- `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*
