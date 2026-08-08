@@ -153,7 +153,6 @@
       </label>
       <div style="display:flex;flex-wrap:wrap;gap:.7rem">
         <button type="button" onClick="{{ print }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.75rem 1rem;min-height:44px;cursor:pointer;border-radius:2px">Print this map</button>
-        <button type="button" onClick="{{ reset }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.75rem 1rem;min-height:44px;cursor:pointer;border-radius:2px">Clear everything</button>
       </div>
     </div>
 
@@ -269,6 +268,12 @@
         <li>— What would it cost you to move one domain to <em>no</em>? If the answer is housing, money, or access to children, the consent in that domain is not yet free.</li>
         <li>— Set a date to look at this again. Consent is ongoing; a map is a snapshot.</li>
       </ul>
+    </div>
+
+    <div class="noprint" style="margin-top:2.4rem;padding-top:1.6rem;border-top:1px solid #C9C6BA;max-width:640px">
+      <p style="margin:0 0 .8rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.6;color:#585B4F">Starting over — nothing above is saved unless you printed or exported it, so this is the only way to lose it. It asks twice.</p>
+      <button type="button" onClick="{{ reset }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;background:{{ resetBg }};border:1px solid {{ resetBorder }};color:{{ resetColor }};padding:.75rem 1rem;min-height:44px;cursor:pointer;border-radius:2px">{{ resetLabel }}</button>
+      <p role="status" aria-live="polite" style="margin:.7rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;color:#8B3A2F;min-height:1.2em">{{ resetWarning }}</p>
     </div>
   </div>
 </section>
@@ -410,7 +415,7 @@ class Component extends DCLogic {
   // resuming across sessions works only by re-importing a file the user
   // chose to save, never by silently persisting to the device — the same
   // risk as an export, without the warning that makes it a choice.
-  state = { who: "", picks: {}, notes: {}, stage: "safety", filename: this.defaultFilename(), importError: "", endingsStage: "closed", endingsAudit: {} };
+  state = { who: "", picks: {}, notes: {}, stage: "safety", filename: this.defaultFilename(), importError: "", endingsStage: "closed", endingsAudit: {}, resetArmed: false };
 
   defaultFilename() {
     const d = new Date().toISOString().slice(0, 10);
@@ -526,7 +531,27 @@ class Component extends DCLogic {
         window.print();
         setTimeout(restore, 4000);
       },
-      reset: () => this.setState({ who: "", picks: {}, notes: {}, filename: this.defaultFilename(), importError: "" }),
+      // Two presses, not one: nothing on this page is saved unless the
+      // reader exports or prints it, so a single stray tap here would be
+      // an unrecoverable loss (UX-03). First press only arms the button
+      // and starts a 5s window; a second press inside that window clears
+      // for real, and anything else — the window closing, leaving the
+      // page — disarms it with no effect.
+      resetArmed: this.state.resetArmed,
+      resetLabel: this.state.resetArmed ? "Click again to clear everything" : "Clear everything",
+      resetBg: this.state.resetArmed ? "rgba(139,58,47,.06)" : "none",
+      resetBorder: this.state.resetArmed ? "#8B3A2F" : "#C9C6BA",
+      resetColor: this.state.resetArmed ? "#8B3A2F" : "#585B4F",
+      resetWarning: this.state.resetArmed ? "Press once more to permanently clear every domain, note, and the name above." : "",
+      reset: () => {
+        clearTimeout(this._resetTimer);
+        if (this.state.resetArmed) {
+          this.setState({ who: "", picks: {}, notes: {}, filename: this.defaultFilename(), importError: "", resetArmed: false });
+        } else {
+          this.setState({ resetArmed: true });
+          this._resetTimer = setTimeout(() => this.setState({ resetArmed: false }), 5000);
+        }
+      },
       filename: this.state.filename,
       setFilename: (ev) => this.setState({ filename: ev.target.value }),
       importError: this.state.importError,

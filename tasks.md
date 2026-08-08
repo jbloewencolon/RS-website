@@ -170,7 +170,7 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 |---|---|---|---|---|---|
 | ~~**UX-01**~~ | ~~Collapsed Resources categories show no disclosure cue; jump-menu links don't open them~~ **Shipped, see `completed.tasks.md`.** | Resources | S | Fixed as (b)+(c), not full-open — see the two notes above. |
 | ~~**UX-02**~~ | ~~"Not yet built" categories look identical to populated-but-collapsed ones~~ **Shipped, see `completed.tasks.md`.** | Resources | S | Shipped together with UX-01 — same template, same commit. |
-| **UX-03** | "Clear everything" wipes an unsaved ~20-minute session with no confirmation, undo, or persistence to fall back on | Practise | S | Two-step in-place confirm (first press swaps the label to a confirm state, reverts after a few seconds or on any other interaction). Move the button away from "Print this map" — bottom of the tool, after all twenty domains, not the top beside the other top-of-tool actions. | `Practise.dc.html` |
+| ~~**UX-03**~~ | ~~"Clear everything" wipes an unsaved ~20-minute session with no confirmation, undo, or persistence to fall back on~~ **Shipped, see `completed.tasks.md`.** | Practise | S | Two-step in-place confirm, moved to the bottom of the tool after all twenty domains. |
 
 ### 6.2 — High impact
 
