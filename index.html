@@ -33,6 +33,7 @@
   @media (max-width:700px){
     #primary-nav{display:none!important}
     .nav-toggle{display:block;width:100%}
+    .drift-wrap{opacity:.3}
   }
   *{box-sizing:border-box}
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
@@ -75,7 +76,7 @@
 
 <main>
 <section id="main-content" style="position:relative;overflow:hidden;padding:clamp(2.2rem,5vw,3.5rem) 0 clamp(2rem,4vw,3rem)">
-  <div style="position:absolute;inset:-14% -8% auto auto;pointer-events:none;z-index:0">{{ drift }}</div>
+  <div class="drift-wrap" style="position:absolute;inset:-14% -8% auto auto;pointer-events:none;z-index:0">{{ drift }}</div>
   <div style="position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.4rem;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center"><span style="width:7px;height:7px;border-radius:50%;background:#3F7A4E;display:inline-block"></span> v0.2 · a commons under construction · about 4 minutes to read this page</p>
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.1rem,6.4vw,4.4rem);line-height:1;letter-spacing:-.035em;margin:0 0 1.6rem;max-width:18ch">NO OWNERS. NO OBJECTS. NO COLONIES IN OUR RELATIONSHIPS.</h1>

@@ -201,9 +201,9 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 
 | ID | Finding | Page(s) | Effort | Fix | Files |
 |---|---|---|---|---|---|
-| **UX-19** | Decorative drift-circle SVG sits behind the H1 on mobile, reducing contrast on the site's single most important line | Home | XS | Below ~700px, drop the SVG's opacity or reposition it above the headline. | `Home.dc.html` |
+| ~~**UX-19**~~ | ~~Decorative drift-circle SVG sits behind the H1 on mobile, reducing contrast on the site's single most important line~~ **Shipped, see `completed.tasks.md`.** | Home | XS | Below ~700px, drop the SVG's opacity or reposition it above the headline. | `Home.dc.html` |
 | **UX-20** | ~40% of the desktop container sits permanently empty on several pages | Home, Learn, Practise, Invitation | L | Strategic, not a quick fix — see the "Strategic opportunities" note below. Not an isolated task on its own. | — |
-| **UX-21** | Archive's sideways-scrolling Venn diagram has no visual edge cue that more content exists off-screen | Archive | XS | Add a soft fade/hairline shadow on the scroll container's trailing edge while more content remains. | `hugo/layouts/archive.html` |
+| ~~**UX-21**~~ | ~~Archive's sideways-scrolling Venn diagram has no visual edge cue that more content exists off-screen~~ **Shipped, see `completed.tasks.md`.** | Archive | XS | Add a soft fade/hairline shadow on the scroll container's trailing edge while more content remains. | `hugo/layouts/archive.html` |
 | ~~**UX-22**~~ | ~~Home's dispatch section's two columns end at very different heights, orphaning trailing text~~ **Shipped, see `completed.tasks.md`.** | Home | XS | Fully resolved by UX-12 alone, exactly as the audit predicted — both columns measured at 656px, no separate alignment fix needed. |
 
 **Strategic opportunities named in the audit, not filed as individual rows** (each is a larger design decision the granular fixes above only partially address — worth reading the audit's own §5 before scoping any of these as real tasks):
