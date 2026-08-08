@@ -437,6 +437,45 @@ groups:
         link: "https://www.haymarketbooks.org/books/1664-we-do-this-til-we-free-us"
         linkLabel: "Haymarket Books"
 
+  - title: "Love, eros, and why any of this is worth doing"
+    note: "The framework asks what to refuse. This is the shelf for what it's for."
+    items:
+      - title: "Uses of the Erotic: The Erotic as Power"
+        by: "Audre Lorde"
+        tags: ["start", "book"]
+        why: "The erotic as a source of knowledge and power, distinct from the pornographic — and the argument that we are taught to distrust it precisely because it measures what we will settle for. The missing limb of a framework about intimacy that never mentions desire."
+        use: "in Sister Outsider, Crossing Press"
+        link: "https://www.penguinrandomhouse.com/books/608235/sister-outsider-by-audre-lorde/"
+        linkLabel: "Sister Outsider, Penguin Random House"
+      - title: "All About Love: New Visions"
+        by: "bell hooks"
+        tags: ["book"]
+        why: "Love as something you do rather than something you feel — the will to extend yourself for another's growth. Also the sentence this site needs most: love and abuse cannot occupy the same relationship, whatever is being said about why."
+        use: "book"
+        link: "https://harpercollins.co.in/product/all-about-love-2/"
+        linkLabel: "HarperCollins"
+      - title: "Pleasure Activism: The Politics of Feeling Good"
+        by: "adrienne maree brown"
+        tags: ["book"]
+        why: "Builds directly on Lorde's erotic. Pleasure as political information rather than reward — what feels good tells you something about what arrangements are working."
+        use: "book"
+        link: "https://www.akpress.org/pleasure-activism.html"
+        linkLabel: "AK Press"
+      - title: "I Hope We Choose Love: A Trans Girl's Notes from the End of the World"
+        by: "Kai Cheng Thom"
+        tags: ["book"]
+        why: "Written from inside queer and trans communities that practise both accountability and disposal, and honest about the difference. Pairs with thesis 12."
+        use: "book"
+        link: "https://arsenalpulp.com/Books/I/I-Hope-We-Choose-Love/"
+        linkLabel: "Arsenal Pulp Press"
+      - title: "What It Takes to Heal: How Transforming Ourselves Can Change the World"
+        by: "Prentis Hemphill"
+        tags: ["book"]
+        why: "Boundaries as the distance at which you can love someone and still love yourself — embodiment and repair as the practice underneath what the manifesto states as principle. The clearest bridge this shelf has between the somatic register (Menakem) and the erotic one (Lorde, brown)."
+        use: "book"
+        link: "https://www.penguinrandomhouse.com/books/726173/what-it-takes-to-heal-by-prentis-hemphill/"
+        linkLabel: "Penguin Random House"
+
 trackA:
   - "Coulthard — Red Skin, White Masks"
   - "Simpson — Mohawk Interruptus"
