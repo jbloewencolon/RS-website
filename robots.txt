@@ -7,6 +7,7 @@
 User-agent: *
 Allow: /Home.dc.html
 Allow: /Manifesto.dc.html
+Allow: /Invitation.dc.html
 Allow: /Learn.dc.html
 Allow: /Archive.dc.html
 Allow: /BehindTheScenes.dc.html
