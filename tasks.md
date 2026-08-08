@@ -110,7 +110,7 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 ---
 
 ## Phase 4 — Conceptual work (deferred / needs people)
-*(Decision Record Cycle 4 — lowest urgency; several items are explicitly meant to wait)*
+*(Decision Record Cycle 4 — lowest urgency; several items are explicitly meant to wait. RS-009/010/011/012/013/014/017 all shipped 2026-08-08, see `completed.tasks.md`. Two rows remain, both intentionally not actioned: RS-048 residual blocks on the author supplying a real contact address; RS-029 residual is deliberately sequenced last, per its own row, until a community exists to route "pods" to.)*
 
 | ID | Task | Tags | Files | Effort | Notes |
 |---|---|---|---|---|---|
@@ -121,7 +121,7 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 | ~~**RS-012**~~ | ~~Revise thesis 02 so tradition isn't uniformly coded as unfreedom...~~ **Shipped, see `completed.tasks.md`.** | `[COPY]` | `Manifesto.dc.html` | M | — |
 | ~~**RS-013**~~ | ~~Revise thesis 11 to name who has standing...~~ **Shipped, see `completed.tasks.md`.** | `[COPY]` | `Manifesto.dc.html` | M | — |
 | ~~**RS-014**~~ | ~~Seven worked scenarios traced through the principles...~~ **Shipped, see `completed.tasks.md`.** | `[COPY]` | `Learn.dc.html` | L | — |
-| **RS-017** | Sexual content: desire discrepancy, reproductive coercion, sexual trauma, consensual power exchange. | `[COPY]` | Learn topics | L | — |
+| ~~**RS-017**~~ | ~~Sexual content: desire discrepancy, reproductive coercion, sexual trauma, consensual power exchange.~~ **Shipped, see `completed.tasks.md`.** | `[COPY]` | `Learn.dc.html` | L | — |
 | **RS-029 (residual)** | Repair Protocol — ~~four steps (impact assessment / non-skippable care-continuity audit / "Pods and stewards," not "Third-Party Triangulation" / restitution-or-responsible-exit)~~ **three steps remain**: impact assessment, "Pods and stewards" (not "Third-Party Triangulation"), restitution-or-responsible-exit. Must sit behind the RS-001 safety gate or its own equivalent. | `[DEV]` `[COPY]` | `Practise.dc.html` | M (was L) | **Deliberately last** — fault 05 records no community exists yet to route "pods" to; build when there are people, say so on the roadmap meanwhile. Placement reassigned from "new page or Learn" per `warm-register-review-v2.md` §4 — it's a process people execute, not a concept they read. **Step 2, the care-continuity audit, shipped 2026-08-08 as RS-039's endings-tool Part 1** — same object as the already-shipped RS-030 clause, built once rather than three times. Effort dropped from L to M with one of four steps done. |
 
 ---
