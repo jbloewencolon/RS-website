@@ -39,6 +39,7 @@
     <a href="Home.dc.html" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.01em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
     <nav aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
       <a href="Manifesto.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
+      <a href="Invitation.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
       <a href="Learn.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
       <a href="Practise.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
       <a href="Archive.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
@@ -93,7 +94,8 @@
             <span>Leave this field empty</span>
             <input type="text" name="website" tabindex="-1" autocomplete="off" value="{{ hp }}" onChange="{{ setHp }}">
           </label>
-          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#7D5915;margin:0 0 1.2rem">Join the dispatch, offer something, or both</p>
+          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#7D5915;margin:0 0 1.2rem">Join the dispatch, leave a note, or both</p>
+          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.6;color:#5A5D53;margin:0 0 1.3rem;max-width:52ch">An address is required to submit this form at all — there is no other channel yet. Leave every box below unchecked and you will get exactly one email asking you to confirm, and nothing after that unless you click it.</p>
           <label style="display:block;margin-bottom:1.3rem">
             <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">Email</span>
             <input type="email" autocomplete="email" value="{{ email }}" onChange="{{ setEmail }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.75rem .8rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
@@ -116,8 +118,8 @@
             </div>
           </fieldset>
           <label style="display:block;margin-bottom:1.4rem">
-            <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">What you might offer</span>
-            <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin-bottom:.5rem;line-height:1.5">Optional. A sentence is enough. Do not put anything here you would not want read by a stranger.</span>
+            <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">Optional contribution note</span>
+            <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin-bottom:.5rem;line-height:1.5">Optional. A sentence is enough. Do not put anything here you would not want read by a stranger. Not yet wired to anywhere it gets acted on — see <a href="BehindTheScenes.dc.html#faults" style="color:#585B4F">the fault list</a>.</span>
             <textarea rows="4" value="{{ offer }}" onChange="{{ setOffer }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.7rem .8rem;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;line-height:1.5;color:#191B18;resize:vertical"></textarea>
           </label>
           <button type="submit" disabled="{{ sending }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px;opacity:{{ sendingOpacity }}">{{ submitLabel }}</button>
@@ -160,7 +162,8 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1rem">Governance — in the open</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.01em;margin:0 0 1.2rem;max-width:26ch">A site about non-domination cannot be governed by invisible authority.</h2>
-    <p style="max-width:54ch;margin:0 0 2rem;color:#3C3E38">These structures do not exist yet. Naming them before there is a community is the only way they can be built with one, rather than announced to one.</p>
+    <p style="max-width:54ch;margin:0 0 1.4rem;color:#3C3E38">These structures do not exist yet. Naming them before there is a community is the only way they can be built with one, rather than announced to one.</p>
+    <p style="max-width:54ch;margin:0 0 2rem;color:#3C3E38;font-size:15px;line-height:1.55">One thing that will need a channel here, once there's a community to route it to: what got said to you, in this site's own vocabulary, to avoid answering something. <a href="Learn.dc.html#field-guide">Learn's field guide</a> names it as the strongest candidate this site has for something a reader could add — parked here rather than built, per fault 05.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.6rem 2.4rem;max-width:1000px">
       <sc-for list="{{ governance }}" as="g" hint-placeholder-count="6">
         <div>
@@ -188,6 +191,7 @@
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
       <a href="Home.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>
       <a href="Manifesto.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
+      <a href="Invitation.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
       <a href="Learn.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
       <a href="Practise.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
       <a href="Archive.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
@@ -282,6 +286,11 @@ class Component extends DCLogic {
               email,
               name: this.state.name,
               interests: this.state.interests,
+              // Sent so it's not lost before it even leaves the browser.
+              // The Worker does not yet read or store this field — see
+              // fault 07 in the colophon. Included now so wiring it up
+              // later is a Worker-side change only, not a client one too.
+              offer: this.state.offer,
               hp: this.state.hp,
             }),
           });
@@ -295,7 +304,7 @@ class Component extends DCLogic {
           // only cost of a failure is pressing the button again.
           this.setState({
             sending: false,
-            error: "That did not send. Check your connection and try again, or write to the address in the colophon.",
+            error: "That did not send. Check your connection and try again in a moment.",
           });
         }
       },

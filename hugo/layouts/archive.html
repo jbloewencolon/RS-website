@@ -41,6 +41,7 @@
     <a href="Home.dc.html" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
     <nav aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
       <a href="Manifesto.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
+      <a href="Invitation.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
       <a href="Learn.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
       <a href="Practise.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
       <a href="Archive.dc.html" style="color:#366943;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
@@ -70,6 +71,7 @@
       <button type="button" data-filter="{{ .value }}" aria-pressed="{{ if eq .value "all" }}true{{ else }}false{{ end }}"{{ if eq .value "all" }} class="is-active"{{ end }}>{{ .label }}</button>
       {{ end }}
     </div>
+    <p style="margin:0 0 .3rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">"★ a first route" marks a suggested way in, not a ranking — everything else on this shelf carries the same weight, not runner-up status.</p>
     <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">Every entry below is shown by default. These buttons narrow the list if your browser runs the small script that does it — nothing is ever hidden without a click, and the full shelf renders either way.</p>
   </div>
 </section>
@@ -85,7 +87,7 @@
         {{ $rule := "#2B4C9B" }}
         {{ if in .tags "start" }}{{ $rule = "#7D5915" }}{{ else if in .tags "free" }}{{ $rule = "#366943" }}{{ end }}
         <article data-tags="{{ delimit .tags " " }}" style="border-top:2px solid {{ $rule }};padding-top:.9rem">
-          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ $rule }};margin:0 0 .5rem">{{ if in .tags "start" }}★ start here · {{ end }}{{ .use }}</p>
+          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ $rule }};margin:0 0 .5rem">{{ if in .tags "start" }}★ a first route · {{ end }}{{ .use }}</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">{{ .title }}</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">{{ .by }}</p>
           <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">{{ .why }}</p>
@@ -138,7 +140,7 @@
         </ul>
       </div>
     </div>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #3F7A4E;padding:.3rem 0 .3rem .9rem;margin:1.4rem 0 0;max-width:58ch">⌖ Two Row Wampum, as layout: two vessels on one river, neither steering the other, and a stretch of water that belongs to both. The rest of this site still parcels space in the ordinary way — <a href="BehindTheScenes.dc.html">fault 04</a>.</p>
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #3F7A4E;padding:.3rem 0 .3rem .9rem;margin:1.4rem 0 0;max-width:58ch">⌖ Two Row Wampum, as layout: two vessels on one river, neither steering the other, and a stretch of water that belongs to both. The rest of this site still parcels space in the ordinary way — <a href="BehindTheScenes.dc.html">fault 04</a>. What this treaty relationship suggests as a conceptual apparatus, not just a layout figure, is unpacked on <a href="Learn.dc.html#treaty">Learn</a> — including the limit on how far that suggestion is allowed to go.</p>
   </div>
 </section>
 
@@ -190,6 +192,7 @@
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
       <a href="Home.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>
       <a href="Manifesto.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
+      <a href="Invitation.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
       <a href="Learn.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
       <a href="Practise.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
       <a href="Contribute.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>

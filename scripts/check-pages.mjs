@@ -18,6 +18,7 @@ const pages = [
   "index.html",
   "Home.dc.html",
   "Manifesto.dc.html",
+  "Invitation.dc.html",
   "Learn.dc.html",
   "Practise.dc.html",
   "Archive.dc.html",

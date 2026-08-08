@@ -35,6 +35,7 @@
     <a href="Home.dc.html" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
     <nav aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
       <a href="Manifesto.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
+      <a href="Invitation.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
       <a href="Learn.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
       <a href="Practise.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
       <a href="Archive.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
@@ -52,10 +53,22 @@
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.1rem,5.6vw,3.8rem);line-height:1;letter-spacing:-.03em;margin:0 0 1.4rem;max-width:17ch">How this site is made, including where it fails.</h1>
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">A site arguing against domination cannot keep its own workings private. What follows is the substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.</p>
     <p style="max-width:52ch;margin:0;color:#3C3E38">Some of these fields are marked <em>not yet known</em>. That is the accurate answer at v0.2, and a blank is more honest than a placeholder.</p>
+    <nav aria-label="Contents" style="margin-top:1.6rem">
+      <ul style="list-style:none;margin:0;padding:0;max-width:900px;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:0 1.5rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px">
+        <li><a href="#substrate" style="display:inline-flex;align-items:center;min-height:44px">Substrate</a></li>
+        <li><a href="#type" style="display:inline-flex;align-items:center;min-height:44px">Accessibility &amp; type</a></li>
+        <li><a href="#crawler" style="display:inline-flex;align-items:center;min-height:44px">Crawler policy</a></li>
+        <li><a href="#reuse" style="display:inline-flex;align-items:center;min-height:44px">Reuse terms</a></li>
+        <li><a href="#faults" style="display:inline-flex;align-items:center;min-height:44px">Current faults</a></li>
+        <li><a href="#roadmap" style="display:inline-flex;align-items:center;min-height:44px">Roadmap</a></li>
+        <li><a href="#changelog" style="display:inline-flex;align-items:center;min-height:44px">Change history</a></li>
+        <li><a href="#labour" style="display:inline-flex;align-items:center;min-height:44px">Labour &amp; money</a></li>
+      </ul>
+    </nav>
   </div>
 </section>
 
-<section style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
+<section id="substrate" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">The substrate</h2>
     <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">A land acknowledgement in a footer is decoration. These are the material facts of the machine you are reading on, as far as they are currently known.</p>
@@ -63,17 +76,17 @@
       
       <div style="border-top:2px solid #8B3A2F;padding-top:.7rem">
         <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8B3A2F;margin:0 0 .35rem">Server location</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">Not yet known — the site is unhosted at v0.2. Before launch this field states the city, the operator, and whose territory the machine sits on.</dd>
+        <dd style="margin:0;font-size:16px;line-height:1.5">Hosted on GitHub Pages (GitHub, Inc.) — this project&#39;s actual current host, not a future plan; see the security-headers row below for why that matters. GitHub does not publish which physical data centre or region serves a given Pages deployment, so the city, operator, and territory this field is meant to name are genuinely unstated, not merely undocumented. Moving to a host that discloses this is what RS-022/FLAG-02 would resolve.</dd>
       </div>
       
       <div style="border-top:2px solid #8B3A2F;padding-top:.7rem">
         <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8B3A2F;margin:0 0 .35rem">Watershed</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">Not yet known. The data centre cooling a site is drawn from someone&#39;s water; that water has a name.</dd>
+        <dd style="margin:0;font-size:16px;line-height:1.5">Not statable for the same reason as server location: the current host doesn&#39;t disclose which facility serves this site, so there is no watershed to name yet — not because nobody looked, but because the information isn&#39;t published anywhere to find.</dd>
       </div>
       
-      <div style="border-top:2px solid #366943;padding-top:.7rem">
-        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Page weight</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">Under 60 KB per page, uncompressed, including all markup and logic. No images, no icon fonts, no video.</dd>
+      <div style="border-top:2px solid #7D5915;padding-top:.7rem">
+        <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .35rem">Page weight</dt>
+        <dd style="margin:0;font-size:16px;line-height:1.5">Ranges from about 15 KB (the Invitation) to about 118 KB (the Archive) per page, uncompressed HTML — no images, no icon fonts, no video. Three pages (Home, Practise, Contribute) additionally load a shared ~70 KB script once per browser session, cached rather than re-downloaded on every page view. A flat &#34;under 60 KB&#34; figure was stated here before this project&#39;s content had grown to its current size; corrected to the real current range rather than left to quietly stop being true.</dd>
       </div>
       
       <div style="border-top:2px solid #366943;padding-top:.7rem">
@@ -113,7 +126,7 @@
       
       <div style="border-top:2px solid #7D5915;padding-top:.7rem">
         <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .35rem">What is logged</dt>
-        <dd style="margin:0;font-size:16px;line-height:1.5">Whatever the eventual host logs by default, which will be reduced as far as the host allows and stated here plainly.</dd>
+        <dd style="margin:0;font-size:16px;line-height:1.5">Whatever GitHub Pages, this project&#39;s current host, logs by default — not yet audited or reduced, and not yet stated here in specific terms. This project inherited a host before confirming its logging practices meet the minimisation this page states as a goal, which is backwards, and this row says so rather than implying the sequencing went the other way.</dd>
       </div>
       
       <div style="border-top:2px solid #366943;padding-top:.7rem">
@@ -130,7 +143,7 @@
   </div>
 </section>
 
-<section style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
+<section id="type" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Type, and why it changed</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem 2.6rem">
@@ -165,7 +178,7 @@
   </div>
 </section>
 
-<section style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
+<section id="crawler" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">Opacity as governance, not as a button</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.2rem;max-width:24ch;color:#E7E5DC">What this site refuses to the crawler.</h2>
@@ -208,7 +221,7 @@
   </div>
 </section>
 
-<section style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(2.5rem,5vw,3.5rem)">
+<section id="reuse" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Reuse terms, version 0.2</h2>
     <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">Terms that only bind the reader are not terms; they are imposed law. These bind the project too.</p>
@@ -233,7 +246,7 @@
   </div>
 </section>
 
-<section style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
+<section id="faults" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .5rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">The fault list</h2>
     <p style="max-width:56ch;margin:1rem 0 1.6rem;color:#3C3E38">Known and unfixed, published rather than quietly carried. Naming them is not absolution; it is the work list.</p>
@@ -243,7 +256,7 @@
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#8B3A2F">01</span>
         <div>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .3rem;line-height:1.2">The server has no declared territory yet</h3>
-          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">The site is unhosted, so the most material field in the colophon is blank. Naming the machine&#39;s location and watershed is a launch condition, not an optional extra.</p>
+          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">The site is hosted — GitHub Pages, live at this domain — but the most material fields in the colophon (server location, watershed) are blank for a different reason than this fault used to say: not because nothing exists yet, but because the current host doesn&#39;t disclose which facility it uses. Naming the actual machine&#39;s location and watershed, on a host that can name them, is a launch condition this project has not met, not an optional extra.</p>
         </div>
       </li>
       
@@ -267,7 +280,7 @@
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#8B3A2F">04</span>
         <div>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .3rem;line-height:1.2">The layout still parcels space</h3>
-          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">One section of the archive now expresses shared jurisdiction — two themes claiming the same texts in the same cells. The rest of the site is a conventional grid of exclusive parcels. Whether that matters more than legibility is an open question, not a settled one.</p>
+          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">Two places now express shared jurisdiction rather than a conventional grid of exclusive parcels: the archive&#39;s &#34;Held in common&#34; section, where two themes claim the same texts in the same cells, and the Invitation/Manifesto pairing — two doors, neither introducing the other, run as parallel rather than primary and secondary. The rest of the site is still ordinary parcels. Whether any of this matters more than legibility is an open question, not a settled one.</p>
         </div>
       </li>
       
@@ -287,11 +300,173 @@
         </div>
       </li>
       
+      <li style="counter-increment:f;display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;border-top:1px solid #C9C6BA;padding-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#8B3A2F">07</span>
+        <div>
+          <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .3rem;line-height:1.2">The contribution note goes nowhere yet</h3>
+          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">The Contribute form&#39;s optional note field is captured on the page and sent to the dispatch Worker, but nothing on the Worker reads, stores, or forwards it — no one sees what&#39;s typed there. Submitting the form still requires an email address regardless of whether that note is filled in, since the only backend behind this form today is the mailing-list signup flow; there is no separate channel yet for someone who wants to leave a note without joining the dispatch. Fixing this needs a real destination for the note (a person, an inbox, a store) that does not exist yet, not just a code change.</p>
+        </div>
+      </li>
+      
     </ol>
   </div>
 </section>
 
-<section style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
+<section id="roadmap" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .5rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Roadmap</h2>
+    <p style="max-width:56ch;margin:1rem 0 1.6rem;color:#3C3E38">Learn names twenty-four topics. Thirteen have a drafted outline; none are linked or published from this list, because an unfinished page marked <em>drafted</em> would be the small lie this site is trying not to tell. No dates are given, for the same reason <a href="Practise.dc.html">Practise's own unbuilt-tools list</a> gives none: a date this project couldn't keep would be its own small domination.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.6rem">
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #366943;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">What is relational sovereignty?</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#366943">drafted</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #366943;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Relational sovereignty and Indigenous sovereignty</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#366943">drafted</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #366943;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Relational freedom</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#366943">drafted</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #64665D;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Relational autonomy</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#64665D">not yet written</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #366943;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Relationship anarchy</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#366943">drafted</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #366943;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Amatonormativity</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#366943">drafted</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #366943;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Consent and coercion</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#366943">drafted</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #64665D;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Care ethics</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#64665D">not yet written</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #64665D;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Disability justice and interdependence</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#64665D">not yet written</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #64665D;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Chosen family</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#64665D">not yet written</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #64665D;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Kinship and community</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#64665D">not yet written</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #366943;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Refusal and opacity</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#366943">drafted</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #366943;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Power and non-domination</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#366943">drafted</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #64665D;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Transformative justice</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#64665D">not yet written</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #64665D;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Land-based relationships</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#64665D">not yet written</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #64665D;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">More-than-human kinship</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#64665D">not yet written</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #64665D;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Colonial family structures</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#64665D">not yet written</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #64665D;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Gender, sexuality, and property</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#64665D">not yet written</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #64665D;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Regeneration and relational futurity</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#64665D">not yet written</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #366943;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Treaty and protocol</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#366943">drafted</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #366943;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Desire discrepancy</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#366943">drafted</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #366943;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Reproductive coercion</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#366943">drafted</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #366943;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Sexual trauma</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#366943">drafted</span>
+      </div>
+      
+      
+      <div style="border:1px solid #C9C6BA;border-left:3px solid #366943;padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:15.5px;line-height:1.3">Consensual power exchange</span>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#366943">drafted</span>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<section id="changelog" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">Change log — repair in view</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.2rem;max-width:24ch;color:#E7E5DC">Corrections are shown, not overwritten.</h2>
@@ -301,6 +476,58 @@
       <div>
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;color:#DB9E2A;margin:0 0 .7rem;border-bottom:1px solid #2A4C4C;padding-bottom:.4rem">v0.2 — current</p>
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.65">
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">Decision Record D15 authorized an outbound-only link to a territory-identification tool — no embedded lookup, no reproduced dataset — for whoever reads this site to find whose territory they&#39;re on. It was never added; the verification queue tracked it as still open through the entire session</del> <span style="color:#509C64">a link to native-land.ca on Home, in the section that already asks whose territory the servers sit on. Framed with the organisation&#39;s own stated caveat, verified directly rather than assumed: their map is educational and reference-only, not a legal record, and stays a work in progress rather than a finished boundary line. Outbound link only, exactly as D15 specified — nothing from native-land.ca is embedded, queried, or reproduced on this site</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the colophon&#39;s own substrate table contradicted itself: &#34;server location&#34; and &#34;watershed&#34; both said the site was &#34;unhosted,&#34; while three rows down, &#34;security headers&#34; correctly named GitHub Pages as &#34;this site&#39;s current host.&#34; Fault 01 repeated the unhosted claim. &#34;Page weight&#34; said &#34;under 60 KB per page&#34; against pages that had grown, over the course of this session&#39;s content additions, to as much as 118 KB — the Archive alone, uncompressed, with no images or video, is nearly double the stated ceiling</del> <span style="color:#509C64">server location and watershed corrected to state what&#39;s actually true: the site is hosted, on GitHub Pages, and the reason the specific city and territory still can&#39;t be named is that GitHub itself doesn&#39;t disclose which facility serves a given Pages deployment — a different, more precise problem than &#34;nothing exists yet.&#34; Page weight corrected to the real current range, about 15 KB to about 118 KB depending on the page, with the shared ~70 KB script three pages load noted separately since it&#39;s cached, not re-downloaded per page. &#34;What is logged&#34; now says plainly that this project deployed to GitHub Pages before auditing what GitHub logs by default — a sequencing gap, named rather than implied away. Fault 01 rewritten to match</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">a framework about intimacy said nothing about sex — desire discrepancy, reproductive coercion, sexual trauma, and consensual power exchange were all absent, despite the site already having exactly the vocabulary each of them needed (principle 04&#39;s ongoing and materially possible consent; principle 05&#39;s arbitrary/hidden/uncontestable test for power, already &#34;named, limited, contestable&#34; enough to describe negotiated power exchange without new concepts)</del> <span style="color:#509C64">a new Learn section naming all four plainly, each as an application of an existing principle rather than a new one: desire discrepancy (04 — a yes given to avoid conflict isn&#39;t the yes the principle describes, in either direction); reproductive coercion (02 and 04, routed to Resources&#39; coercive-control listing, since this is intimate partner violence, not a disagreement); sexual trauma (04&#39;s &#34;materially possible&#34; applied to a nervous system&#39;s capacity to say no, with a direct statement that this site isn&#39;t a trauma-therapy resource and doesn&#39;t pretend to be); consensual power exchange (05&#39;s actual test — arbitrary, hidden, uncontestable — distinguishing structured, named, revocable power from the kind 05 refuses). `topics.yaml` gains four new entries, all drafted; the topic and reading-time counts across Learn and the colophon are updated to match rather than left stale</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the thirteen principles were illustrated only by their own abstract questions — nothing on the site showed what they&#39;re actually like to be inside for a sponsored partner, a disabled person partnered with their funded attendant, a carer of a dependent adult, someone under coercive control, someone under guardianship, a precarious worker in shared housing, or a child in a restructuring household. A framework that only illustrates itself with easy cases quietly asks readers whose situation is a hard case to notice the gap themselves. Also stale, caught while updating this page: its own &#34;about 6 minutes&#34; reading-time estimate, from before this session roughly tripled the page&#39;s length</del> <span style="color:#509C64">a new Learn section, seven worked scenarios, each naming which principles hold and — marked as failures, not softened — which ones don&#39;t: a sponsored partner whose refusal has no material floor under it; a funded attendant relationship where paid labour and chosen intimacy share the same hours with no separate vocabulary; a carer whose refusal is honestly named as constrained and just as honestly left unrelieved, because a website can&#39;t supply respite care; coercive control, where nearly every principle fails at once by design, which is why the framework routes to Resources there instead of offering more principles; guardianship, where self-determination fails by legal design and this site takes no position on when that&#39;s justified; precarious shared housing, where refusal exists in principle and not in practice; and a child in a restructuring household, absorbing more of it than almost anyone while holding no standing in a principle set written for adults. Learn&#39;s reading-time estimate corrected to about 15 minutes, on Learn itself and on Home&#39;s own door card</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the Two Row Wampum appeared exactly once on this site, as a layout figure in the archive&#39;s &#34;Held in common&#34; section — decorative and unexplained as a concept, even though relational sovereignty&#39;s own central claim (two people, each sovereign, sharing one condition, neither subordinate) is precisely the structure a treaty is built to hold. &#34;Sovereignty&#34; named the value; nothing named the missing form. And, caught while fixing this: the roadmap&#39;s topic count (&#34;nineteen topics, six drafted&#34;) had already gone stale two tasks earlier, when RS-035 flipped two more topics to drafted without the hardcoded count being updated to match</del> <span style="color:#509C64">a new Learn section, &#34;Two sovereigns, one shared condition. Sovereignty doesn&#39;t have a form for that. Treaty does,&#34; naming treaty and protocol as concepts this framework leans on and doesn&#39;t yet have machinery for — with the limit stated as plainly as the claim: a household is not a treaty relationship, the stakes and histories aren&#39;t equivalent, and using the concept is not the same as claiming the weight. What&#39;s actually borrowed: a treaty is a standing practice of renewal, not a one-time agreement, and the framework&#39;s own unbuilt &#34;Relational Review&#34; (still on Practise&#39;s not-yet-built list) is exactly that logic, unbuilt. The archive&#39;s existing Two Row Wampum note now links back to this section rather than standing alone. Fixed alongside it: the topic count, now accurate at twenty topics, nine drafted</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the framework named two real conflicts between its own principles — accountability (06) against refusal (07), and opacity (08) against the manifesto&#39;s &#34;relationships are not private empires&#34; (thesis 11) — and answered neither. The existing continuity-of-care clause resolved one narrow instance of the first (dependency, at the moment of leaving) and said plainly it wasn&#39;t a general answer; nothing addressed the second at all, or the general case of the first</del> <span style="color:#509C64">a new Learn section answering both, differently, because they don&#39;t have the same shape. 06 vs. 07 stays open on purpose: refusal is protected regardless of the disruption it causes, 06 governs the manner of an ending where real obligations exist rather than whether the ending is allowed, and past that the framework declines to supply a formula precise enough to resolve every case, calling that false precision rather than rigor. 08 vs. thesis 11 gets an actual rule: opacity holds fully against anyone without standing, and even someone with standing is owed only what they&#39;ll absorb, not a full accounting — the same reasoning already built into the endings tool&#39;s &#34;who holds this after, and do they know&#34;</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">thesis 11 — &#34;relationships are not private empires... children, friends, communities, care networks, and land absorb the consequences&#34; — argued a relationship must answer for its effects on others, without ever saying who has standing to demand that answer. Read carelessly, it supplies a rationale for exactly the surveillance already aimed at poor, disabled, queer, and Black families — the demand that a household explain itself to a state or a hostile public, dressed in this framework&#39;s own language</del> <span style="color:#509C64">thesis 11 keeps its claim and adds the missing line: &#34;standing to demand that account belongs to the people who absorb the consequences — not the state, not a crowd with an opinion. Collapse that distinction and this thesis becomes a rationale for the surveillance already aimed at the families it should be protecting.&#34; The closing line changes to match: &#34;No private freedom built on public damage — and only the people who absorb it get to ask&#34;</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">thesis 02&#39;s closing line — &#34;no rule is sacred just because it is old&#34; — coded tradition itself as presumptively unfree, with age as the implicit test. That quietly privileges the self-authorizing individual as the free position and treats inherited, genealogical, or ceremonial forms of relationship as constraint by default — the same move settler discourse has long used to call Indigenous and other genealogically-organized societies unfree for being genealogical, exactly the kind of move this framework argues against everywhere else</del> <span style="color:#509C64">thesis 02 keeps its core refusal — the preassembled defaults, tradition mistaken for consent — and adds the missing distinction: a relationship chosen inside inherited law, kinship, or ceremony is not less free than one built from nothing, and insisting the self-authoring individual is the only free shape has &#34;its own colonial history.&#34; The closing line changes from an age test to the same accountability test the rest of the thesis already uses: not how old the rule is, whether it can answer for itself</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">Home&#39;s four stated limits explained what this framework isn&#39;t without ever naming that chosen monogamy is one of the things it protects — a site built partly out of a critique of amatonormativity had no line saying non-monogamy isn&#39;t the more evolved choice, and no name for pressure running the other direction, toward opening a relationship someone didn&#39;t want opened</del> <span style="color:#509C64">a new paragraph beside the four limits, not folded into any one of them: chosen monogamy named directly as protected on the same terms as any other form, and coercive non-monogamy named as what isn&#39;t protected — pressure, guilt, or being worn down into opening up, sometimes in this site&#39;s own vocabulary</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the archive had thirteen groups of what to refuse, revise, or hold accountable, and nothing for why any of it is worth doing — no erotics in a framework about intimacy, and a Black feminist presence still thin even after this session&#39;s earlier additions</del> <span style="color:#509C64">a fourteenth and final group, &#34;Love, eros, and why any of this is worth doing&#34;: Audre Lorde&#39;s Uses of the Erotic, bell hooks&#39; All About Love, adrienne maree brown&#39;s Pleasure Activism, Kai Cheng Thom&#39;s I Hope We Choose Love, and Prentis Hemphill&#39;s What It Takes to Heal — the last moved here from an earlier, thinner plan to pair it alone with Menakem, on the reasoning that five entries in one live group beats two half-built ones. Distinct from the property-and-kinship genealogy earlier in the archive: two different holes, both real</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the framework had no tool for endings — the Consent Domains Map assumes an ongoing relationship, and &#34;Exit &amp; Transition Plan&#34; sat on the not-yet-built list for eight months of roadmap language while nothing addressed the actual logistics of leaving, what&#39;s owed on the way out, or the grief that follows either</del> <span style="color:#509C64">a second tool on Practise, gated by its own safety card at the top rather than the bottom (&#34;if leaving safely means leaving suddenly — close this and go&#34;): a care-continuity audit (money, medication, the school run, paperwork, the lease, immigration status, a pet, a phone plan — who holds each after, and do they know), the Invitation&#39;s &#34;On goodbyes&#34; reproduced in full, and a closing section with no fields, no prompts, and nothing that counts as finished. One build, not three — the same object the Repair Protocol&#39;s still-unbuilt step 2 and the already-shipped continuity-of-care clause in Learn both point at, built once here rather than duplicated later</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">this site&#39;s own vocabulary — &#34;boundary,&#34; &#34;capacity,&#34; &#34;sovereignty,&#34; and the rest — was published with no acknowledgment that every one of those words is exactly as usable to avoid accountability as it is to name what needs it. And, found while building the fix: the manifesto&#39;s &#34;Print this manifesto&#34; button had been silently non-functional since it shipped — an inline onclick, blocked by this site&#39;s own script-src CSP, doing nothing when clicked, with no error visible to a reader</del> <span style="color:#509C64">a new Learn section, &#34;How this vocabulary gets used as a weapon&#34; (`#field-guide`), naming ten phrases this site&#39;s own words make available — including its own &#34;I&#39;m honouring my sovereignty&#34; — each with the diagnostic question worth asking when one lands on you. Linked from Practise&#39;s safety gate, from Resources&#39; coercive-control listing, and from the Invitation&#39;s own closing section, naming plainly that its own warmth is exactly this kind of language too. Printable on its own, isolated from the rest of Learn, via a new button. Fixed alongside it: print.js, a same-origin script every print button on the site now uses instead of an inline handler, so &#34;Print this manifesto&#34; and &#34;Print this invitation&#34; actually fire for the first time under this site&#39;s own CSP, not just visually</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the site said a great deal about what relational sovereignty is and nothing about how to raise it with someone who hasn&#39;t read any of it — a reader convinced by the manifesto had no guidance for the actual, awkward moment of bringing this up with a partner, and no warning that the same vocabulary that names coercion can also be used to apply it</del> <span style="color:#509C64">a &#34;Before you bring this up with someone&#34; disclosure on Practise, next to the existing safety and grounding sequence rather than gating it — five concrete suggestions, then the one paragraph that isn&#39;t optional: if this is being raised to get someone to agree to something they already declined, it isn&#39;t the tool for that, and putting it in this vocabulary makes it worse, not better</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the roadmap named &#34;Relationship anarchy&#34; and &#34;Amatonormativity&#34; as topics with nothing written yet, and Learn never actually explained either term — a reader had to already know what relationship anarchy meant to notice the framework was building on it</del> <span style="color:#509C64">a new Learn section, &#34;Forms and labels, none of them the default,&#34; naming both terms plainly and linking each to its source on the archive shelf. Underneath: an alphabetical, unranked grid of eleven relationship-form labels — monogamy, polyamory, relationship anarchy, chosen family, and others — with a line stating outright that alphabetical order is the only order it carries, nothing here outranks anything else, and a person&#39;s own word for what they have governs even if it&#39;s not listed. A closing line holds the line the material-conditions constraint requires: naming these as equals doesn&#39;t make the legal, immigration, and custody risk of choosing one equal to another</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the site had exactly one door, the manifesto, and one register — acid, declarative, thirteen theses and a refusal. Anyone the register itself repelled had nowhere else to start, and nothing on the site said anything about wanting to be here, what it feels like when this works, or what&#39;s owed when it ends</del> <span style="color:#509C64">a second page, the Invitation, running parallel to the manifesto rather than introducing it — &#34;two ways in, neither is the introduction to the other,&#34; the same two-vessels-one-river figure the archive already uses for its own shared shelf, applied a second time. It carries two pieces of new writing: &#34;An invitation,&#34; first person, on wanting someone&#39;s growth without owning it, ending on the same material floor every warm line on this site now has to clear; and &#34;On goodbyes,&#34; on what&#39;s owed at the end of something, closing with the line this whole addition exists to hold — if going safely means going suddenly, go. Home gains exactly one paragraph above its door grid, linking there; the primary nav on every page gains one link, next to the manifesto&#39;s</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the archive named Coulthard&#39;s *Red Skin, White Masks* in the &#34;Held in common&#34; diagram since v0.2 and never actually shelved it, and eighteen other works the site&#39;s own citations depended on — sovereignty&#39;s own critics, a second genealogy of settler kinship and sexuality, the clinical basis for the safety gate, mutual aid and abolitionist practice, non-monogamy&#39;s own critics — sat as drafts, unlinked, in a planning document instead of on the page</del> <span style="color:#509C64">nineteen entries added across the existing shelves, each link independently verified against the publisher, journal DOI, or author&#39;s own site rather than trusted from the draft: Coulthard, Cohen, Kuokkanen/Lightfoot/Starblanket/Wildcat&#39;s 2025 sequel to the site&#39;s own foundational citation, Povinelli, Rifkin, Lugones, Kelly &amp; Johnson, Feeney, Freeman, Spade, adrienne maree brown&#39;s *We Will Not Cancel Us*, Kaba, Noël, Rambukkana, and Borrows. No new filter facets added — every new entry fits the existing book/article/toolkit taxonomy without stretching it, so the filter bar stays as it was</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the framework&#39;s one safety check — the five questions asked before the Consent Domains Map, and republished standalone on Resources — existed in only one register: full sentences with embedded clauses, excluding non-speaking, intermittently verbal, and cognitively fatigued readers from the exact check meant to protect them</del> <span style="color:#509C64">the same five questions, reworded to shorter sentences, sit behind a plain-HTML disclosure on both pages — no script, works identically with JavaScript on or off, since Resources carries zero script by design and this needed to match. The Consent Domains Map gains a line naming that consent is not always spoken: use the labels, or agree on signals of your own — a tap, a card, a gesture — with the tool holding none of those signals itself, since a physical protocol between two people isn&#39;t something a webpage should try to encode as an input method</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the framework asked readers to notice what is happening in a relationship and offered no vocabulary for what happens in a body while they do it — and the archive&#39;s only Black theoretical presence was distant from the felt, somatic register thesis 07&#39;s own line about who absorbs the anger is written in</del> <span style="color:#509C64">a new archive group, &#34;Bodies, regulation, and what happens before words,&#34; opens with Resmaa Menakem&#39;s *My Grandmother&#39;s Hands* — racialised trauma carried somatically, read alongside thesis 07. Polyvagal theory, contested in the physiological literature, is left out entirely rather than shelved with a caveat, per Decision Record D13. A second planned entry for this group is being placed with a related new archive group instead of duplicated here — one group, not two thin ones</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the manifesto had no thesis linking the dyad to collective struggle — fifteen theses about relationships, and nothing about the relationship between a household and a movement</del> <span style="color:#509C64">thesis 16, &#34;The house is not a rehearsal&#34;: we will not build a world without police, borders, and extraction while running small versions of all three at home — not because the private is where politics begins, but because they are the same fight at different scales, and a movement that cannot survive its own kitchen will not survive anything else. Do both; neither is waiting for the other to finish. Sixteen theses and a refusal, updated everywhere the count was said out loud</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the Contribute form&#39;s &#34;What you might offer&#34; field looked like a working way to leave a note — but nothing on the dispatch Worker ever read, stored, or forwarded it, so whatever anyone typed there was silently discarded. Submitting anything through the form required an email either way and always sent a &#34;confirm your subscription&#34; message, even to someone who only wanted to leave a note and never checked a single dispatch-interest box. Both error messages on this form and on Home pointed a failed submission to &#34;the address in the colophon&#34; — which does not exist; no email address is published anywhere on this site</del> <span style="color:#509C64">the field is relabelled &#34;Optional contribution note&#34; and says plainly, next to the warning about strangers reading it, that it isn&#39;t wired to anywhere yet — linking to a new fault (07) that names the gap precisely: an email is required for any submission today because the only backend behind this form is the mailing-list signup flow, and there is no separate channel yet for a note-only visitor. The note is now at least sent to the Worker rather than dropped before it leaves the browser, so wiring up real delivery later is a Worker-side change only. The dead colophon-address referenced in both forms&#39; error text is gone, replaced with something that doesn&#39;t point at nothing</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the Archive&#39;s filter for its most accessible entries was labelled &#34;★ start here,&#34; implying an order to a shelf the page&#39;s own kicker already called &#34;nothing ranked&#34; — the filter and the framing copy around it disagreed with each other</del> <span style="color:#509C64">&#34;★ a first route,&#34; with a line at the filter bar saying plainly what that means: a suggested way in, not a ranking — everything else on the shelf carries the same weight, not runner-up status. The filter still narrows nothing without a click, the full archive still renders unfiltered by default, and scripting off still shows every entry — only the label and its framing changed, not the mechanism</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the Consent Domains Map&#39;s save/resume controls (export warning, filename field, save button, resume-from-file) sat permanently open beneath the print and clear buttons, adding four elements&#39; worth of visual weight to a toolbar most visits never need</del> <span style="color:#509C64">those controls live inside a native disclosure, &#34;Save or resume this map&#34; — closed by default, opened with a click or a keypress, no script required to toggle it. The complete findability warning still sits directly above the export button every time the section is open, in exactly the same words, not summarised or deferred to a second click. Print and Clear stay exactly where they were, outside the disclosure, needing no extra interaction. Nothing about what&#39;s saved, how, or the no-localStorage guarantee changed — only how much of the page shows by default</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">Behind the Scenes carried eight sections — substrate, type, crawler policy, reuse terms, faults, roadmap, change log, labour and money — in a single unbroken scroll with no way to jump to one directly</del> <span style="color:#509C64">a contents menu at the top of the page, eight ordinary same-page anchor links. The fault list stays exactly as visible as it always was — the menu is a way in, not a way to fold anything out of sight, and current faults were never going to be the thing this page made harder to find</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">Learn ended with a nineteen-card grid of topic names, none linked, most not even drafted — the single largest block on the page was the part that didn&#39;t exist yet, outweighing the thirteen principles actually written above it</del> <span style="color:#509C64">a two-sentence explanation and a link to a new Roadmap section on the colophon, which carries the full nineteen-topic list (six drafted, thirteen not yet written) instead. Learn is now weighted toward what&#39;s actually on it; the honest disclosure that more is planned didn&#39;t need to be the biggest thing on the page to still be told plainly</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">Resources listed eleven categories in page order with no way to jump straight to the one a reader needed — crisis lines first, Indigenous-led services near the bottom, nothing in between named until scrolled to</del> <span style="color:#509C64">a &#34;Choose what you need&#34; list of same-page anchor links, placed after the immediate-safety questions rather than before them — a reader in danger sees those first, not a menu. Ordinary anchors only: no geolocation, no questionnaire, no filtering, no storage of what anyone clicked. Every urgent line on the page stays exactly where it was</span></li>
+          
+          <li style="color:#B8C7C1"><del style="color:#73968D">the Consent Domains Map&#39;s two section headings — &#34;The seventeen domains&#34; and &#34;Access Intimacy &amp; Body Support&#34; — never stated that they add to twenty, leaving a reader to do the arithmetic against the page&#39;s own meta description instead of being told</del> <span style="color:#509C64">&#34;Seventeen general consent domains&#34; and &#34;Three care and access domains: Access Intimacy &amp; Body Support&#34; — the split and the total are both explicit in the headings themselves, and the Access Intimacy name (Mia Mingus&#39;s term, tied to principle 13) stays rather than being replaced outright</span></li>
           
           <li style="color:#B8C7C1"><del style="color:#73968D">the site used &#34;sovereignty&#34; in at least four different senses — political, jurisdictional, relational, rhetorical — without ever marking which one was doing the work in a given sentence, and never engaged the strongest objection to using the word at all</del> <span style="color:#509C64">a new Learn section names all four senses and says plainly that the political and relational ones are not the same kind of thing, even where the site&#39;s own persuasiveness leans on them rhyming. A closing paragraph names Taiaiake Alfred&#39;s argument that sovereignty is inseparable from the frameworks of colonisation as an objection this site has not answered, not a settled question — and that argument is genuinely on the shelf now, not just referenced: Joanne Barker&#39;s edited collection carrying Alfred&#39;s chapter joined the archive alongside it, so the claim has something real to point to. The reading-ten list changes for the first time since v0.1: a heavy edited collection is out in favour of the free encyclopedia entry already on the shelf that covers the same ground; amatonormativity and relationship anarchy step aside, being the part of this framework people get wrong the least, for the second genealogy of possession and compelled legibility. Six of the ten are now free to read, worth saying outright rather than leaving a reader to notice</span></li>
           
@@ -370,7 +597,7 @@
   </div>
 </section>
 
-<section style="padding:clamp(3rem,6vw,4.5rem) 0">
+<section id="labour" style="padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Labour and money</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.6rem 2.4rem;max-width:1000px">
@@ -413,6 +640,7 @@
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
       <a href="Home.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>
       <a href="Manifesto.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
+      <a href="Invitation.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
       <a href="Learn.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
       <a href="Practise.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
       <a href="Archive.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>

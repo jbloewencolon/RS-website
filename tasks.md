@@ -1,7 +1,7 @@
 # Relational Sovereignty — Active Tasks
 
-**Last reconciled:** 2026-08-07
-**Reconciles:** `docs/spec/base-work-order.md`, `docs/spec/addendum-a.md`, `docs/spec/decision-record-d1-d15.md` (authoritative on all `[DECISION]`/`D#` items), plus findings from a full read of the shipped code on this branch.
+**Last reconciled:** 2026-08-08
+**Reconciles:** `docs/spec/base-work-order.md`, `docs/spec/addendum-a.md`, `docs/spec/decision-record-d1-d15.md` (authoritative on all `[DECISION]`/`D#` items), `docs/spec/warm-register-review-v2.md` (new content initiative, the warm register), an author review of navigation/disclosure/IA delivered directly into this session (no separate file — see Phase 2.5), plus findings from a full read of the shipped code on this branch.
 **Companion file:** `completed.tasks.md` — when a task ships, move its row there with a dated `~~was:~~ now:` entry in the site's own changelog voice. Don't delete history; strike it.
 
 ## How to use this file
@@ -47,7 +47,7 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 
 | ID | Task | Tags | Files | Effort | Depends on |
 |---|---|---|---|---|---|
-| **RS-023 (residual)** | The screen-reader pass genuinely needs a person: ≥2 of NVDA/Firefox, JAWS/Chrome, VoiceOver/Safari, TalkBack/Chrome, actually listened to, not simulated. Also residual: print stylesheet test on real paper/PDF output (Playwright's print-media emulation can check `@media print` rules apply, but not that the result reads well printed), and — deliberately deferred, not forgotten — RS-026's non-verbal state-control standard, which doesn't exist yet (Phase 3). | `[DEV]` (needs a human tester) | all pages | S (down from M — the automatable parts are done) | RS-026 for the state-control-standard piece specifically |
+| **RS-023 (residual)** | The screen-reader pass genuinely needs a person: ≥2 of NVDA/Firefox, JAWS/Chrome, VoiceOver/Safari, TalkBack/Chrome, actually listened to, not simulated. Also residual: print stylesheet test on real paper/PDF output (Playwright's print-media emulation can check `@media print` rules apply, but not that the result reads well printed). | `[DEV]` (needs a human tester) | all pages | S (down from M — the automatable parts are done) | RS-026 shipped 2026-08-08, see `completed.tasks.md` — no longer a residual dependency here |
 
 ---
 
@@ -61,32 +61,68 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 
 ---
 
+## Phase 2.5 — Navigation, disclosure, and information-architecture simplification
+*(Author review delivered directly into this session, 2026-08-08 — not part of a Decision Record cycle. Marked priority by the author, ahead of the remaining Phase 3 content work below; items RS-047/RS-048 are the two the author called optional follow-ups. Suggested implementation order noted per row.)*
+
+**Constraints on every row in this phase, stated by the author and binding on all of them:** do not alter `Home.dc.html`. Do not hide safety-critical information. Prefer semantic HTML, anchor links, and native `<details>/<summary>` over scripted show/hide. Preserve keyboard and screen-reader access. Preserve no-JavaScript access wherever it currently exists (all four Hugo-generated reading pages, Resources, and the Archive's unfiltered baseline). Do not add dependencies, tracking, external requests, storage, geolocation, or personalization. Any new disclosure/optional section must expand automatically for printing, not stay collapsed on the printed page. **For the Hugo-generated pages (Manifesto, Learn, Archive, BehindTheScenes), edit the authoritative `hugo/layouts/*.html` template and/or `hugo/data/*.yaml`, then regenerate via `npm run build:hugo` — never hand-edit the committed `.dc.html` output directly**, per this repo's established convention since RS-004.
+
+| ID | Task | Tags | Files | Effort | Notes |
+|---|---|---|---|---|---|
+
+**Suggested implementation order, as given:** ~~RS-042~~ → ~~RS-043~~ → ~~RS-044~~ → ~~RS-045~~ → ~~RS-046~~ → ~~RS-047~~ → ~~RS-048~~. All of Phase 2.5 shipped, see `completed.tasks.md`. RS-048 rescoped in the shipping — see its entry there for why the literal "state independence" ask couldn't be shipped as written, and what shipped instead.
+
+---
+
 ## Phase 3 — Content gaps
 *(Decision Record Cycle 3)*
 
 | ID | Task | Tags | Files | Effort | Notes |
 |---|---|---|---|---|---|
 | **RS-006 (residual)** | ~~Thesis 01 insertion: second genealogy of possession (chattel slavery / natal alienation vs. settler land-to-property). New archive group.~~ **Thesis 01 insertion and the archive group both shipped, see `completed.tasks.md`** — Spillers, Hartman, Roberts, and Bridges are in. What's left: adding Patterson and Collins once FLAG-03 (which two books, exactly) is answered. | `[COPY]` `[VERIFY]` | `Archive.dc.html` | S | **Still blocked on FLAG-03** |
-| **RS-016** | Bulk archive additions — P0 set (~~Coulthard, Malatino,~~ ~~Spillers, Hartman, Roberts, Bridges,~~ Cohen — Malatino shipped via RS-007, Spillers/Hartman/Roberts/Bridges shipped via RS-006; Coulthard and Cohen remain), P1 set (~~Barker,~~ Kuokkanen et al. 2025, Povinelli, Rifkin, Lugones, Kelly & Johnson, Feeney, Freeman, Spade, brown, Kaba — Barker shipped via RS-008), P2 set (Noël, Rambukkana, Borrows). New filter facets (`clinical`, `process`) if warranted. | `[DEV]` `[COPY]` `[VERIFY]` | `Archive.dc.html` | M | Large `[VERIFY]` batch — see Verification queue below |
-| **RS-026** | Non-verbal/low-language check-in mode for the Practise tool: labelled states with colour as secondary cue only (not primary — regression risk against the v0.2 colour-only fix), inline SVG/CSS shapes with `aria-label` (not emoji), reduced-language version of the RS-001 safety questions. Document tap-count signalling as practice, not a built input method. | `[DEV]` `[COPY]` | `Practise.dc.html` | M | Extends RS-001's reduced-language requirement |
-| **RS-033** | Archive additions: Hemphill (*What It Takes to Heal*), Menakem (*My Grandmother's Hands*). New archive group "Bodies, regulation, and what happens before words." **Omit polyvagal theory entirely** (D13 — do not shelve with caveat). | `[DEV]` `[COPY]` `[VERIFY]` | `Archive.dc.html` | S | — |
-| **RS-034** | New thesis 16, "The house is not a rehearsal" — prefigurative claim without the "picking up your bundle" metaphor (that framing is **rejected**, see Rejected section below). Sixteen theses total — global find-replace "fifteen theses and a refusal." Link to *The Revolution Starts at Home*. | `[COPY]` | `Manifesto.dc.html`, Home nav card, meta descriptions | S | — |
+
+**RS-016 shipped in full, see `completed.tasks.md`** — all three priority sets (Coulthard/Cohen; Kuokkanen et al. 2025/Povinelli/Rifkin/Lugones/Kelly & Johnson/Feeney/Freeman/Spade/brown/Kaba; Noël/Rambukkana/Borrows) added to `Archive.dc.html`, every link independently verified. No new filter facets — see that entry for why. Phase 3's only open item is RS-006's FLAG-03-blocked residual above.
+
+---
+
+## Phase 3.5 — The warm register
+*(New content initiative, `docs/spec/warm-register-review-v2.md` — not a Decision Record cycle. A second, parallel register alongside the manifesto's, not a replacement for it. RS-036 was the anchor and has shipped, see `completed.tasks.md`; RS-035/037/038/039/040 no longer have a hard dependency on it, RS-041 remains blocked, differently than expected — see its row.)*
+
+**A standing caution about this source doc's fault numbers.** Found twice now while shipping this phase (RS-036, RS-038): the review cites fault numbers against an older fault-list state, before fault 04 ("the pages need a runtime to draw") was retired and the list renumbered earlier this session. Its "fault 05" (the Two Row Wampum figure) is current fault 04; its "fault 06" (no community yet) is current fault 05. Check `hugo/data/faults.yaml` directly before citing any fault number this document names — do not trust its own numbering.
+
+**Reference — what must not soften, in any register (§9 of the review).** Whatever gets written under this phase, these keep their force and can be said warmly but never vaguely: consent requires that refusal be materially survivable; the coercive-control gate and its routing to Resources; continuity of care for dependants, including that it is not available to anyone using it to keep someone; the differential legal, immigration, and custody risk across relationship forms; that the framework does not rank relationship forms; that opacity is never owed by a disabled person to the people whose support they need; that a website returns no land.
+
+**One line the review asks to keep exactly as written, if it lands anywhere on the site (§10):** *"The risk isn't: 'will you fall in love?' The risk is: 'how will you show up when it's time to say goodbye?'"*
+
+**Binding design constraints from §6 (weaknesses), not just commentary:** every growth-language formulation ("I want the best version of you," etc.) must be reciprocal and refusable on its face, with the failure mode named on the page (RS-038 does this) and no aspirational line anywhere without the material question beside it (§2.1's structure — warmth, then the floor — is the template for all of it). No "join," no "if you are able to," no implied cohort of people doing this correctly (§6.3) — invite toward practice, not membership. The soft register is a door, not a floor (§6.4): the material condition of consent, differential legal/immigration risk, the coercive-control gate, continuity of care, and differential privacy stay declarative and unhedged regardless of what page they're on.
+
+| ID | Task | Tags | Files | Effort | Notes |
+|---|---|---|---|---|---|
+| ~~**RS-036**~~ | ~~Build the Invitation...~~ **Shipped, see `completed.tasks.md`.** | `[COPY]` `[DEV]` | `Invitation.dc.html`, `Home.dc.html` | M | — |
+| ~~**RS-035**~~ | ~~Forms/relationship labels...~~ **Shipped, see `completed.tasks.md`.** | `[COPY]` `[DEV]` | `hugo/layouts/learn.html` | S–M | — |
+| ~~**RS-037**~~ | ~~"Before you bring this up"...~~ **Shipped, see `completed.tasks.md`.** | `[COPY]` `[DEV]` | `Practise.dc.html` | S | — |
+| ~~**RS-038**~~ | ~~"How this vocabulary gets used as a weapon"...~~ **Shipped, see `completed.tasks.md`.** | `[COPY]` `[DEV]` | `hugo/layouts/learn.html`, `print.js` (new), `Practise.dc.html`, `Resources.dc.html`, `hugo/layouts/invitation.html`, `Contribute.dc.html` | M | Shipping this surfaced a real, unrelated defect (broken print buttons under CSP) — fixed in the same commit, see `completed.tasks.md` |
+| ~~**RS-039**~~ | ~~An endings tool on Practise...~~ **Shipped, see `completed.tasks.md`.** | `[DEV]` `[COPY]` | `Practise.dc.html` | M | Absorbed RS-029's step 2 — see RS-029's row in Phase 4, updated |
+| ~~**RS-040**~~ | ~~New archive group, "Love, eros, and why any of this is worth doing"...~~ **Shipped, see `completed.tasks.md`.** | `[DEV]` `[COPY]` `[VERIFY]` | `hugo/data/archive.yaml` | S–M | — |
+| **RS-041** | Taíno-terms disclosure infrastructure. Once RS-036 ships with the Taíno-sourced terms the Invitation draws on, the Colophon's reuse terms need to say what a reader may do with them specifically — the site's first actual holding of Indigenous-language material, not just a citation of someone else's. Two consistent options: a carve-out (general reuse grant excludes these terms, reuse requires asking) or an explicit grant on stated conditions (attribution to author and nation, no commercial use, no use as branding). Apply a Local Contexts TK Label if appropriate — fault 02's promised protocol tooling, on its first real occasion to actually be used. | `[DEV]` `[COPY]` `[DECISION]` `[VERIFY]` | `BehindTheScenes.dc.html` (reuse terms) | S | **Still blocked, differently than before.** RS-036 shipped 2026-08-08, but `warm-register-review-v2.md` §7 only resolves the *provenance* question for "the Taíno terms" — it never names which specific words they are, and that content lived in "the previous warm-register review" (v1), which isn't in this repo. §2.1 and §3.4, the only draft copy v2 actually supplies, read as plain English with nothing identifiable as Taíno-sourced vocabulary, and nothing was invented to fill that gap when RS-036 shipped. **Do not write disclosure terms for content that can't be identified** — this needs either the v1 document or the author naming the terms directly, not a guess |
+
+**Open question, flagged not decided (§8):** D8 (Phase 3, already shipped) settled a reading-ten list of ten analytic entries. If the Invitation becomes a genuinely co-equal door, the review argues the ten arguably should reflect both registers, with hooks as "the natural candidate" — accessible, widely available, doing the framework's own work in plain language. That would mean dropping someone already on the list. Not actioned here; D8 stands unless the author revisits it.
 
 ---
 
 ## Phase 4 — Conceptual work (deferred / needs people)
-*(Decision Record Cycle 4 — lowest urgency; several items are explicitly meant to wait)*
+*(Decision Record Cycle 4 — lowest urgency; several items are explicitly meant to wait. RS-009/010/011/012/013/014/017 all shipped 2026-08-08, see `completed.tasks.md`. Two rows remain, both intentionally not actioned: RS-048 residual blocks on the author supplying a real contact address; RS-029 residual is deliberately sequenced last, per its own row, until a community exists to route "pods" to.)*
 
 | ID | Task | Tags | Files | Effort | Notes |
 |---|---|---|---|---|---|
-| **RS-009 (residual)** | Adjudication section: which principle governs when 06 (relational accountability) conflicts with 07 (refusal), and when 08 (opacity) conflicts with 11 (no private empires)? If the answer is "no rule, deliberately," say that and why — that's content, not an oversight. | `[COPY]` | `Learn.dc.html` | M | RS-029 (Repair Protocol) answers "what's the process," not "which principle wins" — this is the residual question after RS-029 |
-| **RS-010** | Promote treaty/protocol (Two Row Wampum) from a layout gesture to a conceptual apparatus — two sovereigns over one shared condition as the framework's unsolved problem. | `[COPY]` `[DECISION]` | `Learn.dc.html`, `Archive.dc.html` | L | — |
-| **RS-011** | Name and protect chosen monogamy; name coercive non-monogamy. One paragraph. | `[COPY]` | `Home.dc.html` | S | — |
-| **RS-012** | Revise thesis 02 so tradition isn't uniformly coded as unfreedom (autological/genealogical antinomy). | `[COPY]` | `Manifesto.dc.html` | M | Thesis 14 (post-RS-003 revision) already gestures at the answer |
-| **RS-013** | Revise thesis 11 to name who has standing to demand a relationship account for itself (affected parties — not the state, not a crowd). Without this it supplies a rationale for surveillance already applied to marginalized families. | `[COPY]` | `Manifesto.dc.html` | M | — |
-| **RS-014** | Seven worked scenarios traced through the principles, failures marked as failures (sponsored partner, disabled person + funded attendant, carer of dependent adult, coercive control, guardianship, precarious shared housing, child in restructuring household). | `[COPY]` | new page or `Learn.dc.html` | L | — |
-| **RS-017** | Sexual content: desire discrepancy, reproductive coercion, sexual trauma, consensual power exchange. | `[COPY]` | Learn topics | L | — |
-| **RS-029** | Repair Protocol — four steps (impact assessment / non-skippable care-continuity audit / "Pods and stewards," not "Third-Party Triangulation" / restitution-or-responsible-exit). Must sit behind the RS-001 safety gate or its own equivalent. | `[DEV]` `[COPY]` | new page or `Learn.dc.html` | L | **Deliberately last** — fault 06 records no community exists yet to route "pods" to; build when there are people, say so on the roadmap meanwhile |
+| **RS-048 (residual)** | A real destination for the Contribute form's contribution-note field. Fault 07 (`BehindTheScenes.dc.html`) names the gap: the note is captured and now transmitted to the dispatch Worker, but nothing reads or stores it, and there's no way to submit one without also providing an email (the only backend behind this form is the mailing-list signup flow). Needs either a genuine second channel (a maintainer inbox the Worker can relay to, requiring a real address the author supplies and a new deploy) or a decision to leave it disclosed-but-unbuilt. | `[DEV]` `[DECISION]` | `worker/src/index.js`, `Contribute.dc.html` | S–M | **Blocked on the author supplying a real contact destination** — inventing one isn't an option; needs a live `wrangler deploy`, which this session can't perform |
+| ~~**RS-009 (residual)**~~ | ~~Adjudication section...~~ **Shipped, see `completed.tasks.md`.** | `[COPY]` | `Learn.dc.html` | M | — |
+| ~~**RS-010**~~ | ~~Promote treaty/protocol (Two Row Wampum) from a layout gesture to a conceptual apparatus...~~ **Shipped, see `completed.tasks.md`.** | `[COPY]` `[DECISION]` | `Learn.dc.html`, `Archive.dc.html` | L | — |
+| ~~**RS-011**~~ | ~~Name and protect chosen monogamy...~~ **Shipped, see `completed.tasks.md`.** | `[COPY]` | `Home.dc.html` | S | — |
+| ~~**RS-012**~~ | ~~Revise thesis 02 so tradition isn't uniformly coded as unfreedom...~~ **Shipped, see `completed.tasks.md`.** | `[COPY]` | `Manifesto.dc.html` | M | — |
+| ~~**RS-013**~~ | ~~Revise thesis 11 to name who has standing...~~ **Shipped, see `completed.tasks.md`.** | `[COPY]` | `Manifesto.dc.html` | M | — |
+| ~~**RS-014**~~ | ~~Seven worked scenarios traced through the principles...~~ **Shipped, see `completed.tasks.md`.** | `[COPY]` | `Learn.dc.html` | L | — |
+| ~~**RS-017**~~ | ~~Sexual content: desire discrepancy, reproductive coercion, sexual trauma, consensual power exchange.~~ **Shipped, see `completed.tasks.md`.** | `[COPY]` | `Learn.dc.html` | L | — |
+| **RS-029 (residual)** | Repair Protocol — ~~four steps (impact assessment / non-skippable care-continuity audit / "Pods and stewards," not "Third-Party Triangulation" / restitution-or-responsible-exit)~~ **three steps remain**: impact assessment, "Pods and stewards" (not "Third-Party Triangulation"), restitution-or-responsible-exit. Must sit behind the RS-001 safety gate or its own equivalent. | `[DEV]` `[COPY]` | `Practise.dc.html` | M (was L) | **Deliberately last** — fault 05 records no community exists yet to route "pods" to; build when there are people, say so on the roadmap meanwhile. Placement reassigned from "new page or Learn" per `warm-register-review-v2.md` §4 — it's a process people execute, not a concept they read. **Step 2, the care-continuity audit, shipped 2026-08-08 as RS-039's endings-tool Part 1** — same object as the already-shipped RS-030 clause, built once rather than three times. Effort dropped from L to M with one of four steps done. |
 
 ---
 
@@ -120,7 +156,7 @@ Not in any spec document — surfaced from reading `support.js`, the build scrip
 
 | ID | Suggestion | Rationale |
 |---|---|---|
-| **SUGGEST-01** | Colophon accuracy audit, independent of and prior to RS-022's new fields. Several current substrate claims are already stale: "under 60 KB per page" (support.js alone is ~70 KB, plus vendored React/ReactDOM), "no build step" (prerender.mjs already exists — pre-dates RS-004), "the site is unhosted at v0.2" (CNAME + GitHub Pages deploy already live — see FLAG-02). | The site's own transparency practice ("show corrections, don't overwrite mistakes") applies to code-vs-copy drift, not just content revisions. These are quick, low-risk fixes independent of the bigger D2/D6 decisions. |
+| ~~**SUGGEST-01**~~ | ~~Colophon accuracy audit...~~ **Done, see `completed.tasks.md`.** "No build step" was already fixed (predates this session's visible window). "Unhosted" and "under 60 KB" were still stale — both corrected. | — |
 | ~~**SUGGEST-02**~~ | ~~Add `<meta name="robots" content="noindex">` to `Practise.dc.html`~~ — **done, 2026-08-07, alongside RS-001+032.** | Directly serves RS-001/Practise's own safety intent: this page should be as hard to stumble into via search as the architecture allows. |
 | **SUGGEST-03** | Evaluate removing the dormant Babel/unpkg CDN path in `support.js` (`BABEL_URL = "https://unpkg.com/@babel/standalone@..."`, loaded only if a page ever uses `x-import` with a `.jsx`/`.tsx` module). No current page uses it, and RS-020's CSP (now shipped) does **not** allow-list unpkg.com anywhere — deliberately, since no page currently needs it. If this code path is ever triggered, it will hit a CSP violation rather than silently working around one, which surfaces the dead-code question at the moment it'd matter instead of before. Dead code still contradicts D2's stated preference for "no supply chain, nothing to rot." | `Practise.dc.html` is now the only page still on the runtime and it never needs JSX import, so this capability may be safe to delete outright. Needs a decision, not just a fix — flagging here rather than acting unilaterally. |
 | **SUGGEST-04** | Harden the dispatch Worker's `/api/confirm` and `/api/unsubscribe` against link-prefetching (email security scanners, Outlook Safe Links, some VPN/antivirus products fetch links in email bodies automatically). Currently both act on a bare `GET`. An interstitial confirm button (still one click, still no account, still honors "one click to leave") would prevent a scanner from silently confirming or unsubscriming someone. | Now directly relevant given the D5 amendment above — since the Worker is being kept and hardened rather than replaced, this is worth doing as part of RS-021's disclosure/hardening pass rather than a separate future task. |
@@ -135,12 +171,15 @@ Bulk list, independent of phase, so link/citation verification can be worked in 
 
 ~~**Archive link corrections (RS-015)** — ~20 entries, full list in `docs/spec/base-work-order.md` §4. Highest-priority single item: Kuokkanen *It's About All Relations* currently links to a paywalled index while tagged "open access" — verified replacement URLs already supplied in the source doc.~~ — **done, see `completed.tasks.md`.** All entries resolved to the specific work's own page (or DOI), each fetched and confirmed before use; two previously-empty links now hold verified URLs; one paywalled Wiley mirror replaced with the journal's own open-access copy.
 
-**New archive entries needing a link (RS-006/007/016/033)** — from `docs/spec/base-work-order.md` §5 and `docs/spec/addendum-a.md` §RS-033: Coulthard, Spillers, Hartman, Roberts, Bridges, Cohen, Kuokkanen/Lightfoot/Starblanket/Wildcat 2025, Povinelli, Rifkin, Lugones, Freeman, Spade, brown, Kaba, Noël, Rambukkana, Borrows, Hemphill, Menakem. (Malatino, Barker, Kelly & Johnson, Feeney already verified in the source doc.)
+~~**New archive entries needing a link (RS-006/007/016/033)** — from `docs/spec/base-work-order.md` §5 and `docs/spec/addendum-a.md` §RS-033: Coulthard, Spillers, Hartman, Roberts, Bridges, Cohen, Kuokkanen/Lightfoot/Starblanket/Wildcat 2025, Povinelli, Rifkin, Lugones, Freeman, Spade, brown, Kaba, Noël, Rambukkana, Borrows, Menakem.~~ — **done, see `completed.tasks.md`.** All eighteen resolved and independently verified (fetched or Crossref-confirmed, not trusted from the draft); Hemphill was moved to RS-040's verification queue below rather than counted twice; Malatino, Barker, Kelly & Johnson, Feeney were already verified in the source doc and re-confirmed live before use.
+
+~~**New archive entries needing a link (RS-040, `warm-register-review-v2.md` §8)** — Lorde, hooks, brown, Kai Cheng Thom, Hemphill.~~ — **done, see `completed.tasks.md`.** All five verified (publisher pages fetched directly except hooks, blocked from the US HarperCollins domain and confirmed instead via HarperCollins India's own product page plus independent corroboration). The RS-016/RS-040 "brown" entries remain two different books by the same author, not a duplicate, as noted when this was first flagged.
 
 **Other verifications:**
 - BATJC pod-mapping worksheet URL (RS-029)
+- Local Contexts current TK/BC Label set and application process, localcontexts.org (RS-041)
 ~~Kafer *Feminist, Queer, Crip* + Samuels "Six Ways of Looking at Crip Time" citations (RS-027)~~ — done, both verified and added to `Archive.dc.html`; see `completed.tasks.md`.
-- Native Land Digital's terms/disclaimer, for the outbound-link-only territory reference (RS-031/D15)
+~~Native Land Digital's terms/disclaimer, for the outbound-link-only territory reference (RS-031/D15)~~ — done, see `completed.tasks.md`. Confirmed native-land.ca places no restriction on being linked to (only on reusing their map data, which this site doesn't do); their own accuracy caveat is quoted on Home rather than paraphrased from memory.
 - Outbound link target for Home limit #3 (D10) — Indigenous-led org/land-defence fund/policy institute, confirmed comfortable being linked
 - Hugo current version + cross-platform availability (RS-004/D2)
 - Static-host candidates against D6's five selection criteria (RS-022)
@@ -192,4 +231,5 @@ Applies to every page, every release — from `docs/spec/base-work-order.md` §7
 - `docs/spec/base-work-order.md` — original problem statements, RS-001–RS-025, draft copy
 - `docs/spec/addendum-a.md` — RS-026–RS-034, what was accepted/rejected from the v0.3 specification
 - `docs/spec/decision-record-d1-d15.md` — authoritative resolution of every `[DECISION]`, consolidated build order
-- `docs/spec/README.md` — how the three relate
+- `docs/spec/warm-register-review-v2.md` — RS-035–RS-041, the Invitation as a second door alongside the Manifesto, plus the Phase 2.5 IA/navigation review delivered alongside it (see that phase for details; no separate file for the latter)
+- `docs/spec/README.md` — how the docs relate (does not yet mention the warm-register review; update if this file's own description of itself goes stale)
