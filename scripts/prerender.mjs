@@ -43,7 +43,7 @@ const PAGES = [
 // Pages Hugo generates (see hugo/README.md and RS-004) are already plain
 // HTML with no <x-dc> runtime to render — they're copied as-is, same as
 // Resources.dc.html.
-const COPY_AS_IS = ["glyph-check.html", "glyph-check.js", "Resources.dc.html", "Manifesto.dc.html", "Learn.dc.html", "BehindTheScenes.dc.html", "Archive.dc.html", "archive-filter.js", "support.js", "robots.txt", "CNAME", "LICENSE"];
+const COPY_AS_IS = ["glyph-check.html", "glyph-check.js", "Resources.dc.html", "Manifesto.dc.html", "Invitation.dc.html", "Learn.dc.html", "BehindTheScenes.dc.html", "Archive.dc.html", "archive-filter.js", "support.js", "robots.txt", "CNAME", "LICENSE"];
 
 const MIME = { ".html": "text/html", ".js": "application/javascript", ".txt": "text/plain" };
 
