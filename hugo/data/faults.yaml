@@ -26,3 +26,6 @@
 - n: "06"
   title: "No clickjacking protection"
   body: "The CSP is delivered as a <meta> tag because the current host cannot set response headers — and frame-ancestors, the directive that would stop this site being framed inside someone else's page, is one of a small number the CSP specification refuses to honour outside a real header, on any browser, no matter how it's written. There is currently no way to close this gap without changing host. Same root cause as fault 01."
+- n: "07"
+  title: "The contribution note goes nowhere yet"
+  body: "The Contribute form's optional note field is captured on the page and sent to the dispatch Worker, but nothing on the Worker reads, stores, or forwards it — no one sees what's typed there. Submitting the form still requires an email address regardless of whether that note is filled in, since the only backend behind this form today is the mailing-list signup flow; there is no separate channel yet for someone who wants to leave a note without joining the dispatch. Fixing this needs a real destination for the note (a person, an inbox, a store) that does not exist yet, not just a code change."

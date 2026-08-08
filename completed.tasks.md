@@ -391,4 +391,29 @@ Notes:
 - Last of Phase 2.5's items shipped before RS-048 (the other author-flagged optional follow-up).
 - `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
 
+### RS-048 (rescoped) — clarify the Contribute form
+**Shipped:** 2026-08-08 · **Commit/PR:** (pending)
+
+~~was: the Contribute form's "What you might offer" field, and the plan to add copy stating that subscribing and contributing are independent actions~~
+now: the field is relabelled "Optional contribution note," the stranger-reads-this warning is preserved verbatim, and instead of the originally-planned independence claim, the field's own hint text says plainly what's actually true — the note isn't wired to anywhere it gets acted on yet — linking to a new fault (07) that names the gap precisely.
+
+**The literal ask couldn't be shipped honestly, and here's why.** Before touching any copy, I traced what actually happens to this form's data: the "offer" textarea's value was captured in component state but never included in the `fetch()` call to the dispatch Worker — dropped before it even left the browser. Reading `worker/src/index.js` end to end confirmed the deployed Worker has zero code path for an "offer" field regardless; its entire surface is the mailing-list double-opt-in flow (subscribe/confirm/unsubscribe). Submitting the form for any reason — even leaving a note with every dispatch-interest box unchecked — requires a valid email and unconditionally triggers a "confirm your subscription" email, since there's no branch in the Worker that distinguishes "wants to subscribe" from "wants to leave a note." Separately, both this form's and Home's error message pointed a failed submission to "the address in the colophon" — a destination that does not exist; no email address is published anywhere on this site.
+
+Given this, writing copy that told a reader "subscribing and contributing are independent actions" would have been the exact kind of claim this site's whole practice exists to prevent — asserting a capability the code doesn't have, the same category of problem RS-003, RS-021, and RS-015 all corrected earlier this session. **The user's own instruction — "a full multi-mode form redesign can wait" — also ruled out building the fix**, and building it for real requires infrastructure (a genuine second delivery channel) this session can't respons­ibly invent: no maintainer contact address exists to route note-only submissions to, and even a Worker-side code change can't take effect without a live `wrangler deploy` this sandboxed session has no credentials for. A clarifying question was put to the user about how to handle the gap (disclose honestly / provide a real address / ship the literal ask anyway / drop the field) and went unanswered; proceeded on the first, most conservative option — the one that ships the safe, real parts of the ask and discloses the rest, rather than either lying or blocking indefinitely.
+
+**What shipped, concretely:**
+- Field relabelled "Optional contribution note"; stranger-warning preserved word for word.
+- The kicker line changed from "Join the dispatch, offer something, or both" (implies real independence) to "Join the dispatch, leave a note, or both," with a new sentence stating plainly that an email is required to submit this form at all today, and that leaving every interest box unchecked results in exactly one confirmation email and nothing further unless it's clicked — true of the code as it stands, not aspirational.
+- `offer` added to the JSON body actually POSTed to the Worker — a small, safe, forward-compatible change (the deployed Worker currently ignores the extra key harmlessly; wiring up real handling later becomes a Worker-side change only, not a client one too).
+- New fault 07 on `BehindTheScenes.dc.html`, named precisely: the note isn't read or stored anywhere, and why (no second channel exists behind this form).
+- The dead "write to the address in the colophon" reference removed from both Contribute's and Home's submission-failure error messages (neither page nor colophon has ever published such an address) — `index.html` re-synced byte-for-byte from `Home.dc.html` per the established pattern.
+- A residual task (RS-048, Phase 4) tracks the actual fix — a real contact destination the author would need to supply, plus a live deploy this session cannot perform — rather than leaving the gap undocumented once this task's row closed.
+
+Verified with real Playwright interaction: intercepted the actual `fetch()` call to confirm the `offer` field is now present in the outgoing JSON body; confirmed the relabelled field, preserved warning text, and new fault-list link all render; confirmed with JavaScript disabled that the old field label, old kicker line, and dead colophon-address text are all gone from both affected pages and the colophon's `#faults` anchor (added by RS-045 earlier this session) resolves correctly.
+
+Notes:
+- This is the more consequential of Phase 2.5's two "optional follow-up" items precisely because investigating it surfaced two real, previously-undisclosed defects (silently-dropped user input; a dead contact reference) that the literal one-line task description gave no reason to expect were there.
+- `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
+- **This closes Phase 2.5** — RS-042 through RS-048 have all shipped, six as directly specified and RS-048 rescoped, with the reasoning for that deviation documented above rather than silently absorbed into a "done" checkmark.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*

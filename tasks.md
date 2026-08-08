@@ -68,9 +68,8 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 
 | ID | Task | Tags | Files | Effort | Notes |
 |---|---|---|---|---|---|
-| **RS-048** | Clarify the Contribute form. State explicitly that subscribing to the dispatch and offering a contribution are independent actions — neither requires the other. Rename the "What you might offer" field label to "Optional contribution note." Preserve the existing warning not to enter anything the visitor wouldn't want read by a stranger. A full multi-mode form redesign can wait — this is copy and a label change, not a rebuild. | `[COPY]` | `Contribute.dc.html` | S | Optional follow-up, author's own framing |
 
-**Suggested implementation order, as given:** ~~RS-042~~ → ~~RS-043~~ → ~~RS-044~~ → ~~RS-045~~ → ~~RS-046~~ → ~~RS-047~~ → RS-048 if time permits. RS-042 through RS-047 shipped, see `completed.tasks.md`. Only RS-048 remains in this phase.
+**Suggested implementation order, as given:** ~~RS-042~~ → ~~RS-043~~ → ~~RS-044~~ → ~~RS-045~~ → ~~RS-046~~ → ~~RS-047~~ → ~~RS-048~~. All of Phase 2.5 shipped, see `completed.tasks.md`. RS-048 rescoped in the shipping — see its entry there for why the literal "state independence" ask couldn't be shipped as written, and what shipped instead.
 
 ---
 
@@ -115,6 +114,7 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 
 | ID | Task | Tags | Files | Effort | Notes |
 |---|---|---|---|---|---|
+| **RS-048 (residual)** | A real destination for the Contribute form's contribution-note field. Fault 07 (`BehindTheScenes.dc.html`) names the gap: the note is captured and now transmitted to the dispatch Worker, but nothing reads or stores it, and there's no way to submit one without also providing an email (the only backend behind this form is the mailing-list signup flow). Needs either a genuine second channel (a maintainer inbox the Worker can relay to, requiring a real address the author supplies and a new deploy) or a decision to leave it disclosed-but-unbuilt. | `[DEV]` `[DECISION]` | `worker/src/index.js`, `Contribute.dc.html` | S–M | **Blocked on the author supplying a real contact destination** — inventing one isn't an option; needs a live `wrangler deploy`, which this session can't perform |
 | **RS-009 (residual)** | Adjudication section: which principle governs when 06 (relational accountability) conflicts with 07 (refusal), and when 08 (opacity) conflicts with 11 (no private empires)? If the answer is "no rule, deliberately," say that and why — that's content, not an oversight. | `[COPY]` | `Learn.dc.html` | M | RS-029 (Repair Protocol) answers "what's the process," not "which principle wins" — this is the residual question after RS-029 |
 | **RS-010** | Promote treaty/protocol (Two Row Wampum) from a layout gesture to a conceptual apparatus — two sovereigns over one shared condition as the framework's unsolved problem. | `[COPY]` `[DECISION]` | `Learn.dc.html`, `Archive.dc.html` | L | — |
 | **RS-011** | Name and protect chosen monogamy; name coercive non-monogamy. One paragraph. | `[COPY]` | `Home.dc.html` | S | — |
