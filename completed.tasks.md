@@ -616,4 +616,18 @@ now: the thesis keeps its claim and adds the missing sentence: "standing to dema
 
 Verified: `npm run build:hugo && npm run build && npm run check` all pass clean.
 
+### RS-009 (residual) — the adjudication question, answered where it can be
+**Shipped:** 2026-08-08 · **Commit/PR:** (pending)
+
+~~was: the framework named two real internal conflicts and answered neither in general terms. Learn's existing "Continuity of care" clause already flagged that "principle 06 (relational accountability) and principle 07 (refusal) can pull against each other with nothing here to say which wins," resolving only the dependency-at-leaving case and saying explicitly it wasn't a general answer. The second conflict — principle 08 (opacity) against the manifesto's thesis 11 ("relationships are not private empires," standing to demand an account) — wasn't addressed anywhere at all, despite both principle 08's own text and (as of RS-013, shipped earlier this same session) thesis 11's own text already containing the pieces needed to answer it~~
+now: a new Learn section, "Two adjudication questions, two different answers," directly beneath the existing Continuity of care clause. It gives the two conflicts different treatments because they have different shapes, rather than forcing one method onto both: **06 vs. 07 stays open, argued rather than just asserted** — refusal is protected regardless of the disruption it causes; what 06 actually governs is the manner of an ending where real obligations exist, not whether the ending is allowed; past that distinction, the framework declines to supply a formula, and calls that a refusal of false precision rather than an oversight. **08 vs. thesis 11 gets an actual rule**, not a shrug: principle 08's own text already narrows opacity to a right against people who want more than they're owed; thesis 11's revised text (RS-013, shipped earlier today) already narrows standing to the people who absorb the consequences. Put together, the answer is that opacity holds fully against anyone without standing, and even someone with standing is owed only the specific thing they'll absorb, not a full accounting.
+
+**This wasn't answerable until earlier today.** The 08-vs-11 half of this task depended on RS-013's revision to thesis 11 actually existing — before that revision shipped, thesis 11 didn't name who had standing, so there was no "standing" concept on the site for principle 08 to be weighed against. Sequencing this after RS-012/RS-013 rather than before was necessary, not incidental.
+
+**Directly cites its own proof of work.** Rather than assert the 08/11 synthesis as abstract reasoning, the section points at RS-039's endings tool as the rule already in practice: "who holds this after, and do they know" is exactly "owed only what they'll absorb, not a full accounting," built before this section explained why it was built that way.
+
+**A cross-reference callout distinguishes this from the Repair Protocol** (RS-029, still mostly unbuilt, deliberately last per its own row): the Repair Protocol answers what's the process after harm; this section answers which principle governs a standing conflict between two of them. Different questions, and only one of them had a process already planned to resolve it.
+
+Verified: `npm run build:hugo && npm run build && npm run check` all pass clean.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*
