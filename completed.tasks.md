@@ -520,6 +520,7 @@ Verified: `npm run build:hugo && npm run build && npm run check` all pass clean.
 
 Notes:
 - Placed as the last substantive Learn section before the existing "What's planned, not what's built" roadmap pointer, since it's new content added under this initiative rather than a rewrite of something already there.
+- **Correction, added when RS-010 shipped:** flipping these two `topics.yaml` entries to `drafted: true` should have come with an update to the hardcoded "six...nineteen" topic-count sentences in `hugo/layouts/learn.html` and `hugo/layouts/behindthescenes.html`. It didn't, and both stayed stale until RS-010 caught and fixed it two tasks later. See RS-010's entry below for the fix; noted here so the record shows where the staleness actually originated.
 
 ### RS-037 — "Before you bring this up with someone"
 **Shipped:** 2026-08-08 · **Commit/PR:** (pending)
@@ -629,5 +630,22 @@ now: a new Learn section, "Two adjudication questions, two different answers," d
 **A cross-reference callout distinguishes this from the Repair Protocol** (RS-029, still mostly unbuilt, deliberately last per its own row): the Repair Protocol answers what's the process after harm; this section answers which principle governs a standing conflict between two of them. Different questions, and only one of them had a process already planned to resolve it.
 
 Verified: `npm run build:hugo && npm run build && npm run check` all pass clean.
+
+### RS-010 — treaty and protocol, promoted from layout gesture to concept
+**Shipped:** 2026-08-08 · **Commit/PR:** (pending)
+
+~~was: the Two Row Wampum appeared exactly once on the site, in the archive's "Held in common" section, functioning purely as a layout figure — two vessels on one river, neither steering the other — with no connection drawn to the framework's own central structural claim: two people, each sovereign over the terms of their own relations, sharing one condition, with neither subordinate to the other. That is exactly the shape a treaty relationship is built to hold, and "sovereignty" (the site's own operative word, per the existing "Four things this word is doing" section) names the value without naming the missing form~~
+now: a new Learn section (`#treaty`), placed directly after the sovereignty-senses discussion it completes: "Two sovereigns, one shared condition. Sovereignty doesn't have a form for that. Treaty does." Names treaty and protocol as concepts the framework needs and identifies what's actually borrowed — not the fact of a treaty, but its *logic*: a treaty is a standing practice of renewal, not terms set once and assumed to hold, and this framework asserts non-domination (principle 05) as a value while having built no equivalent renewal practice of its own. Points at "The Relational Review" — still on Practise's not-yet-built list, "a seasonal check-in on what feels alive, what feels assumed, where resentment is accumulating, what needs revision" — as that exact logic, unbuilt, rather than inventing a new tool to fill the gap.
+
+**The limit is stated with the same weight as the claim, not appended as a disclaimer.** Given the `[DECISION]` tag on this task and the real risk of analogizing an interpersonal relationship to a nation-to-nation treaty relationship, the section states directly and early: the Two Row Wampum "is not a metaphor invented for that purpose. It's a specific treaty relationship, between specific nations, with its own terms, its own history of being violated, and its own ongoing life independent of anything this site does with it," and that treating a household as equivalent to that relationship "would be exactly the kind of 'lifestyle experimentation' borrowing of Indigenous political thought that Home's own stated limits already rule out" — a direct cross-reference to Home's existing "Not a substitute for decolonization" and "Not one universal Indigenous philosophy" limits, so the new section is bound by constraints the site already committed to rather than inventing new ones for the occasion.
+
+**The archive's own Two Row Wampum note now points back**, closing what was previously a one-way, undeveloped reference: `hugo/layouts/archive.html`'s existing callout gains a sentence linking to the new Learn section, "including the limit on how far that suggestion is allowed to go" — naming the limit even in the one-line cross-reference, not just in the fuller treatment.
+
+**A real, unrelated staleness bug was caught and fixed in the same edit.** `topics.yaml`'s roadmap gained a twentieth entry ("Treaty and protocol," `drafted: true`) for this section, which required recomputing the drafted count — nine of twenty, not six of nineteen. Checking that number surfaced that it had *already* gone stale two tasks earlier: RS-035 (shipped today) flipped two topics from `false` to `true` without updating the hardcoded "six" in either `hugo/layouts/learn.html`'s or `hugo/layouts/behindthescenes.html`'s prose, so both pages had been quietly wrong since that commit. Both fixed here, with `behindthescenes.html`'s claim also tightened from "none are linked or published" to "none are linked or published from this list," since three of the drafted topics now correspond to real, anchored Learn sections even though the Roadmap's own cards don't hyperlink to them.
+
+Verified: `npm run build:hugo && npm run build && npm run check` all pass clean.
+
+Notes:
+- A general lesson from the staleness bug, worth carrying forward: any task that flips `topics.yaml` entries between `drafted: true`/`false` needs to recompute and update the two hardcoded topic-count sentences (`learn.html`, `behindthescenes.html`) as part of that same task, not as an afterthought caught by the next task that happens to touch the same file.
 
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*
