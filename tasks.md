@@ -179,7 +179,7 @@ Bulk list, independent of phase, so link/citation verification can be worked in 
 - BATJC pod-mapping worksheet URL (RS-029)
 - Local Contexts current TK/BC Label set and application process, localcontexts.org (RS-041)
 ~~Kafer *Feminist, Queer, Crip* + Samuels "Six Ways of Looking at Crip Time" citations (RS-027)~~ — done, both verified and added to `Archive.dc.html`; see `completed.tasks.md`.
-- Native Land Digital's terms/disclaimer, for the outbound-link-only territory reference (RS-031/D15)
+~~Native Land Digital's terms/disclaimer, for the outbound-link-only territory reference (RS-031/D15)~~ — done, see `completed.tasks.md`. Confirmed native-land.ca places no restriction on being linked to (only on reusing their map data, which this site doesn't do); their own accuracy caveat is quoted on Home rather than paraphrased from memory.
 - Outbound link target for Home limit #3 (D10) — Indigenous-led org/land-defence fund/policy institute, confirmed comfortable being linked
 - Hugo current version + cross-platform availability (RS-004/D2)
 - Static-host candidates against D6's five selection criteria (RS-022)

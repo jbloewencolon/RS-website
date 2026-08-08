@@ -691,4 +691,16 @@ now: "Server location" and "Watershed" corrected to state what checking the repo
 
 Verified: `npm run build:hugo && npm run build && npm run check` all pass clean.
 
+### D15 / RS-031 residual — the territory-identification outbound link
+**Shipped:** 2026-08-08 · **Commit/PR:** (pending)
+
+~~was: Decision Record D15 resolved a real open question — should the Solidarity Finder embed a territory lookup, or only link out to one — with "outbound link only, no embedded lookup, no reproduced dataset." That decision was never implemented; the verification queue carried "Native Land Digital's terms/disclaimer, for the outbound-link-only territory reference" as still open through every phase of this session until now, and Home's "A website returns no land" section — which already names \"whose territory the servers sit\" as a real jurisdictional question — pointed nowhere a reader could actually go to ask that question about their own location~~
+now: a new paragraph on Home, immediately after the existing jurisdictional-questions paragraph, linking to native-land.ca and stating the organisation's own caveat about its map rather than presenting it as authoritative: "a starting point, not a legal record... its map stays a work in progress rather than a finished boundary line." The paragraph also states plainly that this is a link out, not a lookup built in — matching D15's "no embedded lookup, no reproduced dataset" restriction exactly, since it would have been easy to read D15 as merely a suggestion once the original Solidarity Finder shrank to a static directory list rather than the interactive tool it was written against.
+
+**Verified rather than assumed, on both fronts D15 actually cared about.** Fetched native-land.ca's own FAQ directly: confirmed no restriction exists on linking to the site (their attribution requirement applies only to reusing their map data, which this site doesn't do), and confirmed the exact caveat language to use — "not a legal resource... educational and reference purposes only," "a work in progress" — rather than writing a caveat from general knowledge of what such tools usually say.
+
+**Placement chosen over the task's own original context, and why.** D15's title ties this to RS-031 (the Solidarity Finder), which shipped this session as a static directory list rather than the interactive, location-aware tool the original territory-lookup idea was written for — see RS-002+031's own completed entry. Rather than force the link into a Resources section it no longer fits (a static list has no "your location" moment to attach a lookup to), it's placed on Home, where the site already asks "whose territory the servers sit" as one of jurisdictional sovereignty's real questions — the natural home for a tool answering exactly that question about a reader's own location, once the original interactive-Finder context no longer existed to house it.
+
+Verified: `npm run build:hugo && npm run build && npm run check` all pass clean; `index.html` re-copied from `Home.dc.html` and confirmed byte-identical. No CSP change needed — this is a plain outbound `<a href>`, exempt from `script-src`/`connect-src` the same way every other outbound citation link on the site already is.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*
