@@ -604,4 +604,16 @@ now: the thesis keeps its actual target — preassembled defaults, tradition mis
 
 Verified: `npm run build:hugo && npm run build && npm run check` all pass clean.
 
+### RS-013 — thesis 11, naming who has standing to ask
+**Shipped:** 2026-08-08 · **Commit/PR:** (pending)
+
+~~was: "What happens between two people does not always stay between two people; children, friends, communities, care networks, and land absorb the consequences. We reject the excuse that anything is ethical because consenting adults arranged it behind closed doors." / "No private freedom built on public damage." The thesis argued a relationship must answer for its effects, but never said to whom — left as a general principle, it can license anyone with an opinion (a hostile public, an ideological pile-on, a state agency) to demand that a household explain itself, which is already, in practice, how surveillance of poor, disabled, queer, and Black families gets justified~~
+now: the thesis keeps its claim and adds the missing sentence: "standing to demand that account belongs to the people who absorb the consequences — not the state, not a crowd with an opinion. Collapse that distinction and this thesis becomes a rationale for the surveillance already aimed at the families it should be protecting." The closing line changes to match: "No private freedom built on public damage — and only the people who absorb it get to ask."
+
+**"The people who absorb the consequences" reuses the thesis's own list rather than introducing a new category.** Standing is defined by the same group the thesis already names as bearing the costs — children, friends, communities, care networks, land — not by a newly invented category of "affected parties" that would need its own definition. The revision closes the gap the task named without adding vocabulary the thesis doesn't already have a home for.
+
+**Names the failure mode directly rather than just avoiding it.** Rather than quietly adding the standing clause and moving on, the revision states outright what happens if the distinction is dropped — "this thesis becomes a rationale for the surveillance already aimed at the families it should be protecting" — matching thesis 01's own citation of Dorothy Roberts' *Torn Apart* ("the demand that a household account for itself is already, for some families, the state's demand," added to the archive this session under RS-006) rather than leaving that connection implicit.
+
+Verified: `npm run build:hugo && npm run build && npm run check` all pass clean.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*
