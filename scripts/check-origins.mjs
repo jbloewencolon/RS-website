@@ -24,9 +24,19 @@ const KNOWN_CROSS_ORIGIN_FETCH = "https://rs-dispatch-worker.rssite.workers.dev"
 
 const SELF_ORIGIN = "https://relationalsovereignty.com";
 
-const PAGES = fs
-  .readdirSync(root)
-  .filter((f) => (f.endsWith(".dc.html") || f === "index.html" || f === "glyph-check.html") && fs.statSync(path.join(root, f)).isFile());
+// BUG-03: the six Hugo pages plus Practise/Contribute now live one
+// directory down (manifesto/index.html, practise/index.html, ...), not
+// as flat root-level *.dc.html files — those flat paths still exist,
+// but only as redirect stubs, which are worth scanning too (they're
+// real HTML, just minimal).
+const PRETTY_URL_DIRS = ["manifesto", "invitation", "learn", "archive", "resources", "behind-the-scenes", "practise", "contribute"];
+
+const PAGES = [
+  ...fs
+    .readdirSync(root)
+    .filter((f) => (f.endsWith(".dc.html") || f === "index.html" || f === "glyph-check.html") && fs.statSync(path.join(root, f)).isFile()),
+  ...PRETTY_URL_DIRS.map((d) => `${d}/index.html`).filter((f) => fs.existsSync(path.join(root, f))),
+];
 
 function isSelfOrExempt(url) {
   if (url.startsWith("data:")) return true; // inline, not a request

@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Behind the Scenes — How This Site Is Made</title>
 <meta name="description" content="The substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.">
-<link rel="canonical" href="https://relationalsovereignty.com/BehindTheScenes.dc.html">
+<link rel="canonical" href="https://relationalsovereignty.com/behind-the-scenes/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Relational Sovereignty">
-<meta property="og:url" content="https://relationalsovereignty.com/BehindTheScenes.dc.html">
+<meta property="og:url" content="https://relationalsovereignty.com/behind-the-scenes/">
 <meta property="og:title" content="Behind the Scenes — How This Site Is Made">
 <meta property="og:description" content="The substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.">
 <meta name="twitter:card" content="summary">
@@ -26,11 +26,11 @@
     },
     {
       "@type": "Article",
-      "@id": "https://relationalsovereignty.com/BehindTheScenes.dc.html#article",
+      "@id": "https://relationalsovereignty.com/behind-the-scenes/#article",
       "headline": "Behind the Scenes — How This Site Is Made",
       "name": "Behind the Scenes — How This Site Is Made",
       "description": "The substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.",
-      "url": "https://relationalsovereignty.com/BehindTheScenes.dc.html",
+      "url": "https://relationalsovereignty.com/behind-the-scenes/",
       "inLanguage": "en",
       "isPartOf": { "@id": "https://relationalsovereignty.com/#website" }
     }
@@ -42,6 +42,10 @@
   body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
   a{color:#2B4C9B;text-underline-offset:3px;text-decoration-thickness:1px}
   a:hover{color:#2C5A38}
+  a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none}
+  nav[aria-label="Contents"] a{border:1px solid #C9C6BA;border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:#585B4F}
+  nav[aria-label="Contents"] a:hover{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
+  nav[aria-label="Contents"] a::before{content:none!important}
   summary::before{content:"▸";display:inline-block;margin-right:.6rem;color:currentColor;flex-shrink:0;transition:transform .15s ease}
   details[open]>summary::before{transform:rotate(90deg)}
   .nav-toggle{display:none}
@@ -65,28 +69,28 @@
 <a href="#main-content" class="skip-link">Skip to content</a>
 <header style="border-bottom:1px solid #C9C6BA">
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
-    <a href="Home.dc.html" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
+    <a href="/" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
     <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
-      <a href="Manifesto.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-      <a href="Invitation.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-      <a href="Learn.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-      <a href="Practise.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-      <a href="Archive.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
-      <a href="Contribute.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-      <a href="Resources.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
-      <a href="BehindTheScenes.dc.html" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
+      <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
+      <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
+      <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
+      <a href="/practise/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
+      <a href="/archive/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
+      <a href="/contribute/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
+      <a href="/resources/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
+      <a href="/behind-the-scenes/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
     </nav>
     <details class="nav-toggle">
       <summary aria-label="Menu">Menu</summary>
       <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
-        <a href="Manifesto.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-        <a href="Invitation.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-        <a href="Learn.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-        <a href="Practise.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-        <a href="Archive.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
-        <a href="Contribute.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-        <a href="Resources.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
-        <a href="BehindTheScenes.dc.html" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
+        <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
+        <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
+        <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
+        <a href="/practise/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
+        <a href="/archive/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
+        <a href="/contribute/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
+        <a href="/resources/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
+        <a href="/behind-the-scenes/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
       </div>
     </details>
   </div>
@@ -185,7 +189,7 @@
           <li><span style="color:{{ cond .ok "#366943" "#8B3A2F" }}">{{ cond .ok "ok" "!!" }}</span> {{ .text }}</li>
           {{ end }}
         </ul>
-        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.55;color:#5A5D53">Re-measured 2026 with a pixel-comparison check: the previous method compared advance widths against the .notdef box, which cannot detect a missing glyph in a monospace face at all — every character there shares one fixed advance width by design, present or not. That was a real gap in "checked, not assumed," not a platform-coverage gap, and it's fixed now. Confirmed clean this session on Chrome / Linux, the one platform available to re-verify it on. Windows, macOS, iOS, and Android — and Safari, Firefox, and Edge — have not been independently re-checked and are a known gap. Results can vary by platform, which is why each stack names several faces. The check itself is <a href="glyph-check.html">viewable and re-runnable</a>.</p>
+        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.55;color:#5A5D53">Re-measured 2026 with a pixel-comparison check: the previous method compared advance widths against the .notdef box, which cannot detect a missing glyph in a monospace face at all — every character there shares one fixed advance width by design, present or not. That was a real gap in "checked, not assumed," not a platform-coverage gap, and it's fixed now. Confirmed clean this session on Chrome / Linux, the one platform available to re-verify it on. Windows, macOS, iOS, and Android — and Safari, Firefox, and Edge — have not been independently re-checked and are a known gap. Results can vary by platform, which is why each stack names several faces. The check itself is <a href="/glyph-check.html">viewable and re-runnable</a>.</p>
       </div>
     </div>
   </div>
@@ -195,7 +199,7 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">Opacity as governance, not as a button</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.2rem;max-width:24ch;color:#E7E5DC">What this site refuses to the crawler.</h2>
-    <p style="max-width:54ch;margin:0 0 1.6rem;color:#B8C7C1">Discovery by a third party is not a condition of existing. A publisher can decline the index, and this one does, selectively. The policy is a real file, not a claim: <a href="robots.txt" style="color:#DB9E2A">read robots.txt</a>.</p>
+    <p style="max-width:54ch;margin:0 0 1.6rem;color:#B8C7C1">Discovery by a third party is not a condition of existing. A publisher can decline the index, and this one does, selectively. The policy is a real file, not a claim: <a href="/robots.txt" style="color:#DB9E2A">read robots.txt</a>.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:#2A4C4C;border:1px solid #2A4C4C;margin-bottom:1.8rem">
       {{ range hugo.Data.crawler }}
       <div style="background:#0F2A2E;padding:1.2rem 1.3rem 1.4rem">
@@ -244,7 +248,7 @@
 <section id="roadmap" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .5rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Roadmap</h2>
-    <p style="max-width:56ch;margin:1rem 0 1.6rem;color:#3C3E38">Learn names twenty-four topics. Thirteen have a drafted outline; none are linked or published from this list, because an unfinished page marked <em>drafted</em> would be the small lie this site is trying not to tell. No dates are given, for the same reason <a href="Practise.dc.html">Practise's own unbuilt-tools list</a> gives none: a date this project couldn't keep would be its own small domination.</p>
+    <p style="max-width:56ch;margin:1rem 0 1.6rem;color:#3C3E38">Learn names twenty-four topics. Thirteen have a drafted outline; none are linked or published from this list, because an unfinished page marked <em>drafted</em> would be the small lie this site is trying not to tell. No dates are given, for the same reason <a href="/practise/">Practise's own unbuilt-tools list</a> gives none: a date this project couldn't keep would be its own small domination.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.6rem">
       {{ range hugo.Data.topics }}
       {{ $accent := cond .drafted "#366943" "#64665D" }}
@@ -295,7 +299,7 @@
       </div>
       <div>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.05rem;margin:0 0 .4rem">Sources this site is built from</h3>
-        <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">Four research documents and a manifesto held by the project, and the writers named in the <a href="Archive.dc.html">archive</a> — who are owed the credit, and to whom this site is only a door.</p>
+        <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">Four research documents and a manifesto held by the project, and the writers named in the <a href="/archive/">archive</a> — who are owed the credit, and to whom this site is only a door.</p>
       </div>
     </div>
   </div>
@@ -316,16 +320,16 @@
 
 <footer style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
-    <p style="margin:0;max-width:44ch">v0.2 · no fonts, scripts, or requests from third parties · <a href="robots.txt" style="color:#8FA9A2">crawler policy</a></p>
+    <p style="margin:0;max-width:44ch">v0.2 · no fonts, scripts, or requests from third parties · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
-      <a href="Home.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>
-      <a href="Manifesto.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-      <a href="Invitation.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-      <a href="Learn.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-      <a href="Practise.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-      <a href="Archive.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
-      <a href="Contribute.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-      <a href="Resources.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
+      <a href="/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>
+      <a href="/manifesto/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
+      <a href="/invitation/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
+      <a href="/learn/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
+      <a href="/practise/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
+      <a href="/archive/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
+      <a href="/contribute/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
+      <a href="/resources/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
     </nav>
   </div>
 </footer>

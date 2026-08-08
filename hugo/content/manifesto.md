@@ -1,4 +1,4 @@
 ---
-url: "/Manifesto.dc.html"
+url: "/manifesto/"
 layout: "manifesto"
 ---

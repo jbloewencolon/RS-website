@@ -1,4 +1,4 @@
 ---
-url: "/Resources.dc.html"
+url: "/resources/"
 layout: "resources"
 ---

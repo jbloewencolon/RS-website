@@ -1,4 +1,4 @@
 ---
-url: "/Archive.dc.html"
+url: "/archive/"
 layout: "archive"
 ---

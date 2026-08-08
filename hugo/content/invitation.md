@@ -1,4 +1,4 @@
 ---
-url: "/Invitation.dc.html"
+url: "/invitation/"
 layout: "invitation"
 ---
