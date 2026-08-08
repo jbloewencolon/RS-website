@@ -433,4 +433,19 @@ Verified with a real headless browser, JavaScript disabled: thesis 16's heading 
 Notes:
 - `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
 
+### RS-033 (partial, + D13) — the somatic archive shelf, Menakem
+**Shipped:** 2026-08-08 · **Commit/PR:** (pending)
+
+~~was: the framework asked readers to notice what happens in a relationship and offered no vocabulary for what happens in a body while they do it — no somatic register anywhere in the archive, and the archive's thin Black theoretical presence sat at a conceptual distance from the felt register thesis 07's own line about who absorbs the anger is written in~~
+now: a new archive group, "Bodies, regulation, and what happens before words," opens with Resmaa Menakem's *My Grandmother's Hands* — racialised trauma carried somatically, explicitly read alongside thesis 07, using `addendum-a.md`'s own `why` text verbatim. Verified directly against Central Recovery Press's own product page (title, author, publisher, ISBN all confirmed) rather than trusted from the source doc's unfilled `[VERIFY]` placeholder.
+
+**Polyvagal theory is omitted entirely, not shelved with a caveat** — `addendum-a.md`'s own draft offered two options (shelve the contested theory with the dispute named, or omit it), and flagged that "option (b) is more interesting and more honest." `decision-record-d1-d15.md`'s D13 overrides that instinct: omit entirely. Nothing about polyvagal theory appears anywhere in the shipped group — verified by checking the rendered page contains no mention of the term at all, not just that no entry cites it.
+
+**Prentis Hemphill's entry (the other half of this task as originally scoped) is not in this group — moved to RS-040 instead, decided rather than left flagged.** `warm-register-review-v2.md` §8 argued Hemphill belongs with Lorde/hooks/brown/Thom's new "Love, eros, and why any of this is worth doing" group rather than paired alone with Menakem, on the reasoning that five entries in one live group beats two thin groups. That review flagged the question rather than deciding it; since RS-040 (which creates the group Hemphill would move to) hasn't shipped yet in this same session, shipping Hemphill here and then relocating it later would mean editing an already-published entry for no reason other than sequencing — so the call was made now, before either group existed, rather than shipped provisionally and moved. `tasks.md`'s RS-040 row is updated to carry Hemphill forward; this group ships with exactly the one entry it can defend on its own terms.
+
+Verified with a real headless browser, JavaScript disabled: the new group title and Menakem's name both render on `Archive.dc.html`; a case-insensitive search for "polyvagal" across the full rendered page text returns nothing.
+
+Notes:
+- `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*

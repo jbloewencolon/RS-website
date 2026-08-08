@@ -257,6 +257,17 @@ groups:
         link: "https://leavingevidence.wordpress.com/2011/05/05/access-intimacy-the-missing-link/"
         linkLabel: "read on Leaving Evidence"
 
+  - title: "Bodies, regulation, and what happens before words"
+    note: "The framework asks you to notice. This is about the noticing."
+    items:
+      - title: "My Grandmother's Hands: Racialized Trauma and the Pathway to Mending Our Hearts and Bodies"
+        by: "Resmaa Menakem"
+        tags: ["book"]
+        why: "Racialised trauma carried somatically, and what it does to trust between people before either of them has said anything. Read alongside thesis 07's line about who absorbs the anger."
+        use: "book"
+        link: "https://centralrecoverypress.com/product/my-grandmothers-hands-racialized-trauma-and-the-pathway-to-mending-our-hearts-and-bodies-paperback"
+        linkLabel: "Central Recovery Press"
+
   - title: "Hierarchy, custom commitments, possession"
     note: "Why ranking relationships by category fails, and how control actually operates."
     items:
