@@ -82,7 +82,17 @@
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.2rem,6vw,4rem);line-height:1;letter-spacing:-.035em;margin:0 0 1.4rem;max-width:15ch">Read the people, not the summary.</h1>
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">No single source contains this whole framework. It is assembled from Indigenous political thought, feminist relational autonomy, disability justice, care ethics, and transformative-justice practice — each with its own authors, nations, and arguments.</p>
     <p style="max-width:52ch;margin:0 0 1.4rem;color:#3C3E38">Every entry links away from here, to the author, the publisher, or the open-access copy. Where no stable public link exists, the holder is named instead of a guess. This site is a door; its success is how quickly you stop needing it.</p>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:0;max-width:58ch">⌖ Indigenous relationality, sovereignty, refusal, and survivance are not a generic radical style. These traditions are nation-specific, and borrowing them as atmosphere reproduces colonial extraction even when it calls itself rebellion. Every note below is provisional and awaiting paid Indigenous review.</p>
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:0 0 1.6rem;max-width:58ch">⌖ Indigenous relationality, sovereignty, refusal, and survivance are not a generic radical style. These traditions are nation-specific, and borrowing them as atmosphere reproduces colonial extraction even when it calls itself rebellion. Every note below is provisional and awaiting paid Indigenous review.</p>
+    <nav aria-label="Contents">
+      <ul style="list-style:none;margin:0;padding:0;max-width:900px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0 1.5rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px">
+        {{ range hugo.Data.archive.groups }}
+        <li><a href="#{{ .title | anchorize }}" style="display:inline-flex;align-items:center;min-height:44px">{{ .title }}</a></li>
+        {{ end }}
+        <li><a href="#held-in-common" style="display:inline-flex;align-items:center;min-height:44px">Held in common</a></li>
+        <li><a href="#fastest-route" style="display:inline-flex;align-items:center;min-height:44px">The fastest honest route in</a></li>
+        <li><a href="#absence" style="display:inline-flex;align-items:center;min-height:44px">Absence &amp; incompleteness</a></li>
+      </ul>
+    </nav>
   </div>
 </section>
 
@@ -102,14 +112,14 @@
 <section style="padding:0 0 clamp(3rem,6vw,4.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     {{ range hugo.Data.archive.groups }}
-    <div data-group style="margin-bottom:3rem">
+    <div data-group id="{{ .title | anchorize }}" style="margin-bottom:3rem;scroll-margin-top:1rem">
       <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">{{ .title }}</h2>
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:.6rem 0 1.4rem">{{ .note }}</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem">
         {{ range .items }}
         {{ $rule := "#2B4C9B" }}
         {{ if in .tags "start" }}{{ $rule = "#7D5915" }}{{ else if in .tags "free" }}{{ $rule = "#366943" }}{{ end }}
-        <article data-tags="{{ delimit .tags " " }}" style="border-top:2px solid {{ $rule }};padding-top:.9rem">
+        <article data-tags="{{ delimit .tags " " }}" id="entry-{{ .title | anchorize }}" style="border-top:2px solid {{ $rule }};padding-top:.9rem;scroll-margin-top:1rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ $rule }};margin:0 0 .5rem">{{ if in .tags "start" }}★ a first route · {{ end }}{{ .use }}</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">{{ .title }}</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">{{ .by }}</p>
@@ -127,7 +137,7 @@
   </div>
 </section>
 
-<section style="padding:0 0 clamp(3rem,6vw,4.5rem)">
+<section id="held-in-common" style="padding:0 0 clamp(3rem,6vw,4.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .5rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Held in common</h2>
     <p style="max-width:60ch;margin:1rem 0 .6rem;color:#3C3E38">A shelf is a cadastre: one parcel per book, no overlaps, every text assigned to exactly one owner. Some of these texts refuse that. The four in the centre below are claimed fully by both traditions at once — not shared out, not split, not filed under one and cross-referenced from the other. Two jurisdictions, one holding.</p>
@@ -167,7 +177,7 @@
   </div>
 </section>
 
-<section style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
+<section id="fastest-route" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:3rem">
     <div>
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">If you read ten things</p>
@@ -178,14 +188,14 @@
       {{ range $i, $s := hugo.Data.archive.sequence }}
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">{{ printf "%02d" (add $i 1) }}</span>
-        <span style="font-size:16px;line-height:1.4">{{ $s }}</span>
+        <a href="#entry-{{ $s.title | anchorize }}" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">{{ $s.display }}</a>
       </li>
       {{ end }}
     </ol>
   </div>
 </section>
 
-<section style="padding:clamp(3rem,6vw,4.5rem) 0">
+<section id="absence" style="padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1rem">Opacity as archive design</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1.2rem;max-width:24ch">Absence does not mean the archive is incomplete.</h2>

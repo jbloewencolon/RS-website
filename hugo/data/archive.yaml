@@ -500,17 +500,33 @@ shared:
   - title: "Access Intimacy: The Missing Link"
     by: "Mia Mingus — support that does not create ownership. Belongs equally to the ethics of care and to the refusal of possession."
 
+# UX-08: each entry now carries the exact `title` of the shelf item it
+# names above, verbatim, so the template can link to that item's own
+# `{{ .title | urlize }}` id instead of leaving these as unlinked text.
+# If an item's title changes in `groups` above, update the matching
+# `title:` here too, or the link silently points nowhere — there is no
+# automatic cross-check between the two lists.
 sequence:
-  - "Wildcat — Replacing Exclusive Sovereignty"
-  - "Kuokkanen — It's About All Relations"
-  - "TallBear — Caretaking Relations, Not American Dreaming"
-  - "Tuck and Yang — Decolonization Is Not a Metaphor"
-  - "Spillers — Mama's Baby, Papa's Maybe"
-  - "Stanford Encyclopedia — Feminist Perspectives on Autonomy"
-  - "Mingus — Access Intimacy"
-  - "Malatino — Trans Care"
-  - "Stark — Coercive Control"
-  - "Creative Interventions — Toolkit"
+  - display: "Wildcat — Replacing Exclusive Sovereignty"
+    title: "Replacing Exclusive Sovereignty with a Relational Sovereignty"
+  - display: "Kuokkanen — It's About All Relations"
+    title: "It's About All Relations: Indigenous Feminist Theory of Relational Freedom"
+  - display: "TallBear — Caretaking Relations, Not American Dreaming"
+    title: "Caretaking Relations, Not American Dreaming"
+  - display: "Tuck and Yang — Decolonization Is Not a Metaphor"
+    title: "Decolonization Is Not a Metaphor"
+  - display: "Spillers — Mama's Baby, Papa's Maybe"
+    title: "Mama's Baby, Papa's Maybe: An American Grammar Book"
+  - display: "Stanford Encyclopedia — Feminist Perspectives on Autonomy"
+    title: "Feminist Perspectives on Autonomy"
+  - display: "Mingus — Access Intimacy"
+    title: "Access Intimacy: The Missing Link"
+  - display: "Malatino — Trans Care"
+    title: "Trans Care"
+  - display: "Stark — Coercive Control"
+    title: "Coercive Control: How Men Entrap Women in Personal Life"
+  - display: "Creative Interventions — Toolkit"
+    title: "Toolkit: A Practical Guide to Stop Interpersonal Violence"
 
 accessStates:
   - "public — read freely"
