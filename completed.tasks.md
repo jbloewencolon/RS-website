@@ -582,4 +582,14 @@ Notes:
 - Placement decision: last group in the archive, deliberately, rather than interleaved earlier — the source review frames this shelf as answering "why" after the rest of the archive spends its groups on refusal and repair, and closing on it reads that argument correctly rather than burying it mid-list.
 - `tasks.md`'s verification queue entry for RS-040 is updated to record that all five are done, and to correct itself: it had previously described the RS-016/RS-040 "brown" entries only in a note added elsewhere in the file, not resolved in its own line — now consistent.
 
+### RS-011 — chosen monogamy, named and protected
+**Shipped:** 2026-08-08 · **Commit/PR:** (pending)
+
+~~was: Home's "Four limits, stated before anything else" named what relational sovereignty isn't — not radical individualism, not relationship anarchy, not decolonization, not one universal Indigenous philosophy — without ever affirmatively protecting chosen monogamy or naming the coercion that runs toward non-monogamy rather than away from it, an odd gap for a site whose own "not a synonym for relationship anarchy" limit already argues against treating any one relationship form as more evolved~~
+now: a new paragraph on `Home.dc.html`, placed beside the four-limit grid rather than folded into it (a fifth item would have muddied a section titled "four limits"): chosen monogamy named directly as protected on the same terms as any other form, and coercive non-monogamy named as what isn't — pressure, guilt, or being worn down into opening a relationship someone didn't want opened, sometimes using this site's own vocabulary to do it.
+
+**Deliberately consistent with, not duplicating, RS-038's field guide.** Learn's "How this vocabulary gets used as a weapon" already carries an entry on "You're being possessive. That's so amatonormative." with the diagnostic *is the objection being answered, or reclassified?* This paragraph is the Home-level, affirmative statement of the same position rather than a repeat of that entry — Home states what's protected, Learn's field guide names how the protection gets talked around.
+
+Verified: `npm run build:hugo && npm run build && npm run check` all pass clean; `index.html` re-copied from `Home.dc.html` and confirmed byte-identical.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*
