@@ -1,0 +1,826 @@
+<title>Relational Sovereignty — UX/UI Optimization Audit</title>
+<style>
+  :root{
+    --paper:#E8EAEC; --surface:#F6F7F8; --surface-2:#FFFFFF;
+    --ink:#12161A; --ink-2:#3D4650; --muted:#6B747D;
+    --rule:#CFD4D9; --rule-soft:#DDE1E5;
+    --accent:#0B6B5B; --accent-soft:rgba(11,107,91,.09);
+    --quote-bg:#E7E5DC; --quote-ink:#191B18; --quote-rule:#C9C6BA;
+    --critical:#A3231B; --critical-bg:rgba(163,35,27,.08);
+    --high:#8F5406;    --high-bg:rgba(143,84,6,.09);
+    --medium:#2B4C9B;  --medium-bg:rgba(43,76,155,.08);
+    --polish:#606A73;  --polish-bg:rgba(96,106,115,.09);
+    --good:#0B6B5B;    --good-bg:rgba(11,107,91,.08);
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --serif:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;
+    --mono:ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#0F1317; --surface:#161B21; --surface-2:#1B2128;
+      --ink:#E7EAED; --ink-2:#B6BFC8; --muted:#87919B;
+      --rule:#2A323A; --rule-soft:#232A31;
+      --accent:#4FBFA8; --accent-soft:rgba(79,191,168,.12);
+      --quote-bg:#1A1D1A; --quote-ink:#DDDCD3; --quote-rule:#3A3F39;
+      --critical:#F0857B; --critical-bg:rgba(240,133,123,.11);
+      --high:#E0A54A;     --high-bg:rgba(224,165,74,.12);
+      --medium:#8FADEB;   --medium-bg:rgba(143,173,235,.12);
+      --polish:#8B959E;   --polish-bg:rgba(139,149,158,.12);
+      --good:#4FBFA8;     --good-bg:rgba(79,191,168,.11);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0F1317; --surface:#161B21; --surface-2:#1B2128;
+    --ink:#E7EAED; --ink-2:#B6BFC8; --muted:#87919B;
+    --rule:#2A323A; --rule-soft:#232A31;
+    --accent:#4FBFA8; --accent-soft:rgba(79,191,168,.12);
+    --quote-bg:#1A1D1A; --quote-ink:#DDDCD3; --quote-rule:#3A3F39;
+    --critical:#F0857B; --critical-bg:rgba(240,133,123,.11);
+    --high:#E0A54A;     --high-bg:rgba(224,165,74,.12);
+    --medium:#8FADEB;   --medium-bg:rgba(143,173,235,.12);
+    --polish:#8B959E;   --polish-bg:rgba(139,149,158,.12);
+    --good:#4FBFA8;     --good-bg:rgba(79,191,168,.11);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--sans);font-size:16.5px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;
+  }
+  a{color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1px}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:3px;border-radius:2px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+  html{scroll-behavior:smooth}
+
+  /* ---------- masthead ---------- */
+  .mast{border-bottom:1px solid var(--rule);background:var(--surface)}
+  .mast-in{max-width:1240px;margin:0 auto;padding:clamp(2.2rem,5vw,3.4rem) clamp(1.1rem,4vw,2.6rem) clamp(1.8rem,4vw,2.6rem)}
+  .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 1.1rem;display:flex;flex-wrap:wrap;gap:.5rem .9rem;align-items:center}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block}
+  h1{font-size:clamp(2rem,5.2vw,3.35rem);line-height:1.02;letter-spacing:-.035em;font-weight:800;margin:0 0 1rem;max-width:20ch;text-wrap:balance}
+  .standfirst{font-size:clamp(1.02rem,1.9vw,1.2rem);line-height:1.5;color:var(--ink-2);max-width:64ch;margin:0 0 1.8rem}
+  .scope{display:flex;flex-wrap:wrap;gap:.5rem;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em}
+  .scope span{border:1px solid var(--rule);border-radius:2px;padding:.4rem .6rem;color:var(--muted);background:var(--paper)}
+
+  /* ---------- shell ---------- */
+  .shell{max-width:1240px;margin:0 auto;padding:0 clamp(1.1rem,4vw,2.6rem) 5rem;display:grid;grid-template-columns:232px minmax(0,1fr);gap:clamp(1.6rem,4vw,3.4rem);align-items:start}
+  @media (max-width:940px){.shell{grid-template-columns:minmax(0,1fr)}}
+
+  /* ---------- rail ---------- */
+  .rail{position:sticky;top:1.4rem;padding-top:2.4rem}
+  @media (max-width:940px){.rail{position:static;padding-top:1.8rem}}
+  .rail h2,.tally-h{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:400;margin:0 0 .8rem}
+  .tally{list-style:none;margin:0 0 2rem;padding:0;display:flex;flex-direction:column;gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft)}
+  .tally li{background:var(--surface);display:flex;align-items:center;gap:.6rem;padding:.62rem .7rem;font-family:var(--mono);font-size:12px}
+  .tally .n{margin-left:auto;font-weight:700;font-size:13px}
+  .swatch{width:3px;height:15px;border-radius:1px;flex:0 0 auto}
+  .s-critical{background:var(--critical)} .s-high{background:var(--high)}
+  .s-medium{background:var(--medium)}     .s-polish{background:var(--polish)}
+  .railnav{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.1rem}
+  .railnav a{display:block;padding:.42rem .55rem;font-size:13.5px;text-decoration:none;color:var(--ink-2);border-left:2px solid var(--rule-soft);border-radius:0 2px 2px 0}
+  .railnav a:hover{color:var(--accent);border-left-color:var(--accent);background:var(--accent-soft)}
+  @media (max-width:940px){
+    .railnav{flex-direction:row;flex-wrap:wrap;gap:.35rem}
+    .railnav a{border-left:none;border:1px solid var(--rule);border-radius:2px;font-size:12.5px;padding:.4rem .6rem}
+    .tally{flex-direction:row;flex-wrap:wrap}
+    .tally li{flex:1 1 140px}
+  }
+
+  /* ---------- main ---------- */
+  main{padding-top:2.4rem;min-width:0}
+  section{margin:0 0 3.6rem;scroll-margin-top:1.4rem}
+  h2.sec{font-size:clamp(1.35rem,2.9vw,1.85rem);line-height:1.12;letter-spacing:-.025em;font-weight:800;margin:0 0 .5rem;text-wrap:balance}
+  .sec-num{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:.5rem}
+  .sec-lede{color:var(--ink-2);max-width:68ch;margin:0 0 1.8rem}
+  p{max-width:68ch}
+  h3{font-size:1.12rem;line-height:1.25;letter-spacing:-.015em;font-weight:750;margin:.15rem 0 .7rem;max-width:52ch;text-wrap:balance}
+
+  /* ---------- finding cards ---------- */
+  .f{background:var(--surface);border:1px solid var(--rule-soft);border-left:3px solid var(--rule);border-radius:0 3px 3px 0;padding:1.25rem 1.35rem 1.4rem;margin:0 0 1.05rem}
+  .f.critical{border-left-color:var(--critical)}
+  .f.high{border-left-color:var(--high)}
+  .f.medium{border-left-color:var(--medium)}
+  .f.polish{border-left-color:var(--polish)}
+  .f-head{display:flex;flex-wrap:wrap;gap:.5rem .7rem;align-items:center;margin-bottom:.55rem}
+  .sev{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:.24rem .5rem;border-radius:2px;font-weight:700}
+  .sev.critical{color:var(--critical);background:var(--critical-bg)}
+  .sev.high{color:var(--high);background:var(--high-bg)}
+  .sev.medium{color:var(--medium);background:var(--medium-bg)}
+  .sev.polish{color:var(--polish);background:var(--polish-bg)}
+  .f-id{font-family:var(--mono);font-size:11.5px;color:var(--muted);font-weight:700;letter-spacing:.04em}
+  .f-page{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-left:auto}
+
+  .readout{display:flex;flex-wrap:wrap;gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft);margin:0 0 1rem;overflow-x:auto}
+  .readout div{background:var(--surface-2);padding:.5rem .7rem;flex:1 1 auto;min-width:0}
+  .ro-k{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin-bottom:.15rem;white-space:nowrap}
+  .ro-v{display:block;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--ink);white-space:nowrap}
+  .ro-v.bad{color:var(--critical)}
+
+  dl.quad{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:.55rem 1.1rem;margin:0;font-size:15.5px}
+  @media (max-width:620px){dl.quad{grid-template-columns:minmax(0,1fr);gap:.15rem .5rem}dl.quad dd{margin-bottom:.7rem}}
+  dl.quad dt{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:.28rem}
+  dl.quad dd{margin:0;color:var(--ink-2);max-width:62ch}
+  dl.quad dd strong{color:var(--ink);font-weight:650}
+
+  code{font-family:var(--mono);font-size:.87em;background:var(--accent-soft);color:var(--ink);padding:.1em .34em;border-radius:2px;word-break:break-word}
+  .quote{font-family:var(--serif);background:var(--quote-bg);color:var(--quote-ink);border:1px solid var(--quote-rule);border-radius:2px;padding:.7rem .9rem;margin:.6rem 0 0;font-size:15px;line-height:1.5;max-width:62ch}
+  .quote::before{content:"from the site";display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;opacity:.6;margin-bottom:.3rem}
+
+  /* ---------- tables ---------- */
+  .tw{overflow-x:auto;border:1px solid var(--rule-soft);border-radius:2px;margin:0 0 1.4rem}
+  table{border-collapse:collapse;width:100%;min-width:620px;font-size:14.5px;background:var(--surface)}
+  th,td{text-align:left;padding:.6rem .8rem;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+  th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:400;background:var(--surface-2);position:sticky;top:0}
+  tbody tr:last-child td{border-bottom:none}
+  td.id{font-family:var(--mono);font-size:12px;font-weight:700;white-space:nowrap}
+  td.id a{text-decoration:none}
+  .pill{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;padding:.2rem .42rem;border-radius:2px;font-weight:700;white-space:nowrap}
+  .pill.critical{color:var(--critical);background:var(--critical-bg)}
+  .pill.high{color:var(--high);background:var(--high-bg)}
+  .pill.medium{color:var(--medium);background:var(--medium-bg)}
+  .pill.polish{color:var(--polish);background:var(--polish-bg)}
+  td .eff{font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap}
+
+  /* ---------- misc blocks ---------- */
+  .verified{background:var(--good-bg);border:1px solid var(--rule-soft);border-left:3px solid var(--good);border-radius:0 3px 3px 0;padding:1.15rem 1.3rem}
+  .verified h3{margin-top:0}
+  .verified ul{margin:0;padding-left:1.1rem;color:var(--ink-2);font-size:15.5px;max-width:64ch}
+  .verified li{margin-bottom:.42rem}
+  .verified li:last-child{margin-bottom:0}
+  .persona{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft);margin:0 0 1.8rem}
+  .persona div{background:var(--surface);padding:1rem 1.1rem}
+  .persona h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:0 0 .5rem;font-weight:400}
+  .persona p{margin:0;font-size:14.5px;color:var(--ink-2);line-height:1.5}
+  ol.qw{counter-reset:qw;list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft)}
+  ol.qw li{counter-increment:qw;background:var(--surface);padding:.85rem 1rem .9rem 2.9rem;position:relative;font-size:15.5px;color:var(--ink-2)}
+  ol.qw li::before{content:counter(qw,decimal-leading-zero);position:absolute;left:1rem;top:.95rem;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--accent)}
+  ol.qw strong{color:var(--ink);font-weight:650}
+  .strat{border-top:2px solid var(--rule);padding-top:1.1rem;margin:0 0 1.6rem}
+  .strat h3{margin-top:0}
+  .strat p{font-size:15.5px;color:var(--ink-2);margin:0 0 .55rem}
+  footer{border-top:1px solid var(--rule);margin-top:1rem;padding:1.6rem 0 0;font-family:var(--mono);font-size:11.5px;color:var(--muted);line-height:1.7;max-width:68ch}
+</style>
+
+<header class="mast">
+  <div class="mast-in">
+    <p class="kicker"><span class="dot"></span> UX / UI optimization audit <span>·</span> relationalsovereignty.com <span>·</span> v0.2</p>
+    <h1>Craft is not the problem. Discoverability is.</h1>
+    <p class="standfirst">This site clears bars most sites never reach — zero automated accessibility violations across nine pages, WCAG-passing contrast throughout, no horizontal overflow at any breakpoint, and copy that is careful about consent in ways almost nothing on the web is. Nearly every finding below is therefore about the same failure mode: <strong>content that exists but cannot be found</strong>, most seriously on the page where being found matters most.</p>
+    <div class="scope">
+      <span>9 pages rendered in Chromium</span>
+      <span>5 breakpoints: 320 / 375 / 768 / 1280 / 1440</span>
+      <span>axe-core WCAG 2.1 AA + best-practice</span>
+      <span>22 findings</span>
+      <span>copy treated as fixed</span>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="rail">
+    <p class="tally-h">Findings by severity</p>
+    <ul class="tally">
+      <li><span class="swatch s-critical"></span> Critical <span class="n">3</span></li>
+      <li><span class="swatch s-high"></span> High impact <span class="n">6</span></li>
+      <li><span class="swatch s-medium"></span> Medium <span class="n">9</span></li>
+      <li><span class="swatch s-polish"></span> Polish <span class="n">4</span></li>
+    </ul>
+    <h2>Contents</h2>
+    <nav aria-label="Contents">
+      <ul class="railnav">
+        <li><a href="#summary">1 · Executive summary</a></li>
+        <li><a href="#holds-up">What holds up</a></li>
+        <li><a href="#audit">2 · Page audit</a></li>
+        <li><a href="#resources">— Resources</a></li>
+        <li><a href="#practise">— Practise</a></li>
+        <li><a href="#home">— Home</a></li>
+        <li><a href="#global">— Global chrome</a></li>
+        <li><a href="#long">— Learn &amp; Archive</a></li>
+        <li><a href="#priority">3 · Priority table</a></li>
+        <li><a href="#quickwins">4 · Quick wins</a></li>
+        <li><a href="#strategic">5 · Strategic</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main>
+
+<!-- ============ 1. EXECUTIVE SUMMARY ============ -->
+<section id="summary">
+  <span class="sec-num">Section 1</span>
+  <h2 class="sec">Executive summary</h2>
+  <p class="sec-lede">The seven findings that matter most, in the order I would fix them.</p>
+
+  <div class="f critical">
+    <div class="f-head"><span class="sev critical">Critical</span><span class="f-id">UX-01</span><span class="f-page">Resources</span></div>
+    <h3>On the crisis page, ten of eleven resource categories look like empty headings</h3>
+    <p style="margin:0 0 .3rem;color:var(--ink-2);font-size:15.5px">Every category is a <code>&lt;details&gt;</code> whose <code>&lt;summary&gt;</code> is styled <code>display:flex</code>. That suppresses the browser's disclosure triangle, so a populated-but-closed section is visually indistinguishable from a heading with nothing under it. Only <code>#crisis-lines</code> ships <code>open</code>. Worse, the page's own "Choose what you need" menu does not fix this: I clicked <em>Coercive control</em> and the target stayed shut.</p>
+  </div>
+
+  <div class="f critical">
+    <div class="f-head"><span class="sev critical">Critical</span><span class="f-id">UX-03</span><span class="f-page">Practise</span></div>
+    <h3>"Clear everything" destroys twenty minutes of work with no confirmation and no undo</h3>
+    <p style="margin:0;color:var(--ink-2);font-size:15.5px">The Consent Domains Map deliberately persists nothing. That principle is right, but it makes an accidental click unrecoverable — and the button sits at the top of the tool, beside "Print this map", where a user reaches before they have entered anything and again after they have entered everything.</p>
+  </div>
+
+  <div class="f high">
+    <div class="f-head"><span class="sev high">High impact</span><span class="f-id">UX-04</span><span class="f-page">Every page</span></div>
+    <h3>The mobile header consumes 30% of the screen before a single word of content</h3>
+    <p style="margin:0;color:var(--ink-2);font-size:15.5px">Eight nav items wrap to three rows and never collapse: a fixed 247px on every page, at every mobile width. On a 320px phone that is 43% of the viewport.</p>
+  </div>
+
+  <div class="f high">
+    <div class="f-head"><span class="sev high">High impact</span><span class="f-id">UX-05</span><span class="f-page">Home</span></div>
+    <h3>The six doors sit below the fold at every breakpoint; the only control above it is a novelty</h3>
+    <p style="margin:0;color:var(--ink-2);font-size:15.5px">The first door card begins at 1272px on desktop and 1366px on mobile. The single interactive element a first-time visitor sees inside <code>&lt;main&gt;</code> is <em>another question</em> — which is also the most button-shaped thing on the page, and leads nowhere.</p>
+  </div>
+
+  <div class="f high">
+    <div class="f-head"><span class="sev high">High impact</span><span class="f-id">UX-07</span><span class="f-page">Learn · Archive</span></div>
+    <h3>The two longest pages have no contents nav — and the component already exists</h3>
+    <p style="margin:0;color:var(--ink-2);font-size:15.5px">Learn runs 22,709px on mobile, Archive 23,900px. Neither offers a way in. Behind the Scenes already ships a nine-link <code>&lt;nav aria-label="Contents"&gt;</code>. The pattern is built; it just is not applied where the need is greatest.</p>
+  </div>
+
+  <div class="f high">
+    <div class="f-head"><span class="sev high">High impact</span><span class="f-id">UX-06</span><span class="f-page">Every page</span></div>
+    <h3>The current page is signalled by colour alone</h3>
+    <p style="margin:0;color:var(--ink-2);font-size:15.5px">No <code>aria-current</code> anywhere on the site. The active link is recoloured — and to two different colours depending on whether the page is light or dark. Colour as the sole cue is a WCAG 1.4.1 failure and gives screen-reader users nothing at all.</p>
+  </div>
+
+  <div class="f medium">
+    <div class="f-head"><span class="sev medium">Medium</span><span class="f-id">UX-12</span><span class="f-page">Home</span></div>
+    <h3>The dispatch's privacy promises are made four separate times on one page</h3>
+    <p style="margin:0;color:var(--ink-2);font-size:15.5px">"No tracking / one click to leave / never sold" appears in the door card, the left-column bullets, the form footnote, and the footer's Build column — then again, verbatim, on Contribute. Repetition intended as reassurance starts to read as protesting too much.</p>
+  </div>
+</section>
+
+<!-- ============ WHAT HOLDS UP ============ -->
+<section id="holds-up">
+  <div class="verified">
+    <h3>What holds up — verified, so you do not spend effort here</h3>
+    <ul>
+      <li><strong>Zero axe-core violations</strong> across all nine pages at WCAG 2.1 A/AA plus best-practice. That is rare.</li>
+      <li><strong>Contrast passes throughout.</strong> I recomputed every colour pair by hand: body 12.4:1, nav 5.50:1, the faintest dark-section text 4.63:1. Only the link <em>hover</em> state falls short (UX-16).</li>
+      <li><strong>No horizontal overflow</strong> at 320, 375, 768, 1280 or 1440. The only elements past the viewport edge are the intentional skip-link and honeypot.</li>
+      <li><strong>"Twenty domains" is accurate.</strong> The <code>slice(0,17)</code> / <code>slice(17)</code> split is a visual grouping of 17 + 3, not a shortfall. Likewise "tool 01 of 09" and "seven more tools" reconcile correctly.</li>
+      <li><strong>The Practise ↔ Resources duplication is deliberate</strong> and the page says so — the five safety questions are republished "useful with or without the rest of this page". Not redundancy.</li>
+      <li><strong>Archive's sideways-scrolling Venn is a documented choice</strong>, announced in copy before the reader meets it.</li>
+      <li><strong>Tab order is clean</strong> — skip link first, then masthead, nav, content, in visual order. The honeypot is correctly <code>aria-hidden</code> and <code>tabindex="-1"</code>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 2. PAGE AUDIT ============ -->
+<section id="audit">
+  <span class="sec-num">Section 2</span>
+  <h2 class="sec">Page and section audit</h2>
+  <p class="sec-lede">Ordered by severity of what the page contains, not by nav order. Each finding states what I observed, why it costs the user something, what to change, and why the change works.</p>
+
+  <div class="persona">
+    <div><h4>First-time visitor</h4><p>Meets a 4.4rem headline, a rotating question, and no route onward until 1,272px of scrolling. Understands the idea; cannot see the shape of the site.</p></div>
+    <div><h4>Motivated visitor</h4><p>Wants the tool or the crisis list. Both are reachable — but the tool is behind a two-step gate and the crisis list is behind invisible disclosures.</p></div>
+    <div><h4>Mobile user</h4><p>Loses 30% of the first screen to the header and meets a 931px footer at the end. Everything between is well set.</p></div>
+    <div><h4>Scanner</h4><p>Badly served on Learn and Archive: no contents nav, no sticky heading, 13 principles and 60 entries in one unbroken column.</p></div>
+  </div>
+</section>
+
+<!-- ---------- RESOURCES ---------- -->
+<section id="resources">
+  <h2 class="sec" style="font-size:1.3rem">Resources — the highest-stakes page</h2>
+  <p class="sec-lede">This is where someone in danger lands. It carries the two most serious findings on the site.</p>
+
+  <article class="f critical">
+    <div class="f-head"><span class="sev critical">Critical</span><span class="f-id">UX-01</span><span class="f-page">Resources</span></div>
+    <h3>Collapsed crisis sections give no sign they can be opened, and the jump menu does not open them</h3>
+    <div class="readout">
+      <div><span class="ro-k">categories</span><span class="ro-v">11</span></div>
+      <div><span class="ro-k">shipped open</span><span class="ro-v bad">1</span></div>
+      <div><span class="ro-k">marker rendered</span><span class="ro-v bad">none</span></div>
+      <div><span class="ro-k">after jump-link click</span><span class="ro-v bad">open: false</span></div>
+    </div>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>Each category is <code>&lt;details&gt;</code> with an <code>&lt;h2&gt;</code> inside a <code>&lt;summary&gt;</code> styled <code>display:flex</code>. A flex container generates no <code>::marker</code>, so the disclosure triangle never paints — computed <code>list-style-type</code> is <code>disclosure-closed</code>, but nothing is drawn. Only <code>#crisis-lines</code> has <code>open</code>. I then clicked <em>Coercive control</em> in the "Choose what you need" menu: the hash changed, the page scrolled, and the section stayed shut. Loading <code>Resources.dc.html#coercive-control</code> directly behaves the same — a browser only auto-expands a <code>&lt;details&gt;</code> when the target is <em>inside</em> it, not when the target <em>is</em> it.</dd>
+      <dt>Impact</dt>
+      <dd>A distressed user clicks the one link matching their situation and arrives at a screen of nine consecutive headings with nothing beneath any of them. The reasonable inference is that the site has not written this content yet — an inference the page actively encourages, because it says elsewhere that the region-specific section "is not built yet". Real, verified, phone-number-bearing help is one click away and completely invisible.</dd>
+      <dt>Change</dt>
+      <dd>Three parts. <strong>(a)</strong> Ship every category <code>open</code> by default on this page — it is a reference list, not an interface to tidy. <strong>(b)</strong> If collapse is kept, replace <code>display:flex</code> on <code>summary</code> with <code>display:block</code> plus an explicit rotating chevron, or keep flex and add the chevron as a real child element. <strong>(c)</strong> Point the jump menu at anchors <em>inside</em> each <code>&lt;details&gt;</code>, or add the four-line handler that sets <code>open = true</code> on the fragment target at load and on <code>hashchange</code>.</dd>
+      <dt>Why it works</dt>
+      <dd>All three restore the page's own promise. Open-by-default is the strongest: it makes the resource list scannable, printable, and searchable with the browser's own find — which is how someone actually looks for a number under stress — and removes the interaction entirely rather than making it more discoverable.</dd>
+    </dl>
+  </article>
+
+  <article class="f critical">
+    <div class="f-head"><span class="sev critical">Critical</span><span class="f-id">UX-02</span><span class="f-page">Resources</span></div>
+    <h3>"Not yet built" sections are indistinguishable from populated ones</h3>
+    <div class="readout">
+      <div><span class="ro-k">populated, closed</span><span class="ro-v">9</span></div>
+      <div><span class="ro-k">genuinely empty</span><span class="ro-v">Mutual aid networks</span></div>
+      <div><span class="ro-k">visual difference</span><span class="ro-v bad">right-aligned label only</span></div>
+    </div>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>"Mutual aid networks" carries the right-aligned note <em>Not yet built</em>. "Intimate partner violence and coercive control" carries <em>Canada, national directory</em>. Collapsed, the two rows are typographically identical — same heading treatment, same rule, same absence of content. The only difference is 11px monospace text at the far right edge, 900px away from the heading on desktop.</dd>
+      <dt>Impact</dt>
+      <dd>The page mixes "there is help here, hidden" with "there is no help here yet" using the same visual form. A user who opens nothing learns the wrong thing about both. This directly undercuts the honesty the site is built on — the roadmap elsewhere is scrupulous about naming what does not exist.</dd>
+      <dt>Change</dt>
+      <dd>Give the two states different form, not just different words. An empty category should not be a <code>&lt;details&gt;</code> at all: render it as a plain dimmed row with the status inline beside the heading rather than at the opposite margin. Populated categories get the entry count in the same position — <em>3 organisations</em> — so the label always answers "is there anything in here".</dd>
+      <dt>Why it works</dt>
+      <dd>State encoded in form survives scanning, low vision, and panic; state encoded only in distant small text does not. A count also pre-answers the question the disclosure was hiding, so the user decides whether to open with information rather than faith.</dd>
+    </dl>
+  </article>
+
+  <article class="f medium">
+    <div class="f-head"><span class="sev medium">Medium</span><span class="f-id">UX-16</span><span class="f-page">Every page</span></div>
+    <h3>Hovering a link lowers its contrast below AA</h3>
+    <div class="readout">
+      <div><span class="ro-k">rest #2B4C9B</span><span class="ro-v">6.38:1</span></div>
+      <div><span class="ro-k">hover #3F7A4E</span><span class="ro-v bad">4.05:1</span></div>
+      <div><span class="ro-k">AA needs</span><span class="ro-v">4.50:1</span></div>
+    </div>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd><code>a:hover{color:#3F7A4E}</code> on the <code>#E7E5DC</code> ground measures 4.05:1 — a regression from the resting blue, and below AA for body-size text. Axe does not catch it because it does not evaluate hover states.</dd>
+      <dt>Impact</dt>
+      <dd>Interaction makes the target harder to read, which is backwards, and is felt most by exactly the low-vision users the rest of the site accommodates well.</dd>
+      <dt>Change</dt>
+      <dd>Darken the hover green to roughly <code>#2C5A38</code> — already in the palette, used for selected interest chips — which measures about 6.5:1. No new colour is introduced.</dd>
+      <dt>Why it works</dt>
+      <dd>Keeps the green hover language and its meaning while making hover a contrast <em>increase</em>, reinforcing the affordance instead of weakening it.</dd>
+    </dl>
+  </article>
+</section>
+
+<!-- ---------- PRACTISE ---------- -->
+<section id="practise">
+  <h2 class="sec" style="font-size:1.3rem">Practise — the Consent Domains Map</h2>
+  <p class="sec-lede">The deepest engagement on the site: a two-step gate, then 20 domains × 5 options = 100 radios, 7,814px tall on desktop.</p>
+
+  <article class="f critical">
+    <div class="f-head"><span class="sev critical">Critical</span><span class="f-id">UX-03</span><span class="f-page">Practise</span></div>
+    <h3>A destructive action with no confirmation, no undo, and no persistence to fall back on</h3>
+    <div class="readout">
+      <div><span class="ro-k">stated fill time</span><span class="ro-v">~20 min</span></div>
+      <div><span class="ro-k">confirm step</span><span class="ro-v bad">none</span></div>
+      <div><span class="ro-k">undo</span><span class="ro-v bad">none</span></div>
+      <div><span class="ro-k">autosave</span><span class="ro-v bad">none by design</span></div>
+    </div>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd><code>reset</code> clears <code>who</code>, <code>picks</code> and <code>notes</code> in a single <code>setState</code>. "Clear everything" is rendered beside "Print this map" at the top of the tool, above all 20 domains, and both are reachable at any point. Because state deliberately never touches storage, there is nothing to recover from.</dd>
+      <dt>Impact</dt>
+      <dd>One mis-tap ends a twenty-minute session about the most sensitive material on the site, with no path back. The no-persistence rule is a genuine privacy virtue, but it converts an ordinary UI slip into total loss — and the two buttons sit adjacent, so the slip is a near-neighbour of the most common intentional action.</dd>
+      <dt>Change</dt>
+      <dd>Make the button a two-step control in place: first press swaps its label to a confirm state that must be pressed again, reverting after a few seconds or on any other interaction. Move it away from "Print this map" — bottom of the tool, after the domains, is the natural home for a reset. Keep "Save to a file" adjacent to the top actions where it is genuinely useful before a long session.</dd>
+      <dt>Why it works</dt>
+      <dd>In-place confirmation adds one press for the deliberate user and blocks the accidental one, without a modal — which would sit badly on a site with no other dialogs. Separating destructive from constructive actions removes the mis-tap at its source rather than catching it afterwards.</dd>
+    </dl>
+  </article>
+
+  <article class="f medium">
+    <div class="f-head"><span class="sev medium">Medium</span><span class="f-id">UX-17</span><span class="f-page">Practise</span></div>
+    <h3>Every domain shows a condition field before there is any condition to state, and nothing reports progress</h3>
+    <div class="readout">
+      <div><span class="ro-k">domains</span><span class="ro-v">20</span></div>
+      <div><span class="ro-k">radios</span><span class="ro-v">100</span></div>
+      <div><span class="ro-k">always-open text fields</span><span class="ro-v">20</span></div>
+      <div><span class="ro-k">form height</span><span class="ro-v">7,814px</span></div>
+    </div>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>"Condition, in your own words" renders under every domain from the outset, including domains marked <em>nothing yet</em> and domains marked <em>yes, freely</em>, where a condition is meaningless. Per-row state reads <em>marked: nothing yet</em>, but there is no aggregate — nothing says how many of the twenty are done.</dd>
+      <dt>Impact</dt>
+      <dd>The form presents its maximum length at first sight, which is where abandonment decisions get made, and it presents fields that will stay empty for most rows. With no progress signal on a stated twenty-minute task, the user cannot tell whether they are a quarter through or nearly finished — and since nothing is saved, an abandonment is a total loss.</dd>
+      <dt>Change</dt>
+      <dd>Reveal the condition field when <em>yes, with conditions</em> or <em>not yet — ask me</em> is chosen, and keep it visible once it holds text so nothing is ever hidden after being written. Add a single count near the top actions — <em>8 of 20 marked</em> — and mirror it in the print output.</dd>
+      <dt>Why it works</dt>
+      <dd>Progressive disclosure cuts the visible form substantially without removing anything, and ties the field to the two answers that actually invite a condition. A count converts an unbounded scroll into a finite task, which is the single strongest lever on completion — and it doubles as the cue to use "Save to a file" before stopping.</dd>
+    </dl>
+  </article>
+
+  <article class="f medium">
+    <div class="f-head"><span class="sev medium">Medium</span><span class="f-id">UX-18</span><span class="f-page">Practise</span></div>
+    <h3>Two tools share one page, but only one is announced</h3>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>The eyebrow reads "tool 01 of 09 · about 20 minutes to fill in" and the intro describes the Consent Domains Map. Further down sits a second, independent tool — "An ending, prepared for" — with its own gate and its own "Open this tool" button, which is present in the DOM throughout the first tool's gate sequence.</dd>
+      <dt>Impact</dt>
+      <dd>A user who completes the map and stops has no reason to know a second tool exists; the page's own framing told them there was one. The stray "Open this tool" button during the first tool's gate is also a competing call to action at the moment the flow is asking for a single decision.</dd>
+      <dt>Change</dt>
+      <dd>Add both tools to the eyebrow's count and give the page a two-item contents list under the intro. Keep the endings tool's trigger, but let it sit inside its own section heading rather than floating as a bare button while another flow is active.</dd>
+      <dt>Why it works</dt>
+      <dd>Sets the correct expectation at the point of entry, so the second tool is discovered by design rather than by scrolling past the end of the first. No copy changes — only where the existing labels sit.</dd>
+    </dl>
+  </article>
+</section>
+
+<!-- ---------- HOME ---------- -->
+<section id="home">
+  <h2 class="sec" style="font-size:1.3rem">Home</h2>
+
+  <article class="f high">
+    <div class="f-head"><span class="sev high">High impact</span><span class="f-id">UX-05</span><span class="f-page">Home</span></div>
+    <h3>Every route into the site is below the fold; the only control above it leads nowhere</h3>
+    <div class="readout">
+      <div><span class="ro-k">first door top · 1280</span><span class="ro-v bad">1,272px</span></div>
+      <div><span class="ro-k">first door top · 375</span><span class="ro-v bad">1,366px</span></div>
+      <div><span class="ro-k">above-fold controls in main</span><span class="ro-v">1</span></div>
+      <div><span class="ro-k">that control</span><span class="ro-v">another question</span></div>
+    </div>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>The hero runs headline, standfirst, and a rotating question with an <em>another question</em> button. The six-door grid — the actual navigation into the site — starts at 1,272px on a 900px-tall desktop viewport, roughly 1.4 screens down. The rotating-question button is bordered, uppercase, 44px tall, and is the most button-like element on the page.</dd>
+      <dt>Impact</dt>
+      <dd>A first-time visitor gets the thesis quickly, which the hero does well, and then has nothing to act on. The one thing that looks actionable cycles a string in place. Visual prominence and usefulness are inverted at the exact moment a visitor decides whether this site goes anywhere.</dd>
+      <dt>Change</dt>
+      <dd>Lift the six-door grid into the first screen: reduce the hero's <code>clamp(3rem,7vw,5.5rem)</code> vertical padding, and place the rotating question <em>beside</em> the standfirst on wide viewports rather than beneath it — the hero currently uses only the left 42ch of a 1120px container, so the room is already there. Restyle <em>another question</em> as a quiet text control so its weight matches its function.</dd>
+      <dt>Why it works</dt>
+      <dd>Puts at least the first row of doors in view without cutting anything, using space that is currently empty. Downgrading the rotating button removes the false affordance and leaves the door cards as the strongest interactive signal — which matches what they are.</dd>
+    </dl>
+  </article>
+
+  <article class="f medium">
+    <div class="f-head"><span class="sev medium">Medium</span><span class="f-id">UX-12</span><span class="f-page">Home · Contribute</span></div>
+    <h3>The same privacy promise is made four times on Home and twice more on Contribute</h3>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>Sentence-level comparison across the rendered pages found the dispatch assurances stated in four places on Home — the door card, the left-column bullets, the form footnote, the footer's Build column — and repeated verbatim on Contribute, including the transactional-email sentence and "Any characters, any script, no validator." The five interest checkboxes are also identical across both forms.</dd>
+      <dd class="quote">"No tracking pixels. No third parties. Your address is confirmed by email before anything is stored, and one link in every letter removes you."</dd>
+      <dt>Impact</dt>
+      <dd>Each statement is good, and the first is persuasive. By the fourth, the effect inverts: dense reassurance clustered around a single email field reads as anxiety about the ask. It also inflates the dispatch section — the left column runs long enough that the submit button ends up level with empty space, leaving the word "offer." orphaned at the top of a screen.</dd>
+      <dt>Change</dt>
+      <dd>Keep one full statement and demote the rest without deleting any. The four left-column bullets are the canonical version — leave them. Drop the form footnote, which repeats two of them within 400px, and let the door card's summary stand alone. No sentence is rewritten; three are removed from a page that already carries them.</dd>
+      <dt>Why it works</dt>
+      <dd>One clear promise at full strength is more credible than four at diminishing returns, and shortening the right column brings the two dispatch columns closer to equal height, which fixes the orphaned trailing text as a side effect.</dd>
+    </dl>
+  </article>
+
+  <article class="f medium">
+    <div class="f-head"><span class="sev medium">Medium</span><span class="f-id">UX-13</span><span class="f-page">Home · Contribute</span></div>
+    <h3>Two dispatch forms post to the same list, and nothing tells the visitor that</h3>
+    <div class="readout">
+      <div><span class="ro-k">forms</span><span class="ro-v">2</span></div>
+      <div><span class="ro-k">endpoint</span><span class="ro-v">identical</span></div>
+      <div><span class="ro-k">interest options</span><span class="ro-v">identical ×5</span></div>
+      <div><span class="ro-k">stated difference</span><span class="ro-v bad">none</span></div>
+    </div>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>Home's dispatch block and Contribute's form both collect email, name, and the same five interests, and both post to the same subscribe worker. Contribute frames its version as "join the dispatch, leave a note, or both"; Home's is signup-only. Nothing on either page acknowledges the other.</dd>
+      <dt>Impact</dt>
+      <dd>A visitor who subscribed on Home meets what looks like a second, unrelated signup on Contribute and cannot tell whether joining again is required, harmful, or a duplicate. On a site whose entire argument is about knowing exactly what you are consenting to, an ambiguous second ask is the wrong kind of friction.</dd>
+      <dt>Change</dt>
+      <dd>Make them visibly one thing. Extract a single dispatch component with an optional note field, so Contribute's version reads as the same form with one addition rather than a separate one — and add a line of existing copy on Contribute acknowledging the shared list.</dd>
+      <dt>Why it works</dt>
+      <dd>Removes the ambiguity at the point of decision and eliminates the maintenance risk of two hand-maintained copies of the same assurances drifting apart — which is also how UX-12's fourfold repetition arose.</dd>
+    </dl>
+  </article>
+
+  <article class="f medium">
+    <div class="f-head"><span class="sev medium">Medium</span><span class="f-id">UX-09</span><span class="f-page">Home · Contribute</span></div>
+    <h3>A form error names the problem but never marks the field</h3>
+    <div class="readout">
+      <div><span class="ro-k">required attr</span><span class="ro-v bad">absent</span></div>
+      <div><span class="ro-k">aria-invalid on error</span><span class="ro-v bad">never set</span></div>
+      <div><span class="ro-k">field border on error</span><span class="ro-v bad">unchanged</span></div>
+      <div><span class="ro-k">focus after error</span><span class="ro-v bad">stays on button</span></div>
+    </div>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>Submitting empty produces a <code>role="alert"</code> message — correctly announced — but the email input keeps its resting <code>#C9C6BA</code> border, never receives <code>aria-invalid</code>, and does not receive focus. The message renders <em>after</em> the submit button, below the field it refers to.</dd>
+      <dt>Impact</dt>
+      <dd>Sighted users read an error at the bottom of the form and must infer which of three inputs it means, while the offending field looks entirely normal. Keyboard and screen-reader users hear the message, then have to navigate backwards past the button and the checkbox group to reach a field that is not marked as the problem.</dd>
+      <dt>Change</dt>
+      <dd>On failure set <code>aria-invalid="true"</code> on the email input, switch its border to the error red already in the palette (<code>#8B3A2F</code>), move focus to it, and render the message directly beneath the field rather than after the button. Keep <code>role="alert"</code> as is.</dd>
+      <dt>Why it works</dt>
+      <dd>Binds the error to its cause in all three channels — visual, programmatic, and focus — so every user is left on the field they need to fix. It is the one meaningful gap in an otherwise careful form.</dd>
+    </dl>
+  </article>
+
+  <article class="f medium">
+    <div class="f-head"><span class="sev medium">Medium</span><span class="f-id">UX-14</span><span class="f-page">Home · Contribute</span></div>
+    <h3>Field hints are absorbed into the field's accessible name</h3>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>The hint spans sit inside the <code>&lt;label&gt;</code>, so the ARIA snapshot reports the accessible name as <code>textbox "Name or pseudonym Optional. Any characters, any script, no validator. We do not check."</code></dd>
+      <dt>Impact</dt>
+      <dd>A screen-reader user hears the entire hint every time focus enters the field, and again on any re-announcement. Voice-control users must speak an unusable name to target it. Axe passes this because a label does exist.</dd>
+      <dt>Change</dt>
+      <dd>Give each hint an <code>id</code>, move it outside the <code>&lt;label&gt;</code>, and reference it with <code>aria-describedby</code>. Same for the "Optional. Choose none, one, or all." paragraph under the fieldset legend.</dd>
+      <dt>Why it works</dt>
+      <dd>The name becomes "Name or pseudonym" and the hint is still read — as a description, after a pause, and only when useful. Nothing is hidden and nothing is reworded.</dd>
+    </dl>
+  </article>
+
+  <article class="f medium">
+    <div class="f-head"><span class="sev medium">Medium</span><span class="f-id">UX-10</span><span class="f-page">Home</span></div>
+    <h3>Four-item grids wrap to three columns at every desktop width</h3>
+    <div class="readout">
+      <div><span class="ro-k">content box</span><span class="ro-v">1,024px</span></div>
+      <div><span class="ro-k">columns · 1280</span><span class="ro-v bad">3 of 4</span></div>
+      <div><span class="ro-k">columns · 1440</span><span class="ro-v bad">3 of 4</span></div>
+      <div><span class="ro-k">orphaned</span><span class="ro-v">Someday · Reuse</span></div>
+    </div>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>The roadmap and the footer both use <code>repeat(auto-fit,minmax(240px,1fr))</code> with a 2.4rem gap. Inside a 1120px container with 48px padding the usable width is 1,024px, which fits three tracks, not four. Because <code>max-width</code> caps the container, this never resolves — 1440px behaves exactly like 1280px.</dd>
+      <dt>Impact</dt>
+      <dd>The roadmap's four stages read as a progression — <em>Open now → In progress → Next → Someday, or never</em> — and the wrap drops the fourth onto a second row directly beneath the first, where it reads as a continuation of "Open now" rather than the end of the sequence. The footer orphans "Reuse" the same way.</dd>
+      <dt>Change</dt>
+      <dd>Lower the track minimum to about <code>200px</code>, or set <code>repeat(4,1fr)</code> above 1100px with the auto-fit rule as the fallback below it.</dd>
+      <dt>Why it works</dt>
+      <dd>Four columns restore left-to-right reading of a sequence that is genuinely ordered, so the layout encodes the roadmap's meaning instead of fighting it. 240 → 200 is enough; the narrowest column holds "Someday, or never" comfortably.</dd>
+    </dl>
+  </article>
+
+  <article class="f medium">
+    <div class="f-head"><span class="sev medium">Medium</span><span class="f-id">UX-15</span><span class="f-page">Home</span></div>
+    <h3>Resources is the only major page with no presence on the homepage</h3>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>The six doors are Manifesto, Learn, Practise, Archive, Contribute, and the dispatch anchor. Invitation is linked from the paragraph above them. Resources appears only in the header nav and the footer list — and the dispatch's own interest checkbox includes "I'm looking for support and resources", so the need is acknowledged without being routed anywhere.</dd>
+      <dt>Impact</dt>
+      <dd>The page a person in difficulty most needs is the hardest to reach from the entry point, and is buried seventh in an eight-item nav that on mobile has already wrapped to a third row.</dd>
+      <dt>Change</dt>
+      <dd>Give Resources a persistent, quiet route near the end of Home — the "you have reached the end of this page" block already sends readers onward to Archive and Practise, and is the natural place for a third destination. A standing link in the safety callouts on Practise would reinforce it.</dd>
+      <dt>Why it works</dt>
+      <dd>Uses an existing exit point rather than adding a seventh door, so the "six doors, none ranked" framing survives intact while the safety route stops depending on the nav.</dd>
+    </dl>
+  </article>
+
+  <article class="f polish">
+    <div class="f-head"><span class="sev polish">Polish</span><span class="f-id">UX-19</span><span class="f-page">Home</span></div>
+    <h3>The drifting circles sit behind the headline on mobile</h3>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>The decorative SVG is positioned <code>inset:-14% -8% auto auto</code>. On desktop it clears the text to the right. At 375px the amber and blue circles land directly behind "NO OWNERS. NO OBJECTS.", multiply-blended under the type.</dd>
+      <dt>Impact</dt>
+      <dd>Reduces contrast on the single most important line on the site, in the one context where the ornament has no room to be ornamental. Still legible, but weaker than everywhere else.</dd>
+      <dt>Change</dt>
+      <dd>Below roughly 700px, drop the SVG's opacity or offset it above the headline so it reads as a band rather than a wash behind the type.</dd>
+      <dt>Why it works</dt>
+      <dd>Keeps the atmosphere on the pages that have room for it and gives the headline a clean ground where it does not.</dd>
+    </dl>
+  </article>
+
+  <article class="f polish">
+    <div class="f-head"><span class="sev polish">Polish</span><span class="f-id">UX-20</span><span class="f-page">Home · Learn · Practise · Invitation</span></div>
+    <h3>Roughly 40% of the desktop container is permanently empty</h3>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>Body copy is capped at 42–60ch inside a 1120px container, so most sections occupy only the left 470–620px. Measures are excellent for reading; the consequence is a tall right margin down every page, and pages that run 30–60% longer than they need to.</dd>
+      <dt>Impact</dt>
+      <dd>Mostly benign and clearly deliberate. It becomes a real cost on Home, where it pushes the six doors past the fold, and in the dispatch block, where the two columns end at very different heights.</dd>
+      <dt>Change</dt>
+      <dd>Keep the measure. Where a section has a natural second element — the hero's rotating question, a callout, a pull quote — place it in the right track instead of stacking it below.</dd>
+      <dt>Why it works</dt>
+      <dd>Preserves the reading rhythm while recovering vertical space exactly where it is scarce, without widening a single line of text.</dd>
+    </dl>
+  </article>
+
+  <article class="f polish">
+    <div class="f-head"><span class="sev polish">Polish</span><span class="f-id">UX-22</span><span class="f-page">Home</span></div>
+    <h3>The dispatch's two columns end at very different heights</h3>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>The left column's four assurance bullets run past the form's fields, so the submit button sits level with empty space and the final word of the bullets — "offer." — is left alone at the top of the screen at desktop scroll position 3400.</dd>
+      <dt>Impact</dt>
+      <dd>The submit button loses the visual support of the text beside it at exactly the moment of decision, and the orphan reads as a rendering fault.</dd>
+      <dt>Change</dt>
+      <dd>Largely resolved by UX-12's consolidation. Beyond that, align the two columns to the top of the form rather than the top of the section.</dd>
+      <dt>Why it works</dt>
+      <dd>Puts the reassurance beside the field it reassures about, which is where it does its work.</dd>
+    </dl>
+  </article>
+</section>
+
+<!-- ---------- GLOBAL ---------- -->
+<section id="global">
+  <h2 class="sec" style="font-size:1.3rem">Global chrome — header, nav, footer</h2>
+  <p class="sec-lede">Identical markup on all nine pages, so each finding here multiplies by nine.</p>
+
+  <article class="f high">
+    <div class="f-head"><span class="sev high">High impact</span><span class="f-id">UX-04</span><span class="f-page">Every page</span></div>
+    <h3>The header never collapses, and takes 30–43% of a mobile screen</h3>
+    <div class="readout">
+      <div><span class="ro-k">header height</span><span class="ro-v">247px</span></div>
+      <div><span class="ro-k">of 375×812</span><span class="ro-v bad">30%</span></div>
+      <div><span class="ro-k">of 320×568</span><span class="ro-v bad">43%</span></div>
+      <div><span class="ro-k">at 1280</span><span class="ro-v">77px · 9%</span></div>
+    </div>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>Eight nav links, each <code>min-height:44px</code> plus <code>.4rem</code> padding, in a wrapping flex row. At 375px they occupy three rows; the header measures a constant 247px at both 375 and 320. There is no menu toggle at any width.</dd>
+      <dt>Impact</dt>
+      <dd>On every mobile page load the first thing a reader sees is a three-row block of uppercase monospace links, and the page's own headline is pushed to 372px. The 44px targets are the right instinct — they are what makes the block tall — so the fix has to preserve them rather than shrink them.</dd>
+      <dt>Change</dt>
+      <dd>Below roughly 700px, collapse the nav behind a single 44px control using <code>&lt;details&gt;</code> so it needs no JavaScript, keeping the wordmark and toggle on one row. That returns roughly 190px — most of a fold — on every page. The eight items stay exactly as they are once opened.</dd>
+      <dt>Why it works</dt>
+      <dd>Trades a permanent cost on every page for one tap by the minority of visitors who navigate laterally, and gives the content the top of the screen back. A <code>&lt;details&gt;</code> toggle also matches the disclosure pattern the site already uses — provided it ships with the visible chevron that UX-01 asks for.</dd>
+    </dl>
+  </article>
+
+  <article class="f high">
+    <div class="f-head"><span class="sev high">High impact</span><span class="f-id">UX-06</span><span class="f-page">Every page</span></div>
+    <h3>No <code>aria-current</code>, and the active-page colour changes between pages</h3>
+    <div class="readout">
+      <div><span class="ro-k">aria-current site-wide</span><span class="ro-v bad">0</span></div>
+      <div><span class="ro-k">active · light pages</span><span class="ro-v">#366943</span></div>
+      <div><span class="ro-k">active · dark pages</span><span class="ro-v">#DB9E2A</span></div>
+      <div><span class="ro-k">non-colour cue</span><span class="ro-v bad">none</span></div>
+    </div>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>The current page's nav link is recoloured — green on light pages, amber on the Manifesto's dark ground — with no weight change, no underline, and no <code>aria-current</code> attribute anywhere in the codebase. Both colours pass contrast; that is not the issue.</dd>
+      <dt>Impact</dt>
+      <dd>Colour is the sole means of conveying "you are here", which fails WCAG 1.4.1 and disappears entirely for colour-blind users, in high-contrast modes, and in print. Screen-reader users get no signal at all. And because the token differs by page theme, the cue has to be relearned rather than recognised.</dd>
+      <dt>Change</dt>
+      <dd>Add <code>aria-current="page"</code> to the active link and pair the colour with a non-colour cue — a 2px underline offset below the link, or a bumped weight. Use one semantic token for "current" and let it resolve per theme, so the meaning is constant even where the hue is not.</dd>
+      <dt>Why it works</dt>
+      <dd>Three redundant signals — colour, shape, and semantics — mean the state survives every rendering context. It is an attribute and a border rule on markup that already exists on all nine pages.</dd>
+    </dl>
+  </article>
+
+  <article class="f medium">
+    <div class="f-head"><span class="sev medium">Medium</span><span class="f-id">UX-11</span><span class="f-page">Every page</span></div>
+    <h3>The mobile footer is taller than the phone screen</h3>
+    <div class="readout">
+      <div><span class="ro-k">footer · 375px</span><span class="ro-v bad">931px</span></div>
+      <div><span class="ro-k">viewport</span><span class="ro-v">812px</span></div>
+      <div><span class="ro-k">nav links</span><span class="ro-v">8 × ~49px</span></div>
+    </div>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>The same <code>min-height:44px</code> plus padding is applied to the footer's vertical link list, so eight links stack to roughly 390px with visibly uneven gaps. With four stacked columns the footer reaches 931px — more than a full screen of chrome after the content ends.</dd>
+      <dt>Impact</dt>
+      <dd>A reader who finishes a page scrolls through more than a screen of navigation to reach the end. The generous gaps also make the link list read as loosely spaced rather than deliberately grouped.</dd>
+      <dt>Change</dt>
+      <dd>Lay the footer nav out as a two-column grid on mobile. Keep the 44px targets — the height comes from stacking, not from the targets, and two columns halves it without touching a single tap area.</dd>
+      <dt>Why it works</dt>
+      <dd>Roughly 195px recovered with no accessibility cost, and the paired columns give the list a visual structure the single stack lacks.</dd>
+    </dl>
+  </article>
+
+  <article class="f polish">
+    <div class="f-head"><span class="sev polish">Polish</span><span class="f-id">UX-21</span><span class="f-page">Archive</span></div>
+    <h3>The Venn diagram scrolls sideways with no visual sign that it can</h3>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>The "Held in common" diagram is a <code>min-width:700px</code> grid in an <code>overflow-x:auto</code> container. At 375px a reader sees a little over half of it. The page announces this in copy beforehand — <em>"on a narrow screen this diagram scrolls sideways"</em> — which is more than most sites do.</dd>
+      <dt>Impact</dt>
+      <dd>The announcement only works for someone reading sequentially. A scanner meets a cut-off diagram with no edge treatment and no scrollbar until they touch it.</dd>
+      <dt>Change</dt>
+      <dd>Add a soft fade or hairline shadow on the right edge of the scroll container while more content remains.</dd>
+      <dt>Why it works</dt>
+      <dd>Gives the scanner the same information the sentence gives the reader, at the moment and place they need it.</dd>
+    </dl>
+  </article>
+</section>
+
+<!-- ---------- LONG PAGES ---------- -->
+<section id="long">
+  <h2 class="sec" style="font-size:1.3rem">Learn and Archive — the long reads</h2>
+
+  <article class="f high">
+    <div class="f-head"><span class="sev high">High impact</span><span class="f-id">UX-07</span><span class="f-page">Learn · Archive</span></div>
+    <h3>The site's two longest pages are the only long pages with no contents nav</h3>
+    <div class="readout">
+      <div><span class="ro-k">Learn · mobile</span><span class="ro-v bad">22,709px</span></div>
+      <div><span class="ro-k">Archive · mobile</span><span class="ro-v bad">23,900px</span></div>
+      <div><span class="ro-k">Learn headings</span><span class="ro-v">25 h2 · 17 h3</span></div>
+      <div><span class="ro-k">contents nav</span><span class="ro-v bad">absent on both</span></div>
+    </div>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>Behind the Scenes opens with a proper <code>&lt;nav aria-label="Contents"&gt;</code> listing nine in-page anchors. It is the only page on the site that has one. Learn (13 principles) and Archive (60 headings) have no in-page anchors at all beyond the skip link — on mobile they run to about 28 and 29 screens respectively.</dd>
+      <dt>Impact</dt>
+      <dd>A reader who wants principle 09, or who followed a reference to a specific text, can only scroll. There is no way to see the shape of the page, no way to resume where they left off, and nothing to link to when sending someone a specific principle. This is the plainest gap between the site's own best pattern and its application.</dd>
+      <dt>Change</dt>
+      <dd>Reuse the Behind the Scenes contents component verbatim on Learn and Archive, with stable anchor ids per principle and per shelf section. Both pages are Hugo-generated from <code>data/principles.yaml</code> and <code>data/archive.yaml</code>, so the list can be built from the same data as the content and cannot drift out of sync.</dd>
+      <dt>Why it works</dt>
+      <dd>No new design language, no new component, no copy written — an existing pattern applied where the need is largest. Stable ids also make individual principles and texts citable, which suits a site built to be forked and passed on.</dd>
+    </dl>
+  </article>
+
+  <article class="f high">
+    <div class="f-head"><span class="sev high">High impact</span><span class="f-id">UX-08</span><span class="f-page">Archive</span></div>
+    <h3>"The fastest honest route in" is a reading order you cannot follow</h3>
+    <div class="readout">
+      <div><span class="ro-k">numbered entries</span><span class="ro-v">7+</span></div>
+      <div><span class="ro-k">links among them</span><span class="ro-v bad">0</span></div>
+      <div><span class="ro-k">shelf entries</span><span class="ro-v">60 headings</span></div>
+    </div>
+    <dl class="quad">
+      <dt>Observed</dt>
+      <dd>The section headed "The fastest honest route in" lists numbered texts — <em>01 Wildcat — Replacing Exclusive Sovereignty</em>, <em>02 Kuokkanen</em>, <em>03 TallBear</em>, and so on. Every item is plain text. Not one links to the corresponding shelf entry above it, on a page with no contents nav and 60 headings.</dd>
+      <dt>Impact</dt>
+      <dd>The page offers a curated path and then makes the reader hunt for each stop by hand, scrolling a 23,900px column. This is the strongest wayfinding device on the page and it does not navigate. The same four titles also appear a third time inside the "Held in common" diagram, so a scanner encounters some entries repeatedly without ever being shown how the three views relate.</dd>
+      <dt>Change</dt>
+      <dd>Make each numbered item an anchor to its shelf entry. Give the Venn's four texts the same treatment. Once UX-07 adds ids, both are a template change with no new markup.</dd>
+      <dt>Why it works</dt>
+      <dd>Turns the reading order into the navigation it already looks like, and converts the apparent repetition into a deliberate three-way cross-reference — browse, sequence, and concept, all pointing at one canonical entry.</dd>
+    </dl>
+  </article>
+
+</section>
+
+<!-- ============ 3. PRIORITY ============ -->
+<section id="priority">
+  <span class="sec-num">Section 3</span>
+  <h2 class="sec">Priority recommendations</h2>
+  <p class="sec-lede">All 22 findings, ranked. Effort is rough implementation time for someone who knows this codebase.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>ID</th><th>Priority</th><th>Finding</th><th>Page</th><th>Effort</th></tr></thead>
+      <tbody>
+        <tr><td class="id"><a href="#resources">UX-01</a></td><td><span class="pill critical">Critical</span></td><td>Collapsed crisis sections show no disclosure cue; jump links do not open them</td><td>Resources</td><td class="eff">S</td></tr>
+        <tr><td class="id"><a href="#resources">UX-02</a></td><td><span class="pill critical">Critical</span></td><td>"Not yet built" looks identical to populated-but-collapsed</td><td>Resources</td><td class="eff">S</td></tr>
+        <tr><td class="id"><a href="#practise">UX-03</a></td><td><span class="pill critical">Critical</span></td><td>"Clear everything" has no confirm, no undo, no persistence</td><td>Practise</td><td class="eff">S</td></tr>
+        <tr><td class="id"><a href="#global">UX-04</a></td><td><span class="pill high">High</span></td><td>Header takes 247px — 30–43% of a mobile viewport, never collapses</td><td>All</td><td class="eff">M</td></tr>
+        <tr><td class="id"><a href="#home">UX-05</a></td><td><span class="pill high">High</span></td><td>Six doors below the fold everywhere; only above-fold control is a novelty</td><td>Home</td><td class="eff">M</td></tr>
+        <tr><td class="id"><a href="#global">UX-06</a></td><td><span class="pill high">High</span></td><td>Current page signalled by colour alone; no <code>aria-current</code></td><td>All</td><td class="eff">S</td></tr>
+        <tr><td class="id"><a href="#long">UX-07</a></td><td><span class="pill high">High</span></td><td>No contents nav on the two longest pages</td><td>Learn · Archive</td><td class="eff">M</td></tr>
+        <tr><td class="id"><a href="#long">UX-08</a></td><td><span class="pill high">High</span></td><td>Curated reading order is unlinked plain text</td><td>Archive</td><td class="eff">S</td></tr>
+        <tr><td class="id"><a href="#home">UX-09</a></td><td><span class="pill high">High</span></td><td>Form error never marks the field or moves focus</td><td>Home · Contribute</td><td class="eff">S</td></tr>
+        <tr><td class="id"><a href="#home">UX-10</a></td><td><span class="pill medium">Medium</span></td><td>Four-item grids wrap 3+1 at all desktop widths</td><td>Home</td><td class="eff">XS</td></tr>
+        <tr><td class="id"><a href="#global">UX-11</a></td><td><span class="pill medium">Medium</span></td><td>Mobile footer is 931px — taller than the viewport</td><td>All</td><td class="eff">XS</td></tr>
+        <tr><td class="id"><a href="#home">UX-12</a></td><td><span class="pill medium">Medium</span></td><td>Dispatch privacy promise repeated 4× on Home, twice more on Contribute</td><td>Home · Contribute</td><td class="eff">XS</td></tr>
+        <tr><td class="id"><a href="#home">UX-13</a></td><td><span class="pill medium">Medium</span></td><td>Two dispatch forms with verbatim-identical copy and no stated difference</td><td>Home · Contribute</td><td class="eff">S</td></tr>
+        <tr><td class="id"><a href="#home">UX-14</a></td><td><span class="pill medium">Medium</span></td><td>Hints folded into accessible names instead of <code>aria-describedby</code></td><td>Home · Contribute</td><td class="eff">XS</td></tr>
+        <tr><td class="id"><a href="#home">UX-15</a></td><td><span class="pill medium">Medium</span></td><td>Resources absent from the homepage entirely</td><td>Home</td><td class="eff">XS</td></tr>
+        <tr><td class="id"><a href="#resources">UX-16</a></td><td><span class="pill medium">Medium</span></td><td>Link hover drops contrast to 4.05:1, below AA</td><td>All</td><td class="eff">XS</td></tr>
+        <tr><td class="id"><a href="#practise">UX-17</a></td><td><span class="pill medium">Medium</span></td><td>20 always-open condition fields; no progress indicator on a 20-minute task</td><td>Practise</td><td class="eff">M</td></tr>
+        <tr><td class="id"><a href="#practise">UX-18</a></td><td><span class="pill medium">Medium</span></td><td>Second tool on the page is never announced</td><td>Practise</td><td class="eff">S</td></tr>
+        <tr><td class="id"><a href="#home">UX-19</a></td><td><span class="pill polish">Polish</span></td><td>Drift SVG sits behind the H1 on mobile</td><td>Home</td><td class="eff">XS</td></tr>
+        <tr><td class="id"><a href="#home">UX-20</a></td><td><span class="pill polish">Polish</span></td><td>~40% of the desktop container permanently empty</td><td>Most</td><td class="eff">L</td></tr>
+        <tr><td class="id"><a href="#global">UX-21</a></td><td><span class="pill polish">Polish</span></td><td>Sideways-scrolling Venn has no edge affordance</td><td>Archive</td><td class="eff">XS</td></tr>
+        <tr><td class="id"><a href="#home">UX-22</a></td><td><span class="pill polish">Polish</span></td><td>Dispatch columns end at very different heights</td><td>Home</td><td class="eff">XS</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 4. QUICK WINS ============ -->
+<section id="quickwins">
+  <span class="sec-num">Section 4</span>
+  <h2 class="sec">Quick wins</h2>
+  <p class="sec-lede">Ordered by impact per unit of effort. The first three are, between them, perhaps twenty lines of CSS and markup, and they resolve two of the three critical findings.</p>
+  <ol class="qw">
+    <li><strong>Ship every Resources category <code>open</code>.</strong> One attribute per <code>&lt;details&gt;</code>. Immediately makes the crisis page's real content visible and searchable with the browser's own find. <em>Resolves UX-01's worst effect on its own.</em></li>
+    <li><strong>Give <code>summary</code> a visible chevron site-wide.</strong> Change <code>display:flex</code> to <code>display:block</code> with an explicit marker, or add a chevron child. Fixes all 16 markerless disclosures across Resources, Practise, and Behind the Scenes in one rule.</li>
+    <li><strong>Add <code>aria-current="page"</code> plus an underline on the active nav link.</strong> One attribute and one border rule, applied to markup that is already identical on nine pages.</li>
+    <li><strong>Lower the two grid minimums from 240px to 200px.</strong> Two characters each. Restores the roadmap's four-stage progression and un-orphans the footer's "Reuse" column.</li>
+    <li><strong>Darken the link hover to <code>#2C5A38</code>.</strong> A colour already in the palette. Turns a contrast regression into a contrast improvement.</li>
+    <li><strong>Set the footer nav to two columns on mobile.</strong> Recovers about 195px on every page with no change to any tap target.</li>
+    <li><strong>Move the three form hints to <code>aria-describedby</code>.</strong> Shortens two accessible names from a full sentence to their actual labels.</li>
+    <li><strong>Make "Clear everything" confirm in place.</strong> A boolean and a label swap; closes the only unrecoverable action on the site.</li>
+    <li><strong>Link the Archive reading order to its shelf entries.</strong> Anchor tags around text that already matches the headings it should point to.</li>
+    <li><strong>Delete the dispatch form's footnote.</strong> It repeats two bullets sitting 400px to its left. Nothing is rewritten and nothing is lost.</li>
+  </ol>
+</section>
+
+<!-- ============ 5. STRATEGIC ============ -->
+<section id="strategic">
+  <span class="sec-num">Section 5</span>
+  <h2 class="sec">Strategic opportunities</h2>
+  <p class="sec-lede">Larger moves worth planning rather than patching.</p>
+
+  <div class="strat">
+    <h3>Decide what disclosure means on this site, once</h3>
+    <p>Sixteen <code>&lt;details&gt;</code> elements are doing three unrelated jobs: hiding optional depth on Practise, tidying a long reference list on Resources, and holding supplementary notes on Behind the Scenes. They share one visual treatment and none of them signals it can be opened. The underlying question is not styling — it is whether collapse is appropriate for reference content at all.</p>
+    <p>A single rule would settle it: <em>collapse things a reader may want to skip; never collapse things a reader may need to find.</em> Under that rule Resources opens by default, Practise's optional grounding exercises stay collapsed, and every remaining disclosure gets one consistent, visibly openable treatment. This turns three critical and high findings into one design decision.</p>
+  </div>
+
+  <div class="strat">
+    <h3>Build a real navigation layer for long-form reading</h3>
+    <p>Four pages now exceed 11,000px on desktop and three exceed 22,000px on mobile, and the roadmap adds more tools and a stories section. Behind the Scenes' contents nav is the right seed, but a page of Archive's size needs more: a contents list, stable per-section ids, and — given that Learn, Archive, and Behind the Scenes are all Hugo-generated from YAML — a shared partial that derives the list from the same data as the content.</p>
+    <p>The payoff compounds. Every principle and every archive text becomes individually linkable, which matters disproportionately for a site whose stated measure of success is being forked, printed, and passed on. Right now nobody can send a friend principle 09.</p>
+  </div>
+
+  <div class="strat">
+    <h3>Give the homepage a first screen that shows the shape of the site</h3>
+    <p>The hero currently spends a full viewport on the thesis and puts every route below the fold. The thesis is strong and should stay — but the six doors are the best thing on the page, and no visitor sees them without scrolling past a control that does nothing.</p>
+    <p>Recomposing the hero to use its empty right half, and lifting the first row of doors into view, would let a visitor grasp both the idea and the map in one screen. This is the highest-leverage conversion change available that does not touch a word of copy.</p>
+  </div>
+
+  <div class="strat">
+    <h3>Resolve the two dispatch forms into one relationship</h3>
+    <p>Home and Contribute both post to the same subscribe endpoint with identical interest checkboxes and identical assurance copy, but Contribute's is framed as "join the dispatch, leave a note, or both" while Home's is dispatch-only. Nothing tells a visitor who has seen one what the other adds, and someone who signs up on Home has no idea Contribute's form is the same list.</p>
+    <p>Worth deciding deliberately: either make Home's the sole signup and let Contribute link to it, or make the difference explicit in the layout — a shared component with one optional extra field. Either removes a duplicated form, a duplicated set of promises, and the maintenance risk of the two drifting apart.</p>
+  </div>
+
+  <div class="strat">
+    <h3>Treat the Consent Domains Map as a session, not a page</h3>
+    <p>It is a twenty-minute, hundred-control task with no autosave — correctly, for privacy — reached through a two-step gate and sharing a page with a second tool. The pieces of a good session are already there: the gate, the file export, the print view, per-row state. What is missing is the connective tissue: a completion count, a visible save prompt before the user leaves, progressive disclosure of the condition fields, and a confirm on the one action that destroys everything.</p>
+    <p>None of these compromise the no-storage principle. Together they would substantially raise the number of maps that reach a printer — which is the roadmap's own stated measure of success.</p>
+  </div>
+</section>
+
+<footer>
+  Method — all nine pages served locally and rendered in Chromium at 320, 375, 768, 1280 and 1440px. Accessibility scanned with axe-core (WCAG 2.1 A/AA plus best-practice): zero violations. Contrast ratios recomputed independently from the source hex values. Layout measurements, grid column counts, focus behaviour, ARIA snapshots and disclosure state read from the live DOM. Interactive flows — the Practise gate, the dispatch form's empty-submit path, and the Resources jump menu — were walked, not inferred.<br><br>
+  Copy treated as fixed throughout. Every recommendation concerns placement, hierarchy, grouping, visual treatment or prominence; where consolidation is proposed, existing sentences are removed or relocated, never rewritten.
+</footer>
+
+  </main>
+</div>
