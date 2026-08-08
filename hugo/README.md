@@ -1,13 +1,19 @@
 # Hugo build (RS-004)
 
-This directory is the source for the site's static reading pages —
-currently `Manifesto.dc.html`, with `Learn`, `Archive`, and
-`BehindTheScenes` to follow. It reads the data in `data/` and writes
-plain HTML to `public/`, which `../scripts/build-hugo.mjs` then copies
-over the matching file at the repo root. **The copied file at the repo
-root is what ships** — nobody reading the site ever runs Hugo, and
-`hugo/` itself is not part of the deployed site (see
+This directory is the source for the site's static reading pages:
+`Manifesto`, `Invitation`, `Learn`, `Archive`, `BehindTheScenes`, and
+`Resources`. It reads the data in `data/` and writes plain HTML to
+`public/`, which `../scripts/build-hugo.mjs` then copies over the
+matching file at the repo root. **The copied file at the repo root is
+what ships** — nobody reading the site ever runs Hugo, and `hugo/`
+itself is not part of the deployed site (see
 `docs/spec/decision-record-d1-d15.md` D2).
+
+`Home.dc.html`, `Practise.dc.html`, and `Contribute.dc.html` are
+deliberately **not** migrated here — each carries live interactive
+logic (a form, a stateful tool) via the `dc-runtime` that Hugo's
+static output can't hold. See `../docs/copy-editing-guide.md` for the
+full map of which page's copy lives where.
 
 ## Editing content
 
