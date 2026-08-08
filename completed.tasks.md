@@ -336,4 +336,17 @@ Notes:
 - `Resources.dc.html` is hand-authored, not Hugo-generated (no `hugo/layouts/resources.html` exists) — edited directly, consistent with how the page has always been maintained.
 - `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
 
+### RS-044 — simplify the end of Learn
+**Shipped:** 2026-08-08 · **Commit/PR:** (pending)
+
+~~was: Learn ended with a nineteen-card grid naming every planned topic, none linked, most not even drafted — visually the single largest block on the page, outweighing the thirteen principles, the four senses of sovereignty, and everything else actually written above it~~
+now: two sentences ("Nineteen further topics are named but not one is linked... The full list, and why nothing on it is dated, lives on the roadmap") replace the grid entirely. The full nineteen-topic list didn't get deleted — it moved to a new **Roadmap** section on `BehindTheScenes.dc.html`, reusing the same `hugo/data/topics.yaml` (six drafted, thirteen not yet written) and the same drafted/not-yet-written color coding, so nothing about what's disclosed changed, only where the bulk of it sits. The new section also names why nothing on the list carries a date, echoing Practise's own "no dates, because a date we couldn't keep would be its own small domination" — same reasoning, now stated in both places it applies rather than once.
+
+Verified with a real headless browser, JavaScript disabled: `Learn.dc.html` no longer contains the old grid's "not yet written" labels and does contain the new short explanation and a working link to `BehindTheScenes.dc.html#roadmap`; `BehindTheScenes.dc.html` has the new `#roadmap` anchor and, checked by querying the actual grid element rather than a whole-page text search (which produced a false negative on a first pass — the phrase "not yet written" also appears elsewhere on the long page, unrelated to the topics grid), renders exactly nineteen topic cards with the correct names.
+
+Notes:
+- Third of Phase 2.5's priority items (implementation order 3).
+- RS-045 (Behind the Scenes contents menu, next in this phase) now needs to cover this new `#roadmap` section too — not in the author's original anchor list, since it didn't exist yet when that list was written. Noted on RS-045's row rather than silently expanding scope without saying so.
+- `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*

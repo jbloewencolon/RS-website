@@ -7,6 +7,8 @@
 # error to fix).
 - version: "v0.2 — current"
   entries:
+    - was: "Learn ended with a nineteen-card grid of topic names, none linked, most not even drafted — the single largest block on the page was the part that didn't exist yet, outweighing the thirteen principles actually written above it"
+      now: "a two-sentence explanation and a link to a new Roadmap section on the colophon, which carries the full nineteen-topic list (six drafted, thirteen not yet written) instead. Learn is now weighted toward what's actually on it; the honest disclosure that more is planned didn't need to be the biggest thing on the page to still be told plainly"
     - was: "Resources listed eleven categories in page order with no way to jump straight to the one a reader needed — crisis lines first, Indigenous-led services near the bottom, nothing in between named until scrolled to"
       now: "a \"Choose what you need\" list of same-page anchor links, placed after the immediate-safety questions rather than before them — a reader in danger sees those first, not a menu. Ordinary anchors only: no geolocation, no questionnaire, no filtering, no storage of what anyone clicked. Every urgent line on the page stays exactly where it was"
     - was: "the Consent Domains Map's two section headings — \"The seventeen domains\" and \"Access Intimacy & Body Support\" — never stated that they add to twenty, leaving a reader to do the arithmetic against the page's own meta description instead of being told"

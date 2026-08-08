@@ -1,6 +1,8 @@
-# "The conceptual map" section on Learn.dc.html. `drafted: true` renders
-# as "drafted" in green; false renders as "not yet written" in grey.
-# Nothing links anywhere yet — see the section's own copy for why.
+# Named on Learn.dc.html (brief mention, links to the Roadmap) and
+# rendered in full on BehindTheScenes.dc.html's "Roadmap" section.
+# `drafted: true` renders as "drafted" in green; false renders as "not
+# yet written" in grey. Nothing links anywhere yet — see the Roadmap
+# section's own copy for why.
 - name: "What is relational sovereignty?"
   drafted: true
 - name: "Relational sovereignty and Indigenous sovereignty"
