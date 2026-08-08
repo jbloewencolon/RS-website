@@ -1,0 +1,162 @@
+# Resources.dc.html's eleven categories, single source of truth. Add,
+# edit, or remove an entry here, then `npm run build:hugo` regenerates
+# the page — no HTML editing required for the routine case (a new
+# crisis line, a changed phone number, an out-of-date URL).
+#
+# Every entry's `contact` field carries its own "verified" date, per
+# this page's own stated practice: a dead number given to someone in
+# a crisis is worse than no number, so entries get checked against the
+# organisation's own site before being added or re-verified, not just
+# copied from wherever they were first found.
+#
+# `open: true` is deliberate and singular — see crisis-lines below.
+# This site's binding practice, established across every disclosure
+# on it, is to never hide safety-critical information behind a click.
+# Do not add a second `open: true` without confirming that practice
+# still holds.
+#
+# One-off connective sentences that reference a specific other category
+# or another page (ShelterSafe's cross-link from housing, the field
+# guide link from coercive-control, the fault-list links from legal-aid
+# and mutual-aid) are hardcoded in hugo/layouts/resources.html rather
+# than kept here, matching this site's existing convention: data holds
+# the repeated, list-shaped content; one-off editorial prose with
+# cross-page links stays in the template. Mutual aid has no entries by
+# design — see its note in the layout — not a gap in this file.
+
+categories:
+  - id: "crisis-lines"
+    title: "Immediate safety and crisis lines"
+    scope: "Canada, national"
+    open: true
+    entries:
+      - name: "9-8-8: Suicide Crisis Helpline"
+        url: "https://988.ca/"
+        linkLabel: "988.ca"
+        description: "For anyone thinking about suicide, or worried about someone who might be. A safe space to talk, any time."
+        contact: "call or text 988 · free · 24/7 · verified 2026-08-07"
+      - name: "Hope for Wellness Helpline"
+        url: "https://www.hopeforwellness.ca/"
+        linkLabel: "hopeforwellness.ca"
+        description: "Crisis intervention and counselling for Indigenous people across Canada, in English, French, Cree, Ojibway, and Inuktitut. Operated by an Indigenous organisation, funded by Indigenous Services Canada."
+        contact: "1-855-242-3310 or online chat · free · 24/7 · verified 2026-08-07"
+      - name: "Kids Help Phone"
+        url: "https://kidshelpphone.ca/"
+        linkLabel: "kidshelpphone.ca"
+        description: "Canada's national e-mental-health service for young people, in over 100 languages with interpretation."
+        contact: "1-800-668-6868, text, or chat · free · 24/7 phone · verified 2026-08-07"
+
+  - id: "coercive-control"
+    title: "Intimate partner violence and coercive control"
+    scope: "Canada, national directory"
+    open: false
+    entries:
+      - name: "ShelterSafe"
+        url: "https://sheltersafe.ca/"
+        linkLabel: "sheltersafe.ca"
+        description: "An interactive map to the nearest shelter, run by Women's Shelters Canada — a network of 16 provincial and territorial shelter associations representing over 600 shelters. Each listing carries its own 24-hour emergency number."
+        contact: "web directory, listings are 24h by phone · free · verified 2026-08-07"
+
+  - id: "legal-aid"
+    title: "Legal aid and family law"
+    scope: "Canada — thin coverage, stated honestly"
+    open: false
+    entries:
+      - name: "211 Canada"
+        url: "https://211.ca/"
+        linkLabel: "211.ca"
+        description: "Canada's largest directory of community, social, and government services, including referral to legal aid and family law clinics in your area. Not legal advice — a starting point for finding who can give it."
+        contact: "phone 211 or web, 150+ languages · free · verified 2026-08-07"
+
+  - id: "immigration"
+    title: "Immigration and refugee support"
+    scope: "Canada, national network"
+    open: false
+    entries:
+      - name: "Canadian Council for Refugees"
+        url: "https://ccrweb.ca/"
+        linkLabel: "ccrweb.ca"
+        description: "A national coalition of refugee- and immigrant-serving organisations. The CCR itself does not provide direct legal help — it coordinates and advocates for the member organisations that do. Use its site to find a member organisation near you."
+        contact: "web, points to member organisations · verified 2026-08-07"
+
+  - id: "housing"
+    title: "Housing, tenant organising, and emergency shelter"
+    scope: "Canada, national"
+    open: false
+    entries:
+      - name: "ACORN Canada"
+        url: "https://acorncanada.org/"
+        linkLabel: "acorncanada.org"
+        description: "A national, member-led union of low- and moderate-income tenants and community members, with chapters across several provinces. Organises collectively on housing conditions, rent, and eviction."
+        contact: "web, chapter-based · membership is free · verified 2026-08-07"
+
+  - id: "income"
+    title: "Income, benefits, and food security"
+    scope: "Canada, national directory"
+    open: false
+    entries:
+      - name: "211 Canada"
+        url: "https://211.ca/"
+        linkLabel: "211.ca"
+        description: "The same directory listed under legal aid above also covers benefits navigation, income support, and food security services by region — call 211 or search by postal code."
+        contact: "phone 211 or web, 150+ languages · free · verified 2026-08-07"
+
+  - id: "disability"
+    title: "Disability advocacy and independent living"
+    scope: "Canada, national"
+    open: false
+    entries:
+      - name: "Council of Canadians with Disabilities"
+        url: "https://www.ccdonline.ca/"
+        linkLabel: "ccdonline.ca"
+        description: "A national, cross-disability human-rights organisation working for an inclusive and accessible Canada. A starting point for advocacy and for finding disability-led organising in your region."
+        contact: "web · verified 2026-08-07"
+
+  - id: "lgbtq"
+    title: "2SLGBTQ+ and trans-specific services"
+    scope: "Canada, national"
+    open: false
+    entries:
+      - name: "Egale Canada"
+        url: "https://egale.ca/"
+        linkLabel: "egale.ca"
+        description: "Canada's national 2SLGBTQI organisation. Runs Egale Youth OUTReach, offering counselling and homelessness/suicide-crisis support for 2SLGBTQI youth, alongside its broader advocacy and resources."
+        contact: "web, see site for youth-service contact details · verified 2026-08-07"
+
+  - id: "indigenous"
+    title: "Indigenous-specific and Indigenous-led services"
+    scope: "Canada, national"
+    open: false
+    entries:
+      - name: "Native Women's Association of Canada"
+        url: "https://www.nwac.ca/"
+        linkLabel: "nwac.ca"
+        description: "A national Indigenous organisation representing Indigenous women, girls, and gender-diverse people, with a long-standing focus on violence prevention alongside its broader advocacy."
+        contact: "1-800-461-4043 · web · verified 2026-08-07"
+      - name: "Hope for Wellness Helpline"
+        url: "https://www.hopeforwellness.ca/"
+        linkLabel: "hopeforwellness.ca"
+        description: "Listed above under crisis lines — included here again because it is Indigenous-specific and Indigenous-delivered, not only a crisis service."
+        contact: "1-855-242-3310 or online chat · free · 24/7 · verified 2026-08-07"
+
+  - id: "mutual-aid"
+    title: "Mutual aid networks"
+    scope: "Not yet built"
+    open: false
+    entries: []
+
+  - id: "international"
+    title: "If you are somewhere other than Canada"
+    scope: "International"
+    open: false
+    entries:
+      - name: "Find A Helpline"
+        url: "https://findahelpline.com/"
+        linkLabel: "findahelpline.com"
+        description: "A vetted directory of crisis lines in 130+ countries, covering suicide, domestic violence, sexual abuse, and gender and sexual identity, by phone, text, or web chat. Built by ThroughLine with the International Association for Suicide Prevention."
+        contact: "web, search by country · verified 2026-08-07"
+      - name: "Befrienders Worldwide"
+        url: "https://befrienders.org/"
+        linkLabel: "befrienders.org"
+        description: "A global network of emotional-support centres for loneliness, despair, and suicidal distress — 349 centres in 32 countries. Grew out of the Samaritans; independent since 2012."
+        contact: "web, phone/email/chat varies by centre · verified 2026-08-07"
