@@ -23,7 +23,17 @@
   html{scroll-behavior:smooth}
   body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
   a{color:#2B4C9B;text-underline-offset:3px;text-decoration-thickness:1px}
-  a:hover{color:#3F7A4E}
+  a:hover{color:#2C5A38}
+  summary::before{content:"▸";display:inline-block;margin-right:.6rem;color:currentColor;flex-shrink:0;transition:transform .15s ease}
+  details[open]>summary::before{transform:rotate(90deg)}
+  .nav-toggle{display:none}
+  .nav-toggle>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:#585B4F}
+  .nav-toggle>summary::-webkit-details-marker{display:none}
+  .nav-toggle>nav{display:flex;flex-direction:column;align-items:flex-start;gap:.4rem;padding:.5rem 0 .8rem}
+  @media (max-width:700px){
+    #primary-nav{display:none!important}
+    .nav-toggle{display:block;width:100%}
+  }
   *{box-sizing:border-box}
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
   @media print{body{background:#fff}.noprint{display:none!important}}
@@ -34,10 +44,10 @@
 </helmet>
 
 <a href="#main-content" class="skip-link">Skip to content</a>
-<header style="border-bottom:1px solid #C9C6BA">
+<header class="noprint" style="border-bottom:1px solid #C9C6BA">
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="Home.dc.html" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
-    <nav aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+    <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
       <a href="Manifesto.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
       <a href="Invitation.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
       <a href="Learn.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
@@ -47,19 +57,34 @@
       <a href="Resources.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
       <a href="BehindTheScenes.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
     </nav>
+    <details class="nav-toggle">
+      <summary aria-label="Menu">Menu</summary>
+      <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+        <a href="Manifesto.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
+        <a href="Invitation.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
+        <a href="Learn.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
+        <a href="Practise.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
+        <a href="Archive.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
+        <a href="Contribute.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
+        <a href="Resources.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
+        <a href="BehindTheScenes.dc.html" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
+      </div>
+    </details>
   </div>
 </header>
 
 <main>
-<section id="main-content" style="position:relative;overflow:hidden;padding:clamp(3rem,7vw,5.5rem) 0 clamp(3rem,6vw,4.5rem)">
+<section id="main-content" style="position:relative;overflow:hidden;padding:clamp(2.2rem,5vw,3.5rem) 0 clamp(2rem,4vw,3rem)">
   <div style="position:absolute;inset:-14% -8% auto auto;pointer-events:none;z-index:0">{{ drift }}</div>
   <div style="position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.4rem;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center"><span style="width:7px;height:7px;border-radius:50%;background:#3F7A4E;display:inline-block"></span> v0.2 · a commons under construction · about 4 minutes to read this page</p>
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.1rem,6.4vw,4.4rem);line-height:1;letter-spacing:-.035em;margin:0 0 1.6rem;max-width:18ch">NO OWNERS. NO OBJECTS. NO COLONIES IN OUR RELATIONSHIPS.</h1>
-    <p style="font-size:clamp(1.1rem,2.3vw,1.35rem);line-height:1.5;max-width:42ch;margin:0 0 2rem">Relational sovereignty asks how we can build relationships that protect self-determination while recognizing interdependence, care, responsibility, and the living worlds to which we belong.</p>
-    <div style="border-top:1px solid #C9C6BA;border-bottom:1px solid #C9C6BA;padding:1.4rem 0;max-width:640px;display:flex;flex-wrap:wrap;gap:1rem;align-items:baseline;justify-content:space-between">
-      <p aria-live="polite" style="margin:0;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.1rem,2.6vw,1.5rem);line-height:1.15;letter-spacing:-.02em;max-width:22ch">{{ question }}</p>
-      <button type="button" onClick="{{ nextQuestion }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.7rem 1rem;min-height:44px;cursor:pointer;border-radius:2px" style-hover="border-color:#3F7A4E;color:#3F7A4E">another question</button>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.6rem 3rem;align-items:start">
+      <p style="font-size:clamp(1.1rem,2.3vw,1.35rem);line-height:1.5;max-width:42ch;margin:0">Relational sovereignty asks how we can build relationships that protect self-determination while recognizing interdependence, care, responsibility, and the living worlds to which we belong.</p>
+      <div style="border-top:1px solid #C9C6BA;border-bottom:1px solid #C9C6BA;padding:1.4rem 0;max-width:420px;display:flex;flex-direction:column;gap:1rem;align-items:flex-start">
+        <p aria-live="polite" style="margin:0;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.1rem,2.6vw,1.5rem);line-height:1.15;letter-spacing:-.02em;max-width:22ch">{{ question }}</p>
+        <button type="button" onClick="{{ nextQuestion }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.05em;text-transform:uppercase;background:none;border:none;color:#585B4F;padding:.4rem 0;min-height:44px;cursor:pointer;text-decoration:underline;text-underline-offset:3px" style-hover="color:#2C5A38">→ another question</button>
+      </div>
     </div>
   </div>
 </section>
@@ -238,7 +263,7 @@
     </div>
     <div>
       <p style="margin:0 0 .5rem;color:#DB9E2A">Pages</p>
-      <nav aria-label="Footer" style="display:flex;flex-direction:column;gap:.3rem">
+      <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
         <a href="Manifesto.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
       <a href="Invitation.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
         <a href="Learn.dc.html" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
