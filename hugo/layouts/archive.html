@@ -70,6 +70,7 @@
       <button type="button" data-filter="{{ .value }}" aria-pressed="{{ if eq .value "all" }}true{{ else }}false{{ end }}"{{ if eq .value "all" }} class="is-active"{{ end }}>{{ .label }}</button>
       {{ end }}
     </div>
+    <p style="margin:0 0 .3rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">"★ a first route" marks a suggested way in, not a ranking — everything else on this shelf carries the same weight, not runner-up status.</p>
     <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">Every entry below is shown by default. These buttons narrow the list if your browser runs the small script that does it — nothing is ever hidden without a click, and the full shelf renders either way.</p>
   </div>
 </section>
@@ -85,7 +86,7 @@
         {{ $rule := "#2B4C9B" }}
         {{ if in .tags "start" }}{{ $rule = "#7D5915" }}{{ else if in .tags "free" }}{{ $rule = "#366943" }}{{ end }}
         <article data-tags="{{ delimit .tags " " }}" style="border-top:2px solid {{ $rule }};padding-top:.9rem">
-          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ $rule }};margin:0 0 .5rem">{{ if in .tags "start" }}★ start here · {{ end }}{{ .use }}</p>
+          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ $rule }};margin:0 0 .5rem">{{ if in .tags "start" }}★ a first route · {{ end }}{{ .use }}</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">{{ .title }}</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">{{ .by }}</p>
           <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">{{ .why }}</p>

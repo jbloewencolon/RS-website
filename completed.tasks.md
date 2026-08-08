@@ -379,4 +379,16 @@ Notes:
 - Fifth and last of Phase 2.5's priority items (implementation order 5). Only RS-047 and RS-048 — the two items the author explicitly called optional follow-ups — remain in this phase.
 - `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
 
+### RS-047 — Archive starter-route reframe
+**Shipped:** 2026-08-08 · **Commit/PR:** (pending)
+
+~~was: the Archive's filter for its most accessible entries was labelled "★ start here," implying an order to the shelf the page's own kicker already called "nothing ranked" — the filter's own label disagreed with the framing copy sitting a few lines above it~~
+now: "★ a first route," with a new line at the filter bar stating plainly what that means: a suggested way in, not a ranking — everything else on the shelf carries the same weight, not runner-up status. The per-entry caption on each "first route" archive card changed to match. Nothing about the underlying mechanism changed: `archive-filter.js` filters on the `data-filter`/`data-tags` attribute value `"start"`, untouched by the label-text rename, and every entry's `tags: ["start", ...]` in `archive.yaml` is unchanged.
+
+Verified two ways, matching the rigor RS-004/D2 established for this exact page: with JavaScript disabled, all 39 archive entries (this count grew from 31 across RS-006/007/008's additions earlier this session) still render unfiltered, the new label text is present, and the old "start here" text is gone entirely — not coexisting, actually replaced. With JavaScript enabled, clicked the renamed filter button and confirmed it still narrows the visible set correctly, then clicked "everything" and confirmed the full 39 restore — the filter mechanism itself was never touched, but re-tested anyway rather than assumed safe from a label-only change.
+
+Notes:
+- Last of Phase 2.5's items shipped before RS-048 (the other author-flagged optional follow-up).
+- `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*

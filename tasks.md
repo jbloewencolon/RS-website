@@ -68,10 +68,9 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 
 | ID | Task | Tags | Files | Effort | Notes |
 |---|---|---|---|---|---|
-| **RS-047** | Improve Archive's existing starter route. Reframe the `start` filter as "A first route," with copy stating explicitly that it's a suggested route, not a ranking. Keep the full archive visible by default and preserve the existing no-JavaScript fallback — every entry must still render unfiltered with scripting off, exactly as RS-004/D2 already established. | `[COPY]` `[DEV]` | `hugo/layouts/archive.html` → regenerate `Archive.dc.html`, `archive-filter.js` | S | Optional follow-up, author's own framing |
 | **RS-048** | Clarify the Contribute form. State explicitly that subscribing to the dispatch and offering a contribution are independent actions — neither requires the other. Rename the "What you might offer" field label to "Optional contribution note." Preserve the existing warning not to enter anything the visitor wouldn't want read by a stranger. A full multi-mode form redesign can wait — this is copy and a label change, not a rebuild. | `[COPY]` | `Contribute.dc.html` | S | Optional follow-up, author's own framing |
 
-**Suggested implementation order, as given:** ~~RS-042~~ → ~~RS-043~~ → ~~RS-044~~ → ~~RS-045~~ → ~~RS-046~~ → RS-047/RS-048 if time permits. RS-042 through RS-046 shipped, see `completed.tasks.md`. Only the two optional follow-ups remain in this phase.
+**Suggested implementation order, as given:** ~~RS-042~~ → ~~RS-043~~ → ~~RS-044~~ → ~~RS-045~~ → ~~RS-046~~ → ~~RS-047~~ → RS-048 if time permits. RS-042 through RS-047 shipped, see `completed.tasks.md`. Only RS-048 remains in this phase.
 
 ---
 

@@ -9,7 +9,7 @@ filters:
   - value: "all"
     label: "everything"
   - value: "start"
-    label: "★ start here"
+    label: "★ a first route"
   - value: "free"
     label: "free to read"
   - value: "book"
