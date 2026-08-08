@@ -363,4 +363,20 @@ Notes:
 - Fourth of Phase 2.5's priority items (implementation order 4). Only RS-046 (priority) and RS-047/RS-048 (optional follow-ups) remain in this phase.
 - `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
 
+### RS-046 — Practise export/import into a native disclosure
+**Shipped:** 2026-08-08 · **Commit/PR:** (pending)
+
+~~was: the Consent Domains Map's save/resume controls — the findability warning, the filename field, the Save button, and the resume-from-file control — sat permanently visible beneath Print and Clear, adding four elements' worth of visual weight to a toolbar most visits never touch~~
+now: those controls live inside a native `<details>`/`<summary>` disclosure labelled "Save or resume this map" — collapsed by default, no script needed to open it. **The full findability warning stays in exactly the same words, directly above the export button, every time the section is open** — verified by DOM order, not just visual placement, so it can't drift out of position on a future edit. Print and Clear everything stay exactly where they were, outside the disclosure, reachable with zero extra interaction — confirmed both remained clickable and visible with the details still collapsed. The print-header caveat, previously nested inside the (now-hidden-by-default) warning box, moved to the always-visible explanatory paragraph above the disclosure, since it's actually about the Print button, which never moved.
+
+**No change to what gets saved, how, or the no-persistence guarantee.** `doExport`, `importFile`, `setFilename`, and `reset` are untouched — this is a markup change, not a logic change, and the completed-tasks entry for RS-027 still accurately describes the underlying model.
+
+**Print CSS needed no changes.** The entire toolbar section (including the new `<details>`) is already wrapped in `class="noprint"` and excluded from printed output entirely — Phase 2.5's "optional sections must expand for printing" constraint doesn't apply here, since nothing in this section prints regardless of its `open` state on screen.
+
+Verified with real Playwright interaction against a local server: confirmed the details element is closed by default; confirmed Print and Clear are visible and clickable without opening it; confirmed the warning text is genuinely not visible while collapsed (not just off-screen); opened the disclosure both by mouse click on the summary and by real keyboard (Tab to the native `<summary>`, then `Enter`) and confirmed both work; re-ran the full export flow (keyboard-triggered download, correct filename) and the full import flow (valid-file round-trip) through the new wrapper and confirmed both still work exactly as RS-027 shipped them.
+
+Notes:
+- Fifth and last of Phase 2.5's priority items (implementation order 5). Only RS-047 and RS-048 — the two items the author explicitly called optional follow-ups — remain in this phase.
+- `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*
