@@ -21,7 +21,7 @@
   a:hover{color:#3F7A4E}
   *{box-sizing:border-box}
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
-  @media print{body{background:#fff}.noprint{display:none!important}}
+  @media print{body{background:#fff}.noprint{display:none!important}body.print-isolate>header,body.print-isolate>main>section:not(#field-guide),body.print-isolate>footer{display:none!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
   .skip-link:focus{left:1rem;top:1rem}
@@ -160,6 +160,72 @@
   </div>
 </section>
 
+<section id="field-guide" style="padding:clamp(3rem,6vw,4.5rem) 0">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8B3A2F;margin:0 0 1rem">This site's own vocabulary, turned around</p>
+    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1.2rem;max-width:26ch">How this vocabulary gets used as a weapon.</h2>
+    <p style="max-width:60ch;margin:0 0 .8rem;color:#3C3E38;font-size:16.5px;line-height:1.58">Every word on this site can be turned around and used on someone. That isn't a reason not to write them down. It's a reason to write down how it happens.</p>
+    <p style="max-width:60ch;margin:0 0 1.8rem;color:#3C3E38;font-size:16.5px;line-height:1.58">Ten phrases below, most of them phrases this site's own vocabulary makes available, each with the diagnostic question worth asking when you hear it — from yourself or from someone else.</p>
+    <div class="noprint" style="margin:0 0 1.8rem">
+      <button type="button" data-print-isolate style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#8B3A2F;color:#F3E9E6;border:none;padding:.8rem 1.1rem;min-height:44px;cursor:pointer;border-radius:2px">Print this field guide</button>
+      <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#585B4F;margin-left:.8rem">One page or two, depending on your browser and paper size — just this list, not the rest of Learn.</span>
+    </div>
+    <div id="field-guide-list" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:#C9C6BA;border:1px solid #C9C6BA">
+      <div style="background:#E7E5DC;padding:1.3rem 1.4rem 1.5rem">
+        <p style="margin:0 0 .5rem;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.02rem;line-height:1.3;color:#191B18">"I just want you to become your best self."</p>
+        <p style="margin:0 0 .6rem;font-size:14.5px;line-height:1.5;color:#3C3E38">Sounds like care. Often is care. Also the standard vocabulary of someone renovating a person. If somebody else is holding the blueprint for who you're supposed to become, that isn't growth.</p>
+        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5;color:#8B3A2F;border-left:2px solid #8B3A2F;padding-left:.7rem">Whose picture of your best self is this, and were you asked?</p>
+      </div>
+      <div style="background:#E7E5DC;padding:1.3rem 1.4rem 1.5rem">
+        <p style="margin:0 0 .5rem;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.02rem;line-height:1.3;color:#191B18">"That's my boundary."</p>
+        <p style="margin:0 0 .6rem;font-size:14.5px;line-height:1.5;color:#3C3E38">A boundary is something you do — what you will and won't be part of. It isn't an instruction for someone else's behaviour, and it isn't a way to close a conversation about something you did.</p>
+        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5;color:#8B3A2F;border-left:2px solid #8B3A2F;padding-left:.7rem">Does this boundary govern them, or you?</p>
+      </div>
+      <div style="background:#E7E5DC;padding:1.3rem 1.4rem 1.5rem">
+        <p style="margin:0 0 .5rem;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.02rem;line-height:1.3;color:#191B18">"I don't have the capacity for this."</p>
+        <p style="margin:0 0 .6rem;font-size:14.5px;line-height:1.5;color:#3C3E38">True constantly, for everyone. Also a way to be permanently unavailable for accountability while remaining available for everything else.</p>
+        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5;color:#8B3A2F;border-left:2px solid #8B3A2F;padding-left:.7rem">Is there any version of later?</p>
+      </div>
+      <div style="background:#E7E5DC;padding:1.3rem 1.4rem 1.5rem">
+        <p style="margin:0 0 .5rem;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.02rem;line-height:1.3;color:#191B18">"You're being anxious." "That's avoidant." "That's textbook narcissism."</p>
+        <p style="margin:0 0 .6rem;font-size:14.5px;line-height:1.5;color:#3C3E38">Clinical words in a domestic argument aren't analysis. They turn a disagreement into a symptom, so it doesn't have to be answered.</p>
+        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5;color:#8B3A2F;border-left:2px solid #8B3A2F;padding-left:.7rem">Could this sentence be said without the diagnosis?</p>
+      </div>
+      <div style="background:#E7E5DC;padding:1.3rem 1.4rem 1.5rem">
+        <p style="margin:0 0 .5rem;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.02rem;line-height:1.3;color:#191B18">"You're being possessive." "That's so amatonormative."</p>
+        <p style="margin:0 0 .6rem;font-size:14.5px;line-height:1.5;color:#3C3E38">Sometimes true. Also the fastest way to make a real objection sound like a character flaw. Monogamy is a legitimate choice. Wanting to be told things is not a pathology.</p>
+        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5;color:#8B3A2F;border-left:2px solid #8B3A2F;padding-left:.7rem">Is the objection being answered, or reclassified?</p>
+      </div>
+      <div style="background:#E7E5DC;padding:1.3rem 1.4rem 1.5rem">
+        <p style="margin:0 0 .5rem;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.02rem;line-height:1.3;color:#191B18">"I'm honouring my sovereignty."</p>
+        <p style="margin:0 0 .6rem;font-size:14.5px;line-height:1.5;color:#3C3E38">This site's own word. It has never meant leaving without telling anyone, and it has never meant walking away from someone who depends on you to survive.</p>
+        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5;color:#8B3A2F;border-left:2px solid #8B3A2F;padding-left:.7rem">What's being honoured, and what's being avoided?</p>
+      </div>
+      <div style="background:#E7E5DC;padding:1.3rem 1.4rem 1.5rem">
+        <p style="margin:0 0 .5rem;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.02rem;line-height:1.3;color:#191B18">"We need to work on this." "We've decided."</p>
+        <p style="margin:0 0 .6rem;font-size:14.5px;line-height:1.5;color:#3C3E38">The "we" is doing work here — check what it's covering for.</p>
+        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5;color:#8B3A2F;border-left:2px solid #8B3A2F;padding-left:.7rem">Swap "we" for "you." Is the sentence still true?</p>
+      </div>
+      <div style="background:#E7E5DC;padding:1.3rem 1.4rem 1.5rem">
+        <p style="margin:0 0 .5rem;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.02rem;line-height:1.3;color:#191B18">"Hold it more spaciously." "You're being so transactional."</p>
+        <p style="margin:0 0 .6rem;font-size:14.5px;line-height:1.5;color:#3C3E38">Money, time, labour, and safety aren't the opposite of love. They're what love runs on. A frame in which material questions are spiritually crude is a frame that benefits whoever has more.</p>
+        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5;color:#8B3A2F;border-left:2px solid #8B3A2F;padding-left:.7rem">Is the concrete question still on the table?</p>
+      </div>
+      <div style="background:#E7E5DC;padding:1.3rem 1.4rem 1.5rem">
+        <p style="margin:0 0 .5rem;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.02rem;line-height:1.3;color:#191B18">"Everyone agrees." "The pod thinks."</p>
+        <p style="margin:0 0 .6rem;font-size:14.5px;line-height:1.5;color:#3C3E38">A collective voice is easy to invoke and hard to check.</p>
+        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5;color:#8B3A2F;border-left:2px solid #8B3A2F;padding-left:.7rem">Has anyone said this to you individually?</p>
+      </div>
+      <div style="background:#E7E5DC;padding:1.3rem 1.4rem 1.5rem">
+        <p style="margin:0 0 .5rem;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.02rem;line-height:1.3;color:#191B18">"You seemed fine with it."</p>
+        <p style="margin:0 0 .6rem;font-size:14.5px;line-height:1.5;color:#3C3E38">Seeming fine is what people do when the alternative is expensive.</p>
+        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5;color:#8B3A2F;border-left:2px solid #8B3A2F;padding-left:.7rem">What would it have cost to not seem fine?</p>
+      </div>
+    </div>
+    <p style="max-width:60ch;margin:1.8rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #DB9E2A;padding:.2rem 0 .2rem .9rem">⌖ What got said to you, in this vocabulary, to avoid answering something — that's the strongest candidate this site has for something a reader could add. There's nowhere built to route it yet. It's named on <a href="Contribute.dc.html">Contribute</a>, parked, not built, until there's a community to route it to.</p>
+  </div>
+</section>
+
 <section style="padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1rem">What's planned, not what's built</p>
@@ -201,5 +267,6 @@
   </div>
 </footer>
 
+<script src="print.js"></script>
 </body>
 </html>
