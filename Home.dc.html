@@ -213,13 +213,16 @@
           </label>
           <label style="display:block;margin-bottom:1.3rem">
             <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">Email</span>
-            <input type="email" autocomplete="email" value="{{ email }}" onChange="{{ setEmail }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.75rem .8rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
+            <input type="email" id="dispatch-email" autocomplete="email" aria-invalid="{{ emailInvalid }}" aria-describedby="dispatch-email-error" value="{{ email }}" onChange="{{ setEmail }}" style="width:100%;background:#EFEEE7;border:1px solid {{ emailBorderColor }};border-radius:2px;padding:.75rem .8rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
           </label>
-          <label style="display:block;margin-bottom:1.3rem">
+          <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
+            <p role="alert" id="dispatch-email-error" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem">{{ error }}</p>
+          </sc-if>
+          <label for="dispatch-name" style="display:block;margin-bottom:.4rem">
             <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">Name or pseudonym</span>
-            <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin-bottom:.5rem;line-height:1.5">Optional. Any characters, any script, no validator. We do not check.</span>
-            <input type="text" autocomplete="name" value="{{ name }}" onChange="{{ setName }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.75rem .8rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
           </label>
+          <p id="name-hint" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:0 0 .5rem;line-height:1.5">Optional. Any characters, any script, no validator. We do not check.</p>
+          <input type="text" id="dispatch-name" autocomplete="name" aria-describedby="name-hint" value="{{ name }}" onChange="{{ setName }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.75rem .8rem;min-height:44px;margin-bottom:1.3rem;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
           <fieldset style="border:none;margin:0 0 1.4rem;padding:0">
             <legend style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;padding:0;margin-bottom:.4rem">What brought you here</legend>
             <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:0 0 .7rem;line-height:1.5">Optional. Choose none, one, or all.</p>
@@ -233,9 +236,6 @@
             </div>
           </fieldset>
           <button type="submit" disabled="{{ sending }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px;opacity:{{ sendingOpacity }}">{{ submitLabel }}</button>
-          <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
-            <p role="alert" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:1rem 0 0">{{ error }}</p>
-          </sc-if>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.6;color:#5A5D53;margin:1rem 0 0">No tracking pixels. No third parties. Your address is confirmed by email before anything is stored, and one link in every letter removes you.</p>
         </form>
       </sc-if>
@@ -288,7 +288,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
 class Component extends DCLogic {
-  state = { qi: 0, sent: false, email: "", name: "", interests: [], hp: "", sending: false, error: "" };
+  state = { qi: 0, sent: false, email: "", name: "", interests: [], hp: "", sending: false, error: "", emailInvalid: false };
 
   // The dispatch signup endpoint. Nothing is stored there until the
   // reader clicks the confirmation link this call triggers.
@@ -350,6 +350,8 @@ class Component extends DCLogic {
       submitLabel: this.state.sending ? "Sending…" : "Join the dispatch",
       error: this.state.error,
       hasError: !!this.state.error,
+      emailInvalid: this.state.emailInvalid,
+      emailBorderColor: this.state.emailInvalid ? "#8B3A2F" : "#C9C6BA",
       // `hp` is a honeypot: real visitors never see or fill it (it's
       // hidden from sight and skipped by screen readers/keyboard tab
       // order), so a non-empty value means a bot filled every field it
@@ -361,10 +363,11 @@ class Component extends DCLogic {
         if (this.state.hp) { this.setState({ sent: true }); return; }
         const email = this.state.email.trim();
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          this.setState({ error: "That address does not look complete. Check it and try again." });
+          this.setState({ error: "That address does not look complete. Check it and try again.", emailInvalid: true });
+          document.getElementById("dispatch-email")?.focus();
           return;
         }
-        this.setState({ sending: true, error: "" });
+        this.setState({ sending: true, error: "", emailInvalid: false });
         try {
           const res = await fetch(Component.ENDPOINT, {
             method: "POST",

@@ -121,13 +121,16 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.6;color:#5A5D53;margin:0 0 1.3rem;max-width:52ch">An address is required to submit this form at all — there is no other channel yet. Leave every box below unchecked and you will get exactly one email asking you to confirm, and nothing after that unless you click it.</p>
           <label style="display:block;margin-bottom:1.3rem">
             <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">Email</span>
-            <input type="email" autocomplete="email" value="{{ email }}" onChange="{{ setEmail }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.75rem .8rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
+            <input type="email" id="contribute-email" autocomplete="email" aria-invalid="{{ emailInvalid }}" aria-describedby="contribute-email-error" value="{{ email }}" onChange="{{ setEmail }}" style="width:100%;background:#EFEEE7;border:1px solid {{ emailBorderColor }};border-radius:2px;padding:.75rem .8rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
           </label>
-          <label style="display:block;margin-bottom:1.3rem">
+          <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
+            <p role="alert" id="contribute-email-error" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem">{{ error }}</p>
+          </sc-if>
+          <label for="contribute-name" style="display:block;margin-bottom:.4rem">
             <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">Name or pseudonym</span>
-            <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin-bottom:.5rem;line-height:1.5">Optional. Any characters, any script, no validator. Anonymity is a legitimate choice, not a lesser one.</span>
-            <input type="text" autocomplete="name" value="{{ name }}" onChange="{{ setName }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.75rem .8rem;min-height:44px;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
           </label>
+          <p id="contribute-name-hint" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:0 0 .5rem;line-height:1.5">Optional. Any characters, any script, no validator. Anonymity is a legitimate choice, not a lesser one.</p>
+          <input type="text" id="contribute-name" autocomplete="name" aria-describedby="contribute-name-hint" value="{{ name }}" onChange="{{ setName }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.75rem .8rem;min-height:44px;margin-bottom:1.3rem;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;color:#191B18">
           <fieldset style="border:none;margin:0 0 1.4rem;padding:0">
             <legend style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;padding:0;margin-bottom:.4rem">What brought you here</legend>
             <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:0 0 .7rem;line-height:1.5">Optional. Choose none, one, or all.</p>
@@ -140,15 +143,12 @@
               </sc-for>
             </div>
           </fieldset>
-          <label style="display:block;margin-bottom:1.4rem">
+          <label for="contribute-note" style="display:block;margin-bottom:.4rem">
             <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">Optional contribution note</span>
-            <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin-bottom:.5rem;line-height:1.5">Optional. A sentence is enough. Do not put anything here you would not want read by a stranger. Not yet wired to anywhere it gets acted on — see <a href="BehindTheScenes.dc.html#faults" style="color:#585B4F">the fault list</a>.</span>
-            <textarea rows="4" value="{{ offer }}" onChange="{{ setOffer }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.7rem .8rem;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;line-height:1.5;color:#191B18;resize:vertical"></textarea>
           </label>
+          <p id="contribute-note-hint" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:0 0 .5rem;line-height:1.5">Optional. A sentence is enough. Do not put anything here you would not want read by a stranger. Not yet wired to anywhere it gets acted on — see <a href="BehindTheScenes.dc.html#faults" style="color:#585B4F">the fault list</a>.</p>
+          <textarea id="contribute-note" rows="4" aria-describedby="contribute-note-hint" value="{{ offer }}" onChange="{{ setOffer }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.7rem .8rem;margin-bottom:1.4rem;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;line-height:1.5;color:#191B18;resize:vertical"></textarea>
           <button type="submit" disabled="{{ sending }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px;opacity:{{ sendingOpacity }}">{{ submitLabel }}</button>
-          <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
-            <p role="alert" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:1rem 0 0">{{ error }}</p>
-          </sc-if>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.6;color:#5A5D53;margin:1rem 0 0">No tracking pixels. A transactional email service sends the confirmation and unsubscribe messages and never receives the list itself — full architecture in the colophon. No schedule promised. Your address is confirmed by email before anything is stored, and one link in every letter removes you.</p>
         </form>
       </sc-if>
@@ -227,7 +227,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
 class Component extends DCLogic {
-  state = { sent: false, email: "", name: "", offer: "", interests: [], hp: "", sending: false, error: "" };
+  state = { sent: false, email: "", name: "", offer: "", interests: [], hp: "", sending: false, error: "", emailInvalid: false };
 
   // The dispatch signup endpoint. Nothing is stored there until the
   // reader clicks the confirmation link this call triggers.
@@ -286,6 +286,8 @@ class Component extends DCLogic {
       submitLabel: this.state.sending ? "Sending…" : "Send",
       error: this.state.error,
       hasError: !!this.state.error,
+      emailInvalid: this.state.emailInvalid,
+      emailBorderColor: this.state.emailInvalid ? "#8B3A2F" : "#C9C6BA",
       // `hp` is a honeypot: real visitors never see or fill it (it's
       // hidden from sight and skipped by screen readers/keyboard tab
       // order), so a non-empty value means a bot filled every field it
@@ -297,10 +299,11 @@ class Component extends DCLogic {
         if (this.state.hp) { this.setState({ sent: true }); return; }
         const email = this.state.email.trim();
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          this.setState({ error: "That address does not look complete. Check it and try again." });
+          this.setState({ error: "That address does not look complete. Check it and try again.", emailInvalid: true });
+          document.getElementById("contribute-email")?.focus();
           return;
         }
-        this.setState({ sending: true, error: "" });
+        this.setState({ sending: true, error: "", emailInvalid: false });
         try {
           const res = await fetch(Component.ENDPOINT, {
             method: "POST",
