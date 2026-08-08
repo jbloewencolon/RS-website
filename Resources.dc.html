@@ -21,7 +21,7 @@
   a:hover{color:#3F7A4E}
   *{box-sizing:border-box}
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
-  @media print{body{background:#fff}.noprint{display:none!important}}
+  @media print{body{background:#fff}.noprint{display:none!important}details:not([open])>*{display:block!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
   .skip-link:focus{left:1rem;top:1rem}
@@ -79,7 +79,7 @@
         — Does anyone else know everything that's happening?
       </p>
     </details>
-    <p style="max-width:56ch;margin:0;color:#3C3E38">If any of those were difficult to sit with, the "coercive control" section below is the most direct next step.</p>
+    <p style="max-width:56ch;margin:0;color:#3C3E38">If any of those were difficult to sit with, the <a href="#coercive-control">"coercive control" section below</a> is the most direct next step.</p>
   </div>
 </section>
 
@@ -107,132 +107,182 @@
 <section style="padding:clamp(2.5rem,5vw,3.5rem) 0;border-top:1px solid #C9C6BA">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
 
-    <h2 id="crisis-lines" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0 0 .3rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">Immediate safety and crisis lines</h2>
-    <p style="margin:0 0 1.2rem;color:#585B4F;font-size:15.5px">Canada, national</p>
-    <div style="display:grid;gap:1.2rem;max-width:820px;margin-bottom:2rem">
-      <div>
-        <p style="margin:0 0 .3rem;font-weight:700">9-8-8: Suicide Crisis Helpline — <a href="https://988.ca/">988.ca</a></p>
-        <p style="margin:0 0 .3rem;color:#3C3E38">For anyone thinking about suicide, or worried about someone who might be. A safe space to talk, any time.</p>
-        <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">call or text 988 · free · 24/7 · verified 2026-08-07</p>
+    <details id="crisis-lines" open style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">Immediate safety and crisis lines</h2>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;white-space:nowrap">Canada, national</span>
+      </summary>
+      <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
+        <div>
+          <p style="margin:0 0 .3rem;font-weight:700">9-8-8: Suicide Crisis Helpline — <a href="https://988.ca/">988.ca</a></p>
+          <p style="margin:0 0 .3rem;color:#3C3E38">For anyone thinking about suicide, or worried about someone who might be. A safe space to talk, any time.</p>
+          <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">call or text 988 · free · 24/7 · verified 2026-08-07</p>
+        </div>
+        <div>
+          <p style="margin:0 0 .3rem;font-weight:700">Hope for Wellness Helpline — <a href="https://www.hopeforwellness.ca/">hopeforwellness.ca</a></p>
+          <p style="margin:0 0 .3rem;color:#3C3E38">Crisis intervention and counselling for Indigenous people across Canada, in English, French, Cree, Ojibway, and Inuktitut. Operated by an Indigenous organisation, funded by Indigenous Services Canada.</p>
+          <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">1-855-242-3310 or online chat · free · 24/7 · verified 2026-08-07</p>
+        </div>
+        <div>
+          <p style="margin:0 0 .3rem;font-weight:700">Kids Help Phone — <a href="https://kidshelpphone.ca/">kidshelpphone.ca</a></p>
+          <p style="margin:0 0 .3rem;color:#3C3E38">Canada's national e-mental-health service for young people, in over 100 languages with interpretation.</p>
+          <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">1-800-668-6868, text, or chat · free · 24/7 phone · verified 2026-08-07</p>
+        </div>
       </div>
-      <div>
-        <p style="margin:0 0 .3rem;font-weight:700">Hope for Wellness Helpline — <a href="https://www.hopeforwellness.ca/">hopeforwellness.ca</a></p>
-        <p style="margin:0 0 .3rem;color:#3C3E38">Crisis intervention and counselling for Indigenous people across Canada, in English, French, Cree, Ojibway, and Inuktitut. Operated by an Indigenous organisation, funded by Indigenous Services Canada.</p>
-        <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">1-855-242-3310 or online chat · free · 24/7 · verified 2026-08-07</p>
-      </div>
-      <div>
-        <p style="margin:0 0 .3rem;font-weight:700">Kids Help Phone — <a href="https://kidshelpphone.ca/">kidshelpphone.ca</a></p>
-        <p style="margin:0 0 .3rem;color:#3C3E38">Canada's national e-mental-health service for young people, in over 100 languages with interpretation.</p>
-        <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">1-800-668-6868, text, or chat · free · 24/7 phone · verified 2026-08-07</p>
-      </div>
-    </div>
+    </details>
 
-    <h2 id="coercive-control" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0 0 .3rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">Intimate partner violence and coercive control</h2>
-    <p style="margin:0 0 1.2rem;color:#585B4F;font-size:15.5px">Canada, national directory</p>
-    <div style="display:grid;gap:1.2rem;max-width:820px;margin-bottom:2rem">
-      <div>
-        <p style="margin:0 0 .3rem;font-weight:700">ShelterSafe — <a href="https://sheltersafe.ca/">sheltersafe.ca</a></p>
-        <p style="margin:0 0 .3rem;color:#3C3E38">An interactive map to the nearest shelter, run by Women's Shelters Canada — a network of 16 provincial and territorial shelter associations representing over 600 shelters. Each listing carries its own 24-hour emergency number.</p>
-        <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">web directory, listings are 24h by phone · free · verified 2026-08-07</p>
+    <details id="coercive-control" style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">Intimate partner violence and coercive control</h2>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;white-space:nowrap">Canada, national directory</span>
+      </summary>
+      <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
+        <div>
+          <p style="margin:0 0 .3rem;font-weight:700">ShelterSafe — <a href="https://sheltersafe.ca/">sheltersafe.ca</a></p>
+          <p style="margin:0 0 .3rem;color:#3C3E38">An interactive map to the nearest shelter, run by Women's Shelters Canada — a network of 16 provincial and territorial shelter associations representing over 600 shelters. Each listing carries its own 24-hour emergency number.</p>
+          <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">web directory, listings are 24h by phone · free · verified 2026-08-07</p>
+        </div>
+        <p style="margin:0;font-size:15px;line-height:1.5;color:#3C3E38">Coercive control often arrives in ordinary-sounding language — concern, growth, a boundary, a diagnosis. Relational Sovereignty's own Learn page keeps a field guide to <a href="Learn.dc.html#field-guide">how that vocabulary gets used as a weapon</a>, off this site's crisis-response content and on its reading pages instead.</p>
       </div>
-      <p style="margin:0;font-size:15px;line-height:1.5;color:#3C3E38">Coercive control often arrives in ordinary-sounding language — concern, growth, a boundary, a diagnosis. Relational Sovereignty's own Learn page keeps a field guide to <a href="Learn.dc.html#field-guide">how that vocabulary gets used as a weapon</a>, off this site's crisis-response content and on its reading pages instead.</p>
-    </div>
+    </details>
 
-    <h2 id="legal-aid" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0 0 .3rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">Legal aid and family law</h2>
-    <p style="margin:0 0 1.2rem;color:#585B4F;font-size:15.5px">Canada — thin coverage, stated honestly</p>
-    <div style="display:grid;gap:1.2rem;max-width:820px;margin-bottom:1rem">
-      <div>
-        <p style="margin:0 0 .3rem;font-weight:700">211 Canada — <a href="https://211.ca/">211.ca</a></p>
-        <p style="margin:0 0 .3rem;color:#3C3E38">Canada's largest directory of community, social, and government services, including referral to legal aid and family law clinics in your area. Not legal advice — a starting point for finding who can give it.</p>
-        <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">phone 211 or web, 150+ languages · free · verified 2026-08-07</p>
+    <details id="legal-aid" style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">Legal aid and family law</h2>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;white-space:nowrap">Canada — thin coverage, stated honestly</span>
+      </summary>
+      <div style="margin-top:1.2rem">
+        <div style="display:grid;gap:1.2rem;max-width:820px;margin-bottom:1rem">
+          <div>
+            <p style="margin:0 0 .3rem;font-weight:700">211 Canada — <a href="https://211.ca/">211.ca</a></p>
+            <p style="margin:0 0 .3rem;color:#3C3E38">Canada's largest directory of community, social, and government services, including referral to legal aid and family law clinics in your area. Not legal advice — a starting point for finding who can give it.</p>
+            <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">phone 211 or web, 150+ languages · free · verified 2026-08-07</p>
+          </div>
+        </div>
+        <p style="max-width:56ch;margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#5A5D53">Legal aid in Canada is administered separately by each province and territory, and no single national directory links out to all thirteen plans cleanly enough to publish here without guessing. This is a known gap, not a finished category — see the fault list on the <a href="BehindTheScenes.dc.html">colophon</a>.</p>
       </div>
-    </div>
-    <p style="max-width:56ch;margin:0 0 2rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#5A5D53">Legal aid in Canada is administered separately by each province and territory, and no single national directory links out to all thirteen plans cleanly enough to publish here without guessing. This is a known gap, not a finished category — see the fault list on the <a href="BehindTheScenes.dc.html">colophon</a>.</p>
+    </details>
 
-    <h2 id="immigration" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0 0 .3rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">Immigration and refugee support</h2>
-    <p style="margin:0 0 1.2rem;color:#585B4F;font-size:15.5px">Canada, national network</p>
-    <div style="display:grid;gap:1.2rem;max-width:820px;margin-bottom:1rem">
-      <div>
-        <p style="margin:0 0 .3rem;font-weight:700">Canadian Council for Refugees — <a href="https://ccrweb.ca/">ccrweb.ca</a></p>
-        <p style="margin:0 0 .3rem;color:#3C3E38">A national coalition of refugee- and immigrant-serving organisations. The CCR itself does not provide direct legal help — it coordinates and advocates for the member organisations that do. Use its site to find a member organisation near you.</p>
-        <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">web, points to member organisations · verified 2026-08-07</p>
+    <details id="immigration" style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">Immigration and refugee support</h2>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;white-space:nowrap">Canada, national network</span>
+      </summary>
+      <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
+        <div>
+          <p style="margin:0 0 .3rem;font-weight:700">Canadian Council for Refugees — <a href="https://ccrweb.ca/">ccrweb.ca</a></p>
+          <p style="margin:0 0 .3rem;color:#3C3E38">A national coalition of refugee- and immigrant-serving organisations. The CCR itself does not provide direct legal help — it coordinates and advocates for the member organisations that do. Use its site to find a member organisation near you.</p>
+          <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">web, points to member organisations · verified 2026-08-07</p>
+        </div>
       </div>
-    </div>
+    </details>
 
-    <h2 id="housing" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0 0 .3rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">Housing, tenant organising, and emergency shelter</h2>
-    <p style="margin:0 0 1.2rem;color:#585B4F;font-size:15.5px">Canada, national</p>
-    <div style="display:grid;gap:1.2rem;max-width:820px;margin-bottom:1rem">
-      <div>
-        <p style="margin:0 0 .3rem;font-weight:700">ACORN Canada — <a href="https://acorncanada.org/">acorncanada.org</a></p>
-        <p style="margin:0 0 .3rem;color:#3C3E38">A national, member-led union of low- and moderate-income tenants and community members, with chapters across several provinces. Organises collectively on housing conditions, rent, and eviction.</p>
-        <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">web, chapter-based · membership is free · verified 2026-08-07</p>
+    <details id="housing" style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">Housing, tenant organising, and emergency shelter</h2>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;white-space:nowrap">Canada, national</span>
+      </summary>
+      <div style="margin-top:1.2rem">
+        <div style="display:grid;gap:1.2rem;max-width:820px;margin-bottom:1rem">
+          <div>
+            <p style="margin:0 0 .3rem;font-weight:700">ACORN Canada — <a href="https://acorncanada.org/">acorncanada.org</a></p>
+            <p style="margin:0 0 .3rem;color:#3C3E38">A national, member-led union of low- and moderate-income tenants and community members, with chapters across several provinces. Organises collectively on housing conditions, rent, and eviction.</p>
+            <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">web, chapter-based · membership is free · verified 2026-08-07</p>
+          </div>
+        </div>
+        <p style="max-width:56ch;margin:0;color:#3C3E38">For emergency shelter specifically, see <a href="#coercive-control">ShelterSafe above</a> — its listings are not limited to intimate-partner violence.</p>
       </div>
-    </div>
-    <p style="max-width:56ch;margin:0 0 2rem;color:#3C3E38">For emergency shelter specifically, see ShelterSafe above — its listings are not limited to intimate-partner violence.</p>
+    </details>
 
-    <h2 id="income" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0 0 .3rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">Income, benefits, and food security</h2>
-    <p style="margin:0 0 1.2rem;color:#585B4F;font-size:15.5px">Canada, national directory</p>
-    <div style="display:grid;gap:1.2rem;max-width:820px;margin-bottom:2rem">
-      <div>
-        <p style="margin:0 0 .3rem;font-weight:700">211 Canada — <a href="https://211.ca/">211.ca</a></p>
-        <p style="margin:0 0 .3rem;color:#3C3E38">The same directory listed under legal aid above also covers benefits navigation, income support, and food security services by region — call 211 or search by postal code.</p>
-        <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">phone 211 or web, 150+ languages · free · verified 2026-08-07</p>
+    <details id="income" style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">Income, benefits, and food security</h2>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;white-space:nowrap">Canada, national directory</span>
+      </summary>
+      <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
+        <div>
+          <p style="margin:0 0 .3rem;font-weight:700">211 Canada — <a href="https://211.ca/">211.ca</a></p>
+          <p style="margin:0 0 .3rem;color:#3C3E38">The same directory listed under legal aid above also covers benefits navigation, income support, and food security services by region — call 211 or search by postal code.</p>
+          <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">phone 211 or web, 150+ languages · free · verified 2026-08-07</p>
+        </div>
       </div>
-    </div>
+    </details>
 
-    <h2 id="disability" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0 0 .3rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">Disability advocacy and independent living</h2>
-    <p style="margin:0 0 1.2rem;color:#585B4F;font-size:15.5px">Canada, national</p>
-    <div style="display:grid;gap:1.2rem;max-width:820px;margin-bottom:2rem">
-      <div>
-        <p style="margin:0 0 .3rem;font-weight:700">Council of Canadians with Disabilities — <a href="https://www.ccdonline.ca/">ccdonline.ca</a></p>
-        <p style="margin:0 0 .3rem;color:#3C3E38">A national, cross-disability human-rights organisation working for an inclusive and accessible Canada. A starting point for advocacy and for finding disability-led organising in your region.</p>
-        <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">web · verified 2026-08-07</p>
+    <details id="disability" style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">Disability advocacy and independent living</h2>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;white-space:nowrap">Canada, national</span>
+      </summary>
+      <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
+        <div>
+          <p style="margin:0 0 .3rem;font-weight:700">Council of Canadians with Disabilities — <a href="https://www.ccdonline.ca/">ccdonline.ca</a></p>
+          <p style="margin:0 0 .3rem;color:#3C3E38">A national, cross-disability human-rights organisation working for an inclusive and accessible Canada. A starting point for advocacy and for finding disability-led organising in your region.</p>
+          <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">web · verified 2026-08-07</p>
+        </div>
       </div>
-    </div>
+    </details>
 
-    <h2 id="lgbtq" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0 0 .3rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">2SLGBTQ+ and trans-specific services</h2>
-    <p style="margin:0 0 1.2rem;color:#585B4F;font-size:15.5px">Canada, national</p>
-    <div style="display:grid;gap:1.2rem;max-width:820px;margin-bottom:2rem">
-      <div>
-        <p style="margin:0 0 .3rem;font-weight:700">Egale Canada — <a href="https://egale.ca/">egale.ca</a></p>
-        <p style="margin:0 0 .3rem;color:#3C3E38">Canada's national 2SLGBTQI organisation. Runs Egale Youth OUTReach, offering counselling and homelessness/suicide-crisis support for 2SLGBTQI youth, alongside its broader advocacy and resources.</p>
-        <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">web, see site for youth-service contact details · verified 2026-08-07</p>
+    <details id="lgbtq" style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">2SLGBTQ+ and trans-specific services</h2>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;white-space:nowrap">Canada, national</span>
+      </summary>
+      <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
+        <div>
+          <p style="margin:0 0 .3rem;font-weight:700">Egale Canada — <a href="https://egale.ca/">egale.ca</a></p>
+          <p style="margin:0 0 .3rem;color:#3C3E38">Canada's national 2SLGBTQI organisation. Runs Egale Youth OUTReach, offering counselling and homelessness/suicide-crisis support for 2SLGBTQI youth, alongside its broader advocacy and resources.</p>
+          <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">web, see site for youth-service contact details · verified 2026-08-07</p>
+        </div>
       </div>
-    </div>
+    </details>
 
-    <h2 id="indigenous" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0 0 .3rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">Indigenous-specific and Indigenous-led services</h2>
-    <p style="margin:0 0 1.2rem;color:#585B4F;font-size:15.5px">Canada, national</p>
-    <div style="display:grid;gap:1.2rem;max-width:820px;margin-bottom:2rem">
-      <div>
-        <p style="margin:0 0 .3rem;font-weight:700">Native Women's Association of Canada — <a href="https://www.nwac.ca/">nwac.ca</a></p>
-        <p style="margin:0 0 .3rem;color:#3C3E38">A national Indigenous organisation representing Indigenous women, girls, and gender-diverse people, with a long-standing focus on violence prevention alongside its broader advocacy.</p>
-        <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">1-800-461-4043 · web · verified 2026-08-07</p>
+    <details id="indigenous" style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">Indigenous-specific and Indigenous-led services</h2>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;white-space:nowrap">Canada, national</span>
+      </summary>
+      <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
+        <div>
+          <p style="margin:0 0 .3rem;font-weight:700">Native Women's Association of Canada — <a href="https://www.nwac.ca/">nwac.ca</a></p>
+          <p style="margin:0 0 .3rem;color:#3C3E38">A national Indigenous organisation representing Indigenous women, girls, and gender-diverse people, with a long-standing focus on violence prevention alongside its broader advocacy.</p>
+          <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">1-800-461-4043 · web · verified 2026-08-07</p>
+        </div>
+        <div>
+          <p style="margin:0 0 .3rem;font-weight:700">Hope for Wellness Helpline — <a href="https://www.hopeforwellness.ca/">hopeforwellness.ca</a></p>
+          <p style="margin:0 0 .3rem;color:#3C3E38">Listed above under crisis lines — included here again because it is Indigenous-specific and Indigenous-delivered, not only a crisis service.</p>
+          <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">1-855-242-3310 or online chat · free · 24/7 · verified 2026-08-07</p>
+        </div>
       </div>
-      <div>
-        <p style="margin:0 0 .3rem;font-weight:700">Hope for Wellness Helpline — <a href="https://www.hopeforwellness.ca/">hopeforwellness.ca</a></p>
-        <p style="margin:0 0 .3rem;color:#3C3E38">Listed above under crisis lines — included here again because it is Indigenous-specific and Indigenous-delivered, not only a crisis service.</p>
-        <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">1-855-242-3310 or online chat · free · 24/7 · verified 2026-08-07</p>
-      </div>
-    </div>
+    </details>
 
-    <h2 id="mutual-aid" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0 0 .3rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">Mutual aid networks</h2>
-    <p style="margin:0 0 1.2rem;color:#585B4F;font-size:15.5px">Not yet built</p>
-    <p style="max-width:56ch;margin:0 0 2rem;color:#3C3E38">This category is genuinely empty, not thin. Mutual aid groups form and dissolve faster than one unpaid maintainer can verify, and a dead contact given to someone in crisis is worse than an honest absence. It stays on the <a href="BehindTheScenes.dc.html">fault list</a> until there's a stable, paid-staff directory to point to instead of individual groups.</p>
+    <details id="mutual-aid" style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">Mutual aid networks</h2>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;white-space:nowrap">Not yet built</span>
+      </summary>
+      <div style="margin-top:1.2rem">
+        <p style="max-width:56ch;margin:0;color:#3C3E38">This category is genuinely empty, not thin. Mutual aid groups form and dissolve faster than one unpaid maintainer can verify, and a dead contact given to someone in crisis is worse than an honest absence. It stays on the <a href="BehindTheScenes.dc.html">fault list</a> until there's a stable, paid-staff directory to point to instead of individual groups.</p>
+      </div>
+    </details>
 
-    <h2 id="international" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0 0 .3rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">If you are somewhere other than Canada</h2>
-    <p style="margin:0 0 1.2rem;color:#585B4F;font-size:15.5px">International</p>
-    <div style="display:grid;gap:1.2rem;max-width:820px">
-      <div>
-        <p style="margin:0 0 .3rem;font-weight:700">Find A Helpline — <a href="https://findahelpline.com/">findahelpline.com</a></p>
-        <p style="margin:0 0 .3rem;color:#3C3E38">A vetted directory of crisis lines in 130+ countries, covering suicide, domestic violence, sexual abuse, and gender and sexual identity, by phone, text, or web chat. Built by ThroughLine with the International Association for Suicide Prevention.</p>
-        <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">web, search by country · verified 2026-08-07</p>
+    <details id="international" style="margin:0;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
+        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">If you are somewhere other than Canada</h2>
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;white-space:nowrap">International</span>
+      </summary>
+      <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
+        <div>
+          <p style="margin:0 0 .3rem;font-weight:700">Find A Helpline — <a href="https://findahelpline.com/">findahelpline.com</a></p>
+          <p style="margin:0 0 .3rem;color:#3C3E38">A vetted directory of crisis lines in 130+ countries, covering suicide, domestic violence, sexual abuse, and gender and sexual identity, by phone, text, or web chat. Built by ThroughLine with the International Association for Suicide Prevention.</p>
+          <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">web, search by country · verified 2026-08-07</p>
+        </div>
+        <div>
+          <p style="margin:0 0 .3rem;font-weight:700">Befrienders Worldwide — <a href="https://befrienders.org/">befrienders.org</a></p>
+          <p style="margin:0 0 .3rem;color:#3C3E38">A global network of emotional-support centres for loneliness, despair, and suicidal distress — 349 centres in 32 countries. Grew out of the Samaritans; independent since 2012.</p>
+          <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">web, phone/email/chat varies by centre · verified 2026-08-07</p>
+        </div>
       </div>
-      <div>
-        <p style="margin:0 0 .3rem;font-weight:700">Befrienders Worldwide — <a href="https://befrienders.org/">befrienders.org</a></p>
-        <p style="margin:0 0 .3rem;color:#3C3E38">A global network of emotional-support centres for loneliness, despair, and suicidal distress — 349 centres in 32 countries. Grew out of the Samaritans; independent since 2012.</p>
-        <p style="margin:0;font-family:ui-monospace,monospace;font-size:13px;color:#585B4F">web, phone/email/chat varies by centre · verified 2026-08-07</p>
-      </div>
-    </div>
+    </details>
 
   </div>
 </section>
