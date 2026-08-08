@@ -349,4 +349,18 @@ Notes:
 - RS-045 (Behind the Scenes contents menu, next in this phase) now needs to cover this new `#roadmap` section too — not in the author's original anchor list, since it didn't exist yet when that list was written. Noted on RS-045's row rather than silently expanding scope without saying so.
 - `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
 
+### RS-045 — Behind the Scenes contents menu
+**Shipped:** 2026-08-08 · **Commit/PR:** (pending)
+
+~~was: Behind the Scenes carried eight sections — substrate, type, crawler policy, reuse terms, faults, roadmap, change log, labour and money — as one unbroken scroll with no way to jump to any of them directly~~
+now: a contents menu at the top of the page, eight ordinary `<a href="#id">` anchor links, one per section. `#roadmap` is included even though it wasn't in the author's original seven-item list — it didn't exist yet when that list was written, and shipped earlier this session via RS-044, landing on this exact page.
+
+**The fault list stays exactly as visible as it always was.** The menu is pure navigation — no `<details>`, no collapse, nothing that could fold current faults out of sight by default. This was the one explicit constraint on this task and it was checked programmatically, not assumed: confirmed the `#faults` section has no collapsed `<details>` ancestor.
+
+Verified with a real headless browser, JavaScript disabled: all eight menu hrefs (`#substrate`, `#type`, `#crawler`, `#reuse`, `#faults`, `#roadmap`, `#changelog`, `#labour`) resolve to a real `id` on the page.
+
+Notes:
+- Fourth of Phase 2.5's priority items (implementation order 4). Only RS-046 (priority) and RS-047/RS-048 (optional follow-ups) remain in this phase.
+- `npm run build:hugo && npm run build && npm run check` all pass clean on the final state.
+
 *(Everything else in `tasks.md` Phase 0 / Phase 1+ remains open.)*

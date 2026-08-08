@@ -7,6 +7,8 @@
 # error to fix).
 - version: "v0.2 — current"
   entries:
+    - was: "Behind the Scenes carried eight sections — substrate, type, crawler policy, reuse terms, faults, roadmap, change log, labour and money — in a single unbroken scroll with no way to jump to one directly"
+      now: "a contents menu at the top of the page, eight ordinary same-page anchor links. The fault list stays exactly as visible as it always was — the menu is a way in, not a way to fold anything out of sight, and current faults were never going to be the thing this page made harder to find"
     - was: "Learn ended with a nineteen-card grid of topic names, none linked, most not even drafted — the single largest block on the page was the part that didn't exist yet, outweighing the thirteen principles actually written above it"
       now: "a two-sentence explanation and a link to a new Roadmap section on the colophon, which carries the full nineteen-topic list (six drafted, thirteen not yet written) instead. Learn is now weighted toward what's actually on it; the honest disclosure that more is planned didn't need to be the biggest thing on the page to still be told plainly"
     - was: "Resources listed eleven categories in page order with no way to jump straight to the one a reader needed — crisis lines first, Indigenous-led services near the bottom, nothing in between named until scrolled to"
