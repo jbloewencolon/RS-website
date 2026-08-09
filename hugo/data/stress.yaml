@@ -1,0 +1,142 @@
+# The seven stress tests on the Learn page — situations traced through
+# the thirteen principles with the failures marked as failures.
+#
+# Single source of truth for BOTH views of this material: the holds/fails
+# matrix and the expandable cards underneath it read the same `holds` and
+# `fails` lists, so a prose revision that changes which principle breaks
+# cannot leave the chart quietly asserting something the prose no longer
+# says. Principle numbers must match the `n` field in principles.yaml.
+#
+# `broadly` marks the two rows whose failure is wider than any set of
+# numbered cells can show — the matrix footnotes them rather than
+# pretending the marked cells are the whole story.
+#
+# holdsNote / failsNote / setup carry inline links and are rendered with
+# `| safeHTML`. Nothing here is reader-supplied; it is site copy under
+# version control, which is the only reason bypassing escaping is safe.
+
+- id: "sponsored-partner"
+  title: "A sponsored partner"
+  setup: >-
+    One partner's legal status in the country is tied to the other
+    maintaining the sponsorship.
+  holds: ["01", "04"]
+  fails: ["07"]
+  holdsNote: >-
+    Principles 01 and 04 still name exactly what's wrong with using that
+    leverage.
+  failsNote: >-
+    Principle 07, refusal without retaliation. Leaving can mean losing
+    status, family separation, deportation. The retaliation isn't the
+    sponsoring partner's — it's the immigration system's — and nothing
+    here supplies a material floor under that refusal, only
+    <a href="/resources/">Resources</a> to point toward.
+
+- id: "funded-attendant"
+  title: "A disabled person partnered with their funded attendant"
+  setup: >-
+    A paid care worker is also an intimate partner — the same hours carry
+    both a wage and a bond.
+  holds: ["03", "13"]
+  fails: ["01", "08"]
+  holdsNote: >-
+    Principle 13 names the carer's own position inside the relationship;
+    principle 03 already distinguishes chosen from unchosen dependence.
+  failsNote: >-
+    Principles 01 and 08 both strain. Funding bodies can require
+    disclosure of the relationship's nature to keep the funding flowing —
+    08's own carve-out, opacity isn't available against institutions that
+    compel disclosure to release money. Neither person can cleanly refuse
+    one role without risking the other, and this framework has no separate
+    words for "this is paid labour" and "this is chosen intimacy" when
+    they're the same person, the same hours.
+
+- id: "carer-dependent-adult"
+  title: "A carer of a dependent adult"
+  setup: >-
+    Ongoing care for someone — an adult child, a parent — who cannot
+    survive without it.
+  holds: ["13"]
+  fails: ["07"]
+  holdsNote: >-
+    Principle 13 and the continuity-of-care clause below name the carer's
+    own refusal as real and constrained, not a moral failing.
+  failsNote: >-
+    Naming a constraint honestly is not the same as relieving it.
+    Principle 07 says refusal should be possible without retaliation; here
+    it's materially bounded by someone else's survival, and nothing on
+    this page supplies the respite, replacement care, or funding that
+    would make refusal actually available. That's a limit of what a
+    website can do, stated rather than hidden.
+
+- id: "coercive-control"
+  title: "A person under coercive control"
+  setup: >-
+    A partner who monitors, isolates, or punishes disagreement — the
+    situation the safety gate on <a href="/practise/">Practise</a> exists
+    for.
+  holds: []
+  fails: ["02", "04", "07"]
+  broadly: "Nearly every principle at once, not only the three marked."
+  holdsNote: >-
+    Nothing, cleanly — that's the point of naming it separately rather
+    than folding it into the other six.
+  failsNote: >-
+    Nearly every principle at once. 02, 04, and 07 all assume conditions
+    coercive control is specifically built to remove. This isn't a case
+    the principles handle badly — it's the case they were never meant to
+    handle alone, which is the entire reason this framework routes to
+    <a href="/resources/">Resources</a> here instead of offering more
+    principles.
+
+- id: "guardianship"
+  title: "A person under guardianship"
+  setup: >-
+    A court has formally transferred some or all of someone's
+    decision-making authority to another person.
+  holds: ["08"]
+  fails: ["02"]
+  holdsNote: >-
+    Principle 08 still distinguishes opacity owed to intimates from
+    disclosure compelled by institutions.
+  failsNote: >-
+    Principle 02, self-determination, by legal design. This framework has
+    no stated position on when that's a justified response to genuine
+    incapacity versus a form of the possession thesis 01 refuses — a tool
+    with a long history of use against disabled, elderly, and
+    disproportionately Indigenous and Black people. Naming the gap here
+    rather than claiming a position it hasn't earned the standing to take.
+
+- id: "precarious-housing"
+  title: "A precarious worker in shared housing"
+  setup: >-
+    Housing security depends on staying in good standing with housemates,
+    a landlord, or an employer providing tied housing.
+  holds: ["05"]
+  fails: ["07"]
+  holdsNote: >-
+    Principle 05 and the manifesto's revised thesis 02 ("whether it can
+    answer for itself") name what's wrong with an arbitrary demand here.
+  failsNote: >-
+    Principle 07 again. Refusing a housemate's demand can mean eviction or
+    homelessness, and a person without secure exit has no practical
+    standing to make anyone answer for themselves, whatever principle 05
+    says should happen in theory.
+
+- id: "child-restructuring"
+  title: "A child in a restructuring household"
+  setup: "Parents separating, a household reforming, custody changing."
+  holds: ["09", "12"]
+  fails: []
+  broadly: "A gap across all thirteen — no cell can carry an absence."
+  holdsNote: >-
+    Principles 09 and 12 gesture toward children without addressing them
+    directly.
+  failsNote: >-
+    No principle here grants a child standing proportionate to what they
+    absorb. The manifesto's revised thesis 11 says the people who absorb a
+    relationship's consequences get to ask — a child absorbs more of a
+    household's restructuring than almost anyone in it, and nothing in
+    these thirteen principles, written for adults capable of exercising
+    refusal and self-determination directly, has an age-appropriate theory
+    of a child's own voice in that process.

@@ -169,10 +169,17 @@
 
 <section id="held-in-common" style="padding:0 0 clamp(3rem,6vw,4.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .5rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Held in common</h2>
+    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .5rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA" id="held-in-common-title">Held in common</h2>
     <p style="max-width:60ch;margin:1rem 0 .6rem;color:#3C3E38">A shelf is a cadastre: one parcel per book, no overlaps, every text assigned to exactly one owner. Some of these texts refuse that. The four in the centre below are claimed fully by both traditions at once — not shared out, not split, not filed under one and cross-referenced from the other. Two jurisdictions, one holding.</p>
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:0 0 1.4rem">Reading order is left to right; on a narrow screen this diagram scrolls sideways. The three lists below are titled for anyone not reading them by their visual position — this is a Venn diagram made of real list text, not an image, so nothing here needs a separate text alternative.</p>
-    <div class="venn-scroll" style="overflow-x:auto;padding-bottom:.5rem">
+    {{/* tabindex="0" makes the sideways scroll reachable from the keyboard.
+         Below ~700px this diagram is the only way to read four of the
+         entries, and without it a keyboard-only reader can see the scroll
+         cue and has no way to act on it (axe: scrollable-region-focusable,
+         serious, at 375px and 390px — the check suite runs at 1280px, where
+         nothing overflows and the violation never appears). role+label give
+         the newly focusable box a name when focus lands on it. */}}
+    <div class="venn-scroll" style="overflow-x:auto;padding-bottom:.5rem" tabindex="0" role="group" aria-labelledby="held-in-common-title">
       <div style="min-width:700px;display:grid;grid-template-columns:1fr 1.15fr 1fr;grid-template-rows:auto minmax(240px,auto);gap:0">
         <p id="held-common-track-a-label" style="grid-column:1;grid-row:1;margin:0 0 .7rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B">Sovereignty, refusal, relation</p>
         <p id="held-common-track-b-label" style="grid-column:3;grid-row:1;margin:0 0 .7rem;text-align:right;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915">Care, access, accountability</p>
