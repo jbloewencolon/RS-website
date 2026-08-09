@@ -50,6 +50,9 @@ const redirectStubs = [
 ];
 
 const MIME = { ".html": "text/html", ".js": "application/javascript" };
+// Phone width for the second accessibility pass on every page — narrow
+// enough that anything with a fixed min-width actually overflows.
+const NARROW_WIDTH = 375;
 
 function serve() {
   return new Promise((resolve) => {
@@ -240,8 +243,25 @@ async function main() {
     }
 
     const axeResults = await new AxeBuilder({ page }).analyze();
+    const seenAtDesktop = new Set();
     for (const v of axeResults.violations) {
+      seenAtDesktop.add(v.id);
       pageProblems.push(`axe [${v.impact}] ${v.id}: ${v.help} (${v.nodes.length} node(s))`);
+    }
+
+    // Second axe pass at a phone width. Some violations only exist once the
+    // layout is narrow enough to overflow — a scrollable region that isn't
+    // keyboard-focusable can't be flagged at a width where nothing scrolls.
+    // This suite ran at the default 1280px only, which is exactly how
+    // SUGGEST-08 (Archive's Venn diagram) survived a full accessibility pass
+    // and had to be found by hand afterwards. Only ids that didn't already
+    // fire at desktop width are reported, so one problem isn't counted twice.
+    await page.setViewportSize({ width: NARROW_WIDTH, height: 800 });
+    await page.waitForTimeout(300);
+    const axeNarrow = await new AxeBuilder({ page }).analyze();
+    for (const v of axeNarrow.violations) {
+      if (seenAtDesktop.has(v.id)) continue;
+      pageProblems.push(`axe @${NARROW_WIDTH}px [${v.impact}] ${v.id}: ${v.help} (${v.nodes.length} node(s))`);
     }
 
     if (pageProblems.length) {
