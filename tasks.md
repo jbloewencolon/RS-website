@@ -296,7 +296,7 @@ One anchor is off by one: the Archive `$rule` assignment is at `archive.html:151
 |---|---|
 | Home's six door kickers (`index.html`, `Home.dc.html`, 6 each) | → `#6B4C12`. This is the case §3.5 is actually about. |
 | `archive.html:151` `$rule` for `start` | → `#6B4C12`, per §3.5's own reasoning about the shared text/border variable. |
-| `invitation.html:61` focus ring | → `#6B4C12`, or leave — see WD-07, which may supersede it. |
+| `invitation.html:61` focus ring (light ground) | Still open — WD-07 fixed the *dark-band* instance of this page's ring separately (2.38:1 on `#0F2A2E`, found doing that work, now `#DB9E2A` there) without touching this line. Whether the light-ground base colour becomes `#6B4C12` is still this FLAG's call. |
 | `invitation.html` `:44, :76, :88, :103, :144, :157` | **Leave.** Page-level ochre identity. Document the exemption alongside Manifesto's in `docs/design-palette.md`. |
 | `practise/index.html:104, :499` | **Leave pending WD-15**, which reassigns Practise's registers wholesale. Changing it twice is churn. |
 | `contribute/index.html:125`, `archive.html:185`, `substrate.yaml` ×3 | Author call — each is a kicker or rule, so `#6B4C12` is defensible, but none was in the spec's scope. |
@@ -344,7 +344,7 @@ Mechanical, individually revertible, verifiable in this environment. Suggested a
 | ~~**WD-02**~~ | ~~The motion token — one `transition` on `a,button,summary,[data-filter],nav[aria-label="Contents"] a,.card-title`.~~ **Done, see `completed.tasks.md`.** | `[DEV]` | S | — |
 | ~~**WD-03**~~ | ~~`h1,h2,h3{text-wrap:balance}`~~ **Done, see `completed.tasks.md`.** | `[DEV]` | XS | — |
 | ~~**WD-04**~~ | ~~Matrix row illumination on hover (Learn).~~ **Done, see `completed.tasks.md`.** | `[DEV]` | XS | — |
-| **WD-07** | Focus visibility on dark grounds: add `class="dark"` hook to every inline `background:#0F2A2E` element, then `.dark :focus-visible{outline-color:#DB9E2A}`. Counts verified above. **Do (a) by review, not `sed`** — the spec is right that a missed section is a silent regression. | `[DEV]` | M | 8 files (Manifesto already correct; Home.dc.html no longer applicable post-WD-26) |
+| ~~**WD-07**~~ | ~~Focus visibility on dark grounds.~~ **Done, see `completed.tasks.md`. Also fixed a previously-undocumented instance on Invitation, found while doing this.** | `[DEV]` | M | — |
 | **WD-09** | Per-group entry counts on Archive shelf headings. **Ship with or before WD-06** — WD-06's JS updates the `[data-count]` element this adds. | `[DEV]` | S | `hugo/layouts/archive.html:146` |
 | **WD-06** | Archive filter: visible result count + `role="status"` live region. The one accessibility gap of consequence in the spec. | `[DEV]` | M | `hugo/layouts/archive.html`, `archive-filter.js` |
 | **WD-08a** | Authored arrows travel 3px on hover/focus (`.arr` span). | `[DEV]` | S | `hugo/layouts/archive.html:158` + CSS |

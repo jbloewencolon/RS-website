@@ -65,6 +65,8 @@
   *{box-sizing:border-box}
   h1,h2,h3{text-wrap:balance}  
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
+   
+  .dark :focus-visible{outline-color:#DB9E2A}
   @media print{body{background:#fff}.noprint{display:none!important}body.print-isolate>header,body.print-isolate>main>section:not(#field-guide),body.print-isolate>footer{display:none!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
@@ -1050,7 +1052,7 @@
   </div>
 </section>
 
-<section id="opacity" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,5rem) 0">
+<section id="opacity" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,5rem) 0">
   <div class="wrap">
     <p class="kick" style="color:#DB9E2A;margin-bottom:1rem">Principle 08, applied to this website</p>
     <h2 class="sec" style="max-width:22ch;color:#E7E5DC">Total legibility is a form of domination.</h2>
@@ -1204,7 +1206,7 @@
 
 </main>
 
-<footer style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
+<footer class="dark" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:44ch">v0.2 · no third-party requests, including fonts · <a href="/behind-the-scenes/" style="color:#DB9E2A">what changed</a> · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">

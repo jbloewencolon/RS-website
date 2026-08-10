@@ -50,6 +50,12 @@
   *{box-sizing:border-box}
   h1,h2,h3{text-wrap:balance} /* WD-03 */
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
+  /* #2B4C9B is 1.88:1 on the #0F2A2E teal ground — effectively invisible.
+     Ochre is 6.42:1 there, and "a question being put to you" is exactly
+     what focus is. Scoped to .dark (dark-ground sections/footers, added
+     alongside this rule) rather than global, since #2B4C9B is fine on
+     every light-ground element the page has otherwise. WD-07. */
+  .dark :focus-visible{outline-color:#DB9E2A}
   @media print{
     body{background:#fff}
     .noprint{display:none!important}
@@ -403,7 +409,7 @@
   </div>
 </section>
 
-<section class="noprint" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
+<section class="noprint dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">The rest of the toolkit</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1rem;max-width:22ch;color:#E7E5DC">Seven more tools, not yet built.</h2>
@@ -435,7 +441,7 @@
 
 </main>
 
-<footer class="noprint" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0;border-top:1px solid #2A4C4C">
+<footer class="noprint dark" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0;border-top:1px solid #2A4C4C">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:44ch">v0.2 · nothing you type here leaves your device · <a href="/behind-the-scenes/" style="color:#DB9E2A">what changed</a> · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">

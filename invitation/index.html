@@ -64,6 +64,8 @@
   *{box-sizing:border-box}
   h1,h2,h3{text-wrap:balance}  
   :focus-visible{outline:2.5px solid #7D5915;outline-offset:3px}
+   
+  .dark :focus-visible{outline-color:#DB9E2A}
   @media print{body{background:#fff}.noprint{display:none!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
@@ -124,7 +126,7 @@
   </div>
 </section>
 
-<section style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
+<section class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1.2rem">The part almost nobody writes down</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(1.7rem,4vw,2.6rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.8rem;max-width:16ch;color:#E7E5DC">On goodbyes.</h2>
