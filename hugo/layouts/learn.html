@@ -75,7 +75,7 @@
      every light-ground element the page has otherwise. WD-07. */
   .dark :focus-visible{outline-color:#DB9E2A}
   @media print{body{background:#fff}.noprint{display:none!important}body.print-isolate>header,body.print-isolate>main>section:not(#field-guide),body.print-isolate>footer{display:none!important}}
-  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
   .skip-link:focus{left:1rem;top:1rem}
 
@@ -146,6 +146,22 @@
      back to the top. Plain in-page links, so it works with scripting
      off — the current-section label is the only part JS supplies. */
   .jump{position:sticky;top:0;z-index:30;background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);box-shadow:0 10px 18px -16px rgba(25,27,24,.6)}
+  /* WD-20: how far down the page you are, not just which section — the
+     bar already names where. Scroll-driven, not JS-driven: the browser
+     itself ties the animation's progress to scroll position, so there is
+     no scroll listener, no rAF loop, nothing running on the main thread
+     while you scroll. Fully feature-gated: absent everywhere @supports
+     doesn't confirm animation-timeline:scroll(), not a partial or broken
+     version of it. Covered by the site's own reduced-motion rule like
+     every other animation here. */
+  @supports (animation-timeline: scroll()) {
+    .jump::after{
+      content:"";display:block;height:2px;background:var(--ask-edge);
+      transform-origin:left;transform:scaleX(0);
+      animation:jump-progress linear;animation-timeline:scroll()
+    }
+    @keyframes jump-progress{to{transform:scaleX(1)}}
+  }
   /* nowrap, deliberately: a wrapping flex line wraps before it shrinks,
      which put the open-all button on a second sticky row on a phone and
      cost ~50px of every screen. Nothing here is allowed to wrap — the
@@ -179,7 +195,14 @@
   .p-n{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;font-weight:500;color:#DDE4DC;background:var(--teal);display:inline-flex;align-items:center;justify-content:center;width:2.1rem;height:2.1rem;border-radius:2px;margin:0 0 .75rem}
   .p-t{font-family:var(--sans);font-weight:700;font-size:1.28rem;line-height:1.1;letter-spacing:-.02em;margin:0 0 .5rem}
   .p-b{margin:0 0 1.2rem;font-size:16px;line-height:1.55;color:var(--ink-2);flex:1 1 auto}
-  .p-q{margin:0 -1.5rem;padding:.85rem 1.5rem;background:var(--ask-fill);border-top:1px solid var(--ask-edge);font-family:var(--mono);font-size:12.5px;line-height:1.5;color:var(--ask)}
+  /* WD-24: optional refinement, not a bug fix — every band's bottom edge
+     already lines up exactly within its grid row (flex:1 1 auto on .p-b
+     above absorbs the difference), which is the thing that actually
+     needed to be true. This only evens the shortest bands' top edge so a
+     one-line question doesn't sit as a sliver beside a three-line one.
+     4.1rem covers two lines without clipping the longest band measured
+     (122px, principle 03). */
+  .p-q{margin:0 -1.5rem;padding:.85rem 1.5rem;background:var(--ask-fill);border-top:1px solid var(--ask-edge);font-family:var(--mono);font-size:12.5px;line-height:1.5;color:var(--ask);min-height:4.1rem;display:flex;align-items:center}
 
   /* Holds/fails matrix. Colour, fill, and glyph all say the same thing
      three times over: ▪ filled = the principle bears load here, □ hollow
