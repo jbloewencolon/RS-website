@@ -214,9 +214,14 @@
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">Opacity as governance, not as a button</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.2rem;max-width:24ch;color:#E7E5DC">What this site refuses to the crawler.</h2>
     <p style="max-width:54ch;margin:0 0 1.6rem;color:#B8C7C1">Discovery by a third party is not a condition of existing. A publisher can decline the index, and this one does, selectively. The policy is a real file, not a claim: <a href="/robots.txt" style="color:#DB9E2A">read robots.txt</a>.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:#2A4C4C;border:1px solid #2A4C4C;margin-bottom:1.8rem">
+    {{/* WD-10a, Fix A: hairlines on the cells, not the container. Five
+         items in this grid's 4-column layout at typical desktop widths
+         leaves 3 empty cells in the final row; the old background+gap:1px
+         trick painted #2A4C4C through those empty gaps as a solid slab.
+         An empty cell now has no border and no background of its own. */}}
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:0;border-top:1px solid #2A4C4C;border-left:1px solid #2A4C4C;margin-bottom:1.8rem">
       {{ range hugo.Data.crawler }}
-      <div style="background:#0F2A2E;padding:1.2rem 1.3rem 1.4rem">
+      <div style="background:#0F2A2E;border-right:1px solid #2A4C4C;border-bottom:1px solid #2A4C4C;padding:1.2rem 1.3rem 1.4rem">
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ .color }};margin:0 0 .5rem">{{ .state }}</p>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">{{ .what }}</h3>
         <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">{{ .why }}</p>
