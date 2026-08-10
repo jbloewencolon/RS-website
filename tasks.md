@@ -332,7 +332,7 @@ Two things keep this a blocker anyway:
 
 | ID | Task | Tags | Effort | Note |
 |---|---|---|---|---|
-| **WD-26** | Collapse the `index.html` / `Home.dc.html` duplication to one file. | `[DEV]` | S | **Promoted from follow-up to prerequisite** — see the sequencing note above. Six Phase 9 items touch Home; every one is a double edit until this lands. `Home.dc.html` becomes a soft-redirect stub to `/`, reusing the pattern BUG-03 already built and `check-pages.mjs` already verifies. Retire `checkIndexMatchesHome()` and add `Home.dc.html` to the redirect-stub list in the same commit. |
+| ~~**WD-26**~~ | ~~Collapse the `index.html` / `Home.dc.html` duplication to one file.~~ **Done, see `completed.tasks.md`.** | `[DEV]` | S | — |
 
 ### 9.1 — Ship first: no author decision required
 
@@ -340,7 +340,7 @@ Mechanical, individually revertible, verifiable in this environment. Suggested a
 
 | ID | Task | Tags | Effort | Files |
 |---|---|---|---|---|
-| **WD-01** | Homepage headline typo `FREDOM` → `FREEDOM`. **Note: this spelling was supplied by the author when the hero was rewritten and was implemented as given; the spec now confirms it as a typo.** | `[DEV]` | XS | `index.html:109`, `Home.dc.html:109` — both, then `diff` |
+| ~~**WD-01**~~ | ~~Homepage headline typo `FREDOM` → `FREEDOM`.~~ **Done, see `completed.tasks.md`. Shipped together with WD-26 and an author line-break request — "NO OWNERS." and "NO OBJECTS." now sit on their own lines.** | `[DEV]` | XS | — |
 | **WD-02** | The motion token — one `transition` on `a,button,summary,[data-filter],nav[aria-label="Contents"] a,.card-title`. Shorter selector list for Manifesto. | `[DEV]` | S | All 10 |
 | **WD-03** | `h1,h2,h3{text-wrap:balance}` | `[DEV]` | XS | All 10 |
 | **WD-04** | Matrix row illumination on hover (Learn). | `[DEV]` | XS | `hugo/layouts/learn.html` ~146 |

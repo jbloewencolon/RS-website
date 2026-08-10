@@ -36,19 +36,22 @@ const outDir = path.join(root, "_site");
 
 const PAGES = [
   "index.html",
-  "Home.dc.html",
   "practise/index.html",
   "contribute/index.html",
 ];
 // Pages Hugo generates (see hugo/README.md and RS-004) are already plain
 // HTML with no <x-dc> runtime to render — they're copied as-is, same as
-// resources/index.html. The eight *.dc.html entries are BUG-03's redirect
+// resources/index.html. The nine *.dc.html entries are BUG-03's redirect
 // stubs, left at the old flat paths so an already-indexed or bookmarked
 // link still lands somewhere real; they're plain static HTML too.
+// Home.dc.html (WD-26) joined this list rather than PAGES above: the
+// homepage's real content now lives only in index.html, and Home.dc.html
+// is a thin soft-redirect to "/" like the other eight, not a second
+// x-dc runtime page to render.
 const COPY_AS_IS = [
   "glyph-check.html", "glyph-check.js",
   "resources/index.html", "manifesto/index.html", "invitation/index.html", "learn/index.html", "behind-the-scenes/index.html", "archive/index.html",
-  "Manifesto.dc.html", "Invitation.dc.html", "Learn.dc.html", "Archive.dc.html", "Resources.dc.html", "BehindTheScenes.dc.html", "Practise.dc.html", "Contribute.dc.html",
+  "Home.dc.html", "Manifesto.dc.html", "Invitation.dc.html", "Learn.dc.html", "Archive.dc.html", "Resources.dc.html", "BehindTheScenes.dc.html", "Practise.dc.html", "Contribute.dc.html",
   "archive-filter.js", "print.js", "learn.js", "support.js", "robots.txt", "CNAME", "LICENSE",
 ];
 

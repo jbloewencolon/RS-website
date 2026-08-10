@@ -21,7 +21,6 @@ const htmlValidateConfig = JSON.parse(fs.readFileSync(path.join(root, ".htmlvali
 // below), not just "does this file happen to contain valid HTML."
 const pages = [
   "index.html",
-  "Home.dc.html",
   "manifesto/",
   "invitation/",
   "learn/",
@@ -32,13 +31,14 @@ const pages = [
   "resources/",
   "glyph-check.html",
 ];
-// The eight redirect stubs left at the old flat *.dc.html paths (BUG-03).
-// Checked separately, by raw fetch rather than browser navigation — each
-// carries a <meta http-equiv="refresh">, and navigating to one in a real
-// browser context immediately follows it, so a page.goto() here would
-// silently end up testing the redirect *target* a second time rather
-// than the stub itself.
+// The nine redirect stubs left at the old flat *.dc.html paths (BUG-03,
+// plus Home.dc.html folded in by WD-26). Checked separately, by raw fetch
+// rather than browser navigation — each carries a <meta http-equiv="refresh">,
+// and navigating to one in a real browser context immediately follows it,
+// so a page.goto() here would silently end up testing the redirect
+// *target* a second time rather than the stub itself.
 const redirectStubs = [
+  { path: "Home.dc.html", target: "/" },
   { path: "Manifesto.dc.html", target: "/manifesto/" },
   { path: "Invitation.dc.html", target: "/invitation/" },
   { path: "Learn.dc.html", target: "/learn/" },
@@ -58,7 +58,7 @@ function serve() {
   return new Promise((resolve) => {
     const server = http.createServer((req, res) => {
       const reqPath = decodeURIComponent(req.url.split("?")[0]);
-      let filePath = path.join(root, reqPath === "/" ? "/Home.dc.html" : reqPath);
+      let filePath = path.join(root, reqPath === "/" ? "/index.html" : reqPath);
       // Mimic GitHub Pages' directory-index resolution: /manifesto/ (or
       // /manifesto) serves manifesto/index.html. Without this, every
       // pretty-URL page in `pages` above would 404 against this local
@@ -150,33 +150,12 @@ function checkPrerender() {
   return problems;
 }
 
-// GitHub Pages always serves index.html at the root — this site's real
-// homepage content lives in Home.dc.html, so index.html has to be an
-// exact copy or the bare domain silently drifts out of sync with the
-// page every nav link actually points to. This caught a real incident:
-// index.html was once overwritten with an unrelated site's boilerplate.
-function checkIndexMatchesHome() {
-  const home = fs.readFileSync(path.join(root, "Home.dc.html"), "utf8");
-  const index = fs.readFileSync(path.join(root, "index.html"), "utf8");
-  if (home === index) {
-    console.log("✓ index.html matches Home.dc.html");
-    return 0;
-  }
-  console.log("\n✗ index.html — 1 problem(s)");
-  console.log("    index.html does not match Home.dc.html byte-for-byte.");
-  console.log("    GitHub Pages serves index.html at the site's root — if it's out of");
-  console.log("    sync with (or isn't a copy of) Home.dc.html, visitors hitting the");
-  console.log("    bare domain see something other than the real homepage.");
-  console.log("    Fix: cp Home.dc.html index.html");
-  return 1;
-}
-
 // hugo/ is the source of truth for the pages listed in HUGO_PAGES (see
 // hugo/README.md and RS-004) — the committed root-level file is Hugo's
 // output, not hand-authored. If someone edits the root file directly, or
 // edits hugo/ without regenerating, the two drift silently: the site
 // keeps serving the stale committed copy. Regenerate (without writing)
-// and diff, the same pattern checkIndexMatchesHome() uses for index.html.
+// and diff to catch it.
 function checkHugoPagesInSync() {
   if (HUGO_PAGES.length === 0) return 0;
   let results;
@@ -210,7 +189,7 @@ async function main() {
   const browser = await chromium.launch(executablePath ? { executablePath } : {});
   const htmlValidate = new HtmlValidate(htmlValidateConfig);
 
-  let problems = checkIndexMatchesHome() + checkPrerender() + checkHugoPagesInSync();
+  let problems = checkPrerender() + checkHugoPagesInSync();
   problems += await checkRedirectStubs(base);
 
   for (const pg of pages) {
