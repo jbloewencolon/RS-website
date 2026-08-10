@@ -1,12 +1,12 @@
 # Relational Sovereignty — Active Tasks
 
-**Last reconciled:** 2026-08-08
-**Reconciles:** `docs/spec/base-work-order.md`, `docs/spec/addendum-a.md`, `docs/spec/decision-record-d1-d15.md` (authoritative on all `[DECISION]`/`D#` items), `docs/spec/warm-register-review-v2.md` (new content initiative, the warm register), an author review of navigation/disclosure/IA delivered directly into this session (no separate file — see Phase 2.5), plus findings from a full read of the shipped code on this branch.
+**Last reconciled:** 2026-08-10
+**Reconciles:** `docs/spec/base-work-order.md`, `docs/spec/addendum-a.md`, `docs/spec/decision-record-d1-d15.md` (authoritative on all `[DECISION]`/`D#` items), `docs/spec/warm-register-review-v2.md` (new content initiative, the warm register), an author review of navigation/disclosure/IA delivered directly into this session (no separate file — see Phase 2.5), the author-supplied `Web Design Spec — v0.3 refinement pass` (Phase 9; **its own cited source, `docs/audits/design-review-2026-08-10.md`, is not in this repository** — see that phase's header), plus findings from a full read of the shipped code on this branch.
 **Companion file:** `completed.tasks.md` — when a task ships, move its row there with a dated `~~was:~~ now:` entry in the site's own changelog voice. Don't delete history; strike it.
 
 ## How to use this file
 
-- Every task keeps its source ID (`RS-0xx`) so it can be cross-referenced against the docs in `docs/spec/`. Tasks with no source ID are prefixed `SUGGEST-` (raised during codebase familiarization, not in any spec doc), `FLAG-` (a gap or contradiction found in the spec docs themselves that needs author input before work can proceed), `HUGO2-` (Phase 5, a direct author instruction with no `docs/spec/` origin — see that phase's header), `UX-` (Phase 6, IDs kept identical to `docs/audits/ux-audit-2026-08-08.html`'s own numbering), `SEO-` (Phase 7, reconciled from an external technical SEO/AEO specification against this project's own ethos and conventions — see that phase's header for what was kept, rejected, and why), or `BUG-` (Phase 8, live-site defects the author found by visiting the deployed site after PR #13 merged, numbered in the order the author reported them).
+- Every task keeps its source ID (`RS-0xx`) so it can be cross-referenced against the docs in `docs/spec/`. Tasks with no source ID are prefixed `SUGGEST-` (raised during codebase familiarization, not in any spec doc), `FLAG-` (a gap or contradiction found in the spec docs themselves that needs author input before work can proceed), `HUGO2-` (Phase 5, a direct author instruction with no `docs/spec/` origin — see that phase's header), `UX-` (Phase 6, IDs kept identical to `docs/audits/ux-audit-2026-08-08.html`'s own numbering), `SEO-` (Phase 7, reconciled from an external technical SEO/AEO specification against this project's own ethos and conventions — see that phase's header for what was kept, rejected, and why), `BUG-` (Phase 8, live-site defects the author found by visiting the deployed site after PR #13 merged, numbered in the order the author reported them), or `WD-` (Phase 9, IDs kept identical to the web design spec's own `§3.n` numbering, same convention as `UX-`; `WD-25`/`WD-26` are follow-ups that spec names but deliberately scopes out).
 - Tags: `[DEV]` buildable now · `[COPY]` blocked on author-approved text (drafts exist in `docs/spec/`, not final) · `[VERIFY]` requires checking a live source before publish — never guess a URL, number, or DOI · `[DECISION]` blocked on a human call.
 - Phases mirror the Decision Record's "Consolidated build order" (Cycles 1–4), with one Phase 0 for blockers that gate everything else, and my own resequencing note on where the Hugo migration (RS-004) should actually land within Phase 1 — see that phase's header.
 - **Draft copy lives in `docs/spec/`, not here.** This file tracks status, files touched, effort, and dependencies so it stays a working checklist instead of a second copy of 1,900 lines of markdown.
@@ -259,6 +259,164 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 | ~~**BUG-05**~~ | ~~Found while verifying BUG-03, not reported by the author: `print.js` (Manifesto/Invitation/Learn's print button) already 404s live — confirmed against production before touching anything, same as BUG-01. Same root cause as BUG-01 too: missing from `scripts/prerender.mjs`'s `COPY_AS_IS` list, so never copied into `_site/`. `archive-filter.js` was already in the list; `print.js` never was.~~ **Shipped, see `completed.tasks.md`.** | Manifesto, Invitation, Learn | XS | Add `"print.js"` to `COPY_AS_IS`. | `scripts/prerender.mjs` |
 
 **SUGGEST-10** *(logged here, not a task on its own)*: the `x-dc` runtime reorders a page's `<style>` block to render well after its source position (see BUG-02) — confirmed on Home, and by pattern almost certainly true of Practise and Contribute too. BUG-02 works around the specific consequence found so far without touching `support.js`. Whether the reordering itself is worth understanding and fixing in the runtime — as opposed to working around each consequence as it's found — is an open question; flagging it rather than guessing at a framework-level fix without first reading `support.js`'s render path closely.
+
+---
+
+## Phase 9 — Web design spec v0.3 (author-supplied, 2026-08-10)
+
+*(Source: `Web Design Spec — v0.3 refinement pass`, supplied directly by the author. IDs below are `WD-nn`, kept identical to the spec's own `§3.n` numbering so the two can be read side by side — same convention Phase 6 uses for the UX audit. The spec is unusually good: it states build architecture before changes, gives exact anchors, specifies verification per item, and carries its own §6 correcting three claims in the review it derives from. Most of it can be implemented as written.)*
+
+**The spec's stated source document is not in this repository.** It cites `docs/audits/design-review-2026-08-10.md` as the document that argues *why*; `docs/audits/` contains only `ux-audit-2026-08-08.html`. Every claim below was therefore checked against the shipped code directly rather than against that review. Where the spec's §6 corrects the review, those corrections are taken on trust as internally consistent — but the review's own reasoning cannot be consulted when a judgement call comes up. **Ask the author to add the review to `docs/audits/`** before working the editorial items (WD-12, WD-15, WD-17), which explicitly defer to its argument.
+
+### What was verified before planning, and what held
+
+Checked directly against the committed code, not read off the spec:
+
+- **§1c's file census is correct.** Nine files carry the light base block anchored by `a:hover{color:#2C5A38}` (`hugo/layouts/{archive,behindthescenes,invitation,learn,resources}.html`, `index.html`, `Home.dc.html`, `practise/index.html`, `contribute/index.html`); `hugo/layouts/manifesto.html` is the tenth and is the dark-ground exception, as stated. Every site-wide rule really is a ten-file edit.
+- **§3.7's expected `background:#0F2A2E` counts are exactly right** — archive 3, behindthescenes 5, invitation 2, resources 2, index/Home 4 each, practise 11, contribute 4, and Learn 3 (the spec correctly flags Learn as needing a separate check).
+- **§3.6 and §3.9's Archive figures are right** — 9 groups of `[8, 11, 4, 5, 11, 1, 9, 6, 5]`, total **60**, matching `hugo.Data.archive.groups` / `len .items` as the snippet assumes.
+- **§3.10's line anchors survived the Learn redesign** — `.principles` is still at `learn.html:163`, `.fg` at `:266`. `learn.js`'s `BAR = 76` is correct (§3.14).
+- **`npm run check:responsive` exists** (`responsive-audit.mjs`), so §5's QA block runs as written.
+
+One anchor is off by one: the Archive `$rule` assignment is at `archive.html:151`, not `:150` (§3.5, §3.12). Trivial, noted so nobody edits the wrong line.
+
+### FLAG-07 — §3.5 "one ochre" is wrong in both directions, and its verify step would destroy the Invitation page
+
+**This is the one item in the spec that must not be implemented as written.** `[DECISION]`
+
+§3.5 says to replace `#7D5915` with `#6B4C12` "at all occurrences," suggests `grep -rn "7D5915" index.html Home.dc.html hugo/layouts/` to find them, and sets the success condition as `grep -rn "7D5915" .` returning nothing outside `docs/`. All three are wrong.
+
+**It misses occurrences.** The suggested grep does not cover `hugo/data/substrate.yaml` (3 occurrences, driving Behind the Scenes' rules), `practise/index.html` (2), `contribute/index.html:125`, or `archive.html:185`.
+
+**More seriously, it would sweep up occurrences that are a different colour doing a different job.** `hugo/layouts/invitation.html` holds **seven** `#7D5915`s, and only one of them (`:61`, the focus ring) is the case §3.5 is about. The rest are that page's identity: `:44` is `a{color:#7D5915}` — the base link colour for the entire page — plus the `aria-current` nav state at `:76` and `:88`, two kickers, and the print button. **Invitation is to ochre what Manifesto is to dark ground: a deliberate whole-page exception the spec's §1c pattern already anticipates but §3.5 forgets.** Blanket-replacing there would quietly restyle every link on the page. Separately, `practise/index.html:499` is `["yes, with conditions", "conditions", "#7D5915"]` — a tool's answer-state colour inside a JS data array, not a kicker.
+
+**Recommended split, for the author to confirm:**
+
+| Occurrence | Action |
+|---|---|
+| Home's six door kickers (`index.html`, `Home.dc.html`, 6 each) | → `#6B4C12`. This is the case §3.5 is actually about. |
+| `archive.html:151` `$rule` for `start` | → `#6B4C12`, per §3.5's own reasoning about the shared text/border variable. |
+| `invitation.html:61` focus ring | → `#6B4C12`, or leave — see WD-07, which may supersede it. |
+| `invitation.html` `:44, :76, :88, :103, :144, :157` | **Leave.** Page-level ochre identity. Document the exemption alongside Manifesto's in `docs/design-palette.md`. |
+| `practise/index.html:104, :499` | **Leave pending WD-15**, which reassigns Practise's registers wholesale. Changing it twice is churn. |
+| `contribute/index.html:125`, `archive.html:185`, `substrate.yaml` ×3 | Author call — each is a kicker or rule, so `#6B4C12` is defensible, but none was in the spec's scope. |
+
+Until this is settled, **WD-05 is blocked**, and §3.5's verify step must be rewritten: the correct end state is not "zero occurrences of `#7D5915`," it is "no occurrence of `#7D5915` that is doing the job `#6B4C12` is defined for."
+
+### FLAG-08 — §3.18 analyses tracking, hinting and line breaks, but never coverage `[DECISION]` `[VERIFY]`
+
+**Do not ship the `--sans` reorder without re-running the glyph check.** §3.18's whole argument is about how the reordered stack *looks* — grotesque vs humanist, Arial's metrics vs Segoe UI's, line breaks in display type. It never asks what the reordered stack can *render*. On this site that is the wrong thing to leave out: the colophon's own commitment is that a font which turns a nation's name into boxes makes a people unwritable in their own name.
+
+`glyph-check.js` tests three stacks by name, and its `display` entry is the exact `--sans` string §3.18 proposes to reorder. **Reordering silently invalidates that row of the audit** — an audit whose methodology RS-024 corrected only days ago (advance-width comparison → rendered-pixel comparison, `completed.tasks.md`), and whose cross-platform matrix is still open as RS-024 (residual).
+
+**But the immediate blast radius is smaller than it first looks, and the reason matters.** All five nation names live in `hugo/data/archive.yaml`'s `by:` field, rendered in the **mono** stack (`archive.html:155` and `:201`) — which §3.18 does not touch. A programmatic sweep of every `h1`/`h2`/`h3` across all ten page sources found **zero** headings containing unusual non-ASCII. So today the sans stack renders none of the at-risk characters, and reordering it cannot box a nation's name.
+
+Two things keep this a blocker anyway:
+
+1. **It is one content edit away from being load-bearing.** The moment a by-line, a pull quote, or an entry title carrying `x̂`, `ʔ`, or `ę` is set in sans, the reordered stack becomes the thing standing between that name and a fallback face. Nothing currently prevents that edit.
+2. **The realistic failure mode is not a box, it is a mismatched or misplaced glyph.** Browsers fall back per character, so a face lacking `ʔ` borrows it from another font — visibly off, not empty. For a combining mark like `x̂` (x + U+0302) it is worse: base and mark can resolve to different faces and the accent lands wrong. That is harder to notice in review than a box, which is an argument for testing rather than eyeballing.
+
+**Gate:** re-run `glyph-check.html` against the reordered stack, on each target platform, before adopting. That folds this into RS-024 (residual) rather than duplicating it — the cross-platform matrix that task already asks for is exactly the evidence §3.18 needs. **Sequence WD-18 after RS-024, not before.**
+
+### Sequencing decision the spec leaves open
+
+§1c recommends extracting the duplicated base CSS into `hugo/layouts/partials/head-base.html` plus one `/base.css`, and deliberately scopes that refactor *out* — "Do it after, or before — not during." §3.11 then asks for the `:root` token block to be pasted into nine files.
+
+**Those two interact, and the order changes the cost materially.** Extract first and WD-11 becomes a one-file edit instead of a nine-file paste, and every later site-wide rule (WD-02, WD-03, WD-07b) collapses from ten edits to one or two. Extract second and all of that work is done ten times and then deduplicated anyway. Against that: the extract is a genuine refactor touching every page's `<head>`, it is the highest-regression-risk change in this whole plan, and it would delay the entire Tier A set behind it.
+
+**Recommendation: do Tier A first as ten-file edits (they are small and mechanical), then the extract, then WD-11 on top of it.** Tier A's rules are two or three lines each; paying that ten times is cheaper than sequencing a refactor ahead of the quick wins. Logged as **WD-25** below. `[DECISION]`
+
+**The Home duplication is the opposite case — collapse it first.** §1b observes that `FREDOM` exists in two files "precisely because they are maintained by hand in parallel," and then routes further changes through that same duplication, suggesting a collapse as a follow-up. That is backwards: the duplication is the cause, and it is cheap to remove. **Six items in this phase touch Home** — WD-01, WD-02, WD-03, WD-05, WD-07 and WD-17 — so leaving it in place means twelve edits where six would do, each pair an opportunity for exactly the drift that produced the typo. `Home.dc.html` is a genuine second copy, not a redirect stub (`check-pages.mjs` walks it as a page, and it is absent from the eight-stub list), and the soft-redirect pattern for collapsing it is already built and proven from BUG-03. **WD-26 is therefore promoted to 9.0, ahead of everything else in this phase.**
+
+### 9.0 — Do before anything else in this phase
+
+| ID | Task | Tags | Effort | Note |
+|---|---|---|---|---|
+| **WD-26** | Collapse the `index.html` / `Home.dc.html` duplication to one file. | `[DEV]` | S | **Promoted from follow-up to prerequisite** — see the sequencing note above. Six Phase 9 items touch Home; every one is a double edit until this lands. `Home.dc.html` becomes a soft-redirect stub to `/`, reusing the pattern BUG-03 already built and `check-pages.mjs` already verifies. Retire `checkIndexMatchesHome()` and add `Home.dc.html` to the redirect-stub list in the same commit. |
+
+### 9.1 — Ship first: no author decision required
+
+Mechanical, individually revertible, verifiable in this environment. Suggested as two or three commits, not one.
+
+| ID | Task | Tags | Effort | Files |
+|---|---|---|---|---|
+| **WD-01** | Homepage headline typo `FREDOM` → `FREEDOM`. **Note: this spelling was supplied by the author when the hero was rewritten and was implemented as given; the spec now confirms it as a typo.** | `[DEV]` | XS | `index.html:109`, `Home.dc.html:109` — both, then `diff` |
+| **WD-02** | The motion token — one `transition` on `a,button,summary,[data-filter],nav[aria-label="Contents"] a,.card-title`. Shorter selector list for Manifesto. | `[DEV]` | S | All 10 |
+| **WD-03** | `h1,h2,h3{text-wrap:balance}` | `[DEV]` | XS | All 10 |
+| **WD-04** | Matrix row illumination on hover (Learn). | `[DEV]` | XS | `hugo/layouts/learn.html` ~146 |
+| **WD-07** | Focus visibility on dark grounds: add `class="dark"` hook to every inline `background:#0F2A2E` element, then `.dark :focus-visible{outline-color:#DB9E2A}`. Counts verified above. **Do (a) by review, not `sed`** — the spec is right that a missed section is a silent regression. | `[DEV]` | M | 9 files (Manifesto already correct) |
+| **WD-09** | Per-group entry counts on Archive shelf headings. **Ship with or before WD-06** — WD-06's JS updates the `[data-count]` element this adds. | `[DEV]` | S | `hugo/layouts/archive.html:146` |
+| **WD-06** | Archive filter: visible result count + `role="status"` live region. The one accessibility gap of consequence in the spec. | `[DEV]` | M | `hugo/layouts/archive.html`, `archive-filter.js` |
+| **WD-08a** | Authored arrows travel 3px on hover/focus (`.arr` span). | `[DEV]` | S | `hugo/layouts/archive.html:158` + CSS |
+
+**A note on WD-07 and the `.dark` hook.** That class is worth more than the focus fix it exists for — it is the first real selector for "this is a dark band," which WD-15's palette rollout and any future dark-ground rule will both want. Land it deliberately rather than as a focus-bug side effect.
+
+### 9.2 — Tier A, deliberately deferred
+
+| ID | Task | Tags | Why not in 9.1 |
+|---|---|---|---|
+| **WD-08b** | Generated `::before` arrows travel — requires `display:inline-block` on the pseudo-element. | `[DEV]` | The spec flags this itself: changing the pseudo from `inline` to `inline-block` changes wrapping behaviour between the arrow and the following word. Ship 9.1, then diff screenshots of Learn's jump menu and Archive's contents nav specifically. |
+| **WD-05** | One ochre. | `[DECISION]` | **Blocked on FLAG-07.** Do not run the spec's grep-and-replace. |
+
+### 9.3 — Tier B: structural, buildable, sequenced
+
+| ID | Task | Tags | Effort | Depends on |
+|---|---|---|---|---|
+| **WD-10a** | Dead grid slabs, Fix A (borders on cells, not container) for `.fg` and the Behind the Scenes crawler grid. `.opq` and `.senses` are exactly full — **do not touch**, per §6.3. | `[DEV]` | S | — |
+| **WD-11** | Promote the `:root` token block to the other nine layouts, **as its own inert commit**, then migrate literals page by page. | `[DEV]` | M | WD-25 decision |
+| **WD-13** | Archive sticky filter bar, carrying WD-06's count. Reuses Learn's `.jump` pattern. | `[DEV]` | M | WD-06 |
+| **WD-14** | Port the jump bar to Behind the Scenes; generalise `learn.js` (rename to `/sections.js` — cleaner, and the spec permits either). `BAR = 76` must match the new bar's height. | `[DEV]` | M | Learn stable |
+| **WD-10b** | Dead grid slabs, Fix B — the "no fourteenth principle yet" cell filling `.principles`' gap. | `[COPY]` | S | Author copy; confirm the `/behind-the-scenes/#roadmap` anchor resolves |
+
+### 9.4 — Tier B: blocked on author editorial judgement
+
+Each of these is a claim about content, not a rendering decision. The spec says so in every case.
+
+| ID | Task | Tags | Blocked on |
+|---|---|---|---|
+| **WD-12** | Archive: retire link-blue as a category colour; add a rust `counter` register for texts that cut against the framework. **Change the label.** | `[DECISION]` `[COPY]` | Which entries qualify — the spec names Barker (Alfred's chapter) as clearest and estimates 2–4 others. **But `⚑ argues against this site` is a category error and should not ship.** Alfred's chapter is from 2005; he is arguing that sovereignty is inseparable from colonial frameworks, not against a website he never saw. On a site whose citation ethic is not putting claims in people's mouths, that label attributes an intention its author cannot have had — and it contradicts the site's own prose, which already gets this right on Learn: "That argument is on the shelf… That is a reason, not a refutation." **`⚑ we have no answer to this` locates the claim where it belongs — on the framework, not on the author.** Same colour, same doubling, correct speaker. |
+| **WD-15** | Palette rollout to Behind the Scenes, Practise, Resources, Archive. Manifesto explicitly excluded. **Carve-out required on Practise — see below.** | `[DECISION]` | Author confirmation of each item's built/unbuilt status — the spec is explicit that this must not be inferred from the data file. Supersedes the Practise half of FLAG-07. |
+| **WD-16** | Archive: order the seven access-state chips as the gradient they describe; ochre "named, not built" treatment. | `[DEV]` `[COPY]` | Part of WD-15's Archive row; needs the doubled wording. |
+| **WD-17** | Home: register-code the six doors. | `[DECISION]` | The spec's own risk note: the homepage thesis is "six doors, none ranked," and a register could read as hierarchy. Greyscale check is the gate. Fallback is ship the hover rule, skip the recolour. **Settle WD-28 first** — this change spends design effort hardening "six equal doors" while Invitation still calls itself "a second way in." |
+| **WD-18** | Decide the `--sans` stack. **Blocked on FLAG-08 — sequence after RS-024.** | `[DECISION]` `[VERIFY]` | **Cannot be verified in this environment** — needs before/after screenshots of display type on Windows and Linux, and this session has neither. Invisible on macOS. Whatever is chosen, record it as a decision; today it is an accident of stack order. |
+
+**The Practise carve-out WD-15 needs.** §3.15 says "safety gate is rust — **and nothing else on the page is**," and treats every other rust on Practise as leakage to be cleaned up. Two of them are: `practise/index.html:501` is a tool answer-state (`["no", "no", "#8B3A2F"]`) and `:591–592` is the reset-armed state. But `:199–200` is not leakage — it is the export/save warning, rust-bordered with a rust `<strong>`, reading *"Saving this makes it findable. Nothing you type leaves your browser, but a downloaded file or a printout is an object in the world, and objects can be found."* That is a second safety surface, and the file's own comment at `:458` says the export would otherwise carry "risk as an export, without the warning that makes it a choice." **Enforcing rust exclusivity as written would demote the one warning that makes exporting an informed act.** Rust on Practise should mean *safety surface*, of which there are two, not *the safety gate*, of which there is one.
+
+### 9.5 — Tier C: optional, after A and B are stable
+
+| ID | Task | Tags | Note |
+|---|---|---|---|
+| **WD-19** | Section arrival reveal (`/reveal.js`, IntersectionObserver). | `[DEV]` | Hiding class must be added *by JS* — never `opacity:0` in the stylesheet. The spec is right that this is the most likely to feel gimmicky; ship last, be willing to cut. |
+| **WD-20** | Scroll-progress hairline on Learn's jump bar (`animation-timeline: scroll()`). | `[DEV]` | Fully `@supports`-gated, zero risk. |
+| **WD-21** | Native `<details>` disclosure easing (`interpolate-size`). | `[DEV]` | Chromium-only, harmless elsewhere. Do not polyfill. |
+| **WD-22** | The palimpsest change log — superseded wording shown struck beside its replacement. | `[COPY]` | No motion at all; markup and colour only. Use on two or three entries, not everywhere. |
+| **WD-23** | The two-row divider. | `[DEV]` | At most once per page. It is a signature, not a divider style. |
+| **WD-24** | Even the question-band tops on Learn (`min-height` on `.p-q`). | `[DEV]` | Explicitly **not** a bug fix — §6.1 confirms the bands are already correctly bottom-aligned. Optional refinement to the top edge only. |
+
+### 9.5b — Live defects found while planning this phase
+
+Neither is caused by the design spec. Both were found while checking its claims, and both are unblocked.
+
+| ID | Task | Tags | Effort | Detail |
+|---|---|---|---|---|
+| **WD-27** | The colophon's published page-weight range is stale again. | `[DEV]` `[VERIFY]` | XS | `hugo/data/substrate.yaml` states "about 15 KB (the Invitation) to about 118 KB (the Archive)." Measured against the shipped `_site/`: Invitation 16 KB, **Archive 128 KB** — roughly 10 KB past the published figure, and Learn is now 79 KB after its redesign. This is the second drift of the same claim: SUGGEST-01 already had to replace a flat "under 60 KB" for exactly this reason, and the entry's own copy says it was "corrected to the real current range rather than left to quietly stop being true." It has quietly stopped being true again. **Fix the numbers, and add a weight check to `check-pages.mjs`** so the claim is enforced rather than periodically re-audited — same class of published-fact-as-code as the third-party request count. |
+| **WD-28** | The "second way in" framing is now orphaned. | `[COPY]` `[DECISION]` | XS | Invitation's kicker still reads "A second way in · about 4 minutes," but the passages that set up the pairing are gone — the "Two ways in. Neither is the introduction to the other." block was removed from Invitation, and Home's "a second way in, running alongside the manifesto below" paragraph was removed at the same time (`grep` confirms zero occurrences in `index.html`). So Invitation calls itself the second of two while nothing establishes the first, and Home now presents six equal doors instead. **Caused by this session's own content removals, not by the spec.** Either restore a pairing somewhere or change the kicker; WD-17 should not harden "six unranked doors" until this is settled. |
+
+### 9.6 — Follow-ups the spec scopes out but names
+
+| ID | Task | Tags | Note |
+|---|---|---|---|
+| **WD-25** | Extract the shared base CSS into `hugo/layouts/partials/head-base.html` + one `/base.css`. | `[DECISION]` | See "Sequencing decision" above. Recommended *after* Tier A, *before* WD-11. |
+| ~~**WD-26**~~ | *Moved to 9.0 as a prerequisite* — §1b names it as a live bug source and it is, but it is also the cheapest way to halve six of this phase's edits. See above. | — | — |
+
+### What this phase cannot verify in this environment
+
+Stated plainly so nobody records these as done on the strength of an automated pass:
+
+- **Cross-platform display type (WD-18)** — no Windows or Linux rendering available here.
+- **Screen-reader behaviour (WD-06)** — `role="status"` can be verified as present and correct in the DOM, but whether VoiceOver/NVDA actually announce the count on filter needs a human with real assistive technology. This is the same limitation already recorded in the Definition of Done checklist.
+- **Live-site browser checks** — Chromium in this environment cannot reach external hosts (`example.com` fails identically to the site), so post-deploy verification is limited to HTTP-level checks via `curl`. Local headless browser testing against the built `_site/` is unaffected and remains the right gate.
+- **Greyscale/achromatopsia emulation (WD-15, WD-17)** — scriptable via devtools protocol, but the judgement it supports ("do the six doors still read as unranked?") is a human one.
 
 ---
 
