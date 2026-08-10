@@ -26,6 +26,13 @@
   body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
   a{color:#2B4C9B;text-underline-offset:3px;text-decoration-thickness:1px}
   a:hover{color:#2C5A38}
+  /* One motion token. Paint-only properties (colour/background/border)
+     on small elements: no layout, no compositing cost. outline-color is
+     deliberately excluded — keyboard focus must arrive instantly.
+     The prefers-reduced-motion rule below neutralises all of this. WD-02. */
+  a,button,summary,[data-filter],nav[aria-label="Contents"] a,.card-title{
+    transition:color .14s ease,background-color .14s ease,border-color .14s ease
+  }
   a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none}
   nav[aria-label="Contents"] a{border:1px solid #C9C6BA;border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:#585B4F}
   nav[aria-label="Contents"] a:hover{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
@@ -41,6 +48,7 @@
     .nav-toggle{display:block;width:100%}
   }
   *{box-sizing:border-box}
+  h1,h2,h3{text-wrap:balance} /* WD-03 */
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
   @media print{
     body{background:#fff}

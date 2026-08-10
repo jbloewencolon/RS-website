@@ -324,7 +324,7 @@ Two things keep this a blocker anyway:
 
 **Those two interact, and the order changes the cost materially.** Extract first and WD-11 becomes a one-file edit instead of a nine-file paste, and every later site-wide rule (WD-02, WD-03, WD-07b) collapses from ten edits to one or two. Extract second and all of that work is done ten times and then deduplicated anyway. Against that: the extract is a genuine refactor touching every page's `<head>`, it is the highest-regression-risk change in this whole plan, and it would delay the entire Tier A set behind it.
 
-**Recommendation: do Tier A first as ten-file edits (they are small and mechanical), then the extract, then WD-11 on top of it.** Tier A's rules are two or three lines each; paying that ten times is cheaper than sequencing a refactor ahead of the quick wins. Logged as **WD-25** below. `[DECISION]`
+**Recommendation: do Tier A first as nine-file edits (they are small and mechanical), then the extract, then WD-11 on top of it.** Tier A's rules are two or three lines each; paying that nine times is cheaper than sequencing a refactor ahead of the quick wins. **Now nine rather than the spec's stated ten** — WD-26 removed `Home.dc.html` from the set of files carrying page CSS; it's a redirect stub now, not a second copy of the light base block. Logged as **WD-25** below. `[DECISION]`
 
 **The Home duplication is the opposite case — collapse it first.** §1b observes that `FREDOM` exists in two files "precisely because they are maintained by hand in parallel," and then routes further changes through that same duplication, suggesting a collapse as a follow-up. That is backwards: the duplication is the cause, and it is cheap to remove. **Six items in this phase touch Home** — WD-01, WD-02, WD-03, WD-05, WD-07 and WD-17 — so leaving it in place means twelve edits where six would do, each pair an opportunity for exactly the drift that produced the typo. `Home.dc.html` is a genuine second copy, not a redirect stub (`check-pages.mjs` walks it as a page, and it is absent from the eight-stub list), and the soft-redirect pattern for collapsing it is already built and proven from BUG-03. **WD-26 is therefore promoted to 9.0, ahead of everything else in this phase.**
 
@@ -341,10 +341,10 @@ Mechanical, individually revertible, verifiable in this environment. Suggested a
 | ID | Task | Tags | Effort | Files |
 |---|---|---|---|---|
 | ~~**WD-01**~~ | ~~Homepage headline typo `FREDOM` → `FREEDOM`.~~ **Done, see `completed.tasks.md`. Shipped together with WD-26 and an author line-break request — "NO OWNERS." and "NO OBJECTS." now sit on their own lines.** | `[DEV]` | XS | — |
-| **WD-02** | The motion token — one `transition` on `a,button,summary,[data-filter],nav[aria-label="Contents"] a,.card-title`. Shorter selector list for Manifesto. | `[DEV]` | S | All 10 |
-| **WD-03** | `h1,h2,h3{text-wrap:balance}` | `[DEV]` | XS | All 10 |
-| **WD-04** | Matrix row illumination on hover (Learn). | `[DEV]` | XS | `hugo/layouts/learn.html` ~146 |
-| **WD-07** | Focus visibility on dark grounds: add `class="dark"` hook to every inline `background:#0F2A2E` element, then `.dark :focus-visible{outline-color:#DB9E2A}`. Counts verified above. **Do (a) by review, not `sed`** — the spec is right that a missed section is a silent regression. | `[DEV]` | M | 9 files (Manifesto already correct) |
+| ~~**WD-02**~~ | ~~The motion token — one `transition` on `a,button,summary,[data-filter],nav[aria-label="Contents"] a,.card-title`.~~ **Done, see `completed.tasks.md`.** | `[DEV]` | S | — |
+| ~~**WD-03**~~ | ~~`h1,h2,h3{text-wrap:balance}`~~ **Done, see `completed.tasks.md`.** | `[DEV]` | XS | — |
+| ~~**WD-04**~~ | ~~Matrix row illumination on hover (Learn).~~ **Done, see `completed.tasks.md`.** | `[DEV]` | XS | — |
+| **WD-07** | Focus visibility on dark grounds: add `class="dark"` hook to every inline `background:#0F2A2E` element, then `.dark :focus-visible{outline-color:#DB9E2A}`. Counts verified above. **Do (a) by review, not `sed`** — the spec is right that a missed section is a silent regression. | `[DEV]` | M | 8 files (Manifesto already correct; Home.dc.html no longer applicable post-WD-26) |
 | **WD-09** | Per-group entry counts on Archive shelf headings. **Ship with or before WD-06** — WD-06's JS updates the `[data-count]` element this adds. | `[DEV]` | S | `hugo/layouts/archive.html:146` |
 | **WD-06** | Archive filter: visible result count + `role="status"` live region. The one accessibility gap of consequence in the spec. | `[DEV]` | M | `hugo/layouts/archive.html`, `archive-filter.js` |
 | **WD-08a** | Authored arrows travel 3px on hover/focus (`.arr` span). | `[DEV]` | S | `hugo/layouts/archive.html:158` + CSS |
