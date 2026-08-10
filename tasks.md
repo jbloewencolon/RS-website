@@ -364,7 +364,7 @@ Mechanical, individually revertible, verifiable in this environment. Suggested a
 |---|---|---|---|---|
 | ~~**WD-10a**~~ | ~~Dead grid slabs, Fix A for `.fg` and the Behind the Scenes crawler grid.~~ **Done, see `completed.tasks.md`.** `.opq`/`.senses` confirmed still exactly full and left untouched. | `[DEV]` | S | — |
 | **WD-11** | Promote the `:root` token block to the other nine layouts, **as its own inert commit**, then migrate literals page by page. | `[DEV]` | M | WD-25 decision |
-| **WD-13** | Archive sticky filter bar, carrying WD-06's count. Reuses Learn's `.jump` pattern. | `[DEV]` | M | WD-06 |
+| ~~**WD-13**~~ | ~~Archive sticky filter bar, carrying WD-06's count.~~ **Done, see `completed.tasks.md`.** | `[DEV]` | M | — |
 | **WD-14** | Port the jump bar to Behind the Scenes; generalise `learn.js` (rename to `/sections.js` — cleaner, and the spec permits either). `BAR = 76` must match the new bar's height. | `[DEV]` | M | Learn stable |
 | **WD-10b** | Dead grid slabs, Fix B — the "no fourteenth principle yet" cell filling `.principles`' gap. | `[COPY]` | S | Author copy; confirm the `/behind-the-scenes/#roadmap` anchor resolves |
 

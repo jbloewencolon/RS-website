@@ -73,6 +73,15 @@
    
   [data-filter]{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.03em;padding:.6rem .8rem;min-height:44px;cursor:pointer;border-radius:2px;border:1px solid #C9C6BA;background:transparent;color:#585B4F}
   [data-filter].is-active{border-color:#3F7A4E;background:rgba(63,122,78,.1);color:#2C5A38}
+   
+  .filterbar{position:sticky;top:0;z-index:30;background:#E7E5DC;border-top:1px solid #C9C6BA;border-bottom:1px solid #C9C6BA;box-shadow:0 10px 18px -16px rgba(25,27,24,.6);padding:.55rem 0}
+  @media (max-width:700px){
+     
+    .filterbar .chips{flex-wrap:nowrap!important;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .filterbar .chips::-webkit-scrollbar{display:none}
+     
+    [data-group],article[data-tags]{scroll-margin-top:7.5rem!important}
+  }
   .venn-scroll{position:relative}
   .venn-scroll::after{content:"";position:absolute;top:0;right:0;bottom:.5rem;width:32px;background:linear-gradient(to right,rgba(231,229,220,0),#E7E5DC 90%);pointer-events:none}
    
@@ -149,9 +158,10 @@
   </div>
 </section>
 
-<section class="noprint" style="padding:0 0 1.6rem">
+
+<div class="filterbar noprint">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <div style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.5rem">
+    <div class="chips" style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.4rem">
       <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-right:.4rem">Filter</span>
       
       <button type="button" data-filter="all" aria-pressed="true" class="is-active">everything</button>
@@ -170,7 +180,11 @@
     
     
     
-    <p id="filter-status" role="status" aria-live="polite" style="margin:0 0 .3rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">Showing all 60 entries</p>
+    <p id="filter-status" role="status" aria-live="polite" style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">Showing all 60 entries</p>
+  </div>
+</div>
+<section class="noprint" style="padding:0 0 1.6rem">
+  <div style="max-width:1120px;margin:0 auto;padding:.9rem clamp(1.1rem,4vw,3rem) 0">
     <p style="margin:0 0 .3rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">"★ a first route" marks a suggested way in, not a ranking — everything else on this shelf carries the same weight, not runner-up status.</p>
     <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">Every entry below is shown by default. These buttons narrow the list if your browser runs the small script that does it — nothing is ever hidden without a click, and the full shelf renders either way.</p>
   </div>
@@ -179,14 +193,14 @@
 <section style="padding:0 0 clamp(3rem,6vw,4.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     
-    <div data-group id="relational-sovereignty--indigenous-relational-freedom" style="margin-bottom:3rem;scroll-margin-top:1rem">
+    <div data-group id="relational-sovereignty--indigenous-relational-freedom" style="margin-bottom:3rem;scroll-margin-top:6rem">
       <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Relational sovereignty &amp; Indigenous relational freedom <span data-count style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:.62em;font-weight:400;letter-spacing:.06em;color:#585B4F;vertical-align:.15em">8</span></h2>
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:.6rem 0 1.4rem">The most direct foundations for the term itself.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem">
         
         
         
-        <article data-tags="start article free" id="entry-replacing-exclusive-sovereignty-with-a-relational-sovereignty" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="start article free" id="entry-replacing-exclusive-sovereignty-with-a-relational-sovereignty" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .5rem">★ a first route · Borderlands 19(2), 2020</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Replacing Exclusive Sovereignty with a Relational Sovereignty</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Matthew Wildcat</p>
@@ -198,7 +212,7 @@
         
         
         
-        <article data-tags="start article free" id="entry-its-about-all-relations-indigenous-feminist-theory-of-relational-freedom" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="start article free" id="entry-its-about-all-relations-indigenous-feminist-theory-of-relational-freedom" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .5rem">★ a first route · open access</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">It&#39;s About All Relations: Indigenous Feminist Theory of Relational Freedom</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Rauna Kuokkanen (Sámi)</p>
@@ -210,7 +224,7 @@
         
         
         
-        <article data-tags="article" id="entry-are-indigenous-conceptions-of-sovereignty-as-non-interference-patriarchal" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="article" id="entry-are-indigenous-conceptions-of-sovereignty-as-non-interference-patriarchal" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">Review of International Studies 51(1): 1–21, 2025</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Are Indigenous Conceptions of Sovereignty as Non-Interference Patriarchal?</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Rauna Kuokkanen (Sámi), Sheryl Lightfoot (Anishinaabe), Gina Starblanket (Cree/Saulteaux), Matthew Wildcat (Cree)</p>
@@ -222,7 +236,7 @@
         
         
         
-        <article data-tags="article free" id="entry-indigenous-relationality-definitions-and-methods" style="border-top:2px solid #366943;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="article free" id="entry-indigenous-relationality-definitions-and-methods" style="border-top:2px solid #366943;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .5rem">AlterNative 19(2): 475–483, 2023</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Indigenous Relationality: Definitions and Methods</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Matthew Wildcat and Daniel Voth</p>
@@ -234,7 +248,7 @@
         
         
         
-        <article data-tags="book" id="entry-restructuring-relations-indigenous-self-determination-governance-and-gender" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-restructuring-relations-indigenous-self-determination-governance-and-gender" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Restructuring Relations: Indigenous Self-Determination, Governance, and Gender</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Rauna Kuokkanen (Sámi)</p>
@@ -246,7 +260,7 @@
         
         
         
-        <article data-tags="article free" id="entry-from-autonomy-to-sovereignty-a-new-telos-for-socially-assistive-technology" style="border-top:2px solid #366943;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="article free" id="entry-from-autonomy-to-sovereignty-a-new-telos-for-socially-assistive-technology" style="border-top:2px solid #366943;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .5rem">open access</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">From Autonomy to Sovereignty: A New Telos for Socially Assistive Technology</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">JiWoong Jang, Patrick Carrington, Andrew Begel</p>
@@ -258,7 +272,7 @@
         
         
         
-        <article data-tags="book" id="entry-sovereignty-matters-locations-of-contestation-and-possibility-in-indigenous-struggles-for-self-determination" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-sovereignty-matters-locations-of-contestation-and-possibility-in-indigenous-struggles-for-self-determination" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">edited collection</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Sovereignty Matters: Locations of Contestation and Possibility in Indigenous Struggles for Self-Determination</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Joanne Barker (Lenape), ed.</p>
@@ -270,7 +284,7 @@
         
         
         
-        <article data-tags="book" id="entry-red-skin-white-masks-rejecting-the-colonial-politics-of-recognition" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-red-skin-white-masks-rejecting-the-colonial-politics-of-recognition" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Red Skin, White Masks: Rejecting the Colonial Politics of Recognition</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Glen Coulthard (Yellowknives Dene)</p>
@@ -283,14 +297,14 @@
       </div>
     </div>
     
-    <div data-group id="decolonization-possession-land-kinship-intimacy" style="margin-bottom:3rem;scroll-margin-top:1rem">
+    <div data-group id="decolonization-possession-land-kinship-intimacy" style="margin-bottom:3rem;scroll-margin-top:6rem">
       <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Decolonization, possession, land, kinship, intimacy <span data-count style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:.62em;font-weight:400;letter-spacing:.06em;color:#585B4F;vertical-align:.15em">11</span></h2>
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:.6rem 0 1.4rem">Including the limit on how far this vocabulary can be stretched.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem">
         
         
         
-        <article data-tags="start article" id="entry-caretaking-relations-not-american-dreaming" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="start article" id="entry-caretaking-relations-not-american-dreaming" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .5rem">★ a first route · Kalfou 6(1), 2019</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Caretaking Relations, Not American Dreaming</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Kim TallBear (Sisseton-Wahpeton Oyate)</p>
@@ -302,7 +316,7 @@
         
         
         
-        <article data-tags="start book" id="entry-identity-is-a-poor-substitute-for-relating" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="start book" id="entry-identity-is-a-poor-substitute-for-relating" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .5rem">★ a first route · book chapter</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Identity Is a Poor Substitute for Relating</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Kim TallBear (Sisseton-Wahpeton Oyate)</p>
@@ -314,7 +328,7 @@
         
         
         
-        <article data-tags="start article free" id="entry-decolonization-is-not-a-metaphor" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="start article free" id="entry-decolonization-is-not-a-metaphor" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .5rem">★ a first route · open access</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Decolonization Is Not a Metaphor</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Eve Tuck (Unangax̂) and K. Wayne Yang</p>
@@ -326,7 +340,7 @@
         
         
         
-        <article data-tags="start book" id="entry-as-we-have-always-done-indigenous-freedom-through-radical-resistance" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="start book" id="entry-as-we-have-always-done-indigenous-freedom-through-radical-resistance" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .5rem">★ a first route · book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">As We Have Always Done: Indigenous Freedom through Radical Resistance</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Leanne Betasamosake Simpson (Michi Saagiig Nishnaabeg)</p>
@@ -338,7 +352,7 @@
         
         
         
-        <article data-tags="book" id="entry-the-white-possessive-property-power-and-indigenous-sovereignty" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-the-white-possessive-property-power-and-indigenous-sovereignty" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">The White Possessive: Property, Power, and Indigenous Sovereignty</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Aileen Moreton-Robinson (Goenpul, Quandamooka)</p>
@@ -350,7 +364,7 @@
         
         
         
-        <article data-tags="book" id="entry-mohawk-interruptus-political-life-across-the-borders-of-settler-states" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-mohawk-interruptus-political-life-across-the-borders-of-settler-states" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Mohawk Interruptus: Political Life Across the Borders of Settler States</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Audra Simpson (Kahnawà:ke Mohawk)</p>
@@ -362,7 +376,7 @@
         
         
         
-        <article data-tags="article free" id="entry-consents-revenge" style="border-top:2px solid #366943;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="article free" id="entry-consents-revenge" style="border-top:2px solid #366943;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .5rem">open access</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Consent&#39;s Revenge</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Audra Simpson (Kahnawà:ke Mohawk)</p>
@@ -374,7 +388,7 @@
         
         
         
-        <article data-tags="book" id="entry-canadas-indigenous-constitution" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-canadas-indigenous-constitution" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Canada&#39;s Indigenous Constitution</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">John Borrows (Anishinaabe/Ojibway, Chippewas of Nawash)</p>
@@ -386,7 +400,7 @@
         
         
         
-        <article data-tags="book" id="entry-the-empire-of-love-toward-a-theory-of-intimacy-genealogy-and-carnality" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-the-empire-of-love-toward-a-theory-of-intimacy-genealogy-and-carnality" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">The Empire of Love: Toward a Theory of Intimacy, Genealogy, and Carnality</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Elizabeth Povinelli</p>
@@ -398,7 +412,7 @@
         
         
         
-        <article data-tags="book" id="entry-when-did-indians-become-straight-kinship-the-history-of-sexuality-and-native-sovereignty" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-when-did-indians-become-straight-kinship-the-history-of-sexuality-and-native-sovereignty" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">When Did Indians Become Straight? Kinship, the History of Sexuality, and Native Sovereignty</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Mark Rifkin</p>
@@ -410,7 +424,7 @@
         
         
         
-        <article data-tags="article" id="entry-heterosexualism-and-the-colonialmodern-gender-system" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="article" id="entry-heterosexualism-and-the-colonialmodern-gender-system" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">Hypatia 22(1): 186–209, 2007</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Heterosexualism and the Colonial/Modern Gender System</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">María Lugones</p>
@@ -423,14 +437,14 @@
       </div>
     </div>
     
-    <div data-group id="possession-the-person-and-kinship-made-void" style="margin-bottom:3rem;scroll-margin-top:1rem">
+    <div data-group id="possession-the-person-and-kinship-made-void" style="margin-bottom:3rem;scroll-margin-top:6rem">
       <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Possession, the person, and kinship made void <span data-count style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:.62em;font-weight:400;letter-spacing:.06em;color:#585B4F;vertical-align:.15em">4</span></h2>
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:.6rem 0 1.4rem">A second genealogy of ownership, with its own mechanism and its own afterlife.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem">
         
         
         
-        <article data-tags="article" id="entry-mamas-baby-papas-maybe-an-american-grammar-book" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="article" id="entry-mamas-baby-papas-maybe-an-american-grammar-book" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">Diacritics 17(2), 1987</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Mama&#39;s Baby, Papa&#39;s Maybe: An American Grammar Book</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Hortense Spillers</p>
@@ -442,7 +456,7 @@
         
         
         
-        <article data-tags="book" id="entry-scenes-of-subjection" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-scenes-of-subjection" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Scenes of Subjection</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Saidiya Hartman</p>
@@ -454,7 +468,7 @@
         
         
         
-        <article data-tags="book" id="entry-torn-apart" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-torn-apart" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Torn Apart</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Dorothy Roberts</p>
@@ -466,7 +480,7 @@
         
         
         
-        <article data-tags="book" id="entry-the-poverty-of-privacy-rights" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-the-poverty-of-privacy-rights" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">The Poverty of Privacy Rights</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Khiara M. Bridges</p>
@@ -479,14 +493,14 @@
       </div>
     </div>
     
-    <div data-group id="relation-opacity-refusal-survivance" style="margin-bottom:3rem;scroll-margin-top:1rem">
+    <div data-group id="relation-opacity-refusal-survivance" style="margin-bottom:3rem;scroll-margin-top:6rem">
       <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Relation, opacity, refusal, survivance <span data-count style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:.62em;font-weight:400;letter-spacing:.06em;color:#585B4F;vertical-align:.15em">5</span></h2>
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:.6rem 0 1.4rem">Where the right to remain unlegible comes from.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem">
         
         
         
-        <article data-tags="start book" id="entry-poetics-of-relation" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="start book" id="entry-poetics-of-relation" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .5rem">★ a first route · book, in translation</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Poetics of Relation</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Édouard Glissant, trans. Betsy Wing</p>
@@ -498,7 +512,7 @@
         
         
         
-        <article data-tags="book" id="entry-imaginary-spaces-of-conciliation-and-reconciliation" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-imaginary-spaces-of-conciliation-and-reconciliation" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book chapter</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Imaginary Spaces of Conciliation and Reconciliation</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">David Garneau (Métis)</p>
@@ -510,7 +524,7 @@
         
         
         
-        <article data-tags="article" id="entry-visualizing-sovereignty-in-the-time-of-biometric-sensors" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="article" id="entry-visualizing-sovereignty-in-the-time-of-biometric-sensors" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">peer-reviewed</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Visualizing Sovereignty in the Time of Biometric Sensors</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Jolene Rickard (Tuscarora / Skarù·ręʔ)</p>
@@ -522,7 +536,7 @@
         
         
         
-        <article data-tags="book" id="entry-manifest-manners-narratives-on-postindian-survivance" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-manifest-manners-narratives-on-postindian-survivance" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Manifest Manners: Narratives on Postindian Survivance</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Gerald Vizenor (White Earth Nation)</p>
@@ -534,7 +548,7 @@
         
         
         
-        <article data-tags="start book free" id="entry-trans-care" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="start book free" id="entry-trans-care" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .5rem">★ a first route · open access, Forerunners: Ideas First</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Trans Care</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Hil Malatino</p>
@@ -547,14 +561,14 @@
       </div>
     </div>
     
-    <div data-group id="relational-autonomy-interdependence-care" style="margin-bottom:3rem;scroll-margin-top:1rem">
+    <div data-group id="relational-autonomy-interdependence-care" style="margin-bottom:3rem;scroll-margin-top:6rem">
       <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Relational autonomy, interdependence, care <span data-count style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:.62em;font-weight:400;letter-spacing:.06em;color:#585B4F;vertical-align:.15em">11</span></h2>
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:.6rem 0 1.4rem">Autonomy does not require isolation or self-sufficiency.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem">
         
         
         
-        <article data-tags="start book" id="entry-relational-autonomy-feminist-perspectives-on-autonomy-agency-and-the-social-self" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="start book" id="entry-relational-autonomy-feminist-perspectives-on-autonomy-agency-and-the-social-self" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .5rem">★ a first route · edited collection</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Relational Autonomy: Feminist Perspectives on Autonomy, Agency, and the Social Self</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Catriona Mackenzie and Natalie Stoljar, eds.</p>
@@ -566,7 +580,7 @@
         
         
         
-        <article data-tags="article free" id="entry-feminist-perspectives-on-autonomy" style="border-top:2px solid #366943;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="article free" id="entry-feminist-perspectives-on-autonomy" style="border-top:2px solid #366943;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .5rem">free reference</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Feminist Perspectives on Autonomy</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Stanford Encyclopedia of Philosophy</p>
@@ -578,7 +592,7 @@
         
         
         
-        <article data-tags="book" id="entry-caring-democracy-markets-equality-and-justice" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-caring-democracy-markets-equality-and-justice" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Caring Democracy: Markets, Equality, and Justice</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Joan Tronto</p>
@@ -590,7 +604,7 @@
         
         
         
-        <article data-tags="book" id="entry-loves-labor-essays-on-women-equality-and-dependency" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-loves-labor-essays-on-women-equality-and-dependency" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Love&#39;s Labor: Essays on Women, Equality and Dependency</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Eva Feder Kittay</p>
@@ -602,7 +616,7 @@
         
         
         
-        <article data-tags="start book" id="entry-care-work-dreaming-disability-justice" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="start book" id="entry-care-work-dreaming-disability-justice" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .5rem">★ a first route · essay collection</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Care Work: Dreaming Disability Justice</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Leah Lakshmi Piepzna-Samarasinha</p>
@@ -614,7 +628,7 @@
         
         
         
-        <article data-tags="free" id="entry-10-principles-of-disability-justice" style="border-top:2px solid #366943;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="free" id="entry-10-principles-of-disability-justice" style="border-top:2px solid #366943;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .5rem">free</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">10 Principles of Disability Justice</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Sins Invalid</p>
@@ -626,7 +640,7 @@
         
         
         
-        <article data-tags="book" id="entry-feminist-queer-crip" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-feminist-queer-crip" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Feminist, Queer, Crip</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Alison Kafer</p>
@@ -638,7 +652,7 @@
         
         
         
-        <article data-tags="article free" id="entry-six-ways-of-looking-at-crip-time" style="border-top:2px solid #366943;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="article free" id="entry-six-ways-of-looking-at-crip-time" style="border-top:2px solid #366943;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .5rem">Disability Studies Quarterly 37(3), 2017</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Six Ways of Looking at Crip Time</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Ellen Samuels</p>
@@ -650,7 +664,7 @@
         
         
         
-        <article data-tags="start free" id="entry-access-intimacy-the-missing-link" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="start free" id="entry-access-intimacy-the-missing-link" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .5rem">★ a first route · free</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Access Intimacy: The Missing Link</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Mia Mingus</p>
@@ -662,7 +676,7 @@
         
         
         
-        <article data-tags="article" id="entry-the-dependency-paradox-in-close-relationships-accepting-dependence-promotes-independence" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="article" id="entry-the-dependency-paradox-in-close-relationships-accepting-dependence-promotes-independence" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">Journal of Personality and Social Psychology 92(2), 2007</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">The Dependency Paradox in Close Relationships: Accepting Dependence Promotes Independence</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Brooke C. Feeney</p>
@@ -674,7 +688,7 @@
         
         
         
-        <article data-tags="book" id="entry-mutual-aid-building-solidarity-during-this-crisis-and-the-next" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-mutual-aid-building-solidarity-during-this-crisis-and-the-next" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Mutual Aid: Building Solidarity During This Crisis (and the Next)</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Dean Spade</p>
@@ -687,14 +701,14 @@
       </div>
     </div>
     
-    <div data-group id="bodies-regulation-and-what-happens-before-words" style="margin-bottom:3rem;scroll-margin-top:1rem">
+    <div data-group id="bodies-regulation-and-what-happens-before-words" style="margin-bottom:3rem;scroll-margin-top:6rem">
       <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Bodies, regulation, and what happens before words <span data-count style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:.62em;font-weight:400;letter-spacing:.06em;color:#585B4F;vertical-align:.15em">1</span></h2>
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:.6rem 0 1.4rem">The framework asks you to notice. This is about the noticing.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem">
         
         
         
-        <article data-tags="book" id="entry-my-grandmothers-hands-racialized-trauma-and-the-pathway-to-mending-our-hearts-and-bodies" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-my-grandmothers-hands-racialized-trauma-and-the-pathway-to-mending-our-hearts-and-bodies" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">My Grandmother&#39;s Hands: Racialized Trauma and the Pathway to Mending Our Hearts and Bodies</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Resmaa Menakem</p>
@@ -707,14 +721,14 @@
       </div>
     </div>
     
-    <div data-group id="hierarchy-custom-commitments-possession" style="margin-bottom:3rem;scroll-margin-top:1rem">
+    <div data-group id="hierarchy-custom-commitments-possession" style="margin-bottom:3rem;scroll-margin-top:6rem">
       <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Hierarchy, custom commitments, possession <span data-count style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:.62em;font-weight:400;letter-spacing:.06em;color:#585B4F;vertical-align:.15em">9</span></h2>
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:.6rem 0 1.4rem">Why ranking relationships by category fails, and how control actually operates.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem">
         
         
         
-        <article data-tags="start free" id="entry-the-short-instructional-manifesto-for-relationship-anarchy" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="start free" id="entry-the-short-instructional-manifesto-for-relationship-anarchy" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .5rem">★ a first route · free</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">The Short Instructional Manifesto for Relationship Anarchy</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Andie Nordgren</p>
@@ -726,7 +740,7 @@
         
         
         
-        <article data-tags="book" id="entry-minimizing-marriage-marriage-morality-and-the-law" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-minimizing-marriage-marriage-morality-and-the-law" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Minimizing Marriage: Marriage, Morality, and the Law</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Elizabeth Brake</p>
@@ -738,7 +752,7 @@
         
         
         
-        <article data-tags="article" id="entry-punks-bulldaggers-and-welfare-queens-the-radical-potential-of-queer-politics" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="article" id="entry-punks-bulldaggers-and-welfare-queens-the-radical-potential-of-queer-politics" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">GLQ 3(4), 1997</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Punks, Bulldaggers, and Welfare Queens: The Radical Potential of Queer Politics?</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Cathy J. Cohen</p>
@@ -750,7 +764,7 @@
         
         
         
-        <article data-tags="article" id="entry-progressive-polyamory-considering-issues-of-diversity" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="article" id="entry-progressive-polyamory-considering-issues-of-diversity" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">Sexualities 9(5): 602–620, 2006</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Progressive Polyamory: Considering Issues of Diversity</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Melita J. Noël</p>
@@ -762,7 +776,7 @@
         
         
         
-        <article data-tags="book" id="entry-fraught-intimacies-nonmonogamy-in-the-public-sphere" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-fraught-intimacies-nonmonogamy-in-the-public-sphere" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Fraught Intimacies: Non/Monogamy in the Public Sphere</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Nathan Rambukkana</p>
@@ -774,7 +788,7 @@
         
         
         
-        <article data-tags="book" id="entry-coercive-control-how-men-entrap-women-in-personal-life" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-coercive-control-how-men-entrap-women-in-personal-life" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Coercive Control: How Men Entrap Women in Personal Life</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Evan Stark</p>
@@ -786,7 +800,7 @@
         
         
         
-        <article data-tags="article" id="entry-differentiation-among-types-of-intimate-partner-violence-research-update-and-implications-for-interventions" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="article" id="entry-differentiation-among-types-of-intimate-partner-violence-research-update-and-implications-for-interventions" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">Family Court Review 46(3), 2008</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Differentiation Among Types of Intimate Partner Violence: Research Update and Implications for Interventions</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Joan B. Kelly and Michael P. Johnson</p>
@@ -798,7 +812,7 @@
         
         
         
-        <article data-tags="article free" id="entry-privacy-threats-in-intimate-relationships" style="border-top:2px solid #366943;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="article free" id="entry-privacy-threats-in-intimate-relationships" style="border-top:2px solid #366943;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .5rem">open access</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Privacy Threats in Intimate Relationships</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Karen Levy and Bruce Schneier</p>
@@ -810,7 +824,7 @@
         
         
         
-        <article data-tags="free" id="entry-the-tyranny-of-structurelessness" style="border-top:2px solid #366943;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="free" id="entry-the-tyranny-of-structurelessness" style="border-top:2px solid #366943;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .5rem">free</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">The Tyranny of Structurelessness</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Jo Freeman</p>
@@ -823,14 +837,14 @@
       </div>
     </div>
     
-    <div data-group id="accountability-repair-transformative-justice" style="margin-bottom:3rem;scroll-margin-top:1rem">
+    <div data-group id="accountability-repair-transformative-justice" style="margin-bottom:3rem;scroll-margin-top:6rem">
       <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Accountability, repair, transformative justice <span data-count style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:.62em;font-weight:400;letter-spacing:.06em;color:#585B4F;vertical-align:.15em">6</span></h2>
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:.6rem 0 1.4rem">What happens after harm, without relying on punishment or disposal.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem">
         
         
         
-        <article data-tags="start toolkit free" id="entry-toolkit-a-practical-guide-to-stop-interpersonal-violence" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="start toolkit free" id="entry-toolkit-a-practical-guide-to-stop-interpersonal-violence" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .5rem">★ a first route · free</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Toolkit: A Practical Guide to Stop Interpersonal Violence</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Creative Interventions</p>
@@ -842,7 +856,7 @@
         
         
         
-        <article data-tags="free" id="entry-the-four-parts-of-accountability-and-how-to-give-a-genuine-apology" style="border-top:2px solid #366943;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="free" id="entry-the-four-parts-of-accountability-and-how-to-give-a-genuine-apology" style="border-top:2px solid #366943;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .5rem">free</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">The Four Parts of Accountability and How to Give a Genuine Apology</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Mia Mingus</p>
@@ -854,7 +868,7 @@
         
         
         
-        <article data-tags="book" id="entry-the-revolution-starts-at-home-confronting-intimate-violence-within-activist-communities" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-the-revolution-starts-at-home-confronting-intimate-violence-within-activist-communities" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">edited collection</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">The Revolution Starts at Home: Confronting Intimate Violence Within Activist Communities</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Ching-In Chen, Jai Dulani, Leah Lakshmi Piepzna-Samarasinha, eds.</p>
@@ -866,7 +880,7 @@
         
         
         
-        <article data-tags="book" id="entry-beyond-survival-strategies-and-stories-from-the-transformative-justice-movement" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-beyond-survival-strategies-and-stories-from-the-transformative-justice-movement" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">edited collection</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Beyond Survival: Strategies and Stories from the Transformative Justice Movement</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Ejeris Dixon and Leah Lakshmi Piepzna-Samarasinha, eds.</p>
@@ -878,7 +892,7 @@
         
         
         
-        <article data-tags="book" id="entry-we-will-not-cancel-us-and-other-dreams-of-transformative-justice" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-we-will-not-cancel-us-and-other-dreams-of-transformative-justice" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">We Will Not Cancel Us: And Other Dreams of Transformative Justice</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">adrienne maree brown</p>
@@ -890,7 +904,7 @@
         
         
         
-        <article data-tags="book" id="entry-we-do-this-til-we-free-us-abolitionist-organizing-and-transforming-justice" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-we-do-this-til-we-free-us-abolitionist-organizing-and-transforming-justice" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">We Do This &#39;Til We Free Us: Abolitionist Organizing and Transforming Justice</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Mariame Kaba</p>
@@ -903,14 +917,14 @@
       </div>
     </div>
     
-    <div data-group id="love-eros-and-why-any-of-this-is-worth-doing" style="margin-bottom:3rem;scroll-margin-top:1rem">
+    <div data-group id="love-eros-and-why-any-of-this-is-worth-doing" style="margin-bottom:3rem;scroll-margin-top:6rem">
       <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Love, eros, and why any of this is worth doing <span data-count style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:.62em;font-weight:400;letter-spacing:.06em;color:#585B4F;vertical-align:.15em">5</span></h2>
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:.6rem 0 1.4rem">The framework asks what to refuse. This is the shelf for what it&#39;s for.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem">
         
         
         
-        <article data-tags="start book" id="entry-uses-of-the-erotic-the-erotic-as-power" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="start book" id="entry-uses-of-the-erotic-the-erotic-as-power" style="border-top:2px solid #7D5915;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .5rem">★ a first route · in Sister Outsider, Crossing Press</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Uses of the Erotic: The Erotic as Power</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Audre Lorde</p>
@@ -922,7 +936,7 @@
         
         
         
-        <article data-tags="book" id="entry-all-about-love-new-visions" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-all-about-love-new-visions" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">All About Love: New Visions</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">bell hooks</p>
@@ -934,7 +948,7 @@
         
         
         
-        <article data-tags="book" id="entry-pleasure-activism-the-politics-of-feeling-good" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-pleasure-activism-the-politics-of-feeling-good" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Pleasure Activism: The Politics of Feeling Good</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">adrienne maree brown</p>
@@ -946,7 +960,7 @@
         
         
         
-        <article data-tags="book" id="entry-i-hope-we-choose-love-a-trans-girls-notes-from-the-end-of-the-world" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-i-hope-we-choose-love-a-trans-girls-notes-from-the-end-of-the-world" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">I Hope We Choose Love: A Trans Girl&#39;s Notes from the End of the World</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Kai Cheng Thom</p>
@@ -958,7 +972,7 @@
         
         
         
-        <article data-tags="book" id="entry-what-it-takes-to-heal-how-transforming-ourselves-can-change-the-world" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="book" id="entry-what-it-takes-to-heal-how-transforming-ourselves-can-change-the-world" style="border-top:2px solid #2B4C9B;padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">What It Takes to Heal: How Transforming Ourselves Can Change the World</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Prentis Hemphill</p>

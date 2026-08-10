@@ -83,6 +83,32 @@
      page; it never draws content that wasn't there. */
   [data-filter]{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.03em;padding:.6rem .8rem;min-height:44px;cursor:pointer;border-radius:2px;border:1px solid #C9C6BA;background:transparent;color:#585B4F}
   [data-filter].is-active{border-color:#3F7A4E;background:rgba(63,122,78,.1);color:#2C5A38}
+  /* WD-13: sixty entries over ~12,000px means the filter scrolls out of
+     reach within two viewports. Pinning it — same sticky pattern as
+     Learn's .jump bar — keeps the buttons and the WD-06 result count
+     reachable without a trip back to the top. Only the controls stick;
+     the explanatory paragraphs below stay in normal flow, since they're
+     one-time context, not chrome a reader needs at every scroll depth. */
+  .filterbar{position:sticky;top:0;z-index:30;background:#E7E5DC;border-top:1px solid #C9C6BA;border-bottom:1px solid #C9C6BA;box-shadow:0 10px 18px -16px rgba(25,27,24,.6);padding:.55rem 0}
+  @media (max-width:700px){
+    /* !important: .chips carries an inline style="…flex-wrap:wrap…" (it
+       wraps at every width above 700px), and an inline style attribute
+       always outranks an external stylesheet rule at equal or lower
+       specificity — without it this rule is silently ignored, the row
+       keeps wrapping onto several lines, and the bar balloons tall
+       enough to eat most of a phone screen. Same narrow, targeted use of
+       !important already established in this codebase (see BUG-04's
+       write-up in completed.tasks.md) for exactly this situation. */
+    .filterbar .chips{flex-wrap:nowrap!important;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .filterbar .chips::-webkit-scrollbar{display:none}
+    /* The bar is taller here than at desktop widths — the "Filter" label
+       plus scrollable chip row plus the status line stack differently —
+       so the single scroll-margin-top set inline on [data-group] and
+       article[data-tags] (sized for the desktop bar) isn't enough at
+       narrow widths and needs its own !important override for the same
+       inline-beats-external reason as the rule above. */
+    [data-group],article[data-tags]{scroll-margin-top:7.5rem!important}
+  }
   .venn-scroll{position:relative}
   .venn-scroll::after{content:"";position:absolute;top:0;right:0;bottom:.5rem;width:32px;background:linear-gradient(to right,rgba(231,229,220,0),#E7E5DC 90%);pointer-events:none}
   /* WD-08a: the entry link, not the card, is the interactive unit here —
@@ -146,9 +172,18 @@
   </div>
 </section>
 
-<section class="noprint" style="padding:0 0 1.6rem">
+{{/* .filterbar is a direct child of <main>, a sibling of the <section>
+     that holds the nine shelf groups below — not nested inside a
+     <section> of its own. position:sticky stays pinned only within its
+     containing block's own height, so nesting it inside the short
+     wrapper that used to hold both the controls and the two explanatory
+     paragraphs meant it un-stuck and scrolled away as soon as that short
+     wrapper's bottom edge passed the viewport, a few hundred px into a
+     ~12,000px page. Matches how Learn's .jump bar is placed, for the
+     same reason. */}}
+<div class="filterbar noprint">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <div style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.5rem">
+    <div class="chips" style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.4rem">
       <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-right:.4rem">Filter</span>
       {{ range hugo.Data.archive.filters }}
       <button type="button" data-filter="{{ .value }}" aria-pressed="{{ if eq .value "all" }}true{{ else }}false{{ end }}"{{ if eq .value "all" }} class="is-active"{{ end }}>{{ .label }}</button>
@@ -162,7 +197,11 @@
          reader user with no indication anything had changed. */}}
     {{ $total := 0 }}
     {{ range hugo.Data.archive.groups }}{{ $total = add $total (len .items) }}{{ end }}
-    <p id="filter-status" role="status" aria-live="polite" style="margin:0 0 .3rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">Showing all {{ $total }} entries</p>
+    <p id="filter-status" role="status" aria-live="polite" style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">Showing all {{ $total }} entries</p>
+  </div>
+</div>
+<section class="noprint" style="padding:0 0 1.6rem">
+  <div style="max-width:1120px;margin:0 auto;padding:.9rem clamp(1.1rem,4vw,3rem) 0">
     <p style="margin:0 0 .3rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">"★ a first route" marks a suggested way in, not a ranking — everything else on this shelf carries the same weight, not runner-up status.</p>
     <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">Every entry below is shown by default. These buttons narrow the list if your browser runs the small script that does it — nothing is ever hidden without a click, and the full shelf renders either way.</p>
   </div>
@@ -171,14 +210,14 @@
 <section style="padding:0 0 clamp(3rem,6vw,4.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     {{ range hugo.Data.archive.groups }}
-    <div data-group id="{{ .title | anchorize }}" style="margin-bottom:3rem;scroll-margin-top:1rem">
+    <div data-group id="{{ .title | anchorize }}" style="margin-bottom:3rem;scroll-margin-top:6rem">
       <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">{{ .title }} <span data-count style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:.62em;font-weight:400;letter-spacing:.06em;color:#585B4F;vertical-align:.15em">{{ len .items }}</span></h2>
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:.6rem 0 1.4rem">{{ .note }}</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem">
         {{ range .items }}
         {{ $rule := "#2B4C9B" }}
         {{ if in .tags "start" }}{{ $rule = "#7D5915" }}{{ else if in .tags "free" }}{{ $rule = "#366943" }}{{ end }}
-        <article data-tags="{{ delimit .tags " " }}" id="entry-{{ .title | anchorize }}" style="border-top:2px solid {{ $rule }};padding-top:.9rem;scroll-margin-top:1rem">
+        <article data-tags="{{ delimit .tags " " }}" id="entry-{{ .title | anchorize }}" style="border-top:2px solid {{ $rule }};padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ $rule }};margin:0 0 .5rem">{{ if in .tags "start" }}★ a first route · {{ end }}{{ .use }}</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">{{ .title }}</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">{{ .by }}</p>
