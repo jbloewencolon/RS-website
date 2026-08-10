@@ -345,8 +345,8 @@ Mechanical, individually revertible, verifiable in this environment. Suggested a
 | ~~**WD-03**~~ | ~~`h1,h2,h3{text-wrap:balance}`~~ **Done, see `completed.tasks.md`.** | `[DEV]` | XS | — |
 | ~~**WD-04**~~ | ~~Matrix row illumination on hover (Learn).~~ **Done, see `completed.tasks.md`.** | `[DEV]` | XS | — |
 | ~~**WD-07**~~ | ~~Focus visibility on dark grounds.~~ **Done, see `completed.tasks.md`. Also fixed a previously-undocumented instance on Invitation, found while doing this.** | `[DEV]` | M | — |
-| **WD-09** | Per-group entry counts on Archive shelf headings. **Ship with or before WD-06** — WD-06's JS updates the `[data-count]` element this adds. | `[DEV]` | S | `hugo/layouts/archive.html:146` |
-| **WD-06** | Archive filter: visible result count + `role="status"` live region. The one accessibility gap of consequence in the spec. | `[DEV]` | M | `hugo/layouts/archive.html`, `archive-filter.js` |
+| ~~**WD-09**~~ | ~~Per-group entry counts on Archive shelf headings.~~ **Done, see `completed.tasks.md`.** | `[DEV]` | S | — |
+| ~~**WD-06**~~ | ~~Archive filter: visible result count + `role="status"` live region.~~ **Done, see `completed.tasks.md`.** | `[DEV]` | M | — |
 | **WD-08a** | Authored arrows travel 3px on hover/focus (`.arr` span). | `[DEV]` | S | `hugo/layouts/archive.html:158` + CSS |
 
 **A note on WD-07 and the `.dark` hook.** That class is worth more than the focus fix it exists for — it is the first real selector for "this is a dark band," which WD-15's palette rollout and any future dark-ground rule will both want. Land it deliberately rather than as a focus-bug side effect.

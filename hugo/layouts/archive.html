@@ -148,6 +148,15 @@
       <button type="button" data-filter="{{ .value }}" aria-pressed="{{ if eq .value "all" }}true{{ else }}false{{ end }}"{{ if eq .value "all" }} class="is-active"{{ end }}>{{ .label }}</button>
       {{ end }}
     </div>
+    {{/* Server-rendered with the honest no-JS value: with scripting off,
+         nothing below is ever narrowed, so "all N" is always true without
+         a script to update it. WD-06: previously the filter narrowed the
+         list with zero aria-live announcement anywhere on the page --
+         pressing "books" silently dropped 60 entries to 36 for a screen
+         reader user with no indication anything had changed. */}}
+    {{ $total := 0 }}
+    {{ range hugo.Data.archive.groups }}{{ $total = add $total (len .items) }}{{ end }}
+    <p id="filter-status" role="status" aria-live="polite" style="margin:0 0 .3rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">Showing all {{ $total }} entries</p>
     <p style="margin:0 0 .3rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">"★ a first route" marks a suggested way in, not a ranking — everything else on this shelf carries the same weight, not runner-up status.</p>
     <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">Every entry below is shown by default. These buttons narrow the list if your browser runs the small script that does it — nothing is ever hidden without a click, and the full shelf renders either way.</p>
   </div>
@@ -157,7 +166,7 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     {{ range hugo.Data.archive.groups }}
     <div data-group id="{{ .title | anchorize }}" style="margin-bottom:3rem;scroll-margin-top:1rem">
-      <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">{{ .title }}</h2>
+      <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">{{ .title }} <span data-count style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:.62em;font-weight:400;letter-spacing:.06em;color:#585B4F;vertical-align:.15em">{{ len .items }}</span></h2>
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:.6rem 0 1.4rem">{{ .note }}</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem">
         {{ range .items }}
