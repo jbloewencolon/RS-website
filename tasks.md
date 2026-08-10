@@ -388,9 +388,9 @@ Each of these is a claim about content, not a rendering decision. The spec says 
 |---|---|---|---|
 | **WD-19** | Section arrival reveal (`/reveal.js`, IntersectionObserver). | `[DEV]` | Hiding class must be added *by JS* — never `opacity:0` in the stylesheet. The spec is right that this is the most likely to feel gimmicky; ship last, be willing to cut. |
 | ~~**WD-20**~~ | ~~Scroll-progress hairline on Learn's jump bar.~~ **Done, see `completed.tasks.md`. Also found and fixed a pre-existing, site-wide reduced-motion gap while verifying it.** | `[DEV]` | — |
-| **WD-21** | Native `<details>` disclosure easing (`interpolate-size`). | `[DEV]` | Chromium-only, harmless elsewhere. Do not polyfill. |
-| **WD-22** | The palimpsest change log — superseded wording shown struck beside its replacement. | `[COPY]` | No motion at all; markup and colour only. Use on two or three entries, not everywhere. |
-| **WD-23** | The two-row divider. | `[DEV]` | At most once per page. It is a signature, not a divider style. |
+| ~~**WD-21**~~ | ~~Native `<details>` disclosure easing.~~ **Done, see `completed.tasks.md`.** | `[DEV]` | — |
+| ~~**WD-22**~~ | ~~The palimpsest change log.~~ **Turned out to already exist, site-wide, for every entry — not new work. See `completed.tasks.md`.** | `[COPY]` | — |
+| ~~**WD-23**~~ | ~~The two-row divider.~~ **Done, see `completed.tasks.md`.** | `[DEV]` | — |
 | ~~**WD-24**~~ | ~~Even the question-band tops on Learn.~~ **Done, see `completed.tasks.md`.** | `[DEV]` | — |
 
 ### 9.5b — Live defects found while planning this phase

@@ -356,7 +356,15 @@
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;color:#DB9E2A;margin:0 0 .7rem;border-bottom:1px solid #2A4C4C;padding-bottom:.4rem">{{ .version }}</p>
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.65">
           {{ range .entries }}
-          <li style="color:#B8C7C1"><del style="color:#73968D">{{ .was }}</del> <span style="color:#509C64">{{ .now }}</span></li>
+          {{/* WD-22: this palimpsest pattern (struck prior wording beside its
+               replacement) already exists here for every entry — the design
+               spec that proposed it as new work described a feature that
+               was, in fact, already shipped, site-wide, well before Phase 9.
+               The one real gap: this was unconditional, so v0.1's genuinely
+               empty was: "" rendered a pointless <del style="..."></del>
+               with nothing inside it. {{ with }} skips the element entirely
+               when there is nothing to strike. */}}
+          <li style="color:#B8C7C1">{{ with .was }}<del style="color:#73968D">{{ . }}</del> {{ end }}<span style="color:#509C64">{{ .now }}</span></li>
           {{ end }}
         </ul>
       </div>

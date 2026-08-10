@@ -111,6 +111,14 @@
   }
   .vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
   .wrap{max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)}
+  /* WD-23: the site's signature mark, not a general divider style — used
+     once, at the single break the Treaty section itself is about: "two
+     vessels on one river, neither steering the other." Two rules standing
+     apart is the Two Row Wampum's own figure, not a decoration borrowed
+     for the occasion; drawing it here, and nowhere else, is what keeps it
+     a mark rather than a motif. */
+  .rule-two{border-top:1px solid var(--teal);position:relative}
+  .rule-two::before{content:"";position:absolute;top:3px;left:0;right:0;height:1px;background:var(--ask-edge)}
   .band{padding:0 0 clamp(3rem,6vw,4.5rem)}
   /* Clears the sticky jump bar when a fragment link lands on a section. */
   main [id]{scroll-margin-top:5.4rem}
@@ -252,6 +260,21 @@
   /* Collapsible cards. Closed is the default only where the material is
      long or heavy enough that being handed all of it at once is its own
      problem; the summary always carries enough to decide by. */
+  /* WD-21: lets <details class="card"> ease open/closed on browsers that
+     support animating a native disclosure's content block-size, rather
+     than the default instant snap. Feature-detected, not polyfilled —
+     the spec is explicit that a JS height-animation polyfill isn't worth
+     its cost for what is a small visual nicety; every browser without
+     this support keeps the plain, correct, instant native behaviour it
+     already has. Covered by the site's own reduced-motion rule. */
+  @supports (interpolate-size: allow-keywords) {
+    :root{interpolate-size:allow-keywords}
+    .card::details-content{
+      block-size:0;overflow:clip;
+      transition:block-size .2s ease,content-visibility .2s allow-discrete
+    }
+    .card[open]::details-content{block-size:auto}
+  }
   .card{border:1px solid var(--rule);border-left:4px solid var(--rule);background:var(--paper-2);margin:0 0 .8rem}
   .card:last-of-type{margin-bottom:0}
   .card-fails{border-left-color:var(--fails)}
@@ -606,6 +629,10 @@
     </div>
   </div>
 </section>
+
+<div class="wrap" role="presentation">
+  <div class="rule-two" style="margin:0 0 clamp(2.2rem,4vw,3rem)"></div>
+</div>
 
 <section id="treaty" class="band">
   <div class="wrap">
