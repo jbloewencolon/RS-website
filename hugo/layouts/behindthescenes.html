@@ -72,6 +72,32 @@
      alongside this rule) rather than global, since #2B4C9B is fine on
      every light-ground element the page has otherwise. WD-07. */
   .dark :focus-visible{outline-color:#DB9E2A}
+  /* WD-14: at ~39 minutes and roughly 18,600px this is the longest page
+     on the site, and the only long one with no persistent orientation —
+     the Contents nav above only exists once, at the top, and scrolls
+     away immediately. Ported from Learn's .jump bar (learn.html /
+     learn.js), literal hex here since the CSS custom-property token set
+     is Learn-only for now (WD-11, not yet promoted site-wide). No
+     [data-open-all] button: unlike Learn, nothing on this page is a
+     data-collapsible section — the one <details> here (§substrate) is a
+     single, unrelated disclosure, not part of this navigation model, so
+     porting a button for "every section" would control nothing real. */
+  .jump{position:sticky;top:0;z-index:30;background:#E7E5DC;border-top:1px solid #C9C6BA;border-bottom:1px solid #C9C6BA;box-shadow:0 10px 18px -16px rgba(25,27,24,.6)}
+  .jump-inner{position:relative;max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:nowrap;align-items:center;gap:0 1rem;justify-content:space-between}
+  .jump-menu{flex:1 1 auto;min-width:0}
+  .jump-menu>summary{cursor:pointer;list-style:none;display:flex;align-items:center;min-height:48px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:#585B4F}
+  .jump-menu>summary::-webkit-details-marker{display:none}
+  #jump-current{color:#0F2A2E;text-transform:none;letter-spacing:.01em;margin-left:.5rem;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .jump-menu>nav{position:absolute;left:0;right:0;top:100%;z-index:5;background:#E7E5DC;border-bottom:1px solid #C9C6BA;box-shadow:0 12px 20px -14px rgba(25,27,24,.65);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(215px,100%),1fr));gap:0 1.4rem;padding:.3rem clamp(1.1rem,4vw,3rem) 1rem}
+  .jump-menu>nav a{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;text-decoration:none;display:flex;align-items:center;min-height:40px;border-bottom:2px solid transparent}
+  .jump-menu>nav a::before{content:none!important}
+  .jump-menu>nav a:hover{color:#2C5A38}
+  .jump-menu>nav a[aria-current]{color:#0F2A2E;border-bottom-color:#DB9E2A}
+  /* Clears the sticky jump bar when a fragment link lands on a section —
+     including the existing Contents nav's own links, which predate the
+     bar and had no need of this before. */
+  main [id]{scroll-margin-top:5.4rem}
+  @media print{.jump{display:none!important}}
   @media print{body{background:#fff}.noprint{display:none!important}details:not([open])>*{display:block!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
@@ -132,6 +158,25 @@
     </nav>
   </div>
 </section>
+
+<div class="jump noprint">
+  <div class="jump-inner">
+    <details class="jump-menu">
+      <summary>Sections<span id="jump-current"></span></summary>
+      <nav aria-label="Sections">
+        <a href="#limits">What this is not</a>
+        <a href="#substrate">Substrate</a>
+        <a href="#type">Accessibility &amp; type</a>
+        <a href="#crawler">Crawler policy</a>
+        <a href="#reuse">Reuse terms</a>
+        <a href="#faults">Current faults</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#changelog">Change history</a>
+        <a href="#labour">Labour &amp; money</a>
+      </nav>
+    </details>
+  </div>
+</div>
 
 <section id="limits" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
@@ -353,5 +398,6 @@
   </div>
 </footer>
 
+<script src="/sections.js"></script>
 </body>
 </html>

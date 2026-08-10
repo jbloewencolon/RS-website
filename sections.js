@@ -1,11 +1,18 @@
-// Learn page enhancements. Progressive enhancement only, in the same
-// sense as archive-filter.js and print.js: every word this file can
-// reach is already in the HTML, fully readable, before it runs. With
-// scripting off the reader still gets native <details> they can open
-// themselves, a jump menu that is a plain list of in-page links, and a
-// page that prints. This file only adds three conveniences on top.
+// Learn and Behind the Scenes page enhancements (originally learn.js;
+// renamed WD-14 when Behind the Scenes became this file's second
+// consumer). Progressive enhancement only, in the same sense as
+// archive-filter.js and print.js: every word this file can reach is
+// already in the HTML, fully readable, before it runs. With scripting
+// off a reader still gets native <details> they can open themselves, a
+// jump menu that is a plain list of in-page links, and a page that
+// prints. This file only adds conveniences on top — and not every page
+// uses all of them: Behind the Scenes has no [data-open-all] button and
+// no main details[data-collapsible] sections, so features 1 and 4 below
+// simply find nothing to do there and no-op safely (guarded by
+// `if (toggle && collapsible.length)` and an empty collapsible array,
+// not by a page check in this file).
 //
-// External file rather than inline <script> because the page ships
+// External file rather than inline <script> because both pages ship
 // script-src 'self' with no 'unsafe-inline' — an inline handler is
 // exactly what that CSP is there to refuse.
 (function () {
