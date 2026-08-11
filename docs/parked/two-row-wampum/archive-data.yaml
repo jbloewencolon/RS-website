@@ -1,0 +1,29 @@
+# Pulled from hugo/data/archive.yaml, 2026-08-11. See ../README.md.
+# Fed the #held-in-common section (archive-held-in-common.html in this
+# folder). `sequence`, a separate array that sat a few lines below `shared`
+# in the original file, was NOT part of this and is still live — it drives
+# the unrelated "reading order" feature (UX-08).
+
+trackA:
+  - "Coulthard — Red Skin, White Masks"
+  - "Simpson — Mohawk Interruptus"
+  - "Vizenor — Manifest Manners"
+  - "Wildcat — Replacing Exclusive Sovereignty"
+  - "Rickard — Visualizing Sovereignty"
+
+trackB:
+  - "Tronto — Caring Democracy"
+  - "Kittay — Love's Labor"
+  - "Brake — Minimizing Marriage"
+  - "Stark — Coercive Control"
+  - "Dixon & Piepzna-Samarasinha — Beyond Survival"
+
+shared:
+  - title: "It's About All Relations"
+    by: "Rauna Kuokkanen — Indigenous feminist relational freedom is a sovereignty argument and a care argument in the same sentence, and refuses to be filed as either."
+  - title: "Caretaking Relations, Not American Dreaming"
+    by: "Kim TallBear — caretaking is kinship obligation and land relation at once; splitting them produces the settler version of both."
+  - title: "Care Work: Dreaming Disability Justice"
+    by: "Leah Lakshmi Piepzna-Samarasinha — collective access as self-determination; the care webs are also a politics of refusal."
+  - title: "Access Intimacy: The Missing Link"
+    by: "Mia Mingus — support that does not create ownership. Belongs equally to the ethics of care and to the refusal of possession."

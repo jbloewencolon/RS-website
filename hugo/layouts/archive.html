@@ -174,7 +174,7 @@
 <main>
 <section id="main-content" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Archive — a starter shelf, nothing ranked · about 12 minutes</p>
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Archive — a starter shelf, nothing ranked · about 11 minutes</p>
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.2rem,6vw,4rem);line-height:1;letter-spacing:-.035em;margin:0 0 1.4rem;max-width:15ch">Read the people, not the summary.</h1>
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">No single source contains this whole framework. It is assembled from Indigenous political thought, feminist relational autonomy, disability justice, care ethics, and transformative-justice practice — each with its own authors, nations, and arguments.</p>
     <p style="max-width:52ch;margin:0 0 1.4rem;color:#3C3E38">Every entry links away from here, to the author, the publisher, or the open-access copy. Where no stable public link exists, the holder is named instead of a guess. This site is a door; its success is how quickly you stop needing it.</p>
@@ -184,7 +184,6 @@
         {{ range hugo.Data.archive.groups }}
         <li><a href="#{{ .title | anchorize }}" style="display:inline-flex;align-items:center;min-height:44px">{{ .title }}</a></li>
         {{ end }}
-        <li><a href="#held-in-common" style="display:inline-flex;align-items:center;min-height:44px">Held in common</a></li>
         <li><a href="#fastest-route" style="display:inline-flex;align-items:center;min-height:44px">The fastest honest route in</a></li>
         <li><a href="#absence" style="display:inline-flex;align-items:center;min-height:44px">Absence &amp; incompleteness</a></li>
       </ul>
@@ -252,53 +251,6 @@
       </div>
     </div>
     {{ end }}
-  </div>
-</section>
-
-<section id="held-in-common" style="padding:0 0 clamp(3rem,6vw,4.5rem)">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .5rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA" id="held-in-common-title">Held in common</h2>
-    <p style="max-width:60ch;margin:1rem 0 .6rem;color:#3C3E38">A shelf is a cadastre: one parcel per book, no overlaps, every text assigned to exactly one owner. Some of these texts refuse that. The four in the centre below are claimed fully by both traditions at once — not shared out, not split, not filed under one and cross-referenced from the other. Two jurisdictions, one holding.</p>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:0 0 1.4rem">Reading order is left to right; on a narrow screen this diagram scrolls sideways. The three lists below are titled for anyone not reading them by their visual position — this is a Venn diagram made of real list text, not an image, so nothing here needs a separate text alternative.</p>
-    {{/* tabindex="0" makes the sideways scroll reachable from the keyboard.
-         Below ~700px this diagram is the only way to read four of the
-         entries, and without it a keyboard-only reader can see the scroll
-         cue and has no way to act on it (axe: scrollable-region-focusable,
-         serious, at 375px and 390px — the check suite runs at 1280px, where
-         nothing overflows and the violation never appears). role+label give
-         the newly focusable box a name when focus lands on it. */}}
-    <div class="venn-scroll" style="overflow-x:auto;padding-bottom:.5rem" tabindex="0" role="group" aria-labelledby="held-in-common-title">
-      <div style="min-width:700px;display:grid;grid-template-columns:1fr 1.15fr 1fr;grid-template-rows:auto minmax(240px,auto);gap:0">
-        <p id="held-common-track-a-label" style="grid-column:1;grid-row:1;margin:0 0 .7rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#2B4C9B">Sovereignty, refusal, relation</p>
-        <p id="held-common-track-b-label" style="grid-column:3;grid-row:1;margin:0 0 .7rem;text-align:right;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915">Care, access, accountability</p>
-
-        <div style="grid-column:1 / 3;grid-row:2;background:rgba(43,76,155,.09);border:1px solid #2B4C9B;border-radius:2px;z-index:0" aria-hidden="true"></div>
-        <div style="grid-column:2 / 4;grid-row:2;background:rgba(219,158,42,.16);border:1px solid #DB9E2A;border-radius:2px;z-index:0" aria-hidden="true"></div>
-
-        <ul aria-labelledby="held-common-track-a-label" style="grid-column:1;grid-row:2;z-index:1;list-style:none;margin:0;padding:1.2rem 1.2rem;display:flex;flex-direction:column;gap:.7rem;font-size:15px;line-height:1.4">
-          {{ range hugo.Data.archive.trackA }}
-          <li>{{ . }}</li>
-          {{ end }}
-        </ul>
-
-        <p id="held-common-shared-label" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">Held in common by both traditions</p>
-        <ul aria-labelledby="held-common-shared-label" style="grid-column:2;grid-row:2;z-index:2;list-style:none;margin:1.1rem .8rem;padding:1.1rem 1.1rem;background:rgba(231,229,220,.72);border:2px solid #3F7A4E;border-radius:2px;display:flex;flex-direction:column;gap:.8rem">
-          {{ range hugo.Data.archive.shared }}
-          <li>
-            <p style="margin:0 0 .15rem;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:.98rem;line-height:1.2;letter-spacing:-.01em">{{ .title }}</p>
-            <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.4;color:#585B4F">{{ .by }}</p>
-          </li>
-          {{ end }}
-        </ul>
-
-        <ul aria-labelledby="held-common-track-b-label" style="grid-column:3;grid-row:2;z-index:1;list-style:none;margin:0;padding:1.2rem 1.2rem;display:flex;flex-direction:column;gap:.7rem;font-size:15px;line-height:1.4;text-align:right">
-          {{ range hugo.Data.archive.trackB }}
-          <li>{{ . }}</li>
-          {{ end }}
-        </ul>
-      </div>
-    </div>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #3F7A4E;padding:.3rem 0 .3rem .9rem;margin:1.4rem 0 0;max-width:58ch">⌖ Two Row Wampum, as layout: two vessels on one river, neither steering the other, and a stretch of water that belongs to both. The rest of this site still parcels space in the ordinary way — <a href="/behind-the-scenes/">fault 04</a>. What this treaty relationship suggests as a conceptual apparatus, not just a layout figure, is unpacked on <a href="/learn/#treaty">Learn</a> — including the limit on how far that suggestion is allowed to go.</p>
   </div>
 </section>
 
