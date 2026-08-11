@@ -235,7 +235,7 @@
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem">
         {{ range .items }}
         {{ $rule := "#2B4C9B" }}
-        {{ if in .tags "start" }}{{ $rule = "#7D5915" }}{{ else if in .tags "free" }}{{ $rule = "#366943" }}{{ end }}
+        {{ if in .tags "start" }}{{ $rule = "#6B4C12" }}{{ else if in .tags "free" }}{{ $rule = "#366943" }}{{ end }}
         <article data-tags="{{ delimit .tags " " }}" id="entry-{{ .title | anchorize }}" style="border-top:2px solid {{ $rule }};padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ $rule }};margin:0 0 .5rem">{{ if in .tags "start" }}★ a first route · {{ end }}{{ .use }}</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">{{ .title }}</h3>

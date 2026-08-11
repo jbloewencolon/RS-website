@@ -70,3 +70,31 @@ Not yet done — these are recommendations, not commitments:
 
 Keep the palette to these four. A fifth hue would have to mean something
 the other four cannot, and nothing on the site currently does.
+
+## Deliberate exceptions
+
+Two pages sit outside the four-register system entirely, for different
+reasons. Neither is a gap to close.
+
+**Manifesto** goes dark-ground throughout and never uses the analytical
+registers — see above.
+
+**Invitation** uses `#7D5915` as its whole page identity: base link
+colour, `aria-current` nav state, section kickers, the print button.
+That predates the register system and was never a semantic claim about
+content the way Learn's ochre is — it's the page's own accent, the way
+Manifesto's is dark teal-on-ink. `#7D5915` (5.02:1 on paper) stays here
+even though the rest of the site now standardises on `#6B4C12` (6.24:1)
+for the actual "a question being put to you" register — see the next
+section. Bringing Invitation in line would be consistency for its own
+sake, and would restyle every link on the page as a side effect of a
+contrast fix that only ever needed to touch one line.
+
+## Ochre: one value, not two
+
+As of this pass, every use of ochre *as the semantic register* — a claim
+that something is named but not built, or a question put to the reader —
+is `#6B4C12`. `#7D5915` had drifted into use for the same job on Home's
+door kickers and Archive's "★ a first route" marker; both are now
+`#6B4C12`. The two pending exceptions above (Manifesto, Invitation) are
+not this register at all, so they're unaffected.
