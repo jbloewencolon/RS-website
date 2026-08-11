@@ -43,6 +43,13 @@
   body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
   a{color:#2B4C9B;text-underline-offset:3px;text-decoration-thickness:1px}
   a:hover{color:#2C5A38}
+  /* One motion token. Paint-only properties (colour/background/border)
+     on small elements: no layout, no compositing cost. outline-color is
+     deliberately excluded — keyboard focus must arrive instantly.
+     The prefers-reduced-motion rule below neutralises all of this. WD-02. */
+  a,button,summary,[data-filter],nav[aria-label="Contents"] a,.card-title{
+    transition:color .14s ease,background-color .14s ease,border-color .14s ease
+  }
   a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none}
   nav[aria-label="Contents"] a{border:1px solid #C9C6BA;border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:#585B4F;display:inline-flex;align-items:center;min-height:44px}
   nav[aria-label="Contents"] a:hover{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
@@ -59,9 +66,16 @@
     .nav-toggle{display:block;width:100%}
   }
   *{box-sizing:border-box}
+  h1,h2,h3{text-wrap:balance} /* WD-03 */
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
+  /* #2B4C9B is 1.88:1 on the #0F2A2E teal ground — effectively invisible.
+     Ochre is 6.42:1 there, and "a question being put to you" is exactly
+     what focus is. Scoped to .dark (dark-ground sections/footers, added
+     alongside this rule) rather than global, since #2B4C9B is fine on
+     every light-ground element the page has otherwise. WD-07. */
+  .dark :focus-visible{outline-color:#DB9E2A}
   @media print{body{background:#fff}.noprint{display:none!important}body.print-isolate>header,body.print-isolate>main>section:not(#field-guide),body.print-isolate>footer{display:none!important}}
-  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
   .skip-link:focus{left:1rem;top:1rem}
 
@@ -97,6 +111,14 @@
   }
   .vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
   .wrap{max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)}
+  /* WD-23: the site's signature mark, not a general divider style — used
+     once, at the single break the Treaty section itself is about: "two
+     vessels on one river, neither steering the other." Two rules standing
+     apart is the Two Row Wampum's own figure, not a decoration borrowed
+     for the occasion; drawing it here, and nowhere else, is what keeps it
+     a mark rather than a motif. */
+  .rule-two{border-top:1px solid var(--teal);position:relative}
+  .rule-two::before{content:"";position:absolute;top:3px;left:0;right:0;height:1px;background:var(--ask-edge)}
   .band{padding:0 0 clamp(3rem,6vw,4.5rem)}
   /* Clears the sticky jump bar when a fragment link lands on a section. */
   main [id]{scroll-margin-top:5.4rem}
@@ -104,6 +126,12 @@
   /* Section kicker. The coloured rule is the accent at full strength;
      the label beside it is the same register in its legible form. */
   .kick{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 1.1rem;display:flex;align-items:center;gap:.75rem;color:var(--ink-3)}
+  /* WD-19: .rv/.rv-in are added by reveal.js, never present here on
+     their own — a kicker with only .kick and no script running is never
+     hidden. Flagged in the spec as the item most likely to feel
+     gimmicky; kept small and short (6px, .25s) on that basis. */
+  .rv{opacity:0;transform:translateY(6px);transition:opacity .25s ease,transform .25s ease}
+  .rv-in{opacity:1;transform:none}
   .kick::before{content:"";flex:0 0 auto;width:2.2rem;height:3px;background:var(--rule)}
   .kick-teal{color:var(--teal)}.kick-teal::before{background:var(--teal)}
   .kick-fails{color:var(--fails)}.kick-fails::before{background:var(--fails)}
@@ -132,6 +160,22 @@
      back to the top. Plain in-page links, so it works with scripting
      off — the current-section label is the only part JS supplies. */
   .jump{position:sticky;top:0;z-index:30;background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);box-shadow:0 10px 18px -16px rgba(25,27,24,.6)}
+  /* WD-20: how far down the page you are, not just which section — the
+     bar already names where. Scroll-driven, not JS-driven: the browser
+     itself ties the animation's progress to scroll position, so there is
+     no scroll listener, no rAF loop, nothing running on the main thread
+     while you scroll. Fully feature-gated: absent everywhere @supports
+     doesn't confirm animation-timeline:scroll(), not a partial or broken
+     version of it. Covered by the site's own reduced-motion rule like
+     every other animation here. */
+  @supports (animation-timeline: scroll()) {
+    .jump::after{
+      content:"";display:block;height:2px;background:var(--ask-edge);
+      transform-origin:left;transform:scaleX(0);
+      animation:jump-progress linear;animation-timeline:scroll()
+    }
+    @keyframes jump-progress{to{transform:scaleX(1)}}
+  }
   /* nowrap, deliberately: a wrapping flex line wraps before it shrinks,
      which put the open-all button on a second sticky row on a phone and
      cost ~50px of every screen. Nothing here is allowed to wrap — the
@@ -152,7 +196,7 @@
   .jump-menu>nav a::before{content:none!important}
   .jump-menu>nav a:hover{color:var(--holds)}
   .jump-menu>nav a[aria-current]{color:var(--teal);border-bottom-color:var(--ask-edge)}
-  /* Hidden until learn.js adds .is-ready, so a reader with scripting off
+  /* Hidden until sections.js adds .is-ready, so a reader with scripting off
      is never shown a control that cannot do anything. */
   [data-open-all]{display:none;font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;background:none;color:var(--teal);border:1px solid var(--rule);border-radius:2px;padding:.45rem .8rem;min-height:44px;cursor:pointer;white-space:nowrap}
   [data-open-all].is-ready{display:inline-flex;align-items:center}
@@ -165,7 +209,14 @@
   .p-n{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;font-weight:500;color:#DDE4DC;background:var(--teal);display:inline-flex;align-items:center;justify-content:center;width:2.1rem;height:2.1rem;border-radius:2px;margin:0 0 .75rem}
   .p-t{font-family:var(--sans);font-weight:700;font-size:1.28rem;line-height:1.1;letter-spacing:-.02em;margin:0 0 .5rem}
   .p-b{margin:0 0 1.2rem;font-size:16px;line-height:1.55;color:var(--ink-2);flex:1 1 auto}
-  .p-q{margin:0 -1.5rem;padding:.85rem 1.5rem;background:var(--ask-fill);border-top:1px solid var(--ask-edge);font-family:var(--mono);font-size:12.5px;line-height:1.5;color:var(--ask)}
+  /* WD-24: optional refinement, not a bug fix — every band's bottom edge
+     already lines up exactly within its grid row (flex:1 1 auto on .p-b
+     above absorbs the difference), which is the thing that actually
+     needed to be true. This only evens the shortest bands' top edge so a
+     one-line question doesn't sit as a sliver beside a three-line one.
+     4.1rem covers two lines without clipping the longest band measured
+     (122px, principle 03). */
+  .p-q{margin:0 -1.5rem;padding:.85rem 1.5rem;background:var(--ask-fill);border-top:1px solid var(--ask-edge);font-family:var(--mono);font-size:12.5px;line-height:1.5;color:var(--ask);min-height:4.1rem;display:flex;align-items:center}
 
   /* Holds/fails matrix. Colour, fill, and glyph all say the same thing
      three times over: ▪ filled = the principle bears load here, □ hollow
@@ -196,6 +247,12 @@
   table.matrix tbody th a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
   table.matrix tbody th a:hover{color:var(--holds);border-bottom-color:var(--holds)}
   table.matrix a::before{content:none!important}
+  /* WD-04: tinting the hovered row is the cheapest way to trace one
+     situation across thirteen columns without a finger on the screen.
+     A td's own background always paints over its parent tr's, so the
+     holds/fails fills below stay exactly as legible on the tint as off it. */
+  table.matrix tbody tr{transition:background-color .14s ease}
+  table.matrix tbody tr:hover{background:rgba(15,42,46,.05)}
   td.c-holds{background:var(--holds-fill);color:var(--holds);font-size:15px}
   td.c-fails{background:var(--fails-fill);color:var(--fails);font-size:15px}
   /* Purely visual placeholder — the cell is empty in the DOM so a screen
@@ -209,6 +266,21 @@
   /* Collapsible cards. Closed is the default only where the material is
      long or heavy enough that being handed all of it at once is its own
      problem; the summary always carries enough to decide by. */
+  /* WD-21: lets <details class="card"> ease open/closed on browsers that
+     support animating a native disclosure's content block-size, rather
+     than the default instant snap. Feature-detected, not polyfilled —
+     the spec is explicit that a JS height-animation polyfill isn't worth
+     its cost for what is a small visual nicety; every browser without
+     this support keeps the plain, correct, instant native behaviour it
+     already has. Covered by the site's own reduced-motion rule. */
+  @supports (interpolate-size: allow-keywords) {
+    :root{interpolate-size:allow-keywords}
+    .card::details-content{
+      block-size:0;overflow:clip;
+      transition:block-size .2s ease,content-visibility .2s allow-discrete
+    }
+    .card[open]::details-content{block-size:auto}
+  }
   .card{border:1px solid var(--rule);border-left:4px solid var(--rule);background:var(--paper-2);margin:0 0 .8rem}
   .card:last-of-type{margin-bottom:0}
   .card-fails{border-left-color:var(--fails)}
@@ -263,8 +335,15 @@
      most-used artifact, it is the one section with a print button, and a
      closed <details> does not print. Colour does the compression here
      instead of disclosure. */
-  .fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
-  .fg>div{background:var(--paper);padding:1.25rem 1.3rem 0;display:flex;flex-direction:column}
+  /* WD-10a, Fix A: hairlines drawn on the cells, not the container. The
+     old background+gap:1px trick painted the container's own rule colour
+     through every gap, including gaps with no cell behind them — ten
+     items in 3 columns leaves 2 empty cells in the last row, which
+     rendered as a solid slab of --rule there. Cells with no content have
+     no borders and no background now, so an incomplete row shows page
+     ground instead. */
+  .fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0;border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+  .fg>div{background:var(--paper);border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:1.25rem 1.3rem 0;display:flex;flex-direction:column}
   .fg-p{margin:0 0 .5rem;font-family:var(--sans);font-weight:700;font-size:1.02rem;line-height:1.3;color:var(--ink)}
   .fg-g{margin:0 0 1.1rem;font-size:14.5px;line-height:1.5;color:var(--ink-2);flex:1 1 auto}
   .fg-q{margin:0 -1.3rem;padding:.8rem 1.3rem;background:var(--fails-fill);border-top:1px solid var(--fails-edge);font-family:var(--mono);font-size:12.5px;line-height:1.5;color:var(--fails)}
@@ -557,6 +636,10 @@
   </div>
 </section>
 
+<div class="wrap" role="presentation">
+  <div class="rule-two" style="margin:0 0 clamp(2.2rem,4vw,3rem)"></div>
+</div>
+
 <section id="treaty" class="band">
   <div class="wrap">
     <p class="kick kick-teal">The word this framework needs and doesn't have yet</p>
@@ -576,7 +659,7 @@
   </div>
 </section>
 
-<section id="opacity" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,5rem) 0">
+<section id="opacity" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,5rem) 0">
   <div class="wrap">
     <p class="kick" style="color:#DB9E2A;margin-bottom:1rem">Principle 08, applied to this website</p>
     <h2 class="sec" style="max-width:22ch;color:#E7E5DC">Total legibility is a form of domination.</h2>
@@ -712,7 +795,7 @@
 
 </main>
 
-<footer style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
+<footer class="dark" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:44ch">v0.2 · no third-party requests, including fonts · <a href="/behind-the-scenes/" style="color:#DB9E2A">what changed</a> · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
@@ -729,6 +812,7 @@
 </footer>
 
 <script src="/print.js"></script>
-<script src="/learn.js"></script>
+<script src="/sections.js"></script>
+<script src="/reveal.js"></script>
 </body>
 </html>

@@ -42,6 +42,10 @@
   body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
   a{color:#2B4C9B;text-underline-offset:3px;text-decoration-thickness:1px}
   a:hover{color:#2C5A38}
+   
+  a,button,summary,[data-filter],nav[aria-label="Contents"] a,.card-title{
+    transition:color .14s ease,background-color .14s ease,border-color .14s ease
+  }
   a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none}
   nav[aria-label="Contents"] a{border:1px solid #C9C6BA;border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:#585B4F}
   nav[aria-label="Contents"] a:hover{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
@@ -56,10 +60,38 @@
     #primary-nav{display:none!important}
     .nav-toggle{display:block;width:100%}
   }
+   
+  :root{
+    --paper:#E7E5DC;--paper-2:#EFEEE7;--ink:#191B18;--ink-2:#3C3E38;--ink-3:#585B4F;--rule:#C9C6BA;
+    --teal:#0F2A2E;--teal-2:#2A4C4C;--sage:#8FA9A2;
+    --holds:#2C5A38;--holds-fill:rgba(63,122,78,.13);--holds-edge:rgba(44,90,56,.35);
+    --fails:#8B3A2F;--fails-fill:rgba(139,58,47,.10);--fails-edge:rgba(139,58,47,.24);
+    --ask:#6B4C12;--ask-edge:#DB9E2A;--ask-fill:rgba(219,158,42,.13);
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  }
   *{box-sizing:border-box}
+  h1,h2,h3{text-wrap:balance}  
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
+   
+  .dark :focus-visible{outline-color:#DB9E2A}
+   
+  .jump{position:sticky;top:0;z-index:30;background:#E7E5DC;border-top:1px solid #C9C6BA;border-bottom:1px solid #C9C6BA;box-shadow:0 10px 18px -16px rgba(25,27,24,.6)}
+  .jump-inner{position:relative;max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:nowrap;align-items:center;gap:0 1rem;justify-content:space-between}
+  .jump-menu{flex:1 1 auto;min-width:0}
+  .jump-menu>summary{cursor:pointer;list-style:none;display:flex;align-items:center;min-height:48px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:#585B4F}
+  .jump-menu>summary::-webkit-details-marker{display:none}
+  #jump-current{color:#0F2A2E;text-transform:none;letter-spacing:.01em;margin-left:.5rem;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .jump-menu>nav{position:absolute;left:0;right:0;top:100%;z-index:5;background:#E7E5DC;border-bottom:1px solid #C9C6BA;box-shadow:0 12px 20px -14px rgba(25,27,24,.65);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(215px,100%),1fr));gap:0 1.4rem;padding:.3rem clamp(1.1rem,4vw,3rem) 1rem}
+  .jump-menu>nav a{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;text-decoration:none;display:flex;align-items:center;min-height:40px;border-bottom:2px solid transparent}
+  .jump-menu>nav a::before{content:none!important}
+  .jump-menu>nav a:hover{color:#2C5A38}
+  .jump-menu>nav a[aria-current]{color:#0F2A2E;border-bottom-color:#DB9E2A}
+   
+  main [id]{scroll-margin-top:5.4rem}
+  @media print{.jump{display:none!important}}
   @media print{body{background:#fff}.noprint{display:none!important}details:not([open])>*{display:block!important}}
-  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
   .skip-link:focus{left:1rem;top:1rem}
 </style>
@@ -119,6 +151,25 @@
   </div>
 </section>
 
+<div class="jump noprint">
+  <div class="jump-inner">
+    <details class="jump-menu">
+      <summary>Sections<span id="jump-current"></span></summary>
+      <nav aria-label="Sections">
+        <a href="#limits">What this is not</a>
+        <a href="#substrate">Substrate</a>
+        <a href="#type">Accessibility &amp; type</a>
+        <a href="#crawler">Crawler policy</a>
+        <a href="#reuse">Reuse terms</a>
+        <a href="#faults">Current faults</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#changelog">Change history</a>
+        <a href="#labour">Labour &amp; money</a>
+      </nav>
+    </details>
+  </div>
+</div>
+
 <section id="limits" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1rem">What this is not</p>
@@ -174,7 +225,7 @@
         
         <div style="border-top:2px solid #7D5915;padding-top:.7rem">
           <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .35rem">Page weight</dt>
-          <dd style="margin:0;font-size:16px;line-height:1.5">Ranges from about 15 KB (the Invitation) to about 118 KB (the Archive) per page, uncompressed HTML — no images, no icon fonts, no video. Three pages (Home, Practise, Contribute) additionally load a shared ~70 KB script once per browser session, cached rather than re-downloaded on every page view. A flat &#34;under 60 KB&#34; figure was stated here before this project&#39;s content had grown to its current size; corrected to the real current range rather than left to quietly stop being true.</dd>
+          <dd style="margin:0;font-size:16px;line-height:1.5">Ranges from about 17 KB (the Invitation) to about 134 KB (the Archive) per page, uncompressed HTML — no images, no icon fonts, no video. Three pages (Home, Practise, Contribute) additionally load a shared ~69 KB script once per browser session, cached rather than re-downloaded on every page view. This figure has drifted stale twice before — first a flat &#34;under 60 KB&#34; claim outgrown by the site&#39;s own content, then a range that drifted 10&#43; KB out of date as pages kept changing after it was written. It is now checked in the build&#39;s own test suite (checkPageWeight in scripts/check-pages.mjs) against every shipped file&#39;s actual size, so a future edit that moves this number without updating the words here fails the build instead of quietly becoming untrue a third time.</dd>
         </div>
         
         <div style="border-top:2px solid #366943;padding-top:.7rem">
@@ -267,38 +318,39 @@
   </div>
 </section>
 
-<section id="crawler" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
+<section id="crawler" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">Opacity as governance, not as a button</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.2rem;max-width:24ch;color:#E7E5DC">What this site refuses to the crawler.</h2>
     <p style="max-width:54ch;margin:0 0 1.6rem;color:#B8C7C1">Discovery by a third party is not a condition of existing. A publisher can decline the index, and this one does, selectively. The policy is a real file, not a claim: <a href="/robots.txt" style="color:#DB9E2A">read robots.txt</a>.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:#2A4C4C;border:1px solid #2A4C4C;margin-bottom:1.8rem">
+    
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:0;border-top:1px solid #2A4C4C;border-left:1px solid #2A4C4C;margin-bottom:1.8rem">
       
-      <div style="background:#0F2A2E;padding:1.2rem 1.3rem 1.4rem">
+      <div style="background:#0F2A2E;border-right:1px solid #2A4C4C;border-bottom:1px solid #2A4C4C;padding:1.2rem 1.3rem 1.4rem">
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#509C64;margin:0 0 .5rem">indexed</p>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">Manifesto, Learn, Archive, Behind the Scenes</h3>
         <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">Public reading material. Find it, index it, pass it on. Refusing discovery for its own sake would just be obscurity.</p>
       </div>
       
-      <div style="background:#0F2A2E;padding:1.2rem 1.3rem 1.4rem">
+      <div style="background:#0F2A2E;border-right:1px solid #2A4C4C;border-bottom:1px solid #2A4C4C;padding:1.2rem 1.3rem 1.4rem">
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#DB9E2A;margin:0 0 .5rem">disallowed</p>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">Practise</h3>
         <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">What a person marks about their own relationships is not material for a register, a snapshot, or a training set — even though nothing they type ever leaves their browser.</p>
       </div>
       
-      <div style="background:#0F2A2E;padding:1.2rem 1.3rem 1.4rem">
+      <div style="background:#0F2A2E;border-right:1px solid #2A4C4C;border-bottom:1px solid #2A4C4C;padding:1.2rem 1.3rem 1.4rem">
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#DB9E2A;margin:0 0 .5rem">disallowed</p>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">Contribute</h3>
         <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">Contributor material is reachable by relationship and request, governed by the terms each contributor chose, not by discovery.</p>
       </div>
       
-      <div style="background:#0F2A2E;padding:1.2rem 1.3rem 1.4rem">
+      <div style="background:#0F2A2E;border-right:1px solid #2A4C4C;border-bottom:1px solid #2A4C4C;padding:1.2rem 1.3rem 1.4rem">
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#D07F75;margin:0 0 .5rem">refused</p>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">Training crawlers</h3>
         <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">GPTBot, CCBot, Google-Extended, ClaudeBot and their kin are disallowed site-wide. This request has no technical force; it is stated so that ignoring it is a choice on the record.</p>
       </div>
       
-      <div style="background:#0F2A2E;padding:1.2rem 1.3rem 1.4rem">
+      <div style="background:#0F2A2E;border-right:1px solid #2A4C4C;border-bottom:1px solid #2A4C4C;padding:1.2rem 1.3rem 1.4rem">
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#509C64;margin:0 0 .5rem">allowed, with limits</p>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">Retrieval crawlers</h3>
         <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">Training and retrieval are different acts. A crawler fetching this page to answer a person&#39;s question, and citing it back, may read the public pages — it is refused the workshop and the contribution page like anyone else. Refusing to become training data is not the same as refusing to be found.</p>
@@ -555,7 +607,7 @@
   </div>
 </section>
 
-<section id="changelog" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
+<section id="changelog" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">Change log — repair in view</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.2rem;max-width:24ch;color:#E7E5DC">Corrections are shown, not overwritten.</h2>
@@ -566,115 +618,171 @@
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;color:#DB9E2A;margin:0 0 .7rem;border-bottom:1px solid #2A4C4C;padding-bottom:.4rem">v0.2 — current</p>
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.65">
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">Resources&#39; eleven collapsible categories (shipped earlier this session) had no visible way to tell a closed-but-populated section from an empty one, and the browser&#39;s native disclosure triangle never rendered at all — `summary{display:flex}` suppresses it silently. The page&#39;s own &#34;Choose what you need&#34; jump menu made this worse, not better: clicking a category link scrolled to it without opening it, so a reader following the site&#39;s own shortcut still landed on a wall of closed headings. Found by an independent UX audit (`docs/audits/ux-audit-2026-08-08.html`), not by this session</del> <span style="color:#509C64">every category summary carries a visible chevron that rotates open (pure CSS, no script — this page stays `script-src &#39;none&#39;`). Jump-menu links now open their target: each category&#39;s id moved from the `&lt;details&gt;` element onto its content wrapper, which is what the fragment-navigation &#34;reveal&#34; behaviour actually checks for — a link to an id on `&lt;details&gt;` itself never auto-opens it, a link to an id on a descendant does. `crisis-lines` still opens by default, unchanged. Populated categories show an entry count in the summary (&#34;3 entries · Canada, national&#34;); mutual aid — genuinely empty, not thin — is no longer a `&lt;details&gt;` at all, so it can&#39;t be confused with a closed-but-populated one, and reads as a plain, visibly muted placeholder row instead</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">Home stated its own four limits and a fifth about the website itself directly on the homepage — a page meant as a short, warm entry point was also carrying the framework&#39;s most caveated, self-critical material, arguably the wrong audience and definitely the wrong shelf for it. And, found while moving it: this page&#39;s own reading-time estimate, &#34;about 6 minutes,&#34; for what was already the longest page on the site before this move added another section to it</del> <span style="color:#509C64">both limits sections moved to the colophon, under a new &#34;What this is not&#34; heading and first item in the contents menu, right before the substrate — the natural shelf for a page that already exists to be the site&#39;s caveats and fault list. Home keeps nothing of it and reads straight from the six doors into the roadmap. The one sentence that pointed at itself (&#34;the colophon states...&#34;) is reworded now that it&#39;s not pointing at a different page anymore. A stale cross-reference in Learn&#39;s treaty section, which named &#34;Home&#39;s own stated limits,&#34; is repointed to the colophon. Reading-time estimate corrected to about 39 minutes, matching the page&#39;s actual length rather than a number set before most of this session&#39;s additions to it</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">the colophon&#39;s substrate table — thirteen fields, from server location to build process — rendered fully expanded under its own heading, a long grid to scroll past before reaching the rest of the page</del> <span style="color:#509C64">the same thirteen fields sit behind a &#34;Show the 13 substrate fields&#34; disclosure — the field count reads from the data file directly rather than being typed by hand, so it can&#39;t go stale the way this page&#39;s own topic and reading-time counts already have twice this session. The section heading and its framing paragraph (&#34;A land acknowledgement in a footer is decoration...&#34;) stay visible either way; only the field-by-field list collapses. Forces open when printed, same fix as Resources</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">Resources listed all eleven categories fully expanded, one after another — a long page to scroll past even with the &#34;Choose what you need&#34; contents index (RS-043) offering a jump-to-section shortcut, since jumping still landed on a page where everything else was already open too</del> <span style="color:#509C64">each category is a native &lt;details&gt;/&lt;summary&gt; disclosure, closed by default so a reader sees the list of what&#39;s available before committing to reading all of it — except &#34;Immediate safety and crisis lines,&#34; left open by default since this site does not hide safety-critical information behind a click. Works identically with JavaScript on or off, since this page carries none by design (script-src &#39;none&#39;). Printing the page force-opens every section regardless of its on-screen state, so a printout is never missing a phone number someone meant to bring with them</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">Decision Record D15 authorized an outbound-only link to a territory-identification tool — no embedded lookup, no reproduced dataset — for whoever reads this site to find whose territory they&#39;re on. It was never added; the verification queue tracked it as still open through the entire session</del> <span style="color:#509C64">a link to native-land.ca on Home, in the section that already asks whose territory the servers sit on. Framed with the organisation&#39;s own stated caveat, verified directly rather than assumed: their map is educational and reference-only, not a legal record, and stays a work in progress rather than a finished boundary line. Outbound link only, exactly as D15 specified — nothing from native-land.ca is embedded, queried, or reproduced on this site</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">the colophon&#39;s own substrate table contradicted itself: &#34;server location&#34; and &#34;watershed&#34; both said the site was &#34;unhosted,&#34; while three rows down, &#34;security headers&#34; correctly named GitHub Pages as &#34;this site&#39;s current host.&#34; Fault 01 repeated the unhosted claim. &#34;Page weight&#34; said &#34;under 60 KB per page&#34; against pages that had grown, over the course of this session&#39;s content additions, to as much as 118 KB — the Archive alone, uncompressed, with no images or video, is nearly double the stated ceiling</del> <span style="color:#509C64">server location and watershed corrected to state what&#39;s actually true: the site is hosted, on GitHub Pages, and the reason the specific city and territory still can&#39;t be named is that GitHub itself doesn&#39;t disclose which facility serves a given Pages deployment — a different, more precise problem than &#34;nothing exists yet.&#34; Page weight corrected to the real current range, about 15 KB to about 118 KB depending on the page, with the shared ~70 KB script three pages load noted separately since it&#39;s cached, not re-downloaded per page. &#34;What is logged&#34; now says plainly that this project deployed to GitHub Pages before auditing what GitHub logs by default — a sequencing gap, named rather than implied away. Fault 01 rewritten to match</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">a framework about intimacy said nothing about sex — desire discrepancy, reproductive coercion, sexual trauma, and consensual power exchange were all absent, despite the site already having exactly the vocabulary each of them needed (principle 04&#39;s ongoing and materially possible consent; principle 05&#39;s arbitrary/hidden/uncontestable test for power, already &#34;named, limited, contestable&#34; enough to describe negotiated power exchange without new concepts)</del> <span style="color:#509C64">a new Learn section naming all four plainly, each as an application of an existing principle rather than a new one: desire discrepancy (04 — a yes given to avoid conflict isn&#39;t the yes the principle describes, in either direction); reproductive coercion (02 and 04, routed to Resources&#39; coercive-control listing, since this is intimate partner violence, not a disagreement); sexual trauma (04&#39;s &#34;materially possible&#34; applied to a nervous system&#39;s capacity to say no, with a direct statement that this site isn&#39;t a trauma-therapy resource and doesn&#39;t pretend to be); consensual power exchange (05&#39;s actual test — arbitrary, hidden, uncontestable — distinguishing structured, named, revocable power from the kind 05 refuses). `topics.yaml` gains four new entries, all drafted; the topic and reading-time counts across Learn and the colophon are updated to match rather than left stale</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">the thirteen principles were illustrated only by their own abstract questions — nothing on the site showed what they&#39;re actually like to be inside for a sponsored partner, a disabled person partnered with their funded attendant, a carer of a dependent adult, someone under coercive control, someone under guardianship, a precarious worker in shared housing, or a child in a restructuring household. A framework that only illustrates itself with easy cases quietly asks readers whose situation is a hard case to notice the gap themselves. Also stale, caught while updating this page: its own &#34;about 6 minutes&#34; reading-time estimate, from before this session roughly tripled the page&#39;s length</del> <span style="color:#509C64">a new Learn section, seven worked scenarios, each naming which principles hold and — marked as failures, not softened — which ones don&#39;t: a sponsored partner whose refusal has no material floor under it; a funded attendant relationship where paid labour and chosen intimacy share the same hours with no separate vocabulary; a carer whose refusal is honestly named as constrained and just as honestly left unrelieved, because a website can&#39;t supply respite care; coercive control, where nearly every principle fails at once by design, which is why the framework routes to Resources there instead of offering more principles; guardianship, where self-determination fails by legal design and this site takes no position on when that&#39;s justified; precarious shared housing, where refusal exists in principle and not in practice; and a child in a restructuring household, absorbing more of it than almost anyone while holding no standing in a principle set written for adults. Learn&#39;s reading-time estimate corrected to about 15 minutes, on Learn itself and on Home&#39;s own door card</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">the Two Row Wampum appeared exactly once on this site, as a layout figure in the archive&#39;s &#34;Held in common&#34; section — decorative and unexplained as a concept, even though relational sovereignty&#39;s own central claim (two people, each sovereign, sharing one condition, neither subordinate) is precisely the structure a treaty is built to hold. &#34;Sovereignty&#34; named the value; nothing named the missing form. And, caught while fixing this: the roadmap&#39;s topic count (&#34;nineteen topics, six drafted&#34;) had already gone stale two tasks earlier, when RS-035 flipped two more topics to drafted without the hardcoded count being updated to match</del> <span style="color:#509C64">a new Learn section, &#34;Two sovereigns, one shared condition. Sovereignty doesn&#39;t have a form for that. Treaty does,&#34; naming treaty and protocol as concepts this framework leans on and doesn&#39;t yet have machinery for — with the limit stated as plainly as the claim: a household is not a treaty relationship, the stakes and histories aren&#39;t equivalent, and using the concept is not the same as claiming the weight. What&#39;s actually borrowed: a treaty is a standing practice of renewal, not a one-time agreement, and the framework&#39;s own unbuilt &#34;Relational Review&#34; (still on Practise&#39;s not-yet-built list) is exactly that logic, unbuilt. The archive&#39;s existing Two Row Wampum note now links back to this section rather than standing alone. Fixed alongside it: the topic count, now accurate at twenty topics, nine drafted</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">the framework named two real conflicts between its own principles — accountability (06) against refusal (07), and opacity (08) against the manifesto&#39;s &#34;relationships are not private empires&#34; (thesis 11) — and answered neither. The existing continuity-of-care clause resolved one narrow instance of the first (dependency, at the moment of leaving) and said plainly it wasn&#39;t a general answer; nothing addressed the second at all, or the general case of the first</del> <span style="color:#509C64">a new Learn section answering both, differently, because they don&#39;t have the same shape. 06 vs. 07 stays open on purpose: refusal is protected regardless of the disruption it causes, 06 governs the manner of an ending where real obligations exist rather than whether the ending is allowed, and past that the framework declines to supply a formula precise enough to resolve every case, calling that false precision rather than rigor. 08 vs. thesis 11 gets an actual rule: opacity holds fully against anyone without standing, and even someone with standing is owed only what they&#39;ll absorb, not a full accounting — the same reasoning already built into the endings tool&#39;s &#34;who holds this after, and do they know&#34;</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">thesis 11 — &#34;relationships are not private empires... children, friends, communities, care networks, and land absorb the consequences&#34; — argued a relationship must answer for its effects on others, without ever saying who has standing to demand that answer. Read carelessly, it supplies a rationale for exactly the surveillance already aimed at poor, disabled, queer, and Black families — the demand that a household explain itself to a state or a hostile public, dressed in this framework&#39;s own language</del> <span style="color:#509C64">thesis 11 keeps its claim and adds the missing line: &#34;standing to demand that account belongs to the people who absorb the consequences — not the state, not a crowd with an opinion. Collapse that distinction and this thesis becomes a rationale for the surveillance already aimed at the families it should be protecting.&#34; The closing line changes to match: &#34;No private freedom built on public damage — and only the people who absorb it get to ask&#34;</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">thesis 02&#39;s closing line — &#34;no rule is sacred just because it is old&#34; — coded tradition itself as presumptively unfree, with age as the implicit test. That quietly privileges the self-authorizing individual as the free position and treats inherited, genealogical, or ceremonial forms of relationship as constraint by default — the same move settler discourse has long used to call Indigenous and other genealogically-organized societies unfree for being genealogical, exactly the kind of move this framework argues against everywhere else</del> <span style="color:#509C64">thesis 02 keeps its core refusal — the preassembled defaults, tradition mistaken for consent — and adds the missing distinction: a relationship chosen inside inherited law, kinship, or ceremony is not less free than one built from nothing, and insisting the self-authoring individual is the only free shape has &#34;its own colonial history.&#34; The closing line changes from an age test to the same accountability test the rest of the thesis already uses: not how old the rule is, whether it can answer for itself</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">Home&#39;s four stated limits explained what this framework isn&#39;t without ever naming that chosen monogamy is one of the things it protects — a site built partly out of a critique of amatonormativity had no line saying non-monogamy isn&#39;t the more evolved choice, and no name for pressure running the other direction, toward opening a relationship someone didn&#39;t want opened</del> <span style="color:#509C64">a new paragraph beside the four limits, not folded into any one of them: chosen monogamy named directly as protected on the same terms as any other form, and coercive non-monogamy named as what isn&#39;t protected — pressure, guilt, or being worn down into opening up, sometimes in this site&#39;s own vocabulary</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">the archive had thirteen groups of what to refuse, revise, or hold accountable, and nothing for why any of it is worth doing — no erotics in a framework about intimacy, and a Black feminist presence still thin even after this session&#39;s earlier additions</del> <span style="color:#509C64">a fourteenth and final group, &#34;Love, eros, and why any of this is worth doing&#34;: Audre Lorde&#39;s Uses of the Erotic, bell hooks&#39; All About Love, adrienne maree brown&#39;s Pleasure Activism, Kai Cheng Thom&#39;s I Hope We Choose Love, and Prentis Hemphill&#39;s What It Takes to Heal — the last moved here from an earlier, thinner plan to pair it alone with Menakem, on the reasoning that five entries in one live group beats two half-built ones. Distinct from the property-and-kinship genealogy earlier in the archive: two different holes, both real</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">the framework had no tool for endings — the Consent Domains Map assumes an ongoing relationship, and &#34;Exit &amp; Transition Plan&#34; sat on the not-yet-built list for eight months of roadmap language while nothing addressed the actual logistics of leaving, what&#39;s owed on the way out, or the grief that follows either</del> <span style="color:#509C64">a second tool on Practise, gated by its own safety card at the top rather than the bottom (&#34;if leaving safely means leaving suddenly — close this and go&#34;): a care-continuity audit (money, medication, the school run, paperwork, the lease, immigration status, a pet, a phone plan — who holds each after, and do they know), the Invitation&#39;s &#34;On goodbyes&#34; reproduced in full, and a closing section with no fields, no prompts, and nothing that counts as finished. One build, not three — the same object the Repair Protocol&#39;s still-unbuilt step 2 and the already-shipped continuity-of-care clause in Learn both point at, built once here rather than duplicated later</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">this site&#39;s own vocabulary — &#34;boundary,&#34; &#34;capacity,&#34; &#34;sovereignty,&#34; and the rest — was published with no acknowledgment that every one of those words is exactly as usable to avoid accountability as it is to name what needs it. And, found while building the fix: the manifesto&#39;s &#34;Print this manifesto&#34; button had been silently non-functional since it shipped — an inline onclick, blocked by this site&#39;s own script-src CSP, doing nothing when clicked, with no error visible to a reader</del> <span style="color:#509C64">a new Learn section, &#34;How this vocabulary gets used as a weapon&#34; (`#field-guide`), naming ten phrases this site&#39;s own words make available — including its own &#34;I&#39;m honouring my sovereignty&#34; — each with the diagnostic question worth asking when one lands on you. Linked from Practise&#39;s safety gate, from Resources&#39; coercive-control listing, and from the Invitation&#39;s own closing section, naming plainly that its own warmth is exactly this kind of language too. Printable on its own, isolated from the rest of Learn, via a new button. Fixed alongside it: print.js, a same-origin script every print button on the site now uses instead of an inline handler, so &#34;Print this manifesto&#34; and &#34;Print this invitation&#34; actually fire for the first time under this site&#39;s own CSP, not just visually</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">the site said a great deal about what relational sovereignty is and nothing about how to raise it with someone who hasn&#39;t read any of it — a reader convinced by the manifesto had no guidance for the actual, awkward moment of bringing this up with a partner, and no warning that the same vocabulary that names coercion can also be used to apply it</del> <span style="color:#509C64">a &#34;Before you bring this up with someone&#34; disclosure on Practise, next to the existing safety and grounding sequence rather than gating it — five concrete suggestions, then the one paragraph that isn&#39;t optional: if this is being raised to get someone to agree to something they already declined, it isn&#39;t the tool for that, and putting it in this vocabulary makes it worse, not better</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">the roadmap named &#34;Relationship anarchy&#34; and &#34;Amatonormativity&#34; as topics with nothing written yet, and Learn never actually explained either term — a reader had to already know what relationship anarchy meant to notice the framework was building on it</del> <span style="color:#509C64">a new Learn section, &#34;Forms and labels, none of them the default,&#34; naming both terms plainly and linking each to its source on the archive shelf. Underneath: an alphabetical, unranked grid of eleven relationship-form labels — monogamy, polyamory, relationship anarchy, chosen family, and others — with a line stating outright that alphabetical order is the only order it carries, nothing here outranks anything else, and a person&#39;s own word for what they have governs even if it&#39;s not listed. A closing line holds the line the material-conditions constraint requires: naming these as equals doesn&#39;t make the legal, immigration, and custody risk of choosing one equal to another</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">the site had exactly one door, the manifesto, and one register — acid, declarative, thirteen theses and a refusal. Anyone the register itself repelled had nowhere else to start, and nothing on the site said anything about wanting to be here, what it feels like when this works, or what&#39;s owed when it ends</del> <span style="color:#509C64">a second page, the Invitation, running parallel to the manifesto rather than introducing it — &#34;two ways in, neither is the introduction to the other,&#34; the same two-vessels-one-river figure the archive already uses for its own shared shelf, applied a second time. It carries two pieces of new writing: &#34;An invitation,&#34; first person, on wanting someone&#39;s growth without owning it, ending on the same material floor every warm line on this site now has to clear; and &#34;On goodbyes,&#34; on what&#39;s owed at the end of something, closing with the line this whole addition exists to hold — if going safely means going suddenly, go. Home gains exactly one paragraph above its door grid, linking there; the primary nav on every page gains one link, next to the manifesto&#39;s</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">the archive named Coulthard&#39;s *Red Skin, White Masks* in the &#34;Held in common&#34; diagram since v0.2 and never actually shelved it, and eighteen other works the site&#39;s own citations depended on — sovereignty&#39;s own critics, a second genealogy of settler kinship and sexuality, the clinical basis for the safety gate, mutual aid and abolitionist practice, non-monogamy&#39;s own critics — sat as drafts, unlinked, in a planning document instead of on the page</del> <span style="color:#509C64">nineteen entries added across the existing shelves, each link independently verified against the publisher, journal DOI, or author&#39;s own site rather than trusted from the draft: Coulthard, Cohen, Kuokkanen/Lightfoot/Starblanket/Wildcat&#39;s 2025 sequel to the site&#39;s own foundational citation, Povinelli, Rifkin, Lugones, Kelly &amp; Johnson, Feeney, Freeman, Spade, adrienne maree brown&#39;s *We Will Not Cancel Us*, Kaba, Noël, Rambukkana, and Borrows. No new filter facets added — every new entry fits the existing book/article/toolkit taxonomy without stretching it, so the filter bar stays as it was</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">the framework&#39;s one safety check — the five questions asked before the Consent Domains Map, and republished standalone on Resources — existed in only one register: full sentences with embedded clauses, excluding non-speaking, intermittently verbal, and cognitively fatigued readers from the exact check meant to protect them</del> <span style="color:#509C64">the same five questions, reworded to shorter sentences, sit behind a plain-HTML disclosure on both pages — no script, works identically with JavaScript on or off, since Resources carries zero script by design and this needed to match. The Consent Domains Map gains a line naming that consent is not always spoken: use the labels, or agree on signals of your own — a tap, a card, a gesture — with the tool holding none of those signals itself, since a physical protocol between two people isn&#39;t something a webpage should try to encode as an input method</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">the framework asked readers to notice what is happening in a relationship and offered no vocabulary for what happens in a body while they do it — and the archive&#39;s only Black theoretical presence was distant from the felt, somatic register thesis 07&#39;s own line about who absorbs the anger is written in</del> <span style="color:#509C64">a new archive group, &#34;Bodies, regulation, and what happens before words,&#34; opens with Resmaa Menakem&#39;s *My Grandmother&#39;s Hands* — racialised trauma carried somatically, read alongside thesis 07. Polyvagal theory, contested in the physiological literature, is left out entirely rather than shelved with a caveat, per Decision Record D13. A second planned entry for this group is being placed with a related new archive group instead of duplicated here — one group, not two thin ones</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">the manifesto had no thesis linking the dyad to collective struggle — fifteen theses about relationships, and nothing about the relationship between a household and a movement</del> <span style="color:#509C64">thesis 16, &#34;The house is not a rehearsal&#34;: we will not build a world without police, borders, and extraction while running small versions of all three at home — not because the private is where politics begins, but because they are the same fight at different scales, and a movement that cannot survive its own kitchen will not survive anything else. Do both; neither is waiting for the other to finish. Sixteen theses and a refusal, updated everywhere the count was said out loud</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">the Contribute form&#39;s &#34;What you might offer&#34; field looked like a working way to leave a note — but nothing on the dispatch Worker ever read, stored, or forwarded it, so whatever anyone typed there was silently discarded. Submitting anything through the form required an email either way and always sent a &#34;confirm your subscription&#34; message, even to someone who only wanted to leave a note and never checked a single dispatch-interest box. Both error messages on this form and on Home pointed a failed submission to &#34;the address in the colophon&#34; — which does not exist; no email address is published anywhere on this site</del> <span style="color:#509C64">the field is relabelled &#34;Optional contribution note&#34; and says plainly, next to the warning about strangers reading it, that it isn&#39;t wired to anywhere yet — linking to a new fault (07) that names the gap precisely: an email is required for any submission today because the only backend behind this form is the mailing-list signup flow, and there is no separate channel yet for a note-only visitor. The note is now at least sent to the Worker rather than dropped before it leaves the browser, so wiring up real delivery later is a Worker-side change only. The dead colophon-address referenced in both forms&#39; error text is gone, replaced with something that doesn&#39;t point at nothing</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">the Archive&#39;s filter for its most accessible entries was labelled &#34;★ start here,&#34; implying an order to a shelf the page&#39;s own kicker already called &#34;nothing ranked&#34; — the filter and the framing copy around it disagreed with each other</del> <span style="color:#509C64">&#34;★ a first route,&#34; with a line at the filter bar saying plainly what that means: a suggested way in, not a ranking — everything else on the shelf carries the same weight, not runner-up status. The filter still narrows nothing without a click, the full archive still renders unfiltered by default, and scripting off still shows every entry — only the label and its framing changed, not the mechanism</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">the Consent Domains Map&#39;s save/resume controls (export warning, filename field, save button, resume-from-file) sat permanently open beneath the print and clear buttons, adding four elements&#39; worth of visual weight to a toolbar most visits never need</del> <span style="color:#509C64">those controls live inside a native disclosure, &#34;Save or resume this map&#34; — closed by default, opened with a click or a keypress, no script required to toggle it. The complete findability warning still sits directly above the export button every time the section is open, in exactly the same words, not summarised or deferred to a second click. Print and Clear stay exactly where they were, outside the disclosure, needing no extra interaction. Nothing about what&#39;s saved, how, or the no-localStorage guarantee changed — only how much of the page shows by default</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">Behind the Scenes carried eight sections — substrate, type, crawler policy, reuse terms, faults, roadmap, change log, labour and money — in a single unbroken scroll with no way to jump to one directly</del> <span style="color:#509C64">a contents menu at the top of the page, eight ordinary same-page anchor links. The fault list stays exactly as visible as it always was — the menu is a way in, not a way to fold anything out of sight, and current faults were never going to be the thing this page made harder to find</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">Learn ended with a nineteen-card grid of topic names, none linked, most not even drafted — the single largest block on the page was the part that didn&#39;t exist yet, outweighing the thirteen principles actually written above it</del> <span style="color:#509C64">a two-sentence explanation and a link to a new Roadmap section on the colophon, which carries the full nineteen-topic list (six drafted, thirteen not yet written) instead. Learn is now weighted toward what&#39;s actually on it; the honest disclosure that more is planned didn&#39;t need to be the biggest thing on the page to still be told plainly</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">Resources listed eleven categories in page order with no way to jump straight to the one a reader needed — crisis lines first, Indigenous-led services near the bottom, nothing in between named until scrolled to</del> <span style="color:#509C64">a &#34;Choose what you need&#34; list of same-page anchor links, placed after the immediate-safety questions rather than before them — a reader in danger sees those first, not a menu. Ordinary anchors only: no geolocation, no questionnaire, no filtering, no storage of what anyone clicked. Every urgent line on the page stays exactly where it was</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">the Consent Domains Map&#39;s two section headings — &#34;The seventeen domains&#34; and &#34;Access Intimacy &amp; Body Support&#34; — never stated that they add to twenty, leaving a reader to do the arithmetic against the page&#39;s own meta description instead of being told</del> <span style="color:#509C64">&#34;Seventeen general consent domains&#34; and &#34;Three care and access domains: Access Intimacy &amp; Body Support&#34; — the split and the total are both explicit in the headings themselves, and the Access Intimacy name (Mia Mingus&#39;s term, tied to principle 13) stays rather than being replaced outright</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">the site used &#34;sovereignty&#34; in at least four different senses — political, jurisdictional, relational, rhetorical — without ever marking which one was doing the work in a given sentence, and never engaged the strongest objection to using the word at all</del> <span style="color:#509C64">a new Learn section names all four senses and says plainly that the political and relational ones are not the same kind of thing, even where the site&#39;s own persuasiveness leans on them rhyming. A closing paragraph names Taiaiake Alfred&#39;s argument that sovereignty is inseparable from the frameworks of colonisation as an objection this site has not answered, not a settled question — and that argument is genuinely on the shelf now, not just referenced: Joanne Barker&#39;s edited collection carrying Alfred&#39;s chapter joined the archive alongside it, so the claim has something real to point to. The reading-ten list changes for the first time since v0.1: a heavy edited collection is out in favour of the free encyclopedia entry already on the shelf that covers the same ground; amatonormativity and relationship anarchy step aside, being the part of this framework people get wrong the least, for the second genealogy of possession and compelled legibility. Six of the ten are now free to read, worth saying outright rather than leaving a reader to notice</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">thesis 01 derived possession from a single road — settler colonialism enclosing land, then bodies, then the home — and the archive held no Black feminist theory of kinship and property, for a manifesto whose first thesis is about the grammar of possession</del> <span style="color:#509C64">thesis 01 names a second road into that grammar: chattel slavery made the person property directly and made kinship legally void, a different mechanism with a different afterlife, still shaping which households are permitted a closed door. Neither genealogy stands in for the other. A new archive group, &#34;Possession, the person, and kinship made void,&#34; carries Spillers, Hartman, Roberts, and Bridges. Two more named entries — Patterson and Collins — are held back: the source material specifying which of their books belongs here has a gap neither this session nor the site&#39;s own planning docs can responsibly guess at, so the group ships with four names rather than a placeholder for six</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">principle 08 (Opacity) said intimacy does not require total legibility, with no distinction between a person choosing not to be fully known and a person being compelled to disclose themselves to a clinician, court, employer, insurer, or border agent to receive care, money, status, or documents — a difference the archive had no trans scholarship to name</del> <span style="color:#509C64">principle 08 states the limit: opacity is a right against people who want more of you than they are owed, not against institutions that compel disclosure — refusing to be read is a privilege unevenly distributed, and the framework should not mistake one for the other. A second question asks where a person is already required to be legible to someone with power over them. Trans Care by Hil Malatino joins the archive — open access, and read for what it argues is the most developed live practice of what this site theorises, not as a stand-in for trans people&#39;s own account of their own care</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">the Consent Domains Map had to be completed in one sitting or lost entirely — no way to save progress and come back, which is a stamina requirement the framework has no reason to impose</del> <span style="color:#509C64">a file-based save and resume: export writes a plain JSON file, nothing auto-saves and nothing is written to the device silently, and a non-dismissible notice sits directly above the export button because a saved file is a discoverable object in a way in-browser state isn&#39;t — printouts and download-history entries can be found by someone else, and the warning says so before the file exists, not after. Resuming works only by re-importing a file you chose to keep; there is no localStorage, so the same risk never exists without the same warning. Filenames are neutral by default and yours to change. The Consent Domains Map now also names the concept behind not requiring one sitting — crip time, Alison Kafer&#39;s term — and the archive carries both her book and Ellen Samuels&#39; essay on it, rather than using the phrase without saying where it came from</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">the glyph check compared advance widths against the .notdef box — a method that cannot detect a missing glyph in a monospace face at all, since every character in a true monospace font shares one fixed advance width whether it&#39;s present or not. The x̂ (Unangax̂) combining character, which renders live in that exact stack on Archive&#39;s by-lines, was flagged &#34;at-risk&#34; because the check itself couldn&#39;t give a real answer, not because anyone had confirmed a problem</del> <span style="color:#509C64">the check compares actual rendered pixels against the .notdef glyph instead, which works for any font. Re-run this session on the one platform available to test it (Chrome / Linux): every character in all three font stacks, including x̂, is confirmed present, not assumed. Windows, macOS, iOS, and Android — and Safari, Firefox, and Edge — remain unverified and are named as a known gap rather than left implied</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">&#34;every archive entry links to the author, publisher, or open-access source&#34; — true of the destination domain, not always true of the page: roughly twenty entries linked to a publisher&#39;s homepage rather than the specific book or article, and two entries had no link at all</del> <span style="color:#509C64">every one of the 31 entries checked individually and, where possible, repointed to the actual work: a specific book page, a specific article page, or a DOI. Two entries that previously had no link recorded now do — one turned out to be genuinely open access where nobody had checked before. One paywalled mirror (a Wiley reprint of an article the journal itself publishes open access) was replaced with the journal&#39;s own free copy. Nothing was guessed: every replacement was fetched and its title and author confirmed before it went in</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">the dispatch signup forms said an address is &#34;never given to a third party&#34; and &#34;no third parties&#34; with no further detail, while a live Cloudflare Worker, a Resend transactional-email account, and a private GitHub repository were all already part of how a signup actually gets processed</del> <span style="color:#509C64">the substrate table names all three: the Worker as the self-operated processor, Resend&#39;s role limited to sending the confirmation and unsubscribe emails (never handed the list, never told what someone was interested in), and the encrypted file&#39;s home in a private repository this one doesn&#39;t touch, keyed by a secret that is never written to any repository at all. The dispatch copy on Home and Contribute now points to that disclosure instead of asserting no processor exists</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">thesis 14 titled &#34;Survivance, not &#39;no future&#39;&#34;, using a Nation-specific concept for injuries it was not written about</del> <span style="color:#509C64">the term removed until there is paid review that could say whether the extension holds. The archive still carries Vizenor. The debt was real; the borrowing was not ours to make</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">three faces loaded from a font CDN on every page</del> <span style="color:#509C64">system font stack, zero third-party requests, reader addresses disclosed to nobody</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">orthographic coverage assumed</del> <span style="color:#509C64">every diacritic on the site measured against the notdef box, check published and re-runnable</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">opacity demonstrated as a reveal button</del> <span style="color:#509C64">a real crawler policy, an honest account of what is not built, and the existing protocol tools named</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">34-pixel colour-only swatches in the Consent Domains Map</del> <span style="color:#509C64">labelled radio controls, 44-pixel targets, colour never the only signal</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">&#39;points outward&#39; with no outbound links</del> <span style="color:#509C64">every archive entry links to the author, publisher, or open-access source</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">no colophon, no changelog, no reuse terms, no crawler file</del> <span style="color:#509C64">this page, plus robots.txt</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">&#39;not a substitute for decolonization&#39; as the only limit</del> <span style="color:#509C64">the limit stated plainly — a website returns no land; this is anti-colonial design</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">the dispatch card visually privileged above the other five entry points</del> <span style="color:#509C64">equal weight, and the ask named as an ask</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">nothing on this site pointed anywhere for a reader in danger</del> <span style="color:#509C64">Resources.dc.html — crisis lines, coercive-control and shelter services, legal, immigration, housing, disability, 2SLGBTQ&#43;, and Indigenous-led directories, each checked against the organisation&#39;s own site and dated. Ships as plain static HTML, no runtime, allowed to every crawler including the ones this site otherwise refuses training access to. Partial: the local/regional tier is not built yet, stated on the page rather than guessed at</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">a single safety-notice paragraph sat beside the Consent Domains Map, and the tool itself had no gate at all</del> <span style="color:#509C64">the tool sits behind a real sequence — five non-diagnostic safety questions, then optional rewritten grounding, then the tool — held in page state only, never stored or sent anywhere, with a Resources link at every step and no stage that can only be passed one way</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">principles 06 and 07 could conflict with no tiebreaker, leaving sovereignty language available to justify walking away from a dependant</del> <span style="color:#509C64">a Continuity of care clause on the Learn page — leaving is not abandonment, but it moves an unmet need rather than dissolving it; the clause is explicit that it is not available to anyone using it to keep a person who needs to leave</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">every reading page needed the runtime described below just to draw its text</del> <span style="color:#509C64">Manifesto is generated from plain data files by Hugo and committed as plain HTML — confirmed rendering with scripting off, not just claimed. Learn, Archive, and this page have not migrated yet; fault 4 stays open until they do</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">Learn&#39;s twelve principles, the opacity table, and the topics list lived in a JS array and needed scripting to draw</del> <span style="color:#509C64">Learn is generated by Hugo from plain YAML data files — confirmed rendering fully with scripting off. Archive and this page remain</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">this page (Behind the Scenes) needed the same runtime as every other reading page to draw its substrate, glyph, crawler, fault, and change-log tables</del> <span style="color:#509C64">generated by Hugo from six plain YAML data files, this page included — confirmed rendering fully with scripting off. Archive is the one reading page left; fault 4 stays open until it lands too</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">reading pages that need a runtime to draw</del> <span style="color:#509C64">plain HTML, generated once and committed; scripting is used only by the workshop (Practise) and, as a pure progressive enhancement, by Archive&#39;s filter-by-tag buttons — every one of Archive&#39;s 31 entries renders and reads with scripting off, unfiltered, confirmed against a real headless browser rather than assumed. Fault 4 retired</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">twelve principles written for a person who can choose, refuse, and exit a relationship — none for someone whose dependency is not chosen, and none for the person providing that care</del> <span style="color:#509C64">thirteen principles. Principle 03 revised (drops &#34;chosen,&#34; names guardianship, congregate care, and dependency that cannot be left); new principle 13, &#34;The carer is inside the relationship.&#34; The Consent Domains Map gains a matching Access Intimacy &amp; Body Support domain — body support, administrative and logistical care, and emotional and relational care, each meant to be filled in from either position, sharing the map&#39;s existing five-option scale rather than a new one</span></li>
           
+          
           <li style="color:#B8C7C1"><del style="color:#73968D">no Content-Security-Policy anywhere, and two inline &lt;script&gt; blocks (the archive filter, the glyph check) that a strict one would have had to carve an exception for</del> <span style="color:#509C64">every page carries a CSP scoped to what that specific page actually does — no script execution at all on Resources, same-origin-only on the four reading pages and glyph-check, a narrow eval allowance only where the page template runtime still runs, connect-src naming the dispatch Worker only on the two pages that call it. Machine-enforced: a new CI check fails the build if any page ever loads a script, stylesheet, or CSS import/url() from off this domain. The two inline scripts were moved to their own files first, specifically so script-src never needed unsafe-inline anywhere. One real gap, disclosed rather than hidden: frame-ancestors can&#39;t be delivered via &lt;meta&gt; at all — a genuine CSP-specification limit, not a choice — so there is no clickjacking protection until this site moves off a host that can set response headers. Fault 06</span></li>
+          
           
           <li style="color:#B8C7C1"><del style="color:#73968D">the site&#39;s own 44-pixel touch-target standard held for the Consent Domains Map&#39;s radio controls but not for the primary or footer navigation, whose links were roughly 20 pixels tall everywhere; the Archive&#39;s Held in Common diagram had no way for a screen-reader user to know which visual column a list belonged to; Archive&#39;s 31 per-entry citation links (the page&#39;s actual purpose) were the same 20-pixel links as the nav</del> <span style="color:#509C64">every navigation link and every Archive citation link site-wide now meets 44 pixels, verified against real rendered layout at 320/375px, not just read off the markup. The three Held in Common lists carry aria-labelledby (or a visually-hidden label for the middle one, since it had no visible heading to point to) naming their category, verified by resolving the reference in a live DOM rather than assuming the markup was right — a first attempt (aria-label directly on a &lt;ul&gt;) failed html-validate&#39;s aria-label-misuse check, and the fix (a hidden label element plus aria-labelledby) was re-verified, not just applied. Keyboard focus order confirmed end to end on the Practise safety/grounding/tool sequence, including that the skip link genuinely lands the very next Tab on &#34;Continue&#34; — not just present, exercised. Honeypot field confirmed already correct (aria-hidden, tabindex=-1, autocomplete=off). This is the automatable half of RS-023: what a real screen reader (NVDA, JAWS, VoiceOver, TalkBack) actually announces has not been tested by a person and is not claimed here</span></li>
           
@@ -685,7 +793,8 @@
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;color:#DB9E2A;margin:0 0 .7rem;border-bottom:1px solid #2A4C4C;padding-bottom:.4rem">v0.1 — first draft</p>
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.65">
           
-          <li style="color:#B8C7C1"><del style="color:#73968D"></del> <span style="color:#509C64">Five pages: Home, Manifesto, Learn, Practise, Archive, Contribute. Twelve principles, fifteen theses, a working Consent Domains Map, a starter reading shelf.</span></li>
+          
+          <li style="color:#B8C7C1"><span style="color:#509C64">Five pages: Home, Manifesto, Learn, Practise, Archive, Contribute. Twelve principles, fifteen theses, a working Consent Domains Map, a starter reading shelf.</span></li>
           
         </ul>
       </div>
@@ -731,7 +840,7 @@
 
 </main>
 
-<footer style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
+<footer class="dark" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:44ch">v0.2 · no fonts, scripts, or requests from third parties · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
@@ -747,5 +856,6 @@
   </div>
 </footer>
 
+<script src="/sections.js"></script>
 </body>
 </html>

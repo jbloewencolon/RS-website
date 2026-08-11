@@ -21,7 +21,6 @@ const htmlValidateConfig = JSON.parse(fs.readFileSync(path.join(root, ".htmlvali
 // below), not just "does this file happen to contain valid HTML."
 const pages = [
   "index.html",
-  "Home.dc.html",
   "manifesto/",
   "invitation/",
   "learn/",
@@ -32,13 +31,14 @@ const pages = [
   "resources/",
   "glyph-check.html",
 ];
-// The eight redirect stubs left at the old flat *.dc.html paths (BUG-03).
-// Checked separately, by raw fetch rather than browser navigation — each
-// carries a <meta http-equiv="refresh">, and navigating to one in a real
-// browser context immediately follows it, so a page.goto() here would
-// silently end up testing the redirect *target* a second time rather
-// than the stub itself.
+// The nine redirect stubs left at the old flat *.dc.html paths (BUG-03,
+// plus Home.dc.html folded in by WD-26). Checked separately, by raw fetch
+// rather than browser navigation — each carries a <meta http-equiv="refresh">,
+// and navigating to one in a real browser context immediately follows it,
+// so a page.goto() here would silently end up testing the redirect
+// *target* a second time rather than the stub itself.
 const redirectStubs = [
+  { path: "Home.dc.html", target: "/" },
   { path: "Manifesto.dc.html", target: "/manifesto/" },
   { path: "Invitation.dc.html", target: "/invitation/" },
   { path: "Learn.dc.html", target: "/learn/" },
@@ -58,7 +58,7 @@ function serve() {
   return new Promise((resolve) => {
     const server = http.createServer((req, res) => {
       const reqPath = decodeURIComponent(req.url.split("?")[0]);
-      let filePath = path.join(root, reqPath === "/" ? "/Home.dc.html" : reqPath);
+      let filePath = path.join(root, reqPath === "/" ? "/index.html" : reqPath);
       // Mimic GitHub Pages' directory-index resolution: /manifesto/ (or
       // /manifesto) serves manifesto/index.html. Without this, every
       // pretty-URL page in `pages` above would 404 against this local
@@ -150,33 +150,12 @@ function checkPrerender() {
   return problems;
 }
 
-// GitHub Pages always serves index.html at the root — this site's real
-// homepage content lives in Home.dc.html, so index.html has to be an
-// exact copy or the bare domain silently drifts out of sync with the
-// page every nav link actually points to. This caught a real incident:
-// index.html was once overwritten with an unrelated site's boilerplate.
-function checkIndexMatchesHome() {
-  const home = fs.readFileSync(path.join(root, "Home.dc.html"), "utf8");
-  const index = fs.readFileSync(path.join(root, "index.html"), "utf8");
-  if (home === index) {
-    console.log("✓ index.html matches Home.dc.html");
-    return 0;
-  }
-  console.log("\n✗ index.html — 1 problem(s)");
-  console.log("    index.html does not match Home.dc.html byte-for-byte.");
-  console.log("    GitHub Pages serves index.html at the site's root — if it's out of");
-  console.log("    sync with (or isn't a copy of) Home.dc.html, visitors hitting the");
-  console.log("    bare domain see something other than the real homepage.");
-  console.log("    Fix: cp Home.dc.html index.html");
-  return 1;
-}
-
 // hugo/ is the source of truth for the pages listed in HUGO_PAGES (see
 // hugo/README.md and RS-004) — the committed root-level file is Hugo's
 // output, not hand-authored. If someone edits the root file directly, or
 // edits hugo/ without regenerating, the two drift silently: the site
 // keeps serving the stale committed copy. Regenerate (without writing)
-// and diff, the same pattern checkIndexMatchesHome() uses for index.html.
+// and diff to catch it.
 function checkHugoPagesInSync() {
   if (HUGO_PAGES.length === 0) return 0;
   let results;
@@ -201,6 +180,111 @@ function checkHugoPagesInSync() {
   return problems;
 }
 
+// WD-27: the colophon's page-weight claim (hugo/data/substrate.yaml,
+// rendered on Behind the Scenes) has gone stale twice before without
+// anything catching it — first a flat "under 60 KB" outgrown by the
+// site's own content, then a range that drifted 10+ KB as pages kept
+// changing after it was written. This regex-extracts the numbers the
+// *rendered page* currently claims (not the YAML source — no YAML
+// parser is a dependency of this project, matching D2's "no dependency
+// tree, nothing to rot," and reading the rendered output is also a
+// closer match to what a reader actually sees) and checks them against
+// every shipped file's real size, including which page is named as
+// lightest/heaviest — a claim that says "the Invitation" is stale in a
+// different way than a claim that says "17 KB" if some other page ever
+// becomes lighter. A ±1.5 KB tolerance absorbs the claim's own "about"
+// rounding without being loose enough to miss real drift.
+const WEIGHT_TOLERANCE_KB = 1.5;
+
+async function checkPageWeight() {
+  const btsPath = path.join(root, "behind-the-scenes", "index.html");
+  if (!fs.existsSync(btsPath)) {
+    console.log("• Page weight not checked — behind-the-scenes/index.html not built");
+    return 0;
+  }
+  const bts = fs.readFileSync(btsPath, "utf8");
+  const m = bts.match(
+    /Ranges from about (\d+) KB \(the (\w+)\) to about (\d+) KB \(the (\w+)\)[^]*?shared ~(\d+) KB script/
+  );
+  if (!m) {
+    console.log("\n✗ Page weight — 1 problem(s)");
+    console.log("    Could not find the expected 'Ranges from about N KB (the X)…' sentence");
+    console.log("    on Behind the Scenes. If the wording changed, update the regex in");
+    console.log("    checkPageWeight() (scripts/check-pages.mjs) to match it.");
+    return 1;
+  }
+  const [, claimedMinKB, minName, claimedMaxKB, maxName, claimedScriptKB] = m;
+
+  // Every shipped file a reader can actually land on: root-level index.html
+  // for the three x-dc pages is a template with no content until rendered,
+  // so those three are measured from _site/ (the prerendered, crawler-
+  // visible artifact) instead — same reasoning checkPrerender() already
+  // uses elsewhere in this file.
+  const siteDir = path.join(root, "_site");
+  const usesSite = fs.existsSync(siteDir);
+  const pages = {
+    Home: usesSite ? "_site/index.html" : "index.html",
+    Manifesto: "manifesto/index.html",
+    Invitation: "invitation/index.html",
+    Learn: "learn/index.html",
+    Archive: "archive/index.html",
+    Resources: "resources/index.html",
+    "Behind the Scenes": "behind-the-scenes/index.html",
+    Practise: usesSite ? "_site/practise/index.html" : "practise/index.html",
+    Contribute: usesSite ? "_site/contribute/index.html" : "contribute/index.html",
+  };
+
+  const sizesKB = {};
+  for (const [name, rel] of Object.entries(pages)) {
+    const p = path.join(root, rel);
+    if (!fs.existsSync(p)) continue;
+    sizesKB[name] = fs.statSync(p).size / 1024;
+  }
+  const scriptPath = path.join(root, "support.js");
+  const scriptKB = fs.existsSync(scriptPath) ? fs.statSync(scriptPath).size / 1024 : null;
+
+  const entries = Object.entries(sizesKB);
+  const [actualMinName, actualMinKB] = entries.reduce((a, b) => (b[1] < a[1] ? b : a));
+  const [actualMaxName, actualMaxKB] = entries.reduce((a, b) => (b[1] > a[1] ? b : a));
+
+  const problems = [];
+  if (actualMinName !== minName) {
+    problems.push(
+      `lightest page is now ${actualMinName} (${actualMinKB.toFixed(1)} KB), not ${minName} as the colophon claims`
+    );
+  } else if (Math.abs(actualMinKB - Number(claimedMinKB)) > WEIGHT_TOLERANCE_KB) {
+    problems.push(
+      `${minName} is ${actualMinKB.toFixed(1)} KB, more than ${WEIGHT_TOLERANCE_KB} KB off the claimed ${claimedMinKB} KB`
+    );
+  }
+  if (actualMaxName !== maxName) {
+    problems.push(
+      `heaviest page is now ${actualMaxName} (${actualMaxKB.toFixed(1)} KB), not ${maxName} as the colophon claims`
+    );
+  } else if (Math.abs(actualMaxKB - Number(claimedMaxKB)) > WEIGHT_TOLERANCE_KB) {
+    problems.push(
+      `${maxName} is ${actualMaxKB.toFixed(1)} KB, more than ${WEIGHT_TOLERANCE_KB} KB off the claimed ${claimedMaxKB} KB`
+    );
+  }
+  if (scriptKB !== null && Math.abs(scriptKB - Number(claimedScriptKB)) > WEIGHT_TOLERANCE_KB) {
+    problems.push(
+      `support.js is ${scriptKB.toFixed(1)} KB, more than ${WEIGHT_TOLERANCE_KB} KB off the claimed ~${claimedScriptKB} KB`
+    );
+  }
+
+  if (problems.length) {
+    console.log(`\n✗ Page weight — ${problems.length} problem(s)`);
+    for (const p of problems) console.log(`    ${p}`);
+    console.log(`    Fix: update the "Page weight" entry in hugo/data/substrate.yaml, then`);
+    console.log(`    npm run build:hugo.`);
+    return problems.length;
+  }
+  console.log(
+    `✓ Page weight (${minName} ${actualMinKB.toFixed(1)} KB – ${maxName} ${actualMaxKB.toFixed(1)} KB, script ${scriptKB.toFixed(1)} KB, claim within ${WEIGHT_TOLERANCE_KB} KB)`
+  );
+  return 0;
+}
+
 async function main() {
   const server = await serve();
   const { port } = server.address();
@@ -210,8 +294,9 @@ async function main() {
   const browser = await chromium.launch(executablePath ? { executablePath } : {});
   const htmlValidate = new HtmlValidate(htmlValidateConfig);
 
-  let problems = checkIndexMatchesHome() + checkPrerender() + checkHugoPagesInSync();
+  let problems = checkPrerender() + checkHugoPagesInSync();
   problems += await checkRedirectStubs(base);
+  problems += await checkPageWeight();
 
   for (const pg of pages) {
     const context = await browser.newContext();

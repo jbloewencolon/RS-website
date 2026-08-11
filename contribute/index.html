@@ -25,6 +25,13 @@
   body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
   a{color:#2B4C9B;text-underline-offset:3px;text-decoration-thickness:1px}
   a:hover{color:#2C5A38}
+  /* One motion token. Paint-only properties (colour/background/border)
+     on small elements: no layout, no compositing cost. outline-color is
+     deliberately excluded — keyboard focus must arrive instantly.
+     The prefers-reduced-motion rule below neutralises all of this. WD-02. */
+  a,button,summary,[data-filter],nav[aria-label="Contents"] a,.card-title{
+    transition:color .14s ease,background-color .14s ease,border-color .14s ease
+  }
   a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none}
   nav[aria-label="Contents"] a{border:1px solid #C9C6BA;border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:#585B4F}
   nav[aria-label="Contents"] a:hover{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
@@ -39,10 +46,37 @@
     #primary-nav{display:none!important}
     .nav-toggle{display:block;width:100%}
   }
+  /* WD-11: the semantic colour register, promoted from Learn (see
+     docs/design-palette.md for the full reasoning) — teal for what the
+     framework asserts, green for where a principle holds, rust for
+     where it fails, ochre for a question put to the reader. Defined
+     here but not yet consumed by anything on this page: this is
+     deliberately an inert commit, adding the tokens everywhere before
+     migrating any literal hex value to reference them, so a later
+     migration commit is bisectable against a clean baseline. Manifesto
+     does not get this block — its register is rhetorical, not
+     analytical, and design-palette.md excludes it from this system on
+     that basis. */
+  :root{
+    --paper:#E7E5DC;--paper-2:#EFEEE7;--ink:#191B18;--ink-2:#3C3E38;--ink-3:#585B4F;--rule:#C9C6BA;
+    --teal:#0F2A2E;--teal-2:#2A4C4C;--sage:#8FA9A2;
+    --holds:#2C5A38;--holds-fill:rgba(63,122,78,.13);--holds-edge:rgba(44,90,56,.35);
+    --fails:#8B3A2F;--fails-fill:rgba(139,58,47,.10);--fails-edge:rgba(139,58,47,.24);
+    --ask:#6B4C12;--ask-edge:#DB9E2A;--ask-fill:rgba(219,158,42,.13);
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  }
   *{box-sizing:border-box}
+  h1,h2,h3{text-wrap:balance} /* WD-03 */
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
+  /* #2B4C9B is 1.88:1 on the #0F2A2E teal ground — effectively invisible.
+     Ochre is 6.42:1 there, and "a question being put to you" is exactly
+     what focus is. Scoped to .dark (dark-ground sections/footers, added
+     alongside this rule) rather than global, since #2B4C9B is fine on
+     every light-ground element the page has otherwise. WD-07. */
+  .dark :focus-visible{outline-color:#DB9E2A}
   @media print{body{background:#fff}.noprint{display:none!important}}
-  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
   .skip-link:focus{left:1rem;top:1rem}
 </style>
@@ -161,7 +195,7 @@
   </div>
 </section>
 
-<section style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
+<section class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">Community agreements</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.01em;margin:0 0 2rem;max-width:24ch;color:#E7E5DC">What the commons refuses.</h2>
@@ -213,7 +247,7 @@
 
 </main>
 
-<footer style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
+<footer class="dark" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:46ch">v0.2 · no third-party requests, including fonts · this page is disallowed to search crawlers · <a href="/behind-the-scenes/" style="color:#DB9E2A">what changed</a> · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
