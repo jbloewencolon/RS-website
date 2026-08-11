@@ -1,0 +1,48 @@
+<!--
+  Pulled from hugo/layouts/learn.html, 2026-08-11. See ../README.md.
+
+  Two pieces, in the order they appeared on the page:
+  1. The .rule-two CSS (was in the page's <style> block) and its divider
+     markup (was a `.wrap` immediately before the section below).
+  2. The #treaty section itself.
+
+  Both are reproduced verbatim, including the surrounding comment that
+  explained the CSS.
+-->
+
+<!-- === CSS, was in learn.html's <style> block === -->
+<style>
+  /* WD-23: the site's signature mark, not a general divider style — used
+     once, at the single break the Treaty section itself is about: "two
+     vessels on one river, neither steering the other." Two rules standing
+     apart is the Two Row Wampum's own figure, not a decoration borrowed
+     for the occasion; drawing it here, and nowhere else, is what keeps it
+     a mark rather than a motif. */
+  .rule-two{border-top:1px solid var(--teal);position:relative}
+  .rule-two::before{content:"";position:absolute;top:3px;left:0;right:0;height:1px;background:var(--ask-edge)}
+</style>
+
+<!-- === Divider markup, was immediately before <section id="treaty"> === -->
+<div class="wrap" role="presentation">
+  <div class="rule-two" style="margin:0 0 clamp(2.2rem,4vw,3rem)"></div>
+</div>
+
+<!-- === The section itself === -->
+<section id="treaty" class="band">
+  <div class="wrap">
+    <p class="kick kick-teal">The word this framework needs and doesn't have yet</p>
+    <h2 class="sec" style="max-width:24ch">Two sovereigns, one shared condition. Sovereignty doesn't have a form for that. Treaty does.</h2>
+    <p style="max-width:60ch;margin:0 0 1.4rem;color:#3C3E38;font-size:16.5px;line-height:1.58">"Relational sovereignty" (the third sense above) names a value — authority over the terms of one's own relations — without naming the form that value takes when two people hold it at once, in the same relationship, neither one's authority cancelling the other's. Political theory already built that form. It's called treaty.</p>
+    <details class="card" style="border-left-color:var(--teal);max-width:900px" data-collapsible>
+      <summary>
+        <span class="card-title">What is borrowed, and what is not</span>
+        <span class="chips"><span class="chip chip-holds">the framework's central unsolved problem</span></span>
+      </summary>
+      <div class="card-body" id="treaty-borrowing">
+        <p style="max-width:62ch;margin:0 0 1.2rem;color:#3C3E38;font-size:16px;line-height:1.58">The <a href="/archive/">Two Row Wampum</a>, used elsewhere on this site as a layout figure — two vessels on one river, neither steering the other, a stretch of water belonging to both — is not a metaphor invented for that purpose. It's a specific treaty relationship, between specific nations, with its own terms, its own history of being violated, and its own ongoing life independent of anything this site does with it. Naming it as an influence on how this framework thinks about two-party non-domination is not the same claim as saying a couple, a household, or a friendship <em>is</em> a treaty relationship. It isn't. The stakes, the histories, and the legal weight are not equivalent, and treating them as equivalent would be exactly the kind of "lifestyle experimentation" borrowing of Indigenous political thought that <a href="/behind-the-scenes/#limits">this site's own stated limits</a> already rule out.</p>
+        <p style="max-width:62ch;margin:0;color:#3C3E38;font-size:16px;line-height:1.58">What's actually borrowed is narrower and more useful: a treaty isn't a one-time agreement, it's a standing practice of renewal — terms that get revisited, not terms that get set once and assumed to hold. This framework asserts non-domination (principle 05) as a value but has, so far, built no equivalent practice of its own. The closest gesture on the site is <a href="/practise/">"The Relational Review,"</a> still on the not-yet-built list — a seasonal check-in on what feels alive, what feels assumed, what needs revision. That's the treaty logic, unbuilt. Two sovereigns sharing a condition don't stay in right relation by having agreed once. They stay in right relation by renewing.</p>
+      </div>
+    </details>
+    <p class="note">⌖ This is named as the framework's central unsolved problem, not a solved one. Sovereignty supplies the value; treaty supplies the shape a working answer would need to have. Nothing on this site yet does what a treaty does — set terms, revisit them, hold both parties to the revisiting.</p>
+  </div>
+</section>

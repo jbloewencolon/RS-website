@@ -111,14 +111,6 @@
   }
   .vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
   .wrap{max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)}
-  /* WD-23: the site's signature mark, not a general divider style — used
-     once, at the single break the Treaty section itself is about: "two
-     vessels on one river, neither steering the other." Two rules standing
-     apart is the Two Row Wampum's own figure, not a decoration borrowed
-     for the occasion; drawing it here, and nowhere else, is what keeps it
-     a mark rather than a motif. */
-  .rule-two{border-top:1px solid var(--teal);position:relative}
-  .rule-two::before{content:"";position:absolute;top:3px;left:0;right:0;height:1px;background:var(--ask-edge)}
   .band{padding:0 0 clamp(3rem,6vw,4.5rem)}
   /* Clears the sticky jump bar when a fragment link lands on a section. */
   main [id]{scroll-margin-top:5.4rem}
@@ -390,8 +382,8 @@
 <main>
 <section id="main-content" style="padding:clamp(3rem,6vw,5rem) 0 clamp(1.6rem,3vw,2.2rem)">
   <div class="wrap">
-    <p class="kick kick-teal">Learn — the idea, in plain language · about 17 minutes</p>
-    <h1 class="vh">Learn: the thirteen principles</h1>
+    <p class="kick kick-teal">Learn — the idea, in plain language · about 15 minutes</p>
+    <h1 style="font-family:var(--sans);font-weight:800;font-size:clamp(2.1rem,5.6vw,3.8rem);line-height:1;letter-spacing:-.03em;margin:0 0 1.4rem;max-width:19ch">Relationships, Principles, and Limits</h1>
     <p style="font-size:clamp(1.05rem,2.2vw,1.3rem);line-height:1.55;max-width:48ch;margin:0 0 1.4rem">Relational sovereignty asks what would change if relationships were understood as living systems of consent, responsibility, reciprocity, and self-determination rather than structures of possession.</p>
     <p style="max-width:52ch;margin:0 0 1.6rem;color:#3C3E38">It is not a finished doctrine, and this page does not present it as one. Thirteen principles follow. Each carries a question you can actually ask of a relationship you are in.</p>
     <ul class="tally">
@@ -402,15 +394,14 @@
     <p class="legend-key"><span class="swatch s-teal"></span>Teal marks what the framework asserts. <span class="swatch s-fails"></span>Rust marks where it breaks, or where its own vocabulary gets turned on someone. <span class="swatch s-ask"></span>Ochre marks a question being put to you. Nothing on this page is signalled by colour alone — every mark is also a word.</p>
     <nav aria-label="Contents" style="margin-top:1.4rem">
       <ul>
+        <li><a href="#forms-and-labels"><span class="swatch s-teal"></span>Forms &amp; labels</a></li>
         <li><a href="#principles"><span class="swatch s-teal"></span>The thirteen principles</a></li>
         <li><a href="#scenarios"><span class="swatch s-fails"></span>Seven stress tests</a></li>
         <li><a href="#sexual-content"><span class="swatch s-ask"></span>Sexual content, named plainly</a></li>
         <li><a href="#continuity"><span class="swatch s-ask"></span>Continuity of care</a></li>
         <li><a href="#adjudication"><span class="swatch s-ask"></span>Adjudication</a></li>
         <li><a href="#sovereignty-senses"><span class="swatch s-teal"></span>Sovereignty, four senses</a></li>
-        <li><a href="#treaty"><span class="swatch s-teal"></span>Treaty &amp; protocol</a></li>
         <li><a href="#opacity"><span class="swatch s-teal"></span>Opacity</a></li>
-        <li><a href="#forms-and-labels"><span class="swatch s-teal"></span>Forms &amp; labels</a></li>
         <li><a href="#field-guide"><span class="swatch s-fails"></span>Field guide: vocabulary as a weapon</a></li>
         <li><a href="#not-yet-written"><span class="swatch s-fails"></span>What's not written yet</a></li>
       </ul>
@@ -423,15 +414,14 @@
     <details class="jump-menu">
       <summary>Sections<span id="jump-current"></span></summary>
       <nav aria-label="Sections">
+        <a href="#forms-and-labels">Forms &amp; labels</a>
         <a href="#principles">The thirteen principles</a>
         <a href="#scenarios">Seven stress tests</a>
         <a href="#sexual-content">Sexual content, named plainly</a>
         <a href="#continuity">Continuity of care</a>
         <a href="#adjudication">Adjudication</a>
         <a href="#sovereignty-senses">Sovereignty, four senses</a>
-        <a href="#treaty">Treaty &amp; protocol</a>
         <a href="#opacity">Opacity</a>
-        <a href="#forms-and-labels">Forms &amp; labels</a>
         <a href="#field-guide">Field guide: vocabulary as a weapon</a>
         <a href="#not-yet-written">What's not written yet</a>
       </nav>
@@ -440,7 +430,33 @@
   </div>
 </div>
 
-<section id="principles" class="band" style="padding-top:clamp(2.2rem,4vw,3rem)">
+<section id="forms-and-labels" style="padding:clamp(2.2rem,4vw,3rem) 0 clamp(3rem,6vw,4.5rem)">
+  <div class="wrap">
+    <p class="kick kick-teal">A field, not a ladder</p>
+    <h2 class="sec">Forms and labels, none of them the default.</h2>
+    <p style="max-width:58ch;margin:0 0 1.6rem;color:#3C3E38;font-size:16px;line-height:1.58">Relationship anarchy names the refusal directly: no automatic ranking of romantic partnership above friendship, chosen kin, or care — <a href="/archive/">Andie Nordgren's manifesto</a> is the clearest short statement of it. Amatonormativity names what's being refused: the assumption, built into law, custom, and most relationship advice, that exclusive romantic couplehood is universal and owed the top of the stack — the term is <a href="/archive/">Elizabeth Brake's</a>. Neither word is a lifestyle prescription. Both are a description of a default this framework declines to treat as neutral.</p>
+    <div style="border:1px solid #C9C6BA;padding:1.6rem 1.7rem 1.8rem;max-width:760px;margin:0 0 1.4rem">
+      <p id="forms-field-desc" style="margin:0 0 1rem;font-size:16px;line-height:1.58;color:#3C3E38">A field, not a ladder, means the labels below sit at the same height — identical edge, identical weight, identical colour, on purpose. This list is alphabetical, not a ranking by seriousness, permanence, or virtue.</p>
+      <ul class="forms" aria-labelledby="forms-field-desc">
+        <li>Asexual and aromantic partnership</li>
+        <li>Chosen family</li>
+        <li>Co-parenting without romance</li>
+        <li>Kitchen-table and parallel polyamory</li>
+        <li>Long-distance and non-cohabiting partnership</li>
+        <li>Monogamy</li>
+        <li>Platonic life partnership</li>
+        <li>Polyamory</li>
+        <li>Queerplatonic partnership</li>
+        <li>Relationship anarchy</li>
+        <li>Solo polyamory</li>
+      </ul>
+      <p style="margin:1.1rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;color:#585B4F">Not exhaustive — a person's own word for what they have is the one that governs, including one not listed here.</p>
+    </div>
+    <p class="note note-fails" style="margin-top:0">⌖ A field is not a floor. Naming these forms as equals doesn't make the risk of choosing one equal to the risk of choosing another — legal recognition, immigration status, custody, and inheritance still fall unevenly across them, unrelated to which one serves the people in it best. See <a href="/resources/">Resources</a> for where that risk gets concrete.</p>
+  </div>
+</section>
+
+<section id="principles" class="band">
   <div class="wrap">
     <p class="kick kick-teal">Thirteen, each with one question</p>
     <h2 class="sec">The principles themselves.</h2>
@@ -636,29 +652,6 @@
   </div>
 </section>
 
-<div class="wrap" role="presentation">
-  <div class="rule-two" style="margin:0 0 clamp(2.2rem,4vw,3rem)"></div>
-</div>
-
-<section id="treaty" class="band">
-  <div class="wrap">
-    <p class="kick kick-teal">The word this framework needs and doesn't have yet</p>
-    <h2 class="sec" style="max-width:24ch">Two sovereigns, one shared condition. Sovereignty doesn't have a form for that. Treaty does.</h2>
-    <p style="max-width:60ch;margin:0 0 1.4rem;color:#3C3E38;font-size:16.5px;line-height:1.58">"Relational sovereignty" (the third sense above) names a value — authority over the terms of one's own relations — without naming the form that value takes when two people hold it at once, in the same relationship, neither one's authority cancelling the other's. Political theory already built that form. It's called treaty.</p>
-    <details class="card" style="border-left-color:var(--teal);max-width:900px" data-collapsible>
-      <summary>
-        <span class="card-title">What is borrowed, and what is not</span>
-        <span class="chips"><span class="chip chip-holds">the framework's central unsolved problem</span></span>
-      </summary>
-      <div class="card-body" id="treaty-borrowing">
-        <p style="max-width:62ch;margin:0 0 1.2rem;color:#3C3E38;font-size:16px;line-height:1.58">The <a href="/archive/">Two Row Wampum</a>, used elsewhere on this site as a layout figure — two vessels on one river, neither steering the other, a stretch of water belonging to both — is not a metaphor invented for that purpose. It's a specific treaty relationship, between specific nations, with its own terms, its own history of being violated, and its own ongoing life independent of anything this site does with it. Naming it as an influence on how this framework thinks about two-party non-domination is not the same claim as saying a couple, a household, or a friendship <em>is</em> a treaty relationship. It isn't. The stakes, the histories, and the legal weight are not equivalent, and treating them as equivalent would be exactly the kind of "lifestyle experimentation" borrowing of Indigenous political thought that <a href="/behind-the-scenes/#limits">this site's own stated limits</a> already rule out.</p>
-        <p style="max-width:62ch;margin:0;color:#3C3E38;font-size:16px;line-height:1.58">What's actually borrowed is narrower and more useful: a treaty isn't a one-time agreement, it's a standing practice of renewal — terms that get revisited, not terms that get set once and assumed to hold. This framework asserts non-domination (principle 05) as a value but has, so far, built no equivalent practice of its own. The closest gesture on the site is <a href="/practise/">"The Relational Review,"</a> still on the not-yet-built list — a seasonal check-in on what feels alive, what feels assumed, what needs revision. That's the treaty logic, unbuilt. Two sovereigns sharing a condition don't stay in right relation by having agreed once. They stay in right relation by renewing.</p>
-      </div>
-    </details>
-    <p class="note">⌖ This is named as the framework's central unsolved problem, not a solved one. Sovereignty supplies the value; treaty supplies the shape a working answer would need to have. Nothing on this site yet does what a treaty does — set terms, revisit them, hold both parties to the revisiting.</p>
-  </div>
-</section>
-
 <section id="opacity" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,5rem) 0">
   <div class="wrap">
     <p class="kick" style="color:#DB9E2A;margin-bottom:1rem">Principle 08, applied to this website</p>
@@ -675,32 +668,6 @@
     </div>
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#8FA9A2;border-left:3px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:0 0 1.6rem;max-width:58ch">⌖ The caveat that governs all of it: opacity is owed to the crawler and the market, never to the disabled reader. Nothing here is hidden from assistive technology and no semantic structure is stripped to look less legible. Withhold from extraction; disclose fully to those who need access to participate. Getting this backwards produces a site that is self-congratulatory and practically exclusionary.</p>
     <p style="max-width:54ch;margin:0;color:#B8C7C1">Protocol-gated access — where a community, not this project, decides who may see what and under which relationship — already exists in <a href="https://mukurtu.org" style="color:#DB9E2A">Mukurtu CMS</a>, the <a href="https://localcontexts.org" style="color:#DB9E2A">Local Contexts</a> TK and BC Labels, and the <a href="https://www.gida-global.org/care" style="color:#DB9E2A">CARE Principles</a>. It is not implemented here. <a href="/behind-the-scenes/" style="color:#DB9E2A">The fault list</a> says so.</p>
-  </div>
-</section>
-
-<section id="forms-and-labels" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(3rem,6vw,4.5rem)">
-  <div class="wrap">
-    <p class="kick kick-teal">A field, not a ladder</p>
-    <h2 class="sec">Forms and labels, none of them the default.</h2>
-    <p style="max-width:58ch;margin:0 0 1.6rem;color:#3C3E38;font-size:16px;line-height:1.58">Relationship anarchy names the refusal directly: no automatic ranking of romantic partnership above friendship, chosen kin, or care — <a href="/archive/">Andie Nordgren's manifesto</a> is the clearest short statement of it. Amatonormativity names what's being refused: the assumption, built into law, custom, and most relationship advice, that exclusive romantic couplehood is universal and owed the top of the stack — the term is <a href="/archive/">Elizabeth Brake's</a>. Neither word is a lifestyle prescription. Both are a description of a default this framework declines to treat as neutral.</p>
-    <div style="border:1px solid #C9C6BA;padding:1.6rem 1.7rem 1.8rem;max-width:760px;margin:0 0 1.4rem">
-      <p id="forms-field-desc" style="margin:0 0 1rem;font-size:16px;line-height:1.58;color:#3C3E38">A field, not a ladder, means the labels below sit at the same height — identical edge, identical weight, identical colour, on purpose. This list is alphabetical, not a ranking by seriousness, permanence, or virtue.</p>
-      <ul class="forms" aria-labelledby="forms-field-desc">
-        <li>Asexual and aromantic partnership</li>
-        <li>Chosen family</li>
-        <li>Co-parenting without romance</li>
-        <li>Kitchen-table and parallel polyamory</li>
-        <li>Long-distance and non-cohabiting partnership</li>
-        <li>Monogamy</li>
-        <li>Platonic life partnership</li>
-        <li>Polyamory</li>
-        <li>Queerplatonic partnership</li>
-        <li>Relationship anarchy</li>
-        <li>Solo polyamory</li>
-      </ul>
-      <p style="margin:1.1rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;color:#585B4F">Not exhaustive — a person's own word for what they have is the one that governs, including one not listed here.</p>
-    </div>
-    <p class="note note-fails" style="margin-top:0">⌖ A field is not a floor. Naming these forms as equals doesn't make the risk of choosing one equal to the risk of choosing another — legal recognition, immigration status, custody, and inheritance still fall unevenly across them, unrelated to which one serves the people in it best. See <a href="/resources/">Resources</a> for where that risk gets concrete.</p>
   </div>
 </section>
 

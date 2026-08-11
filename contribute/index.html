@@ -185,8 +185,11 @@
           <label for="contribute-note" style="display:block;margin-bottom:.4rem">
             <span style="display:block;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-bottom:.4rem">Optional contribution note</span>
           </label>
-          <p id="contribute-note-hint" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:0 0 .5rem;line-height:1.5">Optional. A sentence is enough. Do not put anything here you would not want read by a stranger. Not yet wired to anywhere it gets acted on — see <a href="/behind-the-scenes/#faults" style="color:#585B4F">the fault list</a>.</p>
-          <textarea id="contribute-note" rows="4" aria-describedby="contribute-note-hint" value="{{ offer }}" onChange="{{ setOffer }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.7rem .8rem;margin-bottom:1.4rem;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;line-height:1.5;color:#191B18;resize:vertical"></textarea>
+          <p id="contribute-note-hint" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:0 0 .5rem;line-height:1.5">Optional. A sentence is enough. Do not put anything here you would not want read by a stranger. Submitting the form below does not send it anywhere by itself — use the email link underneath the box for that.</p>
+          <textarea id="contribute-note" rows="4" aria-describedby="contribute-note-hint" value="{{ offer }}" onChange="{{ setOffer }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.7rem .8rem;margin-bottom:.7rem;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;line-height:1.5;color:#191B18;resize:vertical"></textarea>
+          <p style="margin:0 0 1.4rem">
+            <a href="{{ noteMailto }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;display:inline-flex;align-items:center;min-height:44px">Email this note to relationalsovereignty@gmail.com →</a>
+          </p>
           <button type="submit" disabled="{{ sending }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px;opacity:{{ sendingOpacity }}">{{ submitLabel }}</button>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.6;color:#5A5D53;margin:1rem 0 0">No tracking pixels. A transactional email service sends the confirmation and unsubscribe messages and never receives the list itself — full architecture in the colophon. No schedule promised. Your address is confirmed by email before anything is stored, and one link in every letter removes you.</p>
         </form>
@@ -225,7 +228,7 @@
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1rem">Governance — in the open</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.01em;margin:0 0 1.2rem;max-width:26ch">A site about non-domination cannot be governed by invisible authority.</h2>
     <p style="max-width:54ch;margin:0 0 1.4rem;color:#3C3E38">These structures do not exist yet. Naming them before there is a community is the only way they can be built with one, rather than announced to one.</p>
-    <p style="max-width:54ch;margin:0 0 2rem;color:#3C3E38;font-size:15px;line-height:1.55">One thing that will need a channel here, once there's a community to route it to: what got said to you, in this site's own vocabulary, to avoid answering something. <a href="/learn/#field-guide">Learn's field guide</a> names it as the strongest candidate this site has for something a reader could add — parked here rather than built, per fault 05.</p>
+    <p style="max-width:54ch;margin:0 0 2rem;color:#3C3E38;font-size:15px;line-height:1.55">One thing that will need a channel here, once there's a community to route it to: what got said to you, in this site's own vocabulary, to avoid answering something. <a href="/learn/#field-guide">Learn's field guide</a> names it as the strongest candidate this site has for something a reader could add — parked here rather than built, per fault 03.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.6rem 2.4rem;max-width:1000px">
       <sc-for list="{{ governance }}" as="g" hint-placeholder-count="6">
         <div>
@@ -304,6 +307,23 @@ class Component extends DCLogic {
     ["What happens if the project closes?", "A stated wind-down: contributors are notified, material is returned or deleted according to their terms, and nothing is sold."]
   ];
 
+  // The note field has no server behind it — see the submit handler's own
+  // comment below. A plain mailto: link is the one delivery mechanism a
+  // static page can offer without a new backend: it opens in the reader's
+  // own mail client, pre-filled, and they choose whether to send it.
+  // Recomputed on every render so it always reflects the current note,
+  // name, and email — not just whatever was typed when the page loaded.
+  noteMailto() {
+    const parts = [];
+    if (this.state.offer.trim()) parts.push(this.state.offer.trim());
+    const signoff = [this.state.name.trim(), this.state.email.trim() ? `(${this.state.email.trim()})` : ""].filter(Boolean).join(" ");
+    if (signoff) parts.push("— " + signoff);
+    const body = parts.join("\n\n");
+    let url = "mailto:relationalsovereignty@gmail.com?subject=" + encodeURIComponent("Contribution note from the Contribute page");
+    if (body) url += "&body=" + encodeURIComponent(body);
+    return url;
+  }
+
   renderVals() {
     const chosen = this.state.interests;
     return {
@@ -315,6 +335,7 @@ class Component extends DCLogic {
       email: this.state.email,
       name: this.state.name,
       offer: this.state.offer,
+      noteMailto: this.noteMailto(),
       setEmail: (ev) => this.setState({ email: ev.target.value }),
       hp: this.state.hp,
       setHp: (ev) => this.setState({ hp: ev.target.value }),
@@ -352,9 +373,11 @@ class Component extends DCLogic {
               name: this.state.name,
               interests: this.state.interests,
               // Sent so it's not lost before it even leaves the browser.
-              // The Worker does not yet read or store this field — see
-              // fault 07 in the colophon. Included now so wiring it up
-              // later is a Worker-side change only, not a client one too.
+              // The Worker still doesn't read or store this field — the
+              // real delivery path for a note is the mailto: link next to
+              // the textarea (see noteMailto() above), which the reader
+              // triggers themselves. Kept here too, harmlessly, in case
+              // the Worker is ever updated to read it directly.
               offer: this.state.offer,
               hp: this.state.hp,
             }),
