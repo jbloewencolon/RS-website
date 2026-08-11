@@ -17,12 +17,14 @@ STORE_BRANCH = "main"
 # (below, via `wrangler secret put`) needs to stay private.
 TURNSTILE_SITE_KEY = "0x4AAAAAAEMpChSeguKsGevc"
 
-# Backs the per-IP, per-address, and daily-cap limits in
-# src/ratelimit.js. Create once with:
-#   npx wrangler kv namespace create RATE_LIMIT
-# then paste the id it prints below. Until this id is filled in and
-# deployed, the limits fail open (see ratelimit.js) — the endpoint is
-# not protected until this step is done.
+# Two jobs, one namespace, distinguished by key prefix — the per-IP,
+# per-address, and daily-cap limits in src/ratelimit.js (`rl:...` keys,
+# fail open if this binding is missing), and the short-lived pending-
+# signup storage in src/pending.js (`signup:...` keys, REQUIRED — see
+# that file for why the confirm token can no longer carry the payload
+# itself). Create once with:
+#   npx wrangler kv namespace create WORKER_KV
+# then paste the id it prints below.
 [[kv_namespaces]]
-binding = "RATE_LIMIT"
-id = " d42000356002e21893f25dde69c49a1b"
+binding = "WORKER_KV"
+id = "d42000356002e21893f25dde69c49a1b"
