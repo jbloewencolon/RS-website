@@ -266,6 +266,12 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 
 *(Source: `Web Design Spec — v0.3 refinement pass`, supplied directly by the author. IDs below are `WD-nn`, kept identical to the spec's own `§3.n` numbering so the two can be read side by side — same convention Phase 6 uses for the UX audit. The spec is unusually good: it states build architecture before changes, gives exact anchors, specifies verification per item, and carries its own §6 correcting three claims in the review it derives from. Most of it can be implemented as written.)*
 
+**Open questions for the author, as of PR #26 (2026-08-11):** FLAG-07, WD-05, WD-17, and WD-28 are resolved and shipped in that PR. Still waiting on a decision, in priority order:
+1. **WD-12** — approve tagging Freeman (*The Tyranny of Structurelessness*), Roberts (*Torn Apart*), and Bridges (*The Poverty of Privacy Rights*) alongside the already-confirmed Barker/Alfred entry? (§9.4 below has each entry's textual basis.)
+2. **WD-10b** — copy for the "no fourteenth principle yet" filler card on Learn (a draft exists, needs approval or a rewrite).
+3. **WD-15 / WD-16** — how to proceed with the palette rollout: author compiles the built/unbuilt call per item directly, or wants a draft classification to react to first (bigger lift than WD-12 — 13+ fault-list entries, 11 resource categories, plus Practise and Archive's own items).
+4. **WD-08b, WD-18, WD-25** — lower-stakes sequencing calls, detailed in §9.2/9.4/9.6 below.
+
 **The spec's stated source document is not in this repository.** It cites `docs/audits/design-review-2026-08-10.md` as the document that argues *why*; `docs/audits/` contains only `ux-audit-2026-08-08.html`. Every claim below was therefore checked against the shipped code directly rather than against that review. Where the spec's §6 corrects the review, those corrections are taken on trust as internally consistent — but the review's own reasoning cannot be consulted when a judgement call comes up. **Ask the author to add the review to `docs/audits/`** before working the editorial items (WD-12, WD-15, WD-17), which explicitly defer to its argument.
 
 ### What was verified before planning, and what held
