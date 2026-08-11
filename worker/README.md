@@ -24,8 +24,14 @@ Enter.
   half-second it takes to handle one signup, confirm, or unsubscribe).
 - A free Resend account that sends the confirmation and unsubscribe
   emails.
-- Four secret values, generated once, that only you and this Worker will
-  ever hold.
+- A free Cloudflare Turnstile widget — the small "verify you're human"
+  check that now sits on both signup forms, so the endpoint can't be
+  used to send mail to a stranger's address at scale.
+- A free Cloudflare KV namespace that holds nothing about anyone — just
+  short-lived counters ("3 attempts from this IP in the last hour") so
+  the endpoint can refuse to send once someone's clearly abusing it.
+- Five secret values, generated or issued once, that only you and this
+  Worker will ever hold.
 
 ## Step 1 — Create a private repo just for the subscriber list
 
@@ -102,15 +108,51 @@ another way to generate them.
 3. This opens a browser window asking you to approve access for the
    Cloudflare account **j.loewencolon@gmail.com**. Approve it.
 
-## Step 6 — Fill in the non-secret settings
+## Step 6 — Register a Turnstile widget
+
+This is the "prove you're not a bot" check on both signup forms — it
+replaces nothing, it's a second layer alongside the honeypot field that
+was already there.
+
+1. In the Cloudflare dashboard, go to **Turnstile → Add widget**.
+2. Name it something like `rs-dispatch`.
+3. Under **Domains**, add `relationalsovereignty.com`.
+4. Widget mode: **Managed** (Cloudflare's default — shows a checkbox
+   most of the time, a harder challenge only when it's suspicious).
+5. Create it. You'll be shown two values:
+   - a **Site Key** (safe to be public — it's shipped to every visitor's
+     browser)
+   - a **Secret Key** (private — treat it like the other secrets below)
+6. Copy both somewhere private for a moment. You'll paste the Site Key
+   into `wrangler.toml` in Step 8 and send it back in Step 12 so it can
+   be added to the two forms; the Secret Key goes into `wrangler secret`
+   in Step 9.
+
+## Step 7 — Create the rate-limit storage
+
+A small Cloudflare KV namespace holds nothing about anyone — just
+short-lived counters like "3 signup attempts from this IP in the last
+hour" — so the endpoint can refuse once someone's clearly abusing it.
+
+```
+npx wrangler kv namespace create RATE_LIMIT
+```
+
+This prints an `id`. Copy it — you'll paste it into `wrangler.toml` in
+the next step.
+
+## Step 8 — Fill in the non-secret settings
 
 Open `worker/wrangler.toml` in a text editor and replace:
 - `CHANGE_ME_github_username` → your GitHub username
 - `CHANGE_ME_private_storage_repo_name` → the repo name from Step 1
 - `CHANGE_ME` in `WORKER_URL` → leave as-is for now, we'll fix it after
-  the first deploy in Step 8.
+  the first deploy in Step 10
+- `CHANGE_ME_after_registering_a_turnstile_widget` → the **Site Key**
+  from Step 6
+- `CHANGE_ME_after_wrangler_kv_namespace_create` → the `id` from Step 7
 
-## Step 7 — Store the four secrets
+## Step 9 — Store the five secrets
 
 Still in the `worker` folder, run each of these one at a time. Each will
 prompt you to paste a value and press Enter — the value won't be shown on
@@ -121,11 +163,13 @@ npx wrangler secret put GITHUB_TOKEN
 npx wrangler secret put RESEND_API_KEY
 npx wrangler secret put ENCRYPTION_KEY
 npx wrangler secret put TOKEN_SECRET
+npx wrangler secret put TURNSTILE_SECRET_KEY
 ```
 
-Paste the matching value from Steps 2, 3, and 4 at each prompt.
+Paste the matching value from Steps 2, 3, 4, and 6 (the **Secret Key**,
+not the Site Key) at each prompt.
 
-## Step 8 — Deploy
+## Step 10 — Deploy
 
 ```
 npx wrangler deploy
@@ -136,29 +180,39 @@ live URL. Copy it, open `worker/wrangler.toml`, and paste it in as the
 `WORKER_URL` value (replacing the placeholder). Then run
 `npx wrangler deploy` one more time so the Worker knows its own address.
 
-## Step 9 — Test it yourself before it's connected to the site
+## Step 11 — Test it yourself before it's connected to the site
+
+The subscribe endpoint now requires a solved Turnstile token, so a bare
+`curl` to `/api/subscribe` will correctly get rejected with "verification
+failed" — that's Step 12's job to wire up, not something to test with
+curl. What you *can* still test directly from the command line:
 
 ```
-curl -X POST https://YOUR-WORKER-URL/api/subscribe \
-  -H "Content-Type: application/json" \
-  -d '{"email":"your-own-email@example.com","interests":["I want to contribute something"]}'
+curl https://YOUR-WORKER-URL/api/confirm?token=not-a-real-token
 ```
 
-You should get a confirmation email within a minute or two. Click the
-link — you should see "You're confirmed," and a second email with an
-unsubscribe link. Click that too, and confirm you get "You've been
-removed."
+should return `400` with "This confirmation link is invalid or has
+expired." A real end-to-end test (Turnstile widget included) happens
+once the site's two forms are pointed at this Worker in Step 12 — do
+that test from the live pages, not from curl.
+
+## Step 12 — Send the Worker URL and Site Key back
+
+Send both the `.workers.dev` address from Step 10 and the Turnstile
+**Site Key** from Step 6 back so the two signup forms on the actual site
+can be pointed at this Worker and carry the widget. That's the last step
+before this is live for real visitors.
+
+Once that's done, run the real end-to-end test from the live site: fill
+in the form, solve the Turnstile check, submit. You should get a
+confirmation email within a minute or two. Click the link — you should
+see "You're confirmed," and a second email with an unsubscribe link.
+Click that too, and confirm you get "You've been removed."
 
 Check the private repo from Step 1 — you should now see a file called
 `subscribers.enc` appear (and then update after you unsubscribe). Open
 it if you're curious: it'll just look like random letters and numbers.
 That's the point.
-
-## Step 10 — Send the Worker URL back
-
-Once Step 9 works, send the `.workers.dev` address back so the two
-signup forms on the actual site can be pointed at it. That's the last
-step before this is live for real visitors.
 
 ## If something needs to change later
 
@@ -173,3 +227,10 @@ step before this is live for real visitors.
   datastore) is meant to comfortably handle a small, growing list. If it
   ever gets big enough that this feels limiting, migrating to real list
   software (Phase 5 in the plan) can reuse the same encrypted export.
+- **Adjust the rate limits**: the numbers (5 signups/hour per IP, 1/hour
+  per address, 300 sends/day total) live as constants at the top of
+  `src/ratelimit.js`, not in `wrangler.toml` — edit and redeploy.
+- **Rate limiting or Turnstile seems to be doing nothing**: check that
+  the `RATE_LIMIT` KV `id` and `TURNSTILE_SECRET_KEY` secret are both
+  actually set — `wrangler tail` will show a `console.error` naming
+  which one is missing rather than failing silently.

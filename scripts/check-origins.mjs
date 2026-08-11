@@ -22,6 +22,16 @@ const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 // scanning this file for the allowlist finds it in one place.
 const KNOWN_CROSS_ORIGIN_FETCH = "https://rs-dispatch-worker.rssite.workers.dev";
 
+// Cloudflare Turnstile: the one <script src> allowed off-origin, and
+// only on Home and Contribute (see tasks.md SEC-01.3). Added after an
+// external security audit and an independent review both found the
+// signup endpoint had no defense against being used to send unwanted
+// email to a stranger's address at scale — a real new third-party
+// dependency, added deliberately, not something to silence here either.
+// Disclosed in both forms' footers and in Behind the Scenes' substrate
+// table, same as the Worker origin above.
+const KNOWN_CROSS_ORIGIN_SCRIPT = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+
 const SELF_ORIGIN = "https://relationalsovereignty.com";
 
 // BUG-03: the six Hugo pages plus Practise/Contribute now live one
@@ -43,6 +53,7 @@ function isSelfOrExempt(url) {
   if (url.startsWith("#")) return true; // in-page anchor
   if (url.startsWith("/") && !url.startsWith("//")) return true; // root-relative, same origin
   if (url.startsWith(SELF_ORIGIN)) return true;
+  if (url === KNOWN_CROSS_ORIGIN_SCRIPT) return true;
   if (!/^[a-z]+:\/\//i.test(url)) return true; // relative path, e.g. "./support.js", "glyph-check.js"
   return false;
 }

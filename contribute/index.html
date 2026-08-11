@@ -13,9 +13,14 @@
 <meta property="og:description" content="Share a story, tool, question, or artwork on terms you set, and can withdraw.">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://rs-dispatch-worker.rssite.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://rs-dispatch-worker.rssite.workers.dev https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <style>.skip-link{position:absolute;left:-9999px;top:0}.nav-toggle{display:none}</style>
 <script src="/support.js"></script>
+<!-- The one third-party request on this site: Cloudflare's own bot check
+     on the form below, disclosed in the footer and on Behind the Scenes
+     rather than added silently. See worker/src/ratelimit.js and
+     worker/src/turnstile.js for what it's guarding against. -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 <x-dc>
@@ -190,6 +195,7 @@
           <p style="margin:0 0 1.4rem">
             <a href="{{ noteMailto }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;display:inline-flex;align-items:center;min-height:44px">Email this note to relationalsovereignty@gmail.com →</a>
           </p>
+          <div ref="{{ turnstileRef }}" style="margin:0 0 1.2rem"></div>
           <button type="submit" disabled="{{ sending }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px;opacity:{{ sendingOpacity }}">{{ submitLabel }}</button>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.6;color:#5A5D53;margin:1rem 0 0">No tracking pixels. A transactional email service sends the confirmation and unsubscribe messages and never receives the list itself — full architecture in the colophon. No schedule promised. Your address is confirmed by email before anything is stored, and one link in every letter removes you.</p>
         </form>
@@ -252,7 +258,7 @@
 
 <footer class="dark" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
-    <p style="margin:0;max-width:46ch">v0.2 · no third-party requests, including fonts · this page is disallowed to search crawlers · <a href="/behind-the-scenes/" style="color:#DB9E2A">what changed</a> · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
+    <p style="margin:0;max-width:46ch">v0.2 · no fonts, no third-party requests except one, disclosed: the form above asks Cloudflare's Turnstile to confirm you're not a bot · this page is disallowed to search crawlers · <a href="/behind-the-scenes/" style="color:#DB9E2A">what changed</a> · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
       <a href="/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>
       <a href="/manifesto/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
@@ -269,11 +275,68 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
 class Component extends DCLogic {
-  state = { sent: false, email: "", name: "", offer: "", interests: [], hp: "", sending: false, error: "", emailInvalid: false };
+  state = { sent: false, email: "", name: "", offer: "", interests: [], hp: "", sending: false, error: "", emailInvalid: false, turnstileToken: "" };
 
   // The dispatch signup endpoint. Nothing is stored there until the
   // reader clicks the confirmation link this call triggers.
   static ENDPOINT = "https://rs-dispatch-worker.rssite.workers.dev/api/subscribe";
+
+  // Public by design — this key is shipped to every browser that loads
+  // the form. Only the matching secret key (held by the Worker, never
+  // here) can actually verify a solved challenge. Set after registering
+  // a widget at the Cloudflare dashboard — see worker/README.md Step 6.
+  static TURNSTILE_SITE_KEY = "CHANGE_ME_after_registering_a_turnstile_widget";
+
+  // Mounts the Turnstile widget imperatively into the div this ref
+  // callback is attached to, rather than relying on Turnstile's
+  // auto-render (which scans for `.cf-turnstile` divs once on script
+  // load and would miss a container that mounts later, e.g. after
+  // "use a different address" re-shows the form). React calls this with
+  // `null` on unmount too, which is when the widget is torn down —
+  // both directions of that transition happen whenever the surrounding
+  // `sc-if` toggles between the confirmation and form states.
+  mountTurnstile(el) {
+    if (!el) {
+      if (this._turnstileId != null && window.turnstile) {
+        try { window.turnstile.remove(this._turnstileId); } catch {}
+      }
+      this._turnstileId = null;
+      return;
+    }
+    const render = () => {
+      if (!window.turnstile || this._turnstileId != null) return;
+      this._turnstileId = window.turnstile.render(el, {
+        sitekey: Component.TURNSTILE_SITE_KEY,
+        callback: (token) => this.setState({ turnstileToken: token }),
+        "expired-callback": () => this.setState({ turnstileToken: "" }),
+        "error-callback": () => this.setState({ turnstileToken: "" }),
+      });
+    };
+    if (window.turnstile) render();
+    else {
+      // api.js loads async and can finish after this div mounts —
+      // poll briefly rather than depending on script/render order.
+      const poll = setInterval(() => {
+        if (window.turnstile) { clearInterval(poll); render(); }
+      }, 100);
+    }
+  }
+
+  // A stable reference, not a fresh closure created inline in
+  // renderVals() on every render — React calls a ref callback with
+  // `null` and then the new value whenever the *identity* of the
+  // function passed as `ref` changes, not just on real mount/unmount.
+  // A fresh arrow function every render would tear down and rebuild
+  // the widget on every keystroke elsewhere in the form, discarding
+  // a solved token the moment someone typed their name.
+  turnstileRef = (el) => this.mountTurnstile(el);
+
+  resetTurnstile() {
+    if (this._turnstileId != null && window.turnstile) {
+      try { window.turnstile.reset(this._turnstileId); } catch {}
+    }
+    this.setState({ turnstileToken: "" });
+  }
 
   interestList = [
     "The printable zine when it exists",
@@ -341,6 +404,7 @@ class Component extends DCLogic {
       setHp: (ev) => this.setState({ hp: ev.target.value }),
       setName: (ev) => this.setState({ name: ev.target.value }),
       setOffer: (ev) => this.setState({ offer: ev.target.value }),
+      turnstileRef: this.turnstileRef,
       sending: this.state.sending,
       sendingOpacity: this.state.sending ? "0.6" : "1",
       submitLabel: this.state.sending ? "Sending…" : "Send",
@@ -363,6 +427,10 @@ class Component extends DCLogic {
           document.getElementById("contribute-email")?.focus();
           return;
         }
+        if (!this.state.turnstileToken) {
+          this.setState({ error: "Please complete the verification above, then try again." });
+          return;
+        }
         this.setState({ sending: true, error: "", emailInvalid: false });
         try {
           const res = await fetch(Component.ENDPOINT, {
@@ -380,6 +448,7 @@ class Component extends DCLogic {
               // the Worker is ever updated to read it directly.
               offer: this.state.offer,
               hp: this.state.hp,
+              turnstileToken: this.state.turnstileToken,
             }),
           });
           if (!res.ok) {
@@ -389,7 +458,10 @@ class Component extends DCLogic {
           this.setState({ sent: true, sending: false });
         } catch (err) {
           // Never lose what they typed — the form stays filled in so the
-          // only cost of a failure is pressing the button again.
+          // only cost of a failure is pressing the button again. The
+          // token is single-use regardless of outcome, so the widget
+          // needs a fresh solve before a retry can work.
+          this.resetTurnstile();
           this.setState({
             sending: false,
             error: "That did not send. Check your connection and try again in a moment.",

@@ -32,3 +32,6 @@
 - n: "04"
   title: "No clickjacking protection"
   body: "The CSP is delivered as a <meta> tag because the current host cannot set response headers — and frame-ancestors, the directive that would stop this site being framed inside someone else's page, is one of a small number the CSP specification refuses to honour outside a real header, on any browser, no matter how it's written. There is currently no way to close this gap without changing host. Same root cause as fault 01."
+- n: "05"
+  title: "The confirm link carries more than it should"
+  body: "Signing up sends a link containing the chosen name and interests, signed to prove it came from this site but not encrypted — readable by anything the link passes through on its way to being clicked: mail-provider logs, link-scanning security products, the transactional-email service's own logs. The subscriber store itself keeps interests aggregate-only and never attached to an address, by design; this link defeats that property everywhere outside the store file for the roughly 48 hours before it's clicked or expires. Fix in progress: move the pending signup into short-lived server-side storage and put only an opaque, meaningless id in the link itself."

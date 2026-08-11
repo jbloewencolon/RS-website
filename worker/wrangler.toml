@@ -11,3 +11,18 @@ STORE_OWNER = "jbloewencolon"
 STORE_REPO = "rs-dispatch-storage"
 STORE_PATH = "subscribers.enc"
 STORE_BRANCH = "main"
+
+# Turnstile's site key is meant to be public — it's shipped to every
+# browser that loads the form. Only the matching TURNSTILE_SECRET_KEY
+# (below, via `wrangler secret put`) needs to stay private.
+TURNSTILE_SITE_KEY = "CHANGE_ME_after_registering_a_turnstile_widget"
+
+# Backs the per-IP, per-address, and daily-cap limits in
+# src/ratelimit.js. Create once with:
+#   npx wrangler kv namespace create RATE_LIMIT
+# then paste the id it prints below. Until this id is filled in and
+# deployed, the limits fail open (see ratelimit.js) — the endpoint is
+# not protected until this step is done.
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "CHANGE_ME_after_wrangler_kv_namespace_create"

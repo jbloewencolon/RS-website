@@ -214,7 +214,7 @@
         
         <div style="border-top:2px solid #366943;padding-top:.7rem">
           <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Third-party requests</dt>
-          <dd style="margin:0;font-size:16px;line-height:1.5">Zero, with one deliberate, disclosed exception: submitting the dispatch signup form on Home or Contribute sends the address you typed to the Worker described below. No fonts, analytics, embeds, tag managers, CDNs, or ad tech — and nothing fires until you submit that one form.</dd>
+          <dd style="margin:0;font-size:16px;line-height:1.5">Zero, with two deliberate, disclosed exceptions, both on Home and Contribute only. First: submitting the dispatch signup form sends the address you typed to the Worker described below. Second: both forms load Cloudflare&#39;s Turnstile, a bot check that runs before the form will submit at all — added after an external security audit and an independent review both flagged the same gap: nothing stopped the signup endpoint from being used to send unwanted email to a stranger&#39;s address, repeatedly, from many machines at once. It&#39;s verified on the Worker itself, not just displayed, so a script can&#39;t skip it by forging success. No fonts, analytics, embeds, tag managers, or ad tech, on any page — and nothing on the other five pages phones anywhere at all.</dd>
         </div>
         
         <div style="border-top:2px solid #366943;padding-top:.7rem">
@@ -244,7 +244,7 @@
         
         <div style="border-top:2px solid #7D5915;padding-top:.7rem">
           <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .35rem">Security headers</dt>
-          <dd style="margin:0;font-size:16px;line-height:1.5">A Content-Security-Policy on every page, machine-checked in CI (a build fails if any page loads a script, stylesheet, or CSS import/url() from off this domain — outbound prose links are exempt on purpose, that&#39;s citation, not a subresource load). Each page&#39;s policy is only as permissive as that specific page needs: the four reading pages allow no script execution beyond their own same-origin file, Practise/Home/Contribute need a narrow eval allowance for the page-template runtime they still run on, and only Home and Contribute&#39;s connect-src includes the dispatch Worker&#39;s origin. Delivered as a &lt;meta&gt; tag, not a response header, because GitHub Pages — this site&#39;s current host — cannot set response headers. That has one real consequence: frame-ancestors (clickjacking protection) cannot be delivered via &lt;meta&gt; at all, by the CSP specification itself, so this site currently has none. Fault below.</dd>
+          <dd style="margin:0;font-size:16px;line-height:1.5">A Content-Security-Policy on every page, machine-checked in CI (a build fails if any page loads a script, stylesheet, or CSS import/url() from off this domain — outbound prose links are exempt on purpose, that&#39;s citation, not a subresource load). Each page&#39;s policy is only as permissive as that specific page needs: the four reading pages allow no script execution beyond their own same-origin file, Practise/Home/Contribute need a narrow eval allowance for the page-template runtime they still run on, and only Home and Contribute&#39;s script-src/connect-src/frame-src additionally name the dispatch Worker and Cloudflare Turnstile — the one third-party addition either page carries, and only those two. Delivered as a &lt;meta&gt; tag, not a response header, because GitHub Pages — this site&#39;s current host — cannot set response headers. That has one real consequence: frame-ancestors (clickjacking protection) cannot be delivered via &lt;meta&gt; at all, by the CSP specification itself, so this site currently has none. Fault below.</dd>
         </div>
         
         <div style="border-top:2px solid #7D5915;padding-top:.7rem">
@@ -406,6 +406,14 @@
         <div>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .3rem;line-height:1.2">No clickjacking protection</h3>
           <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">The CSP is delivered as a &lt;meta&gt; tag because the current host cannot set response headers — and frame-ancestors, the directive that would stop this site being framed inside someone else&#39;s page, is one of a small number the CSP specification refuses to honour outside a real header, on any browser, no matter how it&#39;s written. There is currently no way to close this gap without changing host. Same root cause as fault 01.</p>
+        </div>
+      </li>
+      
+      <li style="counter-increment:f;display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;border-top:1px solid #C9C6BA;padding-top:1rem">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#8B3A2F">05</span>
+        <div>
+          <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .3rem;line-height:1.2">The confirm link carries more than it should</h3>
+          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">Signing up sends a link containing the chosen name and interests, signed to prove it came from this site but not encrypted — readable by anything the link passes through on its way to being clicked: mail-provider logs, link-scanning security products, the transactional-email service&#39;s own logs. The subscriber store itself keeps interests aggregate-only and never attached to an address, by design; this link defeats that property everywhere outside the store file for the roughly 48 hours before it&#39;s clicked or expires. Fix in progress: move the pending signup into short-lived server-side storage and put only an opaque, meaningless id in the link itself.</p>
         </div>
       </li>
       

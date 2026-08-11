@@ -13,7 +13,7 @@
 <meta property="og:description" content="Relational sovereignty asks how we can build relationships that protect self-determination while recognizing interdependence, care, responsibility, and the living worlds to which we belong.">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://rs-dispatch-worker.rssite.workers.dev; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://rs-dispatch-worker.rssite.workers.dev https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -38,6 +38,11 @@
 </script>
 <style>.skip-link{position:absolute;left:-9999px;top:0}.nav-toggle{display:none}</style>
 <script src="/support.js"></script>
+<!-- The one third-party request on this site: Cloudflare's own bot check
+     on the dispatch form below, disclosed in the footer and on Behind
+     the Scenes rather than added silently. See worker/src/ratelimit.js
+     and worker/src/turnstile.js for what it's guarding against. -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 <x-dc>
@@ -291,6 +296,7 @@
               </sc-for>
             </div>
           </fieldset>
+          <div ref="{{ turnstileRef }}" style="margin:0 0 1.2rem"></div>
           <button type="submit" disabled="{{ sending }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px;opacity:{{ sendingOpacity }}">{{ submitLabel }}</button>
         </form>
       </sc-if>
@@ -332,7 +338,7 @@
     </div>
     <div>
       <p style="margin:0 0 .5rem;color:#DB9E2A">Build</p>
-      <p style="margin:0">No trackers, cookies, analytics, or third-party requests — including fonts. Nothing you type into a tool leaves your device. <a href="/robots.txt" style="color:#8FA9A2">Crawler policy</a>.</p>
+      <p style="margin:0">No trackers, cookies, or analytics — and no third-party requests except one, disclosed: the dispatch form below asks Cloudflare's Turnstile to confirm you're not a bot before it will send anything. Nothing you type into a tool leaves your device. <a href="/robots.txt" style="color:#8FA9A2">Crawler policy</a>.</p>
     </div>
     <div>
       <p style="margin:0 0 .5rem;color:#DB9E2A">Reuse</p>
@@ -344,11 +350,68 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
 class Component extends DCLogic {
-  state = { qi: 0, sent: false, email: "", name: "", interests: [], hp: "", sending: false, error: "", emailInvalid: false };
+  state = { qi: 0, sent: false, email: "", name: "", interests: [], hp: "", sending: false, error: "", emailInvalid: false, turnstileToken: "" };
 
   // The dispatch signup endpoint. Nothing is stored there until the
   // reader clicks the confirmation link this call triggers.
   static ENDPOINT = "https://rs-dispatch-worker.rssite.workers.dev/api/subscribe";
+
+  // Public by design — this key is shipped to every browser that loads
+  // the form. Only the matching secret key (held by the Worker, never
+  // here) can actually verify a solved challenge. Set after registering
+  // a widget at the Cloudflare dashboard — see worker/README.md Step 6.
+  static TURNSTILE_SITE_KEY = "CHANGE_ME_after_registering_a_turnstile_widget";
+
+  // Mounts the Turnstile widget imperatively into the div this ref
+  // callback is attached to, rather than relying on Turnstile's
+  // auto-render (which scans for `.cf-turnstile` divs once on script
+  // load and would miss a container that mounts later, e.g. after
+  // "use a different address" re-shows the form). React calls this with
+  // `null` on unmount too, which is when the widget is torn down —
+  // both directions of that transition happen whenever the surrounding
+  // `sc-if` toggles between the confirmation and form states.
+  mountTurnstile(el) {
+    if (!el) {
+      if (this._turnstileId != null && window.turnstile) {
+        try { window.turnstile.remove(this._turnstileId); } catch {}
+      }
+      this._turnstileId = null;
+      return;
+    }
+    const render = () => {
+      if (!window.turnstile || this._turnstileId != null) return;
+      this._turnstileId = window.turnstile.render(el, {
+        sitekey: Component.TURNSTILE_SITE_KEY,
+        callback: (token) => this.setState({ turnstileToken: token }),
+        "expired-callback": () => this.setState({ turnstileToken: "" }),
+        "error-callback": () => this.setState({ turnstileToken: "" }),
+      });
+    };
+    if (window.turnstile) render();
+    else {
+      // api.js loads async and can finish after this div mounts —
+      // poll briefly rather than depending on script/render order.
+      const poll = setInterval(() => {
+        if (window.turnstile) { clearInterval(poll); render(); }
+      }, 100);
+    }
+  }
+
+  // A stable reference, not a fresh closure created inline in
+  // renderVals() on every render — React calls a ref callback with
+  // `null` and then the new value whenever the *identity* of the
+  // function passed as `ref` changes, not just on real mount/unmount.
+  // A fresh arrow function every render would tear down and rebuild
+  // the widget on every keystroke elsewhere in the form, discarding
+  // a solved token the moment someone typed their name.
+  turnstileRef = (el) => this.mountTurnstile(el);
+
+  resetTurnstile() {
+    if (this._turnstileId != null && window.turnstile) {
+      try { window.turnstile.reset(this._turnstileId); } catch {}
+    }
+    this.setState({ turnstileToken: "" });
+  }
 
   questions = [
     "Where does care end and control begin?",
@@ -401,6 +464,7 @@ class Component extends DCLogic {
       hp: this.state.hp,
       setHp: (ev) => this.setState({ hp: ev.target.value }),
       setName: (ev) => this.setState({ name: ev.target.value }),
+      turnstileRef: this.turnstileRef,
       sending: this.state.sending,
       sendingOpacity: this.state.sending ? "0.6" : "1",
       submitLabel: this.state.sending ? "Sending…" : "Join the dispatch",
@@ -423,6 +487,10 @@ class Component extends DCLogic {
           document.getElementById("dispatch-email")?.focus();
           return;
         }
+        if (!this.state.turnstileToken) {
+          this.setState({ error: "Please complete the verification above, then try again." });
+          return;
+        }
         this.setState({ sending: true, error: "", emailInvalid: false });
         try {
           const res = await fetch(Component.ENDPOINT, {
@@ -433,6 +501,7 @@ class Component extends DCLogic {
               name: this.state.name,
               interests: this.state.interests,
               hp: this.state.hp,
+              turnstileToken: this.state.turnstileToken,
             }),
           });
           if (!res.ok) {
@@ -442,7 +511,10 @@ class Component extends DCLogic {
           this.setState({ sent: true, sending: false });
         } catch (err) {
           // Never lose what they typed — the form stays filled in so the
-          // only cost of a failure is pressing the button again.
+          // only cost of a failure is pressing the button again. The
+          // token is single-use regardless of outcome, so the widget
+          // needs a fresh solve before a retry can work.
+          this.resetTurnstile();
           this.setState({
             sending: false,
             error: "That did not send. Check your connection and try again in a moment.",
