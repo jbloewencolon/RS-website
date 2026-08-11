@@ -14,6 +14,19 @@ let commitCount = 0;
 // --- fake Resend: capture the last email "sent" ---
 let lastEmail = null;
 
+// --- fake in-memory KV, standing in for the RATE_LIMIT binding ---
+function fakeKV() {
+  const store = new Map();
+  return {
+    async get(key) {
+      return store.has(key) ? store.get(key) : null;
+    },
+    async put(key, value) {
+      store.set(key, value);
+    },
+  };
+}
+
 const originalFetch = globalThis.fetch;
 globalThis.fetch = async (url, opts = {}) => {
   const u = String(url);
@@ -21,6 +34,14 @@ globalThis.fetch = async (url, opts = {}) => {
   if (u.startsWith("https://api.resend.com/emails")) {
     lastEmail = JSON.parse(opts.body);
     return new Response(JSON.stringify({ id: "test" }), { status: 200 });
+  }
+
+  // Always succeeds — Turnstile verification itself is covered in
+  // worker/test/abuse.test.mjs. This file is testing the subscribe ->
+  // confirm -> unsubscribe wiring, not the abuse controls layered onto
+  // subscribe, so it stubs them as a pass rather than re-proving them.
+  if (u.startsWith("https://challenges.cloudflare.com/turnstile/v0/siteverify")) {
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
   }
 
   if (u.includes("api.github.com/repos") && u.includes("/contents/")) {
@@ -54,18 +75,29 @@ const env = {
   GITHUB_TOKEN: "fake-github-token",
   RESEND_API_KEY: "fake-resend-key",
   TOKEN_SECRET: "fake-token-secret",
+  TURNSTILE_SECRET_KEY: "fake-turnstile-secret",
   ENCRYPTION_KEY: Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString("base64"),
+  RATE_LIMIT: fakeKV(),
 };
 
 function extractLink(text) {
   return text.match(/https:\/\/\S+/)[0];
 }
 
-function subscribeRequest(email, interests, hp = "", name = "") {
+// Each call gets its own IP unless one is passed — this file's own
+// per-address and per-IP traffic (steps 1, 3, 8) would otherwise trip
+// the rate limits abuse.test.mjs is responsible for proving, which
+// isn't what this test is checking.
+let ipCounter = 0;
+function subscribeRequest(email, interests, hp = "", name = "", ip = null) {
   return new Request("https://worker.example/api/subscribe", {
     method: "POST",
-    headers: { "Content-Type": "application/json", Origin: env.SITE_URL },
-    body: JSON.stringify({ email, name, interests, hp }),
+    headers: {
+      "Content-Type": "application/json",
+      Origin: env.SITE_URL,
+      "CF-Connecting-IP": ip || `203.0.113.${++ipCounter}`,
+    },
+    body: JSON.stringify({ email, name, interests, hp, turnstileToken: "solved-token" }),
   });
 }
 

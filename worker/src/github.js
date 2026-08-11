@@ -54,7 +54,15 @@ export async function updateWithRetry(owner, repo, path, branch, token, mutate, 
     if (res.status !== 409 && res.status !== 422) {
       throw new Error(`GitHub write failed: ${res.status} ${await res.text()}`);
     }
-    // conflict — loop and retry against whatever is there now
+    // Conflict — someone else wrote in between. Back off before
+    // retrying so a burst of near-simultaneous confirmations turns into
+    // a handful of spaced-out retries against the GitHub API rather
+    // than a tight loop of five immediate ones per request.
+    if (attempt < maxAttempts - 1) {
+      const delayMs = 100 * 2 ** attempt + Math.floor(Math.random() * 100);
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+    }
   }
+  console.error(`GitHub write to ${owner}/${repo}/${path} failed after ${maxAttempts} attempts — repeated conflicts`);
   throw new Error("GitHub write failed after repeated conflicts");
 }

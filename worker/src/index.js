@@ -8,6 +8,8 @@
 import { signToken, verifyToken } from "./crypto.js";
 import { sendEmail } from "./email.js";
 import { confirmSubscriber, removeSubscriber } from "./store.js";
+import { checkSubscribeIpLimit, checkSubscribeAddressLimit, checkDailyCap } from "./ratelimit.js";
+import { verifyTurnstile } from "./turnstile.js";
 
 const CONFIRM_TTL_MS = 48 * 60 * 60 * 1000; // confirm links expire after 48 hours
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -35,7 +37,7 @@ function withCors(res, origin) {
 async function handleSubscribe(req, env) {
   const body = await req.json().catch(() => null);
   if (!body) return json({ error: "bad request" }, 400);
-  const { email, name, interests, hp } = body;
+  const { email, name, interests, hp, turnstileToken } = body;
 
   // Honeypot: real visitors never see or fill this field. A non-empty
   // value means a bot filled every field it could find. Pretend success
@@ -45,6 +47,43 @@ async function handleSubscribe(req, env) {
   if (typeof email !== "string" || !EMAIL_RE.test(email.trim())) {
     return json({ error: "invalid email" }, 400);
   }
+  const cleanEmail = email.trim().toLowerCase();
+
+  // Two independent abuse limits, checked before the (comparatively
+  // expensive) Turnstile verification call so a hammering IP doesn't
+  // cost a round trip to Cloudflare for every attempt. Per-IP alone
+  // wouldn't catch a distributed flood aimed at one address — see
+  // worker/src/ratelimit.js for why both exist.
+  const ip = req.headers.get("CF-Connecting-IP") || "unknown";
+  if (!(await checkSubscribeIpLimit(env, ip))) {
+    return json({ error: "too many requests — try again later" }, 429);
+  }
+
+  // Proves a human (not a script holding a stolen or fabricated token)
+  // submitted this request. Required — a request with no token or an
+  // env with no secret configured both fail closed, not open.
+  const humanVerified = env.TURNSTILE_SECRET_KEY
+    ? await verifyTurnstile(turnstileToken, env.TURNSTILE_SECRET_KEY, ip)
+    : false;
+  if (!humanVerified) {
+    return json({ error: "verification failed — please try again" }, 400);
+  }
+
+  // Only a verified-human request can spend this budget, so a bot can't
+  // burn a real person's one-per-hour slot with garbage submissions
+  // that were never going to pass Turnstile anyway.
+  if (!(await checkSubscribeAddressLimit(env, cleanEmail))) {
+    return json({ error: "too many requests — try again later" }, 429);
+  }
+
+  // A blunt circuit breaker on total sends, independent of who's
+  // asking — bounds the worst case if the limits above are somehow
+  // outrun, rather than leaving daily volume unbounded.
+  if (!(await checkDailyCap(env))) {
+    console.error("daily subscribe cap reached — refusing further sends until it resets");
+    return json({ error: "signups are temporarily paused — please try again tomorrow" }, 503);
+  }
+
   const cleanInterests = Array.isArray(interests)
     ? interests.filter((i) => typeof i === "string").slice(0, MAX_INTERESTS)
     : [];
