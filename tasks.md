@@ -266,6 +266,12 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 
 *(Source: `Web Design Spec — v0.3 refinement pass`, supplied directly by the author. IDs below are `WD-nn`, kept identical to the spec's own `§3.n` numbering so the two can be read side by side — same convention Phase 6 uses for the UX audit. The spec is unusually good: it states build architecture before changes, gives exact anchors, specifies verification per item, and carries its own §6 correcting three claims in the review it derives from. Most of it can be implemented as written.)*
 
+**Open questions for the author, as of PR #26 (2026-08-11):** FLAG-07, WD-05, WD-17, and WD-28 are resolved and shipped in that PR. Still waiting on a decision, in priority order:
+1. **WD-12** — approve tagging Freeman (*The Tyranny of Structurelessness*), Roberts (*Torn Apart*), and Bridges (*The Poverty of Privacy Rights*) alongside the already-confirmed Barker/Alfred entry? (§9.4 below has each entry's textual basis.)
+2. **WD-10b** — copy for the "no fourteenth principle yet" filler card on Learn (a draft exists, needs approval or a rewrite).
+3. **WD-15 / WD-16** — how to proceed with the palette rollout: author compiles the built/unbuilt call per item directly, or wants a draft classification to react to first (bigger lift than WD-12 — 13+ fault-list entries, 11 resource categories, plus Practise and Archive's own items).
+4. **WD-08b, WD-18, WD-25** — lower-stakes sequencing calls, detailed in §9.2/9.4/9.6 below.
+
 **The spec's stated source document is not in this repository.** It cites `docs/audits/design-review-2026-08-10.md` as the document that argues *why*; `docs/audits/` contains only `ux-audit-2026-08-08.html`. Every claim below was therefore checked against the shipped code directly rather than against that review. Where the spec's §6 corrects the review, those corrections are taken on trust as internally consistent — but the review's own reasoning cannot be consulted when a judgement call comes up. **Ask the author to add the review to `docs/audits/`** before working the editorial items (WD-12, WD-15, WD-17), which explicitly defer to its argument.
 
 ### What was verified before planning, and what held
@@ -282,7 +288,9 @@ One anchor is off by one: the Archive `$rule` assignment is at `archive.html:151
 
 ### FLAG-07 — §3.5 "one ochre" is wrong in both directions, and its verify step would destroy the Invitation page
 
-**This is the one item in the spec that must not be implemented as written.** `[DECISION]`
+**Resolved by the author, 2026-08-11. Home's six door kickers and Archive's `start` register are now `#6B4C12`; Invitation's `#7D5915` is confirmed as a deliberate page-level exception and left untouched everywhere, including the `:61` focus ring this flag left open. Documented in `docs/design-palette.md` under "Deliberate exceptions." Shipped.**
+
+*(Original flag, kept for the record — this is the one item in the spec that must not be implemented as written.)* `[DECISION]`
 
 §3.5 says to replace `#7D5915` with `#6B4C12` "at all occurrences," suggests `grep -rn "7D5915" index.html Home.dc.html hugo/layouts/` to find them, and sets the success condition as `grep -rn "7D5915" .` returning nothing outside `docs/`. All three are wrong.
 
@@ -356,7 +364,7 @@ Mechanical, individually revertible, verifiable in this environment. Suggested a
 | ID | Task | Tags | Why not in 9.1 |
 |---|---|---|---|
 | **WD-08b** | Generated `::before` arrows travel — requires `display:inline-block` on the pseudo-element. | `[DEV]` | The spec flags this itself: changing the pseudo from `inline` to `inline-block` changes wrapping behaviour between the arrow and the following word. Ship 9.1, then diff screenshots of Learn's jump menu and Archive's contents nav specifically. |
-| **WD-05** | One ochre. | `[DECISION]` | **Blocked on FLAG-07.** Do not run the spec's grep-and-replace. |
+| ~~**WD-05**~~ | ~~One ochre.~~ **Done, 2026-08-11 — resolved via FLAG-07, see above.** Home's door kickers and Archive's `start` register are `#6B4C12`; Invitation is an untouched, documented exception. | `[DECISION]` | — |
 
 ### 9.3 — Tier B: structural, buildable, sequenced
 
@@ -374,10 +382,10 @@ Each of these is a claim about content, not a rendering decision. The spec says 
 
 | ID | Task | Tags | Blocked on |
 |---|---|---|---|
-| **WD-12** | Archive: retire link-blue as a category colour; add a rust `counter` register for texts that cut against the framework. **Change the label.** | `[DECISION]` `[COPY]` | Which entries qualify — the spec names Barker (Alfred's chapter) as clearest and estimates 2–4 others. **But `⚑ argues against this site` is a category error and should not ship.** Alfred's chapter is from 2005; he is arguing that sovereignty is inseparable from colonial frameworks, not against a website he never saw. On a site whose citation ethic is not putting claims in people's mouths, that label attributes an intention its author cannot have had — and it contradicts the site's own prose, which already gets this right on Learn: "That argument is on the shelf… That is a reason, not a refutation." **`⚑ we have no answer to this` locates the claim where it belongs — on the framework, not on the author.** Same colour, same doubling, correct speaker. |
+| **WD-12** | Archive: retire link-blue as a category colour **(done, see WD-05/FLAG-07 above — the default-register half of this shipped there)**; add a rust `counter` register for texts that cut against the framework. | `[DECISION]` `[COPY]` | **Label approved by the author, 2026-08-11: `⚑ we have no answer to this`.** Which entries qualify is still open — a candidate shortlist (Barker/Alfred confirmed, plus Freeman's *The Tyranny of Structurelessness*, Roberts' *Torn Apart*, and Bridges' *The Poverty of Privacy Rights*, each with its textual basis) went to the author for a yes/no on 2026-08-11. Tagging and the filter-chip wiring wait on that. |
 | **WD-15** | Palette rollout to Behind the Scenes, Practise, Resources, Archive. Manifesto explicitly excluded. **Carve-out required on Practise — see below.** | `[DECISION]` | Author confirmation of each item's built/unbuilt status — the spec is explicit that this must not be inferred from the data file. Supersedes the Practise half of FLAG-07. |
 | **WD-16** | Archive: order the seven access-state chips as the gradient they describe; ochre "named, not built" treatment. | `[DEV]` `[COPY]` | Part of WD-15's Archive row; needs the doubled wording. |
-| **WD-17** | Home: register-code the six doors. | `[DECISION]` | The spec's own risk note: the homepage thesis is "six doors, none ranked," and a register could read as hierarchy. Greyscale check is the gate. Fallback is ship the hover rule, skip the recolour. **Settle WD-28 first** — this change spends design effort hardening "six equal doors" while Invitation still calls itself "a second way in." |
+| ~~**WD-17**~~ | ~~Home: register-code the six doors.~~ **Done, 2026-08-11.** Author overrode the ranking caution directly ("I don't think the color indicates ranking"): teal on Manifesto/Learn, green on Practise/Archive, ochre on Contribute/dispatch, plus a hover/focus top-edge accent per register (`.door-teal`, `.door-holds`, `.door-ask` in `index.html`). Greyscale-emulation screenshot taken post-ship to confirm the six cards still read as evenly weighted — they do. | `[DECISION]` | — |
 | **WD-18** | Decide the `--sans` stack. **Blocked on FLAG-08 — sequence after RS-024.** | `[DECISION]` `[VERIFY]` | **Cannot be verified in this environment** — needs before/after screenshots of display type on Windows and Linux, and this session has neither. Invisible on macOS. Whatever is chosen, record it as a decision; today it is an accident of stack order. |
 
 **The Practise carve-out WD-15 needs.** §3.15 says "safety gate is rust — **and nothing else on the page is**," and treats every other rust on Practise as leakage to be cleaned up. Two of them are: `practise/index.html:501` is a tool answer-state (`["no", "no", "#8B3A2F"]`) and `:591–592` is the reset-armed state. But `:199–200` is not leakage — it is the export/save warning, rust-bordered with a rust `<strong>`, reading *"Saving this makes it findable. Nothing you type leaves your browser, but a downloaded file or a printout is an object in the world, and objects can be found."* That is a second safety surface, and the file's own comment at `:458` says the export would otherwise carry "risk as an export, without the warning that makes it a choice." **Enforcing rust exclusivity as written would demote the one warning that makes exporting an informed act.** Rust on Practise should mean *safety surface*, of which there are two, not *the safety gate*, of which there is one.
@@ -390,7 +398,7 @@ Each of these is a claim about content, not a rendering decision. The spec says 
 | ~~**WD-20**~~ | ~~Scroll-progress hairline on Learn's jump bar.~~ **Done, see `completed.tasks.md`. Also found and fixed a pre-existing, site-wide reduced-motion gap while verifying it.** | `[DEV]` | — |
 | ~~**WD-21**~~ | ~~Native `<details>` disclosure easing.~~ **Done, see `completed.tasks.md`.** | `[DEV]` | — |
 | ~~**WD-22**~~ | ~~The palimpsest change log.~~ **Turned out to already exist, site-wide, for every entry — not new work. See `completed.tasks.md`.** | `[COPY]` | — |
-| ~~**WD-23**~~ | ~~The two-row divider.~~ **Done, see `completed.tasks.md`.** | `[DEV]` | — |
+| **WD-23** | The two-row divider. | `[DEV]` | Shipped 2026-08-11, then removed the same day: `48f0a81` parked all Two Row Wampum content (Learn's `#treaty` section, which `.rule-two` introduced) to `docs/parked/two-row-wampum/` by direct author instruction. `completed.tasks.md` still describes the shipped version; nothing currently renders it. Re-open when/if the wampum content returns from parking — the CSS is preserved in the parked files, not lost. |
 | ~~**WD-24**~~ | ~~Even the question-band tops on Learn.~~ **Done, see `completed.tasks.md`.** | `[DEV]` | — |
 
 ### 9.5b — Live defects found while planning this phase
@@ -400,7 +408,7 @@ Neither is caused by the design spec. Both were found while checking its claims,
 | ID | Task | Tags | Effort | Detail |
 |---|---|---|---|---|
 | ~~**WD-27**~~ | ~~The colophon's published page-weight range is stale again.~~ **Done, see `completed.tasks.md`.** | `[DEV]` `[VERIFY]` | XS | — |
-| **WD-28** | The "second way in" framing is now orphaned. | `[COPY]` `[DECISION]` | XS | Invitation's kicker still reads "A second way in · about 4 minutes," but the passages that set up the pairing are gone — the "Two ways in. Neither is the introduction to the other." block was removed from Invitation, and Home's "a second way in, running alongside the manifesto below" paragraph was removed at the same time (`grep` confirms zero occurrences in `index.html`). So Invitation calls itself the second of two while nothing establishes the first, and Home now presents six equal doors instead. **Caused by this session's own content removals, not by the spec.** Either restore a pairing somewhere or change the kicker; WD-17 should not harden "six unranked doors" until this is settled. |
+| ~~**WD-28**~~ | ~~The "second way in" framing is now orphaned.~~ **Done, 2026-08-11.** Author chose to drop the pairing rather than restore it: Invitation's kicker is now "A warmer register · about 4 minutes" — ties to the existing subtitle ("What relational sovereignty sounds like:") instead of referencing a first-of-two that no longer exists on Home. | `[COPY]` `[DECISION]` | XS | — |
 
 ### 9.6 — Follow-ups the spec scopes out but names
 

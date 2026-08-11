@@ -96,6 +96,16 @@
   }
   *{box-sizing:border-box}
   h1,h2,h3{text-wrap:balance} /* WD-03 */
+  /* WD-17: the six doors' kicker colour already carries the register
+     claim (teal = asserted, green = built and real, ochre = asks
+     something of you); this adds a matching top edge on hover/focus so
+     the register reads before the reader even reaches the words. Colour
+     is not the sole carrier here — the kicker text underneath still
+     says what each door is regardless of hue or contact with a pointer. */
+  .door{border-top:2px solid transparent;transition:border-color .14s ease,background-color .14s ease}
+  .door-teal:hover,.door-teal:focus-visible{border-top-color:var(--teal)}
+  .door-holds:hover,.door-holds:focus-visible{border-top-color:var(--holds)}
+  .door-ask:hover,.door-ask:focus-visible{border-top-color:var(--ask)}
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
   /* #2B4C9B is 1.88:1 on the #0F2A2E teal ground — effectively invisible.
      Ochre is 6.42:1 there, and "a question being put to you" is exactly
@@ -160,33 +170,33 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <h2 style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.8rem;font-weight:400">Where to begin — six doors, none ranked, including the one that asks something of you</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:#C9C6BA;border:1px solid #C9C6BA">
-      <a href="/manifesto/" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#7D5915">the threshold · 9 min</span>
+      <a href="/manifesto/" class="door door-teal" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--teal)">the threshold · 9 min</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Read the manifesto</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">Sixteen theses and a refusal. Printable, forkable, meant to be read aloud.</p>
       </a>
-      <a href="/learn/" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#7D5915">the idea · 17 min</span>
+      <a href="/learn/" class="door door-teal" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--teal)">the idea · 17 min</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Learn the thirteen principles</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">What relational sovereignty is, what it is not, and the question each principle asks of you.</p>
       </a>
-      <a href="/practise/" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#7D5915">the workshop · 20 min</span>
+      <a href="/practise/" class="door door-holds" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--holds)">the workshop · 20 min</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Examine a relationship</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">The Consent Domains Map, working now in your browser. Nothing you enter leaves this page, and the crawler is not allowed in.</p>
       </a>
-      <a href="/archive/" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#7D5915">the library · 12 min</span>
+      <a href="/archive/" class="door door-holds" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--holds)">the library · 12 min</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Enter the archive</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">Thirty-odd texts, attributed to their authors and nations, each linking away from here to the people who wrote them.</p>
       </a>
-      <a href="/contribute/" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#7D5915">the commons · 5 min</span>
+      <a href="/contribute/" class="door door-ask" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ask)">the commons · 5 min</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Contribute something</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">A story, a tool, a question, an artwork — on terms you set, and can withdraw.</p>
       </a>
-      <a href="#dispatch" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#7D5915">an ask, stated as one</span>
+      <a href="#dispatch" class="door door-ask" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
+        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ask)">an ask, stated as one</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Join the dispatch</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">This one wants something from you: an address. Occasional letters, no schedule promised, no tracking, one click to leave.</p>
       </a>
