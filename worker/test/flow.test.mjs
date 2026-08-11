@@ -5,7 +5,7 @@
 // Run with: node worker/test/flow.test.mjs
 import assert from "node:assert/strict";
 import worker from "../src/index.js";
-import { decryptJSON } from "../src/crypto.js";
+import { decryptJSON, verifyToken } from "../src/crypto.js";
 
 // --- fake GitHub contents API (one file, in memory) ---
 let fakeRepoFile = { content: null, sha: null };
@@ -14,7 +14,7 @@ let commitCount = 0;
 // --- fake Resend: capture the last email "sent" ---
 let lastEmail = null;
 
-// --- fake in-memory KV, standing in for the RATE_LIMIT binding ---
+// --- fake in-memory KV, standing in for the WORKER_KV binding ---
 function fakeKV() {
   const store = new Map();
   return {
@@ -77,11 +77,28 @@ const env = {
   TOKEN_SECRET: "fake-token-secret",
   TURNSTILE_SECRET_KEY: "fake-turnstile-secret",
   ENCRYPTION_KEY: Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString("base64"),
-  RATE_LIMIT: fakeKV(),
+  WORKER_KV: fakeKV(),
 };
 
 function extractLink(text) {
   return text.match(/https:\/\/\S+/)[0];
+}
+
+// Confirm/unsubscribe are GET-to-show / POST-to-act (SEC-02.3) — GET
+// alone (what a link-prefetching scanner issues) must never confirm or
+// remove anyone. This simulates the actual button click: a form POST
+// with the token in the body, not the URL, same as the real HTML form.
+async function postConfirmOrUnsubscribe(link) {
+  const url = new URL(link);
+  const token = url.searchParams.get("token");
+  return worker.fetch(
+    new Request(`${url.origin}${url.pathname}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `token=${encodeURIComponent(token)}`,
+    }),
+    env
+  );
 }
 
 // Each call gets its own IP unless one is passed — this file's own
@@ -122,40 +139,70 @@ async function run() {
   assert.equal(lastEmail, null, "honeypot signups should never trigger an email");
   console.log("ok: honeypot-filled submissions are silently dropped");
 
-  // 3. Confirm — this is what should actually add the subscriber.
+  // 2b. The confirm link's token itself must not decode to the address,
+  //     name, or interests — only an opaque id and a timestamp (SEC-02.1).
+  //     A link-scanning product, a mail provider's logs, or Resend's own
+  //     logs seeing this URL learn nothing about who's confirming or why.
+  const confirmToken = new URL(confirmLink).searchParams.get("token");
+  const confirmPayload = await verifyToken(confirmToken, env.TOKEN_SECRET);
+  assert.deepEqual(Object.keys(confirmPayload).sort(), ["id", "t"], "confirm token must carry only an opaque id and timestamp");
+  console.log("ok: the confirm link's token carries no address, name, or interests");
+
+  // 3. GET on the confirm link must NOT add the subscriber — a
+  //    link-prefetching scanner only ever issues GET, and this is the
+  //    property SEC-02.3 exists to guarantee. It should show a page
+  //    with a confirm button instead.
   lastEmail = null;
-  const confirmRes = await worker.fetch(new Request(confirmLink, { method: "GET" }), env);
+  const showRes = await worker.fetch(new Request(confirmLink, { method: "GET" }), env);
+  assert.equal(showRes.status, 200);
+  assert.equal(commitCount, 0, "GET on the confirm link must never write to storage");
+  assert.equal(lastEmail, null, "GET on the confirm link must never send the welcome email");
+  const showBody = await showRes.text();
+  assert.ok(showBody.includes("<form") && showBody.includes("Confirm subscription"), "GET should show a confirm button, not act");
+  console.log("ok: GET on the confirm link shows a button and does nothing else");
+
+  // 3b. POST — the button's actual target — is what adds the subscriber.
+  lastEmail = null;
+  const confirmRes = await postConfirmOrUnsubscribe(confirmLink);
   assert.equal(confirmRes.status, 200);
   assert.equal(commitCount, 1, "confirming should write to storage exactly once");
   assert.ok((await confirmRes.text()).includes("confirmed"));
   assert.ok(lastEmail, "a welcome/unsubscribe-link email should follow confirmation");
   const unsubLink = extractLink(lastEmail.text);
-  console.log("ok: confirm link adds the subscriber and writes the encrypted store");
+  console.log("ok: POSTing the confirm button adds the subscriber and writes the encrypted store");
 
   // 4. The stored file should be genuinely encrypted (no plaintext email visible).
   assert.equal(Buffer.from(fakeRepoFile.content, "base64").toString().includes("person@example.com"), false);
   console.log("ok: the committed file does not contain the plaintext email");
 
   // 5. A second confirm with the same token should be a harmless no-op (no second commit).
-  await worker.fetch(new Request(confirmLink, { method: "GET" }), env);
+  await postConfirmOrUnsubscribe(confirmLink);
   assert.equal(commitCount, 1, "re-confirming an already-confirmed subscriber should not write again");
   console.log("ok: re-confirming is idempotent");
 
-  // 6. Unsubscribe — should remove them and write once more.
-  const unsubRes = await worker.fetch(new Request(unsubLink, { method: "GET" }), env);
+  // 6. Unsubscribe — GET shows the "leave" button, POST is what removes them.
+  const unsubShowRes = await worker.fetch(new Request(unsubLink, { method: "GET" }), env);
+  assert.equal(unsubShowRes.status, 200);
+  assert.equal(commitCount, 1, "GET on the unsubscribe link must never write to storage");
+  assert.ok((await unsubShowRes.text()).includes("Leave the dispatch"));
+
+  const unsubRes = await postConfirmOrUnsubscribe(unsubLink);
   assert.equal(unsubRes.status, 200);
   assert.equal(commitCount, 2, "unsubscribing should write to storage exactly once more");
   assert.ok((await unsubRes.text()).includes("removed"));
-  console.log("ok: unsubscribe link removes the subscriber");
+  console.log("ok: unsubscribe link shows a button on GET; POST removes the subscriber");
 
-  // 7. An expired-looking / forged token should be rejected outright.
-  const badRes = await worker.fetch(
+  // 7. An expired-looking / forged token should be rejected outright, on
+  //    both GET (show) and POST (act).
+  const badShowRes = await worker.fetch(
     new Request("https://worker.example/api/confirm?token=not.real", { method: "GET" }),
     env
   );
-  assert.equal(badRes.status, 400);
-  assert.equal(commitCount, 2, "a bad token must never touch storage");
-  console.log("ok: invalid confirm tokens are rejected without touching storage");
+  assert.equal(badShowRes.status, 400);
+  const badActRes = await postConfirmOrUnsubscribe("https://worker.example/api/confirm?token=not.real");
+  assert.equal(badActRes.status, 400);
+  assert.equal(commitCount, 2, "a bad token must never touch storage, on GET or POST");
+  console.log("ok: invalid confirm tokens are rejected without touching storage, on GET or POST");
 
   // 8. A chosen name (or pseudonym) survives the round trip and is stored,
   //    while the interests picked alongside it stay aggregate-only — the
@@ -165,7 +212,7 @@ async function run() {
     subscribeRequest("Named@Example.com", ["I'm looking for support and resources"], "", "a pseudonym"),
     env
   );
-  await worker.fetch(new Request(extractLink(lastEmail.text), { method: "GET" }), env);
+  await postConfirmOrUnsubscribe(extractLink(lastEmail.text));
   const stored = await decryptJSON(
     Buffer.from(fakeRepoFile.content, "base64").toString(),
     env.ENCRYPTION_KEY

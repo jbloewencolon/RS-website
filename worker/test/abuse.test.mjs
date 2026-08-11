@@ -49,7 +49,7 @@ function baseEnv(kv) {
     TOKEN_SECRET: "fake-token-secret",
     TURNSTILE_SECRET_KEY: "fake-turnstile-secret",
     ENCRYPTION_KEY: Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString("base64"),
-    RATE_LIMIT: kv,
+    WORKER_KV: kv,
   };
 }
 
@@ -172,17 +172,35 @@ async function run() {
     console.log("ok: honeypot submissions bypass the abuse controls entirely, as before");
   }
 
-  // 7. If RATE_LIMIT isn't bound (setup incomplete), subscribing still
-  //    works rather than breaking over an infra step nobody's finished —
-  //    the limits fail open, not the endpoint itself.
+  // 7. WORKER_KV is now load-bearing, not just a hardening extra — it's
+  //    where the pending signup lives between "link sent" and "link
+  //    confirmed" (SEC-02.1), and there's no fallback path left that
+  //    puts that data back in the link. So unlike the rate-limit checks
+  //    below (which still fail open on their own), the endpoint as a
+  //    whole must now refuse cleanly with no WORKER_KV bound, not fall
+  //    back to the old, less private behaviour.
   {
     const env = baseEnv(undefined);
-    delete env.RATE_LIMIT;
+    delete env.WORKER_KV;
     lastEmail = null;
     const res = await worker.fetch(subscribeRequest("noKV@example.com", "198.51.100.50"), env);
-    assert.equal(res.status, 200, "subscribing should still work with no RATE_LIMIT KV bound");
-    assert.ok(lastEmail);
-    console.log("ok: a missing RATE_LIMIT binding fails open rather than breaking signups");
+    assert.equal(res.status, 503, "subscribing must refuse cleanly with no WORKER_KV bound, not silently regress");
+    assert.equal(lastEmail, null);
+    console.log("ok: subscribing refuses cleanly with no WORKER_KV bound, rather than falling back to the old link-carries-everything design");
+  }
+
+  // 7b. The rate-limit functions themselves still fail open when called
+  //     directly (unreachable via the full endpoint now, per #7 above,
+  //     but exercised here at the module level so ratelimit.js's own
+  //     documented behaviour — "don't break signups over an unfinished
+  //     infra step" — stays proven, not just asserted in a comment).
+  {
+    const { checkSubscribeIpLimit, checkSubscribeAddressLimit, checkDailyCap } = await import("../src/ratelimit.js");
+    const env = {};
+    assert.equal(await checkSubscribeIpLimit(env, "203.0.113.99"), true);
+    assert.equal(await checkSubscribeAddressLimit(env, "someone@example.com"), true);
+    assert.equal(await checkDailyCap(env), true);
+    console.log("ok: ratelimit.js's own checks fail open in isolation when WORKER_KV isn't bound");
   }
 
   console.log("\nAll abuse-control tests passed.");
