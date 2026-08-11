@@ -239,7 +239,13 @@
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:.6rem 0 1.4rem">{{ .note }}</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem">
         {{ range .items }}
-        {{ $rule := "#2B4C9B" }}
+        {{/* WD-12: teal, not the site's #2B4C9B hyperlink blue, for the
+             default register. Blue means "this is a link" on every page,
+             and each of these cards contains a real one — the same hue
+             doing two jobs inside one card blurred the site's own
+             semantics. Teal is the correct claim here: these are the
+             texts the framework asserts as its foundations. */}}
+        {{ $rule := "#0F2A2E" }}
         {{ if in .tags "counter" }}{{ $rule = "#8B3A2F" }}{{ else if in .tags "start" }}{{ $rule = "#6B4C12" }}{{ else if in .tags "free" }}{{ $rule = "#366943" }}{{ end }}
         <article data-tags="{{ delimit .tags " " }}" id="entry-{{ .title | anchorize }}" style="border-top:2px solid {{ $rule }};padding-top:.9rem;scroll-margin-top:6rem">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ $rule }};margin:0 0 .5rem">{{ if in .tags "counter" }}⚑ we have no answer to this · {{ else if in .tags "start" }}★ a first route · {{ end }}{{ .use }}</p>
@@ -283,8 +289,15 @@
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1.2rem;max-width:24ch">Absence does not mean the archive is incomplete.</h2>
     <p style="max-width:54ch;margin:0 0 1.8rem;color:#3C3E38">Most archives assume more access is always better. This one will hold seven access states, with consent as a metadata field rather than an afterthought. Sometimes withholding is part of ethical preservation. None of it is built yet, and the model it will follow already exists — <a href="https://mukurtu.org">Mukurtu</a>, <a href="https://localcontexts.org">Local Contexts</a>, <a href="https://www.gida-global.org/care">CARE</a>.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.6rem;max-width:1000px">
+      {{/* WD-16: the ochre "named, not built" register, and a dashed edge
+           rather than the solid one the real filter chips upstream use.
+           None of these seven states is implemented — the paragraph above
+           says so in words, which is what keeps this from being carried by
+           colour alone, and the dashed border repeats it in a form that
+           survives greyscale. The failure mode this guards against is a
+           reader mistaking them for live controls and clicking. */}}
       {{ range hugo.Data.archive.accessStates }}
-      <div style="border:1px solid #C9C6BA;padding:.8rem .9rem;border-radius:2px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5;color:#585B4F">{{ . }}</div>
+      <div style="border:1px dashed #DB9E2A;padding:.8rem .9rem;border-radius:2px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5;color:#6B4C12">{{ . }}</div>
       {{ end }}
     </div>
   </div>
