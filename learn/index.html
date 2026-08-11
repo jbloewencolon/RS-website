@@ -47,7 +47,10 @@
   a,button,summary,[data-filter],nav[aria-label="Contents"] a,.card-title{
     transition:color .14s ease,background-color .14s ease,border-color .14s ease
   }
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none}
+   
+  a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none;display:inline-block;transition:transform .14s ease}
+  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before,
+  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):focus-visible::before{transform:translateX(2px)}
   nav[aria-label="Contents"] a{border:1px solid #C9C6BA;border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:#585B4F;display:inline-flex;align-items:center;min-height:44px}
   nav[aria-label="Contents"] a:hover{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
   nav[aria-label="Contents"] a::before{content:none!important}
@@ -143,13 +146,17 @@
   [data-open-all]:hover{border-color:var(--holds);background:var(--holds-fill);color:var(--holds)}
 
    
-  .principles{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
-  .principles>li{background:var(--paper);padding:1.5rem 1.5rem 0;display:flex;flex-direction:column}
+  .principles{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0;border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+  .principles>li{background:var(--paper);border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:1.5rem 1.5rem 0;display:flex;flex-direction:column}
   .p-n{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;font-weight:500;color:#DDE4DC;background:var(--teal);display:inline-flex;align-items:center;justify-content:center;width:2.1rem;height:2.1rem;border-radius:2px;margin:0 0 .75rem}
   .p-t{font-family:var(--sans);font-weight:700;font-size:1.28rem;line-height:1.1;letter-spacing:-.02em;margin:0 0 .5rem}
   .p-b{margin:0 0 1.2rem;font-size:16px;line-height:1.55;color:var(--ink-2);flex:1 1 auto}
    
   .p-q{margin:0 -1.5rem;padding:.85rem 1.5rem;background:var(--ask-fill);border-top:1px solid var(--ask-edge);font-family:var(--mono);font-size:12.5px;line-height:1.5;color:var(--ask);min-height:4.1rem;display:flex;align-items:center}
+   
+  .p-open{background:var(--ask-fill)}
+  .p-n-open{background:none;border:1px dashed var(--ask-edge);color:var(--ask)}
+  .p-open .p-q a{color:inherit}
 
    
    
@@ -454,6 +461,12 @@
         <p class="p-q">Who relieves this person, and what happens if no one does?</p>
       </li>
       
+      <li class="p-open">
+        <span class="p-n p-n-open" aria-hidden="true">14</span>
+        <h3 class="p-t">There is no fourteenth principle yet.</h3>
+        <p class="p-b">Thirteen is where the drafting stopped, not where the thinking did. What is missing is listed as missing rather than implied by a gap.</p>
+        <p class="p-q"><a href="/behind-the-scenes/#roadmap">See what is named but not written</a></p>
+      </li>
     </ol>
   </div>
 </section>

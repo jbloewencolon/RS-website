@@ -18,6 +18,8 @@ filters:
     label: "articles"
   - value: "toolkit"
     label: "toolkits"
+  - value: "counter"
+    label: "we have no answer to this"
 
 groups:
   - title: "Relational sovereignty & Indigenous relational freedom"
@@ -67,7 +69,7 @@ groups:
         linkLabel: "read on arXiv"
       - title: "Sovereignty Matters: Locations of Contestation and Possibility in Indigenous Struggles for Self-Determination"
         by: "Joanne Barker (Lenape), ed."
-        tags: ["book"]
+        tags: ["book", "counter"]
         why: "Barker traces sovereignty's European juridical and theological genealogy. Taiaiake Alfred's chapter argues the concept is inseparable from colonisation — the strongest case against this site's own master term, and it belongs here, not just cited from a distance."
         use: "edited collection"
         link: "https://www.nebraskapress.unl.edu/nebraska-paperback/9780803262515"
@@ -180,14 +182,14 @@ groups:
         linkLabel: "Oxford University Press"
       - title: "Torn Apart"
         by: "Dorothy Roberts"
-        tags: ["book"]
+        tags: ["book", "counter"]
         why: "The family policing system. Required reading against thesis 11: the demand that a household account for itself is already, for some families, the state's demand."
         use: "book"
         link: "https://www.hachettebookgroup.com/titles/dorothy-roberts/torn-apart/9781541675445/"
         linkLabel: "Basic Books"
       - title: "The Poverty of Privacy Rights"
         by: "Khiara M. Bridges"
-        tags: ["book"]
+        tags: ["book", "counter"]
         why: "Privacy is distributed unequally. Poor mothers are subject to state inquiry that wealthier families are shielded from — which is why \"no private empires\" cannot be stated without saying who may ask."
         use: "book"
         link: "https://www.sup.org/books/law/poverty-privacy-rights"
@@ -385,7 +387,7 @@ groups:
         linkLabel: "the authors' copy"
       - title: "The Tyranny of Structurelessness"
         by: "Jo Freeman"
-        tags: ["free"]
+        tags: ["free", "counter"]
         why: "Groups that abolish formal structure do not abolish hierarchy; they make it informal and harder to contest. The standing objection to \"no secret thrones\" as a principle without a procedure."
         use: "free"
         link: "https://www.jofreeman.com/joreen/tyranny.htm"
