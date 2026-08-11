@@ -27,11 +27,24 @@ Enter.
 - A free Cloudflare Turnstile widget — the small "verify you're human"
   check that now sits on both signup forms, so the endpoint can't be
   used to send mail to a stranger's address at scale.
-- A free Cloudflare KV namespace that holds nothing about anyone — just
-  short-lived counters ("3 attempts from this IP in the last hour") so
-  the endpoint can refuse to send once someone's clearly abusing it.
+- A free Cloudflare KV namespace with two jobs: short-lived counters
+  ("3 attempts from this IP in the last hour," so the endpoint can
+  refuse once someone's clearly abusing it) and holding a pending
+  signup for the ~48 hours between the confirmation email being sent
+  and its link being clicked, so that link itself never has to carry
+  the address or name in a readable form.
 - Five secret values, generated or issued once, that only you and this
   Worker will ever hold.
+
+Confirming and unsubscribing are both two steps now, not one: clicking
+the link in an email opens a page with a single button, and clicking
+that button is what actually confirms or removes you. This is
+deliberate — some email security scanners and antivirus products
+automatically open every link in an email body before a person ever
+sees it, which used to mean a scanner could silently confirm a
+signup, or silently unsubscribe someone, that no human ever clicked.
+The extra step closes that without adding an account, a survey, or a
+delay: still one link, still one click on the page it opens.
 
 ## Step 1 — Create a private repo just for the subscriber list
 
@@ -128,14 +141,17 @@ was already there.
    be added to the two forms; the Secret Key goes into `wrangler secret`
    in Step 9.
 
-## Step 7 — Create the rate-limit storage
+## Step 7 — Create the KV storage
 
-A small Cloudflare KV namespace holds nothing about anyone — just
-short-lived counters like "3 signup attempts from this IP in the last
-hour" — so the endpoint can refuse once someone's clearly abusing it.
+**This step is required, not optional** — unlike Turnstile, which the
+Worker can (loudly) run without, there's no fallback for this one: it's
+where a pending signup lives between the confirmation email being sent
+and its link being clicked, and without it the endpoint has nowhere
+safe to put that data, so it refuses rather than falling back to the
+old, less private design.
 
 ```
-npx wrangler kv namespace create RATE_LIMIT
+npx wrangler kv namespace create WORKER_KV
 ```
 
 This prints an `id`. Copy it — you'll paste it into `wrangler.toml` in
@@ -205,9 +221,12 @@ before this is live for real visitors.
 
 Once that's done, run the real end-to-end test from the live site: fill
 in the form, solve the Turnstile check, submit. You should get a
-confirmation email within a minute or two. Click the link — you should
-see "You're confirmed," and a second email with an unsubscribe link.
-Click that too, and confirm you get "You've been removed."
+confirmation email within a minute or two. Click the link — it opens a
+page with a single "Confirm subscription" button (this extra step is
+deliberate, see "What you'll end up with" above); click it and you
+should see "You're confirmed," and a second email with an unsubscribe
+link. Click that too, then click its "Leave the dispatch" button, and
+confirm you get "You've been removed."
 
 Check the private repo from Step 1 — you should now see a file called
 `subscribers.enc` appear (and then update after you unsubscribe). Open
@@ -230,7 +249,12 @@ That's the point.
 - **Adjust the rate limits**: the numbers (5 signups/hour per IP, 1/hour
   per address, 300 sends/day total) live as constants at the top of
   `src/ratelimit.js`, not in `wrangler.toml` — edit and redeploy.
-- **Rate limiting or Turnstile seems to be doing nothing**: check that
-  the `RATE_LIMIT` KV `id` and `TURNSTILE_SECRET_KEY` secret are both
-  actually set — `wrangler tail` will show a `console.error` naming
-  which one is missing rather than failing silently.
+- **Rate limiting or Turnstile seems to be doing nothing, or signups
+  refuse outright**: check that the `WORKER_KV` `id` and
+  `TURNSTILE_SECRET_KEY` secret are both actually set — `wrangler tail`
+  will show a `console.error` naming which one is missing rather than
+  failing silently. A missing `WORKER_KV` id refuses every signup
+  outright (Step 7 is required); a missing `TURNSTILE_SECRET_KEY` does
+  the same. Rate limiting alone degrading (no `WORKER_KV`) would fail
+  open instead, but since `WORKER_KV` is required for signups to work
+  at all now, that distinction rarely comes up in practice.

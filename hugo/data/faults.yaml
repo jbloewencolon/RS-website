@@ -20,6 +20,14 @@
 #   - "The contribution note goes nowhere yet" — resolved: the note field
 #     on Contribute now opens a pre-filled email to the project's inbox
 #     instead of a field nothing reads. See contribute/index.html.
+#
+# Retired 2026-08-11 (same day it was added — found and fixed within the
+# same security review, not carried open):
+#   - "The confirm link carries more than it should" — resolved: the
+#     pending signup (address, name, interests) now lives in short-lived
+#     KV storage, keyed by an opaque random id; the confirm link's signed
+#     token carries only that id and a timestamp. See
+#     worker/src/pending.js and the changelog's SEC-02.1 entry.
 - n: "01"
   title: "The server has no declared territory yet"
   body: "The site is hosted — GitHub Pages, live at this domain — but the most material fields in the colophon (server location, watershed) are blank for a different reason than this fault used to say: not because nothing exists yet, but because the current host doesn't disclose which facility it uses. Naming the actual machine's location and watershed, on a host that can name them, is a launch condition this project has not met, not an optional extra."
@@ -33,5 +41,5 @@
   title: "No clickjacking protection"
   body: "The CSP is delivered as a <meta> tag because the current host cannot set response headers — and frame-ancestors, the directive that would stop this site being framed inside someone else's page, is one of a small number the CSP specification refuses to honour outside a real header, on any browser, no matter how it's written. There is currently no way to close this gap without changing host. Same root cause as fault 01."
 - n: "05"
-  title: "The confirm link carries more than it should"
-  body: "Signing up sends a link containing the chosen name and interests, signed to prove it came from this site but not encrypted — readable by anything the link passes through on its way to being clicked: mail-provider logs, link-scanning security products, the transactional-email service's own logs. The subscriber store itself keeps interests aggregate-only and never attached to an address, by design; this link defeats that property everywhere outside the store file for the roughly 48 hours before it's clicked or expires. Fix in progress: move the pending signup into short-lived server-side storage and put only an opaque, meaningless id in the link itself."
+  title: "Nobody has decided what happens to a removed subscriber's history"
+  body: "Every write to the subscriber list is a git commit to a private repository. Removing someone updates the file at HEAD, but the prior encrypted version — the one that still listed them — stays in that repository's git history indefinitely, unless someone deliberately rewrites it. If the encryption key were ever compromised, the recoverable list would include people who left, against an unsubscribe email that told them they'd been removed. Three real options exist (periodically rewrite the store repo's history, migrate to storage where deletion is actually deletion, or keep this and say so plainly) and none has been chosen yet."

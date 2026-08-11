@@ -34,41 +34,41 @@ async function checkAndIncrement(kv, key, limit) {
   return true;
 }
 
-// `env.RATE_LIMIT` is a KV binding that must be created and wired in
+// `env.WORKER_KV` is a KV binding that must be created and wired in
 // wrangler.toml (see worker/README.md) — if it's missing, these checks
 // fail open rather than breaking signups over an infra step nobody's
 // finished yet. That's a real gap, not a silent one: it's logged so it
 // shows up in `wrangler tail` instead of just quietly doing nothing.
 export async function checkSubscribeIpLimit(env, ip) {
-  if (!env.RATE_LIMIT) {
-    console.error("RATE_LIMIT KV not bound — IP rate limiting is not active");
+  if (!env.WORKER_KV) {
+    console.error("WORKER_KV not bound — IP rate limiting is not active");
     return true;
   }
-  return checkAndIncrement(env.RATE_LIMIT, `rl:ip:${ip}`, IP_LIMIT);
+  return checkAndIncrement(env.WORKER_KV, `rl:ip:${ip}`, IP_LIMIT);
 }
 
 export async function checkSubscribeAddressLimit(env, email) {
-  if (!env.RATE_LIMIT) {
-    console.error("RATE_LIMIT KV not bound — per-address rate limiting is not active");
+  if (!env.WORKER_KV) {
+    console.error("WORKER_KV not bound — per-address rate limiting is not active");
     return true;
   }
-  return checkAndIncrement(env.RATE_LIMIT, `rl:addr:${email}`, ADDRESS_LIMIT);
+  return checkAndIncrement(env.WORKER_KV, `rl:addr:${email}`, ADDRESS_LIMIT);
 }
 
 // A blunt daily ceiling on total sends, independent of who's asking.
 // Its job is to convert an unbounded incident (bill, reputation) into a
 // bounded one if the two limits above are somehow outrun.
 export async function checkDailyCap(env) {
-  if (!env.RATE_LIMIT) {
-    console.error("RATE_LIMIT KV not bound — the daily send cap is not active");
+  if (!env.WORKER_KV) {
+    console.error("WORKER_KV not bound — the daily send cap is not active");
     return true;
   }
   const key = `rl:daily:${new Date().toISOString().slice(0, 10)}`;
-  const raw = await env.RATE_LIMIT.get(key);
+  const raw = await env.WORKER_KV.get(key);
   const count = raw ? parseInt(raw, 10) : 0;
   if (count >= DAILY_LIMIT) return false;
   // TTL a bit past 24h so a key created just before midnight UTC still
   // covers its whole day even with KV's propagation lag.
-  await env.RATE_LIMIT.put(key, String(count + 1), { expirationTtl: 60 * 60 * 26 });
+  await env.WORKER_KV.put(key, String(count + 1), { expirationTtl: 60 * 60 * 26 });
   return true;
 }

@@ -1,15 +1,32 @@
 // The whole dispatch signup flow in one small Worker:
 //   POST /api/subscribe    — honeypot + email check, sends a confirm link
-//   GET  /api/confirm      — verifies the link, adds the subscriber (this
-//                            step is what makes it double opt-in — nobody
-//                            is added just for filling in the form)
-//   GET  /api/unsubscribe  — verifies the link, removes the subscriber
-//                            immediately, no delay, no survey
+//   GET  /api/confirm      — shows a one-button confirm page; does NOT
+//                            add the subscriber (see the GET/POST split
+//                            note below)
+//   POST /api/confirm      — the button's actual target: adds the
+//                            subscriber. This is what makes it double
+//                            opt-in — nobody is added just for filling
+//                            in the form, or just for a link being
+//                            fetched.
+//   GET  /api/unsubscribe  — shows a one-button "leave" page
+//   POST /api/unsubscribe  — the button's actual target: removes the
+//                            subscriber immediately, no delay, no survey
+//
+// Confirm and unsubscribe are both GET-to-show / POST-to-act rather
+// than acting directly on GET. Mail-security scanners, corporate link
+// rewriters (Outlook Safe Links), and some antivirus/VPN products
+// prefetch every URL in an email body automatically — a bare
+// state-changing GET would let one of those silently confirm or
+// unsubscribe someone who never clicked anything. A prefetcher only
+// ever issues GET requests; it doesn't submit HTML forms. Still one
+// deliberate action for a real person — click the link, click the one
+// button on the page it opens — not an account, a survey, or a delay.
 import { signToken, verifyToken } from "./crypto.js";
 import { sendEmail } from "./email.js";
 import { confirmSubscriber, removeSubscriber } from "./store.js";
 import { checkSubscribeIpLimit, checkSubscribeAddressLimit, checkDailyCap } from "./ratelimit.js";
 import { verifyTurnstile } from "./turnstile.js";
+import { storePendingSignup, readPendingSignup } from "./pending.js";
 
 const CONFIRM_TTL_MS = 48 * 60 * 60 * 1000; // confirm links expire after 48 hours
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -25,6 +42,42 @@ function json(obj, status = 200) {
 
 function text(body, status = 200) {
   return new Response(body, { status, headers: { "Content-Type": "text/plain; charset=utf-8" } });
+}
+
+// A small, self-contained HTML page for the confirm/unsubscribe
+// interstitials — no external stylesheet, script, or font, matching
+// the rest of the site's zero-third-party-request posture even though
+// this is served from the Worker's own origin, not the main site.
+// noindex: these URLs are single-use capability links, not content.
+function htmlPage(title, bodyHtml, status = 200) {
+  return new Response(
+    `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>${title} — Relational Sovereignty</title>
+<style>
+body{font-family:Georgia,'Iowan Old Style',Palatino,serif;background:#F5F3EC;color:#191B18;max-width:34rem;margin:3.5rem auto;padding:0 1.5rem;line-height:1.5}
+button{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px;margin-top:1rem}
+p{font-size:16px}
+</style>
+</head>
+<body>
+${bodyHtml}
+</body>
+</html>`,
+    { status, headers: { "Content-Type": "text/html; charset=utf-8" } }
+  );
+}
+
+function invalidLinkPage(action) {
+  return htmlPage(
+    "Link expired",
+    `<p>This ${action} link is invalid or has expired.${action === "confirmation" ? " Please sign up again." : ""}</p>`,
+    400
+  );
 }
 
 function withCors(res, origin) {
@@ -48,6 +101,15 @@ async function handleSubscribe(req, env) {
     return json({ error: "invalid email" }, 400);
   }
   const cleanEmail = email.trim().toLowerCase();
+
+  // Required, not optional — see src/pending.js. There's no fallback
+  // path left to put the signup data in the link itself (that's the
+  // gap this fixes), so a missing binding fails the whole request
+  // rather than silently reverting to the less private old behaviour.
+  if (!env.WORKER_KV) {
+    console.error("WORKER_KV not bound — cannot store a pending signup, refusing rather than falling back to putting subscriber data in the link");
+    return json({ error: "signups are temporarily unavailable — please try again later" }, 503);
+  }
 
   // Two independent abuse limits, checked before the (comparatively
   // expensive) Turnstile verification call so a hammering IP doesn't
@@ -92,10 +154,13 @@ async function handleSubscribe(req, env) {
   // used to address a letter. Optional by design.
   const cleanName = typeof name === "string" ? name.trim().slice(0, MAX_NAME) : "";
 
-  const token = await signToken(
-    { e: email.trim().toLowerCase(), n: cleanName, i: cleanInterests, t: Date.now() },
-    env.TOKEN_SECRET
-  );
+  // The address, name, and interests live in KV now, not in the link —
+  // see src/pending.js. The token carries only an opaque id and a
+  // timestamp, so a confirm link reveals nothing about who's confirming
+  // or what they're interested in to anything it passes through on the
+  // way to being clicked.
+  const signupId = await storePendingSignup(env, { email: cleanEmail, name: cleanName, interests: cleanInterests });
+  const token = await signToken({ id: signupId, t: Date.now() }, env.TOKEN_SECRET);
   const confirmUrl = `${env.WORKER_URL}/api/confirm?token=${encodeURIComponent(token)}`;
 
   await sendEmail({
@@ -107,46 +172,98 @@ async function handleSubscribe(req, env) {
       "Someone (hopefully you) asked to join the Relational Sovereignty dispatch.\n\n" +
       `Confirm here:\n${confirmUrl}\n\n` +
       "This link expires in 48 hours. If this wasn't you, ignore this email — " +
-      "nothing happens until the link above is clicked.",
+      "nothing happens until that page's confirm button is clicked; opening the link alone does nothing.",
   });
 
   return json({ ok: true });
 }
 
-async function handleConfirm(req, env) {
+// Verifies the token and looks up the pending signup — shared by the
+// GET (show) and POST (act) confirm handlers so both apply the exact
+// same validity check. Read-only: never mutates anything, safe to call
+// from a GET a prefetcher might issue.
+async function resolveConfirmToken(req, env) {
   const url = new URL(req.url);
-  const token = url.searchParams.get("token");
+  const token = url.searchParams.get("token") || (await req.formData().catch(() => null))?.get("token");
   const payload = token ? await verifyToken(token, env.TOKEN_SECRET) : null;
-  if (!payload || typeof payload.e !== "string" || Date.now() - payload.t > CONFIRM_TTL_MS) {
-    return text("This confirmation link is invalid or has expired. Please sign up again.", 400);
+  if (!payload || typeof payload.id !== "string" || Date.now() - payload.t > CONFIRM_TTL_MS) {
+    return { token, pending: null };
   }
+  const pending = await readPendingSignup(env, payload.id);
+  return { token, pending };
+}
 
-  await confirmSubscriber(env, payload.e, payload.i, payload.n);
+// GET: shows the confirm button. Does not add the subscriber — see the
+// GET/POST split note at the top of this file for why.
+async function handleConfirmShow(req, env) {
+  const { token, pending } = await resolveConfirmToken(req, env);
+  if (!pending) return invalidLinkPage("confirmation");
+  return htmlPage(
+    "Confirm your subscription",
+    `<p>Confirm ${escapeHtml(pending.e)} for the Relational Sovereignty dispatch?</p>
+<form method="POST" action="/api/confirm">
+<input type="hidden" name="token" value="${escapeHtml(token)}">
+<button type="submit">Confirm subscription</button>
+</form>`
+  );
+}
 
-  const unsubToken = await signToken({ e: payload.e }, env.TOKEN_SECRET);
+// POST: the button's actual target. This is what makes it double
+// opt-in — nobody is added just for filling in the form on the site,
+// or just for this link being fetched by something other than a person.
+async function handleConfirmAct(req, env) {
+  const { pending } = await resolveConfirmToken(req, env);
+  if (!pending) return invalidLinkPage("confirmation");
+
+  await confirmSubscriber(env, pending.e, pending.i, pending.n);
+
+  const unsubToken = await signToken({ e: pending.e }, env.TOKEN_SECRET);
   const unsubUrl = `${env.WORKER_URL}/api/unsubscribe?token=${encodeURIComponent(unsubToken)}`;
   await sendEmail({
     apiKey: env.RESEND_API_KEY,
     from: env.FROM_EMAIL,
-    to: payload.e,
+    to: pending.e,
     subject: "You're on the list — Relational Sovereignty",
     text:
       "You're confirmed. You'll hear from us when there's something worth sending, and not before.\n\n" +
       `Leave any time, no questions asked: ${unsubUrl}`,
   });
 
-  return text("You're confirmed. You can close this tab.");
+  return htmlPage("You're confirmed", "<p>You're confirmed. You can close this tab.</p>");
 }
 
-async function handleUnsubscribe(req, env) {
+async function resolveUnsubscribeToken(req) {
   const url = new URL(req.url);
-  const token = url.searchParams.get("token");
+  const token = url.searchParams.get("token") || (await req.formData().catch(() => null))?.get("token");
+  return token || null;
+}
+
+// GET: shows the "leave" button. Does not remove the subscriber.
+async function handleUnsubscribeShow(req, env) {
+  const token = await resolveUnsubscribeToken(req);
   const payload = token ? await verifyToken(token, env.TOKEN_SECRET) : null;
-  if (!payload || typeof payload.e !== "string") {
-    return text("This unsubscribe link is invalid.", 400);
-  }
+  if (!payload || typeof payload.e !== "string") return invalidLinkPage("unsubscribe");
+  return htmlPage(
+    "Leave the dispatch",
+    `<p>Remove ${escapeHtml(payload.e)} from the Relational Sovereignty dispatch? Nothing further will be asked.</p>
+<form method="POST" action="/api/unsubscribe">
+<input type="hidden" name="token" value="${escapeHtml(token)}">
+<button type="submit">Leave the dispatch</button>
+</form>`
+  );
+}
+
+// POST: the button's actual target. Immediate, no delay, no survey.
+async function handleUnsubscribeAct(req, env) {
+  const token = await resolveUnsubscribeToken(req);
+  const payload = token ? await verifyToken(token, env.TOKEN_SECRET) : null;
+  if (!payload || typeof payload.e !== "string") return invalidLinkPage("unsubscribe");
   await removeSubscriber(env, payload.e);
-  return text("You've been removed. Nothing further will be sent.");
+  return htmlPage("You've been removed", "<p>You've been removed. Nothing further will be sent.</p>");
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
 export default {
@@ -164,10 +281,16 @@ export default {
         return withCors(await handleSubscribe(req, env), allowedOrigin);
       }
       if (url.pathname === "/api/confirm" && req.method === "GET") {
-        return await handleConfirm(req, env);
+        return await handleConfirmShow(req, env);
+      }
+      if (url.pathname === "/api/confirm" && req.method === "POST") {
+        return await handleConfirmAct(req, env);
       }
       if (url.pathname === "/api/unsubscribe" && req.method === "GET") {
-        return await handleUnsubscribe(req, env);
+        return await handleUnsubscribeShow(req, env);
+      }
+      if (url.pathname === "/api/unsubscribe" && req.method === "POST") {
+        return await handleUnsubscribeAct(req, env);
       }
       return text("not found", 404);
     } catch (err) {
