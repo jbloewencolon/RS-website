@@ -15,7 +15,7 @@ STORE_BRANCH = "main"
 # Turnstile's site key is meant to be public — it's shipped to every
 # browser that loads the form. Only the matching TURNSTILE_SECRET_KEY
 # (below, via `wrangler secret put`) needs to stay private.
-TURNSTILE_SITE_KEY = "CHANGE_ME_after_registering_a_turnstile_widget"
+TURNSTILE_SITE_KEY = "0x4AAAAAAEMpChSeguKsGevc"
 
 # Two jobs, one namespace, distinguished by key prefix — the per-IP,
 # per-address, and daily-cap limits in src/ratelimit.js (`rl:...` keys,
@@ -27,4 +27,4 @@ TURNSTILE_SITE_KEY = "CHANGE_ME_after_registering_a_turnstile_widget"
 # then paste the id it prints below.
 [[kv_namespaces]]
 binding = "WORKER_KV"
-id = "CHANGE_ME_after_wrangler_kv_namespace_create"
+id = "d42000356002e21893f25dde69c49a1b"
