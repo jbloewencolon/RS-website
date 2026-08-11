@@ -126,6 +126,12 @@
   /* Section kicker. The coloured rule is the accent at full strength;
      the label beside it is the same register in its legible form. */
   .kick{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 1.1rem;display:flex;align-items:center;gap:.75rem;color:var(--ink-3)}
+  /* WD-19: .rv/.rv-in are added by reveal.js, never present here on
+     their own — a kicker with only .kick and no script running is never
+     hidden. Flagged in the spec as the item most likely to feel
+     gimmicky; kept small and short (6px, .25s) on that basis. */
+  .rv{opacity:0;transform:translateY(6px);transition:opacity .25s ease,transform .25s ease}
+  .rv-in{opacity:1;transform:none}
   .kick::before{content:"";flex:0 0 auto;width:2.2rem;height:3px;background:var(--rule)}
   .kick-teal{color:var(--teal)}.kick-teal::before{background:var(--teal)}
   .kick-fails{color:var(--fails)}.kick-fails::before{background:var(--fails)}
@@ -807,5 +813,6 @@
 
 <script src="/print.js"></script>
 <script src="/sections.js"></script>
+<script src="/reveal.js"></script>
 </body>
 </html>

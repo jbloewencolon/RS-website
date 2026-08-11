@@ -52,7 +52,7 @@ const COPY_AS_IS = [
   "glyph-check.html", "glyph-check.js",
   "resources/index.html", "manifesto/index.html", "invitation/index.html", "learn/index.html", "behind-the-scenes/index.html", "archive/index.html",
   "Home.dc.html", "Manifesto.dc.html", "Invitation.dc.html", "Learn.dc.html", "Archive.dc.html", "Resources.dc.html", "BehindTheScenes.dc.html", "Practise.dc.html", "Contribute.dc.html",
-  "archive-filter.js", "print.js", "sections.js", "support.js", "robots.txt", "CNAME", "LICENSE",
+  "archive-filter.js", "print.js", "sections.js", "reveal.js", "support.js", "robots.txt", "CNAME", "LICENSE",
 ];
 
 const MIME = { ".html": "text/html", ".js": "application/javascript", ".txt": "text/plain" };
