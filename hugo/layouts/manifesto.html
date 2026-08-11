@@ -48,7 +48,12 @@
   a,button,summary,nav[aria-label="Contents"] a{
     transition:color .14s ease,background-color .14s ease,border-color .14s ease
   }
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none}
+  /* WD-08b: the arrow travels on hover/focus, matching the .arr
+     treatment already used for authored arrows. inline-block is
+     required for transform to apply to a pseudo-element. */
+  a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none;display:inline-block;transition:transform .14s ease}
+  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before,
+  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):focus-visible::before{transform:translateX(2px)}
   nav[aria-label="Contents"] a{border:1px solid #5C7A72;border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:#8FA9A2}
   nav[aria-label="Contents"] a:hover{border-color:#509C64;color:#509C64;background:rgba(80,156,100,.1)}
   nav[aria-label="Contents"] a::before{content:none!important}

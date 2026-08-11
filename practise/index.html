@@ -33,7 +33,12 @@
   a,button,summary,[data-filter],nav[aria-label="Contents"] a,.card-title{
     transition:color .14s ease,background-color .14s ease,border-color .14s ease
   }
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none}
+  /* WD-08b: the arrow travels on hover/focus, matching the .arr
+     treatment already used for authored arrows. inline-block is
+     required for transform to apply to a pseudo-element. */
+  a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none;display:inline-block;transition:transform .14s ease}
+  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before,
+  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):focus-visible::before{transform:translateX(2px)}
   nav[aria-label="Contents"] a{border:1px solid #C9C6BA;border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:#585B4F}
   nav[aria-label="Contents"] a:hover{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
   nav[aria-label="Contents"] a::before{content:none!important}
