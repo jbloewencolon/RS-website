@@ -65,7 +65,7 @@ jobs:
           path: _site
 
       - id: deployment
-        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
 
       # SEC-04.4. The audit's F-02: `cancel-in-progress: true` above means
       # a superseded run is killed mid-deploy, and a run that fails partway
