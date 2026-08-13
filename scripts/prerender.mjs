@@ -29,6 +29,7 @@ import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { execFileSync } from "node:child_process";
 import { chromium } from "playwright";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
@@ -147,6 +148,24 @@ async function main() {
   if (fs.existsSync(path.join(root, "sitemap.xml"))) {
     fs.copyFileSync(path.join(root, "sitemap.xml"), path.join(outDir, "sitemap.xml"));
   }
+
+  // SEC-04.4: stamps the build with the commit it was built from, so
+  // deploy.yml can fetch this back through the live domain after
+  // deploying and fail loudly if the two don't match — a cancelled or
+  // failed run otherwise leaves the previous artifact live with no
+  // signal that anything's wrong. GITHUB_SHA is set by Actions for every
+  // workflow run; the git fallback keeps a local `npm run build` (this
+  // sandbox included) producing a real file instead of an empty one.
+  const commitSha =
+    process.env.GITHUB_SHA ||
+    (() => {
+      try {
+        return execFileSync("git", ["rev-parse", "HEAD"], { cwd: root, encoding: "utf8" }).trim();
+      } catch {
+        return "unknown";
+      }
+    })();
+  fs.writeFileSync(path.join(outDir, "deployed-commit.txt"), commitSha);
 
   await browser.close();
   server.close();

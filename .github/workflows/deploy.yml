@@ -33,9 +33,16 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      # SEC-04.1: every `uses:` below is pinned to a 40-char commit SHA,
+      # not a mutable tag — a compromised or repointed tag would otherwise
+      # publish arbitrary content to the live domain via this workflow's
+      # own pages:write/id-token:write permissions. The version comment is
+      # what Dependabot (SEC-04.2, .github/dependabot.yml) reads to open a
+      # PR bumping both the SHA and the comment when a new release ships;
+      # don't let the two drift apart by hand-editing one without the other.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 20
           cache: npm
@@ -52,10 +59,37 @@ jobs:
       - name: Prerender and assemble site
         run: npm run build
 
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
           path: _site
 
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+
+      # SEC-04.4. The audit's F-02: `cancel-in-progress: true` above means
+      # a superseded run is killed mid-deploy, and a run that fails partway
+      # can leave the previous artifact live with no signal anything's
+      # wrong — the deploy step itself reporting success only means the
+      # upload succeeded, not that the domain is actually serving it.
+      # scripts/prerender.mjs stamps _site/deployed-commit.txt with
+      # $GITHUB_SHA during the build above; this fetches that file back
+      # through the URL Pages just reported and fails the run if it
+      # doesn't match this run's own commit. Retries absorb ordinary CDN
+      # propagation lag rather than racing it.
+      - name: Verify the live domain is serving this commit
+        run: |
+          base="${{ steps.deployment.outputs.page_url }}"
+          url="${base%/}/deployed-commit.txt"
+          expected="${{ github.sha }}"
+          for i in 1 2 3 4 5 6 7 8; do
+            actual="$(curl -fsS "$url" 2>/dev/null || true)"
+            if [ "$actual" = "$expected" ]; then
+              echo "✓ $url is serving $expected"
+              exit 0
+            fi
+            echo "Attempt $i/8: $url returned '$actual', expected '$expected' — retrying in 5s"
+            sleep 5
+          done
+          echo "✗ $url never served the expected commit ($expected) after 8 attempts — the live domain may not reflect this deploy."
+          exit 1
