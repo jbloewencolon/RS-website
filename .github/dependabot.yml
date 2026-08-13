@@ -1,0 +1,23 @@
+# SEC-04.2. Two npm projects live in this repo (the root site build and
+# worker/'s own dependencies — see worker/package.json), so each gets its
+# own entry; a single root-only entry would silently miss the Worker.
+# The github-actions entry is what keeps SEC-04.1's SHA pins (both
+# workflow files) current — it opens a PR bumping the SHA and its
+# trailing version comment together whenever a pinned action ships a new
+# release, rather than leaving pins to rot until someone remembers.
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "npm"
+    directory: "/worker"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"

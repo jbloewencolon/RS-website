@@ -1246,3 +1246,60 @@ Notes:
 - **Email copy updated for accuracy:** the confirmation email used to say "nothing happens until the link above is clicked" — no longer true once clicking only opens a button. Reworded to "nothing happens until that page's confirm button is clicked; opening the link alone does nothing."
 - **SEC-02.3 partial, not full:** the task as filed named both endpoints; both got the GET/POST split. What's *not* done from Phase 10.2 is SEC-02.2 (the git-history question — old encrypted store versions persisting after a subscriber is removed) and SEC-02.4's remaining scope (this changelog/fault update is itself SEC-02.4's deliverable, done alongside). SEC-02.2 is `[DECISION]`-tagged and was put to the site author rather than picked; unanswered as of this entry, so a new fault 05 (renumbered from the retired one) names it explicitly rather than leaving the gap unstated.
 - Verified: `worker/npm test` — rewrote `flow.test.mjs`'s confirm/unsubscribe steps to prove the GET-doesn't-mutate property directly (no commit, no email, on a bare GET to either endpoint) and that the confirm token decodes to exactly `{id, t}`, nothing else; `abuse.test.mjs` updated for the binding rename and the new required-KV failure mode. Full site `check-origins`/`check-pages`/Hugo-sync suite re-run clean after the Behind the Scenes regeneration.
+
+### SEC-04.1 + SEC-04.2 — GitHub Actions pinned to commit SHAs, Dependabot enabled
+
+**Shipped:** 2026-08-11 · **Commit/PR:** (pending)
+
+~~was: both workflows called every action by a mutable major-version tag (`actions/checkout@v4`, etc.) — `deploy.yml` runs with `pages: write` and `id-token: write`, so whoever could repoint one of those tags could publish arbitrary content to the live domain. Nothing kept dependency or action versions current either way; `npm ci` already ran from a committed lockfile, but the loop of noticing when something in it needed a bump wasn't closed.~~
+now: every `uses:` in `deploy.yml` and `check-pages.yml` (six distinct action references) is pinned to the 40-character commit SHA its tag currently resolves to, with the version kept as a trailing comment for readability. `.github/dependabot.yml` (new) watches three ecosystems — root `npm`, `worker/`'s own separate `npm` project (it has its own `package.json`, easy to miss with a root-only entry), and `github-actions` — the last of which is what keeps the new SHA pins from going stale: Dependabot opens a PR bumping both the SHA and its comment together whenever a pinned action ships a new release.
+
+**The SHAs were resolved live, not recalled or guessed.** A major-version tag like `v4` is a moving pointer maintainers repoint at each new patch release, so a memorized or plausible-looking SHA would very likely be stale or simply wrong — either silently pins to an older, potentially-vulnerable release, or references a commit that doesn't correspond to what `v4` actually means today. Each of the six was resolved with `git ls-remote --tags --refs https://github.com/<owner>/<repo>.git refs/tags/<version>` against the action's own public repository — `--refs` specifically, so an annotated tag resolves to the commit it points at rather than the tag object's own SHA, which would silently pin to the wrong kind of object.
+
+Verified: both workflow files parse as valid YAML (`yaml.safe_load`) and `.github/dependabot.yml` parses with the expected three ecosystem entries. `npm run check` still passes clean after the edit — these files aren't part of that suite's own checks, but confirms nothing else was disturbed in the same pass.
+
+### SEC-04.4 — post-deploy check that the live domain is serving the commit that was just deployed
+
+**Shipped:** 2026-08-11 · **Commit/PR:** (pending)
+
+~~was: `deploy.yml` treated `actions/deploy-pages` reporting success as the end of the story. The external audit's F-02 named the real gap: `concurrency: cancel-in-progress: true` means a superseded run is killed mid-deploy, and a run that fails partway through can leave the previous artifact live with no signal anything's wrong — "deployed" and "the domain is actually serving what was just built" are two different claims, and only the first was ever checked.~~
+now: `scripts/prerender.mjs` stamps every build with `_site/deployed-commit.txt`, containing the commit SHA it was built from (`$GITHUB_SHA` in Actions; a `git rev-parse HEAD` fallback keeps a local `npm run build` producing a real file too, rather than an empty or missing one). A new step in `deploy.yml`, after `deploy-pages`, fetches that file back through the URL Pages just reported and fails the run — a visible, red signal — if the two don't match, retrying up to 8 times over ~40 seconds first to absorb ordinary CDN propagation lag rather than racing it.
+
+**Tested the actual retry/comparison logic against a local server before trusting it unexamined in CI**, since the real workflow can't be run from here: served the real `deployed-commit.txt` from a local Python HTTP server and ran the exact bash from the new step against it three ways — a matching SHA (succeeds on the first attempt), a deliberately wrong SHA (correctly exhausts all retries and reaches the failure path), and a base URL with no trailing slash (the `${base%/}` guard produces the same correct single-slash URL either way, confirming no double-slash bug if `page_url`'s trailing-slash convention ever varies).
+
+Verified: `npm run build` run twice locally — once with no `GITHUB_SHA` set (wrote the real local `HEAD`, confirmed matching `git rev-parse HEAD` exactly) and once with a fake `GITHUB_SHA` exported (wrote that exact fake value instead), proving both branches of the source-selection logic work before either is exercised for real by Actions. `npm run check` re-run clean afterward — the new file doesn't trip `check-origins.mjs`'s per-page audit or `check-pages.mjs`'s page walk, both of which iterate explicit page lists rather than scanning `_site/` generically. `deploy.yml` re-validated as parseable YAML after the addition.
+
+### SEC-02.2 — the git-history question, decided
+
+**Shipped:** 2026-08-11 · **Commit/PR:** (pending)
+
+~~was: fault 05 stated the problem — a removed subscriber's encrypted record persists in the store repo's git history indefinitely — and named three defensible answers (periodic history rewrite, migrate to a datastore where deletion is real, or keep this and disclose it) without picking one. Asked via `AskUserQuestion` with a recommended default; unanswered as of the last entry.~~
+now: answered — keep the current git-commit-as-datastore approach, disclosed plainly rather than fixed. No code change: `worker/src/store.js` is untouched. Fault 05's title changed from "Nobody has decided..." to "A removed subscriber's encrypted history outlives their removal," and its body now states the decision directly — the other two options were considered and set aside, not left unexamined.
+
+**Checked the removal confirmation page's own copy against the decision before assuming it needed a change.** `worker/src/index.js`'s post-unsubscribe page says "You've been removed. Nothing further will be sent." — accurate under this decision as written: it's a claim about future email, not about historical data, so it needed no rewording once the decision was to keep and disclose rather than to actually delete.
+
+Verified: `npm run build:hugo` regenerated Behind the Scenes; a real browser confirms `#faults` renders fault 05 with the new title and body, at position 5 of 5.
+
+### FLAG-08 / SEC-03.0 — the hosting/header decision, resolved
+
+**Shipped:** 2026-08-11 · **Commit/PR:** (pending)
+
+~~was: `tasks.md` presented three costed options (proxy through Cloudflare, migrate hosts, stay as-is) with a recommendation on file but no author decision — every row in Phase 10.3 (the clickjacking/HSTS/security-header work) was blocked on it.~~
+now: option (A) chosen — proxy the site through Cloudflare. `tasks.md`'s FLAG-08 and SEC-03.0 rows both updated to record the decision. Fault 04 reworded from "there is currently no way to close this gap without changing host" (no longer true — there's a decided, if not-yet-live, fix) to naming the fix and its status plainly: decided, not yet live.
+
+**What's left is account setup, not more decision or more code from this session.** The domain has to actually be added to a Cloudflare account and proxied — a DNS/nameserver change only the account holder can make. SEC-03.1–03.4 (the actual header values: `frame-ancestors`/`X-Frame-Options`, HSTS, `nosniff`/`Referrer-Policy`/`Permissions-Policy`, and the per-page CSP port) have nowhere to apply until that's live. Nothing in this entry claims those are done — only that the decision blocking them is no longer open.
+
+Verified: `npm run build:hugo` regenerated Behind the Scenes for fault 04's new wording; real-browser check confirms it renders correctly. `tasks.md` cross-checked for every other place FLAG-08 or SEC-03.0 was referenced (the Phase 10.3 section header, the "Deliberately not doing" note) to avoid leaving a contradicting "blocked" claim next to the resolved one.
+
+### SEC-03.1–03.4 (preparation only) — the exact Cloudflare header configuration, ready to apply
+
+**Shipped:** 2026-08-11 · **Commit/PR:** (pending)
+
+~~was: FLAG-08/SEC-03.0 named "proxy through Cloudflare" as the chosen path, but nothing existed yet describing what to actually configure once that's live — SEC-03.1–03.4 were four rows of intent with no values behind them.~~
+now: `docs/spec/cloudflare-headers.md` (new) — one universal Transform Rule (HSTS starting at `max-age=300` with a staged raise schedule to a year, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `X-Frame-Options: DENY`) plus four path-scoped CSP rules, in catch-all-first order so an unmatched future path falls back to the strictest policy rather than getting no CSP. A verification checklist closes the file, gated explicitly on real header inspection (`curl -sI`) rather than assuming intent equals result — and SEC-03.5 (removing the now-duplicate meta tags) is written to wait on every row of that checklist passing, not on this file existing.
+
+**Every CSP value is read directly from the ten shipped `<meta>` tags, not re-derived from the external audit or from memory.** `grep`'d each page's live `Content-Security-Policy` meta content, compared them, and found they collapse into exactly four distinct strings — not ten — which is what makes four Transform Rules sufficient: Home+Contribute share one (the only two reaching the dispatch Worker and loading Turnstile), Practise is its own (needs `unsafe-eval`, nothing external), six pages share a third (`script-src 'self'`, no eval, no third party), and Resources plus all nine `*.dc.html` redirect stubs turned out to already be byte-for-byte identical to each other — confirmed by diffing them, not assumed from their both being "simple" pages — which is the fourth bucket and the catch-all default. `frame-ancestors 'none'` is the one directive added to every bucket: the single thing SEC-03 exists to deliver that a `<meta>` tag structurally cannot carry, everything else ported unchanged.
+
+**Deliberately preparation only — nothing in this entry is live.** The domain isn't proxied through Cloudflare yet; that's an account-level DNS/nameserver change only the operator can make, described as this file's own first section rather than skipped over. No header from this file has been applied anywhere, and the file says so in its own opening paragraph so it can't be mistaken later for a record of something already done.
+
+Verified: cross-checked all four CSP bucket strings, directive-by-directive, against the exact `grep` output pulled from the ten live page sources plus all nine redirect stubs before writing them into the file — not retyped from memory. Confirmed the Resources/redirect-stub bucket really is one identical string across all ten of those files, not nine-similar-but-different ones that happened to look alike at a glance.
