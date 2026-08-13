@@ -126,13 +126,27 @@
        write-up in completed.tasks.md) for exactly this situation. */
     .filterbar .chips{flex-wrap:nowrap!important;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
     .filterbar .chips::-webkit-scrollbar{display:none}
-    /* The bar is taller here than at desktop widths — the "Filter" label
-       plus scrollable chip row plus the status line stack differently —
-       so the single scroll-margin-top set inline on [data-group] and
-       article[data-tags] (sized for the desktop bar) isn't enough at
-       narrow widths and needs its own !important override for the same
-       inline-beats-external reason as the rule above. */
-    [data-group],article[data-tags]{scroll-margin-top:7.5rem!important}
+  }
+  /* The bar is taller below desktop than the inline scroll-margin-top on
+     [data-group] and article[data-tags] was sized for, so every contents
+     link (UX-07) and every "fastest route in" deep link (UX-08) landed
+     its target *behind* the bar. Measured heights of .filterbar, against
+     the clearance actually in effect before this rule:
+
+       width        bar     clearance   result
+       ≥1024px       89px   96px inline  clear
+       768–1023px   141px   96px inline  covered by 45px
+       ≤700px       150px   120px (7.5rem) covered by 30px
+
+     One band, one value: 10rem = 160px clears the tallest case (150px)
+     with room to spare and replaces the old 7.5rem rule, which was both
+     too small and scoped to the wrong breakpoint — the 701–1023px band
+     had no override at all. !important for the same inline-beats-external
+     reason as the .chips rule above. Re-measure if the chip row, the
+     "Filter" label, or the status line changes: these are rendered
+     heights, not theory. */
+  @media (max-width:1023px){
+    [data-group],article[data-tags]{scroll-margin-top:10rem!important}
   }
   .venn-scroll{position:relative}
   .venn-scroll::after{content:"";position:absolute;top:0;right:0;bottom:.5rem;width:32px;background:linear-gradient(to right,rgba(231,229,220,0),#E7E5DC 90%);pointer-events:none}

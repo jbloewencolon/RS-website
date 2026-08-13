@@ -546,6 +546,111 @@ Recorded here rather than in the Rejected section because these are *scoped out 
 
 ---
 
+## Phase 11 — Heuristic and source/DOM audit (external, 2026-08-13)
+
+*(Source: `docs/audits/heuristic-audit-2026-08-13.md`, a heuristic + source/DOM audit supplied by the author, structured around four representative visitors and framed on "conversion" as voluntary movement — understand, route, practise, reach safety, consult, contribute, subscribe — rather than a commercial funnel. It has no native ID scheme, so IDs below are `IA-nn`, assigned here; the audit's own section numbers are cited alongside each so the two can be read side by side. Its central claim — that Learn asks one page to be introduction, glossary, principle index, scenario matrix, safety-adjacent explainer, conceptual essay, field guide, and onward-routing page — is correct, and the sequencing thesis in its "Bottom line" is the most useful thing in the document.)*
+
+### What was verified before planning, and what held
+
+Every measurable claim was re-tested in headless Chromium v0.164.0-built output at 320/390/768/820/900/1024/1280/1440px, against the committed HTML rather than the source templates. **Most of the audit is accurate**, including its two hardest structural claims. Four claims are wrong or overstated, and three recommendations collide with commitments this site publishes on itself.
+
+**Confirmed by measurement:**
+
+| Audit claim | Measured |
+|---|---|
+| Learn ≈ 4,500 words | 4,462 full-text ✓ |
+| Manifesto ≈ 1,550 / Archive ≈ 3,270 / Resources ≈ 1,380 / Behind the Scenes ≈ 3,440 / Home ≈ 690 | 1,547 / 3,267 / 1,378 / 3,432 / 647 ✓ |
+| Archive "more than 90 links/buttons" | 84 links + 7 buttons = 91 ✓ |
+| Learn hero has ten equal contents links | exactly 10 ✓ |
+| The contents index is duplicated | `nav[aria-label="Contents"]` (10) in the hero + `nav[aria-label="Sections"]` (10) in the sticky bar — the same ten destinations, twice ✓ |
+| "Forms and labels" precedes the principles | first `<h2>` on the page, before "The principles themselves." ✓ |
+| Fourteen principle cards exposed simultaneously | 14 cards, **zero** are `<details>` ✓ |
+| Field guide's ten entries fully open | 10 items, zero `<details>` ✓ |
+| Matrix needs horizontal scroll below 820px | at 820px: table 760px in a 752px container ✓ (clear at 1024px+) |
+| Bulk expansion opens the sexual-content group | **confirmed — see IA-01** |
+| Bulk control has no `aria-controls` | confirmed (it does carry `aria-pressed`) ✓ |
+| Interactive microtype at 11.5–12.5px | "Open every section" 11.5px, sticky summary 12.5px, mobile nav 12.5px, hero contents 13px ✓ |
+
+**One qualification on the word counts, which changes how they should be read.** These are full-text figures — they include content inside closed `<details>`. What a visitor actually meets on load is smaller: Learn 3,152 visible words, Resources 761, Behind the Scenes 2,311. Learn is still more than double the next page and the finding stands, but the argument that carries it is the audit's own ("collapsing individual cards reduces paragraph exposure but does not reduce the number of concepts competing for attention"), not the raw 4,500.
+
+### Corrections — implement none of these four as written
+
+**IA-C1 — §6.6 "Home and `Home.dc.html` are duplicate maintained documents" is stale.** It is not. `Home.dc.html` is a 1,345-byte redirect stub carrying `<meta http-equiv="refresh">`; `index.html` is 44,619 bytes. WD-26 collapsed the duplication and `scripts/prerender.mjs` treats the stub as copy-as-is. The audit is reading `docs/web-design.md` §1b, which predates that change. **No consolidation work remains.** Related cleanup filed as IA-07: web-design.md's guardrail §4.10 ("Do not edit `index.html` without editing `Home.dc.html`") is stale for the same reason and will send someone to hand-sync a redirect stub.
+
+**IA-C2 — §1.6 fragment clearance: right conclusion, wrong page.** On Learn and Behind the Scenes the offsets do drift — one bar has three different numbers attached to it (52px rendered, `BAR = 76` in `sections.js`, `scroll-margin-top:5.4rem` = 86.4px in CSS) — but the drift runs in the *safe* direction, and targets clear by 24–36px. Untidy, not a defect. The real defect is on **Archive**, which the audit does not name, at **every width below 1024px**. Fixed under IA-02.
+
+**IA-C3 — §1.6 mobile nav state is overstated.** The claim is that `aria-label="Menu"` fails to expose open/closed. Native `<summary>` exposes expanded/collapsed to assistive technology automatically; no state is missing, and hand-adding `aria-expanded` would fight the browser for something it already manages correctly. The redundant `aria-label` duplicating the visible text is worth deleting as tidying, not as an accessibility fix.
+
+**IA-C4 — §2 Practise's control labels are misquoted, and its word count is wrong.** The audit names "Continue," "Skip straight to the tool," "Start the tool," and "Skip this." The initial DOM has three buttons: "Continue", "Skip straight to the tool", **"Open this tool"** — no "Start the tool", no "Skip this". Since the audit's own instruction is to *preserve every control label*, implementing from its list would rename two of the controls it meant to protect. Its 1,750-word figure for Practise is also wrong (actual full-text: 894): the twenty domains do not exist in the DOM until the gate is passed, so any effort estimate sized against 1,750 words is sized against a page that isn't there.
+
+### FLAG-09 — §2 Practise: "remember UI progress in session storage" contradicts a published promise `[DECISION]`
+
+Practise publishes, on the page itself: *"everything you type stays in this browser tab. Nothing is sent anywhere, **nothing is stored**, nothing is counted… Closing the tab erases it."* Writing UI progress to session storage makes that sentence false. The decision is also already on the record with its reasoning — `practise/index.html:664`: *"No localStorage anywhere in this file. Resuming across sessions works only by re-importing a file the user chose to save — the same risk as exporting, made a deliberate choice each time rather than something the device does to a person silently."*
+
+The threat model is the one the page's own safety gate exists for: a shared or monitored device, where state the device retains on a person's behalf is exactly the exposure. **Recommendation: do not implement.** The underlying problem the audit is solving — a returning visitor re-traversing first-time safety framing — is real and addressable without storage (IA-09).
+
+### FLAG-10 — §5E measurement contradicts the "no analytics" claim `[DECISION]`
+
+Every page footer publishes *"No trackers, cookies, or analytics."* Any measurement layer, however privacy-preserving, retracts that. The audit's instinct is sound — its metric list (layer selection, principle deep links, matrix/card switches, Practise starts, print/save activation) measures useful choice rather than attention, which is the right frame and matches Home's own stated metric: *"Success is not traffic… how quickly this site becomes unnecessary to you."* But it cannot ship without the author retracting a published commitment. **Recommendation: get these signals from moderated testing with real people and ship no measurement code.**
+
+### FLAG-11 — the audit's sequencing is backwards on the design-system layer `[DECISION — resolved: promote to first]`
+
+§5C ("create a minimal shared design-system layer") is filed as a Phase 3 strategic opportunity. It should be first, and the audit's own recommendations are the argument. There is no shared CSS on this site — every page carries its own inline `<style>`, so **every site-wide rule is a ten-file edit** (`docs/web-design.md` §1c). Of the audit's Critical/High/Medium items, these are all site-wide by definition: the contextual-action component, disclosure anatomy, the four component categories, nav grouping, the 14px microtype floor, focus and error states, utility-button standardisation. Sequenced as the audit proposes, each gets built ten times and then rebuilt during extraction.
+
+`web-design.md` §1c already recommends the extraction and explicitly scopes it out of that pass — *"Do it after, or before — not during."* This is the "after." **Resolution: IA-10 runs before the Phase 2 component work, not after it.**
+
+### What the audit missed
+
+**The two forms it recommends improving could not submit at all.** §2 Contribute ("Form trust and completion — High Impact") discusses validation states, error focus, and success announcements for a form that was non-functional in production, as was Home's dispatch form. `index.html` and `contribute/index.html` shipped `TURNSTILE_SITE_KEY = "CHANGE_ME_after_registering_a_turnstile_widget"` while the registered key sat in `worker/wrangler.toml` — no widget rendered, `turnstileToken` stayed empty, and every submit failed on *"Please complete the verification above"* pointing at nothing. Confirmed against the live domain before fixing. Shipped as IA-03; no audit in this repo caught it because all of them were run against local renders where the challenge never loads either way.
+
+### 11.1 — Shipped in this pass: confirmed live defects, no author decision required
+
+| ID | Task | Status |
+|---|---|---|
+| **IA-01** | **Exempt the sexual-content group from bulk expansion** (audit §1.3, §2 Sexual content, quick win 3). Confirmed: all four `<details>` carried `data-collapsible`, so "Open every section" swept open *Reproductive coercion* and *Sexual trauma* along with the stress tests. The page's own note promises **"Opening one is the only thing that changes"** — the shipped JS made that sentence false, in a site whose subject is consent. Fixed by removing the opt-in attribute from the four; the sweep now reaches 9 (7 stress tests + 2 adjudication), direct fragment links still open exactly one target, and the button's label/`aria-pressed` still sync. | **Shipped** |
+| **IA-02** | **Archive fragment targets land behind the sticky filter bar below 1024px.** Measured `.filterbar`: 89px ≥1024, 141px at 768–1023, 150px ≤700 — against 96px inline `scroll-margin-top` and a 120px override scoped to ≤700px only. Every contents link (UX-07) and every "fastest route in" deep link (UX-08) landed covered on tablet and phone: −45px in the 701–1023 band that had no override at all, −30px below it. One `@media (max-width:1023px)` rule at 10rem; targets now clear by 7–20px at every width tested. | **Shipped** |
+| **IA-03** | **Restore the Turnstile site key on both forms.** See "What the audit missed." Key taken from `worker/wrangler.toml`, where it is documented as public by design. Comment above both now records the drift so the pair is changed together. | **Shipped — needs author confirmation, see below** |
+
+> **IA-03 needs one check the author can make and this environment cannot.** The key pairing is verified in source (`wrangler.toml`'s `TURNSTILE_SITE_KEY` is the public half of the Worker's secret), but whether the registered widget's allowed-domains list includes `relationalsovereignty.com` can only be seen in the Cloudflare dashboard. If it does not, the widget will render an error instead of a challenge — a different failure from the current one, and still a dead form. Confirm before or immediately after this reaches production, and submit the form once against a real address.
+
+### 11.2 — Ready to build: no author decision required, not yet done
+
+| ID | Task | Audit ref | Effort |
+|---|---|---|---|
+| **IA-04** | Give the bulk control `aria-controls` listing the 9 ids it actually governs, now that its scope is honest. Keep `aria-pressed`. | §1.6, §3 High 4 | XS |
+| **IA-05** | Default the stress tests to cards below 820px and the matrix at/above it, as labelled alternate views of one dataset rather than a serial repeat. Both stay in the DOM; both stay deep-linkable. The 820px threshold is measured, not chosen. | §1.5, §3 Critical 3 | M |
+| **IA-06** | Delete the hero's ten-link contents grid once an orientation control replaces it, keeping the sticky bar as the single complete index. Confirmed duplicate: the same ten destinations twice. | §6.1, §3 High 2 | S |
+| **IA-07** | Strike the stale `Home.dc.html` guardrail from `docs/web-design.md` §4.10 and §1b. See IA-C1. | — | XS |
+| **IA-08** | Raise interactive microtype to a 14px floor — measured offenders: "Open every section" 11.5px, sticky summary 12.5px, mobile nav links 12.5px. Decorative kickers may stay smaller. Verify at 200% and 400% zoom. | §1.6, §3 Medium 5 | S |
+| **IA-09** | Let a returning Practise visitor reach a chosen tool without re-traversing first-time framing, **without storing anything** — an up-front tool choice, addressable by fragment, is enough. Supersedes the storage half of the audit's recommendation (FLAG-09). | §2 Practise | S |
+
+### 11.3 — Blocked on the design-system layer (see FLAG-11)
+
+| ID | Task | Audit ref |
+|---|---|---|
+| **IA-10** | **Extract the shared base: tokens + header/nav, disclosure, button, notice, contextual-action, form, focus, footer.** Runs first. `hugo/layouts/partials/` reaches six pages; the two hand-authored pages need one `/base.css`. | §5C |
+| **IA-11** | One contextual primary action per page (Learn → Consent Domains Map), global nav left unranked. | §1.2, §3 High 3 |
+| **IA-12** | Four formalised component categories — navigation link, disclosure, primary action, utility action — so a control's behaviour is predictable before clicking. | §3 Medium 1 |
+| **IA-13** | Group the global nav (understand / act / consult / project) as interface labels, not authored copy. Nine-file edit today; one-file edit after IA-10. | §3 High 5 |
+| **IA-14** | Compact indexes for Manifesto and Behind the Scenes; Archive filter feedback and metadata hierarchy. | §3 Medium 3–4 |
+
+### 11.4 — Needs author judgement before scoping
+
+| ID | Question |
+|---|---|
+| **IA-15** | **The Learn three-stage re-architecture (Start / Apply / Go deeper), §3 Critical 1.** The sequencing diagnosis is right and the payoff is the largest available. What needs deciding is whether "Go deeper" containing *Forms and labels, sovereignty senses, opacity, and what is not yet written* is an editorial demotion the author accepts — these are the sections that qualify the framework's own vocabulary, and the site's character depends on qualifications not being tucked behind a chooser. Reordering (IA-16) is separable and cheaper. |
+| **IA-16** | **Move "Forms and labels" after the principles (§3 High 1).** Pure reorder, no copy change, delivers a large share of IA-15's benefit on its own. Recommend shipping this independently of the re-architecture. |
+| **IA-17** | **Collapsing the thirteen principles to a title-first index (§3 Critical 2) — recommend a narrower version.** Recognition-over-recall is the right goal, but closing all thirteen by default hides the page's promised payload and sits badly beside the disclosure rule Phase 6 settled ("collapse what a reader may want to skip; never collapse what they may need to find"). A compact thirteen-title index at the top, deep-linking into cards that stay open, buys the scanning benefit without hiding the content. The audit's own Layer 1 asks only for "a thirteen-title index." |
+| **IA-18** | **Field guide as its own route (§2 Field guide, §5B).** Agreed in principle — it is a printable reference artifact trapped inside a reading page. Needs a decision on whether the embedded copy stays as a preview or becomes a pointer, since the two answers imply different anchor-preservation work. |
+
+### What could not be verified here
+
+- **Whether the Turnstile widget's allowed-domains list covers the live domain** (IA-03) — dashboard only. The highest-consequence unknown in this phase.
+- **Real-visitor behaviour on any of it.** Every finding above is heuristic or measured geometry. The audit's four representative visitors are a reasoning device, not evidence, and neither this pass nor the audit observed a single real person using the site. IA-15's editorial question in particular should not be settled from a screenshot.
+- **Cross-platform rendering of the microtype floor** (IA-08) — same Windows/Linux gap that still blocks WD-18.
+
+---
+
 ## Parked / backlog
 
 | ID | Task | Reason parked |
@@ -669,6 +774,7 @@ Applies to every page, every release — from `docs/spec/base-work-order.md` §7
 - `docs/spec/warm-register-review-v2.md` — RS-035–RS-041, the Invitation as a second door alongside the Manifesto, plus the Phase 2.5 IA/navigation review delivered alongside it (see that phase for details; no separate file for the latter)
 - `docs/spec/README.md` — how the docs relate (does not yet mention the warm-register review; update if this file's own description of itself goes stale)
 - `docs/audits/ux-audit-2026-08-08.html` — the UX/UI audit behind Phase 6, above: 22 findings, full observed data and reasoning per finding
+- `docs/audits/heuristic-audit-2026-08-13.md` — the heuristic/DOM audit behind Phase 11, above, kept verbatim. Saved to the repo on arrival rather than after the fact, which is the pattern the "Missing" note at the end of this list is about. Its four measured corrections and three published-commitment conflicts are recorded in Phase 11, not in the file itself; the file carries a pointer to them.
 - `docs/external/seo-aeo-spec-2026-08-08.md` — the external SEO/AEO specification behind Phase 7, above, kept verbatim for reference; per-task disposition (accepted/rejected/logged, and why) is recorded in Phase 7 itself, not this file
 - `docs/spec/cloudflare-headers.md` — the exact Transform Rules config for SEC-03.1–03.4, prepared 2026-08-11 once FLAG-08/SEC-03.0 were decided. Ready to apply, not yet applied — waiting on the Cloudflare proxy going live (an account-level step, see the file's own opening section).
 - **Missing:** the external `Website Cache & Clickjacking Security Audit` (2026-08-11) behind Phase 10 is not in this repository — it was supplied directly into a session, same as the Phase 9 design spec. **Add it to `docs/external/`.** Phase 10 records every finding taken from it, every finding added to it, and the two of its own that live evidence contradicted, so the phase is workable without it. Its own implementation examples (`_headers` files, nginx blocks) are superseded for this project's purposes by `docs/spec/cloudflare-headers.md` above — Cloudflare Transform Rules, not a `_headers` file or nginx block, since GitHub Pages accepts neither — but the audit's full diagnostic matrix is still worth keeping for reference. The design-review gap flagged in Phase 9 is the same pattern — externally-supplied documents are not making it into the repo.

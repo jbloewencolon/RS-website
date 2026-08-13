@@ -373,9 +373,14 @@ class Component extends DCLogic {
 
   // Public by design — this key is shipped to every browser that loads
   // the form. Only the matching secret key (held by the Worker, never
-  // here) can actually verify a solved challenge. Set after registering
-  // a widget at the Cloudflare dashboard — see worker/README.md Step 6.
-  static TURNSTILE_SITE_KEY = "CHANGE_ME_after_registering_a_turnstile_widget";
+  // here) can actually verify a solved challenge. It must stay identical
+  // to TURNSTILE_SITE_KEY in worker/wrangler.toml: the two were allowed
+  // to drift once — the widget was registered and the Worker updated
+  // while this file kept the CHANGE_ME placeholder, which rendered no
+  // widget, left turnstileToken empty, and made every submit fail on
+  // "complete the verification above" pointing at nothing. Both forms
+  // were dead in production until that was caught. Change both together.
+  static TURNSTILE_SITE_KEY = "0x4AAAAAAEMpChSeguKsGevc";
 
   // Mounts the Turnstile widget imperatively into the div this ref
   // callback is attached to, rather than relying on Turnstile's

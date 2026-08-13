@@ -92,8 +92,10 @@
      
     .filterbar .chips{flex-wrap:nowrap!important;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
     .filterbar .chips::-webkit-scrollbar{display:none}
-     
-    [data-group],article[data-tags]{scroll-margin-top:7.5rem!important}
+  }
+   
+  @media (max-width:1023px){
+    [data-group],article[data-tags]{scroll-margin-top:10rem!important}
   }
   .venn-scroll{position:relative}
   .venn-scroll::after{content:"";position:absolute;top:0;right:0;bottom:.5rem;width:32px;background:linear-gradient(to right,rgba(231,229,220,0),#E7E5DC 90%);pointer-events:none}
