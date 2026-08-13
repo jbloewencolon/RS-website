@@ -456,19 +456,17 @@ Captured 2026-08-11 against `relationalsovereignty.com`, revision `35cf53b`:
 - **Unsubscribing does not delete.** Every write is a GitHub commit, so removal edits `HEAD` while the prior encrypted blob stays in history permanently. If `ENCRYPTION_KEY` ever leaked, the recoverable list includes everyone who ever left — against an unsubscribe email that says "You've been removed."
 - **`rs-dispatch-storage` is not publicly readable** — unauthenticated fetch of `subscribers.enc` returns 404. Encouraging, not proof; confirm in settings (SEC-00.4).
 
-### FLAG-08 — the cheap header fix conflicts with D6, and D6 may already be moot `[DECISION]`
+### FLAG-08 — **Resolved 2026-08-11: option (A), proxy through Cloudflare now.**
 
-The obvious way to get response headers without a hosting migration is to proxy the existing origin through Cloudflare. **That is an edge network, which D6 explicitly rules out**, so it cannot simply be implemented — it is the author's call, and it interacts with RS-022's blank substrate fields.
-
-What makes this decidable rather than merely blocked is the first live finding above: **GitHub Pages already fronts the site with Fastly.** The non-edge property D6 asks for is not something the site currently has and would be giving up; it is something the site already lost. The colophon's "Server location — *not yet known*" field currently has no single honest answer, and would not gain one by staying put.
+*(Original flag, kept for the record.)* The obvious way to get response headers without a hosting migration is to proxy the existing origin through Cloudflare. That is an edge network, which D6 explicitly rules out on paper — but the first live finding above already showed **GitHub Pages fronts the site with Fastly**, so the non-edge property D6 asks for wasn't something staying put would have preserved; it was already gone. The colophon's "Server location — *not yet known*" field had no single honest answer either way.
 
 | Option | Gets headers | Satisfies D6 | Cost | Note |
 |---|---|---|---|---|
-| **(A)** Proxy through Cloudflare | ✅ | ❌ (edge) | S | Also delivers SEC-01's rate limiting. Gives up nothing not already lost. |
-| **(B)** Migrate to a single-region host that sets headers | ✅ | ✅ | M–L | The only option that lets RS-022 fill the substrate fields truthfully. Needs the budget answer FLAG-02 has been waiting on. |
-| **(C)** Stay as-is | ❌ | ❌ | — | Fault 01 stays open, and a second fault gets added for the framing gap. |
+| **(A)** Proxy through Cloudflare | ✅ | ❌ (edge) | S | **Chosen.** Also delivers SEC-01's rate limiting. Gives up nothing not already lost. |
+| (B) Migrate to a single-region host that sets headers | ✅ | ✅ | M–L | Not chosen now — the only option that lets RS-022 fill the substrate fields truthfully, still available later if budget appears. |
+| (C) Stay as-is | ❌ | ❌ | — | Not chosen — would have left fault 04 open indefinitely. |
 
-Recommendation on file: **(A) now, (B) later if budget appears** — headers are cheap and (A) does not foreclose (B). But this is `[DECISION]`, not `[DEV]`; do not proxy the domain without an explicit author yes.
+**What's still needed before SEC-03 can actually ship:** the domain has to be added to a Cloudflare account and proxied (DNS/nameserver change) — an account-level action, not a code change, and not something this session can do. Once that's live, SEC-03.1–03.4's header values are ready to apply (see their own rows) — the work remaining there is Cloudflare-side configuration (Transform Rules or equivalent), not new copy or a new decision.
 
 ### Phase 10.0 — Accounts and keys `today · no code`
 
@@ -493,15 +491,15 @@ Two commitments the site publishes do not match what the code does. On most site
 
 | ID | Task | Tags | Files | Effort | Depends on |
 |---|---|---|---|---|---|
-| **SEC-02.2** | **Decide the git-history question.** Unsubscribing removes from `HEAD`; the encrypted record persists in history forever. Three defensible answers — periodically squash the store repo's history, migrate the store to KV/D1/R2 where deletion is deletion, or keep it and say so in the fault list. Silence is not one of them. Asked via `AskUserQuestion` 2026-08-11 with a recommended default (keep as-is, disclose) — **not yet answered.** Fault 05 on Behind the Scenes names this explicitly in the meantime. | `[DECISION]` `[DEV]` | `worker/src/store.js`, `hugo/data/`, store repo | M–L | author call |
+| ~~**SEC-02.2**~~ | ~~Decide the git-history question...~~ **Resolved 2026-08-11 — keep as-is, disclose.** The recommended default, confirmed by the author. No code change: `worker/src/store.js` keeps its current git-commit-as-datastore behaviour, unchanged. Fault 05's title and body rewritten from "nobody has decided" to state the decision plainly — periodic history rewrites and a datastore migration were both considered and set aside on purpose, not left unexamined. | `[DECISION]` | `hugo/data/faults.yaml` | XS | — |
 
-### Phase 10.3 — Delivery headers `week 3 · gated on FLAG-08`
+### Phase 10.3 — Delivery headers `week 3 · gated on the Cloudflare proxy going live, not on a decision anymore`
 
 The external audit's headline, and its finding is correct. Ranked third anyway: clickjacking pays off by hijacking an authenticated action, and this site has no session, cookie, or logged-in state to hijack. Realistic worst case is tricking someone into submitting the signup form, or a screenshot used for a smear. Worth fixing because it is nearly free — not worth doing before the endpoint that can be aimed at strangers.
 
 | ID | Task | Tags | Files | Effort | Depends on |
 |---|---|---|---|---|---|
-| **SEC-03.0** | Resolve FLAG-08 — proxy, migrate, or accept. Everything below is blocked on it, because GitHub Pages will not serve repository-controlled response headers and no meta tag substitutes. | `[DECISION]` | — | — | FLAG-02, FLAG-08 |
+| ~~**SEC-03.0**~~ | ~~Resolve FLAG-08...~~ **Decided 2026-08-11 — option (A), proxy through Cloudflare.** What's left isn't a decision anymore: the domain has to actually be added to a Cloudflare account and proxied (DNS/nameserver change) before SEC-03.1–03.4 have anywhere to apply a header to. Account-level action, not `[DEV]`. | `[DECISION]` | — | — | FLAG-02, FLAG-08 |
 | **SEC-03.1** | `frame-ancestors 'none'` + `X-Frame-Options: DENY` on every HTML response — successes, redirects, the 404, and all nine `*.dc.html` redirect stubs. | `[DEV]` | host header config | S | SEC-03.0 |
 | **SEC-03.2** | HSTS, starting at `max-age=300`, raised toward a year once nothing breaks. Preload only when confident — hard to undo. | `[DEV]` | host header config | S | SEC-03.0 |
 | **SEC-03.3** | `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy` denying camera/microphone/geolocation (the site uses none). | `[DEV]` | host header config | S | SEC-03.0 |
@@ -651,7 +649,7 @@ Applies to every page, every release — from `docs/spec/base-work-order.md` §7
 - [ ] `/api/subscribe` refuses a burst from one address and from one IP (SEC-01.1), and the daily ceiling holds (SEC-01.2) — logic unit-tested against a fake KV (`worker/test/abuse.test.mjs`); behaviour against real Cloudflare KV under real concurrent traffic is not yet verified, and can't be until the Worker is actually deployed
 - [x] A freshly issued confirm token decodes to an opaque ID and nothing else — no address, no name, no interests (SEC-02.1) — `worker/test/flow.test.mjs` decodes a real token and asserts its keys are exactly `{id, t}`
 - [x] The double opt-in claim is literally true: a link fetched by a scanner does not confirm anyone (SEC-02.3) — `worker/test/flow.test.mjs` proves a bare GET writes nothing and sends no email on either endpoint
-- [ ] Whatever was decided about git history (SEC-02.2) matches what the unsubscribe email and the fault list say — undecided; fault 05 names the gap in the meantime
+- [x] Whatever was decided about git history (SEC-02.2) matches what the unsubscribe email and the fault list say — decided 2026-08-11 (keep as-is, disclose); fault 05's title and body rewritten to state the decision, and the removal confirmation page's own copy ("You've been removed. Nothing further will be sent.") was already accurate under this decision without needing a change
 
 **Security posture, every release:**
 - [ ] No secret in the repo, in `wrangler.toml`'s `[vars]`, or in a build log — `[vars]` is public config by design; the four secrets stay in `wrangler secret`

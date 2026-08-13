@@ -1268,3 +1268,25 @@ now: `scripts/prerender.mjs` stamps every build with `_site/deployed-commit.txt`
 **Tested the actual retry/comparison logic against a local server before trusting it unexamined in CI**, since the real workflow can't be run from here: served the real `deployed-commit.txt` from a local Python HTTP server and ran the exact bash from the new step against it three ways — a matching SHA (succeeds on the first attempt), a deliberately wrong SHA (correctly exhausts all retries and reaches the failure path), and a base URL with no trailing slash (the `${base%/}` guard produces the same correct single-slash URL either way, confirming no double-slash bug if `page_url`'s trailing-slash convention ever varies).
 
 Verified: `npm run build` run twice locally — once with no `GITHUB_SHA` set (wrote the real local `HEAD`, confirmed matching `git rev-parse HEAD` exactly) and once with a fake `GITHUB_SHA` exported (wrote that exact fake value instead), proving both branches of the source-selection logic work before either is exercised for real by Actions. `npm run check` re-run clean afterward — the new file doesn't trip `check-origins.mjs`'s per-page audit or `check-pages.mjs`'s page walk, both of which iterate explicit page lists rather than scanning `_site/` generically. `deploy.yml` re-validated as parseable YAML after the addition.
+
+### SEC-02.2 — the git-history question, decided
+
+**Shipped:** 2026-08-11 · **Commit/PR:** (pending)
+
+~~was: fault 05 stated the problem — a removed subscriber's encrypted record persists in the store repo's git history indefinitely — and named three defensible answers (periodic history rewrite, migrate to a datastore where deletion is real, or keep this and disclose it) without picking one. Asked via `AskUserQuestion` with a recommended default; unanswered as of the last entry.~~
+now: answered — keep the current git-commit-as-datastore approach, disclosed plainly rather than fixed. No code change: `worker/src/store.js` is untouched. Fault 05's title changed from "Nobody has decided..." to "A removed subscriber's encrypted history outlives their removal," and its body now states the decision directly — the other two options were considered and set aside, not left unexamined.
+
+**Checked the removal confirmation page's own copy against the decision before assuming it needed a change.** `worker/src/index.js`'s post-unsubscribe page says "You've been removed. Nothing further will be sent." — accurate under this decision as written: it's a claim about future email, not about historical data, so it needed no rewording once the decision was to keep and disclose rather than to actually delete.
+
+Verified: `npm run build:hugo` regenerated Behind the Scenes; a real browser confirms `#faults` renders fault 05 with the new title and body, at position 5 of 5.
+
+### FLAG-08 / SEC-03.0 — the hosting/header decision, resolved
+
+**Shipped:** 2026-08-11 · **Commit/PR:** (pending)
+
+~~was: `tasks.md` presented three costed options (proxy through Cloudflare, migrate hosts, stay as-is) with a recommendation on file but no author decision — every row in Phase 10.3 (the clickjacking/HSTS/security-header work) was blocked on it.~~
+now: option (A) chosen — proxy the site through Cloudflare. `tasks.md`'s FLAG-08 and SEC-03.0 rows both updated to record the decision. Fault 04 reworded from "there is currently no way to close this gap without changing host" (no longer true — there's a decided, if not-yet-live, fix) to naming the fix and its status plainly: decided, not yet live.
+
+**What's left is account setup, not more decision or more code from this session.** The domain has to actually be added to a Cloudflare account and proxied — a DNS/nameserver change only the account holder can make. SEC-03.1–03.4 (the actual header values: `frame-ancestors`/`X-Frame-Options`, HSTS, `nosniff`/`Referrer-Policy`/`Permissions-Policy`, and the per-page CSP port) have nowhere to apply until that's live. Nothing in this entry claims those are done — only that the decision blocking them is no longer open.
+
+Verified: `npm run build:hugo` regenerated Behind the Scenes for fault 04's new wording; real-browser check confirms it renders correctly. `tasks.md` cross-checked for every other place FLAG-08 or SEC-03.0 was referenced (the Phase 10.3 section header, the "Deliberately not doing" note) to avoid leaving a contradicting "blocked" claim next to the resolved one.
