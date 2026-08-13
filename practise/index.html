@@ -689,10 +689,15 @@ class Component extends DCLogic {
           this.setState({ importError: "That file couldn't be read. Nothing was changed." });
         });
       },
+      // WD-15: both states are "named, not built" in register terms, so
+      // both take ochre — #DB9E2A is text-safe on this section's #0F2A2E
+      // ground (6.42:1). The finer distinction between them is carried by
+      // the status words themselves, not by hue, which is the rule the
+      // palette works by: colour is never the only thing saying it.
       tools: this.tools.map(t => ({
         name: t[0], body: t[1],
         status: t[2] ? "in progress" : "not started",
-        color: t[2] ? "#DB9E2A" : "#73968D"
+        color: "#DB9E2A"
       })),
       domains: renderedDomains.slice(0, 17),
       accessDomains: renderedDomains.slice(17),
