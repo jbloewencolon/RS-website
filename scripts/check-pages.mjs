@@ -358,7 +358,13 @@ async function main() {
     page.on("console", (msg) => { if (msg.type() === "error") consoleErrors.push(msg.text()); });
     page.on("pageerror", (err) => consoleErrors.push(`pageerror: ${err.message}`));
 
-    const resp = await page.goto(base + pg, { waitUntil: "networkidle", timeout: 30000 });
+    // "load" rather than "networkidle" — same reason as prerender.mjs's
+    // identical fix: Home and Contribute load the real Turnstile widget
+    // (IA-03), which keeps background network activity going indefinitely,
+    // so "networkidle" never resolves and this hits its 30s timeout. The
+    // 800ms wait below is the actual settle signal this loop depends on,
+    // not network silence.
+    const resp = await page.goto(base + pg, { waitUntil: "load", timeout: 30000 });
     await page.waitForTimeout(800);
 
     const pageProblems = [];

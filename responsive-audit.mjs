@@ -66,7 +66,11 @@ async function main() {
     for (const vp of VIEWPORTS) {
       const context = await browser.newContext({ viewport: { width: vp.width, height: vp.height } });
       const page = await context.newPage();
-      await page.goto(base + pg, { waitUntil: "networkidle", timeout: 30000 });
+      // "load" not "networkidle" — Home and Contribute's real Turnstile
+      // widget (IA-03) keeps background network activity going
+      // indefinitely, so "networkidle" hangs to the timeout on both. Not
+      // run in CI, but the same landmine as prerender.mjs/check-pages.mjs.
+      await page.goto(base + pg, { waitUntil: "load", timeout: 30000 });
       await page.waitForTimeout(600);
 
       const { scrollWidth, clientWidth } = await page.evaluate(() => ({
