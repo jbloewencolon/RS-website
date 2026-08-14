@@ -101,7 +101,18 @@ async function main() {
     const errors = [];
     page.on("pageerror", (e) => errors.push(e.message));
 
-    await page.goto(`http://127.0.0.1:${port}/${pg}`, { waitUntil: "networkidle", timeout: 30000 });
+    // "load" rather than "networkidle": completion here is gated by
+    // #dc-root existing plus the settle wait below, not by the network
+    // going quiet. It has to be — Home and Contribute load the real
+    // Turnstile widget (IA-03), which keeps its own background network
+    // activity going indefinitely, so "networkidle" never resolves and
+    // this step times out at 30s. Silent when Turnstile's site key was
+    // still the CHANGE_ME placeholder (the challenge failed instantly,
+    // no ongoing requests to wait out); live the moment the real key
+    // shipped — first surfaced when this ran against a real network
+    // (this sandbox blocks challenges.cloudflare.com outright, so it
+    // never reproduced here before deploy).
+    await page.goto(`http://127.0.0.1:${port}/${pg}`, { waitUntil: "load", timeout: 30000 });
     await page.waitForSelector("#dc-root", { timeout: 15000 });
     await page.waitForTimeout(700); // let any post-mount state settle
 
