@@ -12,6 +12,7 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { sync as syncBase } from "./sync-base.mjs";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const hugoDir = path.join(root, "hugo");
@@ -69,6 +70,11 @@ export function buildHugo({ write = true } = {}) {
     }
     results.push({ page: name, inSync, generated });
   }
+  // The three hand-authored pages carry the same base CSS block, spliced in
+  // from what Hugo just rendered — see scripts/sync-base.mjs. Doing it here
+  // means one command keeps all nine pages consistent, and a `write: false`
+  // caller (check-pages.mjs) still gets a pure inspection.
+  if (write) syncBase({ write: true });
   return results;
 }
 

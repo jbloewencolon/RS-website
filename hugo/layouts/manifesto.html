@@ -38,47 +38,9 @@
   ]
 }
 </script>
+{{ partial "head-base.html" (dict "bg" "#0F2A2E" "fg" "#DDE4DC" "link" "#DB9E2A" "linkHover" "#509C64" "navBorder" "#5C7A72" "navFg" "#8FA9A2" "navHoverEdge" "#509C64" "navHoverFg" "#509C64" "navHoverBg" "rgba(80,156,100,.1)" "toggleFg" "#8FA9A2" "focus" "#DB9E2A" "skipBg" "#DB9E2A" "skipFg" "#0F2A2E" "tokens" false) }}
 <style>
-  html{scroll-behavior:smooth}
-  body{margin:0;background:#0F2A2E;color:#DDE4DC;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
-  a{color:#DB9E2A;text-underline-offset:3px;text-decoration-thickness:1px}
-  a:hover{color:#509C64}
-  /* One motion token, Manifesto's shorter variant — no [data-filter]
-     or .card-title on this page. WD-02. */
-  a,button,summary,nav[aria-label="Contents"] a{
-    transition:color .14s ease,background-color .14s ease,border-color .14s ease
-  }
-  /* WD-08b: the arrow travels on hover/focus, matching the .arr
-     treatment already used for authored arrows. inline-block is
-     required for transform to apply to a pseudo-element. */
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none;display:inline-block;transition:transform .14s ease}
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before,
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):focus-visible::before{transform:translateX(2px)}
-  nav[aria-label="Contents"] a{border:1px solid #5C7A72;border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:#8FA9A2}
-  nav[aria-label="Contents"] a:hover{border-color:#509C64;color:#509C64;background:rgba(80,156,100,.1)}
-  nav[aria-label="Contents"] a::before{content:none!important}
-  summary::before{content:"▸";display:inline-block;margin-right:.6rem;color:currentColor;flex-shrink:0;transition:transform .15s ease}
-  details[open]>summary::before{transform:rotate(90deg)}
-  .nav-toggle{display:none}
-  .nav-toggle>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:#8FA9A2}
-  .nav-toggle>summary::-webkit-details-marker{display:none}
-  .nav-toggle>nav{display:flex;flex-direction:column;align-items:flex-start;gap:.4rem;padding:.5rem 0 .8rem}
-  @media (max-width:700px){
-    #primary-nav{display:none!important}
-    .nav-toggle{display:block;width:100%}
-  }
-  *{box-sizing:border-box}
-  h1,h2,h3{text-wrap:balance} /* WD-03 */
-  :focus-visible{outline:2.5px solid #DB9E2A;outline-offset:3px}
-  @media print{
-    body{background:#fff;color:#000}
-    .noprint{display:none!important}
-    h1,h2,b,span,em,p{color:#000!important}
-    ol{columns:2!important}
-  }
-  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
-  .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#DB9E2A;color:#0F2A2E;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
-  .skip-link:focus{left:1rem;top:1rem}
+  @media print{body{color:#000}h1,h2,b,span,em,p{color:#000!important}ol{columns:2!important}}
 </style>
 </head>
 <body>

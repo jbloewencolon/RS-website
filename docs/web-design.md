@@ -67,35 +67,63 @@ the HTML into `_site/`, so a no-JS reader and a crawler see full content.
 > heuristic audit re-reported the duplication as a live finding after
 > reading this section, which is what surfaced the staleness.
 
-### 1c. There is no shared CSS — this is the single most important fact
+### 1c. There is one shared base block — ~~this is the single most important fact~~
 
-Every page carries **its own inline `<style>` block in its own `<head>`**.
-There is no partial, no stylesheet, no import. The same ~25 lines of base
-CSS are duplicated across **ten files**.
+> **Superseded 2026-08-14 by IA-10a.** ~~Every page carries its own inline
+> `<style>` block… the same ~25 lines of base CSS are duplicated across ten
+> files… every site-wide rule in §3 is a ten-file edit.~~ That was true
+> through Phase 9 and is the reason every §3 spec below lists its files
+> explicitly. **It is no longer true.** The follow-up this section
+> recommended has been done; the original text is struck rather than
+> deleted, because the per-file instructions in §3 were written against it.
 
-That means: **every site-wide rule in §3 is a ten-file edit.** They are
-listed explicitly each time. Do not assume one edit propagates.
+The base block now lives in **one file**:
 
-Nine of the ten share an identical base block, anchored by this line:
-
-```css
-a:hover{color:#2C5A38}
+```
+hugo/layouts/partials/head-base.html
 ```
 
-Files containing it: `hugo/layouts/{archive,behindthescenes,invitation,learn,resources}.html`,
-`index.html`, `practise/index.html`, `contribute/index.html`. (`Home.dc.html`
-is a redirect stub since WD-26, not a tenth copy — see §1b.)
+Every page gets it from there. A site-wide base rule is **a one-file edit**,
+followed by `npm run build:hugo`.
 
-**`hugo/layouts/manifesto.html` is the exception.** It is dark-ground
-throughout and has its own base palette (`a{color:#DB9E2A}`,
-`a:hover{color:#509C64}`). Site-wide rules must be adapted for it, not
-pasted. Each spec below states the Manifesto variant where one is needed.
+How it reaches each page:
 
-**Recommended follow-up (not specified here):** extract the shared base
-into `hugo/layouts/partials/head-base.html` plus one `/base.css` for the
-two hand-authored pages. This pass is deliberately scoped to *not* do
-that, because it is a refactor and would collide with everything below.
-Do it after, or before — not during.
+- **The six Hugo pages** call `{{ partial "head-base.html" … }}`. The partial
+  takes a dict of palette overrides; anything not passed falls back to the
+  light ground.
+- **The three hand-authored pages** (`index.html`, `practise/index.html`,
+  `contribute/index.html`) are not Hugo pages and cannot call a partial.
+  `scripts/sync-base.mjs` lifts the block Hugo just rendered and splices it
+  into each one between its `/* base:start */` and `/* base:end */` markers.
+  `npm run build:hugo` does this automatically; `npm run check` fails if any
+  of the three has drifted.
+
+**Do not edit the base CSS in a page file.** In the three hand-authored ones
+it is overwritten on the next build and fails the check meanwhile; in the six
+Hugo ones it is regenerated away.
+
+**The two page-level palette exceptions are now parameters, not forks.**
+`hugo/layouts/manifesto.html` passes the dark ground plus `"tokens" false`
+(its register is rhetorical, not analytical — see `docs/design-palette.md`);
+`hugo/layouts/invitation.html` passes its ochre link and focus colours
+(FLAG-07). Both share the same structural rules as everything else, so a
+site-wide rule no longer needs a hand-adapted Manifesto variant — it needs a
+palette key.
+
+**What still belongs in a page's own `<style>`:** anything one page needs and
+the others do not. The cascade puts each page's block after the shared one,
+so page rules still win. Current examples: Learn's Contents-nav sizing,
+Home's `.door` hover edges, Behind the Scenes' `.jump` bar, and every page's
+print extensions.
+
+**Two traps, both found the hard way while doing this.** Go's `html/template`
+strips HTML comments *and* comments inside `<style>`, so no marker can be
+emitted into Hugo output — the sync locates the block structurally instead,
+by taking the first `<style>` in the generated page. And Hugo's CSS
+sanitiser rewrites unrecognised values in CSS context to the literal string
+`ZgotmplZ`: a bare `rgba(…)` interpolated without `| safeCSS` becomes a
+silently dead rule, not a build error. Every interpolated value in the
+partial is filtered. Keep it that way.
 
 ### 1d. Content Security Policy
 
@@ -224,6 +252,14 @@ Everything else — every hover, every filter, every disclosure — snaps.
 
 Ordered by leverage. Tier A is the cheap high-yield set; Tier B is
 structural; Tier C is optional.
+
+> **Read §1c first if you are working from this section.** Every spec below
+> that says "all ten files" or "the nine light-base files" was written when
+> the base CSS was duplicated per page. Since IA-10a (2026-08-14) it is not:
+> a site-wide base rule is one edit to
+> `hugo/layouts/partials/head-base.html`, then `npm run build:hugo`. These
+> items have all shipped, so the file lists below are a record of where the
+> change landed at the time, not instructions to repeat. Left as written.
 
 ---
 
@@ -1276,6 +1312,15 @@ Things that will look like improvements and are not. Do not do these.
 10. ~~**Do not edit `index.html` without editing `Home.dc.html`.**~~
     **Struck 2026-08-13 (IA-07)** — obsolete since WD-26 made `Home.dc.html`
     a redirect stub. Home is a single source. See §1b.
+10b. **Do not edit base CSS inside a page file.** It lives in
+    `hugo/layouts/partials/head-base.html` and nowhere else (§1c). In the six
+    Hugo pages an edit is regenerated away; in the three hand-authored pages
+    it sits between `/* base:start */` and `/* base:end */` and is
+    overwritten by the next `npm run build:hugo`, failing `npm run check`
+    until then. If a rule genuinely belongs to one page, put it in that
+    page's own `<style>`, which the cascade already places after the shared
+    block. If it needs a different *colour* on one page, add a palette key —
+    do not fork the rule.
 11. **Do not use `aria-live="assertive"`** for filter results. Polite
     only.
 12. **Do not remove the `prefers-reduced-motion` block** from any file,

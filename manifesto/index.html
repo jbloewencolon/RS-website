@@ -44,7 +44,7 @@
   a{color:#DB9E2A;text-underline-offset:3px;text-decoration-thickness:1px}
   a:hover{color:#509C64}
    
-  a,button,summary,nav[aria-label="Contents"] a{
+  a,button,summary,[data-filter],nav[aria-label="Contents"] a,.card-title{
     transition:color .14s ease,background-color .14s ease,border-color .14s ease
   }
    
@@ -65,17 +65,19 @@
     .nav-toggle{display:block;width:100%}
   }
   *{box-sizing:border-box}
-  h1,h2,h3{text-wrap:balance}  
+   
+  h1,h2,h3{text-wrap:balance}
   :focus-visible{outline:2.5px solid #DB9E2A;outline-offset:3px}
-  @media print{
-    body{background:#fff;color:#000}
-    .noprint{display:none!important}
-    h1,h2,b,span,em,p{color:#000!important}
-    ol{columns:2!important}
-  }
+   
+  .dark :focus-visible{outline-color:#DB9E2A}
+  @media print{body{background:#fff}.noprint{display:none!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#DB9E2A;color:#0F2A2E;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
   .skip-link:focus{left:1rem;top:1rem}
+</style>
+
+<style>
+  @media print{body{color:#000}h1,h2,b,span,em,p{color:#000!important}ol{columns:2!important}}
 </style>
 </head>
 <body>

@@ -1,0 +1,129 @@
+{{- /*
+  The base block every page on this site carries — previously nine
+  hand-maintained copies of the same rules (docs/web-design.md §1c), which
+  made every site-wide rule a nine-file edit and every such edit an
+  opportunity for the drift that produced them. IA-10a.
+
+  Callers pass a dict of palette overrides; anything not named falls back
+  to the light ground. Two pages override:
+
+    manifesto.html   dark ground, its own palette, and "tokens" false —
+                     the semantic register is analytical and Manifesto's
+                     is rhetorical (docs/design-palette.md excludes it).
+    invitation.html  page-level ochre identity for links and the focus
+                     ring (FLAG-07, docs/design-palette.md "Deliberate
+                     exceptions"); everything else is the light ground.
+
+  Every interpolated value goes through safeCSS. Hugo sanitises unknown
+  values in CSS context, and a bare rgba() comes out as the literal string
+  ZgotmplZ — which is a silently dead rule, not a build error. Found that
+  way while extracting this; do not remove the filters.
+
+  Structure is shared even where a page has no element to match — the
+  Contents-nav rules ship to Behind the Scenes, which has no such nav, and
+  [data-filter] ships to Manifesto, which has no filters. Both are inert
+  selectors costing a few bytes, and unifying them is what keeps this one
+  block rather than three near-identical ones.
+
+  What does NOT belong here: anything one page needs and the others do
+  not. Those stay in the page's own <style>, which the cascade puts after
+  this block — see learn.html's Contents-nav sizing, index.html's .door
+  rules, and every page's print extensions.
+
+  The three hand-authored pages (index.html, practise/, contribute/) carry
+  a copy of this block's *output*, spliced between the base:start/base:end
+  markers by scripts/sync-base.mjs. They are not Hugo pages and cannot call
+  a partial; the sync keeps them byte-identical instead, and `npm run
+  check` fails if they drift.
+
+  No marker is emitted here to help that script find the block, because
+  none can be: Go's html/template strips HTML comments during execution,
+  and its CSS sanitiser strips comments inside <style> as well. Both were
+  tried. The script keys off this <style> element instead — it is the
+  first one in every generated page's <head>, which is a property of this
+  partial being called before any page CSS. Keep it that way.
+*/ -}}
+{{- $c := merge (dict
+  "bg"            "#E7E5DC"
+  "fg"            "#191B18"
+  "link"          "#2B4C9B"
+  "linkHover"     "#2C5A38"
+  "navBorder"     "#C9C6BA"
+  "navFg"         "#585B4F"
+  "navHoverEdge"  "#3F7A4E"
+  "navHoverFg"    "#2C5A38"
+  "navHoverBg"    "rgba(63,122,78,.08)"
+  "toggleFg"      "#585B4F"
+  "focus"         "#2B4C9B"
+  "skipBg"        "#0F2A2E"
+  "skipFg"        "#E7E5DC"
+  "tokens"        true
+) . -}}
+<style>
+  html{scroll-behavior:smooth}
+  body{margin:0;background:{{ $c.bg | safeCSS }};color:{{ $c.fg | safeCSS }};font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  a{color:{{ $c.link | safeCSS }};text-underline-offset:3px;text-decoration-thickness:1px}
+  a:hover{color:{{ $c.linkHover | safeCSS }}}
+  /* One motion token. Paint-only properties (colour/background/border)
+     on small elements: no layout, no compositing cost. outline-color is
+     deliberately excluded — keyboard focus must arrive instantly.
+     The prefers-reduced-motion rule below neutralises all of this. WD-02. */
+  a,button,summary,[data-filter],nav[aria-label="Contents"] a,.card-title{
+    transition:color .14s ease,background-color .14s ease,border-color .14s ease
+  }
+  /* WD-08b: the arrow travels on hover/focus, matching the .arr
+     treatment already used for authored arrows. inline-block is
+     required for transform to apply to a pseudo-element. */
+  a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none;display:inline-block;transition:transform .14s ease}
+  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before,
+  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):focus-visible::before{transform:translateX(2px)}
+  nav[aria-label="Contents"] a{border:1px solid {{ $c.navBorder | safeCSS }};border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:{{ $c.navFg | safeCSS }}}
+  nav[aria-label="Contents"] a:hover{border-color:{{ $c.navHoverEdge | safeCSS }};color:{{ $c.navHoverFg | safeCSS }};background:{{ $c.navHoverBg | safeCSS }}}
+  nav[aria-label="Contents"] a::before{content:none!important}
+  summary::before{content:"▸";display:inline-block;margin-right:.6rem;color:currentColor;flex-shrink:0;transition:transform .15s ease}
+  details[open]>summary::before{transform:rotate(90deg)}
+  .nav-toggle{display:none}
+  .nav-toggle>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:{{ $c.toggleFg | safeCSS }}}
+  .nav-toggle>summary::-webkit-details-marker{display:none}
+  .nav-toggle>nav{display:flex;flex-direction:column;align-items:flex-start;gap:.4rem;padding:.5rem 0 .8rem}
+  @media (max-width:700px){
+    #primary-nav{display:none!important}
+    .nav-toggle{display:block;width:100%}
+  }
+{{- if $c.tokens }}
+  /* WD-11: the semantic colour register, promoted from Learn (see
+     docs/design-palette.md for the full reasoning) — teal for what the
+     framework asserts, green for where a principle holds, rust for
+     where it fails, ochre for a question put to the reader. Migrating
+     each page's literal hex values to reference these is still open
+     (WD-11's second half); until then most pages define the tokens
+     without consuming them. Manifesto opts out via "tokens" false —
+     its register is rhetorical, not analytical, and design-palette.md
+     excludes it from this system on that basis. */
+  :root{
+    --paper:#E7E5DC;--paper-2:#EFEEE7;--ink:#191B18;--ink-2:#3C3E38;--ink-3:#585B4F;--rule:#C9C6BA;
+    --teal:#0F2A2E;--teal-2:#2A4C4C;--sage:#8FA9A2;
+    --holds:#2C5A38;--holds-fill:rgba(63,122,78,.13);--holds-edge:rgba(44,90,56,.35);
+    --fails:#8B3A2F;--fails-fill:rgba(139,58,47,.10);--fails-edge:rgba(139,58,47,.24);
+    --ask:#6B4C12;--ask-edge:#DB9E2A;--ask-fill:rgba(219,158,42,.13);
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  }
+{{- end }}
+  *{box-sizing:border-box}
+  /* WD-03 */
+  h1,h2,h3{text-wrap:balance}
+  :focus-visible{outline:2.5px solid {{ $c.focus | safeCSS }};outline-offset:3px}
+  /* Every light-ground ring goes invisible on this site's dark bands:
+     #2B4C9B is 1.88:1 on the #0F2A2E teal, and Invitation's own #7D5915
+     is worse still at 2.38:1 — both under the 3:1 minimum for a focus
+     indicator. Ochre is 6.42:1 there, and "a question being put to you"
+     is exactly what focus is. Scoped to .dark (dark-ground sections and
+     footers) rather than global, since each page's base ring is fine on
+     the light ground it was chosen for. WD-07. */
+  .dark :focus-visible{outline-color:#DB9E2A}
+  @media print{body{background:#fff}.noprint{display:none!important}}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+  .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:{{ $c.skipBg | safeCSS }};color:{{ $c.skipFg | safeCSS }};padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
+  .skip-link:focus{left:1rem;top:1rem}
+</style>
