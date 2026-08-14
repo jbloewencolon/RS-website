@@ -1,6 +1,6 @@
 # Relational Sovereignty — Active Tasks
 
-**Last reconciled:** 2026-08-13
+**Last reconciled:** 2026-08-14
 **Reconciles:** `docs/spec/base-work-order.md`, `docs/spec/addendum-a.md`, `docs/spec/decision-record-d1-d15.md` (authoritative on all `[DECISION]`/`D#` items), `docs/spec/warm-register-review-v2.md` (new content initiative, the warm register), an author review of navigation/disclosure/IA delivered directly into this session (no separate file — see Phase 2.5), the author-supplied `Web Design Spec — v0.3 refinement pass` (Phase 9; its cited source `docs/audits/design-review-2026-08-10.md` is now in the repository — it was not when that phase was planned), an author-supplied `Website Cache & Clickjacking Security Audit` dated 2026-08-11 (Phase 10; **not in this repository either**, and its own findings were re-checked against the live site — two did not survive contact, see that phase's header), a heuristic/source-DOM audit dated 2026-08-13 (Phase 11; `docs/audits/heuristic-audit-2026-08-13.md`, saved on arrival — four of its claims did not survive measurement and three of its recommendations collide with published commitments, see that phase's header), plus findings from a full read of the shipped code on this branch.
 **Companion file:** `completed.tasks.md` — when a task ships, move its row there with a dated `~~was:~~ now:` entry in the site's own changelog voice. Don't delete history; strike it.
 
@@ -503,11 +503,36 @@ Every measurable claim was re-tested in headless Chromium v0.164.0-built output 
 
 Practise publishes, on the page itself: *"everything you type stays in this browser tab. Nothing is sent anywhere, **nothing is stored**, nothing is counted… Closing the tab erases it."* Writing UI progress to session storage makes that sentence false. The decision is also already on the record with its reasoning — `practise/index.html:664`: *"No localStorage anywhere in this file. Resuming across sessions works only by re-importing a file the user chose to save — the same risk as exporting, made a deliberate choice each time rather than something the device does to a person silently."*
 
-The threat model is the one the page's own safety gate exists for: a shared or monitored device, where state the device retains on a person's behalf is exactly the exposure. **Recommendation: do not implement.** The underlying problem the audit is solving — a returning visitor re-traversing first-time safety framing — is real and addressable without storage (IA-09).
+The threat model is the one the page's own safety gate exists for: a shared or monitored device, where state the device retains on a person's behalf is exactly the exposure. ~~**Recommendation: do not implement.**~~ The underlying problem the audit is solving — a returning visitor re-traversing first-time safety framing — is real and addressable without storage (IA-09).
+
+> **Reopened by the author, 2026-08-14, with the instruction to remove the conflicting site copy.** The recommendation above is overridden; recorded here rather than deleted because the reasoning is what the next person will need. **Not started, and deliberately not folded into 11.1/11.2** — this is a change to a published safety commitment, not a layout task, and it needs its own commit and its own answer to the questions below.
+>
+> **What implementing it actually touches**, so it can be scoped honestly rather than discovered midway:
+> 1. `practise/index.html`'s published paragraph — *"everything you type stays in this browser tab. Nothing is sent anywhere, nothing is stored, nothing is counted… Closing the tab erases it."*
+> 2. The in-code decision record at `practise/index.html:664`, which states the threat model and must be rewritten rather than contradicted silently.
+> 3. The QA checklist in this file: *"No storage API called except where explicitly disclosed"* and *"Nothing typed is transmitted or persisted."* Both are currently ticked.
+> 4. `hugo/data/faults.yaml` and the colophon's substrate rows, if what the device retains becomes a disclosed property of the system.
+>
+> **Two questions only the author can answer, and the work should not start without them:**
+> - **What exactly gets stored?** "UI progress" spans a wide range — which tool a person opened, versus what they answered. The first is a navigation convenience; the second is the content the safety gate exists to protect on a shared or monitored device. IA-09 already delivers the first *without storage*, so if that is all that is wanted, no promise needs retracting at all.
+> - **What replaces the sentence?** "Nothing is stored" is load-bearing copy on a page about consent. A narrower true statement (naming what is kept, where, and how to clear it) is a different commitment from having no commitment.
 
 ### FLAG-10 — §5E measurement contradicts the "no analytics" claim `[DECISION]`
 
-Every page footer publishes *"No trackers, cookies, or analytics."* Any measurement layer, however privacy-preserving, retracts that. The audit's instinct is sound — its metric list (layer selection, principle deep links, matrix/card switches, Practise starts, print/save activation) measures useful choice rather than attention, which is the right frame and matches Home's own stated metric: *"Success is not traffic… how quickly this site becomes unnecessary to you."* But it cannot ship without the author retracting a published commitment. **Recommendation: get these signals from moderated testing with real people and ship no measurement code.**
+Every page footer publishes *"No trackers, cookies, or analytics."* Any measurement layer, however privacy-preserving, retracts that. The audit's instinct is sound — its metric list (layer selection, principle deep links, matrix/card switches, Practise starts, print/save activation) measures useful choice rather than attention, which is the right frame and matches Home's own stated metric: *"Success is not traffic… how quickly this site becomes unnecessary to you."* But it cannot ship without the author retracting a published commitment. ~~**Recommendation: get these signals from moderated testing with real people and ship no measurement code.**~~
+
+> **Reopened by the author, 2026-08-14, with the instruction to remove the conflicting site copy.** The recommendation above is overridden; kept for the reasoning. **Not started, and not part of 11.1/11.2.**
+>
+> **What implementing it actually touches:**
+> 1. The footer line *"No trackers, cookies, or analytics"* — on all nine pages, which since IA-10a is still nine edits: the footer is page markup, not part of the shared base block.
+> 2. `hugo/data/substrate.yaml`'s "Third-party requests" row, which currently reads *"Zero, with two deliberate, disclosed exceptions"* and names both.
+> 3. Every page's CSP `connect-src`, and `scripts/check-origins.mjs`, which exists to fail the build when a page reaches an origin it hasn't declared.
+> 4. The QA checklist here: *"Zero external network requests on load"* and *"No storage API called except where explicitly disclosed."*
+> 5. `robots.txt`'s reasoning, which argues from the site collecting nothing.
+>
+> **The question that decides the size of this:** is the ask to *add measurement*, or to *stop publishing an absolute promise* so the option stays open? Those are very different jobs. Adding a third-party analytics service reverses the site's zero-third-party-requests property and the colophon argument built on it; a self-hosted counter behind the existing Worker keeps that property and needs no vendor. Removing the footer line while shipping no measurement code is a third option, and the cheapest — but it retracts a commitment in exchange for nothing until something is actually built.
+>
+> Whichever is chosen, the copy change and the code change belong in one commit. A footer that says analytics exist while none do is the same class of gap — claim not matching behaviour — that Phase 10.2 exists to close.
 
 ### FLAG-11 — the audit's sequencing is backwards on the design-system layer `[DECISION — resolved: promote to first]`
 
@@ -563,59 +588,119 @@ the same four IDs, not additional work.
 consequence:** whether the registered Turnstile widget's allowed-domains list
 covers `relationalsovereignty.com`. Dashboard-only. If it does not, the widget
 renders an error instead of a challenge — a different failure, still a dead
-form. **Check this before anything else in the phase.**
+form.
+
+**How to check it** (asked 2026-08-14; writing it down so it isn't asked again):
+
+1. Sign in at `dash.cloudflare.com` → **Turnstile** in the left sidebar.
+2. Find the widget whose **Site Key** is `0x4AAAAAAEMpChSeguKsGevc` — the
+   same value in `worker/wrangler.toml` and now in both forms. Open
+   **Settings**.
+3. Read the **Domains** (or "Hostname Management") list. It must contain
+   `relationalsovereignty.com`. A widget scoped only to `localhost`, or to a
+   `*.pages.dev` preview host, will refuse the live domain.
+4. If it is missing, add it, save, and wait a minute for propagation.
+5. Then confirm end-to-end, which the dashboard cannot tell you: load
+   `https://relationalsovereignty.com/` in a private window, scroll to the
+   dispatch form, and check that a Turnstile challenge widget actually
+   *renders* above the submit button. Submit once with an address you
+   control and confirm the email arrives. A rendered widget proves the
+   domain is allowed; a visible error box proves it is not.
+
+Worth doing both halves — step 3 catches the configuration, step 5 catches
+everything else in the chain, and this form has already been dead in
+production once without anyone noticing.
 
 ---
 
-### Phase 11.1 — The shared layer `first · unblocks everything below`
+### Phase 11.1 — The shared layer `done 2026-08-14`
 
-Nothing else in this phase should start until this lands. **IA-10** is the
-audit's §5C written as four sequenced steps — `IA-10a`–`IA-10d` below are that
-one task, not four separate ones; elsewhere in this phase "after IA-10" means
-after all four have landed. Each step is independently shippable and
-revertible.
+**All five shipped** — IA-10a, IA-10b, IA-10c, IA-10d, IA-08 (plus IA-C3,
+folded into IA-08's commit as the same markup). Records in
+`completed.tasks.md`. Commits `b76a656`, `17d0832`, `14cf2dd`.
+
+The base block now lives in `hugo/layouts/partials/head-base.html` and
+nowhere else; a site-wide base rule is one edit plus `npm run build:hugo`.
+The three hand-authored pages get the same bytes via `scripts/sync-base.mjs`,
+and `npm run check` fails on drift. **`docs/web-design.md` §1c has been
+rewritten accordingly** — its "every site-wide rule is a ten-file edit" is
+struck, and guardrail 10b now says not to edit base CSS inside a page file.
+
+Two departures from the plan as written, both recorded in full on the
+completed entries:
+
+- **No `/base.css`.** IA-10a proposed a partial *plus* a stylesheet for the
+  hand-authored pages, which contradicted this phase's own acceptance
+  criterion that no page gains a network request. Resolved as one source
+  inlined everywhere, on the author's call.
+- **IA-08's floor is measured, not the audit's three offenders.** Measuring
+  every interactive element on all nine pages found 97, not 3; 77
+  declarations were raised. Two exclusions are deliberate and argued on the
+  entry: the stress-matrix headers (settled in IA-05) and the hidden
+  honeypot input.
+
+**What this cost, and who owes it back.** Page weight rose ~2 KB per page,
+because the component layer ships to every page and nothing uses it yet. The
+build's own check caught this and the colophon figure now says so plainly.
+**11.3 is what pays it back** — applying the components removes the
+per-element styling they replace. Do not leave that indefinitely.
+
+### ~~Phase 11.1 — the plan as written~~ *(kept for reference)*
 
 | ID | Step | Notes |
 |---|---|---|
-| **IA-10a** | Extract the base block to `hugo/layouts/partials/head-base.html` + `/base.css` for the two hand-authored pages | The nine-file duplication anchored by `a:hover{color:#2C5A38}`. `manifesto.html` keeps its own dark-ground palette — adapt, do not paste (§1c). |
-| **IA-10b** | Tokenise the four registers and both type stacks on `:root`, site-wide | Learn already does this (`--sans`, `--mono`, `--holds`, `--fails`, `--ask`). Promote Learn's block rather than inventing a second one. |
-| **IA-10c** | One component each: navigation link, disclosure, primary action, utility action | This is IA-12's substance. Build the four here, apply them in 11.3. |
-| **IA-10d** | Focus, error, and form-status treatments in one place | Absorbs the audit's quick wins 9 and 10, which are otherwise nine-file edits. |
-| **IA-08** | Raise interactive microtype to a 14px floor as part of 10a | Measured offenders: "Open every section" 11.5px, sticky summary 12.5px, mobile nav 12.5px. Decorative kickers may stay smaller. Cheap here, expensive later. |
-
-**Accept when:** `npm run check` passes; `npm run build:hugo` is byte-clean;
-every page renders identically to its pre-extraction screenshot at 390/768/1440px
-except for the deliberate microtype change; no page gains a network request.
-
-**Risk.** This touches every page and changes no visible behaviour, which is
-exactly the kind of change that hides regressions. Screenshot every page before
-and after at three widths and diff them; do not rely on the check suite alone.
+| ~~**IA-10a**~~ | Extract the base block to `hugo/layouts/partials/head-base.html` + `/base.css` for the two hand-authored pages | Shipped without the `/base.css` half — see above. |
+| ~~**IA-10b**~~ | Tokenise the four registers and both type stacks on `:root`, site-wide | Came out in the wash of 10a. Hex→`var()` migration is still open as WD-11's second half. |
+| ~~**IA-10c**~~ | One component each: navigation link, disclosure, primary action, utility action | Built and inert. Applied in 11.3. |
+| ~~**IA-10d**~~ | Focus, error, and form-status treatments in one place | Built and inert. |
+| ~~**IA-08**~~ | Raise interactive microtype to a 14px floor | 77 declarations. |
 
 ---
 
-### Phase 11.2 — Learn, in the cheap order `parallel with 11.1 · no styling surface`
+### Phase 11.2 — Learn, in the cheap order `done 2026-08-14`
 
-The audit's largest recommendation is a Learn re-architecture. Most of its
-benefit is available from three changes that need no new components, and taking
-them first means the expensive question (11.5) gets asked against a page that
-has already improved.
+**All three shipped** — IA-16, IA-04, IA-05. Records in
+`completed.tasks.md`. Commits `7469a28`, `a31be6a`.
 
-| ID | Task | Effort |
-|---|---|---|
-| **IA-16** | **Move "Forms and labels" after the principles.** Pure source reorder, no copy change, anchor preserved. The page's title and hero promise thirteen principles and currently deliver a terminology section first. Ship this on its own. | XS |
-| **IA-04** | Give the bulk control `aria-controls` listing the nine ids it now actually governs, and keep `aria-pressed`. Honest scope first (IA-01), correct semantics second. | XS |
-| **IA-05** | Matrix and scenario cards become **labelled alternate views** of one dataset — cards below 820px, matrix at/above, both in the DOM, both deep-linkable, explicit switch. 820px is measured (at 820px the table is 760px in a 752px container), not chosen. | M |
+Every acceptance criterion was measured rather than estimated, as that
+block asked:
 
-**Accept when:** every existing fragment on Learn still resolves; the page is
-complete and readable with scripting off; the matrix remains reachable at every
-width via the switch; a 390px visitor reaches the first principle title in
-fewer viewports than before (measure it, don't estimate).
+- Every fragment on Learn still resolves, with scripting on and off.
+- The page renders identically with scripting off (body text length
+  19,092 vs 19,073 chars — the difference is script-injected label text,
+  not content).
+- The chart is reachable at every width via the switch; verified landing
+  visibly at 320/390/820, where it is not the default view.
+- **A 390px visitor reaches the first principle at 1396px instead of
+  2946px — 3.49 viewports down to 1.65.**
+
+**One correction to the plan.** IA-05's breakpoint is **860px, not 820px**.
+820px is where the audit *observed* the overflow; it is not where it stops.
+`table.matrix` has `min-width:760px` and the wrap pads 4vw a side, so the
+container first clears 760px between 820px (752px, still scrolls) and 860px
+(789px, fits). Measured across eight widths.
+
+**IA-08's matrix deferral is settled here.** The chart keeps its 12.5px row
+headers rather than taking the 14px control floor — it is a summary index
+whose every row and column links to the same content at full reading size
+in the rows view, and widening the table to satisfy a type floor would push
+the fitting threshold back up and reintroduce the overflow IA-05 removes.
 
 ---
 
-### Phase 11.3 — Apply the components `after 11.1`
+### Phase 11.3 — Apply the components `unblocked 2026-08-14 · next`
 
-Now one-file edits instead of nine.
+11.1 has landed, so this is now one-file edits instead of nine. The four
+components (`.action`, `.action-utility`, `.nav-link`, `.disclosure`) and the
+three form states (`.form-error`, `.form-status`, `.field-invalid`) already
+exist in `hugo/layouts/partials/head-base.html` and are inert — IA-05's view
+switch is currently their only consumer.
+
+**This phase also pays back a debt.** The component layer added ~2 KB per
+page while nothing used it. Applying it removes the per-element inline
+styling it replaces, and should take page weight back below where 11.1 found
+it. `checkPageWeight` will say either way, and the colophon figure needs
+updating again when it does.
 
 | ID | Task | Audit ref |
 |---|---|---|
@@ -654,9 +739,8 @@ without two-dimensional scrolling, the labelled matrix scroller excepted.
 
 ### Not doing, and why
 
-- **FLAG-09 · session storage on Practise.** Contradicts the page's published *"nothing is stored… Closing the tab erases it,"* and reverses a decision already recorded with its threat model at `practise/index.html:664`. The problem it solves is real; IA-09 solves it without storage.
-- **FLAG-10 · any measurement layer.** Contradicts *"No trackers, cookies, or analytics"* on every page footer. The audit's metric list is the right frame — get it from moderated testing with real people and ship no code.
-- **§5D "browser Back restores the prior disclosure/view state."** Requires `history.pushState` bookkeeping across every disclosure on the site, for a benefit no measurement here can confirm. Revisit only if IA-05's view switch turns out to strand people, which it may not.
+- ~~**FLAG-09 · session storage on Practise.**~~ ~~**FLAG-10 · any measurement layer.**~~ **Both reopened by the author 2026-08-14**, with the instruction to remove the site copy each conflicts with. They are no longer "not doing" — they are unscheduled, unscoped, and each needs an answer before work starts. See the FLAG-09 and FLAG-10 sections above for what each one actually touches and the specific question each turns on. Neither is part of 11.1/11.2, and neither should ride along in a layout commit: both change a published commitment on a site whose subject is consent and data sovereignty, so each gets its own commit, with the copy change and the code change together.
+- **§5D "browser Back restores the prior disclosure/view state."** Requires `history.pushState` bookkeeping across every disclosure on the site, for a benefit no measurement here can confirm. **Partially overtaken by IA-05**, which now syncs the stress-test view to `hashchange` — so Back does restore the view across a deep link there, without any history bookkeeping. Revisit the general case only if the switch turns out to strand people.
 
 ### Task detail — what shipped in 11.0 and how it was verified
 
