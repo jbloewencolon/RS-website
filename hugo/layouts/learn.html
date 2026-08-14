@@ -41,7 +41,7 @@
 {{ partial "head-base.html" dict }}
 <style>
   nav[aria-label="Contents"] a{border:1px solid #C9C6BA;border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:#585B4F;display:inline-flex;align-items:center;min-height:44px}
-  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;max-width:900px;display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:0 1.5rem;font-family:var(--mono);font-size:13px}
+  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;max-width:900px;display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:0 1.5rem;font-family:var(--mono);font-size:14px}
   @media print{body.print-isolate>header,body.print-isolate>main>section:not(#field-guide),body.print-isolate>footer{display:none!important}}
 
   /* ── Accent system ───────────────────────────────────────────────────
@@ -134,7 +134,7 @@
      expanded menu is taken out of flow entirely below. */
   .jump-inner{position:relative;max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:nowrap;align-items:center;gap:0 1rem;justify-content:space-between}
   .jump-menu{flex:1 1 auto;min-width:0}
-  .jump-menu>summary{cursor:pointer;list-style:none;display:flex;align-items:center;min-height:48px;font-family:var(--mono);font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
+  .jump-menu>summary{cursor:pointer;list-style:none;display:flex;align-items:center;min-height:48px;font-family:var(--mono);font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
   .jump-menu>summary::-webkit-details-marker{display:none}
   /* min-width:0 is what lets the ellipsis actually happen: a flex item
      defaults to min-width:auto and refuses to shrink below its text, which
@@ -143,13 +143,13 @@
   /* Out of flow so the bar above it never has to make room: the expanded
      list drops over the page instead of resizing the row it came from. */
   .jump-menu>nav{position:absolute;left:0;right:0;top:100%;z-index:5;background:var(--paper);border-bottom:1px solid var(--rule);box-shadow:0 12px 20px -14px rgba(25,27,24,.65);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(215px,100%),1fr));gap:0 1.4rem;padding:.3rem clamp(1.1rem,4vw,3rem) 1rem}
-  .jump-menu>nav a{font-family:var(--mono);font-size:13px;color:var(--ink-3);text-decoration:none;display:flex;align-items:center;min-height:40px;border-bottom:2px solid transparent}
+  .jump-menu>nav a{font-family:var(--mono);font-size:14px;color:var(--ink-3);text-decoration:none;display:flex;align-items:center;min-height:40px;border-bottom:2px solid transparent}
   .jump-menu>nav a::before{content:none!important}
   .jump-menu>nav a:hover{color:var(--holds)}
   .jump-menu>nav a[aria-current]{color:var(--teal);border-bottom-color:var(--ask-edge)}
   /* Hidden until sections.js adds .is-ready, so a reader with scripting off
      is never shown a control that cannot do anything. */
-  [data-open-all]{display:none;font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;background:none;color:var(--teal);border:1px solid var(--rule);border-radius:2px;padding:.45rem .8rem;min-height:44px;cursor:pointer;white-space:nowrap}
+  [data-open-all]{display:none;font-family:var(--mono);font-size:14px;letter-spacing:.07em;text-transform:uppercase;background:none;color:var(--teal);border:1px solid var(--rule);border-radius:2px;padding:.45rem .8rem;min-height:44px;cursor:pointer;white-space:nowrap}
   [data-open-all].is-ready{display:inline-flex;align-items:center}
   [data-open-all]:hover{border-color:var(--holds);background:var(--holds-fill);color:var(--holds)}
 
@@ -310,7 +310,7 @@
   .fg-p{margin:0 0 .5rem;font-family:var(--sans);font-weight:700;font-size:1.02rem;line-height:1.3;color:var(--ink)}
   .fg-g{margin:0 0 1.1rem;font-size:14.5px;line-height:1.5;color:var(--ink-2);flex:1 1 auto}
   .fg-q{margin:0 -1.3rem;padding:.8rem 1.3rem;background:var(--fails-fill);border-top:1px solid var(--fails-edge);font-family:var(--mono);font-size:12.5px;line-height:1.5;color:var(--fails)}
-  .btn-print{font-family:var(--mono);font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:var(--fails);color:#F3E9E6;border:none;padding:.8rem 1.1rem;min-height:44px;cursor:pointer;border-radius:2px}
+  .btn-print{font-family:var(--mono);font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:var(--fails);color:#F3E9E6;border:none;padding:.8rem 1.1rem;min-height:44px;cursor:pointer;border-radius:2px}
 
   @media print{
     .jump{display:none!important}
@@ -324,7 +324,7 @@
 <header class="noprint" style="border-bottom:1px solid #C9C6BA">
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="/" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
-    <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+    <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
       <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
       <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
       <a href="/learn/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
@@ -335,8 +335,8 @@
       <a href="/behind-the-scenes/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
     </nav>
     <details class="nav-toggle">
-      <summary aria-label="Menu">Menu</summary>
-      <div style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+      <summary>Menu</summary>
+      <div style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
         <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
         <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
         <a href="/learn/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
@@ -750,7 +750,7 @@
 </main>
 
 <footer class="dark" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:44ch">v0.2 · no third-party requests, including fonts · <a href="/behind-the-scenes/" style="color:#DB9E2A">what changed</a> · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
       <a href="/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>
