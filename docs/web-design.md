@@ -47,7 +47,7 @@ change disappears the next time anyone runs the build.
 
 | Shipped page | Source | Note |
 |---|---|---|
-| `index.html` (Home) | `index.html` **and** `Home.dc.html` | Two byte-identical copies; **both must be edited** |
+| `index.html` (Home) | itself | Single source; see the note below |
 | `practise/index.html` | itself | Interactive tool, stays on the prerender path |
 | `contribute/index.html` | itself | Interactive tool |
 
@@ -55,11 +55,17 @@ These carry live `dc-runtime` logic that Hugo's static output cannot
 hold. `scripts/prerender.mjs` renders them in a real browser and bakes
 the HTML into `_site/`, so a no-JS reader and a crawler see full content.
 
-> **The `index.html` / `Home.dc.html` duplication is a live bug source.**
-> The homepage typo in §3.1 exists in both files precisely because they
-> are maintained by hand in parallel. Any Home change must be applied
-> twice, verified with `diff index.html Home.dc.html` (should output
-> nothing). Consider collapsing this to one file in a follow-up.
+> **Corrected 2026-08-13 (IA-07).** This section previously said Home was
+> two byte-identical copies — `index.html` **and** `Home.dc.html` — that
+> both had to be edited, with `diff index.html Home.dc.html` as the check.
+> **That has not been true since WD-26.** `Home.dc.html` is now a ~1.3 KB
+> redirect stub carrying `<meta http-equiv="refresh">`, like the other
+> eight stubs left at the old flat paths; the homepage's real content
+> lives only in `index.html`, and `scripts/prerender.mjs` treats the stub
+> as copy-as-is. Editing it, or diffing it against `index.html`, is work
+> against a file that is no longer a copy of anything. The 2026-08-13
+> heuristic audit re-reported the duplication as a live finding after
+> reading this section, which is what surfaced the staleness.
 
 ### 1c. There is no shared CSS — this is the single most important fact
 
@@ -77,7 +83,8 @@ a:hover{color:#2C5A38}
 ```
 
 Files containing it: `hugo/layouts/{archive,behindthescenes,invitation,learn,resources}.html`,
-`index.html`, `Home.dc.html`, `practise/index.html`, `contribute/index.html`.
+`index.html`, `practise/index.html`, `contribute/index.html`. (`Home.dc.html`
+is a redirect stub since WD-26, not a tenth copy — see §1b.)
 
 **`hugo/layouts/manifesto.html` is the exception.** It is dark-ground
 throughout and has its own base palette (`a{color:#DB9E2A}`,
@@ -118,9 +125,10 @@ them to achieve anything in this document.
    }
    ```
    Everything in §3 inherits this automatically. **Exception:** SVG SMIL
-   `<animate>` ignores CSS and must be withheld in JS — `Home.dc.html`
+   `<animate>` ignores CSS and must be withheld in JS — `index.html`
    already does this correctly in `drift()`. Copy that pattern if you add
-   any SMIL.
+   any SMIL. (This said `Home.dc.html` until 2026-08-13; the code has been
+   in `index.html` alone since WD-26. IA-07.)
 4. **Colour is never the sole carrier of meaning.** Every coloured state
    is doubled by a glyph or a word. See §2.3.
 
@@ -230,9 +238,11 @@ structural; Tier C is optional.
 **Why.** It is the largest type on the site, set up to 4.4rem, and it is
 the first thing most visitors read.
 
-**Where.** Two files, same line number, both must change:
+**Where.** ~~Two files, same line number, both must change:~~
+**Shipped; and since WD-26 there is only one file.** `index.html` only —
+`Home.dc.html` is a redirect stub (§1b, IA-07).
 - `index.html:109`
-- `Home.dc.html:109`
+- ~~`Home.dc.html:109`~~
 
 **Code.**
 ```diff
@@ -240,8 +250,9 @@ the first thing most visitors read.
 +FREEDOM THROUGH RELATIONSHIP, NOT FROM IT. NO OWNERS. NO OBJECTS.
 ```
 
-**Verify.** `diff index.html Home.dc.html` prints nothing; `grep -c FREDOM
-index.html Home.dc.html` returns 0 for both.
+**Verify.** `grep -c FREDOM index.html` returns 0. (The `diff index.html
+Home.dc.html` half of this step is obsolete — it now reports a full page
+against a redirect stub. IA-07.)
 
 **Risk.** None. The `max-width:18ch` on the `h1` absorbs one extra
 character without reflowing the line breaks meaningfully.
@@ -373,14 +384,15 @@ near-identical browns reading as one colour with two values is exactly
 the kind of drift that makes a deliberate system look accidental.
 
 **Where.**
-- `index.html` and `Home.dc.html` — six door kickers, `color:#7D5915`
+- `index.html` — six door kickers, `color:#7D5915` (`Home.dc.html` is a
+  stub since WD-26, IA-07)
 - `hugo/layouts/archive.html:150` — `{{ $rule = "#7D5915" }}`
 - `hugo/layouts/invitation.html:61` — `:focus-visible` outline
 
 **Code.** Replace `#7D5915` with `#6B4C12` at all occurrences.
 
 ```bash
-grep -rn "7D5915" index.html Home.dc.html hugo/layouts/
+grep -rn "7D5915" index.html hugo/layouts/
 ```
 
 **Decision point.** The Archive's `$rule` value is used as a **border
@@ -1261,7 +1273,9 @@ Things that will look like improvements and are not. Do not do these.
 8. **Do not let colour carry meaning alone.** Every coloured state gets a
    word or a glyph too.
 9. **Do not hand-edit Hugo output.** See §1a.
-10. **Do not edit `index.html` without editing `Home.dc.html`.** See §1b.
+10. ~~**Do not edit `index.html` without editing `Home.dc.html`.**~~
+    **Struck 2026-08-13 (IA-07)** — obsolete since WD-26 made `Home.dc.html`
+    a redirect stub. Home is a single source. See §1b.
 11. **Do not use `aria-live="assertive"`** for filter results. Polite
     only.
 12. **Do not remove the `prefers-reduced-motion` block** from any file,
@@ -1278,7 +1292,8 @@ Run before merging any group of changes.
 npm run check           # HTML validation + origin/page checks
 npm run check:responsive
 npm run build:hugo      # only if a hugo/layouts file changed
-diff index.html Home.dc.html   # must print nothing
+# (the `diff index.html Home.dc.html` check that used to live here was
+# removed 2026-08-13 — Home.dc.html is a redirect stub, not a copy. IA-07.)
 ```
 
 **Cross-cutting manual**

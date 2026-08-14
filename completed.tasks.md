@@ -1303,3 +1303,81 @@ now: `docs/spec/cloudflare-headers.md` (new) — one universal Transform Rule (H
 **Deliberately preparation only — nothing in this entry is live.** The domain isn't proxied through Cloudflare yet; that's an account-level DNS/nameserver change only the operator can make, described as this file's own first section rather than skipped over. No header from this file has been applied anywhere, and the file says so in its own opening paragraph so it can't be mistaken later for a record of something already done.
 
 Verified: cross-checked all four CSP bucket strings, directive-by-directive, against the exact `grep` output pulled from the ten live page sources plus all nine redirect stubs before writing them into the file — not retyped from memory. Confirmed the Resources/redirect-stub bucket really is one identical string across all ten of those files, not nine-similar-but-different ones that happened to look alike at a glance.
+
+### FLAG-06 — the `.dc.html` URL scheme, decided
+**Shipped:** 2026-08-08 · **Commit/PR:** see BUG-03
+
+~~was: every URL on the live site ended in `.dc.html`, an artifact of the authoring format leaking into the address bar~~
+now: author chose option (C) — full pretty URLs. Each page's path is set by an explicit `url:` field in its `hugo/content/*.md` front matter, with redirect stubs left at the nine old flat paths so bookmarked and already-indexed links still land somewhere real.
+
+Notes: recorded here 2026-08-13 during the Phase 11 cleanup — the row had been struck through in `tasks.md` since it shipped but never got an entry in this file. Reconstructed from the `tasks.md` row and the BUG-03 write-up; treat the BUG-03 entry as the fuller record.
+
+### WD-10b — the "no fourteenth principle yet" cell, and a real grid defect found while shipping it
+**Shipped:** 2026-08-11 · **Commit/PR:** PR #26
+
+~~was: `.principles` (13 items, 3 columns) left a filled hairline slab where the fourteenth cell would be~~
+now: the gap carries an authored "no fourteenth principle yet" card, author copy approved as drafted; `/behind-the-scenes/#roadmap` confirmed to resolve.
+
+Notes:
+- **The originally-planned fix was wrong and was caught before it shipped.** `grid-column:span 2` on the filler works at 3 columns and breaks at 2 — the filler can't fit beside principle 13 in the remaining single-column space, so it wraps to its own row and leaves 13 with a genuinely empty cell beside it. A hard-coded breakpoint would have papered over that and gone stale the moment the grid's column minimum or gutters changed.
+- Fixed properly instead: `.principles` now draws hairlines per-cell (`border-top`/`border-left` on the container, `border-right`/`border-bottom` on each `<li>`) — the same technique WD-10a already shipped for `.fg` and the Behind the Scenes crawler grid — so a genuinely empty trailing cell shows page ground and the filler stays a plain, unspanned grid item.
+- Verified by binary-searching the 2↔3 column transition (982/983px) plus visual checks at 1920/1280/1024/768/500/390/320px. No dead cell at any width.
+
+### WD-15 — palette rollout to Behind the Scenes, Practise, Resources, Archive
+**Shipped:** 2026-08-11 · **Commit/PR:** PR #26 (Resources half) + `bb94c0d`
+
+~~was: the four semantic registers were applied systematically only on Learn; four other pages carried the colours without the meaning~~
+now: all four pages carry the register system, each decision recorded rather than applied uniformly.
+
+Notes:
+- **Resources** — the one genuinely empty category (`mutual-aid`) takes ochre on its dashed rule and `Not yet built` scope label. No author judgement was needed: `resources.yaml` already carried `scope: "Not yet built"` and the category already had an explanatory paragraph, so this only added the colour.
+- **Behind the Scenes** — author's call: all five faults take ochre even though that renders them uniformly, because every one is currently unfixed. The numeral moved from rust to ochre in the process — rust means "where the framework fails or runs out," but these are things *named and not yet built*, which is ochre's job. If faults ever carry mixed states, a per-fault status field is where the register would start doing finer work.
+- **Practise** — the seven unbuilt tools' status labels are ochre for both `in progress` and `not started` (author's call): both are "named, not built" in register terms, and the status *words* carry the finer distinction, so nothing is encoded by hue alone. `#DB9E2A` is text-safe on that section's `#0F2A2E` ground (6.42:1).
+- **Archive** — see WD-16.
+- **The Practise rust carve-out, settled 2026-08-11:** rust means *safety surface*, and every current use on that page qualifies, so no rust was changed.
+- Recorded here 2026-08-13 during the Phase 11 cleanup.
+
+### WD-16 — Archive's seven access-state chips take the "named, not built" register
+**Shipped:** 2026-08-11 · **Commit/PR:** PR #26
+
+~~was: the seven access-state chips were styled like the clickable filter chips higher up the page~~
+now: ochre text (`#6B4C12`, 6.24:1) on a **dashed** `#DB9E2A` edge.
+
+Notes:
+- Dashed specifically so they cannot be mistaken for the solid, clickable filter chips above them — the spec's own stated failure mode.
+- Not carried by colour: the section's paragraph already reads "None of it is built yet," and dashed-vs-solid survives greyscale (verified with achromatopsia emulation).
+- **The chips were already in gradient order in `archive.yaml`** (public → contributor-controlled → community-specific → temporarily restricted → excerpt only → metadata only → exists-but-unavailable), so no reordering was needed — checked rather than assumed.
+- Recorded here 2026-08-13 during the Phase 11 cleanup.
+
+### WD-28 — the orphaned "second way in" framing
+**Shipped:** 2026-08-11 · **Commit/PR:** PR #26
+
+~~was: Invitation's kicker referenced being the second of two ways in, after the pairing it referred to had been removed from Home~~
+now: "A warmer register · about 4 minutes" — author chose to drop the pairing rather than restore it, tying the kicker to the existing subtitle ("What relational sovereignty sounds like:") instead of to a first-of-two that no longer exists.
+
+Notes: recorded here 2026-08-13 during the Phase 11 cleanup.
+
+### WD-12 — Archive's register system: a rust `counter` class, and teal as the default
+**Shipped:** 2026-08-11 · **Commit/PR:** `307fa5f`, `d61f40f`
+
+Two halves of one change, tracked as separate rows in `tasks.md` and recorded together here.
+
+**Rust `counter` register.**
+
+~~was: the Archive had no way to mark a text that cuts against the framework's own argument~~
+now: a `counter` tag in `archive.yaml`, rendered in the rust register under the label `⚑ we have no answer to this`.
+
+Notes:
+- Label approved by the author; all four candidates approved — Barker/Alfred, Freeman (*The Tyranny of Structurelessness*), Roberts (*Torn Apart*), Bridges (*The Poverty of Privacy Rights*).
+- Rust takes priority over `start`/`free` in both the rule colour and the kicker prefix. **Checked and stated honestly:** no entry currently carries both `counter` and `start`, so that priority order is untested against real data — correct if such an entry ever arrives, but not currently exercised.
+- Filter chip added alongside.
+
+**Teal as the default register.**
+
+~~was: link-blue `#2B4C9B` doubled as the default category colour for ordinary Archive entries, so blue meant both "this is a link" and "this is an entry"~~
+now: the default register is teal `#0F2A2E`. On Archive, `#2B4C9B` appears exactly twice — the base `a{}` rule and the `:focus-visible` outline — so blue means "this is a link" and nothing else.
+
+Notes:
+- Verified register distribution across all 60 entries: 34 teal (default), 14 ochre (`start`), 8 green (`free`), 4 rust (`counter`).
+- **An earlier pass through the `tasks.md` table wrongly recorded this half as already shipped; that was caught and corrected before the work was actually done.** Kept here because a status field that was once wrong is worth knowing about.
+- Recorded in this file 2026-08-13 during the Phase 11 cleanup — both rows had been struck through in `tasks.md` since they shipped but never got an entry here.
