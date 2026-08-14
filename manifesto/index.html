@@ -64,12 +64,34 @@
     #primary-nav{display:none!important}
     .nav-toggle{display:block;width:100%}
   }
+   
+  :root{
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  }
   *{box-sizing:border-box}
    
   h1,h2,h3{text-wrap:balance}
   :focus-visible{outline:2.5px solid #DB9E2A;outline-offset:3px}
    
   .dark :focus-visible{outline-color:#DB9E2A}
+   
+  .action,.action-utility,.nav-link,.disclosure,.form-error{font-family:var(--mono);font-size:14px}
+  .action,.action-utility,.nav-link,.disclosure{text-transform:uppercase;min-height:44px;display:inline-flex;align-items:center;border-radius:2px}
+  .action,.action-utility{cursor:pointer;letter-spacing:.05em}
+  .action{background:#DB9E2A;color:#0F2A2E;border:none;padding:.85rem 1.2rem}
+  .action[disabled]{cursor:default;opacity:.55}
+  .action-utility{background:transparent;color:#8FA9A2;border:1px solid #5C7A72;padding:.6rem .8rem}
+  .action-utility:hover,.action-utility[aria-pressed="true"],.action-utility.is-active{border-color:#509C64;color:#509C64;background:rgba(80,156,100,.1)}
+  .nav-link,.disclosure{color:#8FA9A2;letter-spacing:.04em;padding:.4rem 0}
+  .nav-link{text-decoration:none}
+  .nav-link:hover,.disclosure:hover{color:#509C64}
+  .nav-link[aria-current]{color:#DDE4DC;text-decoration:underline;text-underline-offset:5px}
+  .disclosure{cursor:pointer}
+   
+  .form-error{line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem}
+  .form-status{border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;background:rgba(63,122,78,.06);padding:1.6rem 1.5rem}
+  .field-invalid{border-color:#8B3A2F!important}
   @media print{body{background:#fff}.noprint{display:none!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#DB9E2A;color:#0F2A2E;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;border-radius:2px}
