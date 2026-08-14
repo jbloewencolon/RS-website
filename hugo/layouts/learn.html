@@ -200,7 +200,30 @@
      still has an accessible name. */
   .matrix-intro{max-width:80ch;margin:0 0 .9rem;font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--ink-3)}
   .matrix-hint{display:none;margin:.6rem 0 0;font-family:var(--mono);font-size:12px;color:var(--ink-3)}
-  @media (max-width:820px){.matrix-hint{display:block}}
+  /* IA-05, the two views of the stress data. Three states, in order of
+     increasing specificity so each beats the one above it:
+
+       1. No scripting. #view-rows always renders; #view-map renders only
+          at 860px and up, where the 760px table fits its container. Below
+          that the chart is not shown at all, which is what removes the
+          horizontal-scroll defect for a reader without JavaScript rather
+          than merely warning them about it.
+       2. Scripting ready (.js-views on the section). Neither view shows
+          until one is marked current, so the switch is in charge at every
+          width — including widths where the chart must scroll, which is
+          what the hint is for.
+       3. The current view.
+
+     The switch itself is hidden until JavaScript marks it ready, the same
+     way [data-open-all] is: a control that cannot work should not be
+     drawn. */
+  .views{display:none;gap:.5rem;flex-wrap:wrap;margin:0 0 1.1rem}
+  .js-views .views{display:flex}
+  @media (max-width:859px){#view-map{display:none}}
+  .js-views #view-map,.js-views #view-rows{display:none}
+  .js-views #view-map.is-current,.js-views #view-rows.is-current{display:block}
+  .js-views #view-map.is-current .matrix-hint{display:none}
+  @media (max-width:859px){.js-views #view-map.is-current .matrix-hint{display:block}}
   table.matrix th,table.matrix td{border:1px solid var(--rule);padding:.45rem .3rem;text-align:center;vertical-align:middle}
   table.matrix thead th{background:var(--teal);color:#DDE4DC;font-weight:500;width:2.7rem}
   table.matrix thead th:first-child{text-align:left;width:auto;min-width:15rem;padding-left:.9rem;letter-spacing:.1em;text-transform:uppercase;font-size:11px}
@@ -315,6 +338,12 @@
   @media print{
     .jump{display:none!important}
     .matrix-scroll{overflow:visible}
+    /* Paper has no switch, so it gets both views — the same reason
+       sections.js opens every <details> before printing. The chart is
+       allowed to print at any page width here because .matrix-scroll
+       stops scrolling above. IA-05. */
+    .views{display:none!important}
+    .js-views #view-map,.js-views #view-rows,#view-map,#view-rows{display:block!important}
   }
 </style>
 </head>
@@ -474,6 +503,27 @@
 
     {{ $prin := hugo.Data.principles }}
     <p class="matrix-intro" id="stress-map-caption">Which of the thirteen each situation engages, and how. Read a row across: a filled mark is a principle doing the work it claims to do here, a hollow one is a principle that is named by the situation and does not hold. Blank columns are not endorsements — they are principles this situation simply does not put under load.</p>
+    <!-- IA-05: one dataset, two views. The chart summarises which principles
+         each situation engages; the rows below carry the same seven
+         situations in full prose. Both are always in the DOM.
+
+         Without scripting the rows always render — they hold the content —
+         and the chart renders only at widths where it actually fits. That
+         threshold is 860px, measured rather than chosen: table.matrix has
+         min-width:760px, the wrap's padding is 4vw a side, and the
+         container first clears 760px between 820px (752px, scrolls) and
+         860px (789px, fits). The audit proposed 820px, which is where the
+         overflow was *observed*, not where it stops.
+
+         With scripting the switch decides at any width, so the chart stays
+         reachable on a phone — in its labelled scroller, which is the one
+         place on this site a horizontal scroll is allowed, and is why the
+         hint below lives inside this view rather than beside it. -->
+    <div class="views" role="group" aria-label="How to read the seven situations">
+      <button type="button" class="action-utility" data-view="map" aria-controls="view-map" aria-pressed="false">Chart</button>
+      <button type="button" class="action-utility" data-view="rows" aria-controls="view-rows" aria-pressed="false">Full rows</button>
+    </div>
+    <div id="view-map">
     <div class="matrix-scroll" id="stress-map" tabindex="0" role="group" aria-labelledby="stress-map-caption">
       <table class="matrix">
         <caption class="vh">The seven situations against the thirteen principles: which hold, and which fail.</caption>
@@ -501,7 +551,11 @@
         </tbody>
       </table>
     </div>
-    <p class="matrix-hint">Thirteen columns — scroll the chart sideways, or read the same seven rows in full below.</p>
+    <p class="matrix-hint">Thirteen columns — scroll the chart sideways, or switch to the full rows.</p>
+    </div>
+    <!-- Legend and the ★ note sit outside both views: the same marks appear
+         on the chart's cells and on the rows' chips, so the key to them is
+         not part of either view. -->
     <ul class="legend">
       <li><span class="m m-holds">▪</span> holds — the principle bears load here</li>
       <li><span class="m m-fails">□</span> fails — named by the situation, does not hold</li>
@@ -510,6 +564,7 @@
     </ul>
     <p class="note note-fails">★ Two rows carry this mark because a matrix can only fail a principle it can point at. Coercive control fails nearly every principle at once, not only the three marked; a child in a restructuring household is failed by an absence — no principle here grants them standing — and an absence has no cell.</p>
 
+    <div id="view-rows">
     <p style="max-width:60ch;margin:2rem 0 1rem;color:#3C3E38;font-size:16.5px;line-height:1.58">Each row, in full — what holds, what fails, and why:</p>
     {{ range hugo.Data.stress }}
     <details class="card card-fails" data-collapsible>
@@ -534,6 +589,7 @@
       </div>
     </details>
     {{ end }}
+    </div>
     <p class="note note-fails">⌖ Not exhaustive, and not ranked by severity. Seven situations chosen because each fails a different principle for a different reason — the point isn't the list, it's that a list this short already finds seven of them.</p>
   </div>
 </section>
