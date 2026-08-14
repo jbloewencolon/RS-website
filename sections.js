@@ -18,6 +18,74 @@
 (function () {
   var BAR = 76; // px of sticky jump bar to keep clear of the viewport top
 
+  // 0. Two views of the seven stress situations (IA-05).
+  //
+  // The chart and the full rows are the same seven situations. Both are in
+  // the HTML always; the CSS decides which shows when this file has not
+  // run — rows at every width, chart only at 860px and up, where it fits.
+  // Here the reader gets an explicit choice instead, at any width.
+  //
+  // Deep links keep working across the switch, which is the part worth
+  // being careful about: the chart's row headers point at ids inside the
+  // rows view, so following one has to change view before the browser can
+  // scroll to it. Anything that lands on a hash — the initial load, an
+  // in-page click, a pasted URL, the Back button — resolves the target's
+  // view first, then lets the native reveal behaviour open the card.
+  var scen = document.getElementById("scenarios");
+  var vmap = document.getElementById("view-map");
+  var vrows = document.getElementById("view-rows");
+  if (scen && vmap && vrows) {
+    var WIDE = 860; // px; where table.matrix's 760px min-width clears the wrap
+    var buttons = [].slice.call(scen.querySelectorAll("[data-view]"));
+
+    // Focus deliberately stays on the pressed button. aria-pressed already
+    // announces the change, and moving focus into the panel would take a
+    // keyboard reader away from the switch they may want to press again.
+    function showView(which) {
+      var map = which === "map";
+      vmap.classList.toggle("is-current", map);
+      vrows.classList.toggle("is-current", !map);
+      buttons.forEach(function (b) {
+        b.setAttribute("aria-pressed", b.getAttribute("data-view") === which ? "true" : "false");
+      });
+    }
+
+    // Which view holds this id, if either.
+    function viewOf(id) {
+      if (!id) return null;
+      var el = document.getElementById(id);
+      if (!el) return null;
+      if (vmap.contains(el)) return "map";
+      if (vrows.contains(el)) return "rows";
+      return null;
+    }
+
+    function syncToHash() {
+      var want = viewOf(decodeURIComponent((location.hash || "").slice(1)));
+      if (want) showView(want);
+    }
+
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () { showView(b.getAttribute("data-view")); });
+    });
+
+    // A click on a link into the hidden view has to switch before the
+    // browser resolves the fragment, or it scrolls to a display:none
+    // element and lands nowhere. Capture phase, so this runs first.
+    scen.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="#"]');
+      if (!a) return;
+      var want = viewOf(a.getAttribute("href").slice(1));
+      if (want) showView(want);
+    }, true);
+
+    window.addEventListener("hashchange", syncToHash);
+
+    scen.classList.add("js-views");
+    showView(window.innerWidth >= WIDE ? "map" : "rows");
+    syncToHash();
+  }
+
   // 1. Open/close every collapsible section at once.
   //
   // The button is display:none in CSS and revealed here by class — not

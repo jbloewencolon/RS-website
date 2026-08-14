@@ -38,74 +38,7 @@
   ]
 }
 </script>
-<style>
-  html{scroll-behavior:smooth}
-  body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
-  a{color:#7D5915;text-underline-offset:3px;text-decoration-thickness:1px}
-  a:hover{color:#2C5A38}
-  /* One motion token. Paint-only properties (colour/background/border)
-     on small elements: no layout, no compositing cost. outline-color is
-     deliberately excluded — keyboard focus must arrive instantly.
-     The prefers-reduced-motion rule below neutralises all of this. WD-02. */
-  a,button,summary,[data-filter],nav[aria-label="Contents"] a,.card-title{
-    transition:color .14s ease,background-color .14s ease,border-color .14s ease
-  }
-  /* WD-08b: the arrow travels on hover/focus, matching the .arr
-     treatment already used for authored arrows. inline-block is
-     required for transform to apply to a pseudo-element. */
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none;display:inline-block;transition:transform .14s ease}
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before,
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):focus-visible::before{transform:translateX(2px)}
-  nav[aria-label="Contents"] a{border:1px solid #C9C6BA;border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:#585B4F}
-  nav[aria-label="Contents"] a:hover{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
-  nav[aria-label="Contents"] a::before{content:none!important}
-  summary::before{content:"▸";display:inline-block;margin-right:.6rem;color:currentColor;flex-shrink:0;transition:transform .15s ease}
-  details[open]>summary::before{transform:rotate(90deg)}
-  .nav-toggle{display:none}
-  .nav-toggle>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:#585B4F}
-  .nav-toggle>summary::-webkit-details-marker{display:none}
-  .nav-toggle>nav{display:flex;flex-direction:column;align-items:flex-start;gap:.4rem;padding:.5rem 0 .8rem}
-  @media (max-width:700px){
-    #primary-nav{display:none!important}
-    .nav-toggle{display:block;width:100%}
-  }
-  /* WD-11: the semantic colour register, promoted from Learn (see
-     docs/design-palette.md for the full reasoning) — teal for what the
-     framework asserts, green for where a principle holds, rust for
-     where it fails, ochre for a question put to the reader. Defined
-     here but not yet consumed by anything on this page: this is
-     deliberately an inert commit, adding the tokens everywhere before
-     migrating any literal hex value to reference them, so a later
-     migration commit is bisectable against a clean baseline. Manifesto
-     does not get this block — its register is rhetorical, not
-     analytical, and design-palette.md excludes it from this system on
-     that basis. */
-  :root{
-    --paper:#E7E5DC;--paper-2:#EFEEE7;--ink:#191B18;--ink-2:#3C3E38;--ink-3:#585B4F;--rule:#C9C6BA;
-    --teal:#0F2A2E;--teal-2:#2A4C4C;--sage:#8FA9A2;
-    --holds:#2C5A38;--holds-fill:rgba(63,122,78,.13);--holds-edge:rgba(44,90,56,.35);
-    --fails:#8B3A2F;--fails-fill:rgba(139,58,47,.10);--fails-edge:rgba(139,58,47,.24);
-    --ask:#6B4C12;--ask-edge:#DB9E2A;--ask-fill:rgba(219,158,42,.13);
-    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;
-    --sans:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;
-  }
-  *{box-sizing:border-box}
-  h1,h2,h3{text-wrap:balance} /* WD-03 */
-  :focus-visible{outline:2.5px solid #7D5915;outline-offset:3px}
-  /* This page's own focus ring (#7D5915, not the site's #2B4C9B blue —
-     see FLAG-07/docs/design-palette.md on Invitation's page-level ochre
-     identity) is only 2.38:1 on its one dark band below #0F2A2E — under
-     the 3:1 minimum for a focus indicator, worse than the site-wide
-     #2B4C9B/#0F2A2E case WD-07 exists to fix elsewhere. Same remedy,
-     same reasoning: ochre at #DB9E2A is 6.42:1 there. Scoped to .dark
-     so the page's own light-ground ring is untouched pending FLAG-07's
-     broader decision on this page's base colour. WD-07. */
-  .dark :focus-visible{outline-color:#DB9E2A}
-  @media print{body{background:#fff}.noprint{display:none!important}}
-  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
-  .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
-  .skip-link:focus{left:1rem;top:1rem}
-</style>
+{{ partial "head-base.html" (dict "link" "#7D5915" "focus" "#7D5915" "actionBg" "#7D5915") }}
 </head>
 <body>
 
@@ -113,7 +46,7 @@
 <header class="noprint" style="border-bottom:1px solid #C9C6BA">
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="/" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
-    <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+    <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
       <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
       <a href="/invitation/" aria-current="page" style="color:#7D5915;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
       <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
@@ -124,8 +57,8 @@
       <a href="/behind-the-scenes/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
     </nav>
     <details class="nav-toggle">
-      <summary aria-label="Menu">Menu</summary>
-      <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+      <summary>Menu</summary>
+      <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
         <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
         <a href="/invitation/" aria-current="page" style="color:#7D5915;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
         <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
@@ -197,8 +130,8 @@
       <p style="margin:0;font-size:17px;line-height:1.55;color:#3C3E38">The other door is <a href="/manifesto/">the manifesto</a> — same floor, colder light, thirteen more theses. What's under both is unpacked in <a href="/learn/">Learn</a>, and the people whose thinking either page compresses are named, in full, in <a href="/archive/">the archive</a>.</p>
     </div>
     <div class="noprint" style="display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.8rem">
-      <button type="button" data-print style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#7D5915;color:#E7E5DC;border:none;padding:.8rem 1.1rem;min-height:44px;cursor:pointer;border-radius:2px">Print this invitation</button>
-      <a href="/manifesto/" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;border:1px solid #C9C6BA;color:#585B4F;padding:.8rem 1.1rem;min-height:44px;text-decoration:none;border-radius:2px;display:inline-flex;align-items:center">Read the manifesto instead</a>
+      <button type="button" data-print style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:#7D5915;color:#E7E5DC;border:none;padding:.8rem 1.1rem;min-height:44px;cursor:pointer;border-radius:2px">Print this invitation</button>
+      <a href="/manifesto/" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;border:1px solid #C9C6BA;color:#585B4F;padding:.8rem 1.1rem;min-height:44px;text-decoration:none;border-radius:2px;display:inline-flex;align-items:center">Read the manifesto instead</a>
     </div>
   </div>
 </section>
@@ -206,7 +139,7 @@
 </main>
 
 <footer class="noprint" style="border-top:1px solid #C9C6BA;padding:clamp(2rem,4vw,3rem) 0;color:#585B4F">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.7">
     <p style="margin:0 0 .6rem;max-width:60ch">This page and <a href="/manifesto/">the manifesto</a> are two ways into the same framework, not a soft version and a real one. The citations live in the <a href="/archive/">archive</a>; the ideas are unpacked in <a href="/learn/">Learn</a>; the build is laid open in <a href="/behind-the-scenes/">Behind the Scenes</a>.</p>
     <p style="margin:0">v0.2 · fork with attribution and consent · no third-party requests, including fonts · <a href="/behind-the-scenes/">what changed</a></p>
   </div>

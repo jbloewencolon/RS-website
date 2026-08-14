@@ -37,63 +37,8 @@
   ]
 }
 </script>
+{{ partial "head-base.html" dict }}
 <style>
-  html{scroll-behavior:smooth}
-  body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
-  a{color:#2B4C9B;text-underline-offset:3px;text-decoration-thickness:1px}
-  a:hover{color:#2C5A38}
-  /* One motion token. Paint-only properties (colour/background/border)
-     on small elements: no layout, no compositing cost. outline-color is
-     deliberately excluded — keyboard focus must arrive instantly.
-     The prefers-reduced-motion rule below neutralises all of this. WD-02. */
-  a,button,summary,[data-filter],.card-title{
-    transition:color .14s ease,background-color .14s ease,border-color .14s ease
-  }
-  /* WD-08b: the arrow travels on hover/focus, matching the .arr
-     treatment already used for authored arrows. inline-block is
-     required for transform to apply to a pseudo-element. */
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none;display:inline-block;transition:transform .14s ease}
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before,
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):focus-visible::before{transform:translateX(2px)}
-  summary::before{content:"▸";display:inline-block;margin-right:.6rem;color:currentColor;flex-shrink:0;transition:transform .15s ease}
-  details[open]>summary::before{transform:rotate(90deg)}
-  .nav-toggle{display:none}
-  .nav-toggle>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:#585B4F}
-  .nav-toggle>summary::-webkit-details-marker{display:none}
-  .nav-toggle>nav{display:flex;flex-direction:column;align-items:flex-start;gap:.4rem;padding:.5rem 0 .8rem}
-  @media (max-width:700px){
-    #primary-nav{display:none!important}
-    .nav-toggle{display:block;width:100%}
-  }
-  /* WD-11: the semantic colour register, promoted from Learn (see
-     docs/design-palette.md for the full reasoning) — teal for what the
-     framework asserts, green for where a principle holds, rust for
-     where it fails, ochre for a question put to the reader. Defined
-     here but not yet consumed by anything on this page: this is
-     deliberately an inert commit, adding the tokens everywhere before
-     migrating any literal hex value to reference them, so a later
-     migration commit is bisectable against a clean baseline. Manifesto
-     does not get this block — its register is rhetorical, not
-     analytical, and design-palette.md excludes it from this system on
-     that basis. */
-  :root{
-    --paper:#E7E5DC;--paper-2:#EFEEE7;--ink:#191B18;--ink-2:#3C3E38;--ink-3:#585B4F;--rule:#C9C6BA;
-    --teal:#0F2A2E;--teal-2:#2A4C4C;--sage:#8FA9A2;
-    --holds:#2C5A38;--holds-fill:rgba(63,122,78,.13);--holds-edge:rgba(44,90,56,.35);
-    --fails:#8B3A2F;--fails-fill:rgba(139,58,47,.10);--fails-edge:rgba(139,58,47,.24);
-    --ask:#6B4C12;--ask-edge:#DB9E2A;--ask-fill:rgba(219,158,42,.13);
-    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;
-    --sans:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;
-  }
-  *{box-sizing:border-box}
-  h1,h2,h3{text-wrap:balance} /* WD-03 */
-  :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
-  /* #2B4C9B is 1.88:1 on the #0F2A2E teal ground — effectively invisible.
-     Ochre is 6.42:1 there, and "a question being put to you" is exactly
-     what focus is. Scoped to .dark (dark-ground sections/footers, added
-     alongside this rule) rather than global, since #2B4C9B is fine on
-     every light-ground element the page has otherwise. WD-07. */
-  .dark :focus-visible{outline-color:#DB9E2A}
   /* WD-14: at ~39 minutes and roughly 18,600px this is the longest page
      on the site, and the only long one with no persistent orientation.
      Ported from Learn's .jump bar (learn.html / learn.js), literal hex
@@ -109,11 +54,11 @@
   .jump{position:sticky;top:0;z-index:30;background:#E7E5DC;border-top:1px solid #C9C6BA;border-bottom:1px solid #C9C6BA;box-shadow:0 10px 18px -16px rgba(25,27,24,.6)}
   .jump-inner{position:relative;max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:nowrap;align-items:center;gap:0 1rem;justify-content:space-between}
   .jump-menu{flex:1 1 auto;min-width:0}
-  .jump-menu>summary{cursor:pointer;list-style:none;display:flex;align-items:center;min-height:48px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:#585B4F}
+  .jump-menu>summary{cursor:pointer;list-style:none;display:flex;align-items:center;min-height:48px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:#585B4F}
   .jump-menu>summary::-webkit-details-marker{display:none}
   #jump-current{color:#0F2A2E;text-transform:none;letter-spacing:.01em;margin-left:.5rem;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .jump-menu>nav{position:absolute;left:0;right:0;top:100%;z-index:5;background:#E7E5DC;border-bottom:1px solid #C9C6BA;box-shadow:0 12px 20px -14px rgba(25,27,24,.65);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(215px,100%),1fr));gap:0 1.4rem;padding:.3rem clamp(1.1rem,4vw,3rem) 1rem}
-  .jump-menu>nav a{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;text-decoration:none;display:flex;align-items:center;min-height:40px;border-bottom:2px solid transparent}
+  .jump-menu>nav a{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;color:#585B4F;text-decoration:none;display:flex;align-items:center;min-height:40px;border-bottom:2px solid transparent}
   .jump-menu>nav a::before{content:none!important}
   .jump-menu>nav a:hover{color:#2C5A38}
   .jump-menu>nav a[aria-current]{color:#0F2A2E;border-bottom-color:#DB9E2A}
@@ -122,10 +67,7 @@
      bar and had no need of this before. */
   main [id]{scroll-margin-top:5.4rem}
   @media print{.jump{display:none!important}}
-  @media print{body{background:#fff}.noprint{display:none!important}details:not([open])>*{display:block!important}}
-  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
-  .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
-  .skip-link:focus{left:1rem;top:1rem}
+  @media print{details:not([open])>*{display:block!important}}
 </style>
 </head>
 <body>
@@ -134,7 +76,7 @@
 <header style="border-bottom:1px solid #C9C6BA">
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="/" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
-    <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+    <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
       <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
       <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
       <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
@@ -145,8 +87,8 @@
       <a href="/behind-the-scenes/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
     </nav>
     <details class="nav-toggle">
-      <summary aria-label="Menu">Menu</summary>
-      <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+      <summary>Menu</summary>
+      <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
         <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
         <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
         <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
@@ -229,7 +171,7 @@
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">The substrate</h2>
     <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">A land acknowledgement in a footer is decoration. These are the material facts of the machine you are reading on, as far as they are currently known.</p>
     <details>
-      <summary style="cursor:pointer;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:#585B4F;min-height:44px;display:flex;align-items:center;padding:.2rem 0">Show the {{ len hugo.Data.substrate }} substrate fields</summary>
+      <summary style="cursor:pointer;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:#585B4F;min-height:44px;display:flex;align-items:center;padding:.2rem 0">Show the {{ len hugo.Data.substrate }} substrate fields</summary>
       <dl style="margin:1.2rem 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem 2.4rem">
         {{ range hugo.Data.substrate }}
         <div style="border-top:2px solid {{ .rule }};padding-top:.7rem">
@@ -351,7 +293,7 @@
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">Change log — repair in view</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.2rem;max-width:24ch;color:#E7E5DC">Corrections are shown, not overwritten.</h2>
     <p style="max-width:54ch;margin:0 0 1.6rem;color:#B8C7C1">The record of what this site used to say, and what it says now, is kept in the project's own version history rather than reproduced on this page.</p>
-    <a href="https://github.com/jbloewencolon/RS-website" style="display:inline-flex;align-items:center;min-height:44px;color:#DB9E2A;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13.5px">See the change history on GitHub</a>
+    <a href="https://github.com/jbloewencolon/RS-website" style="display:inline-flex;align-items:center;min-height:44px;color:#DB9E2A;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px">See the change history on GitHub</a>
   </div>
 </section>
 
@@ -393,7 +335,7 @@
 </main>
 
 <footer class="dark" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:44ch">v0.2 · no fonts, scripts, or requests from third parties · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
       <a href="/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>

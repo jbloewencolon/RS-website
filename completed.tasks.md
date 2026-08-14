@@ -1303,3 +1303,154 @@ now: `docs/spec/cloudflare-headers.md` (new) — one universal Transform Rule (H
 **Deliberately preparation only — nothing in this entry is live.** The domain isn't proxied through Cloudflare yet; that's an account-level DNS/nameserver change only the operator can make, described as this file's own first section rather than skipped over. No header from this file has been applied anywhere, and the file says so in its own opening paragraph so it can't be mistaken later for a record of something already done.
 
 Verified: cross-checked all four CSP bucket strings, directive-by-directive, against the exact `grep` output pulled from the ten live page sources plus all nine redirect stubs before writing them into the file — not retyped from memory. Confirmed the Resources/redirect-stub bucket really is one identical string across all ten of those files, not nine-similar-but-different ones that happened to look alike at a glance.
+
+### FLAG-06 — the `.dc.html` URL scheme, decided
+**Shipped:** 2026-08-08 · **Commit/PR:** see BUG-03
+
+~~was: every URL on the live site ended in `.dc.html`, an artifact of the authoring format leaking into the address bar~~
+now: author chose option (C) — full pretty URLs. Each page's path is set by an explicit `url:` field in its `hugo/content/*.md` front matter, with redirect stubs left at the nine old flat paths so bookmarked and already-indexed links still land somewhere real.
+
+Notes: recorded here 2026-08-13 during the Phase 11 cleanup — the row had been struck through in `tasks.md` since it shipped but never got an entry in this file. Reconstructed from the `tasks.md` row and the BUG-03 write-up; treat the BUG-03 entry as the fuller record.
+
+### WD-10b — the "no fourteenth principle yet" cell, and a real grid defect found while shipping it
+**Shipped:** 2026-08-11 · **Commit/PR:** PR #26
+
+~~was: `.principles` (13 items, 3 columns) left a filled hairline slab where the fourteenth cell would be~~
+now: the gap carries an authored "no fourteenth principle yet" card, author copy approved as drafted; `/behind-the-scenes/#roadmap` confirmed to resolve.
+
+Notes:
+- **The originally-planned fix was wrong and was caught before it shipped.** `grid-column:span 2` on the filler works at 3 columns and breaks at 2 — the filler can't fit beside principle 13 in the remaining single-column space, so it wraps to its own row and leaves 13 with a genuinely empty cell beside it. A hard-coded breakpoint would have papered over that and gone stale the moment the grid's column minimum or gutters changed.
+- Fixed properly instead: `.principles` now draws hairlines per-cell (`border-top`/`border-left` on the container, `border-right`/`border-bottom` on each `<li>`) — the same technique WD-10a already shipped for `.fg` and the Behind the Scenes crawler grid — so a genuinely empty trailing cell shows page ground and the filler stays a plain, unspanned grid item.
+- Verified by binary-searching the 2↔3 column transition (982/983px) plus visual checks at 1920/1280/1024/768/500/390/320px. No dead cell at any width.
+
+### WD-15 — palette rollout to Behind the Scenes, Practise, Resources, Archive
+**Shipped:** 2026-08-11 · **Commit/PR:** PR #26 (Resources half) + `bb94c0d`
+
+~~was: the four semantic registers were applied systematically only on Learn; four other pages carried the colours without the meaning~~
+now: all four pages carry the register system, each decision recorded rather than applied uniformly.
+
+Notes:
+- **Resources** — the one genuinely empty category (`mutual-aid`) takes ochre on its dashed rule and `Not yet built` scope label. No author judgement was needed: `resources.yaml` already carried `scope: "Not yet built"` and the category already had an explanatory paragraph, so this only added the colour.
+- **Behind the Scenes** — author's call: all five faults take ochre even though that renders them uniformly, because every one is currently unfixed. The numeral moved from rust to ochre in the process — rust means "where the framework fails or runs out," but these are things *named and not yet built*, which is ochre's job. If faults ever carry mixed states, a per-fault status field is where the register would start doing finer work.
+- **Practise** — the seven unbuilt tools' status labels are ochre for both `in progress` and `not started` (author's call): both are "named, not built" in register terms, and the status *words* carry the finer distinction, so nothing is encoded by hue alone. `#DB9E2A` is text-safe on that section's `#0F2A2E` ground (6.42:1).
+- **Archive** — see WD-16.
+- **The Practise rust carve-out, settled 2026-08-11:** rust means *safety surface*, and every current use on that page qualifies, so no rust was changed.
+- Recorded here 2026-08-13 during the Phase 11 cleanup.
+
+### WD-16 — Archive's seven access-state chips take the "named, not built" register
+**Shipped:** 2026-08-11 · **Commit/PR:** PR #26
+
+~~was: the seven access-state chips were styled like the clickable filter chips higher up the page~~
+now: ochre text (`#6B4C12`, 6.24:1) on a **dashed** `#DB9E2A` edge.
+
+Notes:
+- Dashed specifically so they cannot be mistaken for the solid, clickable filter chips above them — the spec's own stated failure mode.
+- Not carried by colour: the section's paragraph already reads "None of it is built yet," and dashed-vs-solid survives greyscale (verified with achromatopsia emulation).
+- **The chips were already in gradient order in `archive.yaml`** (public → contributor-controlled → community-specific → temporarily restricted → excerpt only → metadata only → exists-but-unavailable), so no reordering was needed — checked rather than assumed.
+- Recorded here 2026-08-13 during the Phase 11 cleanup.
+
+### WD-28 — the orphaned "second way in" framing
+**Shipped:** 2026-08-11 · **Commit/PR:** PR #26
+
+~~was: Invitation's kicker referenced being the second of two ways in, after the pairing it referred to had been removed from Home~~
+now: "A warmer register · about 4 minutes" — author chose to drop the pairing rather than restore it, tying the kicker to the existing subtitle ("What relational sovereignty sounds like:") instead of to a first-of-two that no longer exists.
+
+Notes: recorded here 2026-08-13 during the Phase 11 cleanup.
+
+### WD-12 — Archive's register system: a rust `counter` class, and teal as the default
+**Shipped:** 2026-08-11 · **Commit/PR:** `307fa5f`, `d61f40f`
+
+Two halves of one change, tracked as separate rows in `tasks.md` and recorded together here.
+
+**Rust `counter` register.**
+
+~~was: the Archive had no way to mark a text that cuts against the framework's own argument~~
+now: a `counter` tag in `archive.yaml`, rendered in the rust register under the label `⚑ we have no answer to this`.
+
+Notes:
+- Label approved by the author; all four candidates approved — Barker/Alfred, Freeman (*The Tyranny of Structurelessness*), Roberts (*Torn Apart*), Bridges (*The Poverty of Privacy Rights*).
+- Rust takes priority over `start`/`free` in both the rule colour and the kicker prefix. **Checked and stated honestly:** no entry currently carries both `counter` and `start`, so that priority order is untested against real data — correct if such an entry ever arrives, but not currently exercised.
+- Filter chip added alongside.
+
+**Teal as the default register.**
+
+~~was: link-blue `#2B4C9B` doubled as the default category colour for ordinary Archive entries, so blue meant both "this is a link" and "this is an entry"~~
+now: the default register is teal `#0F2A2E`. On Archive, `#2B4C9B` appears exactly twice — the base `a{}` rule and the `:focus-visible` outline — so blue means "this is a link" and nothing else.
+
+Notes:
+- Verified register distribution across all 60 entries: 34 teal (default), 14 ochre (`start`), 8 green (`free`), 4 rust (`counter`).
+- **An earlier pass through the `tasks.md` table wrongly recorded this half as already shipped; that was caught and corrected before the work was actually done.** Kept here because a status field that was once wrong is worth knowing about.
+- Recorded in this file 2026-08-13 during the Phase 11 cleanup — both rows had been struck through in `tasks.md` since they shipped but never got an entry here.
+
+---
+
+## Phase 11.1 — The shared layer
+
+### IA-10a / IA-10b — one base CSS block instead of nine
+**Shipped:** 2026-08-14 · **Commit:** `b76a656`
+
+~~was: every page carried its own inline copy of the same ~60 lines of base CSS — nine hand-maintained copies, which is why `docs/web-design.md` §1c called every site-wide rule "a ten-file edit," and which is what produced the drift that section exists to warn about~~
+now: the block lives in `hugo/layouts/partials/head-base.html` and nowhere else. A site-wide base rule is one edit plus `npm run build:hugo`.
+
+Notes:
+- The partial takes a dict of palette overrides, so the two page-level exceptions stopped being forks. Manifesto passes the dark ground plus `"tokens" false`; Invitation passes its ochre link and focus ring (FLAG-07). Structural rules ship to every page even where a page has no element to match — Behind the Scenes has no Contents nav, Manifesto has no filters — because inert selectors cost a few bytes and unifying them is what keeps this one block rather than three.
+- The three hand-authored pages can't call a partial. `scripts/sync-base.mjs` lifts the block Hugo just rendered and splices it between markers in each; `npm run build:hugo` syncs, `npm run check` fails on drift. One source, one renderer — reimplementing the template in JavaScript would have been a fourth copy.
+- **IA-10b came out in the wash.** The `:root` token block is defined once rather than in eight files, and Learn's duplicate is gone. Migrating literal hex to `var()` is still open — that is WD-11's second half.
+- **Three traps, all now guarded.** (1) Hugo's CSS sanitiser rewrites unrecognised values in CSS context to the literal string `ZgotmplZ`; an unfiltered `rgba()` became a silently dead hover rule, not a build error. Every interpolated value goes through `safeCSS`. (2) `html/template` strips HTML comments *and* comments inside `<style>`, so no marker survives into Hugo output — the sync locates the block structurally instead. (3) A marker comment that ran onto a second line lost its closing `*/` on the first sync and commented out the rest of the stylesheet. Three pages rendered unstyled and the entire existing suite passed: html-validate, axe and the console are all blind to a stylesheet the browser gave up parsing. `sync-base.mjs` now rejects a multi-line marker, and `check-pages.mjs` asserts every page's body actually paints its intended ground colour.
+- Verified: all nine pages pixel-identical at 390/768/1440 against pre-extraction screenshots. Home at 768px differed by 0.11% until the SMIL drift animation was frozen, after which byte-identical — animation phase, not layout.
+- `docs/web-design.md` §1c rewritten (original struck, not deleted, since §3's per-file instructions were written against it), §3 given a pointer, and guardrail 10b added: do not edit base CSS inside a page file.
+
+### IA-08 / IA-C3 — a 14px floor on interactive microtype
+**Shipped:** 2026-08-14 · **Commit:** `17d0832`
+
+~~was: the audit named three sub-14px controls; measuring every interactive element on all nine pages at 390 and 1440 found 97. The whole nav and utility chrome sat at 12–13.5px~~
+now: 77 declarations raised to 14px — both nav copies, skip link, jump bars, filter chips, the open-all button, print and submit buttons, disclosure summaries, form labels, and the export filename/file inputs.
+
+Notes:
+- Scoped to controls. Decorative microtype is untouched, and so are the 55 sub-14px links inside sentences of prose, which WCAG 2.5.8 exempts — the measurement classifies those separately rather than by eye.
+- **Two deliberate exclusions.** The stress-matrix headers (20 links at 12.5px) were left to IA-05, since that table already overflowed and raising its type first would have widened the overflow and then been redone; settled there. And the dispatch honeypot input, whose 13.33px is the browser default on a field deliberately hidden from people and password managers.
+- **IA-C3 folded in**, being the same markup: the mobile nav's `aria-label="Menu"` duplicated the summary's own visible text. The audit's claim that open/closed state was missing did not survive checking — native `<summary>` exposes it — but the redundant label was noise, and removing it leaves the visible text as the accessible name.
+- Verified: no horizontal body overflow at 320/390/768/1440 on any page, which is the real risk in a type change since the desktop nav is a single wrapping row. Desktop nav still fits one line at 1440; mobile nav wraps to four rows at 390 and stays inside the viewport.
+
+### IA-10c / IA-10d — four components and three form states
+**Shipped:** 2026-08-14 · **Commit:** `14cf2dd`
+
+~~was: every control's treatment was written per instance, inline, so a reader could not tell what a control would do before clicking it and a change meant finding every copy~~
+now: `.action`, `.action-utility`, `.nav-link`, `.disclosure`, plus `.form-error`, `.form-status` and `.field-invalid`, written once in the shared base from the treatments already shipped.
+
+Notes:
+- **Deliberately inert on arrival**, the same pattern WD-11 used for the token block. Applying them is IA-11/IA-12 in Phase 11.3, page by page and checkable one page at a time; defining them first is what makes that a swap instead of nine more rewrites. Verified inert: all nine pages pixel-identical at 390/768/1440 against the previous commit.
+- Colours come from the palette dict rather than the register tokens, so the components work on Manifesto, which ships `"tokens" false` and has no `--teal` to reference. Manifesto and Invitation each pass their own action ground, so a primary button keeps its page's identity without forking the rule.
+- The type stacks moved out of the token block and are now defined for every page including Manifesto. `design-palette.md` excludes Manifesto from the semantic *colour* register, which is a claim about what a hue means; a font stack makes no such claim.
+- **Page weight rose ~2 KB per page and the build's own check caught it**, which is what that check is for. The colophon figure is updated to 19–130 KB and now says plainly that pages currently ship slightly more CSS than they use, why, and that 11.3 should return it below where it started. Grouping declarations rather than repeating them per class cut about a third of the addition.
+
+## Phase 11.2 — Learn, in the cheap order
+
+### IA-16 / IA-04 — principles first, and an honestly scoped bulk control
+**Shipped:** 2026-08-14 · **Commit:** `7469a28`
+
+~~was: the page is titled "Relationships, Principles, and Limits" and its hero promises thirteen principles, then opened with a terminology section~~
+now: "Forms and labels" sits after the principles it defines vocabulary for.
+
+Notes:
+- Pure source reorder: no copy changed, every anchor kept, body text length identical before and after (19,092 chars), which is the check that it was a move and not an edit.
+- **Measured at 390px:** the first principle section starts at 1396px instead of 2946px — 3.49 viewports of scrolling down to 1.65. Every fragment still resolves; the page renders identically with scripting off.
+- **Both indexes had to move too, and not for tidiness.** `sections.js` builds its scroll-spy list from the DOM order of `nav[aria-label="Sections"]` links and then walks it assuming that order matches the document. Leaving the navs alone would have left the sticky bar naming the wrong section.
+- **The spacing override moved with the section.** `#forms-and-labels` carried a top-padding override for being the first section under the sticky jump bar; every other `.band` relies on the preceding section's bottom padding. This file records that the same override was moved once before, when the section moved up. It moved back: `#principles` takes it, `#forms-and-labels` becomes a plain `.band`, bottom padding unchanged because `.band`'s value is the one it had inline.
+- **IA-04:** the bulk control carries `aria-controls` naming the nine regions it governs, generated from the same data the cards are so the list cannot drift. All nine ids resolve and are exactly the nine `[data-collapsible]` elements `sections.js` sweeps. It deliberately does not name the four sexual-content disclosures — IA-01 removed those from the sweep because the page promises "opening one is the only thing that changes."
+
+### IA-05 — the stress chart and the full rows as labelled alternate views
+**Shipped:** 2026-08-14 · **Commit:** `a31be6a`
+
+~~was: the chart and the seven full rows are the same seven situations, and the page showed both to everyone while the chart quietly needed sideways scrolling on anything narrower than a laptop~~
+now: two labelled views of one dataset with an explicit switch, and the narrow-width overflow is gone rather than annotated.
+
+Notes:
+- **The breakpoint is 860px, not the audit's 820px.** 820px is where the overflow was observed, not where it stops. `table.matrix` carries `min-width:760px` and the wrap pads 4vw a side, so the container first clears 760px between 820px (752px, still scrolls) and 860px (789px, fits). Measured across 768/820/860/900/940/980/1024/1100.
+- **Scripting off:** the rows always render, because they hold the content, and the chart renders only at 860px and up. That is what removes the defect rather than warning about it. Confirmed map hidden at 390/820, shown at 860/1440, rows shown at all four, switch not drawn.
+- **Scripting on:** the switch decides at any width. The chart stays reachable on a phone inside its labelled scroller — the documented exception to this site's no-horizontal-scroll rule — and the scroll hint appears only when the chart is both current and narrow.
+- **Deep links work across the switch**, which is the part that needed care: the chart's row headers point at ids inside the rows view, so following one must change view before the browser resolves the fragment or it scrolls to a `display:none` element. Handled in the capture phase, plus on load and on `hashchange`. Verified `#stress-map` lands visibly at 320/390/820 where it is not the default, and card ids land at 76px — exactly the sticky-bar offset — with the right card open.
+- **Printing gets both views**, the same reason `sections.js` already opens every `<details>` before printing.
+- The legend and the ★ note moved outside both views: those marks appear on the chart's cells and the rows' chips alike, so the key belongs to neither view.
+- **Settles IA-08's deferral.** The chart keeps its 12.5px row headers rather than taking the control floor: it is a summary index whose every row and column links to the same content at full reading size in the rows view, and widening the table to satisfy a type floor would push the fitting threshold back up and reintroduce the overflow this change removes.
+- First real consumer of IA-10c's `.action-utility`, including its `aria-pressed` state.

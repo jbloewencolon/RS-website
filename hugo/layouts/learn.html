@@ -38,51 +38,11 @@
   ]
 }
 </script>
+{{ partial "head-base.html" dict }}
 <style>
-  html{scroll-behavior:smooth}
-  body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
-  a{color:#2B4C9B;text-underline-offset:3px;text-decoration-thickness:1px}
-  a:hover{color:#2C5A38}
-  /* One motion token. Paint-only properties (colour/background/border)
-     on small elements: no layout, no compositing cost. outline-color is
-     deliberately excluded — keyboard focus must arrive instantly.
-     The prefers-reduced-motion rule below neutralises all of this. WD-02. */
-  a,button,summary,[data-filter],nav[aria-label="Contents"] a,.card-title{
-    transition:color .14s ease,background-color .14s ease,border-color .14s ease
-  }
-  /* WD-08b: the arrow travels on hover/focus, matching the .arr
-     treatment already used for authored arrows. inline-block is
-     required for transform to apply to a pseudo-element. */
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none;display:inline-block;transition:transform .14s ease}
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before,
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):focus-visible::before{transform:translateX(2px)}
   nav[aria-label="Contents"] a{border:1px solid #C9C6BA;border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:#585B4F;display:inline-flex;align-items:center;min-height:44px}
-  nav[aria-label="Contents"] a:hover{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
-  nav[aria-label="Contents"] a::before{content:none!important}
-  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;max-width:900px;display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:0 1.5rem;font-family:var(--mono);font-size:13px}
-  summary::before{content:"▸";display:inline-block;margin-right:.6rem;color:currentColor;flex-shrink:0;transition:transform .15s ease}
-  details[open]>summary::before{transform:rotate(90deg)}
-  .nav-toggle{display:none}
-  .nav-toggle>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:#585B4F}
-  .nav-toggle>summary::-webkit-details-marker{display:none}
-  .nav-toggle>nav{display:flex;flex-direction:column;align-items:flex-start;gap:.4rem;padding:.5rem 0 .8rem}
-  @media (max-width:700px){
-    #primary-nav{display:none!important}
-    .nav-toggle{display:block;width:100%}
-  }
-  *{box-sizing:border-box}
-  h1,h2,h3{text-wrap:balance} /* WD-03 */
-  :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
-  /* #2B4C9B is 1.88:1 on the #0F2A2E teal ground — effectively invisible.
-     Ochre is 6.42:1 there, and "a question being put to you" is exactly
-     what focus is. Scoped to .dark (dark-ground sections/footers, added
-     alongside this rule) rather than global, since #2B4C9B is fine on
-     every light-ground element the page has otherwise. WD-07. */
-  .dark :focus-visible{outline-color:#DB9E2A}
-  @media print{body{background:#fff}.noprint{display:none!important}body.print-isolate>header,body.print-isolate>main>section:not(#field-guide),body.print-isolate>footer{display:none!important}}
-  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
-  .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
-  .skip-link:focus{left:1rem;top:1rem}
+  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;max-width:900px;display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:0 1.5rem;font-family:var(--mono);font-size:14px}
+  @media print{body.print-isolate>header,body.print-isolate>main>section:not(#field-guide),body.print-isolate>footer{display:none!important}}
 
   /* ── Accent system ───────────────────────────────────────────────────
      Colour on this page carries information and nothing else. The page's
@@ -105,15 +65,9 @@
      doubled by a glyph, a word, or both, so the matrix and the chips
      still read in greyscale, on paper, and to a reader who does not see
      the difference between the green and the rust. ─────────────────── */
-  :root{
-    --paper:#E7E5DC;--paper-2:#EFEEE7;--ink:#191B18;--ink-2:#3C3E38;--ink-3:#585B4F;--rule:#C9C6BA;
-    --teal:#0F2A2E;--teal-2:#2A4C4C;--sage:#8FA9A2;
-    --holds:#2C5A38;--holds-fill:rgba(63,122,78,.13);--holds-edge:rgba(44,90,56,.35);
-    --fails:#8B3A2F;--fails-fill:rgba(139,58,47,.10);--fails-edge:rgba(139,58,47,.24);
-    --ask:#6B4C12;--ask-edge:#DB9E2A;--ask-fill:rgba(219,158,42,.13);
-    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;
-    --sans:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;
-  }
+  /* The tokens themselves are defined once in partials/head-base.html and
+     shipped to every page (IA-10b). This page originated them and is still
+     their heaviest consumer; the reasoning above stays here, with it. */
   .vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
   .wrap{max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)}
   .band{padding:0 0 clamp(3rem,6vw,4.5rem)}
@@ -180,7 +134,7 @@
      expanded menu is taken out of flow entirely below. */
   .jump-inner{position:relative;max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:nowrap;align-items:center;gap:0 1rem;justify-content:space-between}
   .jump-menu{flex:1 1 auto;min-width:0}
-  .jump-menu>summary{cursor:pointer;list-style:none;display:flex;align-items:center;min-height:48px;font-family:var(--mono);font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
+  .jump-menu>summary{cursor:pointer;list-style:none;display:flex;align-items:center;min-height:48px;font-family:var(--mono);font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
   .jump-menu>summary::-webkit-details-marker{display:none}
   /* min-width:0 is what lets the ellipsis actually happen: a flex item
      defaults to min-width:auto and refuses to shrink below its text, which
@@ -189,13 +143,13 @@
   /* Out of flow so the bar above it never has to make room: the expanded
      list drops over the page instead of resizing the row it came from. */
   .jump-menu>nav{position:absolute;left:0;right:0;top:100%;z-index:5;background:var(--paper);border-bottom:1px solid var(--rule);box-shadow:0 12px 20px -14px rgba(25,27,24,.65);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(215px,100%),1fr));gap:0 1.4rem;padding:.3rem clamp(1.1rem,4vw,3rem) 1rem}
-  .jump-menu>nav a{font-family:var(--mono);font-size:13px;color:var(--ink-3);text-decoration:none;display:flex;align-items:center;min-height:40px;border-bottom:2px solid transparent}
+  .jump-menu>nav a{font-family:var(--mono);font-size:14px;color:var(--ink-3);text-decoration:none;display:flex;align-items:center;min-height:40px;border-bottom:2px solid transparent}
   .jump-menu>nav a::before{content:none!important}
   .jump-menu>nav a:hover{color:var(--holds)}
   .jump-menu>nav a[aria-current]{color:var(--teal);border-bottom-color:var(--ask-edge)}
   /* Hidden until sections.js adds .is-ready, so a reader with scripting off
      is never shown a control that cannot do anything. */
-  [data-open-all]{display:none;font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;background:none;color:var(--teal);border:1px solid var(--rule);border-radius:2px;padding:.45rem .8rem;min-height:44px;cursor:pointer;white-space:nowrap}
+  [data-open-all]{display:none;font-family:var(--mono);font-size:14px;letter-spacing:.07em;text-transform:uppercase;background:none;color:var(--teal);border:1px solid var(--rule);border-radius:2px;padding:.45rem .8rem;min-height:44px;cursor:pointer;white-space:nowrap}
   [data-open-all].is-ready{display:inline-flex;align-items:center}
   [data-open-all]:hover{border-color:var(--holds);background:var(--holds-fill);color:var(--holds)}
 
@@ -246,7 +200,30 @@
      still has an accessible name. */
   .matrix-intro{max-width:80ch;margin:0 0 .9rem;font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--ink-3)}
   .matrix-hint{display:none;margin:.6rem 0 0;font-family:var(--mono);font-size:12px;color:var(--ink-3)}
-  @media (max-width:820px){.matrix-hint{display:block}}
+  /* IA-05, the two views of the stress data. Three states, in order of
+     increasing specificity so each beats the one above it:
+
+       1. No scripting. #view-rows always renders; #view-map renders only
+          at 860px and up, where the 760px table fits its container. Below
+          that the chart is not shown at all, which is what removes the
+          horizontal-scroll defect for a reader without JavaScript rather
+          than merely warning them about it.
+       2. Scripting ready (.js-views on the section). Neither view shows
+          until one is marked current, so the switch is in charge at every
+          width — including widths where the chart must scroll, which is
+          what the hint is for.
+       3. The current view.
+
+     The switch itself is hidden until JavaScript marks it ready, the same
+     way [data-open-all] is: a control that cannot work should not be
+     drawn. */
+  .views{display:none;gap:.5rem;flex-wrap:wrap;margin:0 0 1.1rem}
+  .js-views .views{display:flex}
+  @media (max-width:859px){#view-map{display:none}}
+  .js-views #view-map,.js-views #view-rows{display:none}
+  .js-views #view-map.is-current,.js-views #view-rows.is-current{display:block}
+  .js-views #view-map.is-current .matrix-hint{display:none}
+  @media (max-width:859px){.js-views #view-map.is-current .matrix-hint{display:block}}
   table.matrix th,table.matrix td{border:1px solid var(--rule);padding:.45rem .3rem;text-align:center;vertical-align:middle}
   table.matrix thead th{background:var(--teal);color:#DDE4DC;font-weight:500;width:2.7rem}
   table.matrix thead th:first-child{text-align:left;width:auto;min-width:15rem;padding-left:.9rem;letter-spacing:.1em;text-transform:uppercase;font-size:11px}
@@ -356,11 +333,17 @@
   .fg-p{margin:0 0 .5rem;font-family:var(--sans);font-weight:700;font-size:1.02rem;line-height:1.3;color:var(--ink)}
   .fg-g{margin:0 0 1.1rem;font-size:14.5px;line-height:1.5;color:var(--ink-2);flex:1 1 auto}
   .fg-q{margin:0 -1.3rem;padding:.8rem 1.3rem;background:var(--fails-fill);border-top:1px solid var(--fails-edge);font-family:var(--mono);font-size:12.5px;line-height:1.5;color:var(--fails)}
-  .btn-print{font-family:var(--mono);font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:var(--fails);color:#F3E9E6;border:none;padding:.8rem 1.1rem;min-height:44px;cursor:pointer;border-radius:2px}
+  .btn-print{font-family:var(--mono);font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:var(--fails);color:#F3E9E6;border:none;padding:.8rem 1.1rem;min-height:44px;cursor:pointer;border-radius:2px}
 
   @media print{
     .jump{display:none!important}
     .matrix-scroll{overflow:visible}
+    /* Paper has no switch, so it gets both views — the same reason
+       sections.js opens every <details> before printing. The chart is
+       allowed to print at any page width here because .matrix-scroll
+       stops scrolling above. IA-05. */
+    .views{display:none!important}
+    .js-views #view-map,.js-views #view-rows,#view-map,#view-rows{display:block!important}
   }
 </style>
 </head>
@@ -370,7 +353,7 @@
 <header class="noprint" style="border-bottom:1px solid #C9C6BA">
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="/" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
-    <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+    <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
       <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
       <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
       <a href="/learn/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
@@ -381,8 +364,8 @@
       <a href="/behind-the-scenes/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
     </nav>
     <details class="nav-toggle">
-      <summary aria-label="Menu">Menu</summary>
-      <div style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+      <summary>Menu</summary>
+      <div style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
         <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
         <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
         <a href="/learn/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
@@ -411,8 +394,8 @@
     <p class="legend-key"><span class="swatch s-teal"></span>Teal marks what the framework asserts. <span class="swatch s-fails"></span>Rust marks where it breaks, or where its own vocabulary gets turned on someone. <span class="swatch s-ask"></span>Ochre marks a question being put to you. Nothing on this page is signalled by colour alone — every mark is also a word.</p>
     <nav aria-label="Contents" style="margin-top:1.4rem">
       <ul>
-        <li><a href="#forms-and-labels"><span class="swatch s-teal"></span>Forms &amp; labels</a></li>
         <li><a href="#principles"><span class="swatch s-teal"></span>The thirteen principles</a></li>
+        <li><a href="#forms-and-labels"><span class="swatch s-teal"></span>Forms &amp; labels</a></li>
         <li><a href="#scenarios"><span class="swatch s-fails"></span>Seven stress tests</a></li>
         <li><a href="#sexual-content"><span class="swatch s-ask"></span>Sexual content, named plainly</a></li>
         <li><a href="#continuity"><span class="swatch s-ask"></span>Continuity of care</a></li>
@@ -431,8 +414,8 @@
     <details class="jump-menu">
       <summary>Sections<span id="jump-current"></span></summary>
       <nav aria-label="Sections">
-        <a href="#forms-and-labels">Forms &amp; labels</a>
         <a href="#principles">The thirteen principles</a>
+        <a href="#forms-and-labels">Forms &amp; labels</a>
         <a href="#scenarios">Seven stress tests</a>
         <a href="#sexual-content">Sexual content, named plainly</a>
         <a href="#continuity">Continuity of care</a>
@@ -443,11 +426,50 @@
         <a href="#not-yet-written">What's not written yet</a>
       </nav>
     </details>
-    <button type="button" data-open-all aria-pressed="false">Open every section</button>
+    <!-- IA-04: aria-controls names the nine regions this button actually
+         governs — the seven stress tests and the two adjudication cards,
+         which are exactly the [data-collapsible] set sections.js sweeps.
+         Generated from the same data the cards are, so the list cannot
+         drift from the thing it describes. It deliberately does not name
+         the four sexual-content disclosures: IA-01 removed those from the
+         sweep, because the page promises "opening one is the only thing
+         that changes" and the shipped code was making that false. Honest
+         scope first, correct semantics second. -->
+    <button type="button" data-open-all aria-pressed="false"
+            aria-controls="{{ range hugo.Data.stress }}{{ .id }} {{ end }}adj-06-07 adj-08-11">Open every section</button>
   </div>
 </div>
 
-<section id="forms-and-labels" style="padding:clamp(2.2rem,4vw,3rem) 0 clamp(3rem,6vw,4.5rem)">
+<!-- Top padding, not .band's bottom-only default, because this is now the
+     first section under the sticky jump bar and has no preceding section to
+     borrow spacing from. It carried exactly this override once before and
+     lost it when #forms-and-labels moved above it; IA-16 moved that section
+     back down, so the override comes with it. See completed.tasks.md on
+     UX-07 for why no other .band on this page needs one. -->
+<section id="principles" class="band" style="padding-top:clamp(2.2rem,4vw,3rem)">
+  <div class="wrap">
+    <p class="kick kick-teal">Thirteen, each with one question</p>
+    <h2 class="sec">The principles themselves.</h2>
+    <ol class="principles">
+      {{ range hugo.Data.principles }}
+      <li id="principle-{{ .n }}">
+        <span class="p-n">{{ .n }}</span>
+        <h3 class="p-t">{{ .title }}</h3>
+        <p class="p-b">{{ .body }}</p>
+        <p class="p-q">{{ .question }}</p>
+      </li>
+      {{ end }}
+      <li class="p-open">
+        <span class="p-n p-n-open" aria-hidden="true">14</span>
+        <h3 class="p-t">There is no fourteenth principle yet.</h3>
+        <p class="p-b">Thirteen is where the drafting stopped, not where the thinking did. What is missing is listed as missing rather than implied by a gap.</p>
+        <p class="p-q"><a href="/behind-the-scenes/#roadmap">See what is named but not written</a></p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="forms-and-labels" class="band">
   <div class="wrap">
     <p class="kick kick-teal">A field, not a ladder</p>
     <h2 class="sec">Forms and labels, none of them the default.</h2>
@@ -473,29 +495,6 @@
   </div>
 </section>
 
-<section id="principles" class="band">
-  <div class="wrap">
-    <p class="kick kick-teal">Thirteen, each with one question</p>
-    <h2 class="sec">The principles themselves.</h2>
-    <ol class="principles">
-      {{ range hugo.Data.principles }}
-      <li id="principle-{{ .n }}">
-        <span class="p-n">{{ .n }}</span>
-        <h3 class="p-t">{{ .title }}</h3>
-        <p class="p-b">{{ .body }}</p>
-        <p class="p-q">{{ .question }}</p>
-      </li>
-      {{ end }}
-      <li class="p-open">
-        <span class="p-n p-n-open" aria-hidden="true">14</span>
-        <h3 class="p-t">There is no fourteenth principle yet.</h3>
-        <p class="p-b">Thirteen is where the drafting stopped, not where the thinking did. What is missing is listed as missing rather than implied by a gap.</p>
-        <p class="p-q"><a href="/behind-the-scenes/#roadmap">See what is named but not written</a></p>
-      </li>
-    </ol>
-  </div>
-</section>
-
 <section id="scenarios" class="band">
   <div class="wrap">
     <p class="kick kick-fails">Seven situations, traced through — failures marked as failures</p>
@@ -504,6 +503,27 @@
 
     {{ $prin := hugo.Data.principles }}
     <p class="matrix-intro" id="stress-map-caption">Which of the thirteen each situation engages, and how. Read a row across: a filled mark is a principle doing the work it claims to do here, a hollow one is a principle that is named by the situation and does not hold. Blank columns are not endorsements — they are principles this situation simply does not put under load.</p>
+    <!-- IA-05: one dataset, two views. The chart summarises which principles
+         each situation engages; the rows below carry the same seven
+         situations in full prose. Both are always in the DOM.
+
+         Without scripting the rows always render — they hold the content —
+         and the chart renders only at widths where it actually fits. That
+         threshold is 860px, measured rather than chosen: table.matrix has
+         min-width:760px, the wrap's padding is 4vw a side, and the
+         container first clears 760px between 820px (752px, scrolls) and
+         860px (789px, fits). The audit proposed 820px, which is where the
+         overflow was *observed*, not where it stops.
+
+         With scripting the switch decides at any width, so the chart stays
+         reachable on a phone — in its labelled scroller, which is the one
+         place on this site a horizontal scroll is allowed, and is why the
+         hint below lives inside this view rather than beside it. -->
+    <div class="views" role="group" aria-label="How to read the seven situations">
+      <button type="button" class="action-utility" data-view="map" aria-controls="view-map" aria-pressed="false">Chart</button>
+      <button type="button" class="action-utility" data-view="rows" aria-controls="view-rows" aria-pressed="false">Full rows</button>
+    </div>
+    <div id="view-map">
     <div class="matrix-scroll" id="stress-map" tabindex="0" role="group" aria-labelledby="stress-map-caption">
       <table class="matrix">
         <caption class="vh">The seven situations against the thirteen principles: which hold, and which fail.</caption>
@@ -531,7 +551,11 @@
         </tbody>
       </table>
     </div>
-    <p class="matrix-hint">Thirteen columns — scroll the chart sideways, or read the same seven rows in full below.</p>
+    <p class="matrix-hint">Thirteen columns — scroll the chart sideways, or switch to the full rows.</p>
+    </div>
+    <!-- Legend and the ★ note sit outside both views: the same marks appear
+         on the chart's cells and on the rows' chips, so the key to them is
+         not part of either view. -->
     <ul class="legend">
       <li><span class="m m-holds">▪</span> holds — the principle bears load here</li>
       <li><span class="m m-fails">□</span> fails — named by the situation, does not hold</li>
@@ -540,6 +564,7 @@
     </ul>
     <p class="note note-fails">★ Two rows carry this mark because a matrix can only fail a principle it can point at. Coercive control fails nearly every principle at once, not only the three marked; a child in a restructuring household is failed by an absence — no principle here grants them standing — and an absence has no cell.</p>
 
+    <div id="view-rows">
     <p style="max-width:60ch;margin:2rem 0 1rem;color:#3C3E38;font-size:16.5px;line-height:1.58">Each row, in full — what holds, what fails, and why:</p>
     {{ range hugo.Data.stress }}
     <details class="card card-fails" data-collapsible>
@@ -564,6 +589,7 @@
       </div>
     </details>
     {{ end }}
+    </div>
     <p class="note note-fails">⌖ Not exhaustive, and not ranked by severity. Seven situations chosen because each fails a different principle for a different reason — the point isn't the list, it's that a list this short already finds seven of them.</p>
   </div>
 </section>
@@ -574,25 +600,35 @@
     <h2 class="sec">Four things named plainly, using the vocabulary already here.</h2>
     <p class="lede">None of these are new concepts for this framework — each one is an existing principle, applied to something the site had otherwise left unsaid. This isn't therapeutic or clinical content, and doesn't claim to be; where it isn't enough, <a href="/resources/">Resources</a> is what's actually built for that.</p>
     <p class="note" style="margin:0 0 1.4rem">⌖ These four are closed rather than open — not to soften them, but because two of them describe violence and a reader should get to choose the moment. Opening one is the only thing that changes.</p>
-    <details class="card card-ask" data-collapsible>
+    <!-- These four deliberately carry no `data-collapsible`, which is the
+         opt-in "Open every section" reads (see sections.js). The note
+         directly above promises "opening one is the only thing that
+         changes" — a bulk control that swept all four open, two of which
+         describe violence, would make that sentence false and would take
+         the choice of moment away from exactly the reader it was written
+         for. The sweep is a convenience for the stress tests and the two
+         adjudication cards; consent-gated content is not a section to be
+         swept. Direct fragment links still open a single target, which is
+         the one intended way in. -->
+    <details class="card card-ask">
       <summary><span class="card-title">Desire discrepancy</span><span class="chips"><span class="chip chip-holds">principle 04</span></span></summary>
       <div class="card-body" id="desire-discrepancy">
         <p style="margin:0;max-width:64ch;font-size:15.5px;line-height:1.58;color:#3C3E38">Wanting sex at a different frequency or intensity than a partner does is not a sign either person is broken, and it isn't automatically solved by whoever wants less doing it anyway. Principle 04 requires consent to be specific and ongoing — a yes given to avoid conflict, guilt, or the relationship ending is not that yes, even when nobody said the word "or else." The same principle protects the higher-desire partner too: wanting sex is not a character flaw to be managed, and going without is not a silent obligation either person owes the other.</p>
       </div>
     </details>
-    <details class="card card-ask" data-collapsible>
+    <details class="card card-ask">
       <summary><span class="card-title">Reproductive coercion</span><span class="chips"><span class="chip chip-holds">principles 02 · 04</span></span></summary>
       <div class="card-body" id="reproductive-coercion">
         <p style="margin:0;max-width:64ch;font-size:15.5px;line-height:1.58;color:#3C3E38">Sabotaging contraception, pressuring someone toward or away from pregnancy, or controlling access to abortion or reproductive healthcare is a specific, documented form of intimate partner violence — not a disagreement about family planning. It's coercive control (principles 02 and 04) applied specifically to a body's own reproductive capacity, and it's exactly the situation the safety gate on <a href="/practise/">Practise</a> and the coercive-control listings on <a href="/resources/#coercive-control">Resources</a> already exist for. Named here so it isn't invisible in a framework about intimacy that otherwise doesn't mention it — not because this site has a specialised tool for it beyond what already exists.</p>
       </div>
     </details>
-    <details class="card card-ask" data-collapsible>
+    <details class="card card-ask">
       <summary><span class="card-title">Sexual trauma</span><span class="chips"><span class="chip chip-holds">principle 04</span></span></summary>
       <div class="card-body" id="sexual-trauma">
         <p style="margin:0;max-width:64ch;font-size:15.5px;line-height:1.58;color:#3C3E38">Past sexual trauma changes what consent negotiation needs to look like. A frozen or compliant response is not the same as a wanted one, and principle 04's requirement that consent be "materially possible" applies to a nervous system's capacity to say no in the moment, not only to whether someone had the legal standing to. This site is not a trauma-therapy resource and doesn't pretend to be one — see <a href="/resources/">Resources</a> for what is. What this framework can say: checking in rather than assuming, treating withdrawal as information rather than rejection, and expecting inconsistency rather than reading it as dishonesty is part of what principle 04 already asks for, not an addition to it.</p>
       </div>
     </details>
-    <details class="card card-ask" data-collapsible>
+    <details class="card card-ask">
       <summary><span class="card-title">Consensual power exchange</span><span class="chips"><span class="chip chip-holds">principles 05 · 07</span></span></summary>
       <div class="card-body" id="power-exchange">
         <p style="margin:0;max-width:64ch;font-size:15.5px;line-height:1.58;color:#3C3E38">Deliberately structured power difference — D/s dynamics, protocol, negotiated control — is not what principle 05 refuses. Principle 05's own test is whether power is arbitrary, hidden, or impossible to challenge, not whether power exists at all. Named, bounded, revocable power exchange, agreed to specifically and open to renegotiation, is closer to what principle 05 is actually asking for than a relationship that claims to have no power dynamics and therefore never examines the ones it has. What isn't consensual power exchange: anything that can't be renegotiated, refused, or ended without retaliation — at that point it's principle 07 doing the work, and principle 05 no longer applies.</p>
@@ -786,7 +822,7 @@
 </main>
 
 <footer class="dark" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:44ch">v0.2 · no third-party requests, including fonts · <a href="/behind-the-scenes/" style="color:#DB9E2A">what changed</a> · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
       <a href="/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>
