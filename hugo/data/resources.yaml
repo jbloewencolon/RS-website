@@ -54,18 +54,18 @@ categories:
       - name: "ShelterSafe"
         url: "https://sheltersafe.ca/"
         linkLabel: "sheltersafe.ca"
-        description: "An interactive map to the nearest shelter, run by Women's Shelters Canada — a network of 16 provincial and territorial shelter associations representing over 600 shelters. Each listing carries its own 24-hour emergency number."
+        description: "An interactive map to the nearest shelter, run by Women's Shelters Canada, a network of 16 provincial and territorial shelter associations representing over 600 shelters. Each listing carries its own 24-hour emergency number."
         contact: "web directory, listings are 24h by phone · free · verified 2026-08-07"
 
   - id: "legal-aid"
     title: "Legal aid and family law"
-    scope: "Canada — thin coverage, stated honestly"
+    scope: "Canada: thin coverage, stated honestly"
     open: false
     entries:
       - name: "211 Canada"
         url: "https://211.ca/"
         linkLabel: "211.ca"
-        description: "Canada's largest directory of community, social, and government services, including referral to legal aid and family law clinics in your area. Not legal advice — a starting point for finding who can give it."
+        description: "Canada's largest directory of community, social, and government services, including referral to legal aid and family law clinics in your area. Not legal advice: a starting point for finding who can give it."
         contact: "phone 211 or web, 150+ languages · free · verified 2026-08-07"
 
   - id: "immigration"
@@ -76,7 +76,7 @@ categories:
       - name: "Canadian Council for Refugees"
         url: "https://ccrweb.ca/"
         linkLabel: "ccrweb.ca"
-        description: "A national coalition of refugee- and immigrant-serving organisations. The CCR itself does not provide direct legal help — it coordinates and advocates for the member organisations that do. Use its site to find a member organisation near you."
+        description: "A national coalition of refugee- and immigrant-serving organisations. The CCR itself does not provide direct legal help. It coordinates and advocates for the member organisations that do. Use its site to find a member organisation near you."
         contact: "web, points to member organisations · verified 2026-08-07"
 
   - id: "housing"
@@ -98,7 +98,7 @@ categories:
       - name: "211 Canada"
         url: "https://211.ca/"
         linkLabel: "211.ca"
-        description: "The same directory listed under legal aid above also covers benefits navigation, income support, and food security services by region — call 211 or search by postal code."
+        description: "The same directory listed under legal aid above also covers benefits navigation, income support, and food security services by region. Call 211 or search by postal code."
         contact: "phone 211 or web, 150+ languages · free · verified 2026-08-07"
 
   - id: "disability"
@@ -136,7 +136,7 @@ categories:
       - name: "Hope for Wellness Helpline"
         url: "https://www.hopeforwellness.ca/"
         linkLabel: "hopeforwellness.ca"
-        description: "Listed above under crisis lines — included here again because it is Indigenous-specific and Indigenous-delivered, not only a crisis service."
+        description: "Listed above under crisis lines, included here again because it is Indigenous-specific and Indigenous-delivered, not only a crisis service."
         contact: "1-855-242-3310 or online chat · free · 24/7 · verified 2026-08-07"
 
   - id: "mutual-aid"
@@ -158,5 +158,5 @@ categories:
       - name: "Befrienders Worldwide"
         url: "https://befrienders.org/"
         linkLabel: "befrienders.org"
-        description: "A global network of emotional-support centres for loneliness, despair, and suicidal distress — 349 centres in 32 countries. Grew out of the Samaritans; independent since 2012."
+        description: "A global network of emotional-support centres for loneliness, despair, and suicidal distress: 349 centres in 32 countries. Grew out of the Samaritans; independent since 2012."
         contact: "web, phone/email/chat varies by centre · verified 2026-08-07"

@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Learn the Thirteen Principles — Relational Sovereignty</title>
+<title>Learn the Thirteen Principles: Relational Sovereignty</title>
 <meta name="description" content="What relational sovereignty is, what it is not, and the question each principle asks of you.">
 <link rel="canonical" href="https://relationalsovereignty.com/learn/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Relational Sovereignty">
 <meta property="og:url" content="https://relationalsovereignty.com/learn/">
-<meta property="og:title" content="Learn the Thirteen Principles — Relational Sovereignty">
+<meta property="og:title" content="Learn the Thirteen Principles: Relational Sovereignty">
 <meta property="og:description" content="What relational sovereignty is, what it is not, and the question each principle asks of you.">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
@@ -27,8 +27,8 @@
     {
       "@type": "Article",
       "@id": "https://relationalsovereignty.com/learn/#article",
-      "headline": "Learn the Thirteen Principles — Relational Sovereignty",
-      "name": "Learn the Thirteen Principles — Relational Sovereignty",
+      "headline": "Learn the Thirteen Principles: Relational Sovereignty",
+      "name": "Learn the Thirteen Principles: Relational Sovereignty",
       "description": "What relational sovereignty is, what it is not, and the question each principle asks of you.",
       "url": "https://relationalsovereignty.com/learn/",
       "inLanguage": "en",
@@ -40,9 +40,47 @@
 </script>
 {{ partial "head-base.html" dict }}
 <style>
-  nav[aria-label="Contents"] a{border:1px solid #C9C6BA;border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:#585B4F;display:inline-flex;align-items:center;min-height:44px}
-  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;max-width:900px;display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:0 1.5rem;font-family:var(--mono);font-size:14px}
-  @media print{body.print-isolate>header,body.print-isolate>main>section:not(#field-guide),body.print-isolate>footer{display:none!important}}
+  /* ── The hero chooser ────────────────────────────────────────────────
+     Ten boxes, one per section, and the page's only index since the
+     sticky bar went (IA-20). Because a closed section now takes no space
+     on screen (see .pocket below), whichever box is clicked opens its
+     content directly beneath this grid — so "the info appears below the
+     boxes" is true for the tenth box as well as the first, which it was
+     not while nine collapsed headers sat between them.
+
+     Sized as real cards rather than the pills these were: each carries
+     the section's own kicker as a description line, so the choice is made
+     on what a section says rather than on a two-word label. Separate
+     bordered cards on the paper ground, not the hairline slab Home's six
+     doors use — ten is enough weight already, and the open one has to be
+     able to stand out from its neighbours. */
+  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:.7rem;font-family:var(--mono);font-size:14px}
+  nav[aria-label="Contents"] a{display:flex;flex-direction:column;gap:.45rem;height:100%;box-sizing:border-box;border:1px solid var(--rule);border-top:3px solid var(--rule);border-radius:2px;padding:.9rem 1rem 1rem;background:var(--paper-2);text-decoration:none;color:var(--ink);min-height:44px;transition:border-color .14s ease,background-color .14s ease}
+  .door-t{font-family:var(--sans);font-weight:700;font-size:1.06rem;line-height:1.25;letter-spacing:-.01em}
+  .door-d{font-size:12px;line-height:1.5;color:var(--ink-3)}
+  /* The register reads on the top edge at rest, the same scheme the six
+     doors on Home carry. The swatch beside each title says it a second
+     time, and .legend-key above says it in words — colour alone is never
+     the carrier here. */
+  nav[aria-label="Contents"] .d-teal{border-top-color:var(--teal)}
+  nav[aria-label="Contents"] .d-fails{border-top-color:var(--fails)}
+  nav[aria-label="Contents"] .d-ask{border-top-color:var(--ask-edge)}
+  /* head-base's shared hover sets `border-color`, which would drop the
+     register edge at exactly the moment of contact; these restore it at
+     equal specificity, later in the cascade. */
+  nav[aria-label="Contents"] .d-teal:hover,nav[aria-label="Contents"] .d-teal:focus-visible{border-top-color:var(--teal)}
+  nav[aria-label="Contents"] .d-fails:hover,nav[aria-label="Contents"] .d-fails:focus-visible{border-top-color:var(--fails)}
+  nav[aria-label="Contents"] .d-ask:hover,nav[aria-label="Contents"] .d-ask:focus-visible{border-top-color:var(--ask-edge)}
+  nav[aria-label="Contents"] a:hover .door-t{color:var(--holds)}
+  /* Which section is open. aria-current is what assistive technology
+     reads; the badge is the sighted equivalent of the same fact, and the
+     word "open" is in it because a tint and a caret are not a statement.
+     Set by sections.js from the pockets' real state, so it stays true
+     however the section was opened — box, summary, deep link, or the
+     bulk control. */
+  nav[aria-label="Contents"] a[aria-current]{background:var(--holds-fill);border-color:var(--holds-edge)}
+  nav[aria-label="Contents"] a[aria-current]::after{content:"Open ▾";font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--holds);margin-top:auto;padding-top:.5rem}
+  @media print{body.print-isolate>header,body.print-isolate>main>section:not([data-pocket="field-guide"]),body.print-isolate>footer{display:none!important}}
 
   /* ── Accent system ───────────────────────────────────────────────────
      Colour on this page carries information and nothing else. The page's
@@ -71,8 +109,10 @@
   .vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
   .wrap{max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)}
   .band{padding:0 0 clamp(3rem,6vw,4.5rem)}
-  /* Clears the sticky jump bar when a fragment link lands on a section. */
-  main [id]{scroll-margin-top:5.4rem}
+  /* Small breathing room under the (non-sticky) header when a fragment
+     link lands on a section — there is nothing fixed left at the top of
+     this page to clear now that the sections nav bar is gone. */
+  main [id]{scroll-margin-top:1.5rem}
 
   /* Section kicker. The coloured rule is the accent at full strength;
      the label beside it is the same register in its legible form. */
@@ -89,69 +129,71 @@
   .kick-ask{color:var(--ask)}.kick-ask::before{background:var(--ask-edge)}
   h2.sec{font-family:var(--sans);font-weight:700;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1.2rem;max-width:26ch}
   .lede{max-width:60ch;margin:0 0 1.8rem;color:var(--ink-2);font-size:16.5px;line-height:1.58}
-  .note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--ink-3);border-left:3px solid var(--ask-edge);padding:.3rem 0 .3rem .9rem;margin:1.8rem 0 0}
-  .note-fails{border-left-color:var(--fails)}
+  /* .note/.note-fails moved to the shared base (details.note), IA-22. */
 
-  /* Hero tally + colour legend. The legend is what makes the accents
-     information rather than mood: a reader is told, in words, what each
-     hue is claiming before they meet it. */
-  .tally{display:flex;flex-wrap:wrap;gap:.6rem;margin:0 0 1.5rem;padding:0;list-style:none}
-  .tally li{font-family:var(--mono);font-size:12.5px;line-height:1.2;display:flex;align-items:baseline;gap:.45rem;border:1px solid var(--rule);border-left-width:4px;padding:.6rem .85rem;background:var(--paper-2)}
-  .tally b{font-family:var(--sans);font-size:16px;font-weight:700}
-  .t-teal{border-left-color:var(--teal);color:var(--teal)}
-  .t-fails{border-left-color:var(--fails);color:var(--fails)}
-  .t-ask{border-left-color:var(--ask-edge);color:var(--ask)}
+  /* Hero colour legend. This is what makes the accents information rather
+     than mood: a reader is told, in words, what each hue is claiming
+     before they meet it — and it now sits directly above the ten boxes
+     whose swatches are its first real use. (The three tally boxes that
+     used to stand between them were removed 2026-08-14: every figure in
+     them was already in the sentence above — "Thirteen principles follow.
+     Each carries a question" — and in the grid's own "Seven stress
+     tests", so they restated the hero rather than adding to it.) */
   .swatch{display:inline-block;width:.62rem;height:.62rem;flex:0 0 auto;border-radius:1px;margin-right:.5rem;vertical-align:baseline}
   .s-teal{background:var(--teal)}.s-fails{background:var(--fails)}.s-ask{background:var(--ask-edge)}
   .legend-key{max-width:66ch;margin:1.1rem 0 0;font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--ink-3)}
 
-  /* Sticky jump bar — the page's bookmark. Sections are collapsible, so
-     "where am I" stops being answerable by scroll position alone; this
-     names the current section and lets the reader move without going
-     back to the top. Plain in-page links, so it works with scripting
-     off — the current-section label is the only part JS supplies. */
-  .jump{position:sticky;top:0;z-index:30;background:var(--paper);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);box-shadow:0 10px 18px -16px rgba(25,27,24,.6)}
-  /* WD-20: how far down the page you are, not just which section — the
-     bar already names where. Scroll-driven, not JS-driven: the browser
-     itself ties the animation's progress to scroll position, so there is
-     no scroll listener, no rAF loop, nothing running on the main thread
-     while you scroll. Fully feature-gated: absent everywhere @supports
-     doesn't confirm animation-timeline:scroll(), not a partial or broken
-     version of it. Covered by the site's own reduced-motion rule like
-     every other animation here. */
-  @supports (animation-timeline: scroll()) {
-    .jump::after{
-      content:"";display:block;height:2px;background:var(--ask-edge);
-      transform-origin:left;transform:scaleX(0);
-      animation:jump-progress linear;animation-timeline:scroll()
-    }
-    @keyframes jump-progress{to{transform:scaleX(1)}}
-  }
-  /* nowrap, deliberately: a wrapping flex line wraps before it shrinks,
-     which put the open-all button on a second sticky row on a phone and
-     cost ~50px of every screen. Nothing here is allowed to wrap — the
-     current-section label ellipses instead (see #jump-current), and the
-     expanded menu is taken out of flow entirely below. */
-  .jump-inner{position:relative;max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:nowrap;align-items:center;gap:0 1rem;justify-content:space-between}
-  .jump-menu{flex:1 1 auto;min-width:0}
-  .jump-menu>summary{cursor:pointer;list-style:none;display:flex;align-items:center;min-height:48px;font-family:var(--mono);font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
-  .jump-menu>summary::-webkit-details-marker{display:none}
-  /* min-width:0 is what lets the ellipsis actually happen: a flex item
-     defaults to min-width:auto and refuses to shrink below its text, which
-     wraps the whole bar onto a second sticky row on a phone. */
-  #jump-current{color:var(--teal);text-transform:none;letter-spacing:.01em;margin-left:.5rem;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  /* Out of flow so the bar above it never has to make room: the expanded
-     list drops over the page instead of resizing the row it came from. */
-  .jump-menu>nav{position:absolute;left:0;right:0;top:100%;z-index:5;background:var(--paper);border-bottom:1px solid var(--rule);box-shadow:0 12px 20px -14px rgba(25,27,24,.65);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(215px,100%),1fr));gap:0 1.4rem;padding:.3rem clamp(1.1rem,4vw,3rem) 1rem}
-  .jump-menu>nav a{font-family:var(--mono);font-size:14px;color:var(--ink-3);text-decoration:none;display:flex;align-items:center;min-height:40px;border-bottom:2px solid transparent}
-  .jump-menu>nav a::before{content:none!important}
-  .jump-menu>nav a:hover{color:var(--holds)}
-  .jump-menu>nav a[aria-current]{color:var(--teal);border-bottom-color:var(--ask-edge)}
   /* Hidden until sections.js adds .is-ready, so a reader with scripting off
      is never shown a control that cannot do anything. */
   [data-open-all]{display:none;font-family:var(--mono);font-size:14px;letter-spacing:.07em;text-transform:uppercase;background:none;color:var(--teal);border:1px solid var(--rule);border-radius:2px;padding:.45rem .8rem;min-height:44px;cursor:pointer;white-space:nowrap}
   [data-open-all].is-ready{display:inline-flex;align-items:center}
   [data-open-all]:hover{border-color:var(--holds);background:var(--holds-fill);color:var(--holds)}
+
+  /* Pockets. Each of the ten sections below the hero is a <details>: the
+     hero grid opens exactly one and closes the rest (sections.js), a
+     second click on the open one's own box closes it, and every section
+     still opens itself via its own summary or a direct fragment link with
+     scripting off. The chevron and hover-to-holds-colour treatment are
+     already global (head-base.html's summary::before) — nothing pocket-
+     specific to add for those.
+
+     This replaces the sticky "Sections" bar the page carried before: with
+     the whole page choice-driven rather than a long scroll, a persistent
+     "where am I" bar has nothing left to answer that the hero grid — a
+     fixed reference point, not a moving one — doesn't already. */
+  .pocket{border:none;background:none;margin:0}
+  .pocket-summary{cursor:pointer;list-style:none;display:block;padding:.3rem 0}
+  .pocket-summary::-webkit-details-marker{display:none}
+  .pocket-summary .kick{margin-bottom:.5rem}
+  .pocket-summary:hover .sec{color:var(--holds)}
+  .dark .pocket-summary:hover .sec{color:var(--ask-edge)}
+  /* A closed section takes no space on screen. Ten closed headers stacked
+     under the hero grid were the same ten items a second time — the exact
+     duplication that removing the sticky bar was meant to end — and they
+     pushed the tenth box's content a thousand pixels below the box that
+     opened it. Hiding the whole <section> rather than just its <details>
+     is what matters here: every .band carries its own bottom padding and
+     the opacity band carries a full-bleed dark background, so leaving the
+     sections in place would leave nine strips of empty paper and one
+     empty dark stripe behind.
+
+     Two guards, both load-bearing. `@media screen` keeps paper out of it
+     entirely: printing shows every section whatever was open when Print
+     was pressed, which is the same reason sections.js opens the
+     collapsibles on beforeprint. And .js-pockets is added by sections.js,
+     so with scripting off all ten headers stay — they are that reader's
+     only way in, since the grid's links can open a pocket (the HTML
+     reveal algorithm) but cannot close one. */
+  @media screen{
+    main.js-pockets>section[data-pocket].is-shut{display:none}
+  }
+  .pocket-body{padding-top:.4rem}
+  /* Overshoots by roughly the height of the kicker+heading above it, so a
+     fragment link lands with the pocket's own title in view rather than
+     the first line of body copy — same reasoning as .card-body[id] below,
+     and matching its 9rem: both are "clear a summary sitting above the
+     id'd element," and pocket summaries run up to two lines. */
+  .pocket-body[id]{scroll-margin-top:9rem}
 
   /* The thirteen. Number in teal because it is the framework speaking;
      the question band in ochre because it is the framework asking. */
@@ -244,7 +286,7 @@
   /* Purely visual placeholder — the cell is empty in the DOM so a screen
      reader says "blank" once rather than reading "not engaged" seventy
      times. The caption already states what a blank column means. */
-  td.c-none::before{content:"—";color:var(--ink-3)}
+  td.c-none::before{content:"·";color:var(--ink-3)}
   .legend{display:flex;flex-wrap:wrap;gap:.35rem 1.6rem;margin:.9rem 0 0;padding:0;list-style:none;font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--ink-3)}
   .legend .m{font-size:15px}
   .m-holds{color:var(--holds)}.m-fails{color:var(--fails)}
@@ -310,7 +352,7 @@
   .opq-s{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin:0 0 .5rem}
   .opq-w{font-family:var(--sans);font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC}
   .opq-y{margin:0;font-size:15px;line-height:1.5;color:#8FA9A2}
-  #opacity .kick::before{background:#DB9E2A}
+  [data-pocket="opacity"] .kick::before{background:#DB9E2A}
 
   /* A field, not a ladder — every label identical, deliberately. The
      sage edge is the one place a colour means "these are equal." */
@@ -336,7 +378,6 @@
   .btn-print{font-family:var(--mono);font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:var(--fails);color:#F3E9E6;border:none;padding:.8rem 1.1rem;min-height:44px;cursor:pointer;border-radius:2px}
 
   @media print{
-    .jump{display:none!important}
     .matrix-scroll{overflow:visible}
     /* Paper has no switch, so it gets both views — the same reason
        sections.js opens every <details> before printing. The chart is
@@ -344,6 +385,14 @@
        stops scrolling above. IA-05. */
     .views{display:none!important}
     .js-views #view-map,.js-views #view-rows,#view-map,#view-rows{display:block!important}
+    /* No-JS fallback: force every closed pocket open on paper, same
+       established pattern as Resources/Behind the Scenes. Deliberately
+       scoped away from the sexual-content section — its pocket and its
+       four cards stay exactly as closed on a no-JS printout as they do
+       everywhere else (IA-01). sections.js's own beforeprint handler
+       already respects this same exclusion for a reader with scripting;
+       this is the no-JS equivalent, not a looser rule. */
+    main>section:not([data-pocket="sexual-content"]) details:not([open])>*{display:block!important}
   }
 </style>
 </head>
@@ -382,127 +431,128 @@
 <main>
 <section id="main-content" style="padding:clamp(3rem,6vw,5rem) 0 clamp(1.6rem,3vw,2.2rem)">
   <div class="wrap">
-    <p class="kick kick-teal">Learn — the idea, in plain language · about 15 minutes</p>
+    <p class="kick kick-teal">Learn · the idea, in plain language · about 15 minutes</p>
     <h1 style="font-family:var(--sans);font-weight:800;font-size:clamp(2.1rem,5.6vw,3.8rem);line-height:1;letter-spacing:-.03em;margin:0 0 1.4rem;max-width:19ch">Relationships, Principles, and Limits</h1>
     <p style="font-size:clamp(1.05rem,2.2vw,1.3rem);line-height:1.55;max-width:48ch;margin:0 0 1.4rem">Relational sovereignty asks what would change if relationships were understood as living systems of consent, responsibility, reciprocity, and self-determination rather than structures of possession.</p>
     <p style="max-width:52ch;margin:0 0 1.6rem;color:#3C3E38">It is not a finished doctrine, and this page does not present it as one. Thirteen principles follow. Each carries a question you can actually ask of a relationship you are in.</p>
-    <ul class="tally">
-      <li class="t-teal"><b>13</b> principles</li>
-      <li class="t-fails"><b>7</b> places they break</li>
-      <li class="t-ask"><b>1</b> question each</li>
-    </ul>
-    <p class="legend-key"><span class="swatch s-teal"></span>Teal marks what the framework asserts. <span class="swatch s-fails"></span>Rust marks where it breaks, or where its own vocabulary gets turned on someone. <span class="swatch s-ask"></span>Ochre marks a question being put to you. Nothing on this page is signalled by colour alone — every mark is also a word.</p>
-    <nav aria-label="Contents" style="margin-top:1.4rem">
+    <p class="legend-key"><span class="swatch s-teal"></span>Teal marks what the framework asserts. <span class="swatch s-fails"></span>Rust marks where it breaks, or where its own vocabulary gets turned on someone. <span class="swatch s-ask"></span>Ochre marks a question being put to you. Nothing on this page is signalled by colour alone. Every mark is also a word.</p>
+    <!-- Each box's second line is that section's own kicker, verbatim.
+         Repeating it here rather than writing new label copy keeps the
+         two in step: a reader who picks "A field, not a ladder" opens a
+         section that greets them with the same six words. -->
+    <nav aria-label="Contents" style="margin-top:1.5rem">
       <ul>
-        <li><a href="#principles"><span class="swatch s-teal"></span>The thirteen principles</a></li>
-        <li><a href="#forms-and-labels"><span class="swatch s-teal"></span>Forms &amp; labels</a></li>
-        <li><a href="#scenarios"><span class="swatch s-fails"></span>Seven stress tests</a></li>
-        <li><a href="#sexual-content"><span class="swatch s-ask"></span>Sexual content, named plainly</a></li>
-        <li><a href="#continuity"><span class="swatch s-ask"></span>Continuity of care</a></li>
-        <li><a href="#adjudication"><span class="swatch s-ask"></span>Adjudication</a></li>
-        <li><a href="#sovereignty-senses"><span class="swatch s-teal"></span>Sovereignty, four senses</a></li>
-        <li><a href="#opacity"><span class="swatch s-teal"></span>Opacity</a></li>
-        <li><a href="#field-guide"><span class="swatch s-fails"></span>Field guide: vocabulary as a weapon</a></li>
-        <li><a href="#not-yet-written"><span class="swatch s-fails"></span>What's not written yet</a></li>
+        <li><a href="#principles" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>The thirteen principles</span><span class="door-d">Thirteen, each with one question</span></a></li>
+        <li><a href="#forms-and-labels" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Forms &amp; labels</span><span class="door-d">A field, not a ladder</span></a></li>
+        <li><a href="#scenarios" class="d-fails"><span class="door-t"><span class="swatch s-fails"></span>Seven stress tests</span><span class="door-d">Seven situations, traced through, failures marked as failures</span></a></li>
+        <li><a href="#sexual-content" class="d-ask"><span class="door-t"><span class="swatch s-ask"></span>Sexual content, named plainly</span><span class="door-d">A framework about intimacy that hadn't mentioned sex</span></a></li>
+        <li><a href="#continuity" class="d-ask"><span class="door-t"><span class="swatch s-ask"></span>Continuity of care</span><span class="door-d">A clause, not a principle: 06 and 07 without a tiebreaker</span></a></li>
+        <li><a href="#adjudication" class="d-ask"><span class="door-t"><span class="swatch s-ask"></span>Adjudication</span><span class="door-d">Which principle wins, answered where it can be and left open where it can't</span></a></li>
+        <li><a href="#sovereignty-senses" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Sovereignty, four senses</span><span class="door-d">One word, four jobs</span></a></li>
+        <li><a href="#opacity" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Opacity</span><span class="door-d">Principle 08, applied to this website</span></a></li>
+        <li><a href="#field-guide" class="d-fails"><span class="door-t"><span class="swatch s-fails"></span>Field guide: vocabulary as a weapon</span><span class="door-d">This site's own vocabulary, turned around</span></a></li>
+        <li><a href="#not-yet-written" class="d-fails"><span class="door-t"><span class="swatch s-fails"></span>What's not written yet</span><span class="door-d">What's planned, not what's built</span></a></li>
       </ul>
     </nav>
-  </div>
-</section>
+    <!-- The grid above is the only section index now — the sticky
+         "Sections" bar it used to duplicate is gone (IA-06, taken further:
+         the author's own direction was to make the page choice-driven
+         rather than a long scroll, which removes the bar's reason to
+         exist along with the duplication). Every section below is closed
+         until its own box is clicked; clicking a second box closes the
+         first, so at most one is open at a time. A closed section is not
+         merely collapsed but absent from the screen entirely, which is
+         what makes the grid the *only* index rather than the first of
+         two — ten closed headers stacked below it were the same ten
+         items again. "Open every section" still exists for a reader who
+         wants the old everything-at-once page back.
 
-<div class="jump noprint">
-  <div class="jump-inner">
-    <details class="jump-menu">
-      <summary>Sections<span id="jump-current"></span></summary>
-      <nav aria-label="Sections">
-        <a href="#principles">The thirteen principles</a>
-        <a href="#forms-and-labels">Forms &amp; labels</a>
-        <a href="#scenarios">Seven stress tests</a>
-        <a href="#sexual-content">Sexual content, named plainly</a>
-        <a href="#continuity">Continuity of care</a>
-        <a href="#adjudication">Adjudication</a>
-        <a href="#sovereignty-senses">Sovereignty, four senses</a>
-        <a href="#opacity">Opacity</a>
-        <a href="#field-guide">Field guide: vocabulary as a weapon</a>
-        <a href="#not-yet-written">What's not written yet</a>
-      </nav>
-    </details>
-    <!-- IA-04: aria-controls names the nine regions this button actually
-         governs — the seven stress tests and the two adjudication cards,
-         which are exactly the [data-collapsible] set sections.js sweeps.
-         Generated from the same data the cards are, so the list cannot
-         drift from the thing it describes. It deliberately does not name
-         the four sexual-content disclosures: IA-01 removed those from the
-         sweep, because the page promises "opening one is the only thing
-         that changes" and the shipped code was making that false. Honest
-         scope first, correct semantics second. -->
-    <button type="button" data-open-all aria-pressed="false"
+         IA-04's aria-controls carries forward: it names the nine regions
+         this button governs *within whichever pocket is open* — the seven
+         stress tests and the two adjudication cards — generated from the
+         same data the cards are. Sexual content is still excluded from
+         that list for the reason it always was (IA-01): the page promises
+         "opening one is the only thing that changes." What's new is that
+         "every section" now also means the ten pockets themselves; see
+         sections.js for how the sweep and the pockets compose. -->
+    <button type="button" data-open-all aria-pressed="false" style="margin-top:1.2rem"
             aria-controls="{{ range hugo.Data.stress }}{{ .id }} {{ end }}adj-06-07 adj-08-11">Open every section</button>
   </div>
-</div>
+</section>
 
-<!-- Top padding, not .band's bottom-only default, because this is now the
-     first section under the sticky jump bar and has no preceding section to
-     borrow spacing from. It carried exactly this override once before and
-     lost it when #forms-and-labels moved above it; IA-16 moved that section
-     back down, so the override comes with it. See completed.tasks.md on
-     UX-07 for why no other .band on this page needs one. -->
-<section id="principles" class="band" style="padding-top:clamp(2.2rem,4vw,3rem)">
+<section class="band" data-pocket="principles" style="padding-top:clamp(1.6rem,3vw,2.2rem)">
   <div class="wrap">
-    <p class="kick kick-teal">Thirteen, each with one question</p>
-    <h2 class="sec">The principles themselves.</h2>
-    <ol class="principles">
-      {{ range hugo.Data.principles }}
-      <li id="principle-{{ .n }}">
-        <span class="p-n">{{ .n }}</span>
-        <h3 class="p-t">{{ .title }}</h3>
-        <p class="p-b">{{ .body }}</p>
-        <p class="p-q">{{ .question }}</p>
-      </li>
-      {{ end }}
-      <li class="p-open">
-        <span class="p-n p-n-open" aria-hidden="true">14</span>
-        <h3 class="p-t">There is no fourteenth principle yet.</h3>
-        <p class="p-b">Thirteen is where the drafting stopped, not where the thinking did. What is missing is listed as missing rather than implied by a gap.</p>
-        <p class="p-q"><a href="/behind-the-scenes/#roadmap">See what is named but not written</a></p>
-      </li>
-    </ol>
+    <details class="pocket" data-collapsible>
+      <summary class="pocket-summary">
+        <span class="kick kick-teal">Thirteen, each with one question</span>
+        <h2 class="sec">The principles themselves.</h2>
+      </summary>
+      <div class="pocket-body" id="principles">
+        <ol class="principles">
+          {{ range hugo.Data.principles }}
+          <li id="principle-{{ .n }}">
+            <span class="p-n">{{ .n }}</span>
+            <h3 class="p-t">{{ .title }}</h3>
+            <p class="p-b">{{ .body }}</p>
+            <p class="p-q">{{ .question }}</p>
+          </li>
+          {{ end }}
+          <li class="p-open">
+            <span class="p-n p-n-open" aria-hidden="true">14</span>
+            <h3 class="p-t">There is no fourteenth principle yet.</h3>
+            <p class="p-b">Thirteen is where the drafting stopped, not where the thinking did. What is missing is listed as missing rather than implied by a gap.</p>
+            <p class="p-q"><a href="/behind-the-scenes/#roadmap">See what is named but not written</a></p>
+          </li>
+        </ol>
+      </div>
+    </details>
   </div>
 </section>
 
-<section id="forms-and-labels" class="band">
+<section class="band" data-pocket="forms-and-labels">
   <div class="wrap">
-    <p class="kick kick-teal">A field, not a ladder</p>
-    <h2 class="sec">Forms and labels, none of them the default.</h2>
-    <p style="max-width:58ch;margin:0 0 1.6rem;color:#3C3E38;font-size:16px;line-height:1.58">Relationship anarchy names the refusal directly: no automatic ranking of romantic partnership above friendship, chosen kin, or care — <a href="/archive/">Andie Nordgren's manifesto</a> is the clearest short statement of it. Amatonormativity names what's being refused: the assumption, built into law, custom, and most relationship advice, that exclusive romantic couplehood is universal and owed the top of the stack — the term is <a href="/archive/">Elizabeth Brake's</a>. Neither word is a lifestyle prescription. Both are a description of a default this framework declines to treat as neutral.</p>
-    <div style="border:1px solid #C9C6BA;padding:1.6rem 1.7rem 1.8rem;max-width:760px;margin:0 0 1.4rem">
-      <p id="forms-field-desc" style="margin:0 0 1rem;font-size:16px;line-height:1.58;color:#3C3E38">A field, not a ladder, means the labels below sit at the same height — identical edge, identical weight, identical colour, on purpose. This list is alphabetical, not a ranking by seriousness, permanence, or virtue.</p>
-      <ul class="forms" aria-labelledby="forms-field-desc">
-        <li>Asexual and aromantic partnership</li>
-        <li>Chosen family</li>
-        <li>Co-parenting without romance</li>
-        <li>Kitchen-table and parallel polyamory</li>
-        <li>Long-distance and non-cohabiting partnership</li>
-        <li>Monogamy</li>
-        <li>Platonic life partnership</li>
-        <li>Polyamory</li>
-        <li>Queerplatonic partnership</li>
-        <li>Relationship anarchy</li>
-        <li>Solo polyamory</li>
-      </ul>
-      <p style="margin:1.1rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;color:#585B4F">Not exhaustive — a person's own word for what they have is the one that governs, including one not listed here.</p>
-    </div>
-    <p class="note note-fails" style="margin-top:0">⌖ A field is not a floor. Naming these forms as equals doesn't make the risk of choosing one equal to the risk of choosing another — legal recognition, immigration status, custody, and inheritance still fall unevenly across them, unrelated to which one serves the people in it best. See <a href="/resources/">Resources</a> for where that risk gets concrete.</p>
+    <details class="pocket" data-collapsible>
+      <summary class="pocket-summary">
+        <span class="kick kick-teal">A field, not a ladder</span>
+        <h2 class="sec">Forms and labels, none of them the default.</h2>
+      </summary>
+      <div class="pocket-body" id="forms-and-labels">
+        <p style="max-width:58ch;margin:0 0 1.6rem;color:#3C3E38;font-size:16px;line-height:1.58">Relationship anarchy names the refusal directly: no automatic ranking of romantic partnership above friendship, chosen kin, or care. <a href="/archive/">Andie Nordgren's manifesto</a> is the clearest short statement of it. Amatonormativity names what's being refused: the assumption, built into law, custom, and most relationship advice, that exclusive romantic couplehood is universal and owed the top of the stack. The term is <a href="/archive/">Elizabeth Brake's</a>. Neither word is a lifestyle prescription. Both are a description of a default this framework declines to treat as neutral.</p>
+        <div style="border:1px solid #C9C6BA;padding:1.6rem 1.7rem 1.8rem;max-width:760px;margin:0 0 1.4rem">
+          <p id="forms-field-desc" style="margin:0 0 1rem;font-size:16px;line-height:1.58;color:#3C3E38">A field, not a ladder, means the labels below sit at the same height: identical edge, identical weight, identical colour, on purpose. This list is alphabetical, not a ranking by seriousness, permanence, or virtue.</p>
+          <ul class="forms" aria-labelledby="forms-field-desc">
+            <li>Asexual and aromantic partnership</li>
+            <li>Chosen family</li>
+            <li>Co-parenting without romance</li>
+            <li>Kitchen-table and parallel polyamory</li>
+            <li>Long-distance and non-cohabiting partnership</li>
+            <li>Monogamy</li>
+            <li>Platonic life partnership</li>
+            <li>Polyamory</li>
+            <li>Queerplatonic partnership</li>
+            <li>Relationship anarchy</li>
+            <li>Solo polyamory</li>
+          </ul>
+          <p style="margin:1.1rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;color:#585B4F">Not exhaustive. A person's own word for what they have is the one that governs, including one not listed here.</p>
+        </div>
+        <details class="note note-fails" style="margin-top:0"><summary>⌖ A field is not a floor.</summary><p>Naming these forms as equals doesn't make the risk of choosing one equal to the risk of choosing another. Legal recognition, immigration status, custody, and inheritance still fall unevenly across them, unrelated to which one serves the people in it best. See <a href="/resources/">Resources</a> for where that risk gets concrete.</p></details>
+      </div>
+    </details>
   </div>
 </section>
 
-<section id="scenarios" class="band">
+<section class="band" data-pocket="scenarios">
   <div class="wrap">
-    <p class="kick kick-fails">Seven situations, traced through — failures marked as failures</p>
-    <h2 class="sec">What these principles are like to actually be inside.</h2>
-    <p class="lede">Thirteen principles read cleanly in the abstract. Some of them strain, bend, or fail outright for specific people in specific situations — and a framework that only ever illustrates itself with its easy cases is quietly asking readers whose situation is a hard case to notice the gap themselves. Seven aren't illustrations. They're places this framework runs out, named as such rather than smoothed over.</p>
+   <details class="pocket" data-collapsible>
+    <summary class="pocket-summary">
+      <span class="kick kick-fails">Seven situations, traced through, failures marked as failures</span>
+      <h2 class="sec">What these principles are like to actually be inside.</h2>
+    </summary>
+    <div class="pocket-body" id="scenarios">
+    <p class="lede">Thirteen principles read cleanly in the abstract. Some of them strain, bend, or fail outright for specific people in specific situations, and a framework that only ever illustrates itself with its easy cases is quietly asking readers whose situation is a hard case to notice the gap themselves. Seven aren't illustrations. They're places this framework runs out, named as such rather than smoothed over.</p>
 
     {{ $prin := hugo.Data.principles }}
-    <p class="matrix-intro" id="stress-map-caption">Which of the thirteen each situation engages, and how. Read a row across: a filled mark is a principle doing the work it claims to do here, a hollow one is a principle that is named by the situation and does not hold. Blank columns are not endorsements — they are principles this situation simply does not put under load.</p>
+    <p class="matrix-intro" id="stress-map-caption">Which of the thirteen each situation engages, and how. Read a row across: a filled mark is a principle doing the work it claims to do here, a hollow one is a principle that is named by the situation and does not hold. Blank columns are not endorsements. They are principles this situation simply does not put under load.</p>
     <!-- IA-05: one dataset, two views. The chart summarises which principles
          each situation engages; the rows below carry the same seven
          situations in full prose. Both are always in the DOM.
@@ -531,7 +581,7 @@
           <tr>
             <th scope="col">Situation</th>
             {{ range $prin }}
-            <th scope="col"><a href="#principle-{{ .n }}">{{ .n }}<span class="vh"> — {{ .title }}</span></a></th>
+            <th scope="col"><a href="#principle-{{ .n }}">{{ .n }}<span class="vh">: {{ .title }}</span></a></th>
             {{ end }}
           </tr>
         </thead>
@@ -539,7 +589,7 @@
           {{ range hugo.Data.stress }}
           {{ $row := . }}
           <tr>
-            <th scope="row"><a href="#{{ .id }}">{{ .title }}</a>{{ with .broadly }} <span>★<span class="vh"> — {{ . }}</span></span>{{ end }}</th>
+            <th scope="row"><a href="#{{ .id }}">{{ .title }}</a>{{ with .broadly }} <span>★<span class="vh">: {{ . }}</span></span>{{ end }}</th>
             {{ range $prin }}
             {{ $n := .n }}
             {{ if in $row.holds $n }}<td class="c-holds">▪<span class="vh">holds</span></td>
@@ -551,21 +601,21 @@
         </tbody>
       </table>
     </div>
-    <p class="matrix-hint">Thirteen columns — scroll the chart sideways, or switch to the full rows.</p>
+    <p class="matrix-hint">Thirteen columns. Scroll the chart sideways, or switch to the full rows.</p>
     </div>
     <!-- Legend and the ★ note sit outside both views: the same marks appear
          on the chart's cells and on the rows' chips, so the key to them is
          not part of either view. -->
     <ul class="legend">
-      <li><span class="m m-holds">▪</span> holds — the principle bears load here</li>
-      <li><span class="m m-fails">□</span> fails — named by the situation, does not hold</li>
-      <li><span class="m">—</span> not engaged</li>
+      <li><span class="m m-holds">▪</span> holds: the principle bears load here</li>
+      <li><span class="m m-fails">□</span> fails: named by the situation, does not hold</li>
+      <li><span class="m">·</span> not engaged</li>
       <li>★ fails more broadly than any cell can show</li>
     </ul>
-    <p class="note note-fails">★ Two rows carry this mark because a matrix can only fail a principle it can point at. Coercive control fails nearly every principle at once, not only the three marked; a child in a restructuring household is failed by an absence — no principle here grants them standing — and an absence has no cell.</p>
+    <p class="note note-fails">★ Two rows carry this mark because a matrix can only fail a principle it can point at. Coercive control fails nearly every principle at once, not only the three marked; a child in a restructuring household is failed by an absence (no principle here grants them standing) and an absence has no cell.</p>
 
     <div id="view-rows">
-    <p style="max-width:60ch;margin:2rem 0 1rem;color:#3C3E38;font-size:16.5px;line-height:1.58">Each row, in full — what holds, what fails, and why:</p>
+    <p style="max-width:60ch;margin:2rem 0 1rem;color:#3C3E38;font-size:16.5px;line-height:1.58">Each row, in full: what holds, what fails, and why:</p>
     {{ range hugo.Data.stress }}
     <details class="card card-fails" data-collapsible>
       <summary>
@@ -590,16 +640,31 @@
     </details>
     {{ end }}
     </div>
-    <p class="note note-fails">⌖ Not exhaustive, and not ranked by severity. Seven situations chosen because each fails a different principle for a different reason — the point isn't the list, it's that a list this short already finds seven of them.</p>
+    <details class="note note-fails"><summary>⌖ Not exhaustive, and not ranked by severity.</summary><p>Seven situations chosen because each fails a different principle for a different reason. The point isn't the list, it's that a list this short already finds seven of them.</p></details>
+    </div>
+   </details>
   </div>
 </section>
 
-<section id="sexual-content" class="band">
+<section class="band" data-pocket="sexual-content">
   <div class="wrap">
-    <p class="kick kick-ask">A framework about intimacy that hadn't mentioned sex</p>
-    <h2 class="sec">Four things named plainly, using the vocabulary already here.</h2>
-    <p class="lede">None of these are new concepts for this framework — each one is an existing principle, applied to something the site had otherwise left unsaid. This isn't therapeutic or clinical content, and doesn't claim to be; where it isn't enough, <a href="/resources/">Resources</a> is what's actually built for that.</p>
-    <p class="note" style="margin:0 0 1.4rem">⌖ These four are closed rather than open — not to soften them, but because two of them describe violence and a reader should get to choose the moment. Opening one is the only thing that changes.</p>
+   <!-- This pocket itself deliberately carries no `data-collapsible`
+        (see below for why), but is otherwise a pocket like every other:
+        the hero grid opens and closes it exactly the same way. That is
+        stricter than before, not looser — reaching the four cards inside
+        now takes opening this section *and then* a card, where it used
+        to take only the card. IA-01's promise ("opening one is the only
+        thing that changes") is about what's inside; nothing here changes
+        that promise, and the extra step composes with it rather than
+        against it. -->
+   <details class="pocket">
+    <summary class="pocket-summary">
+      <span class="kick kick-ask">A framework about intimacy that hadn't mentioned sex</span>
+      <h2 class="sec">Four things named plainly, using the vocabulary already here.</h2>
+    </summary>
+    <div class="pocket-body" id="sexual-content">
+    <p class="lede">None of these are new concepts for this framework. Each one is an existing principle, applied to something the site had otherwise left unsaid. This isn't therapeutic or clinical content, and doesn't claim to be; where it isn't enough, <a href="/resources/">Resources</a> is what's actually built for that.</p>
+    <details class="note" style="margin:0 0 1.4rem"><summary>⌖ These four are closed rather than open</summary><p>Not to soften them, but because two of them describe violence and a reader should get to choose the moment. Opening one is the only thing that changes.</p></details>
     <!-- These four deliberately carry no `data-collapsible`, which is the
          opt-in "Open every section" reads (see sections.js). The note
          directly above promises "opening one is the only thing that
@@ -613,55 +678,67 @@
     <details class="card card-ask">
       <summary><span class="card-title">Desire discrepancy</span><span class="chips"><span class="chip chip-holds">principle 04</span></span></summary>
       <div class="card-body" id="desire-discrepancy">
-        <p style="margin:0;max-width:64ch;font-size:15.5px;line-height:1.58;color:#3C3E38">Wanting sex at a different frequency or intensity than a partner does is not a sign either person is broken, and it isn't automatically solved by whoever wants less doing it anyway. Principle 04 requires consent to be specific and ongoing — a yes given to avoid conflict, guilt, or the relationship ending is not that yes, even when nobody said the word "or else." The same principle protects the higher-desire partner too: wanting sex is not a character flaw to be managed, and going without is not a silent obligation either person owes the other.</p>
+        <p style="margin:0;max-width:64ch;font-size:15.5px;line-height:1.58;color:#3C3E38">Wanting sex at a different frequency or intensity than a partner does is not a sign either person is broken, and it isn't automatically solved by whoever wants less doing it anyway. Principle 04 requires consent to be specific and ongoing. A yes given to avoid conflict, guilt, or the relationship ending is not that yes, even when nobody said the word "or else." The same principle protects the higher-desire partner too: wanting sex is not a character flaw to be managed, and going without is not a silent obligation either person owes the other.</p>
       </div>
     </details>
     <details class="card card-ask">
       <summary><span class="card-title">Reproductive coercion</span><span class="chips"><span class="chip chip-holds">principles 02 · 04</span></span></summary>
       <div class="card-body" id="reproductive-coercion">
-        <p style="margin:0;max-width:64ch;font-size:15.5px;line-height:1.58;color:#3C3E38">Sabotaging contraception, pressuring someone toward or away from pregnancy, or controlling access to abortion or reproductive healthcare is a specific, documented form of intimate partner violence — not a disagreement about family planning. It's coercive control (principles 02 and 04) applied specifically to a body's own reproductive capacity, and it's exactly the situation the safety gate on <a href="/practise/">Practise</a> and the coercive-control listings on <a href="/resources/#coercive-control">Resources</a> already exist for. Named here so it isn't invisible in a framework about intimacy that otherwise doesn't mention it — not because this site has a specialised tool for it beyond what already exists.</p>
+        <p style="margin:0;max-width:64ch;font-size:15.5px;line-height:1.58;color:#3C3E38">Sabotaging contraception, pressuring someone toward or away from pregnancy, or controlling access to abortion or reproductive healthcare is a specific, documented form of intimate partner violence, not a disagreement about family planning. It's coercive control (principles 02 and 04) applied specifically to a body's own reproductive capacity, and it's exactly the situation the safety gate on <a href="/practise/">Practise</a> and the coercive-control listings on <a href="/resources/#coercive-control">Resources</a> already exist for. Named here so it isn't invisible in a framework about intimacy that otherwise doesn't mention it, not because this site has a specialised tool for it beyond what already exists.</p>
       </div>
     </details>
     <details class="card card-ask">
       <summary><span class="card-title">Sexual trauma</span><span class="chips"><span class="chip chip-holds">principle 04</span></span></summary>
       <div class="card-body" id="sexual-trauma">
-        <p style="margin:0;max-width:64ch;font-size:15.5px;line-height:1.58;color:#3C3E38">Past sexual trauma changes what consent negotiation needs to look like. A frozen or compliant response is not the same as a wanted one, and principle 04's requirement that consent be "materially possible" applies to a nervous system's capacity to say no in the moment, not only to whether someone had the legal standing to. This site is not a trauma-therapy resource and doesn't pretend to be one — see <a href="/resources/">Resources</a> for what is. What this framework can say: checking in rather than assuming, treating withdrawal as information rather than rejection, and expecting inconsistency rather than reading it as dishonesty is part of what principle 04 already asks for, not an addition to it.</p>
+        <p style="margin:0;max-width:64ch;font-size:15.5px;line-height:1.58;color:#3C3E38">Past sexual trauma changes what consent negotiation needs to look like. A frozen or compliant response is not the same as a wanted one, and principle 04's requirement that consent be "materially possible" applies to a nervous system's capacity to say no in the moment, not only to whether someone had the legal standing to. This site is not a trauma-therapy resource and doesn't pretend to be one. See <a href="/resources/">Resources</a> for what is. What this framework can say: checking in rather than assuming, treating withdrawal as information rather than rejection, and expecting inconsistency rather than reading it as dishonesty is part of what principle 04 already asks for, not an addition to it.</p>
       </div>
     </details>
     <details class="card card-ask">
       <summary><span class="card-title">Consensual power exchange</span><span class="chips"><span class="chip chip-holds">principles 05 · 07</span></span></summary>
       <div class="card-body" id="power-exchange">
-        <p style="margin:0;max-width:64ch;font-size:15.5px;line-height:1.58;color:#3C3E38">Deliberately structured power difference — D/s dynamics, protocol, negotiated control — is not what principle 05 refuses. Principle 05's own test is whether power is arbitrary, hidden, or impossible to challenge, not whether power exists at all. Named, bounded, revocable power exchange, agreed to specifically and open to renegotiation, is closer to what principle 05 is actually asking for than a relationship that claims to have no power dynamics and therefore never examines the ones it has. What isn't consensual power exchange: anything that can't be renegotiated, refused, or ended without retaliation — at that point it's principle 07 doing the work, and principle 05 no longer applies.</p>
+        <p style="margin:0;max-width:64ch;font-size:15.5px;line-height:1.58;color:#3C3E38">Deliberately structured power difference (D/s dynamics, protocol, negotiated control) is not what principle 05 refuses. Principle 05's own test is whether power is arbitrary, hidden, or impossible to challenge, not whether power exists at all. Named, bounded, revocable power exchange, agreed to specifically and open to renegotiation, is closer to what principle 05 is actually asking for than a relationship that claims to have no power dynamics and therefore never examines the ones it has. What isn't consensual power exchange: anything that can't be renegotiated, refused, or ended without retaliation. At that point it's principle 07 doing the work, and principle 05 no longer applies.</p>
       </div>
     </details>
+    </div>
+   </details>
   </div>
 </section>
 
-<section id="continuity" class="band">
+<section class="band" data-pocket="continuity">
   <div class="wrap">
-    <p class="kick kick-ask">A clause, not a principle — 06 and 07 without a tiebreaker</p>
-    <h2 class="sec">Continuity of care</h2>
+   <details class="pocket" data-collapsible>
+    <summary class="pocket-summary">
+      <span class="kick kick-ask">A clause, not a principle: 06 and 07 without a tiebreaker</span>
+      <h2 class="sec">Continuity of care</h2>
+    </summary>
+    <div class="pocket-body" id="continuity">
     <div style="border:1px solid #C9C6BA;border-left:5px solid #8B3A2F;padding:1.6rem 1.7rem 0;max-width:680px;background:rgba(139,58,47,.04)">
-      <p style="margin:0 0 1rem;font-size:17px;line-height:1.58">Leaving is not abandonment. But when someone depends on you for survival — food, medication, housing, personal care, money, immigration status — your leaving moves that need somewhere else. It does not dissolve it, and the person holding it next is usually already tired.</p>
+      <p style="margin:0 0 1rem;font-size:17px;line-height:1.58">Leaving is not abandonment. But when someone depends on you for survival (food, medication, housing, personal care, money, immigration status) your leaving moves that need somewhere else. It does not dissolve it, and the person holding it next is usually already tired.</p>
       <p style="margin:0 0 1rem;font-size:17px;line-height:1.58">So if you can go safely: before you go, name who now holds what you were holding, and check that they know they are holding it. If nobody does, say that out loud to someone who is not the person you are leaving.</p>
-      <p style="margin:0 0 1.6rem;font-size:17px;line-height:1.58">If going safely means going suddenly, go suddenly. Nothing in this framework is a reason to stay. This is written against people who use the word sovereignty to walk away from a dependant — and it is not available to anyone who wants to use it to keep you.</p>
+      <p style="margin:0 0 1.6rem;font-size:17px;line-height:1.58">If going safely means going suddenly, go suddenly. Nothing in this framework is a reason to stay. This is written against people who use the word sovereignty to walk away from a dependant, and it is not available to anyone who wants to use it to keep you.</p>
       <p class="p-q" style="margin:0 -1.7rem;padding:1rem 1.7rem">Who is holding what I was holding, and do they know it?</p>
     </div>
-    <p style="max-width:56ch;margin:1.2rem 0 0;color:#585B4F;font-size:14.5px;line-height:1.55">Principle 06 (relational accountability) and principle 07 (refusal) can pull against each other with nothing here to say which wins. This clause is the tiebreaker for one specific case — dependency, at the moment of leaving — not a general answer. If you are not sure whether leaving is safe, <a href="/resources/">Resources</a> has somewhere to start.</p>
+    <p style="max-width:56ch;margin:1.2rem 0 0;color:#585B4F;font-size:14.5px;line-height:1.55">Principle 06 (relational accountability) and principle 07 (refusal) can pull against each other with nothing here to say which wins. This clause is the tiebreaker for one specific case (dependency, at the moment of leaving) not a general answer. If you are not sure whether leaving is safe, <a href="/resources/">Resources</a> has somewhere to start.</p>
+    </div>
+   </details>
   </div>
 </section>
 
-<section id="adjudication" class="band">
+<section class="band" data-pocket="adjudication">
   <div class="wrap">
-    <p class="kick kick-ask">Which principle wins — answered where it can be, left open where it can't</p>
-    <h2 class="sec">Two adjudication questions, two different answers.</h2>
+   <details class="pocket" data-collapsible>
+    <summary class="pocket-summary">
+      <span class="kick kick-ask">Which principle wins, answered where it can be and left open where it can't</span>
+      <h2 class="sec">Two adjudication questions, two different answers.</h2>
+    </summary>
+    <div class="pocket-body" id="adjudication">
     <details class="card card-ask" data-collapsible>
       <summary>
         <span class="card-title">06 (accountability) vs. 07 (refusal)</span>
         <span class="chips"><span class="chip chip-fails">□ no rule, deliberately</span></span>
       </summary>
       <div class="card-body" id="adj-06-07">
-        <p style="margin:0;max-width:64ch;font-size:15.5px;line-height:1.55;color:#3C3E38">Beyond the dependency case above, this framework does not rank these against each other, and that's a position, not an oversight. Principle 07 protects the refusal itself — the grief, disruption, or upheaval that follows someone saying no is not evidence that principle 06 was violated. What 06 actually governs is the <em>manner</em> of an ending where real obligations exist — a lease, a joint decision, a plan someone else built their own choices around — not whether the ending is allowed. Past that distinction, how much notice is owed, how much disruption is acceptable, and what counts as reasonable care in a given ending depends on facts a general principle can't specify in advance. A formula precise enough to resolve every case would be false precision dressed as an answer.</p>
+        <p style="margin:0;max-width:64ch;font-size:15.5px;line-height:1.55;color:#3C3E38">Beyond the dependency case above, this framework does not rank these against each other, and that's a position, not an oversight. Principle 07 protects the refusal itself: the grief, disruption, or upheaval that follows someone saying no is not evidence that principle 06 was violated. What 06 actually governs is the <em>manner</em> of an ending where real obligations exist (a lease, a joint decision, a plan someone else built their own choices around) not whether the ending is allowed. Past that distinction, how much notice is owed, how much disruption is acceptable, and what counts as reasonable care in a given ending depends on facts a general principle can't specify in advance. A formula precise enough to resolve every case would be false precision dressed as an answer.</p>
       </div>
     </details>
     <details class="card card-ask" data-collapsible>
@@ -670,17 +747,23 @@
         <span class="chips"><span class="chip chip-holds">▪ this one has an answer</span></span>
       </summary>
       <div class="card-body" id="adj-08-11">
-        <p style="margin:0;max-width:64ch;font-size:15.5px;line-height:1.55;color:#3C3E38">Principle 08 already narrows itself: opacity is a right against people who want more of you than they're owed, not against institutions that compel disclosure to release care, money, status, or documents. The manifesto's thesis 11 narrows the other side — standing to demand an account belongs to the people who absorb a relationship's consequences, not the state, not a crowd with an opinion. Put together: opacity holds fully against anyone without standing, and even against someone who has it, what's owed is the specific thing they'll absorb — not a full accounting of the relationship. That's the whole reasoning behind the endings tool on <a href="/practise/">Practise</a> asking only "who holds this after, and do they know," never "explain the relationship."</p>
+        <p style="margin:0;max-width:64ch;font-size:15.5px;line-height:1.55;color:#3C3E38">Principle 08 already narrows itself: opacity is a right against people who want more of you than they're owed, not against institutions that compel disclosure to release care, money, status, or documents. The manifesto's thesis 11 narrows the other side: standing to demand an account belongs to the people who absorb a relationship's consequences, not the state, not a crowd with an opinion. Put together: opacity holds fully against anyone without standing, and even against someone who has it, what's owed is the specific thing they'll absorb, not a full accounting of the relationship. That's the whole reasoning behind the endings tool on <a href="/practise/">Practise</a> asking only "who holds this after, and do they know," never "explain the relationship."</p>
       </div>
     </details>
-    <p class="note">⌖ The Repair Protocol (in progress, see the <a href="/behind-the-scenes/#roadmap">roadmap</a>) answers a different question — what's the process after harm — not which principle governs a standing conflict between two of them. Both questions were open; only one had a process already planned to answer it.</p>
+    <details class="note"><summary>⌖ The Repair Protocol</summary><p>(in progress, see the <a href="/behind-the-scenes/#roadmap">roadmap</a>) answers a different question, what's the process after harm, not which principle governs a standing conflict between two of them. Both questions were open; only one had a process already planned to answer it.</p></details>
+    </div>
+   </details>
   </div>
 </section>
 
-<section id="sovereignty-senses" class="band">
+<section class="band" data-pocket="sovereignty-senses">
   <div class="wrap">
-    <p class="kick kick-teal">One word, four jobs</p>
-    <h2 class="sec">Four things this word is doing.</h2>
+   <details class="pocket" data-collapsible>
+    <summary class="pocket-summary">
+      <span class="kick kick-teal">One word, four jobs</span>
+      <h2 class="sec">Four things this word is doing.</h2>
+    </summary>
+    <div class="pocket-body" id="sovereignty-senses">
     <div class="senses">
       <div>
         <p class="badge b-off">Not this site's to touch</p>
@@ -695,7 +778,7 @@
       <div>
         <p class="badge b-on">The operative sense</p>
         <p class="sense-t">Relational sovereignty.</p>
-        <p class="sense-b">Authority over the terms of one's own relations — the sense borrowed from Matthew Wildcat and, independently, from work on assistive technology. This is the site's operative sense.</p>
+        <p class="sense-b">Authority over the terms of one's own relations, the sense borrowed from Matthew Wildcat and, independently, from work on assistive technology. This is the site's operative sense.</p>
       </div>
       <div>
         <p class="badge b-loose">The loosest of the four</p>
@@ -706,16 +789,28 @@
     <p style="max-width:58ch;margin:0 0 1.6rem;color:#3C3E38;font-size:16px;line-height:1.55">The first and the third are not the same kind of thing. Where this site is persuasive partly because they rhyme, that is worth naming rather than using.</p>
     <div style="border:1px solid #C9C6BA;border-left:5px solid #DB9E2A;padding:1.5rem 1.6rem 1.6rem;max-width:700px;background:rgba(219,158,42,.07)">
       <p class="kick kick-ask" style="font-size:11px;letter-spacing:.09em;margin:0 0 .9rem">And an objection this site has not answered</p>
-      <p style="margin:0;font-size:16px;line-height:1.58;color:#3C3E38">Taiaiake Alfred argues sovereignty is inseparable from the frameworks of colonisation, and that Indigenous governance is better served by concepts that are not borrowed from the people who used this one to negate it. That argument is <a href="/archive/">on the shelf</a>. This site keeps the word because Wildcat rebuilt it and because the jurisdictional question — whose law governs here, who holds deletion authority — is the right question for intimacy and "autonomy" cannot ask it. That is a reason, not a refutation. If the paid review says the word does more harm than work, the word goes and this paragraph becomes the record of why it stayed this long.</p>
+      <p style="margin:0;font-size:16px;line-height:1.58;color:#3C3E38">Taiaiake Alfred argues sovereignty is inseparable from the frameworks of colonisation, and that Indigenous governance is better served by concepts that are not borrowed from the people who used this one to negate it. That argument is <a href="/archive/">on the shelf</a>. This site keeps the word because Wildcat rebuilt it and because the jurisdictional question (whose law governs here, who holds deletion authority) is the right question for intimacy and "autonomy" cannot ask it. That is a reason, not a refutation. If the paid review says the word does more harm than work, the word goes and this paragraph becomes the record of why it stayed this long.</p>
     </div>
+    </div>
+   </details>
   </div>
 </section>
 
-<section id="opacity" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,5rem) 0">
+<!-- Dark ground, kept on the <section> exactly as before so the colour
+     spans the full band whether the pocket inside is open or closed —
+     the alternative (colouring only the details/summary) would leave a
+     visible seam of paper-coloured background around a closed pocket.
+     .pocket-summary's own light-ground colours are overridden below via
+     .dark, the same scoping pattern head-base.html uses for focus rings. -->
+<section class="dark band" data-pocket="opacity" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(1.6rem,3vw,2.2rem) 0 clamp(3rem,6vw,5rem)">
   <div class="wrap">
-    <p class="kick" style="color:#DB9E2A;margin-bottom:1rem">Principle 08, applied to this website</p>
-    <h2 class="sec" style="max-width:22ch;color:#E7E5DC">Total legibility is a form of domination.</h2>
-    <p style="max-width:54ch;margin:0 0 1.6rem;color:#B8C7C1">Opacity in a principle is easy. Opacity in software is a governance decision, so here is what it actually amounts to on this site — the parts that are real, and the parts that are not built.</p>
+   <details class="pocket" data-collapsible>
+    <summary class="pocket-summary">
+      <span class="kick" style="color:#DB9E2A;margin-bottom:1rem">Principle 08, applied to this website</span>
+      <h2 class="sec" style="max-width:22ch;color:#E7E5DC">Total legibility is a form of domination.</h2>
+    </summary>
+    <div class="pocket-body" id="opacity">
+    <p style="max-width:54ch;margin:0 0 1.6rem;color:#B8C7C1">Opacity in a principle is easy. Opacity in software is a governance decision, so here is what it actually amounts to on this site: the parts that are real, and the parts that are not built.</p>
     <div class="opq">
       {{ range hugo.Data.opacity }}
       <div style="border-left-color:{{ .color }}">
@@ -725,20 +820,26 @@
       </div>
       {{ end }}
     </div>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#8FA9A2;border-left:3px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:0 0 1.6rem;max-width:58ch">⌖ The caveat that governs all of it: opacity is owed to the crawler and the market, never to the disabled reader. Nothing here is hidden from assistive technology and no semantic structure is stripped to look less legible. Withhold from extraction; disclose fully to those who need access to participate. Getting this backwards produces a site that is self-congratulatory and practically exclusionary.</p>
-    <p style="max-width:54ch;margin:0;color:#B8C7C1">Protocol-gated access — where a community, not this project, decides who may see what and under which relationship — already exists in <a href="https://mukurtu.org" style="color:#DB9E2A">Mukurtu CMS</a>, the <a href="https://localcontexts.org" style="color:#DB9E2A">Local Contexts</a> TK and BC Labels, and the <a href="https://www.gida-global.org/care" style="color:#DB9E2A">CARE Principles</a>. It is not implemented here. <a href="/behind-the-scenes/" style="color:#DB9E2A">The fault list</a> says so.</p>
+    <details class="note" style="color:#8FA9A2"><summary style="color:#8FA9A2">⌖ The caveat that governs all of it</summary><p>opacity is owed to the crawler and the market, never to the disabled reader. Nothing here is hidden from assistive technology and no semantic structure is stripped to look less legible. Withhold from extraction; disclose fully to those who need access to participate. Getting this backwards produces a site that is self-congratulatory and practically exclusionary.</p></details>
+    <p style="max-width:54ch;margin:0;color:#B8C7C1">Protocol-gated access, where a community rather than this project decides who may see what and under which relationship, already exists in <a href="https://mukurtu.org" style="color:#DB9E2A">Mukurtu CMS</a>, the <a href="https://localcontexts.org" style="color:#DB9E2A">Local Contexts</a> TK and BC Labels, and the <a href="https://www.gida-global.org/care" style="color:#DB9E2A">CARE Principles</a>. It is not implemented here. <a href="/behind-the-scenes/" style="color:#DB9E2A">The fault list</a> says so.</p>
+    </div>
+   </details>
   </div>
 </section>
 
-<section id="field-guide" style="padding:0 0 clamp(3rem,6vw,4.5rem)">
+<section class="band" data-pocket="field-guide" style="padding-bottom:clamp(3rem,6vw,4.5rem)">
   <div class="wrap">
-    <p class="kick kick-fails">This site's own vocabulary, turned around</p>
-    <h2 class="sec">How this vocabulary gets used as a weapon.</h2>
+   <details class="pocket" data-collapsible>
+    <summary class="pocket-summary">
+      <span class="kick kick-fails">This site's own vocabulary, turned around</span>
+      <h2 class="sec">How this vocabulary gets used as a weapon.</h2>
+    </summary>
+    <div class="pocket-body" id="field-guide">
     <p style="max-width:60ch;margin:0 0 .8rem;color:#3C3E38;font-size:16.5px;line-height:1.58">Every word on this site can be turned around and used on someone. That isn't a reason not to write them down. It's a reason to write down how it happens.</p>
-    <p class="lede">Ten phrases below, most of them phrases this site's own vocabulary makes available, each with the diagnostic question worth asking when you hear it — from yourself or from someone else. This section stays open: it's the one part of the page built to be printed and carried.</p>
+    <p class="lede">Ten phrases below, most of them phrases this site's own vocabulary makes available, each with the diagnostic question worth asking when you hear it, from yourself or from someone else. Print it and it carries all ten regardless of whether this section is open when you do.</p>
     <div class="noprint" style="margin:0 0 1.8rem">
       <button type="button" data-print-isolate class="btn-print">Print this field guide</button>
-      <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#585B4F;margin-left:.8rem">One page or two, depending on your browser and paper size — just this list, not the rest of Learn.</span>
+      <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#585B4F;margin-left:.8rem">One page or two, depending on your browser and paper size. Just this list, not the rest of Learn.</span>
     </div>
     <div id="field-guide-list" class="fg">
       <div>
@@ -748,7 +849,7 @@
       </div>
       <div>
         <p class="fg-p">"That's my boundary."</p>
-        <p class="fg-g">A boundary is something you do — what you will and won't be part of. It isn't an instruction for someone else's behaviour, and it isn't a way to close a conversation about something you did.</p>
+        <p class="fg-g">A boundary is something you do: what you will and won't be part of. It isn't an instruction for someone else's behaviour, and it isn't a way to close a conversation about something you did.</p>
         <p class="fg-q">Does this boundary govern them, or you?</p>
       </div>
       <div>
@@ -773,7 +874,7 @@
       </div>
       <div>
         <p class="fg-p">"We need to work on this." "We've decided."</p>
-        <p class="fg-g">The "we" is doing work here — check what it's covering for.</p>
+        <p class="fg-g">The "we" is doing work here. Check what it's covering for.</p>
         <p class="fg-q">Swap "we" for "you." Is the sentence still true?</p>
       </div>
       <div>
@@ -792,15 +893,23 @@
         <p class="fg-q">What would it have cost to not seem fine?</p>
       </div>
     </div>
-    <p class="note">⌖ What got said to you, in this vocabulary, to avoid answering something — that's the strongest candidate this site has for something a reader could add. There's nowhere built to route it yet. It's named on <a href="/contribute/">Contribute</a>, parked, not built, until there's a community to route it to.</p>
+    <details class="note"><summary>⌖ What got said to you, in this vocabulary, to avoid answering something</summary><p>That's the strongest candidate this site has for something a reader could add. There's nowhere built to route it yet. It's named on <a href="/contribute/">Contribute</a>, parked, not built, until there's a community to route it to.</p></details>
+    </div>
+   </details>
   </div>
 </section>
 
-<section id="not-yet-written" style="padding:0 0 clamp(3rem,6vw,4.5rem)">
+<section class="band" data-pocket="not-yet-written" style="padding-bottom:clamp(3rem,6vw,4.5rem)">
   <div class="wrap">
-    <p class="kick kick-fails">What's planned, not what's built</p>
-    <h2 class="sec" style="max-width:22ch;margin-bottom:1rem">A conceptual map is planned. This page is what's actually written.</h2>
+   <details class="pocket" data-collapsible>
+    <summary class="pocket-summary">
+      <span class="kick kick-fails">What's planned, not what's built</span>
+      <h2 class="sec" style="max-width:22ch;margin-bottom:1rem">A conceptual map is planned. This page is what's actually written.</h2>
+    </summary>
+    <div class="pocket-body" id="not-yet-written">
     <p style="max-width:56ch;margin:0;color:#3C3E38">Twenty-four further topics are named but not one is linked, because an unwritten page marked <em>drafted</em> would be the small lie this site is trying not to tell. The full list, and why nothing on it is dated, lives on the <a href="/behind-the-scenes/#roadmap">roadmap</a>.</p>
+    </div>
+   </details>
   </div>
 </section>
 
@@ -809,7 +918,7 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem;align-items:start">
       <div>
         <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.2rem;letter-spacing:-.02em;margin:0 0 .6rem">Take it further</h2>
-        <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">Read the <a href="/manifesto/">manifesto</a> for the refusal these principles come from. Work through the <a href="/practise/">Consent Domains Map</a> to apply them. Then leave for the <a href="/archive/">writers themselves</a> — this page is a summary, and a summary is not the thought.</p>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">Read the <a href="/manifesto/">manifesto</a> for the refusal these principles come from. Work through the <a href="/practise/">Consent Domains Map</a> to apply them. Then leave for the <a href="/archive/">writers themselves</a>. This page is a summary, and a summary is not the thought.</p>
       </div>
       <div>
         <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.2rem;letter-spacing:-.02em;margin:0 0 .6rem">A caution held throughout</h2>
@@ -840,5 +949,6 @@
 <script src="/print.js"></script>
 <script src="/sections.js"></script>
 <script src="/reveal.js"></script>
+<script src="/notes.js"></script>
 </body>
 </html>

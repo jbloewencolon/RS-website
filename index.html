@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Relational Sovereignty — No Owners. No Objects. No Colonies in Our Relationships.</title>
+<title>Relational Sovereignty: No Owners. No Objects. No Colonies in Our Relationships.</title>
 <meta name="description" content="Relational sovereignty asks how we can build relationships that protect self-determination while recognizing interdependence, care, responsibility, and the living worlds to which we belong.">
 <link rel="canonical" href="https://relationalsovereignty.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Relational Sovereignty">
 <meta property="og:url" content="https://relationalsovereignty.com/">
-<meta property="og:title" content="Relational Sovereignty — No Owners. No Objects. No Colonies in Our Relationships.">
+<meta property="og:title" content="Relational Sovereignty: No Owners. No Objects. No Colonies in Our Relationships.">
 <meta property="og:description" content="Relational sovereignty asks how we can build relationships that protect self-determination while recognizing interdependence, care, responsibility, and the living worlds to which we belong.">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
@@ -110,22 +110,58 @@
   .form-error{line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem}
   .form-status{border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;background:rgba(63,122,78,.06);padding:1.6rem 1.5rem}
   .field-invalid{border-color:#8B3A2F!important}
+   
+  details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid #DB9E2A;margin:1.6rem 0 0}
+  details.note>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0 .9rem;color:#585B4F}
+  details.note>summary::-webkit-details-marker{display:none}
+  details.note>summary:hover,details.note>summary:focus-visible{color:#191B18}
+  details.note>p{margin:0 .9rem .7rem .9rem}
+  details.note.note-fails{border-left-color:#8B3A2F}
+  details.note.note-holds{border-left-color:#3F7A4E}
+  @media print{details.note:not([open])>*{display:block!important}}
   @media print{body{background:#fff}.noprint{display:none!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;border-radius:2px}
   .skip-link:focus{left:1rem;top:1rem}
   /* base:end */
   @media (max-width:700px){.drift-wrap{opacity:.3}}
-  /* WD-17: the six doors' kicker colour already carries the register
-     claim (teal = asserted, green = built and real, ochre = asks
-     something of you); this adds a matching top edge on hover/focus so
-     the register reads before the reader even reaches the words. Colour
-     is not the sole carrier here — the kicker text underneath still
-     says what each door is regardless of hue or contact with a pointer. */
-  .door{border-top:2px solid transparent;transition:border-color .14s ease,background-color .14s ease}
-  .door-teal:hover,.door-teal:focus-visible{border-top-color:var(--teal)}
-  .door-holds:hover,.door-holds:focus-visible{border-top-color:var(--holds)}
-  .door-ask:hover,.door-ask:focus-visible{border-top-color:var(--ask)}
+  /* WD-17, promoted to the resting state. The six doors' kicker colour
+     already carried the register claim (teal = what the framework
+     asserts, green = built and working now, ochre = asks something of
+     you), and WD-17 added a matching top edge — but only on hover, which
+     meant the scheme was invisible to anyone reading rather than
+     pointing, and invisible on a touch screen entirely. Now every door
+     wears its register at rest: a 3px top edge plus a wash of the same
+     hue, so the six read as three pairs before a single word is read.
+
+     Colour is still not the sole carrier, which is the constraint that
+     governs every accent on this site. Each door's own kicker names its
+     register in words, and the legend below the grid states the scheme
+     outright for a reader who does not see the difference between the
+     green and the ochre.
+
+     Washes are deliberately shallow, and opaque rather than an rgba()
+     of the register hue — which is the trap here, caught by axe and not
+     by eye. The doors' own grid paints #C9C6BA behind them and shows it
+     through a 1px gap to draw the hairlines between cards; a translucent
+     door background therefore composites over that grey, not over paper,
+     and every card's body copy fell to 3.7:1. These are the same washes
+     pre-composited over #E7E5DC: 5.5% teal, 6% green, 9% ochre at rest,
+     9/10/15% on hover. #585B4F body copy lands at 4.98–5.22:1 at rest
+     and 4.66–5.00:1 hovered; the two coloured kickers at 5.5–5.9:1.
+
+     Hover deepens the same wash instead of switching to a neutral grey,
+     so a door never loses its register at the moment of contact — which
+     is what the old #DDDAD0 hover did. */
+  .door{border-top:3px solid var(--rule);background:var(--paper);transition:border-color .14s ease,background-color .14s ease}
+  .door-teal{border-top-color:var(--teal);background:#DBDBD2}
+  .door-holds{border-top-color:var(--holds);background:#DCDDD2}
+  .door-ask{border-top-color:var(--ask-edge);background:#E6DFCC}
+  .door-teal:hover,.door-teal:focus-visible{background:#D4D4CC}
+  .door-holds:hover,.door-holds:focus-visible{background:#D4D7CC}
+  .door-ask:hover,.door-ask:focus-visible{background:#E5DAC1}
+  .reg-key{max-width:70ch;margin:1.3rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.7;color:#585B4F}
+  .reg-dot{display:inline-block;width:.62rem;height:.62rem;flex:0 0 auto;border-radius:1px;margin-right:.5rem;vertical-align:baseline}
 </style>
 </helmet>
 
@@ -177,45 +213,46 @@
 
 <section style="padding:clamp(2.5rem,5vw,4rem) 0;border-top:1px solid #C9C6BA">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <h2 style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.8rem;font-weight:400">Where to begin — six doors, none ranked, including the one that asks something of you</h2>
+    <h2 style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.8rem;font-weight:400">Where to begin: six doors, none ranked, including the one that asks something of you</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:#C9C6BA;border:1px solid #C9C6BA">
-      <a href="/manifesto/" class="door door-teal" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
+      <a href="/manifesto/" class="door door-teal" style="padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--teal)">the threshold · 9 min</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Read the manifesto</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">Sixteen theses and a refusal. Printable, forkable, meant to be read aloud.</p>
       </a>
-      <a href="/learn/" class="door door-teal" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
+      <a href="/learn/" class="door door-teal" style="padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--teal)">the idea · 17 min</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Learn the thirteen principles</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">What relational sovereignty is, what it is not, and the question each principle asks of you.</p>
       </a>
-      <a href="/practise/" class="door door-holds" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
+      <a href="/practise/" class="door door-holds" style="padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--holds)">the workshop · 20 min</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Examine a relationship</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">The Consent Domains Map, working now in your browser. Nothing you enter leaves this page, and the crawler is not allowed in.</p>
       </a>
-      <a href="/archive/" class="door door-holds" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
+      <a href="/archive/" class="door door-holds" style="padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--holds)">the library · 12 min</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Enter the archive</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">Thirty-odd texts, attributed to their authors and nations, each linking away from here to the people who wrote them.</p>
       </a>
-      <a href="/contribute/" class="door door-ask" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
+      <a href="/contribute/" class="door door-ask" style="padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ask)">the commons · 5 min</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Contribute something</h3>
-        <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">A story, a tool, a question, an artwork — on terms you set, and can withdraw.</p>
+        <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">A story, a tool, a question, an artwork: on terms you set, and can withdraw.</p>
       </a>
-      <a href="#dispatch" class="door door-ask" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
+      <a href="#dispatch" class="door door-ask" style="padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ask)">an ask, stated as one</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Join the dispatch</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">This one wants something from you: an address. Occasional letters, no schedule promised, no tracking, one click to leave.</p>
       </a>
     </div>
+    <p class="reg-key"><span class="reg-dot" style="background:var(--teal)"></span>Teal: what the framework asserts. <span class="reg-dot" style="background:var(--holds)"></span>Green: built and working now. <span class="reg-dot" style="background:var(--ask-edge)"></span>Ochre: asks something of you. Each door says the same thing in words above its title; nothing here is signalled by colour alone.</p>
   </div>
 </section>
 
 <section class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">Roadmap — honest about what does not exist yet</p>
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">Roadmap: honest about what does not exist yet</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.6rem,4vw,2.6rem);line-height:1.03;letter-spacing:-.03em;margin:0 0 1rem;max-width:20ch;color:#E7E5DC">A draft that stays a draft.</h2>
     <p style="max-width:56ch;margin:0 0 2.2rem;color:#B8C7C1">No launch dates, because promising one would be a lie. Each item moves when the work and the consent are in place, and the <a href="/behind-the-scenes/" style="color:#DB9E2A">change log</a> stays visible when it does.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2.4rem">
@@ -243,9 +280,9 @@
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#73968D;margin:0 0 .9rem;border-bottom:1px solid #2A4C4C;padding-bottom:.5rem">Next, once there are people</p>
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.7rem;font-size:16px;line-height:1.45;color:#8FA9A2">
           <li>Editorial charter and community agreements</li>
-          <li>Reading Circle — eight weeks, facilitated</li>
-          <li>The Relationship Assembly — a workshop</li>
-          <li>Repair Lab — accountability materials</li>
+          <li>Reading Circle: eight weeks, facilitated</li>
+          <li>The Relationship Assembly: a workshop</li>
+          <li>Repair Lab: accountability materials</li>
           <li>Stories &amp; dispatches from contributors</li>
         </ul>
       </div>
@@ -259,7 +296,7 @@
         </ul>
       </div>
     </div>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.55;color:#73968D;border-left:2px solid #DB9E2A;padding:.2rem 0 .2rem .9rem;margin:2.6rem 0 0;max-width:56ch">⌖ Success is not traffic. It is tools completed, zines printed and passed on, and how quickly this site becomes unnecessary to you.</p>
+    <details class="note" style="color:#73968D;max-width:56ch"><summary style="color:#73968D">⌖ Success is not traffic.</summary><p>It is tools completed, zines printed and passed on, and how quickly this site becomes unnecessary to you.</p></details>
   </div>
 </section>
 
@@ -270,10 +307,10 @@
       <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.6rem,4vw,2.6rem);line-height:1.03;letter-spacing:-.03em;margin:0 0 1.2rem;max-width:16ch">Leave an address, not a self.</h2>
       <p style="margin:0 0 1.2rem;max-width:46ch">An occasional letter when there is something worth sending: the zine when it is printable, an invitation to the reading circle, notice of a workshop, an open call for contributions.</p>
       <ul style="list-style:none;margin:0;padding:0;max-width:46ch;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.6;color:#585B4F;display:flex;flex-direction:column;gap:.55rem">
-        <li>— No schedule is promised. Silence is not a failure.</li>
-        <li>— Your address is used for this and nothing else. It is never sold or traded. A transactional email service sends the confirmation and unsubscribe messages and never receives the list itself — full architecture in the colophon.</li>
-        <li>— A pseudonym is as welcome as a name. Both fields are optional, and nothing is validated against a legal record.</li>
-        <li>— One link in every letter removes you completely. No exit survey, no retention offer.</li>
+        <li>· No schedule is promised. Silence is not a failure.</li>
+        <li>· Your address is used for this and nothing else. It is never sold or traded. A transactional email service sends the confirmation and unsubscribe messages and never receives the list itself. Full architecture in the colophon.</li>
+        <li>· A pseudonym is as welcome as a name. Both fields are optional, and nothing is validated against a legal record.</li>
+        <li>· One link in every letter removes you completely. No exit survey, no retention offer.</li>
       </ul>
     </div>
     <div>
@@ -281,7 +318,7 @@
         <div role="status" aria-live="polite" style="border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;padding:1.6rem 1.5rem;background:rgba(63,122,78,.06)">
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 .6rem">received</p>
           <p style="margin:0 0 .8rem;font-size:17px;line-height:1.5">Check your email. There is a confirmation link waiting, and nothing is recorded until you click it.</p>
-          <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F">The link expires in 48 hours. If it never arrives, check the spam folder, or simply do nothing — an address that is never confirmed is never stored. Every letter after that carries a one-click unsubscribe.</p>
+          <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F">The link expires in 48 hours. If it never arrives, check the spam folder, or simply do nothing. An address that is never confirmed is never stored. Every letter after that carries a one-click unsubscribe.</p>
           <button type="button" onClick="{{ edit }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.7rem 1rem;min-height:44px;margin-top:1.2rem;cursor:pointer;border-radius:2px">use a different address</button>
         </div>
       </sc-if>
@@ -334,6 +371,15 @@
   </div>
 </section>
 
+<section style="padding:clamp(2rem,4vw,3rem) 0">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <div style="border-top:1px solid #C9C6BA;padding-top:1.6rem;max-width:700px">
+      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 1rem">About this site</p>
+      <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">This website was drafted with the assistance of generative LLMs (local and frontier models). The thinking, resources, research, core design, and critical arguments are human-first. Copy and coding have gone through LLM input and output cycles.</p>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <footer class="dark" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2.5rem,5vw,3.5rem) 0">
@@ -357,7 +403,7 @@
     </div>
     <div>
       <p style="margin:0 0 .5rem;color:#DB9E2A">Build</p>
-      <p style="margin:0">No trackers, cookies, or analytics — and no third-party requests except one, disclosed: the dispatch form below asks Cloudflare's Turnstile to confirm you're not a bot before it will send anything. Nothing you type into a tool leaves your device. <a href="/robots.txt" style="color:#8FA9A2">Crawler policy</a>.</p>
+      <p style="margin:0">No trackers, cookies, or analytics, and no third-party requests except one, disclosed: the dispatch form below asks Cloudflare's Turnstile to confirm you're not a bot before it will send anything. Nothing you type into a tool leaves your device. <a href="/robots.txt" style="color:#8FA9A2">Crawler policy</a>.</p>
     </div>
     <div>
       <p style="margin:0 0 .5rem;color:#DB9E2A">Reuse</p>
@@ -560,5 +606,6 @@ class Component extends DCLogic {
   }
 }
 </script>
+<script src="/notes.js"></script>
 </body>
 </html>

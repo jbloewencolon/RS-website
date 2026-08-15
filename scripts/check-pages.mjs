@@ -357,8 +357,28 @@ async function main() {
     const consoleErrors = [];
     page.on("console", (msg) => { if (msg.type() === "error") consoleErrors.push(msg.text()); });
     page.on("pageerror", (err) => consoleErrors.push(`pageerror: ${err.message}`));
+    // Turnstile's own API rejects a render request from a hostname its
+    // widget isn't configured for — by design, that's the whole security
+    // property (SEC-01.3). This suite serves every page from an ephemeral
+    // http://127.0.0.1 port, which is never going to be on that list, so
+    // Home and Contribute (the only two pages that load Turnstile) throw a
+    // generic "Failed to load resource: ...400" console error on every run,
+    // forever, independent of anything this repo's own code does. Tracked
+    // separately from consoleErrors, by response rather than by matching
+    // the generic message text, so a real new console error on these two
+    // pages still fails the build same as anywhere else.
+    let turnstileRejections = 0;
+    page.on("response", (r) => {
+      if (r.url().startsWith("https://challenges.cloudflare.com") && r.status() >= 400) turnstileRejections++;
+    });
 
-    const resp = await page.goto(base + pg, { waitUntil: "networkidle", timeout: 30000 });
+    // "load" rather than "networkidle" — same reason as prerender.mjs's
+    // identical fix: Home and Contribute load the real Turnstile widget
+    // (IA-03), which keeps background network activity going indefinitely,
+    // so "networkidle" never resolves and this hits its 30s timeout. The
+    // 800ms wait below is the actual settle signal this loop depends on,
+    // not network silence.
+    const resp = await page.goto(base + pg, { waitUntil: "load", timeout: 30000 });
     await page.waitForTimeout(800);
 
     const pageProblems = [];
@@ -366,8 +386,25 @@ async function main() {
     if (!resp || resp.status() !== 200) {
       pageProblems.push(`HTTP ${resp ? resp.status() : "no response"}`);
     }
-    if (consoleErrors.length) {
-      pageProblems.push(...consoleErrors.map((e) => `console error: ${e}`));
+    // Exclude exactly as many generic "Failed to load resource" messages
+    // as confirmed Turnstile rejections were observed above — never more,
+    // so an unrelated real console error on these two pages still fails
+    // the build. The browser's own console text for a failed resource
+    // load never carries the URL (only DevTools' UI does), which is why
+    // this can't just string-match the message itself.
+    let excusable = turnstileRejections;
+    const realErrors = consoleErrors.filter((e) => {
+      if (excusable > 0 && /Failed to load resource.*(status of )?4\d\d/.test(e)) {
+        excusable--;
+        return false;
+      }
+      return true;
+    });
+    if (turnstileRejections) {
+      console.log(`  ℹ ${pg}: Turnstile rejected ${turnstileRejections} request(s) from this non-production host — expected, see SEC-01.3`);
+    }
+    if (realErrors.length) {
+      pageProblems.push(...realErrors.map((e) => `console error: ${e}`));
     }
 
     if (GROUND[pg]) {

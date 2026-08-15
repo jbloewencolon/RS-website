@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Consent Domains Map — Relational Sovereignty</title>
+<title>The Consent Domains Map: Relational Sovereignty</title>
 <meta name="description" content="A private, in-browser tool for mapping consent across twenty domains of a relationship. Nothing you enter leaves this page.">
 <meta name="robots" content="noindex">
 <link rel="canonical" href="https://relationalsovereignty.com/practise/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Relational Sovereignty">
 <meta property="og:url" content="https://relationalsovereignty.com/practise/">
-<meta property="og:title" content="The Consent Domains Map — Relational Sovereignty">
+<meta property="og:title" content="The Consent Domains Map: Relational Sovereignty">
 <meta property="og:description" content="A private, in-browser tool for mapping consent across twenty domains of a relationship. Nothing you enter leaves this page.">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
@@ -84,6 +84,15 @@
   .form-error{line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem}
   .form-status{border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;background:rgba(63,122,78,.06);padding:1.6rem 1.5rem}
   .field-invalid{border-color:#8B3A2F!important}
+   
+  details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid #DB9E2A;margin:1.6rem 0 0}
+  details.note>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0 .9rem;color:#585B4F}
+  details.note>summary::-webkit-details-marker{display:none}
+  details.note>summary:hover,details.note>summary:focus-visible{color:#191B18}
+  details.note>p{margin:0 .9rem .7rem .9rem}
+  details.note.note-fails{border-left-color:#8B3A2F}
+  details.note.note-holds{border-left-color:#3F7A4E}
+  @media print{details.note:not([open])>*{display:block!important}}
   @media print{body{background:#fff}.noprint{display:none!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;border-radius:2px}
@@ -125,12 +134,12 @@
 <main>
 <section id="main-content" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Practise — tools 01–02 of 09 · about 20 + 10 minutes to fill in</p>
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Practise · tools 01–02 of 09 · about 20 + 10 minutes to fill in</p>
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.2rem,6vw,4rem);line-height:1;letter-spacing:-.035em;margin:0 0 1.4rem;max-width:15ch">The Consent Domains Map</h1>
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:46ch;margin:0 0 1.2rem">A relationship label is not blanket permission. This map separates consent into twenty domains so that yes in one is not read as yes in all of them.</p>
     <p style="max-width:52ch;margin:0 0 1.6rem;color:#3C3E38">Mark where you stand in each domain, add a condition where it matters, then print it or read it aloud with the other person. There is no score and no correct pattern.</p>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:0;max-width:58ch">⌖ Safety — written relationship exercises are not safe for everyone, and joint exercises are not safe where one person controls the other. This is not always visible from inside a relationship. Before the tool, there are five questions and a way out.</p>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #3F7A4E;padding:.3rem 0 .3rem .9rem;margin:1rem 0 1.4rem;max-width:58ch">⌖ Privacy — everything you type stays in this browser tab. Nothing is sent anywhere, nothing is stored, nothing is counted, and this page is disallowed to search crawlers. Closing the tab erases it.</p>
+    <details class="note note-fails" style="margin:0;max-width:58ch"><summary>⌖ Safety</summary><p>written relationship exercises are not safe for everyone, and joint exercises are not safe where one person controls the other. This is not always visible from inside a relationship. Before the tool, there are five questions and a way out.</p></details>
+    <details class="note note-holds" style="margin:1rem 0 1.4rem;max-width:58ch"><summary>⌖ Privacy</summary><p>everything you type stays in this browser tab. Nothing is sent anywhere, nothing is stored, nothing is counted, and this page is disallowed to search crawlers. Closing the tab erases it.</p></details>
     <nav aria-label="Contents">
       <ul style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:0 1.8rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px">
         <li><a href="#consent-map" style="display:inline-flex;align-items:center;min-height:44px">01 · The Consent Domains Map</a></li>
@@ -145,13 +154,13 @@
           <p style="margin:0 0 1rem;font-size:16px;line-height:1.55">There's no good script, and anything that sounds like one will sound like one.</p>
           <p style="margin:0 0 .8rem;font-size:15.5px;line-height:1.5;color:#3C3E38">A few things that help:</p>
           <ul style="list-style:none;margin:0 0 1.2rem;padding:0;display:flex;flex-direction:column;gap:.7rem;font-size:15.5px;line-height:1.5">
-            <li>— Bring one thing, not the framework. "I've been thinking about how we decide things" travels better than "I've been reading about relational sovereignty."</li>
-            <li>— Don't hand someone a page and ask them to react. That's a test, and people fail tests defensively.</li>
-            <li>— Say what you want, not what they're doing wrong. The second is an indictment even when it's accurate.</li>
-            <li>— Expect it to go badly the first time and be fine by the third.</li>
-            <li>— If they don't want to, that's an answer. It might not be the answer you wanted.</li>
+            <li>· Bring one thing, not the framework. "I've been thinking about how we decide things" travels better than "I've been reading about relational sovereignty."</li>
+            <li>· Don't hand someone a page and ask them to react. That's a test, and people fail tests defensively.</li>
+            <li>· Say what you want, not what they're doing wrong. The second is an indictment even when it's accurate.</li>
+            <li>· Expect it to go badly the first time and be fine by the third.</li>
+            <li>· If they don't want to, that's an answer. It might not be the answer you wanted.</li>
           </ul>
-          <p style="margin:0;font-size:16px;line-height:1.55"><strong>And the one that matters more than the rest: if you're raising this in order to get someone to agree to something they've already declined, this isn't the tool for that — and putting it in this vocabulary will make it worse, not better.</strong></p>
+          <p style="margin:0;font-size:16px;line-height:1.55"><strong>And the one that matters more than the rest: if you're raising this in order to get someone to agree to something they've already declined, this isn't the tool for that, and putting it in this vocabulary will make it worse, not better.</strong></p>
         </div>
       </div>
     </details>
@@ -167,23 +176,23 @@
       <p style="margin:0 0 1.2rem;font-size:17px;line-height:1.55">This tool asks you to describe a relationship in writing. For most people that is useful. For some people it is not safe, and the difference is not always obvious from inside.</p>
       <p style="margin:0 0 1rem;font-size:16px;line-height:1.5;color:#3C3E38">Sit with these for a moment. There is no score and no answer to give anyone.</p>
       <ul style="list-style:none;margin:0 0 1rem;padding:0;display:flex;flex-direction:column;gap:.7rem;font-size:16px;line-height:1.5">
-        <li>— When you disagree, what happens afterwards?</li>
-        <li>— Do you have your own access to money, documents, and a way to leave the house?</li>
-        <li>— Does the other person know where you are most of the time, and did you agree to that?</li>
-        <li>— Have you thought about leaving? If you have said so out loud, what was the response?</li>
-        <li>— Is there anyone who knows the whole of what is happening?</li>
+        <li>· When you disagree, what happens afterwards?</li>
+        <li>· Do you have your own access to money, documents, and a way to leave the house?</li>
+        <li>· Does the other person know where you are most of the time, and did you agree to that?</li>
+        <li>· Have you thought about leaving? If you have said so out loud, what was the response?</li>
+        <li>· Is there anyone who knows the whole of what is happening?</li>
       </ul>
       <details style="margin:0 0 1.4rem">
         <summary style="cursor:pointer;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:#8B3A2F;min-height:44px;display:flex;align-items:center;padding:.2rem 0">Read these in shorter sentences</summary>
         <ul style="list-style:none;margin:.6rem 0 0;padding:0;display:flex;flex-direction:column;gap:.7rem;font-size:16px;line-height:1.5">
-          <li>— After a disagreement, what happens?</li>
-          <li>— Money. ID. A way out. Do you have your own?</li>
-          <li>— Does someone always know where you are? Did you agree to that?</li>
-          <li>— Have you said you might leave? What happened when you did?</li>
-          <li>— Does anyone else know everything that's happening?</li>
+          <li>· After a disagreement, what happens?</li>
+          <li>· Money. ID. A way out. Do you have your own?</li>
+          <li>· Does someone always know where you are? Did you agree to that?</li>
+          <li>· Have you said you might leave? What happened when you did?</li>
+          <li>· Does anyone else know everything that's happening?</li>
         </ul>
       </details>
-      <p style="margin:0 0 1.4rem;font-size:16px;line-height:1.5">If any of those were difficult to sit with, the most useful thing this page can do is point you elsewhere. These same five questions are also published on their own, so you can read or send them without opening a tool. If what's difficult is language rather than a question — a phrase like "I'm honouring my sovereignty" used on you, not by you — <a href="/learn/#field-guide" style="color:#8B3A2F">Learn has a guide</a> to how this vocabulary gets used that way.</p>
+      <p style="margin:0 0 1.4rem;font-size:16px;line-height:1.5">If any of those were difficult to sit with, the most useful thing this page can do is point you elsewhere. These same five questions are also published on their own, so you can read or send them without opening a tool. If what's difficult is language rather than a question (a phrase like "I'm honouring my sovereignty" used on you, not by you) <a href="/learn/#field-guide" style="color:#8B3A2F">Learn has a guide</a> to how this vocabulary gets used that way.</p>
       <div style="display:flex;flex-wrap:wrap;gap:.8rem">
         <button type="button" onClick="{{ toGrounding }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px">Continue</button>
         <button type="button" onClick="{{ toTool }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.85rem 1.1rem;min-height:44px;cursor:pointer;border-radius:2px">Skip straight to the tool</button>
@@ -199,13 +208,13 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <div style="border:1px solid #C9C6BA;border-left:4px solid #3F7A4E;padding:1.7rem 1.6rem 1.9rem;max-width:700px;background:rgba(63,122,78,.05);border-radius:3px">
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 1rem">Before you start</p>
-      <p style="margin:0 0 1.2rem;font-size:17px;line-height:1.55">This goes better when you are not at your worst. Not calm — just not at your worst.</p>
+      <p style="margin:0 0 1.2rem;font-size:17px;line-height:1.55">This goes better when you are not at your worst. Not calm, just not at your worst.</p>
       <p style="margin:0 0 1rem;font-size:16px;line-height:1.5;color:#3C3E38">Some people find one of these helps. Some find they make things worse, which is also worth knowing. None of it is required.</p>
       <ul style="list-style:none;margin:0 0 1.4rem;padding:0;display:flex;flex-direction:column;gap:.7rem;font-size:16px;line-height:1.5">
-        <li>— Name five things you can see, without moving.</li>
-        <li>— Push your feet into the floor and notice the floor pushing back.</li>
-        <li>— Hold something with texture — fabric, a cup, a rail — and describe it to yourself in words.</li>
-        <li>— Breathe however you normally breathe. If counting helps you, count. If paying attention to your breathing makes things worse, skip this one.</li>
+        <li>· Name five things you can see, without moving.</li>
+        <li>· Push your feet into the floor and notice the floor pushing back.</li>
+        <li>· Hold something with texture (fabric, a cup, a rail) and describe it to yourself in words.</li>
+        <li>· Breathe however you normally breathe. If counting helps you, count. If paying attention to your breathing makes things worse, skip this one.</li>
       </ul>
       <p style="margin:0 0 1.4rem;font-size:16px;line-height:1.5">If none of that appeals, skip it. Going straight to the tool is a legitimate choice. So is closing the tab.</p>
       <div style="display:flex;flex-wrap:wrap;gap:.8rem">
@@ -231,7 +240,7 @@
       </div>
     </div>
 
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;margin:1.4rem 0 0;max-width:62ch">Working across more than one sitting is not a lesser way to do this — a framework has no business demanding stamina it doesn't need (crip time, after Alison Kafer; see the <a href="/archive/">archive</a>). Save to a file and pick it back up later, or print and write by hand instead. Your browser may add its own header or footer to a printed page, including this page's address — check your print dialog's header and footer setting first if that matters to you.</p>
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;margin:1.4rem 0 0;max-width:62ch">Working across more than one sitting is not a lesser way to do this. A framework has no business demanding stamina it doesn't need (crip time, after Alison Kafer; see the <a href="/archive/">archive</a>). Save to a file and pick it back up later, or print and write by hand instead. Your browser may add its own header or footer to a printed page, including this page's address. Check your print dialog's header and footer setting first if that matters to you.</p>
 
     <details style="margin-top:1.2rem;max-width:640px">
       <summary style="cursor:pointer;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:#585B4F;min-height:44px;display:flex;align-items:center;padding:.4rem 0">Save or resume this map</summary>
@@ -266,7 +275,7 @@
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin:0 0 1rem">{{ markedCount }} of {{ totalDomains }} marked</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .6rem">Seventeen general consent domains</h2>
     <p style="max-width:56ch;margin:0 0 .8rem;color:#3C3E38;font-size:16px">Each answer is a word as well as a colour, so the map still reads if colour is unavailable to you, and still reads on a photocopy.</p>
-    <p style="max-width:56ch;margin:0 0 1.4rem;color:#3C3E38;font-size:16px">Consent is not always spoken. Use the labels here, or agree on your own signals with the person you're mapping this with — a tap, a card, a gesture, a colour. This tool doesn't build those signals in; what matters is that whatever you use can be given, changed, and withdrawn by whoever is using it, without having to explain.</p>
+    <p style="max-width:56ch;margin:0 0 1.4rem;color:#3C3E38;font-size:16px">Consent is not always spoken. Use the labels here, or agree on your own signals with the person you're mapping this with: a tap, a card, a gesture, a colour. This tool doesn't build those signals in; what matters is that whatever you use can be given, changed, and withdrawn by whoever is using it, without having to explain.</p>
 
     <div style="display:flex;flex-direction:column;gap:1px;background:#C9C6BA;border:1px solid #C9C6BA">
       <sc-for list="{{ domains }}" as="d" hint-placeholder-count="17">
@@ -343,15 +352,15 @@
     <div style="margin-top:2rem;border:1px solid #C9C6BA;border-left:4px solid #3F7A4E;padding:1.4rem 1.5rem;max-width:700px;background:rgba(63,122,78,.05)">
       <h2 style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 .7rem;font-weight:400">After you fill it in</h2>
       <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;font-size:16px;line-height:1.5">
-        <li>— Which domain did you hesitate longest over? That hesitation is the useful part, not the answer.</li>
-        <li>— Where did you assume a yes because of the relationship's name rather than an actual conversation?</li>
-        <li>— What would it cost you to move one domain to <em>no</em>? If the answer is housing, money, or access to children, the consent in that domain is not yet free.</li>
-        <li>— Set a date to look at this again. Consent is ongoing; a map is a snapshot.</li>
+        <li>· Which domain did you hesitate longest over? That hesitation is the useful part, not the answer.</li>
+        <li>· Where did you assume a yes because of the relationship's name rather than an actual conversation?</li>
+        <li>· What would it cost you to move one domain to <em>no</em>? If the answer is housing, money, or access to children, the consent in that domain is not yet free.</li>
+        <li>· Set a date to look at this again. Consent is ongoing; a map is a snapshot.</li>
       </ul>
     </div>
 
     <div class="noprint" style="margin-top:2.4rem;padding-top:1.6rem;border-top:1px solid #C9C6BA;max-width:640px">
-      <p style="margin:0 0 .8rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.6;color:#585B4F">Starting over — nothing above is saved unless you printed or exported it, so this is the only way to lose it. It asks twice.</p>
+      <p style="margin:0 0 .8rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.6;color:#585B4F">Starting over. Nothing above is saved unless you printed or exported it, so this is the only way to lose it. It asks twice.</p>
       <button type="button" onClick="{{ reset }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:{{ resetBg }};border:1px solid {{ resetBorder }};color:{{ resetColor }};padding:.75rem 1rem;min-height:44px;cursor:pointer;border-radius:2px">{{ resetLabel }}</button>
       <p role="status" aria-live="polite" style="margin:.7rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;color:#8B3A2F;min-height:1.2em">{{ resetWarning }}</p>
     </div>
@@ -362,7 +371,7 @@
 
 <section id="endings-tool" style="padding:clamp(3rem,6vw,4.5rem) 0;border-top:1px solid #C9C6BA;scroll-margin-top:1rem">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Practise — tool 02 of 09 · about 10 minutes to fill in</p>
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Practise · tool 02 of 09 · about 10 minutes to fill in</p>
 
     <sc-if value="{{ endingsClosed }}" hint-placeholder-val="{{ true }}">
     <div class="noprint">
@@ -375,7 +384,7 @@
 
     <sc-if value="{{ atEndingsGate }}" hint-placeholder-val="{{ false }}">
     <div class="noprint" style="border:1px solid #C9C6BA;border-left:4px solid #8B3A2F;padding:1.7rem 1.6rem 1.9rem;max-width:700px;background:rgba(139,58,47,.04);border-radius:3px">
-      <p style="margin:0 0 1.2rem;font-size:17px;line-height:1.55;font-weight:700">If leaving safely means leaving suddenly — close this and go. Nothing on this page is worth staying for.</p>
+      <p style="margin:0 0 1.2rem;font-size:17px;line-height:1.55;font-weight:700">If leaving safely means leaving suddenly, close this and go. Nothing on this page is worth staying for.</p>
       <p style="margin:0 0 1.4rem;font-size:16px;line-height:1.5;color:#3C3E38">This tool is for someone with time to prepare, not someone who needs to leave right now. If that's not you, the next click should go to resources, not to this.</p>
       <div style="display:flex;flex-wrap:wrap;gap:.8rem">
         <button type="button" onClick="{{ toEndingsTool }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px">Continue</button>
@@ -393,8 +402,8 @@
         <button type="button" onClick="{{ closeEndings }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.75rem 1rem;min-height:44px;cursor:pointer;border-radius:2px">Close this tool</button>
       </div>
 
-      <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.2rem,2.6vw,1.5rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .6rem">Part one — what lands where.</h3>
-      <p style="max-width:56ch;margin:0 0 1.2rem;color:#3C3E38;font-size:15.5px;line-height:1.55">Not feelings. Logistics. For each of these, who holds it after you — and do they know they're holding it.</p>
+      <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.2rem,2.6vw,1.5rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .6rem">Part one: what lands where.</h3>
+      <p style="max-width:56ch;margin:0 0 1.2rem;color:#3C3E38;font-size:15.5px;line-height:1.55">Not feelings. Logistics. For each of these, who holds it after you, and do they know they're holding it.</p>
       <div style="display:flex;flex-direction:column;gap:1px;background:#C9C6BA;border:1px solid #C9C6BA;margin-bottom:2.2rem">
         <sc-for list="{{ auditRows }}" as="r" hint-placeholder-count="8">
           <div style="background:#E7E5DC;padding:1rem 1.2rem 1.1rem;display:flex;flex-wrap:wrap;gap:.8rem 1.6rem;align-items:flex-end">
@@ -411,24 +420,24 @@
         </sc-for>
       </div>
 
-      <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.2rem,2.6vw,1.5rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .6rem">Part two — what you owe on the way out.</h3>
+      <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.2rem,2.6vw,1.5rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .6rem">Part two: what you owe on the way out.</h3>
       <div style="max-width:58ch;margin:0 0 2.2rem;font-size:15.5px;line-height:1.6;color:#3C3E38">
         <p style="margin:0 0 .9rem">What you owe someone at the end isn't a reason. It's:</p>
         <ul style="list-style:none;margin:0 0 .9rem;padding:0;display:flex;flex-direction:column;gap:.5rem">
-          <li>— telling them, rather than making them work it out</li>
-          <li>— not taking back the good parts on the way out, as though loving them had been a mistake you're now correcting</li>
-          <li>— making sure whatever they depended on you for lands somewhere before you go, if you can go safely</li>
-          <li>— letting them grieve at their own speed, which will not be yours</li>
+          <li>· telling them, rather than making them work it out</li>
+          <li>· not taking back the good parts on the way out, as though loving them had been a mistake you're now correcting</li>
+          <li>· making sure whatever they depended on you for lands somewhere before you go, if you can go safely</li>
+          <li>· letting them grieve at their own speed, which will not be yours</li>
         </ul>
-        <p style="margin:0;font-weight:700;color:#191B18">And if going safely means going suddenly — go. Nothing in any of this is a reason to stay.</p>
+        <p style="margin:0;font-weight:700;color:#191B18">And if going safely means going suddenly, go. Nothing in any of this is a reason to stay.</p>
         <p style="margin:.8rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F">From the <a href="/invitation/">Invitation</a>'s "On goodbyes," in full.</p>
       </div>
 
-      <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.2rem,2.6vw,1.5rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .6rem">Part three — after.</h3>
+      <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.2rem,2.6vw,1.5rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .6rem">Part three: after.</h3>
       <div style="max-width:56ch;font-size:15.5px;line-height:1.6;color:#3C3E38">
         <p style="margin:0 0 .9rem">Nothing below asks anything of you. No fields, no prompts, nothing that counts as finished.</p>
         <p style="margin:0 0 .9rem">Grief for a relationship that's ending, or one that's over, doesn't run on the logic of the rest of this page. It doesn't resolve because the logistics are handled. It can show up long after the audit above is irrelevant, for someone whose name you no longer say out loud.</p>
-        <p style="margin:0">That's not a problem this tool is built to fix. It isn't a problem. Close the tab whenever you want to — there's nothing left to do here, and there was never going to be.</p>
+        <p style="margin:0">That's not a problem this tool is built to fix. It isn't a problem. Close the tab whenever you want to. There's nothing left to do here, and there was never going to be.</p>
       </div>
     </div>
     </sc-if>
@@ -537,16 +546,16 @@ class Component extends DCLogic {
   options = [
     ["yes, freely", "yes", "#366943"],
     ["yes, with conditions", "conditions", "#7D5915"],
-    ["not yet — ask me", "not yet", "#2B4C9B"],
+    ["not yet, ask me", "not yet", "#2B4C9B"],
     ["no", "no", "#8B3A2F"],
     ["mine to withhold", "withheld", "#0F2A2E"]
   ];
 
   tools = [
-    ["Relationship Constellation Map", "Map the people, places, animals, and living systems that hold your life — without a romantic partner automatically at the centre.", 1],
+    ["Relationship Constellation Map", "Map the people, places, animals, and living systems that hold your life, without a romantic partner automatically at the centre.", 1],
     ["Power & Dependency Audit", "Income, housing, citizenship, healthcare, ability to leave. No score, only questions about where power sits and whether it can be challenged.", 1],
     ["Care Labour Inventory", "Who notices the task, who initiates it, who completes it, who is thanked, who holds authority over the outcome.", 1],
-    ["Decision Taxonomy", "Sort decisions into personal, consultative, joint, and collective — and find where a shared decision is being treated as a private one.", 0],
+    ["Decision Taxonomy", "Sort decisions into personal, consultative, joint, and collective, and find where a shared decision is being treated as a private one.", 0],
     ["Boundary & Refusal Builder", "A template that distinguishes a request from an agreement, a boundary from an ultimatum, and an ultimatum from a threat.", 0],
     ["The Relational Review", "A seasonal check-in: what feels alive, what feels assumed, where resentment is accumulating, what needs revision.", 0],
     ["The Repair Map", "What happened, who was affected, what conditions made it possible, what would repair actually require. Repair does not guarantee reconciliation.", 0]
@@ -740,5 +749,6 @@ class Component extends DCLogic {
   }
 }
 </script>
+<script src="/notes.js"></script>
 </body>
 </html>

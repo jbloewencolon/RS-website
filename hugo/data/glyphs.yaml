@@ -1,17 +1,17 @@
 # Glyph coverage list. `ok: true` renders the "ok" mark in green;
 # false renders "!!" in rust. See glyph-check.html for the live check
 # this table summarizes.
-- text: "ʔ  U+0294 glottal stop — Skarù·ręʔ"
+- text: "ʔ  U+0294 glottal stop: Skarù·ręʔ"
   ok: true
-- text: "·  U+00B7 middle dot — Skarù·ręʔ"
+- text: "·  U+00B7 middle dot: Skarù·ręʔ"
   ok: true
-- text: "à ù ê î é  precomposed diacritics — Kahnawà:ke, nêhiyawêwin"
+- text: "à ù ê î é  precomposed diacritics: Kahnawà:ke, nêhiyawêwin"
   ok: true
 - text: "ę ř  ogonek, caron"
   ok: true
-- text: "ʼ  U+02BC modifier apostrophe — Kwakwaka'wakw"
+- text: "ʼ  U+02BC modifier apostrophe: Kwakwaka'wakw"
   ok: true
-- text: "x̂  x + U+0302 combining circumflex — Unangax̂, rendered live in the mono stack (Archive's by-line). Previously flagged at-risk because advance-width measurement was inconclusive on some faces; the check now compares rendered pixels instead and gives a definite answer. Confirmed present on the one platform re-verified this session."
+- text: "x̂  x + U+0302 combining circumflex: Unangax̂, rendered live in the mono stack (Archive's by-line). Previously flagged at-risk because advance-width measurement was inconclusive on some faces; the check now compares rendered pixels instead and gives a definite answer. Confirmed present on the one platform re-verified this session."
   ok: true
-- text: "★ ⌖ ▪ □ —  interface marks"
+- text: "★ ⌖ ▪ □  interface marks"
   ok: true
