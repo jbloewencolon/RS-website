@@ -40,8 +40,46 @@
 </script>
 {{ partial "head-base.html" dict }}
 <style>
-  nav[aria-label="Contents"] a{border:1px solid #C9C6BA;border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:#585B4F;display:inline-flex;align-items:center;min-height:44px}
-  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;max-width:900px;display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:0 1.5rem;font-family:var(--mono);font-size:14px}
+  /* ── The hero chooser ────────────────────────────────────────────────
+     Ten boxes, one per section, and the page's only index since the
+     sticky bar went (IA-20). Because a closed section now takes no space
+     on screen (see .pocket below), whichever box is clicked opens its
+     content directly beneath this grid — so "the info appears below the
+     boxes" is true for the tenth box as well as the first, which it was
+     not while nine collapsed headers sat between them.
+
+     Sized as real cards rather than the pills these were: each carries
+     the section's own kicker as a description line, so the choice is made
+     on what a section says rather than on a two-word label. Separate
+     bordered cards on the paper ground, not the hairline slab Home's six
+     doors use — ten is enough weight already, and the open one has to be
+     able to stand out from its neighbours. */
+  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:.7rem;font-family:var(--mono);font-size:14px}
+  nav[aria-label="Contents"] a{display:flex;flex-direction:column;gap:.45rem;height:100%;box-sizing:border-box;border:1px solid var(--rule);border-top:3px solid var(--rule);border-radius:2px;padding:.9rem 1rem 1rem;background:var(--paper-2);text-decoration:none;color:var(--ink);min-height:44px;transition:border-color .14s ease,background-color .14s ease}
+  .door-t{font-family:var(--sans);font-weight:700;font-size:1.06rem;line-height:1.25;letter-spacing:-.01em}
+  .door-d{font-size:12px;line-height:1.5;color:var(--ink-3)}
+  /* The register reads on the top edge at rest, the same scheme the six
+     doors on Home carry. The swatch beside each title says it a second
+     time, and .legend-key above says it in words — colour alone is never
+     the carrier here. */
+  nav[aria-label="Contents"] .d-teal{border-top-color:var(--teal)}
+  nav[aria-label="Contents"] .d-fails{border-top-color:var(--fails)}
+  nav[aria-label="Contents"] .d-ask{border-top-color:var(--ask-edge)}
+  /* head-base's shared hover sets `border-color`, which would drop the
+     register edge at exactly the moment of contact; these restore it at
+     equal specificity, later in the cascade. */
+  nav[aria-label="Contents"] .d-teal:hover,nav[aria-label="Contents"] .d-teal:focus-visible{border-top-color:var(--teal)}
+  nav[aria-label="Contents"] .d-fails:hover,nav[aria-label="Contents"] .d-fails:focus-visible{border-top-color:var(--fails)}
+  nav[aria-label="Contents"] .d-ask:hover,nav[aria-label="Contents"] .d-ask:focus-visible{border-top-color:var(--ask-edge)}
+  nav[aria-label="Contents"] a:hover .door-t{color:var(--holds)}
+  /* Which section is open. aria-current is what assistive technology
+     reads; the badge is the sighted equivalent of the same fact, and the
+     word "open" is in it because a tint and a caret are not a statement.
+     Set by sections.js from the pockets' real state, so it stays true
+     however the section was opened — box, summary, deep link, or the
+     bulk control. */
+  nav[aria-label="Contents"] a[aria-current]{background:var(--holds-fill);border-color:var(--holds-edge)}
+  nav[aria-label="Contents"] a[aria-current]::after{content:"Open ▾";font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--holds);margin-top:auto;padding-top:.5rem}
   @media print{body.print-isolate>header,body.print-isolate>main>section:not([data-pocket="field-guide"]),body.print-isolate>footer{display:none!important}}
 
   /* ── Accent system ───────────────────────────────────────────────────
@@ -94,15 +132,14 @@
   .note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--ink-3);border-left:3px solid var(--ask-edge);padding:.3rem 0 .3rem .9rem;margin:1.8rem 0 0}
   .note-fails{border-left-color:var(--fails)}
 
-  /* Hero tally + colour legend. The legend is what makes the accents
-     information rather than mood: a reader is told, in words, what each
-     hue is claiming before they meet it. */
-  .tally{display:flex;flex-wrap:wrap;gap:.6rem;margin:0 0 1.5rem;padding:0;list-style:none}
-  .tally li{font-family:var(--mono);font-size:12.5px;line-height:1.2;display:flex;align-items:baseline;gap:.45rem;border:1px solid var(--rule);border-left-width:4px;padding:.6rem .85rem;background:var(--paper-2)}
-  .tally b{font-family:var(--sans);font-size:16px;font-weight:700}
-  .t-teal{border-left-color:var(--teal);color:var(--teal)}
-  .t-fails{border-left-color:var(--fails);color:var(--fails)}
-  .t-ask{border-left-color:var(--ask-edge);color:var(--ask)}
+  /* Hero colour legend. This is what makes the accents information rather
+     than mood: a reader is told, in words, what each hue is claiming
+     before they meet it — and it now sits directly above the ten boxes
+     whose swatches are its first real use. (The three tally boxes that
+     used to stand between them were removed 2026-08-14: every figure in
+     them was already in the sentence above — "Thirteen principles follow.
+     Each carries a question" — and in the grid's own "Seven stress
+     tests", so they restated the hero rather than adding to it.) */
   .swatch{display:inline-block;width:.62rem;height:.62rem;flex:0 0 auto;border-radius:1px;margin-right:.5rem;vertical-align:baseline}
   .s-teal{background:var(--teal)}.s-fails{background:var(--fails)}.s-ask{background:var(--ask-edge)}
   .legend-key{max-width:66ch;margin:1.1rem 0 0;font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--ink-3)}
@@ -131,6 +168,26 @@
   .pocket-summary .kick{margin-bottom:.5rem}
   .pocket-summary:hover .sec{color:var(--holds)}
   .dark .pocket-summary:hover .sec{color:var(--ask-edge)}
+  /* A closed section takes no space on screen. Ten closed headers stacked
+     under the hero grid were the same ten items a second time — the exact
+     duplication that removing the sticky bar was meant to end — and they
+     pushed the tenth box's content a thousand pixels below the box that
+     opened it. Hiding the whole <section> rather than just its <details>
+     is what matters here: every .band carries its own bottom padding and
+     the opacity band carries a full-bleed dark background, so leaving the
+     sections in place would leave nine strips of empty paper and one
+     empty dark stripe behind.
+
+     Two guards, both load-bearing. `@media screen` keeps paper out of it
+     entirely: printing shows every section whatever was open when Print
+     was pressed, which is the same reason sections.js opens the
+     collapsibles on beforeprint. And .js-pockets is added by sections.js,
+     so with scripting off all ten headers stay — they are that reader's
+     only way in, since the grid's links can open a pocket (the HTML
+     reveal algorithm) but cannot close one. */
+  @media screen{
+    main.js-pockets>section[data-pocket].is-shut{display:none}
+  }
   .pocket-body{padding-top:.4rem}
   /* Overshoots by roughly the height of the kicker+heading above it, so a
      fragment link lands with the pocket's own title in view rather than
@@ -379,24 +436,23 @@
     <h1 style="font-family:var(--sans);font-weight:800;font-size:clamp(2.1rem,5.6vw,3.8rem);line-height:1;letter-spacing:-.03em;margin:0 0 1.4rem;max-width:19ch">Relationships, Principles, and Limits</h1>
     <p style="font-size:clamp(1.05rem,2.2vw,1.3rem);line-height:1.55;max-width:48ch;margin:0 0 1.4rem">Relational sovereignty asks what would change if relationships were understood as living systems of consent, responsibility, reciprocity, and self-determination rather than structures of possession.</p>
     <p style="max-width:52ch;margin:0 0 1.6rem;color:#3C3E38">It is not a finished doctrine, and this page does not present it as one. Thirteen principles follow. Each carries a question you can actually ask of a relationship you are in.</p>
-    <ul class="tally">
-      <li class="t-teal"><b>13</b> principles</li>
-      <li class="t-fails"><b>7</b> places they break</li>
-      <li class="t-ask"><b>1</b> question each</li>
-    </ul>
     <p class="legend-key"><span class="swatch s-teal"></span>Teal marks what the framework asserts. <span class="swatch s-fails"></span>Rust marks where it breaks, or where its own vocabulary gets turned on someone. <span class="swatch s-ask"></span>Ochre marks a question being put to you. Nothing on this page is signalled by colour alone — every mark is also a word.</p>
-    <nav aria-label="Contents" style="margin-top:1.4rem">
+    <!-- Each box's second line is that section's own kicker, verbatim.
+         Repeating it here rather than writing new label copy keeps the
+         two in step: a reader who picks "A field, not a ladder" opens a
+         section that greets them with the same six words. -->
+    <nav aria-label="Contents" style="margin-top:1.5rem">
       <ul>
-        <li><a href="#principles"><span class="swatch s-teal"></span>The thirteen principles</a></li>
-        <li><a href="#forms-and-labels"><span class="swatch s-teal"></span>Forms &amp; labels</a></li>
-        <li><a href="#scenarios"><span class="swatch s-fails"></span>Seven stress tests</a></li>
-        <li><a href="#sexual-content"><span class="swatch s-ask"></span>Sexual content, named plainly</a></li>
-        <li><a href="#continuity"><span class="swatch s-ask"></span>Continuity of care</a></li>
-        <li><a href="#adjudication"><span class="swatch s-ask"></span>Adjudication</a></li>
-        <li><a href="#sovereignty-senses"><span class="swatch s-teal"></span>Sovereignty, four senses</a></li>
-        <li><a href="#opacity"><span class="swatch s-teal"></span>Opacity</a></li>
-        <li><a href="#field-guide"><span class="swatch s-fails"></span>Field guide: vocabulary as a weapon</a></li>
-        <li><a href="#not-yet-written"><span class="swatch s-fails"></span>What's not written yet</a></li>
+        <li><a href="#principles" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>The thirteen principles</span><span class="door-d">Thirteen, each with one question</span></a></li>
+        <li><a href="#forms-and-labels" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Forms &amp; labels</span><span class="door-d">A field, not a ladder</span></a></li>
+        <li><a href="#scenarios" class="d-fails"><span class="door-t"><span class="swatch s-fails"></span>Seven stress tests</span><span class="door-d">Seven situations, traced through — failures marked as failures</span></a></li>
+        <li><a href="#sexual-content" class="d-ask"><span class="door-t"><span class="swatch s-ask"></span>Sexual content, named plainly</span><span class="door-d">A framework about intimacy that hadn't mentioned sex</span></a></li>
+        <li><a href="#continuity" class="d-ask"><span class="door-t"><span class="swatch s-ask"></span>Continuity of care</span><span class="door-d">A clause, not a principle — 06 and 07 without a tiebreaker</span></a></li>
+        <li><a href="#adjudication" class="d-ask"><span class="door-t"><span class="swatch s-ask"></span>Adjudication</span><span class="door-d">Which principle wins — answered where it can be, left open where it can't</span></a></li>
+        <li><a href="#sovereignty-senses" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Sovereignty, four senses</span><span class="door-d">One word, four jobs</span></a></li>
+        <li><a href="#opacity" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Opacity</span><span class="door-d">Principle 08, applied to this website</span></a></li>
+        <li><a href="#field-guide" class="d-fails"><span class="door-t"><span class="swatch s-fails"></span>Field guide: vocabulary as a weapon</span><span class="door-d">This site's own vocabulary, turned around</span></a></li>
+        <li><a href="#not-yet-written" class="d-fails"><span class="door-t"><span class="swatch s-fails"></span>What's not written yet</span><span class="door-d">What's planned, not what's built</span></a></li>
       </ul>
     </nav>
     <!-- The grid above is the only section index now — the sticky
@@ -405,9 +461,12 @@
          rather than a long scroll, which removes the bar's reason to
          exist along with the duplication). Every section below is closed
          until its own box is clicked; clicking a second box closes the
-         first, so at most one is open at a time. "Open every section"
-         still exists for a reader who wants the old everything-at-once
-         page back.
+         first, so at most one is open at a time. A closed section is not
+         merely collapsed but absent from the screen entirely, which is
+         what makes the grid the *only* index rather than the first of
+         two — ten closed headers stacked below it were the same ten
+         items again. "Open every section" still exists for a reader who
+         wants the old everything-at-once page back.
 
          IA-04's aria-controls carries forward: it names the nine regions
          this button governs *within whichever pocket is open* — the seven

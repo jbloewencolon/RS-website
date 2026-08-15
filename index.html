@@ -116,16 +116,43 @@
   .skip-link:focus{left:1rem;top:1rem}
   /* base:end */
   @media (max-width:700px){.drift-wrap{opacity:.3}}
-  /* WD-17: the six doors' kicker colour already carries the register
-     claim (teal = asserted, green = built and real, ochre = asks
-     something of you); this adds a matching top edge on hover/focus so
-     the register reads before the reader even reaches the words. Colour
-     is not the sole carrier here — the kicker text underneath still
-     says what each door is regardless of hue or contact with a pointer. */
-  .door{border-top:2px solid transparent;transition:border-color .14s ease,background-color .14s ease}
-  .door-teal:hover,.door-teal:focus-visible{border-top-color:var(--teal)}
-  .door-holds:hover,.door-holds:focus-visible{border-top-color:var(--holds)}
-  .door-ask:hover,.door-ask:focus-visible{border-top-color:var(--ask)}
+  /* WD-17, promoted to the resting state. The six doors' kicker colour
+     already carried the register claim (teal = what the framework
+     asserts, green = built and working now, ochre = asks something of
+     you), and WD-17 added a matching top edge — but only on hover, which
+     meant the scheme was invisible to anyone reading rather than
+     pointing, and invisible on a touch screen entirely. Now every door
+     wears its register at rest: a 3px top edge plus a wash of the same
+     hue, so the six read as three pairs before a single word is read.
+
+     Colour is still not the sole carrier, which is the constraint that
+     governs every accent on this site. Each door's own kicker names its
+     register in words, and the legend below the grid states the scheme
+     outright for a reader who does not see the difference between the
+     green and the ochre.
+
+     Washes are deliberately shallow, and opaque rather than an rgba()
+     of the register hue — which is the trap here, caught by axe and not
+     by eye. The doors' own grid paints #C9C6BA behind them and shows it
+     through a 1px gap to draw the hairlines between cards; a translucent
+     door background therefore composites over that grey, not over paper,
+     and every card's body copy fell to 3.7:1. These are the same washes
+     pre-composited over #E7E5DC: 5.5% teal, 6% green, 9% ochre at rest,
+     9/10/15% on hover. #585B4F body copy lands at 4.98–5.22:1 at rest
+     and 4.66–5.00:1 hovered; the two coloured kickers at 5.5–5.9:1.
+
+     Hover deepens the same wash instead of switching to a neutral grey,
+     so a door never loses its register at the moment of contact — which
+     is what the old #DDDAD0 hover did. */
+  .door{border-top:3px solid var(--rule);background:var(--paper);transition:border-color .14s ease,background-color .14s ease}
+  .door-teal{border-top-color:var(--teal);background:#DBDBD2}
+  .door-holds{border-top-color:var(--holds);background:#DCDDD2}
+  .door-ask{border-top-color:var(--ask-edge);background:#E6DFCC}
+  .door-teal:hover,.door-teal:focus-visible{background:#D4D4CC}
+  .door-holds:hover,.door-holds:focus-visible{background:#D4D7CC}
+  .door-ask:hover,.door-ask:focus-visible{background:#E5DAC1}
+  .reg-key{max-width:70ch;margin:1.3rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.7;color:#585B4F}
+  .reg-dot{display:inline-block;width:.62rem;height:.62rem;flex:0 0 auto;border-radius:1px;margin-right:.5rem;vertical-align:baseline}
 </style>
 </helmet>
 
@@ -179,37 +206,38 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <h2 style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.8rem;font-weight:400">Where to begin — six doors, none ranked, including the one that asks something of you</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:#C9C6BA;border:1px solid #C9C6BA">
-      <a href="/manifesto/" class="door door-teal" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
+      <a href="/manifesto/" class="door door-teal" style="padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--teal)">the threshold · 9 min</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Read the manifesto</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">Sixteen theses and a refusal. Printable, forkable, meant to be read aloud.</p>
       </a>
-      <a href="/learn/" class="door door-teal" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
+      <a href="/learn/" class="door door-teal" style="padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--teal)">the idea · 17 min</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Learn the thirteen principles</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">What relational sovereignty is, what it is not, and the question each principle asks of you.</p>
       </a>
-      <a href="/practise/" class="door door-holds" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
+      <a href="/practise/" class="door door-holds" style="padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--holds)">the workshop · 20 min</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Examine a relationship</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">The Consent Domains Map, working now in your browser. Nothing you enter leaves this page, and the crawler is not allowed in.</p>
       </a>
-      <a href="/archive/" class="door door-holds" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
+      <a href="/archive/" class="door door-holds" style="padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--holds)">the library · 12 min</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Enter the archive</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">Thirty-odd texts, attributed to their authors and nations, each linking away from here to the people who wrote them.</p>
       </a>
-      <a href="/contribute/" class="door door-ask" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
+      <a href="/contribute/" class="door door-ask" style="padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ask)">the commons · 5 min</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Contribute something</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">A story, a tool, a question, an artwork — on terms you set, and can withdraw.</p>
       </a>
-      <a href="#dispatch" class="door door-ask" style="background:#E7E5DC;padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block" style-hover="background:#DDDAD0">
+      <a href="#dispatch" class="door door-ask" style="padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ask)">an ask, stated as one</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Join the dispatch</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#585B4F">This one wants something from you: an address. Occasional letters, no schedule promised, no tracking, one click to leave.</p>
       </a>
     </div>
+    <p class="reg-key"><span class="reg-dot" style="background:var(--teal)"></span>Teal — what the framework asserts. <span class="reg-dot" style="background:var(--holds)"></span>Green — built and working now. <span class="reg-dot" style="background:var(--ask-edge)"></span>Ochre — asks something of you. Each door says the same thing in words above its title; nothing here is signalled by colour alone.</p>
   </div>
 </section>
 
