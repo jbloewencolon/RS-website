@@ -100,6 +100,15 @@
   .form-error{line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem}
   .form-status{border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;background:rgba(63,122,78,.06);padding:1.6rem 1.5rem}
   .field-invalid{border-color:#8B3A2F!important}
+   
+  details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid #DB9E2A;margin:1.6rem 0 0}
+  details.note>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0 .9rem;color:#585B4F}
+  details.note>summary::-webkit-details-marker{display:none}
+  details.note>summary:hover,details.note>summary:focus-visible{color:#191B18}
+  details.note>p{margin:0 .9rem .7rem .9rem}
+  details.note.note-fails{border-left-color:#8B3A2F}
+  details.note.note-holds{border-left-color:#3F7A4E}
+  @media print{details.note:not([open])>*{display:block!important}}
   @media print{body{background:#fff}.noprint{display:none!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;border-radius:2px}
@@ -178,7 +187,7 @@
       </ul>
       <p style="margin:.4rem 0 0;font-weight:700;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:1.1rem;line-height:1.4;color:#E7E5DC">And if going safely means going suddenly — go. Nothing in any of this is a reason to stay.</p>
     </div>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#8FA9A2;border-left:2px solid #DB9E2A;padding:.2rem 0 .2rem .9rem;margin:2.2rem 0 0;max-width:56ch">⌖ This section, plus the logistics — money, medication, the school run, paperwork, a lease, a visa, a pet, a phone plan, who holds each after and whether they know — is built out as an actual tool on <a href="/practise/" style="color:#DB9E2A">Practise</a>, once it ships. The safety gate sits at the top of that tool, not the bottom, and says the same thing this paragraph does: if leaving safely means leaving suddenly, close it and go.</p>
+    <details class="note" style="color:#8FA9A2;max-width:56ch"><summary style="color:#8FA9A2">⌖ This section, plus the logistics</summary><p>— money, medication, the school run, paperwork, a lease, a visa, a pet, a phone plan, who holds each after and whether they know — is built out as an actual tool on <a href="/practise/" style="color:#DB9E2A">Practise</a>, once it ships. The safety gate sits at the top of that tool, not the bottom, and says the same thing this paragraph does: if leaving safely means leaving suddenly, close it and go.</p></details>
   </div>
 </section>
 
@@ -213,5 +222,6 @@
 </footer>
 
 <script src="/print.js"></script>
+<script src="/notes.js"></script>
 </body>
 </html>

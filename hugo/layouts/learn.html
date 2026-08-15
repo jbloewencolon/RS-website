@@ -129,8 +129,7 @@
   .kick-ask{color:var(--ask)}.kick-ask::before{background:var(--ask-edge)}
   h2.sec{font-family:var(--sans);font-weight:700;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1.2rem;max-width:26ch}
   .lede{max-width:60ch;margin:0 0 1.8rem;color:var(--ink-2);font-size:16.5px;line-height:1.58}
-  .note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--ink-3);border-left:3px solid var(--ask-edge);padding:.3rem 0 .3rem .9rem;margin:1.8rem 0 0}
-  .note-fails{border-left-color:var(--fails)}
+  /* .note/.note-fails moved to the shared base (details.note), IA-22. */
 
   /* Hero colour legend. This is what makes the accents information rather
      than mood: a reader is told, in words, what each hue is claiming
@@ -536,7 +535,7 @@
           </ul>
           <p style="margin:1.1rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;color:#585B4F">Not exhaustive — a person's own word for what they have is the one that governs, including one not listed here.</p>
         </div>
-        <p class="note note-fails" style="margin-top:0">⌖ A field is not a floor. Naming these forms as equals doesn't make the risk of choosing one equal to the risk of choosing another — legal recognition, immigration status, custody, and inheritance still fall unevenly across them, unrelated to which one serves the people in it best. See <a href="/resources/">Resources</a> for where that risk gets concrete.</p>
+        <details class="note note-fails" style="margin-top:0"><summary>⌖ A field is not a floor.</summary><p>Naming these forms as equals doesn't make the risk of choosing one equal to the risk of choosing another — legal recognition, immigration status, custody, and inheritance still fall unevenly across them, unrelated to which one serves the people in it best. See <a href="/resources/">Resources</a> for where that risk gets concrete.</p></details>
       </div>
     </details>
   </div>
@@ -641,7 +640,7 @@
     </details>
     {{ end }}
     </div>
-    <p class="note note-fails">⌖ Not exhaustive, and not ranked by severity. Seven situations chosen because each fails a different principle for a different reason — the point isn't the list, it's that a list this short already finds seven of them.</p>
+    <details class="note note-fails"><summary>⌖ Not exhaustive, and not ranked by severity.</summary><p>Seven situations chosen because each fails a different principle for a different reason — the point isn't the list, it's that a list this short already finds seven of them.</p></details>
     </div>
    </details>
   </div>
@@ -665,7 +664,7 @@
     </summary>
     <div class="pocket-body" id="sexual-content">
     <p class="lede">None of these are new concepts for this framework — each one is an existing principle, applied to something the site had otherwise left unsaid. This isn't therapeutic or clinical content, and doesn't claim to be; where it isn't enough, <a href="/resources/">Resources</a> is what's actually built for that.</p>
-    <p class="note" style="margin:0 0 1.4rem">⌖ These four are closed rather than open — not to soften them, but because two of them describe violence and a reader should get to choose the moment. Opening one is the only thing that changes.</p>
+    <details class="note" style="margin:0 0 1.4rem"><summary>⌖ These four are closed rather than open</summary><p>— not to soften them, but because two of them describe violence and a reader should get to choose the moment. Opening one is the only thing that changes.</p></details>
     <!-- These four deliberately carry no `data-collapsible`, which is the
          opt-in "Open every section" reads (see sections.js). The note
          directly above promises "opening one is the only thing that
@@ -751,7 +750,7 @@
         <p style="margin:0;max-width:64ch;font-size:15.5px;line-height:1.55;color:#3C3E38">Principle 08 already narrows itself: opacity is a right against people who want more of you than they're owed, not against institutions that compel disclosure to release care, money, status, or documents. The manifesto's thesis 11 narrows the other side — standing to demand an account belongs to the people who absorb a relationship's consequences, not the state, not a crowd with an opinion. Put together: opacity holds fully against anyone without standing, and even against someone who has it, what's owed is the specific thing they'll absorb — not a full accounting of the relationship. That's the whole reasoning behind the endings tool on <a href="/practise/">Practise</a> asking only "who holds this after, and do they know," never "explain the relationship."</p>
       </div>
     </details>
-    <p class="note">⌖ The Repair Protocol (in progress, see the <a href="/behind-the-scenes/#roadmap">roadmap</a>) answers a different question — what's the process after harm — not which principle governs a standing conflict between two of them. Both questions were open; only one had a process already planned to answer it.</p>
+    <details class="note"><summary>⌖ The Repair Protocol</summary><p>(in progress, see the <a href="/behind-the-scenes/#roadmap">roadmap</a>) answers a different question — what's the process after harm — not which principle governs a standing conflict between two of them. Both questions were open; only one had a process already planned to answer it.</p></details>
     </div>
    </details>
   </div>
@@ -821,7 +820,7 @@
       </div>
       {{ end }}
     </div>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#8FA9A2;border-left:3px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:0 0 1.6rem;max-width:58ch">⌖ The caveat that governs all of it: opacity is owed to the crawler and the market, never to the disabled reader. Nothing here is hidden from assistive technology and no semantic structure is stripped to look less legible. Withhold from extraction; disclose fully to those who need access to participate. Getting this backwards produces a site that is self-congratulatory and practically exclusionary.</p>
+    <details class="note" style="color:#8FA9A2"><summary style="color:#8FA9A2">⌖ The caveat that governs all of it</summary><p>opacity is owed to the crawler and the market, never to the disabled reader. Nothing here is hidden from assistive technology and no semantic structure is stripped to look less legible. Withhold from extraction; disclose fully to those who need access to participate. Getting this backwards produces a site that is self-congratulatory and practically exclusionary.</p></details>
     <p style="max-width:54ch;margin:0;color:#B8C7C1">Protocol-gated access — where a community, not this project, decides who may see what and under which relationship — already exists in <a href="https://mukurtu.org" style="color:#DB9E2A">Mukurtu CMS</a>, the <a href="https://localcontexts.org" style="color:#DB9E2A">Local Contexts</a> TK and BC Labels, and the <a href="https://www.gida-global.org/care" style="color:#DB9E2A">CARE Principles</a>. It is not implemented here. <a href="/behind-the-scenes/" style="color:#DB9E2A">The fault list</a> says so.</p>
     </div>
    </details>
@@ -894,7 +893,7 @@
         <p class="fg-q">What would it have cost to not seem fine?</p>
       </div>
     </div>
-    <p class="note">⌖ What got said to you, in this vocabulary, to avoid answering something — that's the strongest candidate this site has for something a reader could add. There's nowhere built to route it yet. It's named on <a href="/contribute/">Contribute</a>, parked, not built, until there's a community to route it to.</p>
+    <details class="note"><summary>⌖ What got said to you, in this vocabulary, to avoid answering something</summary><p>— that's the strongest candidate this site has for something a reader could add. There's nowhere built to route it yet. It's named on <a href="/contribute/">Contribute</a>, parked, not built, until there's a community to route it to.</p></details>
     </div>
    </details>
   </div>
@@ -950,5 +949,6 @@
 <script src="/print.js"></script>
 <script src="/sections.js"></script>
 <script src="/reveal.js"></script>
+<script src="/notes.js"></script>
 </body>
 </html>

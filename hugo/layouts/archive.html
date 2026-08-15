@@ -135,7 +135,7 @@
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.2rem,6vw,4rem);line-height:1;letter-spacing:-.035em;margin:0 0 1.4rem;max-width:15ch">Read the people, not the summary.</h1>
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">No single source contains this whole framework. It is assembled from Indigenous political thought, feminist relational autonomy, disability justice, care ethics, and transformative-justice practice — each with its own authors, nations, and arguments.</p>
     <p style="max-width:52ch;margin:0 0 1.4rem;color:#3C3E38">Every entry links away from here, to the author, the publisher, or the open-access copy. Where no stable public link exists, the holder is named instead of a guess. This site is a door; its success is how quickly you stop needing it.</p>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:0 0 1.6rem;max-width:58ch">⌖ Indigenous relationality, sovereignty, refusal, and survivance are not a generic radical style. These traditions are nation-specific, and borrowing them as atmosphere reproduces colonial extraction even when it calls itself rebellion. Every note below is provisional and awaiting paid Indigenous review.</p>
+    <details class="note" style="max-width:58ch"><summary>⌖ Indigenous relationality, sovereignty, refusal, and survivance are not a generic radical style.</summary><p>These traditions are nation-specific, and borrowing them as atmosphere reproduces colonial extraction even when it calls itself rebellion. Every note below is provisional and awaiting paid Indigenous review.</p></details>
     <nav aria-label="Contents">
       <ul style="list-style:none;margin:0;padding:0;max-width:900px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0 1.5rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px">
         {{ range hugo.Data.archive.groups }}
@@ -283,5 +283,6 @@
 </footer>
 
 <script src="/archive-filter.js"></script>
+<script src="/notes.js"></script>
 </body>
 </html>

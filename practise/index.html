@@ -84,6 +84,15 @@
   .form-error{line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem}
   .form-status{border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;background:rgba(63,122,78,.06);padding:1.6rem 1.5rem}
   .field-invalid{border-color:#8B3A2F!important}
+   
+  details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid #DB9E2A;margin:1.6rem 0 0}
+  details.note>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0 .9rem;color:#585B4F}
+  details.note>summary::-webkit-details-marker{display:none}
+  details.note>summary:hover,details.note>summary:focus-visible{color:#191B18}
+  details.note>p{margin:0 .9rem .7rem .9rem}
+  details.note.note-fails{border-left-color:#8B3A2F}
+  details.note.note-holds{border-left-color:#3F7A4E}
+  @media print{details.note:not([open])>*{display:block!important}}
   @media print{body{background:#fff}.noprint{display:none!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;border-radius:2px}
@@ -129,8 +138,8 @@
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.2rem,6vw,4rem);line-height:1;letter-spacing:-.035em;margin:0 0 1.4rem;max-width:15ch">The Consent Domains Map</h1>
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:46ch;margin:0 0 1.2rem">A relationship label is not blanket permission. This map separates consent into twenty domains so that yes in one is not read as yes in all of them.</p>
     <p style="max-width:52ch;margin:0 0 1.6rem;color:#3C3E38">Mark where you stand in each domain, add a condition where it matters, then print it or read it aloud with the other person. There is no score and no correct pattern.</p>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:0;max-width:58ch">⌖ Safety — written relationship exercises are not safe for everyone, and joint exercises are not safe where one person controls the other. This is not always visible from inside a relationship. Before the tool, there are five questions and a way out.</p>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #3F7A4E;padding:.3rem 0 .3rem .9rem;margin:1rem 0 1.4rem;max-width:58ch">⌖ Privacy — everything you type stays in this browser tab. Nothing is sent anywhere, nothing is stored, nothing is counted, and this page is disallowed to search crawlers. Closing the tab erases it.</p>
+    <details class="note note-fails" style="margin:0;max-width:58ch"><summary>⌖ Safety</summary><p>written relationship exercises are not safe for everyone, and joint exercises are not safe where one person controls the other. This is not always visible from inside a relationship. Before the tool, there are five questions and a way out.</p></details>
+    <details class="note note-holds" style="margin:1rem 0 1.4rem;max-width:58ch"><summary>⌖ Privacy</summary><p>everything you type stays in this browser tab. Nothing is sent anywhere, nothing is stored, nothing is counted, and this page is disallowed to search crawlers. Closing the tab erases it.</p></details>
     <nav aria-label="Contents">
       <ul style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:0 1.8rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px">
         <li><a href="#consent-map" style="display:inline-flex;align-items:center;min-height:44px">01 · The Consent Domains Map</a></li>
@@ -740,5 +749,6 @@ class Component extends DCLogic {
   }
 }
 </script>
+<script src="/notes.js"></script>
 </body>
 </html>

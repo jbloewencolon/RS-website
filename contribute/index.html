@@ -88,6 +88,15 @@
   .form-error{line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem}
   .form-status{border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;background:rgba(63,122,78,.06);padding:1.6rem 1.5rem}
   .field-invalid{border-color:#8B3A2F!important}
+   
+  details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid #DB9E2A;margin:1.6rem 0 0}
+  details.note>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0 .9rem;color:#585B4F}
+  details.note>summary::-webkit-details-marker{display:none}
+  details.note>summary:hover,details.note>summary:focus-visible{color:#191B18}
+  details.note>p{margin:0 .9rem .7rem .9rem}
+  details.note.note-fails{border-left-color:#8B3A2F}
+  details.note.note-holds{border-left-color:#3F7A4E}
+  @media print{details.note:not([open])>*{display:block!important}}
   @media print{body{background:#fff}.noprint{display:none!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;border-radius:2px}
@@ -152,7 +161,7 @@
         </sc-for>
       </ul>
       <p style="margin:0 0 2rem;font-size:16px;line-height:1.55;color:#3C3E38">The project's side of the agreement is written down too, and carries a version number: <a href="/behind-the-scenes/">reuse terms v0.2</a>. No unilateral amendment, no arbitration clause, and no change applies retroactively to work already given under earlier terms.</p>
-      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:0;max-width:56ch">⌖ Do not send material that belongs to a community rather than to you. Cultural knowledge, ceremony, and restricted teachings require permission from the people who hold them, not from us.</p>
+      <details class="note" style="margin:0;max-width:56ch"><summary>⌖ Do not send material that belongs to a community rather than to you.</summary><p>Cultural knowledge, ceremony, and restricted teachings require permission from the people who hold them, not from us.</p></details>
     </div>
 
     <div>
@@ -234,7 +243,7 @@
         </ul>
       </div>
     </div>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#73968D;border-left:2px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:2.4rem 0 0;max-width:58ch">⌖ Moderation prioritizes safety, context, proportional response, and survivor autonomy. This project will not promise a perfectly non-carceral community while lacking the capacity to address serious danger.</p>
+    <details class="note" style="color:#73968D;margin:2.4rem 0 0;max-width:58ch"><summary style="color:#73968D">⌖ Moderation prioritizes safety, context, proportional response, and survivor autonomy.</summary><p>This project will not promise a perfectly non-carceral community while lacking the capacity to address serious danger.</p></details>
   </div>
 </section>
 
@@ -497,5 +506,6 @@ class Component extends DCLogic {
   }
 }
 </script>
+<script src="/notes.js"></script>
 </body>
 </html>
