@@ -1,6 +1,6 @@
 # Relational Sovereignty — Active Tasks
 
-**Last reconciled:** 2026-08-14
+**Last reconciled:** 2026-08-15
 **Reconciles:** `docs/spec/base-work-order.md`, `docs/spec/addendum-a.md`, `docs/spec/decision-record-d1-d15.md` (authoritative on all `[DECISION]`/`D#` items), `docs/spec/warm-register-review-v2.md` (new content initiative, the warm register), an author review of navigation/disclosure/IA delivered directly into this session (no separate file — see Phase 2.5), the author-supplied `Web Design Spec — v0.3 refinement pass` (Phase 9; its cited source `docs/audits/design-review-2026-08-10.md` is now in the repository — it was not when that phase was planned), an author-supplied `Website Cache & Clickjacking Security Audit` dated 2026-08-11 (Phase 10; **not in this repository either**, and its own findings were re-checked against the live site — two did not survive contact, see that phase's header), a heuristic/source-DOM audit dated 2026-08-13 (Phase 11; `docs/audits/heuristic-audit-2026-08-13.md`, saved on arrival — four of its claims did not survive measurement and three of its recommendations collide with published commitments, see that phase's header), plus findings from a full read of the shipped code on this branch.
 **Companion file:** `completed.tasks.md` — when a task ships, move its row there with a dated `~~was:~~ now:` entry in the site's own changelog voice. Don't delete history; strike it.
 
@@ -8,7 +8,7 @@
 
 ## How to use this file
 
-- Every task keeps its source ID (`RS-0xx`) so it can be cross-referenced against the docs in `docs/spec/`. Tasks with no source ID are prefixed `SUGGEST-` (raised during codebase familiarization, not in any spec doc), `FLAG-` (a gap or contradiction found in the spec docs themselves that needs author input before work can proceed), `HUGO2-` (Phase 5, a direct author instruction with no `docs/spec/` origin — see that phase's header), `UX-` (Phase 6, IDs kept identical to `docs/audits/ux-audit-2026-08-08.html`'s own numbering), `SEO-` (Phase 7, reconciled from an external technical SEO/AEO specification against this project's own ethos and conventions — see that phase's header for what was kept, rejected, and why), `BUG-` (Phase 8, live-site defects the author found by visiting the deployed site after PR #13 merged, numbered in the order the author reported them), `WD-` (Phase 9, IDs kept identical to the web design spec's own `§3.n` numbering, same convention as `UX-`; `WD-25`/`WD-26` are follow-ups that spec names but deliberately scopes out), `SEC-` (Phase 10, security remediation — numbered by phase-and-item as `SEC-0n.x` rather than flat, because the ordering *is* the finding), or `IA-` (Phase 11, assigned here rather than inherited — that audit has no ID scheme of its own, so each row cites the audit's section number alongside; `IA-C1`–`IA-C4` are its four claims that measurement contradicted). See each phase's header.
+- Every task keeps its source ID (`RS-0xx`) so it can be cross-referenced against the docs in `docs/spec/`. Tasks with no source ID are prefixed `SUGGEST-` (raised during codebase familiarization, not in any spec doc), `FLAG-` (a gap or contradiction found in the spec docs themselves that needs author input before work can proceed), `HUGO2-` (Phase 5, a direct author instruction with no `docs/spec/` origin — see that phase's header), `UX-` (Phase 6, IDs kept identical to `docs/audits/ux-audit-2026-08-08.html`'s own numbering), `SEO-` (Phase 7, reconciled from an external technical SEO/AEO specification against this project's own ethos and conventions — see that phase's header for what was kept, rejected, and why), `BUG-` (Phase 8, live-site defects the author found by visiting the deployed site after PR #13 merged, numbered in the order the author reported them), `WD-` (Phase 9, IDs kept identical to the web design spec's own `§3.n` numbering, same convention as `UX-`; `WD-25`/`WD-26` are follow-ups that spec names but deliberately scopes out), `SEC-` (Phase 10, security remediation — numbered by phase-and-item as `SEC-0n.x` rather than flat, because the ordering *is* the finding), `BM-` (Phase 12, assigned here — the author-supplied motion system has no ID scheme of its own, so each row cites its section number alongside; `BM-C1`–`BM-C7` are corrections and build landmines rather than tasks), or `IA-` (Phase 11, assigned here rather than inherited — that audit has no ID scheme of its own, so each row cites the audit's section number alongside; `IA-C1`–`IA-C4` are its four claims that measurement contradicted). See each phase's header.
 - Tags: `[DEV]` buildable now · `[COPY]` blocked on author-approved text (drafts exist in `docs/spec/`, not final) · `[VERIFY]` requires checking a live source before publish — never guess a URL, number, or DOI · `[DECISION]` blocked on a human call.
 - Phases mirror the Decision Record's "Consolidated build order" (Cycles 1–4), with one Phase 0 for blockers that gate everything else, and my own resequencing note on where the Hugo migration (RS-004) should actually land within Phase 1 — see that phase's header.
 - **Draft copy lives in `docs/spec/`, not here.** This file tracks status, files touched, effort, and dependencies so it stays a working checklist instead of a second copy of 1,900 lines of markdown.
@@ -768,6 +768,114 @@ without two-dimensional scrolling, the labelled matrix scroller excepted.
 
 ---
 
+## Phase 12 — Botanical motion system (author-supplied, 2026-08-15)
+
+*(Source: `docs/external/botanical-motion-system-2026-08-15.dc.html`, a "Botanical Motion System · draft 0.1" supplied directly by the author and saved on arrival, same pattern as the heuristic audit. Three flora sharing one inflorescence (the pendant raceme), seven motion behaviours `M1`–`M7`, eight page configurations, a CSS token block, a three-file build, ten restraint rules and eight sign-off criteria. IDs below are `BM-nn`, assigned here — the document has no ID scheme of its own, so each row cites its section number alongside. **Two edits were made to the saved copy, both mechanical:** the first `<script>` tag was a session-scoped signed `claude.ai` URL that expires and is not content, so it was dropped; `src="./support.js"` was repointed to `/support.js` so the live specimens run from `docs/external/`. Nothing else was touched. `scripts/check-origins.mjs` scans root-level files and the pretty-URL directories only, not `docs/`, so the saved copy is outside its scope either way.)*
+
+**The document is good, and it was written against this site rather than at it.** It reaches for the real neutrals (`#E7E5DC` / `#EFEEE7` paper, `#191B18` / `#3C3E38` / `#585B4F` ink, `#C9C6BA` rule), it names the actual CSP constraint, it plans around `prefers-reduced-motion` instead of bolting an override on afterwards, and its §08 restraint rules are the load-bearing half. Most of it can be built as written. What follows is the part that cannot.
+
+### What was verified before planning, and what held
+
+Checked directly against the committed code, not read off the document:
+
+- **The reduced-motion fallback works exactly as §06 claims.** `hugo/layouts/partials/head-base.html:188` carries `@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}}`, and the three hand-authored pages carry the same bytes (`index.html:114`, `practise/index.html:88`, `contribute/index.html:92`). A CSS-animation layer really does switch itself off site-wide with no JS involved.
+- **`script-src 'self'` survives.** Inline SVG generated at mount, animated by CSS, adds no origin. `npm run check:origins` would pass unchanged.
+- **The root-level script convention already exists** — `/print.js`, `/sections.js`, `/reveal.js`, `/notes.js`, `/archive-filter.js`. A botanical script belongs beside them.
+- **The print rule is free.** `@media print{.bm-layer{display:none}}` collides with nothing.
+- **§02's density cap and §07's node budget are two different numbers, not one.** 14 blooms / 60 nodes is per composition; 240 nodes is per page. Home's own recipe (7 + 4 + 3 blooms across three layers) only makes sense read that way. Say so in the built spec rather than leaving a reader to reconcile them.
+
+### Corrections — do not implement these four as written
+
+**BM-C1 — `assets/botanical/bm.css` as a linked stylesheet re-opens a decision already made.** IA-10a proposed exactly this shape (a partial *plus* a stylesheet) and it was rejected on the author's call, because it *"contradicted this phase's own acceptance criterion that no page gains a network request."* The resolution was one source inlined everywhere, carried to the three hand-authored pages by `scripts/sync-base.mjs`. The botanical tokens and keyframes go in `hugo/layouts/partials/head-base.html` the same way. Likewise `bm.js` + `bm-pages.js` should be **one** file at `/botanical.js`, not two under `assets/` — two files is two requests for 8 KB, and the recipes are smaller than the loader that reads them.
+
+**BM-C2 — "No new hues" is the document's weakest claim, and it is checkable.** §02 says the bloom accents are *"saturated cousins of accents the site already uses — brick, sage, link blue."* Two of those three already carry meaning here. `#8B3A2F`, which the swatch row labels "brick · existing," is the **rust register**: *"where the framework fails or runs out"* (`docs/design-palette.md`). `#2B4C9B`, labelled "link · existing," is the link colour. So maga is a saturated rust and wisteria is a desaturated link-blue, and jade `#2E8F7E` sits between the teal and green registers. Counted honestly the system introduces **sixteen** new values — three blooms with a deep and a pale each, six stem greens, and `--bm-nectar` — against a palette document that closes *"Keep the palette to these four. A fifth hue would have to mean something the other four cannot."* See **FLAG-12**; nothing in 12.2 onward should start before it is answered.
+
+**BM-C3 — §06's Hover row contradicts M4 and M7.** The row says the layer answers to hover with *"Nothing… the layer itself is `pointer-events:none`."* M4 leans a tendril toward the pointer; M7 withdraws the whole layer on hover. All three are reconcilable — M4/M7 observe pointer position over a *region* while the layer itself stays untargetable — but the document never says so, and as written a reader implements one of the three and breaks the other two. Also nothing currently forbids granting M4 and M7 to the same page, where they would fight: one leans in, the other retreats. **Make them mutually exclusive per page, explicitly.**
+
+**BM-C4 — the eight compositions cover nine pages.** "Manifesto" appears **zero** times in the document. It is also the one page the system cannot be ported to unchanged: it is dark ground (`#0F2A2E` with `#DDE4DC` text, `head-base.html` called with those values at `manifesto.html:41`), and every opacity ceiling, wash maximum and stem green in §05 is tuned for paper. `docs/design-palette.md` already exempts Manifesto from the register system for the same class of reason. **Recommendation: exempt it deliberately and say so on the page's own terms, rather than spec dark-ground values for a ninth composition nobody asked for.** Author call, but the cheap answer and the consistent one are the same answer here.
+
+### FLAG-12 — the register collision, and the decoration question underneath it `[DECISION]`
+
+Two questions, and the second one is the real one.
+
+**First, mechanically:** IA-21 shipped five days ago and put the register scheme *at rest* on Home's six doors — a 3px top edge, a shallow wash, and a legend naming the three registers in words. Home is also the only page §04 grants a full raceme with blooms at signature opacity. So the site's most-visited page would carry a red-family botanical form hanging above six cards that have just taught the reader red means *"where the framework fails."* Restraint rule 5 says *"The layer never indicates state."* Rule 5 is not violated by the code; it is violated by the reader, who has been given a colour grammar and will apply it. Three consistent resolutions:
+
+| Option | What it costs |
+|---|---|
+| **(A)** Run the layer in line and stem-green only. Drop the three bloom hues site-wide. | Loses the flowers, which are most of what makes it worth building. Cheapest, and the only option needing no palette-doc change. |
+| **(B)** Keep the blooms, but forbid a bloom composition on any page that carries register-coded content — which today is Home and Learn. | Keeps the system, shrinks it to the pages where it matters least. Needs a rule written into §04 and enforced in review. |
+| **(C)** Admit an explicitly non-semantic decorative family to `docs/design-palette.md`, argued and separated from the four registers by name. | Honest and the most work. Rewrites that file's closing rule, which currently forbids exactly this. |
+
+**Second, editorially, and this is the one to answer first.** `docs/design-palette.md` opens by quoting Learn's own closing caution: *"a design that signals warmth while leaving power unmapped has produced decoration, not sovereignty."* The botanical document's §01 answers it head-on and in the affirmative: *"The result is a layer with no job. It carries no meaning, marks no state, and signals nothing."* Its own rule 10 then says *"If it reads as decoration in a screenshot with the motion frozen, it is decoration. Cut it"* — while §06 and the sign-off both require that every composition *"renders complete, still, and correct"* under reduced motion, which is to say: it must look right frozen. **Rule 10 and the reduced-motion criterion cannot both be satisfied.** That is not a defect in the drawing; it is the system telling on itself. This site publishes a fault list and a page-weight figure and argues in its own colophon about what a page is allowed to cost. Adding ~9 KB per page of something whose stated purpose is to have no purpose is a defensible choice — plenty of austere things are worth doing — but it is the author's to make on the record, not one to arrive at by shipping. **Nothing past 12.1 should start before this is answered.**
+
+### The three landmines, which are all in the same place
+
+None of these is in the document, all three are load-bearing, and all three are on the same three pages.
+
+**BM-C5 — the `dc-runtime` destroys mounted DOM on Home, Practise and Contribute.** `support.js:175` does `dc.replaceWith(hostEl)` — the entire `<x-dc>` subtree is thrown away and rebuilt after first paint. IA-22 hit this exact bug with `notes.js` last week and fixed it by delegating listeners on `document`. **Delegation solves listeners; it does not solve mounted DOM.** `BM.init()` mounting an SVG into `[data-bm]` inside `<x-dc>` will have that SVG discarded on three of the eight pages in §04 — including Home, the one page granted the signature composition. Three possible answers: re-mount from a `MutationObserver`, place `.bm-layer` outside `<x-dc>` entirely, or wait on the runtime's own `__dc_booted` message (`support.js:1880`). Decide before touching any of the three, not during.
+
+**BM-C6 — the prerenderer would bake the drawing into the shipped HTML.** `scripts/prerender.mjs:117` waits 700 ms after mount and `:119` captures `document.getElementById("dc-root").innerHTML` to disk. If `BM.init()` mounts inside that window, the generated SVG is committed into `_site/` for those same three pages — frozen at whatever growth state it had reached at 700 ms. Three separate published properties break at once: §07's *"empty until mounted, so a failed or blocked script costs nothing"*, the sign-off's *"script blocked or failed: page is visually intact"* (a JS-blocked reader would get a permanently half-drawn stem), and the reduced-motion criterion's *"no partial stems, no invisible blooms."* And `checkPageWeight()` measures Home, Practise and Contribute **from `_site/`**, so the weight lands on the one figure the build already polices. Fix by making `BM.init()` a no-op under the prerenderer, or by stripping `.bm-layer` children in `prerender.mjs` before write. Verify by diffing `_site/index.html` before and after.
+
+**BM-C7 — the colophon's page-weight row is machine-checked prose.** `checkPageWeight()` (`scripts/check-pages.mjs:221`) parses the *"Ranges from about N KB (the X) to about N KB (the Y)… shared ~N KB script"* sentence out of Behind the Scenes and fails the build against every shipped file's real size. That row currently carries an apology for the ~2 KB the component layer added and a promise the figure will come back down once 11.3 applies it. Botanical CSS inlined into `head-base.html` moves all nine pages the other way, and a new `/botanical.js` is a fourth root-level script the row does not mention. **The copy change ships in the same commit as the code change** — same rule Phase 10.2 exists to enforce, and the third time this figure would have gone stale.
+
+### 12.0 — Answer the two questions `blocks everything below`
+
+| ID | Task | Tags | Effort | Depends on |
+|---|---|---|---|---|
+| **BM-01** | **FLAG-12, editorial half.** Does this site want a layer whose stated job is to have no job? Answer on the record — a line in `docs/design-palette.md` or the colophon, not a commit message. If the answer is no, close Phase 12 here and keep the document as the record of a good idea that lost to the site's own austerity. | `[DECISION]` | — | — |
+| **BM-02** | **FLAG-12, palette half.** Pick (A) line-and-green only, (B) blooms but never on a register-coded page, or (C) an admitted non-semantic family in `docs/design-palette.md`. **(B) is the recommendation** — it keeps the flowers, needs no palette rewrite, and costs only Home's signature composition, which is the one place the collision is sharpest. | `[DECISION]` | — | BM-01 |
+| **BM-03** | Confirm **BM-C4**: Manifesto exempted rather than spec'd. | `[DECISION]` | XS | BM-01 |
+
+### 12.1 — Prove the mechanism on one page, before there is a system
+
+Deliberately not the full build. One composition, one page, no tokens promoted, nothing shared — enough to find out whether the drawing is any good at this scale and on this ground, cheaply enough to throw away.
+
+| ID | Task | Tags | Effort | Notes |
+|---|---|---|---|---|
+| **BM-04** | Build **M1 (raceme descent)** and **M6 (sway)** as a single self-contained `<svg>` inline in **Behind the Scenes**, hardcoded, no `BM.register` API, no token block. §04 gives that page `noBloom` — buds and armature only, no flowers — which means it lands entirely inside FLAG-12's option (A) and can be built **before** BM-02 is answered. It is also Hugo-built, so it never meets BM-C5 or BM-C6. | `[DEV]` | M | The one page where the whole system can be trialled with none of its risks. Its §04 note — *"the page about method shows method"* — is the right instinct and the right place to start. |
+| **BM-05** | Measure it. Body-copy contrast unchanged (measured, not eyeballed), 60 fps during growth, no CLS, `aria-hidden` and absent from the tab order, `npm run check` green, and the page's own weight delta recorded. | `[DEV]` | S | If any of these fails here it fails everywhere. |
+
+### 12.2 — The shared layer `after BM-02`
+
+| ID | Task | Tags | Effort | Notes |
+|---|---|---|---|---|
+| **BM-06** | Promote §05's token block into `hugo/layouts/partials/head-base.html`, minus whatever BM-02 struck. Inlined, not linked (**BM-C1**). `scripts/sync-base.mjs` carries it to the three hand-authored pages; `npm run check` fails on drift, as it already does. | `[DEV]` | S | One edit plus `npm run build:hugo`, because 11.1 already paid for that. |
+| **BM-07** | `/botanical.js` — geometry, species table, `IntersectionObserver`, the `BM.register`/`BM.init` API, and the page recipes, in one root-level file beside `/sections.js` (**BM-C1**). §07's own build notes are correct and worth following as written, particularly `transform-box:fill-box` on an inner `<g>`. | `[DEV]` | L | The document's rect-scan is a preview-frame workaround it says so itself; production uses `IntersectionObserver`. |
+| **BM-08** | Update the colophon page-weight row and re-run `checkPageWeight()` **in the same commit** (**BM-C7**). | `[DEV]` `[COPY]` | S | Non-negotiable. Third time this figure would have drifted. |
+
+### 12.3 — Roll out, cheapest ground first `after 12.2`
+
+Hugo pages first: they are one-file edits, they have no runtime, and none of them can hit BM-C5 or BM-C6.
+
+| ID | Task | Tags | Effort |
+|---|---|---|---|
+| **BM-09** | Learn (M2 + M3, runner, no blooms) and Archive (three stacked runners). Both are ink-only in §04, so both are safe under any FLAG-12 answer. Archive additionally needs checking against IA-02's fragment clearance — its sticky filter bar is 89–150px depending on width, and §04 wants the layer *behind the index, full width*. | `[DEV]` | M |
+| **BM-10** | Invitation (wisteria, 3 blooms) and Resources (jade, 4 blooms). Both blooming, so both gated on BM-02. Resources carries safety-critical content and gets the lower intensity of the two regardless of what §04 says. | `[DEV]` | M |
+
+### 12.4 — The runtime pages `after 12.3 · the risky half`
+
+Do not start this until BM-C5 and BM-C6 both have a written answer and a test.
+
+| ID | Task | Tags | Effort | Notes |
+|---|---|---|---|---|
+| **BM-11** | Resolve **BM-C5** — mount survives `dc.replaceWith()`. Prove it with a real interaction test on all three pages, not a source read. | `[DEV]` | M | Same class of bug IA-22 already paid for once. |
+| **BM-12** | Resolve **BM-C6** — `_site/` output byte-identical to today apart from the layer's empty container. Diff it. | `[DEV]` | S | Gates the page-weight figure and two published no-JS promises. |
+| **BM-13** | Home (M1 + M6, signature), Contribute (M5 inosculation), Practise (M3 alone, minimum density). **M7 (retreat) is mandatory on Practise and Contribute** per §03 and is the one behaviour that has to work before those two ship at all — a layer that does not recede from a focused field is a layer sitting on top of the safety gate. | `[DEV]` | L | Practise holds the RS-001 gate and the Consent Domains Map. It gets the least of everything, and it goes last. |
+
+### 12.5 — Sign-off
+
+| ID | Task | Tags | Effort |
+|---|---|---|---|
+| **BM-14** | Walk §10's eight criteria on all nine pages at 320/390/768/1024/1440, plus the four this plan adds: `_site/` unpolluted (BM-C6), mount survives the runtime (BM-C5), colophon weight true (BM-C7), and no page granted both M4 and M7 (**BM-C3**). | `[DEV]` | M |
+
+### What this phase cannot verify in this environment
+
+- **"Sustained 60 fps on a mid-range Android"** (§10). No such device here. Chromium's frame timing on this host says nothing useful about a mid-range phone, and recording it as passed on the strength of a desktop headless run would be exactly the kind of claim this file exists to stop.
+- **Whether the drawing is any good.** Every finding above is architectural. Nothing here is a judgement about whether a hanging raceme reads as weather or as wallpaper at 0.22 opacity on `#E7E5DC`, and BM-04 exists to answer that with something real rather than by argument.
+- **Greyscale.** Same open question as WD-15/WD-17, now with a second edge: with hue gone, does a maga bloom still read as separate from the rust register, or does the layer collapse into the same grey the doors use? Worth one look by a person once BM-04 renders.
+
+---
+
 ## Parked / backlog
 
 | ID | Task | Reason parked |
@@ -879,6 +987,8 @@ Applies to every page, every release — from `docs/spec/base-work-order.md` §7
 - `docs/audits/ux-audit-2026-08-08.html` — the UX/UI audit behind Phase 6, above: 22 findings, full observed data and reasoning per finding
 - `docs/audits/heuristic-audit-2026-08-13.md` — the heuristic/DOM audit behind Phase 11, above, kept verbatim. Saved to the repo on arrival rather than after the fact, which is the pattern the "Missing" note at the end of this list is about. Its four measured corrections and three published-commitment conflicts are recorded in Phase 11, not in the file itself; the file carries a pointer to them.
 - `docs/external/seo-aeo-spec-2026-08-08.md` — the external SEO/AEO specification behind Phase 7, above, kept verbatim for reference; per-task disposition (accepted/rejected/logged, and why) is recorded in Phase 7 itself, not this file
+- `docs/external/botanical-motion-system-2026-08-15.dc.html` — the author-supplied motion system behind Phase 12, above, saved on arrival with its live specimens intact. Two mechanical edits on save (a dead session-scoped script URL dropped, `support.js` repointed to root); both recorded in that phase's header. Its four corrections, three build landmines, and the palette/decoration decision are in Phase 12, not in the file itself
+- `docs/audits/voice-audit-2026-08-15.md` — the machine-writing audit behind COPY-03 (Phase 11.3), written after COPY-02 removed the site's 306 em dashes. Eight ranked candidates, a four-step remediation order, and a record of what is *not* a tell. Nothing in it has been applied
 - `docs/spec/cloudflare-headers.md` — the exact Transform Rules config for SEC-03.1–03.4, prepared 2026-08-11 once FLAG-08/SEC-03.0 were decided. Ready to apply, not yet applied — waiting on the Cloudflare proxy going live (an account-level step, see the file's own opening section).
 - **Missing:** the external `Website Cache & Clickjacking Security Audit` (2026-08-11) behind Phase 10 is not in this repository — it was supplied directly into a session. **Add it to `docs/external/`.** Phase 10 records every finding taken from it, every finding added to it, and the two of its own that live evidence contradicted, so the phase is workable without it. Its own implementation examples (`_headers` files, nginx blocks) are superseded for this project's purposes by `docs/spec/cloudflare-headers.md` above — Cloudflare Transform Rules, not a `_headers` file or nginx block, since GitHub Pages accepts neither — but the audit's full diagnostic matrix is still worth keeping.
 - **Update 2026-08-13:** this note used to name two more gaps, both now closed. `docs/audits/design-review-2026-08-10.md` (behind Phase 9) is present, and the Phase 11 heuristic audit was written to `docs/audits/` on arrival rather than after the fact. The security audit above is the last one outstanding. The pattern this note describes — externally-supplied documents not reaching the repo — has a real cost that Phase 11 measured: its §6.6 re-reported the `Home.dc.html` duplication as a live finding because it read `docs/web-design.md` §1b, which had gone stale after WD-26 and which nobody had reason to re-read. **Save supplied documents on arrival, and date-stamp corrections into the docs they invalidate** (IA-07 did that for §1b).
