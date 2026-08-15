@@ -1559,3 +1559,39 @@ Notes:
 - **Print unaffected.** `@media print{details.note:not([open])>*{display:block!important}}` added to the shared base, scoped to the class so it can't interact with Learn's existing, deliberately narrower `main>section:not([data-pocket="sexual-content"]) details:not([open])>*` rule (IA-01) — including for the one note that happens to sit inside the sexual-content pocket (Learn, "These four are closed rather than open…", explaining why the pocket's four cards are closed): unlike the pocket's actual sensitive contents, that explanatory note was never gated before, and paper has no hover or click, so it stays print-visible like all seventeen others rather than newly becoming unreachable on a printout.
 - Verified with Playwright against a local static server (not `file://`, which silently breaks every root-absolute script path including `/notes.js` — the first test run's false "hover does nothing" result, on every page, was this rather than a real bug): closed by default, opens on hover, closes on mouse-leave, opens on keyboard focus, stays open while tabbing through a link in the body and only then closes, and native click-to-toggle on a touch/no-hover emulated device with no involvement from `notes.js` at all.
 - `npm run check` clean apart from the two pre-existing sandbox-only `challenges.cloudflare.com` connection resets (confirmed identical via `git stash` against the prior commit before concluding they weren't a regression).
+
+### COPY-02 — Every em dash removed from reader-visible copy
+**Shipped:** 2026-08-15 · direct author instruction, not from the audit
+
+~~was: 306 em dashes across the nine shipped pages, carrying four distinct grammatical jobs and one typographic one.~~
+now: none. The count is verified two ways: a tag-stripped scan of all nine committed files, and a real headless browser reading `document.body.innerText` with every pocket and `<details>` forced open, which also covers the three dc-runtime pages whose DOM is rebuilt by React after first paint.
+
+Replaced by role rather than by a single global swap, since one character was doing five different things:
+
+| job | replacement | example |
+|---|---|---|
+| appositive / explanation | colon | "Not legal advice: a starting point for finding who can give it." |
+| paired interruptive aside | parentheses | "because GitHub Pages, this site's current host, cannot set response headers" |
+| two independent clauses | full stop | "It also stands on its own. You don't need a reason to be here." |
+| light coordination | comma | "no watershed to name yet, not because nobody looked" |
+| bullet / table marker | middle dot | "· When you disagree, what happens afterwards?" |
+
+Notes:
+- **Fifty of the 306 were never prose.** Forty-nine were bullet markers (`<li>— …` and the `<br>`-separated safety questions on Resources), and one was `td.c-none::before{content:"—"}`, the stress matrix's "not engaged" cell mark. All became `·`, which the site already uses as a separator in every footer and kicker line and which is already covered by the glyph-coverage table and `glyph-check.js`, so no new character was introduced. The matrix legend entry was changed in the same commit as the CSS that draws the cell, so the key and the chart cannot drift.
+- **Applied through an anchor map, not sed.** Each entry is a `[file, old, new]` triple; the applier refuses to write anything unless every `old` matches **exactly once** in its file, and additionally rejects any replacement that still contains an em dash. Two ambiguous anchors were caught this way and lengthened. Nothing was replaced by regex.
+- **`hugo/data/changelog.yaml` was deliberately skipped** — 140 em dashes, and no layout references it. It is dead data, not copy. Left for whoever decides whether the file should exist at all.
+- **One specimen removed rather than converted.** `hugo/data/glyphs.yaml` listed `★ ⌖ ▪ □ —  interface marks` as a font-coverage row. The em dash was itself the specimen there, and the site no longer uses the character, so it was dropped from the displayed list. `glyph-check.js` still tests U+2014 and was left alone: it is a diagnostic tool, its output is not prose, and removing a character from a coverage test is a decision worth making deliberately rather than as a side effect.
+- **Two sign-off dashes in generated output**, not page copy, also changed: Practise's consent-scale option label `"not yet — ask me"` (a control the reader picks) became `"not yet, ask me"`, and Contribute's mailto body builder no longer prefixes the signature line with a dash.
+- **This roughly doubled mid-sentence colon density**, from about 2.8 to 6.35 per 1,000 words, because ~60 dashes became colons. Behind the Scenes (32) and Learn (20) carry the most. Flagged as item 8 of the voice audit below rather than silently corrected — rebalancing means a second editorial pass over copy the author has not reviewed yet.
+- `npm run check` and `npm run check:origins` both back to baseline: the only failures are the two pre-existing sandbox-only `challenges.cloudflare.com` connection resets, confirmed identical on the prior commit.
+
+### COPY-03 — Voice audit: what still reads as machine-written
+**Shipped:** 2026-08-15 · `docs/audits/voice-audit-2026-08-15.md` · **audit only, nothing applied**
+
+Run immediately after COPY-02, on the theory that removing the loudest tell makes the next ones audible. Corpus is 16,706 words of rendered `innerText` from all nine pages with everything expanded, measured by pattern counts normalised per 1,000 words and then hand-checked against source to separate deliberate voice from mechanical repetition.
+
+Headline: **the site's default sentence engine is definition by negation** — 195 explicit negative constructions (11.7 per 1,000 words), and the `X, not Y.` terminal antithesis closing paragraphs on all nine pages, in registers as far apart as the manifesto's polemic and the colophon's engineering notes. A house style does not do that; a generator does.
+
+Counter-finding worth recording: the site is **entirely clean of the LLM lexicon**. Zero instances of *delve, tapestry, testament, crucial, robust, leverage, landscape, realm, navigate, underscore, pivotal, multifaceted, nuanced, holistic, seamless, myriad, moreover, furthermore, in conclusion, it's worth noting, that said*. The fingerprint here is structural, not verbal, which is why it survived a copy revision by the author (COPY-01) that rewrote 23 passages without touching it.
+
+Eight ranked candidates with counts and `file:line` locations are in the audit. Also recorded there, against this session's own work: COPY-02's colon-density side effect. Nothing has been applied — the audit proposes a four-step order in which steps 1–3 are mechanical and step 4 touches the site's honesty posture and should be the author's own pass.
