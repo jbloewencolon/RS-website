@@ -964,7 +964,7 @@ Rendered at 1280px against the built page, not read off a comment:
 |---|---|
 | Page height | **11,165px** — the longest page on the site now that Learn and Behind the Scenes are pocketed (BTS is 3,748px closed) |
 | Structure | 9 groups, 60 entries, 11 `nav[aria-label="Contents"]` links (9 groups + 2 framing sections) |
-| `.filterbar` height | 89px ≥1024 · **141px** 768–1023 · 150px ≤700 |
+| `.filterbar` height | ~~89px ≥1024 · 141px 768–1023 · 150px ≤700~~ **Correction, found during AR-14 verification: this row was carried from IA-02's citation, not independently re-measured, despite this table's own header claiming otherwise.** The real current baseline (confirmed against the pre-Phase-14 file, so not something this phase's own changes caused) is **141px ≥1024 · 141px 768–1023 · 162px ≤700** — something changed it between IA-02 shipping and now, uninvestigated. IA-02's existing 10rem/160px clearance and this phase's 96px/160px both still cover it; no reader was ever affected. |
 | Words in `<main>` | 3,230 — the hero's "about 11 minutes" is **accurate** at the site's own ~297 wpm convention, and pockets don't change word count, so unlike RS-049 there is no stale reading-time figure to fix |
 
 **The organisational case is therefore strong and needs no argument**: same problem Learn and BTS had, larger, and the fix is proven twice.
@@ -1007,48 +1007,48 @@ The same question **FLAG-12** raises about the botanical layer applies here in a
 
 **The defensible line, and the reason this is a smaller question than FLAG-12:** a shelf is *structural*, not chromatic. It says "these nine things are groups" — which is true, and already true in the markup. So the treatment below is constrained to **neutral rules and edges drawn from the existing `#C9C6BA` / paper / ink set, introducing no hue and making no claim.** Every register colour on the page keeps its current meaning and its current doubling by word or glyph. If even that reads as decoration the site should refuse, AR-09/AR-10 are the rows to strike; nothing above them depends on it.
 
-### 14.0 — Decide, before any markup `blocks everything below`
+### 14.0 — Decide, before any markup `done 2026-08-16`
 
 | ID | Task | Tags | Effort |
 |---|---|---|---|
-| **AR-01** | Answer **AR-C1**: filter suspends single-open (recommended), or one of the alternatives considered and rejected below. | `[DECISION]` | — |
-| **AR-02** | Answer **FLAG-14**: does a structural, hue-free shelf treatment clear the palette doc's decoration bar? | `[DECISION]` | — |
+| ~~**AR-01**~~ | ~~Answer **AR-C1**.~~ **Decided 2026-08-16, author: filter suspends single-open** (the recommended option) — a non-`all` filter opens every group with ≥1 match, `all` returns every pocket to closed. | `[DECISION]` | — |
+| ~~**AR-02**~~ | ~~Answer **FLAG-14**.~~ **Decided 2026-08-16, author: minimal version ships, plus AR-11.** Hue-free register-edge + shelf rule clears the decoration bar; the count badge also gets the shelf-label treatment. | `[DECISION]` | — |
 
 *Alternatives considered for AR-C1 and not recommended, recorded so they aren't re-proposed: **(a) filter narrows the grid instead of the entries** — changes the filter from an entry-level to a group-level control and silently drops the per-entry precision the tags exist for; **(b) an explicit Browse/Filter mode switch** — honest, but adds a control to a page whose whole problem is that it already has a lot of them; **(c) multi-open pockets** — every pocket independently collapsible, no single-open. Cheapest and lowest-risk, and it makes the filter a non-issue, but it is no longer the Learn treatment the request asked for and it gives up the "grid is the only index" property that made RS-049 worth doing.*
 
-### 14.1 — Fix the shared machinery first `after AR-01`
+### 14.1 — Fix the shared machinery first `shipped 2026-08-16`
 
 | ID | Task | Tags | Effort | Notes |
 |---|---|---|---|---|
-| **AR-03** | **AR-C2**: teach `sections.js` to measure `.jump, .filterbar` for `BAR`, keeping the 24px fallback for pages with neither. One-line selector change plus a comment naming why Archive is different. | `[DEV]` | S | Ships and is verified against Learn + BTS *before* Archive loads the file, so a regression there is impossible to blame on Archive. |
-| **AR-04** | Extend `archive-filter.js` to implement the AR-01 decision: on a non-`all` filter, open every group with ≥1 match and leave zero-match groups shut; on `all`, return every pocket to closed. Keep the existing `hidden` behaviour for entries and the WD-06 status line exactly as-is. | `[DEV]` | M | The two scripts must not both own pocket state. Decide which is authoritative and say so in a comment. |
+| ~~**AR-03**~~ | ~~**AR-C2**: teach `sections.js` to measure `.jump, .filterbar` for `BAR`.~~ **Shipped — see `completed.tasks.md`.** | `[DEV]` | S | — |
+| ~~**AR-04**~~ | ~~Extend `archive-filter.js` to implement the AR-01 decision.~~ **Shipped — see `completed.tasks.md`.** | `[DEV]` | M | — |
 
-### 14.2 — Pocket the nine shelves `after 14.1`
+### 14.2 — Pocket the nine shelves `shipped 2026-08-16`
 
 | ID | Task | Tags | Effort | Notes |
 |---|---|---|---|---|
-| **AR-05** | Wrap each of the nine `[data-group]` divs in `section[data-pocket] > details.pocket[data-collapsible] > summary.pocket-summary + div.pocket-body[id]`, migrating the group `id` onto `.pocket-body` per the RS-049 pattern (the reveal algorithm needs the id on a descendant, not on the `<details>`). **Keep `data-group` on the element `archive-filter.js` already queries** so its per-group count logic is untouched. | `[DEV]` | M | `data-collapsible` is required for `sections.js`'s `beforeprint` sweep to reach them. |
-| **AR-06** | Rebuild the hero `nav[aria-label="Contents"]` as the register-coloured grid (Learn/BTS `.door-t`/`.door-d` pattern). Each group's existing `.note` line is its description — no new copy. **Selector is already correct**: Archive's nav is already `aria-label="Contents"`, which is what `sections.js` keys on. Keep `#fastest-route` and `#absence` as plain links outside the grid (**AR-C3**). | `[DEV]` | M | The 9 group notes are already written; unlike RS-049 there is no blocked-on-copy dependency. |
-| **AR-07** | Port the pocket CSS block (`.pocket`, `.pocket-summary`, `.pocket-body`, the `@media screen` `.js-pockets .is-shut` rule, the print rule) and add `<script src="/sections.js">`. | `[DEV]` | S | Third consumer of this block. If a fourth is coming, promote it to `head-base.html` instead of a third copy — but not as part of this phase. |
-| **AR-08** | Re-check the colophon page-weight sentence. **Archive is the named maximum** in it (130.5 KB), `check-pages.mjs:230` parses that sentence by regex, and pocket markup + CSS will move the figure. | `[DEV]` | S | Same trap RS-049 hit. Build fails loudly rather than silently, which is the point. |
+| ~~**AR-05**~~ | ~~Wrap each of the nine groups in `section[data-pocket]>details.pocket>summary.pocket-summary+div.pocket-body[id]`.~~ **Shipped, one deviation from spec — see `completed.tasks.md`.** `data-group` moved to the outer `section`, not the old div (the div itself no longer exists as a single unit — its h2 went into the summary, its note+entries into the body). | `[DEV]` | M | — |
+| ~~**AR-06**~~ | ~~Rebuild the hero grid as the register-coloured pattern.~~ **Shipped hue-free instead — see `completed.tasks.md` for why.** Archive's nine groups don't differ in register the way Learn's/BTS's sections do, so colour-coding them would itself be the decoration FLAG-14 exists to catch. `#fastest-route`/`#absence` stayed outside the grid as planned (AR-C3). | `[DEV]` | M | — |
+| ~~**AR-07**~~ | ~~Port the pocket CSS block and add `sections.js`.~~ **Shipped — see `completed.tasks.md`.** | `[DEV]` | S | — |
+| ~~**AR-08**~~ | ~~Re-check the colophon page-weight sentence.~~ **Shipped.** Archive rose to 135.8 KB (was 130); `hugo/data/substrate.yaml`'s Page weight row updated to "about 136 KB" with a one-line note on why. | `[DEV]` | S | — |
 
-### 14.3 — The shelf `after 14.2 · gated on AR-02`
+### 14.3 — The shelf `shipped 2026-08-16 · AR-13 open`
 
 Restrained on purpose. Two moves carry almost all of the effect; the rest are optional and should be looked at before being kept.
 
 | ID | Task | Tags | Effort | Notes |
 |---|---|---|---|---|
-| **AR-09** | **Turn the entry card's register edge from `border-top` to `border-left`.** One property, 60 cards, and the cards stop reading as stacked slabs and start reading as spines standing on a shelf. **The register survives intact** — same hue, same meaning, and the `use` line already repeats it as text, so the palette doc's "never carried by colour alone" rule is unaffected. Highest effect-to-risk ratio in this phase. | `[DEV]` | S | Check the 4 `counter` and 14 `start` cards specifically: their edge is the loudest and moves furthest. |
-| **AR-10** | **Give each group a shelf.** A 3px `#C9C6BA` rule under the card grid with a soft downward `box-shadow`, full grid width, so the row of spines sits *on* something. Neutral, hue-free, survives greyscale and print. | `[DEV]` | S | This is the whole bookshelf idea. If it works, stop here. |
-| **AR-11** | *Optional:* style the existing `<span data-count>` as a small shelf label (bracketed monospace, set into the shelf rule). Uses a number already on the page and already kept truthful while filtered (`archive-filter.js:27`). | `[DEV]` | S | Cheap, and the only shelf element that carries information. |
+| ~~**AR-09**~~ | ~~Register edge from `border-top` to `border-left`.~~ **Shipped.** | `[DEV]` | S | — |
+| ~~**AR-10**~~ | ~~A shelf rule under each card grid.~~ **Shipped** as `.shelf-grid` (3px `#C9C6BA` bottom border + soft shadow). | `[DEV]` | S | — |
+| ~~**AR-11**~~ | ~~Style the count badge as a shelf label.~~ **Shipped** as `.shelf-count` (bracketed monospace). | `[DEV]` | S | — |
 | ~~**AR-12**~~ | ~~Staggered card heights / vertical offsets so the books look unevenly shelved.~~ **Do not build.** Breaks the grid's scannability across 60 entries to buy realism nobody asked for, and fights the `auto-fit` layout at every breakpoint. | — | — |
-| ~~**AR-13**~~ | ~~Wood-grain texture behind the shelf rule.~~ **Do not build without looking at it first.** A repeating gradient on `#E7E5DC` paper is far more likely to read as compression noise than as wood, and it is the one item here that would make the page feel like a skeuomorph rather than a document. If tried at all, try it once at very low opacity on one group and decide by eye. | — | — |
+| **AR-13** | Wood-grain texture behind the shelf rule. **Built and scoped to one group (`.shelf-wood-trial`, greyscale not brown — a hue would contradict FLAG-14 before the keep/revert question is even answered), screenshotted, reported to the author 2026-08-16. Reads as fine grain texture, not compression noise, but closer to "textured pinstripe" than "wood."** Awaiting the author's keep/revert call — CSS is isolated to two rules and one class reference, one-line revert either way. | `[DEV]` | S |
 
-### 14.4 — Verify `after 14.3`
+### 14.4 — Verify `shipped 2026-08-16`
 
 | ID | Task | Tags | Effort |
 |---|---|---|---|
-| **AR-14** | Single-open browse; filter opens all matching shelves and returns to closed on `everything`; the WD-06 status line stays truthful in both modes; `#fastest-route`'s ten sequence links each open the right pocket and land in view; **IA-02's clearance table re-measured at 1440/1024/900/768/700/390/320** (AR-C2); print expands everything with scripting both on and off; no-JS renders the complete unfiltered shelf exactly as today; `npm run check` green. | `[DEV]` | M |
+| ~~**AR-14**~~ | ~~Full verification pass.~~ **Done — see `completed.tasks.md`.** Every listed check passed on a real headless-browser run, including a genuine `color-contrast` failure axe caught (`.door-n`'s grey was 2.68:1, fixed to 5.5:1) and a discovered-not-introduced correction to this phase's own planning note (**AR-C2's cited 89/141/150px filterbar heights don't match measurement** — the true baseline, confirmed against the pre-Phase-14 file, is 141/141/162px; the shipped clearance values cover it regardless, so nothing needed fixing, only the record). | `[DEV]` | M |
 
 ### What this phase should not be allowed to quietly change
 
