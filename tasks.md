@@ -15,7 +15,7 @@
 
 ---
 
-## Blocked on author input
+## 🚩 Resolved decisions log (where this project's calls differ from — or add to — the source docs)
 
 | # | Decision | Resolution | Date | Reasoning |
 |---|---|---|---|---|
@@ -42,13 +42,31 @@ The Decision Record flags three assumptions as unconfirmed; a fourth (mailing li
 
 ---
 
-## Phase 1 — Safety and access
+## Phase 1 — Safety, access, and the framework's deepest gap
+*(Decision Record Cycle 1 — nothing in Phase 2+ ships before this phase is done)*
 
-| ID | Task | Tags |
-|---|---|---|
-| **RS-023** (residual) | Screen-reader pass on ≥2 of NVDA/Firefox, JAWS/Chrome, VoiceOver/Safari, TalkBack/Chrome. Print test on real paper output. | `[DEV]` needs a human tester |
+**Sequencing note (mine, not in the source docs):** RS-004, RS-028+RS-005, and RS-020 are all **done — see `completed.tasks.md`.** All four reading pages are Hugo-generated, fault 04 is retired, thirteen principles, the Consent Domains Map's Access Intimacy domain has shipped, and every page carries a scoped, machine-checked CSP. `Practise.dc.html` keeps the `dc-runtime` permanently — it's an interactive tool, not a reading page. RS-023 is **partially done** — see `completed.tasks.md` for what shipped (the automatable half) and what's below (the part that needs a person).
+
+Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (merged into this branch 2026-08-07) — reflected throughout.
+
+| ID | Task | Tags | Files | Effort | Depends on |
+|---|---|---|---|---|---|
+| **RS-023 (residual)** | The screen-reader pass genuinely needs a person: ≥2 of NVDA/Firefox, JAWS/Chrome, VoiceOver/Safari, TalkBack/Chrome, actually listened to, not simulated. Also residual: print stylesheet test on real paper/PDF output (Playwright's print-media emulation can check `@media print` rules apply, but not that the result reads well printed). | `[DEV]` (needs a human tester) | all pages | S (down from M — the automatable parts are done) | RS-026 shipped 2026-08-08, see `completed.tasks.md` — no longer a residual dependency here |
+
+---
 
 ## Phase 2 — Claims the site already makes
+*(Decision Record Cycle 2)*
+
+| ID | Task | Tags | Files | Effort | Notes |
+|---|---|---|---|---|---|
+| **RS-022** | Hosting decision (FLAG-02) + fill the blank colophon substrate fields: server location/operator/territory, watershed, actual logging config (minimized), cost + funding source. Colophon note on the single-region trade-off if D6 is taken as-is. | `[DEV]` `[DECISION]` | `BehindTheScenes.dc.html`, hosting config | M | FLAG-02 |
+| **RS-024 (residual)** | ~~Extend the glyph coverage matrix beyond Chrome/Windows: Safari/macOS+iOS, Firefox/Windows+Linux, Chrome/Android, Edge/Windows. Publish per-platform results. Resolve or document the `x̂` (Unangax̂) at-risk flag specifically.~~ **Partially done, see `completed.tasks.md`** — the check itself had a real defect (width comparison can't detect a missing glyph in a monospace font), now fixed and re-verified clean on Chrome/Linux, the one platform this environment can reach. Genuine multi-platform testing (real Safari/macOS+iOS, Windows ClearType fonts, Chrome/Android, Edge) still needs a person with access to that hardware — same shape of gap as RS-023's screen-reader residual. | `[DEV]` (needs real devices) | `glyph-check.html`, `BehindTheScenes.dc.html` | S | — |
+
+---
+
+## Phase 2.5 — Navigation, disclosure, and information-architecture simplification
+*(Author review delivered directly into this session, 2026-08-08 — not part of a Decision Record cycle. Marked priority by the author, ahead of the remaining Phase 3 content work below; items RS-047/RS-048 are the two the author called optional follow-ups. Suggested implementation order noted per row.)*
 
 **Constraints on every row in this phase, stated by the author and binding on all of them:** do not alter `Home.dc.html`. Do not hide safety-critical information. Prefer semantic HTML, anchor links, and native `<details>/<summary>` over scripted show/hide. Preserve keyboard and screen-reader access. Preserve no-JavaScript access wherever it currently exists (all four Hugo-generated reading pages, Resources, and the Archive's unfiltered baseline). Do not add dependencies, tracking, external requests, storage, geolocation, or personalization. Any new disclosure/optional section must expand automatically for printing, not stay collapsed on the printed page. **For the Hugo-generated pages (Manifesto, Learn, Archive, BehindTheScenes), edit the authoritative `hugo/layouts/*.html` template and/or `hugo/data/*.yaml`, then regenerate via `npm run build:hugo` — never hand-edit the committed `.dc.html` output directly**, per this repo's established convention since RS-004.
 
@@ -59,6 +77,7 @@ The Decision Record flags three assumptions as unconfirmed; a fourth (mailing li
 ---
 
 ## Phase 3 — Content gaps
+*(Decision Record Cycle 3)*
 
 | ID | Task | Tags | Files | Effort | Notes |
 |---|---|---|---|---|---|
@@ -85,9 +104,7 @@ The Decision Record flags three assumptions as unconfirmed; a fourth (mailing li
 
 **Open question, flagged not decided (§8):** D8 (Phase 3, already shipped) settled a reading-ten list of ten analytic entries. If the Invitation becomes a genuinely co-equal door, the review argues the ten arguably should reflect both registers, with hooks as "the natural candidate" — accessible, widely available, doing the framework's own work in plain language. That would mean dropping someone already on the list. Not actioned here; D8 stands unless the author revisits it.
 
-| ID | Task | Tags |
-|---|---|---|
-| **RS-041** | Taíno-terms disclosure in the reuse terms: a carve-out, or an explicit grant on stated conditions. Apply a Local Contexts TK Label if appropriate. | `[COPY]` `[DECISION]` `[VERIFY]` · blocked, terms unidentified |
+---
 
 ## Phase 4 — Conceptual work (deferred / needs people)
 *(Decision Record Cycle 4 — lowest urgency; several items are explicitly meant to wait. RS-009/010/011/012/013/014/017 all shipped 2026-08-08, see `completed.tasks.md`. Two rows remain, both intentionally not actioned: RS-048 residual blocks on the author supplying a real contact address; RS-029 residual is deliberately sequenced last, per its own row, until a community exists to route "pods" to.)*
@@ -398,6 +415,8 @@ Both shipped 2026-08-11 — see the struck line above and `completed.tasks.md`.
 
 ### Phase 10.3 — Delivery headers `week 3 · gated on the Cloudflare proxy going live, not on a decision anymore`
 
+The external audit's headline, and its finding is correct. Ranked third anyway: clickjacking pays off by hijacking an authenticated action, and this site has no session, cookie, or logged-in state to hijack. Realistic worst case is tricking someone into submitting the signup form, or a screenshot used for a smear. Worth fixing because it is nearly free — not worth doing before the endpoint that can be aimed at strangers.
+
 | ID | Task | Tags | Files | Effort | Depends on |
 |---|---|---|---|---|---|
 | **SEC-03.1** | `frame-ancestors 'none'` + `X-Frame-Options: DENY` on every HTML response — successes, redirects, the 404, and all nine `*.dc.html` redirect stubs. **Exact rule prepared, see `docs/spec/cloudflare-headers.md`** — not applied; needs the Cloudflare proxy live first. | `[DEV]` | host header config | S | SEC-03.0 |
@@ -408,205 +427,561 @@ Both shipped 2026-08-11 — see the struck line above and `completed.tasks.md`.
 
 ### Phase 10.4 — Build and supply chain `week 4`
 
+No one is targeting this dependency tree specifically. But `deploy.yml` ran with `pages: write` and `id-token: write` and called actions by mutable major tag, so whoever compromised one of those tags could have published arbitrary content to the live domain. That was the most plausible route to actually owning the site, and it would have arrived as collateral damage from an attack on someone else. **SEC-04.1 and SEC-04.2 close that specific gap, shipped 2026-08-11.**
+
 | ID | Task | Tags | Files | Effort | Depends on |
 |---|---|---|---|---|---|
 | **SEC-04.3** | Assert the security headers in CI, same pattern `check-pages.mjs` already uses to guard the prerender against silent regression. Fail the build if CSP loses `frame-ancestors`, if HSTS disappears, or if a reading page acquires `unsafe-eval`. A header that silently stops shipping looks exactly like one that ships. | `[DEV]` | `scripts/check-pages.mjs` | M | SEC-03.1–03.4 |
 
 ### Phase 10.5 — Standing practice `ongoing`
 
-| ID | Task | Tags |
-|---|---|---|
-| **SEC-05.1** | Rotate the five Worker secrets quarterly — in a calendar, not in intentions. | `[ACCOUNT]` |
-| **SEC-05.2** | Alert on anomalous Resend daily volume. | `[ACCOUNT]` |
-| **SEC-05.3** | Retire `'unsafe-eval'` when Practise leaves the `dc-runtime`. If the standing decision that Practise keeps the runtime holds, this becomes "document, don't fix." | `[DECISION]` |
-| **SEC-05.4** | Re-run the security review after any architecture change. | `[DEV]` |
+| ID | Task | Tags | Files | Effort | Depends on |
+|---|---|---|---|---|---|
+| **SEC-05.1** | Rotate the four Worker secrets quarterly — in a calendar, not in intentions. Immediately and out of cycle after any device loss. | `[DEV]` | — | S | SEC-00.3 |
+| **SEC-05.2** | Alert on anomalous Resend daily volume — the earliest signal that SEC-01's limits have been outflanked. A low threshold is enough; this is a small list. | `[DEV]` | Resend settings | S | SEC-01.2 |
+| **SEC-05.3** | Retire `'unsafe-eval'` when Practise finally leaves the `dc-runtime`. Four reading pages already shed it via RS-004. Practise is the page that takes user input, so it is where an injection foothold escalating to code execution would actually matter — and the last one still needing it. Interacts with SUGGEST-03 (dead Babel/unpkg path) and the standing decision that Practise keeps the runtime permanently; if that holds, this becomes "document, don't fix." | `[DECISION]` | `Practise.dc.html`, `support.js` | M | — |
+| **SEC-05.4** | Re-run this review after any architecture change. The threat model is a function of the system's shape; contributor uploads, comments, or anything holding material on someone else's behalf changes it enough to need a fresh look. | `[DEV]` | — | S | — |
+
+### Deliberately not doing (considered and rejected on the merits)
+
+Recorded here rather than in the Rejected section because these are *scoped out of Phase 10*, not rejected permanently — several become right if the site grows.
+
+- **Content-hashed asset filenames (audit F-03).** Sound in general, and the audit is right that unhashed URLs permit a mixed release. But live headers show ten-minute freshness with working validators, so the window is small, and the fix is a build-system change. Revisit if the site grows or the freshness lifetime changes.
+- **Migrating off GitHub Pages purely to get headers.** The audit's main structural recommendation. FLAG-08 option (A) achieves the same headers for a fraction of the work. Migration remains live as RS-022 for D6/substrate reasons — which are the *real* reasons to do it, and are not security reasons.
+- **A service worker.** There is none and there should not be. It would add an application-owned cache — a fresh class of staleness bug — to solve a problem that is not occurring. The audit agrees.
+- **reCAPTCHA.** Would work, and profiles readers for a third party to do it. Precisely what this site tells people it does not do. Turnstile instead (SEC-01.3).
+- **`no-store` on HTML.** Reflexive in hardening guides. These pages carry no personalised response data; `no-cache` gives correctness without discarding performance.
+- **Technical defences against legal process.** Out of scope, and worth naming honestly: the likeliest route by which the subscriber list leaves the operator's control is a request to GitHub, Cloudflare, or Resend — not an intrusion. SEC-02's data minimisation is the only real answer and it is a partial one. Belongs in the colophon's limit section, not in a task table.
+
+### What could not be verified here
+
+- **Whether `GITHUB_TOKEN` is a classic PAT** (SEC-00.1) — needs the GitHub settings UI. This is the highest-severity item in the phase and its status is genuinely unknown, not assumed safe.
+- **Whether `rs-dispatch-storage` is private** — a 404 on the raw URL is consistent with private *and* with not-existing-at-that-path. Confirm in settings.
+- **Live rate-limit behaviour under load** — the *logic* is unit-tested against a fake in-memory KV (`worker/test/abuse.test.mjs`, 8 tests: per-IP, per-address, daily cap, Turnstile pass/fail/missing-secret, honeypot bypass, fail-open with no KV bound), which is a real improvement over "not probed at all." What's still unverified is the logic running against **real** Cloudflare KV's actual eventual-consistency behavior under concurrent edge traffic — the tradeoff `worker/src/ratelimit.js`'s own comment already names as accepted. Sending real traffic at the production endpoint, which sends real email to real addresses, is not a safe thing to do from here regardless; the loop in SEC-01's verification block is for the operator to run against addresses they control, after the KV namespace and Turnstile keys are both live.
+- **Whether GitHub Pages emits HSTS with "Enforce HTTPS" enabled for custom domains.** Absent in the capture; whether that reflects the setting being off or Pages not sending it for custom domains was not established. Worth one look before assuming (A) or (B) is required.
+
+---
 
 ## Phase 11 — Heuristic and source/DOM audit (external, 2026-08-13)
 
-*(Source: `docs/audits/heuristic-audit-2026-08-13.md`. IDs are `IA-nn`, assigned here — the audit's own section numbers are cited alongside. Most of the audit held, including its central claim that Learn asks one page to be introduction, glossary, principle index, scenario matrix, safety explainer, essay, field guide, and router at once. Four claims were wrong or overstated and three recommendations collided with published commitments — corrected rather than implemented as written. Full verified-claims table, the four corrections (IA-C1–C4), and what this phase can't verify are in `archived.tasks.md`.)*
+*(Source: `docs/audits/heuristic-audit-2026-08-13.md`, a heuristic + source/DOM audit supplied by the author, structured around four representative visitors and framed on "conversion" as voluntary movement — understand, route, practise, reach safety, consult, contribute, subscribe — rather than a commercial funnel. It has no native ID scheme, so IDs below are `IA-nn`, assigned here; the audit's own section numbers are cited alongside each so the two can be read side by side. Its central claim — that Learn asks one page to be introduction, glossary, principle index, scenario matrix, safety-adjacent explainer, conceptual essay, field guide, and onward-routing page — is correct, and the sequencing thesis in its "Bottom line" is the most useful thing in the document.)*
 
-**11.0 (live defects), 11.1 (shared CSS layer), and 11.2 (Learn reorder) have all shipped** — see `completed.tasks.md`.
+### What was verified before planning, and what held
 
-| ID | Task | Tags | Effort |
-|---|---|---|---|
-| **IA-03 (residual)** | Confirm the Turnstile widget's allowed-domains list includes `relationalsovereignty.com` (Site Key `0x4AAAAAAEMpChSeguKsGevc`, `dash.cloudflare.com` → Turnstile → Domains), then load the live site in a private window and submit the dispatch form once for real. | `[ACCOUNT]` | S |
+Every measurable claim was re-tested in headless Chromium v0.164.0-built output at 320/390/768/820/900/1024/1280/1440px, against the committed HTML rather than the source templates. **Most of the audit is accurate**, including its two hardest structural claims. Four claims are wrong or overstated, and three recommendations collide with commitments this site publishes on itself.
 
-### FLAG-09 — Practise session storage vs. the "nothing is stored" promise `[DECISION]`
+**Confirmed by measurement:**
 
-Practise publishes *"nothing is stored… closing the tab erases it."* The audit's recommendation (remember UI progress in session storage) makes that false. **Reopened by the author 2026-08-14** with instruction to remove the conflicting copy — not started. Two questions gate it: what exactly gets stored (which tool was open, vs. what was answered — IA-09 already delivers the first without storage), and what replaces the sentence. Copy change and code change ship in one commit.
+| Audit claim | Measured |
+|---|---|
+| Learn ≈ 4,500 words | 4,462 full-text ✓ |
+| Manifesto ≈ 1,550 / Archive ≈ 3,270 / Resources ≈ 1,380 / Behind the Scenes ≈ 3,440 / Home ≈ 690 | 1,547 / 3,267 / 1,378 / 3,432 / 647 ✓ |
+| Archive "more than 90 links/buttons" | 84 links + 7 buttons = 91 ✓ |
+| Learn hero has ten equal contents links | exactly 10 ✓ |
+| The contents index is duplicated | `nav[aria-label="Contents"]` (10) in the hero + `nav[aria-label="Sections"]` (10) in the sticky bar — the same ten destinations, twice ✓ |
+| "Forms and labels" precedes the principles | first `<h2>` on the page, before "The principles themselves." ✓ |
+| Fourteen principle cards exposed simultaneously | 14 cards, **zero** are `<details>` ✓ |
+| Field guide's ten entries fully open | 10 items, zero `<details>` ✓ |
+| Matrix needs horizontal scroll below 820px | at 820px: table 760px in a 752px container ✓ (clear at 1024px+) |
+| Bulk expansion opens the sexual-content group | **confirmed — see IA-01** |
+| Bulk control has no `aria-controls` | confirmed (it does carry `aria-pressed`) ✓ |
+| Interactive microtype at 11.5–12.5px | "Open every section" 11.5px, sticky summary 12.5px, mobile nav 12.5px, hero contents 13px ✓ |
 
-### FLAG-10 — a measurement layer vs. the "no analytics" promise `[DECISION]`
+**One qualification on the word counts, which changes how they should be read.** These are full-text figures — they include content inside closed `<details>`. What a visitor actually meets on load is smaller: Learn 3,152 visible words, Resources 761, Behind the Scenes 2,311. Learn is still more than double the next page and the finding stands, but the argument that carries it is the audit's own ("collapsing individual cards reduces paragraph exposure but does not reduce the number of concepts competing for attention"), not the raw 4,500.
 
-Every footer publishes *"No trackers, cookies, or analytics."* Any measurement layer retracts that, however privacy-preserving. **Reopened by the author 2026-08-14** with instruction to remove the conflicting copy — not started. The question that decides scope: add measurement (reverses the zero-third-party-requests property), or stop publishing the absolute promise so the option stays open (cheapest, ships nothing)? Touches the footer line (9 files), `substrate.yaml`, CSP `connect-src` + `check-origins.mjs`, and the QA checklist. Copy and code in one commit.
+### Corrections — implement none of these four as written
 
-### FLAG-11 — resolved: shared layer promoted ahead of component work
+**IA-C1 — §6.6 "Home and `Home.dc.html` are duplicate maintained documents" is stale.** It is not. `Home.dc.html` is a 1,345-byte redirect stub carrying `<meta http-equiv="refresh">`; `index.html` is 44,619 bytes. WD-26 collapsed the duplication and `scripts/prerender.mjs` treats the stub as copy-as-is. The audit is reading `docs/web-design.md` §1b, which predates that change. **No consolidation work remains.** Related cleanup filed as IA-07: web-design.md's guardrail §4.10 ("Do not edit `index.html` without editing `Home.dc.html`") is stale for the same reason and will send someone to hand-sync a redirect stub.
 
-§5C filed the design-system extraction as a low-priority strategic opportunity; every Critical/High/Medium item in the audit was site-wide by definition (no shared CSS existed), so building them before extracting meant building each one nine times over. Resolved: extraction ran first (11.1). Shipped.
+**IA-C2 — §1.6 fragment clearance: right conclusion, wrong page.** On Learn and Behind the Scenes the offsets do drift — one bar has three different numbers attached to it (52px rendered, `BAR = 76` in `sections.js`, `scroll-margin-top:5.4rem` = 86.4px in CSS) — but the drift runs in the *safe* direction, and targets clear by 24–36px. Untidy, not a defect. The real defect is on **Archive**, which the audit does not name, at **every width below 1024px**. Fixed under IA-02.
 
-### Phase 11.3 — Apply the components `next`
+**IA-C3 — §1.6 mobile nav state is overstated.** The claim is that `aria-label="Menu"` fails to expose open/closed. Native `<summary>` exposes expanded/collapsed to assistive technology automatically; no state is missing, and hand-adding `aria-expanded` would fight the browser for something it already manages correctly. The redundant `aria-label` duplicating the visible text is worth deleting as tidying, not as an accessibility fix.
 
-11.1 shipped the components inert; this applies them and pays back the ~2 KB/page they cost while unused.
+**IA-C4 — §2 Practise's control labels are misquoted, and its word count is wrong.** The audit names "Continue," "Skip straight to the tool," "Start the tool," and "Skip this." The initial DOM has three buttons: "Continue", "Skip straight to the tool", **"Open this tool"** — no "Start the tool", no "Skip this". Since the audit's own instruction is to *preserve every control label*, implementing from its list would rename two of the controls it meant to protect. Its 1,750-word figure for Practise is also wrong (actual full-text: 894): the twenty domains do not exist in the DOM until the gate is passed, so any effort estimate sized against 1,750 words is sized against a page that isn't there.
+
+### FLAG-09 — §2 Practise: "remember UI progress in session storage" contradicts a published promise `[DECISION]`
+
+Practise publishes, on the page itself: *"everything you type stays in this browser tab. Nothing is sent anywhere, **nothing is stored**, nothing is counted… Closing the tab erases it."* Writing UI progress to session storage makes that sentence false. The decision is also already on the record with its reasoning — `practise/index.html:664`: *"No localStorage anywhere in this file. Resuming across sessions works only by re-importing a file the user chose to save — the same risk as exporting, made a deliberate choice each time rather than something the device does to a person silently."*
+
+The threat model is the one the page's own safety gate exists for: a shared or monitored device, where state the device retains on a person's behalf is exactly the exposure. ~~**Recommendation: do not implement.**~~ The underlying problem the audit is solving — a returning visitor re-traversing first-time safety framing — is real and addressable without storage (IA-09).
+
+> **Reopened by the author, 2026-08-14, with the instruction to remove the conflicting site copy.** The recommendation above is overridden; recorded here rather than deleted because the reasoning is what the next person will need. **Not started, and deliberately not folded into 11.1/11.2** — this is a change to a published safety commitment, not a layout task, and it needs its own commit and its own answer to the questions below.
+>
+> **What implementing it actually touches**, so it can be scoped honestly rather than discovered midway:
+> 1. `practise/index.html`'s published paragraph — *"everything you type stays in this browser tab. Nothing is sent anywhere, nothing is stored, nothing is counted… Closing the tab erases it."*
+> 2. The in-code decision record at `practise/index.html:664`, which states the threat model and must be rewritten rather than contradicted silently.
+> 3. The QA checklist in this file: *"No storage API called except where explicitly disclosed"* and *"Nothing typed is transmitted or persisted."* Both are currently ticked.
+> 4. `hugo/data/faults.yaml` and the colophon's substrate rows, if what the device retains becomes a disclosed property of the system.
+>
+> **Two questions only the author can answer, and the work should not start without them:**
+> - **What exactly gets stored?** "UI progress" spans a wide range — which tool a person opened, versus what they answered. The first is a navigation convenience; the second is the content the safety gate exists to protect on a shared or monitored device. IA-09 already delivers the first *without storage*, so if that is all that is wanted, no promise needs retracting at all.
+> - **What replaces the sentence?** "Nothing is stored" is load-bearing copy on a page about consent. A narrower true statement (naming what is kept, where, and how to clear it) is a different commitment from having no commitment.
+
+### FLAG-10 — §5E measurement contradicts the "no analytics" claim `[DECISION]`
+
+Every page footer publishes *"No trackers, cookies, or analytics."* Any measurement layer, however privacy-preserving, retracts that. The audit's instinct is sound — its metric list (layer selection, principle deep links, matrix/card switches, Practise starts, print/save activation) measures useful choice rather than attention, which is the right frame and matches Home's own stated metric: *"Success is not traffic… how quickly this site becomes unnecessary to you."* But it cannot ship without the author retracting a published commitment. ~~**Recommendation: get these signals from moderated testing with real people and ship no measurement code.**~~
+
+> **Reopened by the author, 2026-08-14, with the instruction to remove the conflicting site copy.** The recommendation above is overridden; kept for the reasoning. **Not started, and not part of 11.1/11.2.**
+>
+> **What implementing it actually touches:**
+> 1. The footer line *"No trackers, cookies, or analytics"* — on all nine pages, which since IA-10a is still nine edits: the footer is page markup, not part of the shared base block.
+> 2. `hugo/data/substrate.yaml`'s "Third-party requests" row, which currently reads *"Zero, with two deliberate, disclosed exceptions"* and names both.
+> 3. Every page's CSP `connect-src`, and `scripts/check-origins.mjs`, which exists to fail the build when a page reaches an origin it hasn't declared.
+> 4. The QA checklist here: *"Zero external network requests on load"* and *"No storage API called except where explicitly disclosed."*
+> 5. `robots.txt`'s reasoning, which argues from the site collecting nothing.
+>
+> **The question that decides the size of this:** is the ask to *add measurement*, or to *stop publishing an absolute promise* so the option stays open? Those are very different jobs. Adding a third-party analytics service reverses the site's zero-third-party-requests property and the colophon argument built on it; a self-hosted counter behind the existing Worker keeps that property and needs no vendor. Removing the footer line while shipping no measurement code is a third option, and the cheapest — but it retracts a commitment in exchange for nothing until something is actually built.
+>
+> Whichever is chosen, the copy change and the code change belong in one commit. A footer that says analytics exist while none do is the same class of gap — claim not matching behaviour — that Phase 10.2 exists to close.
+
+### FLAG-11 — the audit's sequencing is backwards on the design-system layer `[DECISION — resolved: promote to first]`
+
+§5C ("create a minimal shared design-system layer") is filed as a Phase 3 strategic opportunity. It should be first, and the audit's own recommendations are the argument. There is no shared CSS on this site — every page carries its own inline `<style>`, so **every site-wide rule is a ten-file edit** (`docs/web-design.md` §1c). Of the audit's Critical/High/Medium items, these are all site-wide by definition: the contextual-action component, disclosure anatomy, the four component categories, nav grouping, the 14px microtype floor, focus and error states, utility-button standardisation. Sequenced as the audit proposes, each gets built ten times and then rebuilt during extraction.
+
+`web-design.md` §1c already recommends the extraction and explicitly scopes it out of that pass — *"Do it after, or before — not during."* This is the "after." **Resolution: IA-10 runs before the Phase 2 component work, not after it.**
+
+### What the audit missed
+
+**The two forms it recommends improving could not submit at all.** §2 Contribute ("Form trust and completion — High Impact") discusses validation states, error focus, and success announcements for a form that was non-functional in production, as was Home's dispatch form. `index.html` and `contribute/index.html` shipped `TURNSTILE_SITE_KEY = "CHANGE_ME_after_registering_a_turnstile_widget"` while the registered key sat in `worker/wrangler.toml` — no widget rendered, `turnstileToken` stayed empty, and every submit failed on *"Please complete the verification above"* pointing at nothing. Confirmed against the live domain before fixing. Shipped as IA-03; no audit in this repo caught it because all of them were run against local renders where the challenge never loads either way.
+
+### The sequencing decision this phase turns on
+
+The audit's own implementation order (its §7) is Phase 1 "safer compression"
+→ Phase 2 "title-first components" → Phase 3 "system and route consolidation."
+**That order costs roughly three times what the reverse costs**, for the reason
+`docs/web-design.md` §1c states and the audit does not engage with: there is no
+shared CSS on this site. Every page carries its own inline `<style>`, so a
+site-wide rule is a nine-file edit today.
+
+Count what the audit's own list makes site-wide: the contextual-action
+component, the four component categories, disclosure anatomy, nav grouping, the
+14px microtype floor, focus and error states, utility-button standardisation.
+Built in the audit's order, each of those is written nine times and then
+rewritten during the extraction that its own §5C schedules last.
+
+**So the extraction goes first** (11.1), and everything downstream of it gets
+cheaper. That is also what `web-design.md` §1c already recommends — *"Do it
+after, or before — not during"* — deferred from that pass on the grounds that it
+would collide with the changes in it. Those changes shipped. This is the
+"after."
+
+Two things deliberately do **not** wait for it: defects already live in front
+of readers (shipped in 11.0), and the Learn reordering (11.2), which is a
+single-file move with no styling surface and no reason to be blocked.
+
+---
+
+### Phase 11.0 — Live defects `done`
+
+Confirmed by measurement, fixed, and verified. Summary here; the measurements
+and the reasoning for each are in **"Task detail"** at the end of this phase —
+the same four IDs, not additional work.
+
+| ID | Task | Status |
+|---|---|---|
+| **IA-01** | Sexual-content group exempted from bulk expansion — the page's own promise ("Opening one is the only thing that changes") was false in shipped code | ✅ |
+| **IA-02** | Archive fragment targets cleared the sticky filter bar below 1024px | ✅ |
+| **IA-03** | Turnstile site key restored on both forms — dispatch and contribute were both non-functional in production | ✅ |
+| **IA-07** | Stale `Home.dc.html` guidance struck from `docs/web-design.md` §1b/§1c/§1e/§3.1/§3.5/§4.10/§5 | ✅ |
+
+**Still open on IA-03, and it is the one thing in this phase with a live
+consequence:** whether the registered Turnstile widget's allowed-domains list
+covers `relationalsovereignty.com`. Dashboard-only. If it does not, the widget
+renders an error instead of a challenge — a different failure, still a dead
+form.
+
+**How to check it** (asked 2026-08-14; writing it down so it isn't asked again):
+
+1. Sign in at `dash.cloudflare.com` → **Turnstile** in the left sidebar.
+2. Find the widget whose **Site Key** is `0x4AAAAAAEMpChSeguKsGevc` — the
+   same value in `worker/wrangler.toml` and now in both forms. Open
+   **Settings**.
+3. Read the **Domains** (or "Hostname Management") list. It must contain
+   `relationalsovereignty.com`. A widget scoped only to `localhost`, or to a
+   `*.pages.dev` preview host, will refuse the live domain.
+4. If it is missing, add it, save, and wait a minute for propagation.
+5. Then confirm end-to-end, which the dashboard cannot tell you: load
+   `https://relationalsovereignty.com/` in a private window, scroll to the
+   dispatch form, and check that a Turnstile challenge widget actually
+   *renders* above the submit button. Submit once with an address you
+   control and confirm the email arrives. A rendered widget proves the
+   domain is allowed; a visible error box proves it is not.
+
+Worth doing both halves — step 3 catches the configuration, step 5 catches
+everything else in the chain, and this form has already been dead in
+production once without anyone noticing.
+
+---
+
+### Phase 11.1 — The shared layer `done 2026-08-14`
+
+**All five shipped** — IA-10a, IA-10b, IA-10c, IA-10d, IA-08 (plus IA-C3,
+folded into IA-08's commit as the same markup). Records in
+`completed.tasks.md`. Commits `b76a656`, `17d0832`, `14cf2dd`.
+
+The base block now lives in `hugo/layouts/partials/head-base.html` and
+nowhere else; a site-wide base rule is one edit plus `npm run build:hugo`.
+The three hand-authored pages get the same bytes via `scripts/sync-base.mjs`,
+and `npm run check` fails on drift. **`docs/web-design.md` §1c has been
+rewritten accordingly** — its "every site-wide rule is a ten-file edit" is
+struck, and guardrail 10b now says not to edit base CSS inside a page file.
+
+Two departures from the plan as written, both recorded in full on the
+completed entries:
+
+- **No `/base.css`.** IA-10a proposed a partial *plus* a stylesheet for the
+  hand-authored pages, which contradicted this phase's own acceptance
+  criterion that no page gains a network request. Resolved as one source
+  inlined everywhere, on the author's call.
+- **IA-08's floor is measured, not the audit's three offenders.** Measuring
+  every interactive element on all nine pages found 97, not 3; 77
+  declarations were raised. Two exclusions are deliberate and argued on the
+  entry: the stress-matrix headers (settled in IA-05) and the hidden
+  honeypot input.
+
+**What this cost, and who owes it back.** Page weight rose ~2 KB per page,
+because the component layer ships to every page and nothing uses it yet. The
+build's own check caught this and the colophon figure now says so plainly.
+**11.3 is what pays it back** — applying the components removes the
+per-element styling they replace. Do not leave that indefinitely.
+
+### ~~Phase 11.1 — the plan as written~~ *(kept for reference)*
+
+| ID | Step | Notes |
+|---|---|---|
+| ~~**IA-10a**~~ | Extract the base block to `hugo/layouts/partials/head-base.html` + `/base.css` for the two hand-authored pages | Shipped without the `/base.css` half — see above. |
+| ~~**IA-10b**~~ | Tokenise the four registers and both type stacks on `:root`, site-wide | Came out in the wash of 10a. Hex→`var()` migration is still open as WD-11's second half. |
+| ~~**IA-10c**~~ | One component each: navigation link, disclosure, primary action, utility action | Built and inert. Applied in 11.3. |
+| ~~**IA-10d**~~ | Focus, error, and form-status treatments in one place | Built and inert. |
+| ~~**IA-08**~~ | Raise interactive microtype to a 14px floor | 77 declarations. |
+
+---
+
+### Phase 11.2 — Learn, in the cheap order `done 2026-08-14`
+
+**All three shipped** — IA-16, IA-04, IA-05. Records in
+`completed.tasks.md`. Commits `7469a28`, `a31be6a`.
+
+Every acceptance criterion was measured rather than estimated, as that
+block asked:
+
+- Every fragment on Learn still resolves, with scripting on and off.
+- The page renders identically with scripting off (body text length
+  19,092 vs 19,073 chars — the difference is script-injected label text,
+  not content).
+- The chart is reachable at every width via the switch; verified landing
+  visibly at 320/390/820, where it is not the default view.
+- **A 390px visitor reaches the first principle at 1396px instead of
+  2946px — 3.49 viewports down to 1.65.**
+
+**One correction to the plan.** IA-05's breakpoint is **860px, not 820px**.
+820px is where the audit *observed* the overflow; it is not where it stops.
+`table.matrix` has `min-width:760px` and the wrap pads 4vw a side, so the
+container first clears 760px between 820px (752px, still scrolls) and 860px
+(789px, fits). Measured across eight widths.
+
+**IA-08's matrix deferral is settled here.** The chart keeps its 12.5px row
+headers rather than taking the 14px control floor — it is a summary index
+whose every row and column links to the same content at full reading size
+in the rows view, and widening the table to satisfy a type floor would push
+the fitting threshold back up and reintroduce the overflow IA-05 removes.
+
+---
+
+### Phase 11.3 — Apply the components `unblocked 2026-08-14 · next`
+
+11.1 has landed, so this is now one-file edits instead of nine. The four
+components (`.action`, `.action-utility`, `.nav-link`, `.disclosure`) and the
+three form states (`.form-error`, `.form-status`, `.field-invalid`) already
+exist in `hugo/layouts/partials/head-base.html` and are inert — IA-05's view
+switch is currently their only consumer.
+
+**This phase also pays back a debt.** The component layer added ~2 KB per
+page while nothing used it. Applying it removes the per-element inline
+styling it replaces, and should take page weight back below where 11.1 found
+it. `checkPageWeight` will say either way, and the colophon figure needs
+updating again when it does.
 
 | ID | Task | Audit ref |
 |---|---|---|
-| **IA-11** | One contextual primary action per page — Learn → Consent Domains Map. Global nav stays unranked. | §1.2 |
+| **IA-11** | One contextual primary action per page — Learn → Consent Domains Map, Resources' emergency panel unchanged, Contribute's submit unchanged. Global nav stays unranked. | §1.2 |
 | **IA-12** | Apply the four component categories across all pages so a control's behaviour is predictable before clicking. | §3 Med 1 |
 | **IA-13** | Group the global nav (understand / act / consult / project) as interface labels, not authored copy. | §3 High 5 |
+| ~~**IA-06**~~ | ~~Delete Learn's hero contents grid once an orientation control exists; the sticky bar becomes the single index.~~ **Shipped 2026-08-14, the other direction — see IA-20.** The duplicate is gone, but the *grid* survived and the *sticky bar* was deleted, not the reverse this row proposed: direct author instruction made the grid the page's only navigation, which removed the sticky bar's reason to exist rather than the grid's. | §6.1 |
 | **IA-14** | Compact indexes for Manifesto and Behind the Scenes; Archive filter feedback and metadata hierarchy. | §3 Med 3–4 |
-| **IA-09** | Let a returning Practise visitor reach a chosen tool without re-traversing first-time framing — fragment-addressable, stores nothing (FLAG-09). | §2 Practise |
-| **UX-20** | ~40% of the desktop container empty at 1440px (Home 424px, Learn 403px, Practise 451px, Invitation 524px, Manifesto 424px short of the edge). Actionable now the component layer exists — sat open through two audits waiting for it. | Phase 6 |
-| **COPY-03** | Machine-writing tells — `docs/audits/voice-audit-2026-08-15.md`. Definition-by-negation (11.7 per 1,000 words) and the `X, not Y.` terminal antithesis, both structural rather than lexical. Four-step remediation proposed; steps 1–3 mechanical, step 4 (the honesty posture) is the author's own pass. **Nothing applied — audit only.** | — |
-| **RS-049** | Behind the Scenes redesign — pocket navigation matching Learn's (IA-20), register-coloured hero grid (teal on Substrate/Type/Crawler/Reuse/Changelog, rust on Faults, ochre on Roadmap/Labour), delete the sticky jump bar, fix the stale reading-time figures (~10 min / 8,985px, not 39 min / 18,600px). **Blocked on five description lines** for the grid (Substrate, Reuse, Faults, Roadmap, Labour, 1–2 lines each). | `[DEV]` `[COPY]` |
+| **IA-09** | Let a returning Practise visitor reach a chosen tool without re-traversing first-time framing — an up-front, fragment-addressable tool choice. **Stores nothing** (FLAG-09). | §2 Practise |
+| **UX-20** | The long-open dead-desktop-space finding from Phase 6, inherited here. At 1440px the median paragraph ends 403–524px short of the container's right edge (Home 424, Learn 403, Practise 451, Invitation 524, Manifesto 424). Only actionable once there is a component layer to move things into — which is why it sat open through two audits. | Phase 6 |
+| ~~**IA-21**~~ | **Shipped 2026-08-15, direct author instruction, not from the audit.** The follow-through on IA-20, in four parts: Learn's three hero tally boxes removed (every figure already in the prose above them); a *closed* section now takes no space on screen at all, so the hero grid is the only index rather than the first of two and every box opens its content directly beneath itself; the ten choice boxes rebuilt as full-cell cards carrying each section's own kicker as a description; and Home's six doors now wear their register at rest (3px top edge plus a shallow wash) instead of only on hover, with a legend naming the three registers in words. Settles the second half of IA-06's duplication question and is the first cross-page application of the register scheme, which is IA-12/IA-13 territory though neither row is closed by it. See `completed.tasks.md`, including the contrast trap the door washes hit — the doors' grid paints its hairlines *behind* the cards, so a translucent background composites over grey, not paper. | — |
+| ~~**IA-20**~~ | **Shipped 2026-08-14, direct author instruction, not from the audit.** Learn's ten sections are now closed-by-default pockets keyed to the hero grid — click one, it opens and every other pocket closes; click it again, it closes. "Open every section" now opens all ten too (sexual content still excluded, IA-01). No new ID scheme item covered this shape of change — see `completed.tasks.md` for the full record, including a real scroll-position race this surfaced in the *existing* `reveal()` mechanism (present since before this session, on cards too — a pocket's much larger height swing is what made it visible) and its fix. | — |
+| ~~**COPY-02**~~ | **Shipped 2026-08-15, direct author instruction, not from the audit.** Every em dash is gone from reader-visible copy: 306 of them across the nine pages, replaced by grammatical role (colon for an appositive, parentheses for a paired aside, full stop between independent clauses, comma for light coordination) rather than by a blind swap. Fifty were not prose but bullet markers and the stress matrix's "not engaged" cell mark; those became the middle dot the site already uses as a separator, with the matrix legend updated in step with the CSS that draws the cell. Applied through an anchor map asserting each target matched exactly once. Code comments, internal docs, and the unreferenced `hugo/data/changelog.yaml` were left alone, none of them being copy. **Raised mid-sentence colon density to roughly double what it was** — see item 8 of the voice audit below; a rebalancing pass on Behind the Scenes and Learn is open and unstarted. | — |
+| **COPY-03** | **Machine-writing tells in the shipped copy — `docs/audits/voice-audit-2026-08-15.md`, 2026-08-15.** Written after COPY-02 removed the loudest tell. Finding: the site's default sentence engine is definition by negation (195 negative constructions in 16,706 words, 11.7 per 1,000), and the `X, not Y.` terminal antithesis closes paragraphs on all nine pages in registers as different as the manifesto's polemic and the colophon's engineering notes. The LLM *lexicon* is entirely absent, so the fingerprint is structural, not verbal. Four-step remediation order proposed in the audit; steps 1–3 are mechanical, step 4 touches the honesty posture and should be the author's own pass. **Nothing applied — this row is the audit, not the fix.** | — |
+| ~~**IA-22**~~ | **Shipped 2026-08-15, direct author instruction, not from the audit.** All eighteen ⌖ marginal notes site-wide (Home, Manifesto, Invitation, Archive, Resources, Behind the Scenes, Learn ×6, Practise ×2, Contribute ×2) converted from always-visible paragraphs to `details.note` disclosures: closed by default, a click opens and holds one (native `<details>`, no script required — works on mobile and with scripting off), and `notes.js` layers a hover/keyboard-focus preview on top for a mouse or a tab. New component promoted to the shared base (`.note`/`.note-fails`/`.note-holds`), same pattern IA-10a used. Every label is a verbatim substring of the note's own leading clause — no copy was written or paraphrased. See `completed.tasks.md` for the dc-runtime DOM-replacement bug this surfaced (support.js's `boot()` swaps the whole `<x-dc>` subtree after first paint, orphaning per-element listeners on Home/Practise/Contribute) and its fix (delegate on `document` instead). | — |
 
-**Accept when:** header, focus, buttons, disclosures, forms and footer behave identically across all nine pages; no existing URL or fragment breaks; axe reports no serious/critical violations; layouts reflow at 320px and 400% zoom without two-dimensional scrolling, the labelled matrix scroller excepted.
+| **RS-049** | **Behind the Scenes page redesign (pocket navigation, register-colour grid).** Restructure the eight sections (Substrate, Type, Crawler, Reuse, Changelog, Faults, Roadmap, Labour) as closed-by-default pockets keyed to a hero grid, matching the Learn pattern IA-20 established. Hero grid carries register colours: teal (real/asserts) on Substrate/Type/Crawler/Reuse/Changelog; rust (fails) on Faults; ochre (owed) on Roadmap/Labour. `#limits` section stays above the grid as framing. Delete the sticky `.jump` bar (no longer needed once grid becomes single-open navigation). Re-measure page height and reading time; the stale WD-14 comment (39 minutes, ~18,600px) is actually ~10 minutes, 8,985px — fix figures now. **Six implementation steps:** (1) Name grid `aria-label="Contents"` to activate single-open via existing sections.js machinery; (2) Wrap 8 sections in `<details class="pocket">`, migrate section `id`s to `.pocket-body[id]` (DOM reveal requires id on ancestor, not details itself); (3) Delete the sticky `.jump` bar; (4) Add `@media screen` rule + `.js-pockets` class to hide pockets from screen, show toggle button; (5) Fix print rules to expand all pockets on print media, restoring full-text behaviour; (6) Verify all cross-page and within-page fragment links work (identify any section-to-section cross-links that need checking). **Blocked on five pending description lines** for grid navigation (grid entry below each section's kicker should describe it, 1–2 lines): Substrate, Reuse, Faults, Roadmap, Labour each need author-written or author-approved copy before markup implementation starts. | `[DEV]` `[COPY]` | `hugo/layouts/behindthescenes.html`, `hugo/data/substrate.yaml` (register colours), `sections.js` (no changes needed — already queries `nav[aria-label="Contents"]` + `main details.pocket` generically) | L | IA-20, sections.js machinery |
+
+**Accept when:** header, focus, buttons, disclosures, forms and footer behave
+identically across all nine pages; no existing URL or fragment breaks; axe
+reports no serious/critical violations; layouts reflow at 320px and 400% zoom
+without two-dimensional scrolling, the labelled matrix scroller excepted.
+
+---
 
 ### Phase 11.4 — Reference artifacts `after 11.3 · needs one decision`
 
 | ID | Task |
 |---|---|
-| **IA-18** | Give the field guide its own printable route, sourced from the same Hugo data, with a compact version left embedded in Learn. **Decision needed:** whether the embedded copy stays a preview or becomes a pointer. |
+| **IA-18** | Give the field guide its own printable route, sourced from the same Hugo data, with a compact version left embedded in Learn. **Decision needed:** whether the embedded copy stays a preview or becomes a pointer — the two answers imply different anchor-preservation work. Ten entries currently render fully open inside Learn. |
 | **IA-19** | Same treatment for the stress-test matrix, *only if* IA-05's switch shows it is consulted repeatedly rather than read once. Deliberately conditional; do not build it on principle. |
+
+---
 
 ### Phase 11.5 — The editorial question `not scheduled · author only`
 
 | ID | Question |
 |---|---|
-| **IA-17** | **Collapsing the thirteen principles to a title-first index — recommend the narrow version.** Recognition-over-recall is right, but closing all thirteen by default hides the page's promised payload against the disclosure rule Phase 6 settled: *collapse what a reader may want to skip; never collapse what they may need to find.* A compact thirteen-title index above cards that stay open buys the scanning benefit without the hiding. **Still open, untouched by IA-20** — the thirteen principles render exactly as before once their own pocket is opened. |
+| ~~**IA-15**~~ | ~~The three-stage Learn re-architecture (Start / Apply / Go deeper).~~ **Answered by direct author instruction, 2026-08-14 — differently than either this row or its own recommendation.** The underlying question (should Learn stop being one long scroll) is settled: yes. The shape isn't the audit's three fixed tiers — it's ten pockets, all closed by default, all one click from the hero grid, all one further click from being open together via "Open every section." That resolves this row's own worry too: "Go deeper" content (forms & labels, sovereignty senses, opacity, what's not written) isn't staged behind anything the other six aren't also behind — every pocket is one click, uniformly, so the caution about qualifications being "tucked behind a chooser" doesn't apply to what shipped. See IA-20 and `completed.tasks.md`. |
+| **IA-17** | **Collapsing the thirteen principles to a title-first index — recommend the narrow version.** Recognition-over-recall is right, but closing all thirteen by default hides the page's promised payload and sits against the disclosure rule Phase 6 settled: *collapse what a reader may want to skip; never collapse what they may need to find.* A compact thirteen-title index above cards that stay open buys the scanning benefit without the hiding. The audit's own Layer 1 asks only for "a thirteen-title index." **Still open, untouched by IA-20** — the thirteen principles render exactly as before (all open) once their own pocket is opened; nothing about this row changed. |
+
+---
+
+### Not doing, and why
+
+- ~~**FLAG-09 · session storage on Practise.**~~ ~~**FLAG-10 · any measurement layer.**~~ **Both reopened by the author 2026-08-14**, with the instruction to remove the site copy each conflicts with. They are no longer "not doing" — they are unscheduled, unscoped, and each needs an answer before work starts. See the FLAG-09 and FLAG-10 sections above for what each one actually touches and the specific question each turns on. Neither is part of 11.1/11.2, and neither should ride along in a layout commit: both change a published commitment on a site whose subject is consent and data sovereignty, so each gets its own commit, with the copy change and the code change together.
+- **§5D "browser Back restores the prior disclosure/view state."** Requires `history.pushState` bookkeeping across every disclosure on the site, for a benefit no measurement here can confirm. **Partially overtaken by IA-05**, which now syncs the stress-test view to `hashchange` — so Back does restore the view across a deep link there, without any history bookkeeping. Revisit the general case only if the switch turns out to strand people.
+
+### Task detail — what shipped in 11.0 and how it was verified
+
+| ID | Task | Status |
+|---|---|---|
+| **IA-01** | **Exempt the sexual-content group from bulk expansion** (audit §1.3, §2 Sexual content, quick win 3). Confirmed: all four `<details>` carried `data-collapsible`, so "Open every section" swept open *Reproductive coercion* and *Sexual trauma* along with the stress tests. The page's own note promises **"Opening one is the only thing that changes"** — the shipped JS made that sentence false, in a site whose subject is consent. Fixed by removing the opt-in attribute from the four; the sweep now reaches 9 (7 stress tests + 2 adjudication), direct fragment links still open exactly one target, and the button's label/`aria-pressed` still sync. | **Shipped** |
+| **IA-02** | **Archive fragment targets land behind the sticky filter bar below 1024px.** Measured `.filterbar`: 89px ≥1024, 141px at 768–1023, 150px ≤700 — against 96px inline `scroll-margin-top` and a 120px override scoped to ≤700px only. Every contents link (UX-07) and every "fastest route in" deep link (UX-08) landed covered on tablet and phone: −45px in the 701–1023 band that had no override at all, −30px below it. One `@media (max-width:1023px)` rule at 10rem; targets now clear by 7–20px at every width tested. | **Shipped** |
+| **IA-03** | **Restore the Turnstile site key on both forms.** See "What the audit missed." Key taken from `worker/wrangler.toml`, where it is documented as public by design. Comment above both now records the drift so the pair is changed together. | **Shipped — needs author confirmation, see below** |
+| **IA-07** | **Strike the stale `Home.dc.html` guidance.** The audit re-reported the Home duplication as live (its §6.6) because it read `docs/web-design.md` §1b, which had said "two byte-identical copies, both must be edited" since before WD-26 made `Home.dc.html` a redirect stub. Corrected in place with a dated note rather than silently rewritten, at §1b, §1c's file census, §1e's SMIL pointer, §3.1's and §3.5's verify commands, guardrail §4.10, and the §5 QA checklist; the same stale constraint in this file's Phase 5 was struck too. | **Shipped** |
+
+> **IA-03 needs one check the author can make and this environment cannot.** The key pairing is verified in source (`wrangler.toml`'s `TURNSTILE_SITE_KEY` is the public half of the Worker's secret), but whether the registered widget's allowed-domains list includes `relationalsovereignty.com` can only be seen in the Cloudflare dashboard. If it does not, the widget will render an error instead of a challenge — a different failure from the current one, and still a dead form. Confirm before or immediately after this reaches production, and submit the form once against a real address.
+
+### What could not be verified here
+
+- **Whether the Turnstile widget's allowed-domains list covers the live domain** (IA-03) — dashboard only. The highest-consequence unknown in this phase.
+- **Real-visitor behaviour on any of it.** Every finding above is heuristic or measured geometry. The audit's four representative visitors are a reasoning device, not evidence, and neither this pass nor the audit observed a single real person using the site. IA-15's editorial question in particular should not be settled from a screenshot.
+- **Cross-platform rendering of the microtype floor** (IA-08) — same Windows/Linux gap that still blocks WD-18.
 
 ---
 
 ## Phase 12 — Botanical motion system (author-supplied, 2026-08-15)
 
-*(Source: `docs/external/botanical-motion-system-2026-08-15.dc.html`, saved on arrival. IDs are `BM-nn`, assigned here. Written against this site rather than at it — real neutrals, the actual CSP constraint, `prefers-reduced-motion` planned in from the start. Verified claims, four corrections (BM-C1–C4), and three build landmines (BM-C5–C7) are in `archived.tasks.md`.)*
+*(Source: `docs/external/botanical-motion-system-2026-08-15.dc.html`, a "Botanical Motion System · draft 0.1" supplied directly by the author and saved on arrival, same pattern as the heuristic audit. Three flora sharing one inflorescence (the pendant raceme), seven motion behaviours `M1`–`M7`, eight page configurations, a CSS token block, a three-file build, ten restraint rules and eight sign-off criteria. IDs below are `BM-nn`, assigned here — the document has no ID scheme of its own, so each row cites its section number alongside. **Two edits were made to the saved copy, both mechanical:** the first `<script>` tag was a session-scoped signed `claude.ai` URL that expires and is not content, so it was dropped; `src="./support.js"` was repointed to `/support.js` so the live specimens run from `docs/external/`. Nothing else was touched. `scripts/check-origins.mjs` scans root-level files and the pretty-URL directories only, not `docs/`, so the saved copy is outside its scope either way.)*
 
-> **BM-01 answered by the author, 2026-08-16: yes.** The layer ships. The colophon's page-weight row no longer claims *"no images, no icon fonts, no video"* (BM-08). `docs/design-palette.md` and Learn's closing caution are both deliberately untouched — the botanical layer sits outside the four-register scheme the same way Manifesto already does, not folded into it.
->
-> **BM-02 is not answered, and does not block what shipped.** The built layer introduces zero new colour values — one ink per ground, drawn from the existing palette, at 6.8%/17% opacity. That's FLAG-12 option (A) by construction, so the register collision FLAG-12 describes can't arise yet. BM-02 becomes live again only if bloom hues are ever wanted.
+**The document is good, and it was written against this site rather than at it.** It reaches for the real neutrals (`#E7E5DC` / `#EFEEE7` paper, `#191B18` / `#3C3E38` / `#585B4F` ink, `#C9C6BA` rule), it names the actual CSP constraint, it plans around `prefers-reduced-motion` instead of bolting an override on afterwards, and its §08 restraint rules are the load-bearing half. Most of it can be built as written. What follows is the part that cannot.
+
+### What was verified before planning, and what held
+
+Checked directly against the committed code, not read off the document:
+
+- **The reduced-motion fallback works exactly as §06 claims.** `hugo/layouts/partials/head-base.html:188` carries `@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}}`, and the three hand-authored pages carry the same bytes (`index.html:114`, `practise/index.html:88`, `contribute/index.html:92`). A CSS-animation layer really does switch itself off site-wide with no JS involved.
+- **`script-src 'self'` survives.** Inline SVG generated at mount, animated by CSS, adds no origin. `npm run check:origins` would pass unchanged.
+- **The root-level script convention already exists** — `/print.js`, `/sections.js`, `/reveal.js`, `/notes.js`, `/archive-filter.js`. A botanical script belongs beside them.
+- **The print rule is free.** `@media print{.bm-layer{display:none}}` collides with nothing.
+- **§02's density cap and §07's node budget are two different numbers, not one.** 14 blooms / 60 nodes is per composition; 240 nodes is per page. Home's own recipe (7 + 4 + 3 blooms across three layers) only makes sense read that way. Say so in the built spec rather than leaving a reader to reconcile them.
+
+### Corrections — do not implement these four as written
+
+**BM-C1 — `assets/botanical/bm.css` as a linked stylesheet re-opens a decision already made.** IA-10a proposed exactly this shape (a partial *plus* a stylesheet) and it was rejected on the author's call, because it *"contradicted this phase's own acceptance criterion that no page gains a network request."* The resolution was one source inlined everywhere, carried to the three hand-authored pages by `scripts/sync-base.mjs`. The botanical tokens and keyframes go in `hugo/layouts/partials/head-base.html` the same way. Likewise `bm.js` + `bm-pages.js` should be **one** file at `/botanical.js`, not two under `assets/` — two files is two requests for 8 KB, and the recipes are smaller than the loader that reads them.
+
+**BM-C2 — "No new hues" is the document's weakest claim, and it is checkable.** §02 says the bloom accents are *"saturated cousins of accents the site already uses — brick, sage, link blue."* Two of those three already carry meaning here. `#8B3A2F`, which the swatch row labels "brick · existing," is the **rust register**: *"where the framework fails or runs out"* (`docs/design-palette.md`). `#2B4C9B`, labelled "link · existing," is the link colour. So maga is a saturated rust and wisteria is a desaturated link-blue, and jade `#2E8F7E` sits between the teal and green registers. Counted honestly the system introduces **sixteen** new values — three blooms with a deep and a pale each, six stem greens, and `--bm-nectar` — against a palette document that closes *"Keep the palette to these four. A fifth hue would have to mean something the other four cannot."* See **FLAG-12**; nothing in 12.2 onward should start before it is answered.
+
+**BM-C3 — §06's Hover row contradicts M4 and M7.** The row says the layer answers to hover with *"Nothing… the layer itself is `pointer-events:none`."* M4 leans a tendril toward the pointer; M7 withdraws the whole layer on hover. All three are reconcilable — M4/M7 observe pointer position over a *region* while the layer itself stays untargetable — but the document never says so, and as written a reader implements one of the three and breaks the other two. Also nothing currently forbids granting M4 and M7 to the same page, where they would fight: one leans in, the other retreats. **Make them mutually exclusive per page, explicitly.**
+
+**BM-C4 — the eight compositions cover nine pages.** "Manifesto" appears **zero** times in the document. It is also the one page the system cannot be ported to unchanged: it is dark ground (`#0F2A2E` with `#DDE4DC` text, `head-base.html` called with those values at `manifesto.html:41`), and every opacity ceiling, wash maximum and stem green in §05 is tuned for paper. `docs/design-palette.md` already exempts Manifesto from the register system for the same class of reason. **Recommendation: exempt it deliberately and say so on the page's own terms, rather than spec dark-ground values for a ninth composition nobody asked for.** Author call, but the cheap answer and the consistent one are the same answer here.
+
+### FLAG-12 — the register collision, and the decoration question underneath it `[DECISION]`
+
+Two questions, and the second one is the real one.
+
+**First, mechanically:** IA-21 shipped five days ago and put the register scheme *at rest* on Home's six doors — a 3px top edge, a shallow wash, and a legend naming the three registers in words. Home is also the only page §04 grants a full raceme with blooms at signature opacity. So the site's most-visited page would carry a red-family botanical form hanging above six cards that have just taught the reader red means *"where the framework fails."* Restraint rule 5 says *"The layer never indicates state."* Rule 5 is not violated by the code; it is violated by the reader, who has been given a colour grammar and will apply it. Three consistent resolutions:
+
+| Option | What it costs |
+|---|---|
+| **(A)** Run the layer in line and stem-green only. Drop the three bloom hues site-wide. | Loses the flowers, which are most of what makes it worth building. Cheapest, and the only option needing no palette-doc change. |
+| **(B)** Keep the blooms, but forbid a bloom composition on any page that carries register-coded content — which today is Home and Learn. | Keeps the system, shrinks it to the pages where it matters least. Needs a rule written into §04 and enforced in review. |
+| **(C)** Admit an explicitly non-semantic decorative family to `docs/design-palette.md`, argued and separated from the four registers by name. | Honest and the most work. Rewrites that file's closing rule, which currently forbids exactly this. |
+
+**Second, editorially, and this is the one to answer first.** `docs/design-palette.md` opens by quoting Learn's own closing caution: *"a design that signals warmth while leaving power unmapped has produced decoration, not sovereignty."* The botanical document's §01 answers it head-on and in the affirmative: *"The result is a layer with no job. It carries no meaning, marks no state, and signals nothing."* Its own rule 10 then says *"If it reads as decoration in a screenshot with the motion frozen, it is decoration. Cut it"* — while §06 and the sign-off both require that every composition *"renders complete, still, and correct"* under reduced motion, which is to say: it must look right frozen. **Rule 10 and the reduced-motion criterion cannot both be satisfied.** That is not a defect in the drawing; it is the system telling on itself. This site publishes a fault list and a page-weight figure and argues in its own colophon about what a page is allowed to cost. Adding ~9 KB per page of something whose stated purpose is to have no purpose is a defensible choice — plenty of austere things are worth doing — but it is the author's to make on the record, not one to arrive at by shipping. **Nothing past 12.1 should start before this is answered.**
+
+### The three landmines, which are all in the same place
+
+None of these is in the document, all three are load-bearing, and all three are on the same three pages.
+
+**BM-C5 — the `dc-runtime` destroys mounted DOM on Home, Practise and Contribute.** `support.js:175` does `dc.replaceWith(hostEl)` — the entire `<x-dc>` subtree is thrown away and rebuilt after first paint. IA-22 hit this exact bug with `notes.js` last week and fixed it by delegating listeners on `document`. **Delegation solves listeners; it does not solve mounted DOM.** `BM.init()` mounting an SVG into `[data-bm]` inside `<x-dc>` will have that SVG discarded on three of the eight pages in §04 — including Home, the one page granted the signature composition. Three possible answers: re-mount from a `MutationObserver`, place `.bm-layer` outside `<x-dc>` entirely, or wait on the runtime's own `__dc_booted` message (`support.js:1880`). Decide before touching any of the three, not during.
+
+**BM-C6 — the prerenderer would bake the drawing into the shipped HTML.** `scripts/prerender.mjs:117` waits 700 ms after mount and `:119` captures `document.getElementById("dc-root").innerHTML` to disk. If `BM.init()` mounts inside that window, the generated SVG is committed into `_site/` for those same three pages — frozen at whatever growth state it had reached at 700 ms. Three separate published properties break at once: §07's *"empty until mounted, so a failed or blocked script costs nothing"*, the sign-off's *"script blocked or failed: page is visually intact"* (a JS-blocked reader would get a permanently half-drawn stem), and the reduced-motion criterion's *"no partial stems, no invisible blooms."* And `checkPageWeight()` measures Home, Practise and Contribute **from `_site/`**, so the weight lands on the one figure the build already polices. Fix by making `BM.init()` a no-op under the prerenderer, or by stripping `.bm-layer` children in `prerender.mjs` before write. Verify by diffing `_site/index.html` before and after.
+
+**BM-C7 — the colophon's page-weight row is machine-checked prose.** `checkPageWeight()` (`scripts/check-pages.mjs:221`) parses the *"Ranges from about N KB (the X) to about N KB (the Y)… shared ~N KB script"* sentence out of Behind the Scenes and fails the build against every shipped file's real size. That row currently carries an apology for the ~2 KB the component layer added and a promise the figure will come back down once 11.3 applies it. Botanical CSS inlined into `head-base.html` moves all nine pages the other way, and a new `/botanical.js` is a fourth root-level script the row does not mention. **The copy change ships in the same commit as the code change** — same rule Phase 10.2 exists to enforce, and the third time this figure would have gone stale.
+
+### 12.0 — Answer the two questions `blocks everything below`
 
 | ID | Task | Tags | Effort | Depends on |
 |---|---|---|---|---|
-| **BM-02** | **FLAG-12, palette half.** Pick (A) line-and-green only (built by default, see above), (B) blooms but never on a register-coded page — **recommended** — or (C) an admitted non-semantic family in `docs/design-palette.md`. | `[DECISION]` | — | — |
-| **BM-03** | Confirm **BM-C4**: Manifesto exempted from the botanical layer rather than spec'd for dark ground. | `[DECISION]` | XS | — |
-
-**Shipped 2026-08-16** — BM-06 (token block in `head-base.html`, +964 bytes/page, all nine identical), BM-07 (`/botanical.js` mechanism only — `BM.register`/`BM.init`, recipe table, `IntersectionObserver`, kill switch, prerender guard; **no page loads it yet**, recipe table is empty), BM-08 (colophon corrected). See `completed.tasks.md`.
+| **BM-01** | **FLAG-12, editorial half.** Does this site want a layer whose stated job is to have no job? Answer on the record — a line in `docs/design-palette.md` or the colophon, not a commit message. If the answer is no, close Phase 12 here and keep the document as the record of a good idea that lost to the site's own austerity. | `[DECISION]` | — | — |
+| **BM-02** | **FLAG-12, palette half.** Pick (A) line-and-green only, (B) blooms but never on a register-coded page, or (C) an admitted non-semantic family in `docs/design-palette.md`. **(B) is the recommendation** — it keeps the flowers, needs no palette rewrite, and costs only Home's signature composition, which is the one place the collision is sharpest. | `[DECISION]` | — | BM-01 |
+| **BM-03** | Confirm **BM-C4**: Manifesto exempted rather than spec'd. | `[DECISION]` | XS | BM-01 |
 
 ### 12.1 — Prove the mechanism on one page, before there is a system
 
+Deliberately not the full build. One composition, one page, no tokens promoted, nothing shared — enough to find out whether the drawing is any good at this scale and on this ground, cheaply enough to throw away.
+
 | ID | Task | Tags | Effort | Notes |
 |---|---|---|---|---|
-| **BM-04** | Build M1 (raceme descent) + M6 (sway) as a single self-contained inline `<svg>` in Behind the Scenes — hardcoded, no `BM.register`, no token block. §04 gives that page `noBloom` (buds and armature only), so it lands entirely inside FLAG-12 option (A) and can be built before BM-02 is answered. Hugo-built, so it can't hit BM-C5 or BM-C6. | `[DEV]` | M | The one page where the system trials with none of its risks. |
-| **BM-05** | Measure it: body-copy contrast unchanged, 60fps during growth, no CLS, `aria-hidden` and out of the tab order, `npm run check` green, page-weight delta recorded. | `[DEV]` | S | If it fails here it fails everywhere. |
+| **BM-04** | Build **M1 (raceme descent)** and **M6 (sway)** as a single self-contained `<svg>` inline in **Behind the Scenes**, hardcoded, no `BM.register` API, no token block. §04 gives that page `noBloom` — buds and armature only, no flowers — which means it lands entirely inside FLAG-12's option (A) and can be built **before** BM-02 is answered. It is also Hugo-built, so it never meets BM-C5 or BM-C6. | `[DEV]` | M | The one page where the whole system can be trialled with none of its risks. Its §04 note — *"the page about method shows method"* — is the right instinct and the right place to start. |
+| **BM-05** | Measure it. Body-copy contrast unchanged (measured, not eyeballed), 60 fps during growth, no CLS, `aria-hidden` and absent from the tab order, `npm run check` green, and the page's own weight delta recorded. | `[DEV]` | S | If any of these fails here it fails everywhere. |
 
-### 12.3 — Roll out, cheapest ground first `after 12.1 · Hugo pages`
+### 12.2 — The shared layer `after BM-02`
+
+| ID | Task | Tags | Effort | Notes |
+|---|---|---|---|---|
+| **BM-06** | Promote §05's token block into `hugo/layouts/partials/head-base.html`, minus whatever BM-02 struck. Inlined, not linked (**BM-C1**). `scripts/sync-base.mjs` carries it to the three hand-authored pages; `npm run check` fails on drift, as it already does. | `[DEV]` | S | One edit plus `npm run build:hugo`, because 11.1 already paid for that. |
+| **BM-07** | `/botanical.js` — geometry, species table, `IntersectionObserver`, the `BM.register`/`BM.init` API, and the page recipes, in one root-level file beside `/sections.js` (**BM-C1**). §07's own build notes are correct and worth following as written, particularly `transform-box:fill-box` on an inner `<g>`. | `[DEV]` | L | The document's rect-scan is a preview-frame workaround it says so itself; production uses `IntersectionObserver`. |
+| **BM-08** | Update the colophon page-weight row and re-run `checkPageWeight()` **in the same commit** (**BM-C7**). | `[DEV]` `[COPY]` | S | Non-negotiable. Third time this figure would have drifted. |
+
+### 12.3 — Roll out, cheapest ground first `after 12.2`
+
+Hugo pages first: they are one-file edits, they have no runtime, and none of them can hit BM-C5 or BM-C6.
 
 | ID | Task | Tags | Effort |
 |---|---|---|---|
-| **BM-09** | Learn (M2+M3, runner, no blooms) and Archive (three stacked runners) — both ink-only, safe under any FLAG-12 answer. Archive needs checking against IA-02's fragment clearance (sticky filter bar). | `[DEV]` | M |
-| **BM-10** | Invitation (wisteria, 3 blooms) and Resources (jade, 4 blooms) — both blooming, both gated on BM-02. Resources gets the lower intensity regardless. | `[DEV]` | M |
+| **BM-09** | Learn (M2 + M3, runner, no blooms) and Archive (three stacked runners). Both are ink-only in §04, so both are safe under any FLAG-12 answer. Archive additionally needs checking against IA-02's fragment clearance — its sticky filter bar is 89–150px depending on width, and §04 wants the layer *behind the index, full width*. | `[DEV]` | M |
+| **BM-10** | Invitation (wisteria, 3 blooms) and Resources (jade, 4 blooms). Both blooming, so both gated on BM-02. Resources carries safety-critical content and gets the lower intensity of the two regardless of what §04 says. | `[DEV]` | M |
 
 ### 12.4 — The runtime pages `after 12.3 · the risky half`
 
-Do not start until BM-C5 and BM-C6 (see `archived.tasks.md`) both have a written answer and a test.
+Do not start this until BM-C5 and BM-C6 both have a written answer and a test.
 
 | ID | Task | Tags | Effort | Notes |
 |---|---|---|---|---|
-| **BM-11** | Resolve BM-C5 — mount survives `dc.replaceWith()`. Prove with a real interaction test on all three pages. | `[DEV]` | M | Same bug class IA-22 already paid for once. |
-| **BM-12** | Resolve BM-C6 — `_site/` output byte-identical apart from the layer's empty container. Diff it. | `[DEV]` | S | Gates the page-weight figure and two no-JS promises. |
-| **BM-13** | Home (M1+M6, signature), Contribute (M5 inosculation), Practise (M3 alone, minimum density). **M7 (retreat) is mandatory on Practise and Contribute** — a layer that doesn't recede from a focused field sits on top of the safety gate. | `[DEV]` | L | Practise gets the least of everything and goes last. |
+| **BM-11** | Resolve **BM-C5** — mount survives `dc.replaceWith()`. Prove it with a real interaction test on all three pages, not a source read. | `[DEV]` | M | Same class of bug IA-22 already paid for once. |
+| **BM-12** | Resolve **BM-C6** — `_site/` output byte-identical to today apart from the layer's empty container. Diff it. | `[DEV]` | S | Gates the page-weight figure and two published no-JS promises. |
+| **BM-13** | Home (M1 + M6, signature), Contribute (M5 inosculation), Practise (M3 alone, minimum density). **M7 (retreat) is mandatory on Practise and Contribute** per §03 and is the one behaviour that has to work before those two ship at all — a layer that does not recede from a focused field is a layer sitting on top of the safety gate. | `[DEV]` | L | Practise holds the RS-001 gate and the Consent Domains Map. It gets the least of everything, and it goes last. |
 
 ### 12.5 — Sign-off
 
 | ID | Task | Tags | Effort |
 |---|---|---|---|
-| **BM-14** | Walk §10's eight criteria on all nine pages at 320/390/768/1024/1440, plus: `_site/` unpolluted (BM-C6), mount survives the runtime (BM-C5), colophon weight true (BM-C7), no page granted both M4 and M7 (BM-C3). | `[DEV]` | M |
+| **BM-14** | Walk §10's eight criteria on all nine pages at 320/390/768/1024/1440, plus the four this plan adds: `_site/` unpolluted (BM-C6), mount survives the runtime (BM-C5), colophon weight true (BM-C7), and no page granted both M4 and M7 (**BM-C3**). | `[DEV]` | M |
+
+### What this phase cannot verify in this environment
+
+- **"Sustained 60 fps on a mid-range Android"** (§10). No such device here. Chromium's frame timing on this host says nothing useful about a mid-range phone, and recording it as passed on the strength of a desktop headless run would be exactly the kind of claim this file exists to stop.
+- **Whether the drawing is any good.** Every finding above is architectural. Nothing here is a judgement about whether a hanging raceme reads as weather or as wallpaper at 0.22 opacity on `#E7E5DC`, and BM-04 exists to answer that with something real rather than by argument.
+- **Greyscale.** Same open question as WD-15/WD-17, now with a second edge: with hue gone, does a maga bloom still read as separate from the rust register, or does the layer collapse into the same grey the doors use? Worth one look by a person once BM-04 renders.
 
 ---
 
 ## Phase 13 — The runtime handoff (author-supplied review, 2026-08-16)
 
-*(A review of the initial-load fix shipped in `bc4b6dc`. Its central move — separating **first paint** from **runtime takeover** as different problems, only the first actually fixed — is correct: the build pipeline is a browser-serialization round-trip, not SSR, so `hydrateRoot()` was never going to apply. This reframes the `createRoot()` revert from "a workaround" to "the correct call for this architecture." All four load-bearing claims verified against the code; three corrections (RT-C1–C3) and two rejected alternatives (RT-07/RT-08) are in `archived.tasks.md`.)*
+*(A review of the initial-load instability fix shipped in `bc4b6dc`, supplied by the author. IDs below are `RT-nn`, assigned here — the review has no ID scheme of its own. Its central move is to stop treating this as one problem: **first paint** (does the browser's own initial frame look right) and **runtime takeover** (is React's replacement of the static snapshot atomic, measured, and warning-free) are separable, and only the first is actually fixed. Everything structural in it was checked against the code before planning; all four load-bearing claims hold.)*
+
+**The review's central conclusion is correct, and it is the one this session reached the expensive way.** `hydrateRoot()` is not appropriate here, and the reason it gives is better than the one recorded in `support.js`. That comment blames the mismatches (inline-style re-serialization, un-camelCased props). The review names the actual cause: the build pipeline is not SSR and never was. It runs
+
+```
+React tree → browser DOM → browser serialization → saved HTML
+           → HTML parser → new browser DOM → React hydration comparison
+```
+
+Browser serialization is not an identity transform, so the mismatches are not a bug to be fixed one at a time — they are what the pipeline *is*. `hydrateRoot()` would only ever be correct if the build produced markup through a React-compatible server render and preserved the initial component state. It does neither. **The `createRoot()` revert stands, and this reframes it from "a workaround pending fixes" to "the correct call for this architecture."** Amend the `support.js` comment to say so (RT-01).
+
+### What was verified against the code before planning
+
+All four checked directly, not read off the review:
+
+| Claim | Verdict |
+|---|---|
+| The runtime's initial template comes from `x-dc.innerHTML`, so the browser has already parsed and normalised the source before the compiler sees it | **Holds** — `parseDcDocument()`, `support.js:32`: `template: dc.innerHTML`. The later raw-source `fetch` (`support.js:159`) updates the registered template afterwards, but boot begins from the DOM-parsed form, exactly as described |
+| `collectProps()` special-cases `class`/`for`/events but not `tabindex`/`autocomplete` | **Holds exactly** — `support.js:450`, with `class`→`className` (471), `for`→`htmlFor` (472), `EVENT_MAP` (474), and nothing else |
+| `window.__dcRootName?.()` exists as a boot signal the proposed test can wait on | **Holds** — `support.js:1929`, `__dcRootName: () => rootName` |
+| The repo already stages a Contribute → Home → Practise hybrid-Hugo migration | **Holds** — `HUGO2-01`/`02`/`03`, Phase 5, in that order and for the reasons the review gives |
+
+### Three corrections, none fatal to the plan
+
+**RT-C1 — the `tabindex`/`autocomplete` fix is dev-console hygiene, not a functional defect, and the plan should rank it that way.** The review lists it as Phase 1 item 4, beside genuinely load-bearing items. Measured: React passes both through to the DOM as unknown attributes and they land correctly in the rendered output (`_site/index.html` carries `tabindex="-1"` and `autocomplete="email"|"name"|"off"` on the real elements). The warnings are dev-build-only; the production bundle this site ships strips them, which is why the shipped `createRoot()` run logs zero page errors. So: worth doing, for the reason the review gives (fix it at the boundary where lowercase parsed HTML becomes React props, not by camel-casing source markup that HTML parsing will lowercase anyway) — but it is tidying, not a bug, and nothing on the live site behaves incorrectly today because of it.
+
+**RT-C2 — the inventory the review says to run has been run, and it returns two names, not ten.** Across all three runtime templates: `autocomplete` ×3 on Home, ×3 on Contribute, `tabindex` ×1 on each. Practise has none. Eight occurrences, two attribute names, two pages. The review's illustrative `DOM_PROP_MAP` also lists `readonly`, `maxlength`, `minlength`, `colspan`, `rowspan` — **none of which occur anywhere on this site.** Ship the map with the two entries that are real plus `class`/`for` moved into it for consistency; adding the other five would be speculative surface, which is the thing the review itself warns against one sentence later.
+
+**RT-C3 — `html{background}` is redundant, though harmless.** Per CSS canvas propagation, when the root element has no background the body's background is what paints the canvas — so the shipped `body{background:#E7E5DC}` already fixes the white-flash on its own, which is why the measured fix works. Nothing on the site sets `html{background}` today. Add it as belt-and-braces if wanted, but do not record it as the fix, and do not let it grow: the review's "do not duplicate the entire site stylesheet into the critical block" is the load-bearing half of that item and is correct.
+
+**One thing to note for whoever reads the review next:** it says "changing source markup from `tabindex` to `tabIndex`… is understandable." Nobody did that. No source markup was changed in `bc4b6dc` — the shipped change is the critical CSS plus the non-moving prerendered host. The review is arguing against a fix that was never applied, and there is nothing to go looking for.
 
 ### 13.0 — Stabilise the current handoff `next`
 
 | ID | Task | Tags | Effort | Notes |
 |---|---|---|---|---|
-| **RT-01** | Rewrite the `hydrateRoot()` post-mortem comment in `support.js` to give the architectural reason (serialization round-trip, not SSR) instead of the symptom list it currently gives. | `[DEV]` | S | |
-| **RT-02** | Add `DOM_PROP_MAP` to `collectProps()` — `tabindex`→`tabIndex`, `autocomplete`→`autoComplete`, with `class`/`for` folded in from their current inline special-cases. Two new entries only (RT-C2). | `[DEV]` | S | Dev-warning hygiene, not a live defect (RT-C1). |
-| **RT-03** | Optionally add `html{background:#E7E5DC}` to the three critical blocks. Redundant (RT-C3), defensive. Do not grow the critical block beyond canvas-flash and layout-shift properties. | `[DEV]` | XS | |
+| **RT-01** | Rewrite the `hydrateRoot()` post-mortem comment in `support.js` to give the architectural reason (the build is a serialization round-trip, not SSR) rather than the symptom list it currently gives. The present wording invites someone to "fix the mismatches and try again," which is the wrong conclusion. | `[DEV]` | S | The review's own diagram is the clearest statement of this; adapt it. |
+| **RT-02** | Add `DOM_PROP_MAP` to `collectProps()` — `tabindex`→`tabIndex`, `autocomplete`→`autoComplete`, with `class`/`for` folded in from their current inline special-cases. **Two new entries only** (RT-C2). Fixes the mapping at the lowercase-parsed-HTML→React-props boundary, which is where it belongs. | `[DEV]` | S | Dev-warning hygiene, not a live defect (RT-C1). |
+| **RT-03** | Optionally add `html{background:#E7E5DC}` to the three critical blocks. Redundant (RT-C3), defensive. **Do not grow the critical block beyond canvas-flash and layout-shift properties.** | `[DEV]` | XS | |
 
 ### 13.1 — Measure the takeover, do not infer it `blocks 13.2`
 
-Nothing currently measures whether boot causes a visible discontinuity — `check-pages.mjs` verifies rendering completed, not that it looked right doing it. Whether `createRoot()` produces a visible flash is unknown; both the original bug report and this session's fix assumed it does.
+**This is the most valuable part of the review and the part with no existing coverage.** `check-pages.mjs` verifies that rendering completed and that no template placeholders leaked; nothing measures whether boot causes a *visible* discontinuity. This session's own verification has the same gap: it proved the prerendered node survives boot and that `body` computes to `rgb(231,229,220)`, both of which are DOM assertions. Neither shows a reader what they'd see.
+
+The open question the review names precisely: React may remove and re-insert nodes within a single commit without the browser painting an intermediate blank frame. **Whether `createRoot()` produces a visible flash is currently unknown**, and both the original bug report and this session's fix assumed it does. That assumption should be tested before anything is built on it.
 
 | ID | Task | Tags | Effort | Notes |
 |---|---|---|---|---|
-| **RT-04** | Playwright regression test, four assertions: (a) no hydration diagnostics in console/`pageerror`; (b) canvas is `rgb(231,229,220)` from the first observable frame, React bundles delayed via `page.route()`; (c) geometry stable across boot (header box, hero top, document size, `scrollY`), waiting on `window.__dcRootName?.()`; (d) masked screenshot pair, React-delayed vs. post-boot. All three runtime pages. | `[DEV]` | M | |
-| **RT-05** | Answer the question RT-04 exists to settle: does `createRoot()` actually produce a displayed blank frame? Filmstrip capture, not DOM mutation events. | `[VERIFY]` | S | If no visible discontinuity, 13.2 closes unbuilt. |
+| **RT-04** | Playwright regression test for the handoff, four assertions: **(a)** no hydration diagnostics in console or `pageerror`; **(b)** canvas is `rgb(231,229,220)` from the first observable frame, with the React bundles deliberately delayed via `page.route()` so the prerendered state stays inspectable; **(c)** geometry stable across boot — header box, hero top, document width/height within tolerance, `scrollY` — waiting on `window.__dcRootName?.()`; **(d)** masked screenshot pair, React-delayed vs. post-boot, with Turnstile and any animation masked out. | `[DEV]` | M | Playwright is already a devDependency and already drives `npm run check`. Test all three runtime pages. |
+| **RT-05** | **Answer the question RT-04 exists to settle: does `createRoot()` actually produce a displayed blank frame?** Filmstrip capture, not DOM mutation events. Record the answer here either way — it decides whether 13.2 is needed at all. | `[VERIFY]` | S | If there is no visible discontinuity, 13.2 closes unbuilt and the handoff work is done at 13.0. |
 
 ### 13.2 — Protect typed input across a slow boot `gated on RT-05`
 
-Only real if RT-05 finds a visible window, and only reachable by someone typing into a prerendered form before React commits.
+Only real if RT-05 finds a visible window, and only reachable by someone who types into a prerendered form before React commits. The review is right that this is possible on a stalled bundle and right that it should not be built on principle.
 
 | ID | Task | Tags | Effort | Notes |
 |---|---|---|---|---|
-| **RT-06** | If needed: render the prerendered form controls on Home and Contribute inert (visibly disabled) until boot. A visible disabled state beats silently discarded input; submission already requires JS. | `[DEV]` | S–M | The review's recommended option. |
+| **RT-06** | If needed: render the prerendered form controls on Home and Contribute **inert** (visibly disabled) until boot, so nobody types into DOM that is about to be replaced. A visible disabled state is better than silently discarded input, and actual submission already requires JS. | `[DEV]` | S–M | The review's recommended option, and the right one. |
+| ~~**RT-07**~~ | ~~Capture and restore form state across the commit.~~ **Do not build.** Correctly handling text, checkboxes, radios, selects, focus, selection range, scroll, and controlled-input conflicts is a large surface for a window RT-05 may show does not exist. Restoring DOM values without updating component state would create controlled-input conflicts, so values would have to be re-injected as prop overrides. | — | — | Recorded as considered and rejected, per the review's own advice. |
+| ~~**RT-08**~~ | ~~Render a second hidden React root and swap it in.~~ **Do not build.** Duplicate IDs, premature Turnstile init, conflicting focus targets, duplicate form semantics, and double layout/memory cost. The review is right to name this attractive and wrong. | — | — | |
 
 ### 13.3 — The actual fix, which is already planned `= HUGO2-01/02/03`
 
-No new rows. `HUGO2-01` (Contribute) → `HUGO2-02` (Home) → `HUGO2-03` (Practise), Phase 5, already carry this — Hugo owns static content, a small script owns validation/Turnstile/submission/tool state, which shrinks the takeover boundary to a few interactive islands and makes both the first-paint and takeover problems stop existing rather than being managed.
+**The review's long-term conclusion and this repo's existing Phase 5 are the same plan, and neither needs rewriting.** The cleanest solution is not to make browser-captured HTML hydratable; it is to stop asking React to own static content at all. Hugo owns headings, prose, labels, and the form shell; a small script owns validation, Turnstile, submission, and tool state. That shrinks the takeover boundary from "the entire page" to a few interactive islands, at which point the first-paint problem and the takeover problem both stop existing rather than being managed.
 
----
+No new rows here. **`HUGO2-01` (Contribute) → `HUGO2-02` (Home) → `HUGO2-03` (Practise) already carry this, in that order, with Contribute first for the reason the review independently arrives at** — smallest surface, one form, no multi-step state, no safety gate — and Practise last for the same reason too. Phase 5's own header says to ship them one page at a time with real interactive testing. That stands. The only thing Phase 13 adds is the argument for *why* it is worth doing: not just copy-editing ergonomics (Phase 5's original rationale) but the removal of an entire class of load-time defect.
 
-## Phase 14 — Term genealogy and discoverability (author-supplied brief, 2026-08-16)
+### What this phase cannot verify in this environment
 
-*(Source: a research brief on tracing the history of "relational sovereignty" and making the site findable for it. Not in `docs/` — same pattern as the Phase 9, 10, 11 and 12 sources. **Add it to `docs/external/`.** IDs continue the `SEO-` series from Phase 7.)*
-
-**The core of this is scholarship the site's own citation ethic already implies, not an SEO tactic.** Learn names where this project got the term — "the sense borrowed from Matthew Wildcat and, independently, from work on assistive technology" — but the site carries no genealogy anywhere: nothing separating *where we found the phrase* from *where the phrase came from*. On a site whose stated ethic is not putting claims in people's mouths, and which already publishes a fault list, that is a real gap. Filling it also happens to be the strongest available move for ranking on the exact phrase. Do it because it is owed; take the ranking as a side effect.
-
-**The brief's own timeline was wrong in two places — confirmed, not just spot-checked.** Verified 2026-08-16 against Crossref, JSTOR, and Cambridge Core directly, not search summaries — see **SEO-04**, shipped.
-
-- It attributes Stacy's 2003 article to *Law & Social Inquiry*. It is ***Stanford Law Review*** 55 (2003), pp. 2029–2045 — confirmed via JSTOR and HeinOnline.
-- It presents "2003 vs 2005" as one article with a date to resolve. They are **two separate publications** — the 2003 Stanford piece, and a shorter 2005 article of the same title in *Proceedings of the ASIL Annual Meeting* 99, 396–400 — confirmed via Cambridge Core.
-
-**Four claims the page has to keep apart,** which the brief gets right and which collapsing into "X coined it" is the failure mode of: first documented use of the exact phrase · first definition of the concept · earlier precursors using different words · later applications in other fields.
-
-**14.0 shipped 2026-08-16 — see `docs/research/relational-sovereignty-genealogy.md` and `completed.tasks.md`.** Full citation table, every entry checked against Crossref/JSTOR/Cambridge Core. Two findings beyond the brief's own list, both flagged rather than asserted: a 2001 John Hoffman chapter titled "A Relational View of Sovereignty" that may (unconfirmed — paywalled, no full text reachable) predate Stacy as the first exact-phrase use; and a 2026 CHI paper (Jang/Carrington/Begel) that is the strongest found candidate for the site's own "independently, from work on assistive technology" line, though no source doc on this site names it.
-
-### 14.1 — The page `shipped 2026-08-16`
-
-**SEO-05 answered by the author: fold into Learn, no new page.** SEO-06 shipped the same day — a new box in Learn's "Four things this word is doing" pocket (`#sovereignty-senses`), right after the four-senses grid and before the Alfred objection box. States Stacy 2003 predates Wildcat by seventeen years, names the Jang/Carrington/Begel 2026 paper as the strongest found candidate for "work on assistive technology" with the honest caveat that no source document names it directly, and links both directly to their sources (JSTOR, DOI) rather than to `docs/research/` — a repo path isn't a citation a reader can follow. See `completed.tasks.md`.
-
-### 14.2 — Copy this research may correct `done`
-
-**SEO-07 shipped as part of SEO-06** — the new box states the predates-Wildcat fact directly, which was the one clause this row asked for. **SEO-08 reviewed, no change made:** Archive's Wildcat entry (`hugo/data/archive.yaml`) describes what Wildcat's article argues, not when the phrase originated — it makes no priority claim to correct. Also: Archive's `why` field renders via `{{ .why }}`, HTML-escaped by design, so it cannot carry an inline link without a template change (`safeHTML`) that widens that field's injection surface — out of proportion to what this row asked for.
-
-### 14.3 — Discoverability plumbing `unblocked`
-
-| ID | Task | Tags | Effort | Depends on |
-|---|---|---|---|---|
-| **SEO-09** | Google Search Console: verify ownership by DNS TXT, submit `sitemap.xml`, then read what the site actually ranks for. Adds no script, no cookie, no third-party request to any page. **Absent from the brief, and the highest-leverage item in this phase.** | `[ACCOUNT]` | S | — |
-
-**SEO-10 shipped 2026-08-16** — `datePublished`/`dateModified` added to all six reading pages' Article JSON-LD, sourced from each page's actual git history (first and most recent commit touching its `hugo/layouts/*.html` template), not invented. Home, Practise, and Contribute carry no Article block to date — unchanged, consistent with SEO-01's original reading-pages-only scope.
-
-**SEO-11 partially shipped.** Learn's new box links out to its own two sources; it doesn't need to link to itself. Cross-links *from* Archive and Behind the Scenes are still open — Archive's structural block (above) applies here too, and Behind the Scenes has no existing sentence that mentions the term in a context a link would fit without adding new prose nobody asked for.
-
-**SEO-12 verified 2026-08-16.** `npm run check` green: Learn's Hugo output matches source, page weight within tolerance (Archive now 131.5 KB, still inside the colophon's stated range), no CSP/console errors on the two new outbound links (JSTOR, DOI — `<a href>` targets are exempt from `connect-src` by construction). No new page, so `robots.txt`/`sitemap.xml`/canonical were already correct and untouched.
-
-**Not doing, and why.** A named-person `author` in the Article schema is FLAG-04, standing answer **no** — the anonymous commons is deliberate, and the brief's sample JSON-LD assumes otherwise. Search-volume estimation from Trends ratios is deprioritised: approximate by the brief's own admission, and it changes nothing about what gets built. The brief also assumes Netlify hosting; this site is GitHub Pages behind Fastly, and pending SEC-03.0, Cloudflare — its technical checklist needs translating, not pasting.
+- **Real-network boot timing.** Every measurement here is a local static server with the bundles artificially delayed. How wide the pre-boot window actually is on a slow connection, and therefore how often RT-06's scenario occurs in life, is not answerable from this host.
+- **Whether the flash was ever visible to the author in the first place.** The bug report describes an apparent colour change and a flash/reset. The colour half is confirmed fixed and was mechanically explained. The flash/reset half is still, strictly, an unreproduced report — RT-05 is what turns it into a measurement.
 
 ---
 
 ## Parked / backlog
 
-| ID | Task | Tags |
+| ID | Task | Reason parked |
 |---|---|---|
 | **RS-018** | Plain-language edition + translation pipeline | Large, no current translator capacity |
 | **RS-019** | Name the state machinery (Indian Act, residential schools, Sixties Scoop, child apprehension, immigration sponsorship, marriage law, guardianship, benefits conditionality) on relevant Learn topic pages | Large `[COPY]` lift, not urgent relative to Phase 1–3 |
 | **RS-040** | The Consent Domains Map's seventeen general domains carry no cited source — checked specs, audits, and the changelog on 2026-08-15, found none. Only the later three-domain addition (RS-028, Access Intimacy & Body Support) is attributed, to the disability-justice lineage already on the archive shelf. Either name a source or state in Behind the Scenes / the fault list that the domain list was assembled for this project rather than adapted from one named exercise. | Needs the author's memory of where it came from, not something findable in the repo |
 
-## Suggestions
+---
 
-| ID | Task | Tags |
+## Rejected (kept for the record — do not re-propose)
+
+Per `docs/spec/addendum-a.md` §1 and §6:
+
+- **Home limit #3 revision ("a necessary first step in picking up your bundle")** — inverts the site's own anti-appropriation guardrail; uses an unsourced, nation-specific ceremonial term as a general metaphor for settler self-work; creates an indefinite-deferral structure ("prerequisite," "doorway"); contradicts adjacent copy on the same page. **No change to Home limit #3** stands as the resolution (D10) — one outbound link added instead.
+- **Thesis 16 as originally drafted** ("de-colonizing your relationships," "staging ground," "trustworthy ally") — same deferral problem. Salvaged as RS-034 without the metaphor.
+- **"Third-Party Triangulation"** as the Repair Protocol's step-3 name — names a dysfunctional clinical pattern; renamed "Pods and stewards" (RS-029).
+- **Prescribed 4-7 breathing + interoceptive "are your shoulders tense?" check as the grounding default** — not universally safe, inaccessible to the alexithymic/autistic users the same spec's non-verbal-mode section exists to include. Rewritten in RS-032.
+- **"If dysregulated, stop here"** — reproduces the same self-diagnosis error RS-001 exists to remove.
+- **The Non-Abandonment Clause as originally drafted** ("without executing a responsible, community-supported transition plan") — creates a duty to stay that is directly quotable by a controlling partner against someone trying to leave. Rewritten as RS-030.
+- **Polyvagal theory, shelved with the dispute named (Addendum A's original recommendation)** — Decision Record D13 further tightens this to full omission; a starter shelf doesn't need to carry a theoretical dispute it can avoid entirely.
+- **Mailing list → RSS/Atom + mailto (Decision Record D5, and RS-021 as originally scoped)** — **overridden by explicit author decision, 2026-08-07.** See Resolved decisions log at the top of this file.
+
+---
+
+## My suggestions (raised during codebase familiarization, 2026-08-07)
+
+Not in any spec document — surfaced from reading `support.js`, the build scripts, and the Worker source directly.
+
+| ID | Suggestion | Rationale |
 |---|---|---|
 | **SUGGEST-03** | Evaluate removing the dormant Babel/unpkg CDN path in `support.js` (`BABEL_URL = "https://unpkg.com/@babel/standalone@..."`, loaded only if a page ever uses `x-import` with a `.jsx`/`.tsx` module). No current page uses it, and RS-020's CSP (now shipped) does **not** allow-list unpkg.com anywhere — deliberately, since no page currently needs it. If this code path is ever triggered, it will hit a CSP violation rather than silently working around one, which surfaces the dead-code question at the moment it'd matter instead of before. Dead code still contradicts D2's stated preference for "no supply chain, nothing to rot." | `Practise.dc.html` is now the only page still on the runtime and it never needs JSX import, so this capability may be safe to delete outright. Needs a decision, not just a fix — flagging here rather than acting unilaterally. |
 | **SUGGEST-06** | Consider routing the dispatch Worker behind a same-origin path (e.g. `relationalsovereignty.com/api/*` via the eventual host's routing, if RS-022's host supports it) rather than a bare `*.workers.dev` subdomain. | Would tighten SUGGEST-05's CSP carve-out to same-origin and remove the one cross-origin `fetch` the site currently makes, strengthening the "zero third-party requests" claim rather than just disclosing around it. Depends on RS-022's hosting decision, so sequenced after Phase 2. **Update 2026-08-11:** FLAG-08 option (A) would make this nearly free — proxying the site through Cloudflare puts the Worker and the pages on one origin, so `/api/*` routing becomes configuration rather than a migration. If (A) is chosen, do this at the same time and drop the `connect-src` carve-out entirely. |
@@ -614,11 +989,9 @@ No new rows. `HUGO2-01` (Contribute) → `HUGO2-02` (Home) → `HUGO2-03` (Pract
 
 ---
 
-## Housekeeping
+## Verification queue (consolidated `[VERIFY]` tracker)
 
-| Task |
-|---|
-| Add the externally-supplied `Website Cache & Clickjacking Security Audit` (Phase 10) to the repo — pasted into a session and never committed. Phase 10 records every finding taken from it, so the phase is workable without it. `design-review-2026-08-10.md` (Phase 9), the same class of gap, is resolved — see "Reference documents" below. |
+Bulk list, independent of phase, so link/citation verification can be worked in parallel with dev/copy work. **Never guess — leave blank and named per the site's existing practice if a stable link can't be found.**
 
 **The three bulk archive-link passes are all complete** — RS-015's ~20 corrections, the eighteen new entries for RS-006/007/016/033, and RS-040's five. Every entry was fetched or Crossref-confirmed rather than trusted from the draft. Full records, including the two judgement calls (Hemphill counted once, not twice; the two "brown" entries are different books by the same author), are in `completed.tasks.md`. Struck rows removed here 2026-08-13.
 
@@ -631,52 +1004,52 @@ No new rows. `HUGO2-01` (Contribute) → `HUGO2-02` (Home) → `HUGO2-03` (Pract
 
 ## Definition of Done / QA checklist
 
-Every page, every release. From `docs/spec/base-work-order.md` §7.
+Applies to every page, every release — from `docs/spec/base-work-order.md` §7, unchanged:
 
-- [x] Renders with JavaScript disabled — the six reading pages. Home, Practise, Contribute are runtime-dependent by design
+- [x] Renders with JavaScript disabled — Manifesto, Learn, Archive, Resources, BehindTheScenes all confirmed (RS-004, done). Home, Practise, Contribute, index.html remain runtime-dependent by design (Home/Contribute have live interactive forms; Practise is the tool)
 - [ ] No duplicate content in the DOM
-- [ ] Zero external requests on load, except the disclosed Turnstile widget and the dispatch Worker on user-initiated submit
-- [ ] No storage API called except where disclosed
-- [ ] CSP present and not reporting violations — meta CSP cannot carry `frame-ancestors`; anti-framing waits on SEC-03
-- [ ] Page weight stated accurately in the colophon
-- [ ] All outbound links resolve
+- [ ] Zero external network requests on load, except the disclosed dispatch Worker call on user-initiated form submit (devtools Network, 3rd-party filter)
+- [ ] No storage API called except where explicitly disclosed (Application → Local Storage / Session Storage / Cookies)
+- [ ] CSP header present (or meta-CSP if host requires it) and not reporting violations — **note (2026-08-11): the parenthetical is not a full substitute.** Meta-CSP carries every directive this site currently uses, but browsers ignore `frame-ancestors` in meta delivery, so anti-framing cannot ship until SEC-03 resolves. Verified absent on the live site, not assumed.
+- [ ] Page weight stated accurately in the colophon (see SUGGEST-01 — don't just re-assert "under 60 KB" without checking)
+- [ ] All outbound links resolve; no external link resolved relative to site root
 - [ ] Prints cleanly
-- [x] Skip link reaches `#main-content`
+- [x] Skip link reaches `#main-content` — verified with a real keyboard-navigation test (Practise): first Tab focuses it, activating it lands the very next Tab on the interstitial's first button, not somewhere in the header nav
 - [ ] Heading order sequential, no skipped levels
 - [ ] `prefers-reduced-motion` honoured
-- [x] Reflow at 320px, no horizontal scroll except the documented Archive diagram
-- [ ] Screen-reader pass on ≥2 real AT setups — **needs a human tester**
+- [x] Reflow at 320px, no horizontal scroll except the documented Archive diagram (with text equivalent) — checked via `responsive-audit.mjs` across 320/375/768/1280/1920px on every page; the Archive diagram's three lists now carry `aria-labelledby`/a hidden label naming their category, verified by resolving the reference in a live DOM, not just present in markup
+- [ ] Screen-reader pass on ≥2 of NVDA/Firefox, JAWS/Chrome, VoiceOver/Safari, TalkBack/Chrome — **not done, needs a human tester with real assistive technology; nothing in this session substitutes for it**
 - [ ] Every diacritic checked against the notdef box on the target platform
 
-**Practise:**
-- [ ] RS-001/032 sequence cannot be bypassed, or is documented as requiring the runtime
+**Practise page specifically:**
+- [ ] RS-001/032 sequence cannot be bypassed by disabling JavaScript once RS-004 principles apply here too, or is explicitly documented as the one page still requiring the runtime
 - [ ] Resources link present on every interstitial step
-- [x] Nothing typed is transmitted or persisted, except an explicit warned export
+- [x] Nothing typed is transmitted or persisted (except an explicit, warned RS-027 export action) — RS-027 shipped: export is a direct user click only (no auto-save, no timer), a non-dismissible warning sits above the control, there is no `localStorage` anywhere in the file, and resume works only by re-importing a file the user chose to keep. Verified with real Playwright interaction (mouse and keyboard-triggered export, a round-trip import, and a malformed-file import that errors without wiping existing state), not just read off the markup.
 - [ ] Back-navigation leaves no partial state visible
-- [ ] Still disallowed in robots.txt and `noindex`'d
+- [ ] Still disallowed in robots.txt, and `noindex`'d (SUGGEST-02)
 
-**Resources:**
-- [ ] Every entry `verified` within 90 days
+**Resources page specifically:**
+- [ ] Every entry has a `verified` date within the last 90 days
 - [ ] Every link resolves to the organisation's own domain
 - [ ] Jurisdictional scope stated at the top
 - [ ] Allowed to every crawler, in sitemap, reachable from the footer
 
-**Dispatch form (Home + Contribute):**
-- [x] Colophon discloses the Worker/Resend/GitHub-storage architecture accurately
-- [ ] Honeypot stays `aria-hidden`, `tabindex="-1"`, `autocomplete="off"`
-- [x] Confirm/unsubscribe links resist prefetch-triggered false actions
-- [ ] `/api/subscribe` refuses a burst from one address and one IP; the daily ceiling holds — unit-tested, not yet verified against real KV
-- [x] A confirm token decodes to an opaque ID and nothing else
-- [x] The double opt-in claim is literally true
-- [x] The git-history decision matches what the fault list and removal page say
+**Dispatch form specifically (both instances — Home + Contribute):**
+- [x] Colophon discloses the Worker/Resend/GitHub-storage architecture accurately (RS-021 rescoped, done) — four substrate rows name the Worker as self-operated processor, Resend's transactional-only role, the private-repo/AES-256-GCM storage, and the aggregate-only interest data; Home/Contribute copy no longer claims no processor exists
+- [ ] Honeypot remains `aria-hidden`, `tabindex="-1"`, `autocomplete="off"`, doesn't trip password managers
+- [x] Confirm/unsubscribe links resist prefetch-triggered false actions (SEC-02.3, done 2026-08-11 — was SUGGEST-04) — proven in `worker/test/flow.test.mjs`: a bare GET to either endpoint writes nothing and sends no email; only a POST (the button's real target) acts
+- [ ] `/api/subscribe` refuses a burst from one address and from one IP (SEC-01.1), and the daily ceiling holds (SEC-01.2) — logic unit-tested against a fake KV (`worker/test/abuse.test.mjs`); behaviour against real Cloudflare KV under real concurrent traffic is not yet verified, and can't be until the Worker is actually deployed
+- [x] A freshly issued confirm token decodes to an opaque ID and nothing else — no address, no name, no interests (SEC-02.1) — `worker/test/flow.test.mjs` decodes a real token and asserts its keys are exactly `{id, t}`
+- [x] The double opt-in claim is literally true: a link fetched by a scanner does not confirm anyone (SEC-02.3) — `worker/test/flow.test.mjs` proves a bare GET writes nothing and sends no email on either endpoint
+- [x] Whatever was decided about git history (SEC-02.2) matches what the unsubscribe email and the fault list say — decided 2026-08-11 (keep as-is, disclose); fault 05's title and body rewritten to state the decision, and the removal confirmation page's own copy ("You've been removed. Nothing further will be sent.") was already accurate under this decision without needing a change
 
-**Security, every release:**
-- [ ] No secret in the repo, in `wrangler.toml`'s `[vars]`, or in a build log
-- [ ] `GITHUB_TOKEN` is fine-grained, single-repo, `contents:write`, unexpired
-- [x] Every `uses:` in both workflows pins a 40-char SHA
-- [ ] Response headers present and unregressed
-- [ ] Per-page CSP scoping intact — no reading page has acquired `unsafe-eval` or the Worker origin
-- [x] The live domain serves the commit the deploy thought it shipped
+**Security posture, every release:**
+- [ ] No secret in the repo, in `wrangler.toml`'s `[vars]`, or in a build log — `[vars]` is public config by design; the four secrets stay in `wrangler secret`
+- [ ] `GITHUB_TOKEN` is fine-grained, single-repo, `contents:write`, and unexpired (SEC-00.1)
+- [ ] Every `uses:` in both workflows pins a 40-char SHA (SEC-04.1)
+- [ ] Response headers present and unregressed: `frame-ancestors`, HSTS, `nosniff`, `Referrer-Policy` (SEC-03, asserted in CI by SEC-04.3)
+- [ ] Per-page CSP scoping intact — no reading page has acquired `unsafe-eval` or the Worker origin (SEC-03.4)
+- [ ] The live domain serves the commit the deploy thought it shipped (SEC-04.4)
 
 ---
 

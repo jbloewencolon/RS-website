@@ -171,21 +171,26 @@
     // and non-JS readers plus AI/search crawlers (which do not run JS)
     // get the full page instead of an empty shell. See scripts/prerender.mjs.
     //
-    // hydrateRoot() was tried here instead of the createRoot() below, to
-    // attach to that prerendered markup in place rather than discarding
-    // and rebuilding it. Reverted: React's own hydration check compares
-    // the captured markup against a fresh render and finds it mismatched
-    // on every element with an inline style (prerender.mjs captures
-    // innerHTML, which the browser re-serializes — hex colours become
-    // rgb(), quotes and spacing change — so the "same" style string never
-    // byte-matches what a fresh render produces) plus a handful of
-    // un-camelCased DOM props this runtime's own attribute mapping
-    // doesn't cover yet (tabindex, autocomplete). Both are pervasive
-    // enough that hydration fails outside any Suspense boundary and React
-    // falls back to a full client re-render anyway — the same replace as
-    // createRoot(), now also logging real errors on every load. Left as
-    // createRoot(); revisit once the runtime itself emits hydration-safe
-    // markup.
+    // hydrateRoot() was tried here instead of the createRoot() below.
+    // Reverted — and not a workaround pending fixes elsewhere, because
+    // this build is not SSR and hydrateRoot() has nothing valid to
+    // compare against. scripts/prerender.mjs runs the client render in a
+    // real browser and bakes in #dc-root.innerHTML, so the pipeline is a
+    // browser-serialization round trip:
+    //   React tree -> browser DOM -> browser serialization -> saved HTML
+    //              -> HTML parser -> new browser DOM -> hydration compare
+    // Browser serialization is not an identity transform (hex colours
+    // become rgb(), quote/spacing in style strings changes, attribute
+    // names get lowercased by the HTML parser), so the fresh render
+    // mismatches the captured markup on every inline-styled element by
+    // construction, not by a fixable bug. Hydration fails outside any
+    // Suspense boundary on mismatches like these and React falls back to
+    // a full client re-render anyway — the same replace createRoot()
+    // does, just with real errors logged on every page load instead of
+    // none. createRoot() is therefore the correct choice for this
+    // architecture, not a stopgap: hydrateRoot() only makes sense when
+    // the markup came from a React-compatible server render that
+    // preserved initial component state, and this pipeline does neither.
     const prerendered = doc.getElementById("dc-root");
     const hostEl = prerendered || doc.createElement("div");
     hostEl.id = "dc-root";
@@ -447,6 +452,18 @@
   }
 
   // src/compile.ts
+  // Lowercase-parsed-HTML -> React-prop casing for the "dom" kind below.
+  // Verified by grepping index.html, practise/index.html and
+  // contribute/index.html for every attribute name on a real element:
+  // these four are the only casing-sensitive ones this codebase actually
+  // uses (tabindex/autocomplete ×1 each on Home and Contribute, none on
+  // Practise) — see tasks.md Phase 13, RT-C2.
+  var DOM_PROP_MAP = {
+    class: "className",
+    for: "htmlFor",
+    tabindex: "tabIndex",
+    autocomplete: "autoComplete"
+  };
   function collectProps(node, kind, host) {
     const propGetters = [];
     const pseudoClasses = [];
@@ -468,8 +485,7 @@
         if (key.includes("-") && !(kind === "x-import" && (key.startsWith("aria-") || key.startsWith("data-"))))
           key = kebabToCamel(key);
       } else {
-        if (key === "class") key = "className";
-        else if (key === "for") key = "htmlFor";
+        if (key in DOM_PROP_MAP) key = DOM_PROP_MAP[key];
         else if (key.startsWith("on"))
           key = EVENT_MAP[key] || "on" + key[2].toUpperCase() + key.slice(3);
       }
