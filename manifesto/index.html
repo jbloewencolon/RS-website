@@ -31,6 +31,8 @@
       "name": "A Relational Sovereignty Manifesto",
       "description": "Sixteen theses and a refusal: a printable, forkable manifesto on relationships without ownership, meant to be read aloud.",
       "url": "https://relationalsovereignty.com/manifesto/",
+      "datePublished": "2026-08-06",
+      "dateModified": "2026-08-15",
       "inLanguage": "en",
       "isPartOf": { "@id": "https://relationalsovereignty.com/#website" },
       "about": { "@id": "https://relationalsovereignty.com/#term" }
@@ -105,6 +107,24 @@
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#DB9E2A;color:#0F2A2E;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;border-radius:2px}
   .skip-link:focus{left:1rem;top:1rem}
+
+  .bo-layer{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+  .bo{display:block;color:#0F2A2E;opacity:.068}
+  .bo-line{fill:none;stroke:currentColor;stroke-width:1.05;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+  .bo-fine{fill:none;stroke:currentColor;stroke-width:.62;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+  .bo-hair{fill:none;stroke:currentColor;stroke-width:.4;stroke-linecap:round;vector-effect:non-scaling-stroke}
+  .bo-stipple circle{fill:currentColor;stroke:none}
+  circle.bo-line,circle.bo-fine{fill:none}
+   
+  .bo-grow{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1900ms cubic-bezier(.22,.61,.36,1)}
+  .bo-anim.is-in .bo-grow{stroke-dashoffset:0}
+  .bo-anim>g{opacity:0;transition:opacity 700ms ease}
+  .bo-anim.is-in>g{opacity:1}
+   
+   
+  @media (max-width:760px){.bo-gutter{display:none}}
+  @media print{.bo-layer{display:none}}
+
 </style>
 
 <style>
