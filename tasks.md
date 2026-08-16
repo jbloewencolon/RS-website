@@ -15,7 +15,7 @@
 
 ---
 
-## 🚩 Resolved decisions log (where this project's calls differ from — or add to — the source docs)
+## Blocked on author input
 
 | # | Decision | Resolution | Date | Reasoning |
 |---|---|---|---|---|
@@ -42,31 +42,13 @@ The Decision Record flags three assumptions as unconfirmed; a fourth (mailing li
 
 ---
 
-## Phase 1 — Safety, access, and the framework's deepest gap
-*(Decision Record Cycle 1 — nothing in Phase 2+ ships before this phase is done)*
+## Phase 1 — Safety and access
 
-**Sequencing note (mine, not in the source docs):** RS-004, RS-028+RS-005, and RS-020 are all **done — see `completed.tasks.md`.** All four reading pages are Hugo-generated, fault 04 is retired, thirteen principles, the Consent Domains Map's Access Intimacy domain has shipped, and every page carries a scoped, machine-checked CSP. `Practise.dc.html` keeps the `dc-runtime` permanently — it's an interactive tool, not a reading page. RS-023 is **partially done** — see `completed.tasks.md` for what shipped (the automatable half) and what's below (the part that needs a person).
-
-Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (merged into this branch 2026-08-07) — reflected throughout.
-
-| ID | Task | Tags | Files | Effort | Depends on |
-|---|---|---|---|---|---|
-| **RS-023 (residual)** | The screen-reader pass genuinely needs a person: ≥2 of NVDA/Firefox, JAWS/Chrome, VoiceOver/Safari, TalkBack/Chrome, actually listened to, not simulated. Also residual: print stylesheet test on real paper/PDF output (Playwright's print-media emulation can check `@media print` rules apply, but not that the result reads well printed). | `[DEV]` (needs a human tester) | all pages | S (down from M — the automatable parts are done) | RS-026 shipped 2026-08-08, see `completed.tasks.md` — no longer a residual dependency here |
-
----
+| ID | Task | Tags |
+|---|---|---|
+| **RS-023** (residual) | Screen-reader pass on ≥2 of NVDA/Firefox, JAWS/Chrome, VoiceOver/Safari, TalkBack/Chrome. Print test on real paper output. | `[DEV]` needs a human tester |
 
 ## Phase 2 — Claims the site already makes
-*(Decision Record Cycle 2)*
-
-| ID | Task | Tags | Files | Effort | Notes |
-|---|---|---|---|---|---|
-| **RS-022** | Hosting decision (FLAG-02) + fill the blank colophon substrate fields: server location/operator/territory, watershed, actual logging config (minimized), cost + funding source. Colophon note on the single-region trade-off if D6 is taken as-is. | `[DEV]` `[DECISION]` | `BehindTheScenes.dc.html`, hosting config | M | FLAG-02 |
-| **RS-024 (residual)** | ~~Extend the glyph coverage matrix beyond Chrome/Windows: Safari/macOS+iOS, Firefox/Windows+Linux, Chrome/Android, Edge/Windows. Publish per-platform results. Resolve or document the `x̂` (Unangax̂) at-risk flag specifically.~~ **Partially done, see `completed.tasks.md`** — the check itself had a real defect (width comparison can't detect a missing glyph in a monospace font), now fixed and re-verified clean on Chrome/Linux, the one platform this environment can reach. Genuine multi-platform testing (real Safari/macOS+iOS, Windows ClearType fonts, Chrome/Android, Edge) still needs a person with access to that hardware — same shape of gap as RS-023's screen-reader residual. | `[DEV]` (needs real devices) | `glyph-check.html`, `BehindTheScenes.dc.html` | S | — |
-
----
-
-## Phase 2.5 — Navigation, disclosure, and information-architecture simplification
-*(Author review delivered directly into this session, 2026-08-08 — not part of a Decision Record cycle. Marked priority by the author, ahead of the remaining Phase 3 content work below; items RS-047/RS-048 are the two the author called optional follow-ups. Suggested implementation order noted per row.)*
 
 **Constraints on every row in this phase, stated by the author and binding on all of them:** do not alter `Home.dc.html`. Do not hide safety-critical information. Prefer semantic HTML, anchor links, and native `<details>/<summary>` over scripted show/hide. Preserve keyboard and screen-reader access. Preserve no-JavaScript access wherever it currently exists (all four Hugo-generated reading pages, Resources, and the Archive's unfiltered baseline). Do not add dependencies, tracking, external requests, storage, geolocation, or personalization. Any new disclosure/optional section must expand automatically for printing, not stay collapsed on the printed page. **For the Hugo-generated pages (Manifesto, Learn, Archive, BehindTheScenes), edit the authoritative `hugo/layouts/*.html` template and/or `hugo/data/*.yaml`, then regenerate via `npm run build:hugo` — never hand-edit the committed `.dc.html` output directly**, per this repo's established convention since RS-004.
 
@@ -77,7 +59,6 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 ---
 
 ## Phase 3 — Content gaps
-*(Decision Record Cycle 3)*
 
 | ID | Task | Tags | Files | Effort | Notes |
 |---|---|---|---|---|---|
@@ -104,7 +85,9 @@ Note: main separately renamed `Colophon.dc.html` to `BehindTheScenes.dc.html` (m
 
 **Open question, flagged not decided (§8):** D8 (Phase 3, already shipped) settled a reading-ten list of ten analytic entries. If the Invitation becomes a genuinely co-equal door, the review argues the ten arguably should reflect both registers, with hooks as "the natural candidate" — accessible, widely available, doing the framework's own work in plain language. That would mean dropping someone already on the list. Not actioned here; D8 stands unless the author revisits it.
 
----
+| ID | Task | Tags |
+|---|---|---|
+| **RS-041** | Taíno-terms disclosure in the reuse terms: a carve-out, or an explicit grant on stated conditions. Apply a Local Contexts TK Label if appropriate. | `[COPY]` `[DECISION]` `[VERIFY]` · blocked, terms unidentified |
 
 ## Phase 4 — Conceptual work (deferred / needs people)
 *(Decision Record Cycle 4 — lowest urgency; several items are explicitly meant to wait. RS-009/010/011/012/013/014/017 all shipped 2026-08-08, see `completed.tasks.md`. Two rows remain, both intentionally not actioned: RS-048 residual blocks on the author supplying a real contact address; RS-029 residual is deliberately sequenced last, per its own row, until a community exists to route "pods" to.)*
@@ -415,8 +398,6 @@ Both shipped 2026-08-11 — see the struck line above and `completed.tasks.md`.
 
 ### Phase 10.3 — Delivery headers `week 3 · gated on the Cloudflare proxy going live, not on a decision anymore`
 
-The external audit's headline, and its finding is correct. Ranked third anyway: clickjacking pays off by hijacking an authenticated action, and this site has no session, cookie, or logged-in state to hijack. Realistic worst case is tricking someone into submitting the signup form, or a screenshot used for a smear. Worth fixing because it is nearly free — not worth doing before the endpoint that can be aimed at strangers.
-
 | ID | Task | Tags | Files | Effort | Depends on |
 |---|---|---|---|---|---|
 | **SEC-03.1** | `frame-ancestors 'none'` + `X-Frame-Options: DENY` on every HTML response — successes, redirects, the 404, and all nine `*.dc.html` redirect stubs. **Exact rule prepared, see `docs/spec/cloudflare-headers.md`** — not applied; needs the Cloudflare proxy live first. | `[DEV]` | host header config | S | SEC-03.0 |
@@ -427,40 +408,18 @@ The external audit's headline, and its finding is correct. Ranked third anyway: 
 
 ### Phase 10.4 — Build and supply chain `week 4`
 
-No one is targeting this dependency tree specifically. But `deploy.yml` ran with `pages: write` and `id-token: write` and called actions by mutable major tag, so whoever compromised one of those tags could have published arbitrary content to the live domain. That was the most plausible route to actually owning the site, and it would have arrived as collateral damage from an attack on someone else. **SEC-04.1 and SEC-04.2 close that specific gap, shipped 2026-08-11.**
-
 | ID | Task | Tags | Files | Effort | Depends on |
 |---|---|---|---|---|---|
 | **SEC-04.3** | Assert the security headers in CI, same pattern `check-pages.mjs` already uses to guard the prerender against silent regression. Fail the build if CSP loses `frame-ancestors`, if HSTS disappears, or if a reading page acquires `unsafe-eval`. A header that silently stops shipping looks exactly like one that ships. | `[DEV]` | `scripts/check-pages.mjs` | M | SEC-03.1–03.4 |
 
 ### Phase 10.5 — Standing practice `ongoing`
 
-| ID | Task | Tags | Files | Effort | Depends on |
-|---|---|---|---|---|---|
-| **SEC-05.1** | Rotate the four Worker secrets quarterly — in a calendar, not in intentions. Immediately and out of cycle after any device loss. | `[DEV]` | — | S | SEC-00.3 |
-| **SEC-05.2** | Alert on anomalous Resend daily volume — the earliest signal that SEC-01's limits have been outflanked. A low threshold is enough; this is a small list. | `[DEV]` | Resend settings | S | SEC-01.2 |
-| **SEC-05.3** | Retire `'unsafe-eval'` when Practise finally leaves the `dc-runtime`. Four reading pages already shed it via RS-004. Practise is the page that takes user input, so it is where an injection foothold escalating to code execution would actually matter — and the last one still needing it. Interacts with SUGGEST-03 (dead Babel/unpkg path) and the standing decision that Practise keeps the runtime permanently; if that holds, this becomes "document, don't fix." | `[DECISION]` | `Practise.dc.html`, `support.js` | M | — |
-| **SEC-05.4** | Re-run this review after any architecture change. The threat model is a function of the system's shape; contributor uploads, comments, or anything holding material on someone else's behalf changes it enough to need a fresh look. | `[DEV]` | — | S | — |
-
-### Deliberately not doing (considered and rejected on the merits)
-
-Recorded here rather than in the Rejected section because these are *scoped out of Phase 10*, not rejected permanently — several become right if the site grows.
-
-- **Content-hashed asset filenames (audit F-03).** Sound in general, and the audit is right that unhashed URLs permit a mixed release. But live headers show ten-minute freshness with working validators, so the window is small, and the fix is a build-system change. Revisit if the site grows or the freshness lifetime changes.
-- **Migrating off GitHub Pages purely to get headers.** The audit's main structural recommendation. FLAG-08 option (A) achieves the same headers for a fraction of the work. Migration remains live as RS-022 for D6/substrate reasons — which are the *real* reasons to do it, and are not security reasons.
-- **A service worker.** There is none and there should not be. It would add an application-owned cache — a fresh class of staleness bug — to solve a problem that is not occurring. The audit agrees.
-- **reCAPTCHA.** Would work, and profiles readers for a third party to do it. Precisely what this site tells people it does not do. Turnstile instead (SEC-01.3).
-- **`no-store` on HTML.** Reflexive in hardening guides. These pages carry no personalised response data; `no-cache` gives correctness without discarding performance.
-- **Technical defences against legal process.** Out of scope, and worth naming honestly: the likeliest route by which the subscriber list leaves the operator's control is a request to GitHub, Cloudflare, or Resend — not an intrusion. SEC-02's data minimisation is the only real answer and it is a partial one. Belongs in the colophon's limit section, not in a task table.
-
-### What could not be verified here
-
-- **Whether `GITHUB_TOKEN` is a classic PAT** (SEC-00.1) — needs the GitHub settings UI. This is the highest-severity item in the phase and its status is genuinely unknown, not assumed safe.
-- **Whether `rs-dispatch-storage` is private** — a 404 on the raw URL is consistent with private *and* with not-existing-at-that-path. Confirm in settings.
-- **Live rate-limit behaviour under load** — the *logic* is unit-tested against a fake in-memory KV (`worker/test/abuse.test.mjs`, 8 tests: per-IP, per-address, daily cap, Turnstile pass/fail/missing-secret, honeypot bypass, fail-open with no KV bound), which is a real improvement over "not probed at all." What's still unverified is the logic running against **real** Cloudflare KV's actual eventual-consistency behavior under concurrent edge traffic — the tradeoff `worker/src/ratelimit.js`'s own comment already names as accepted. Sending real traffic at the production endpoint, which sends real email to real addresses, is not a safe thing to do from here regardless; the loop in SEC-01's verification block is for the operator to run against addresses they control, after the KV namespace and Turnstile keys are both live.
-- **Whether GitHub Pages emits HSTS with "Enforce HTTPS" enabled for custom domains.** Absent in the capture; whether that reflects the setting being off or Pages not sending it for custom domains was not established. Worth one look before assuming (A) or (B) is required.
-
----
+| ID | Task | Tags |
+|---|---|---|
+| **SEC-05.1** | Rotate the five Worker secrets quarterly — in a calendar, not in intentions. | `[ACCOUNT]` |
+| **SEC-05.2** | Alert on anomalous Resend daily volume. | `[ACCOUNT]` |
+| **SEC-05.3** | Retire `'unsafe-eval'` when Practise leaves the `dc-runtime`. If the standing decision that Practise keeps the runtime holds, this becomes "document, don't fix." | `[DECISION]` |
+| **SEC-05.4** | Re-run the security review after any architecture change. | `[DEV]` |
 
 ## Phase 11 — Heuristic and source/DOM audit (external, 2026-08-13)
 
@@ -983,36 +942,65 @@ No new rows here. **`HUGO2-01` (Contribute) → `HUGO2-02` (Home) → `HUGO2-03`
 
 ---
 
+## Phase 14 — Term genealogy and discoverability (author-supplied brief, 2026-08-16)
+
+*(Source: a research brief on tracing the history of "relational sovereignty" and making the site findable for it. Not in `docs/` — same pattern as the Phase 9, 10, 11 and 12 sources. **Add it to `docs/external/`.** IDs continue the `SEO-` series from Phase 7.)*
+
+**The core of this is scholarship the site's own citation ethic already implies, not an SEO tactic.** Learn names where this project got the term — "the sense borrowed from Matthew Wildcat and, independently, from work on assistive technology" — but the site carries no genealogy anywhere: nothing separating *where we found the phrase* from *where the phrase came from*. On a site whose stated ethic is not putting claims in people's mouths, and which already publishes a fault list, that is a real gap. Filling it also happens to be the strongest available move for ranking on the exact phrase. Do it because it is owed; take the ranking as a side effect.
+
+**The brief's own timeline is wrong in at least two places, found by spot-checking two of its rows.** This is why SEO-04 gates the phase and why nothing from the brief may be pasted in as given:
+
+- It attributes Stacy's 2003 article to *Law & Social Inquiry*. Preliminary checking points to ***Stanford Law Review*** — 55 Stan. L. Rev. 2029 (2003).
+- It presents "2003 vs 2005" as one article with a date to resolve. They appear to be **two separate publications** — the 2003 Stanford piece, and a shorter 2005 article of the same title in *Proceedings of the ASIL Annual Meeting* 99, 396–400.
+
+Both corrections are themselves search-derived and **still need confirming against publisher or DOI metadata** before anything ships — the same standard every Archive entry is held to. The brief's other rows (D'Arcangelis 2010, Bannerman 2024, Hester 2001 as a precursor that may never use the phrase) are unchecked.
+
+**Four claims the page has to keep apart,** which the brief gets right and which collapsing into "X coined it" is the failure mode of: first documented use of the exact phrase · first definition of the concept · earlier precursors using different words · later applications in other fields.
+
+### 14.0 — Verify first `gates everything below`
+
+| ID | Task | Tags | Effort |
+|---|---|---|---|
+| **SEO-04** | Build the citation table: year, author, discipline, exact wording, whether they define the term or merely cite it, the page it first appears on, and any predecessor they cite. Confirm every date and journal against publisher/DOI metadata, not search summaries. | `[VERIFY]` | M |
+
+### 14.1 — The page
+
+| ID | Task | Tags | Effort | Depends on |
+|---|---|---|---|---|
+| **SEO-05** | Decide where the genealogy lives: a new `/relational-sovereignty/` page, or a section of Learn. If a new page — primary nav as a 9th item, or reachable from Learn, Archive and the footer only? **Recommendation: build the page, keep it out of the primary nav** — eight items is already the product of an IA *simplification* pass (Phase 2.5), and a ninth is a real cost for a page that can be reached contextually. | `[DECISION]` | XS |
+| **SEO-06** | Write it. Definition in the opening paragraph, dated timeline, the separate scholarly lineages named as separate, uncertainty stated plainly where it exists, every citation carrying a DOI or stable link. | `[COPY]` `[DEV]` | M | SEO-04, SEO-05 |
+
+### 14.2 — Copy this research may correct
+
+| ID | Task | Tags | Effort | Depends on |
+|---|---|---|---|---|
+| **SEO-07** | Learn's four-senses section is accurate about *this site's* source and silent on whether the phrase predates Wildcat. If SEO-04 shows it does, say so — one clause, not a rewrite. | `[COPY]` | XS | SEO-04 |
+| **SEO-08** | Archive's Wildcat entry — same distinction, if the genealogy warrants it. | `[COPY]` | XS | SEO-04 |
+
+### 14.3 — Discoverability plumbing `unblocked`
+
+| ID | Task | Tags | Effort | Depends on |
+|---|---|---|---|---|
+| **SEO-09** | Google Search Console: verify ownership by DNS TXT, submit `sitemap.xml`, then read what the site actually ranks for. Adds no script, no cookie, no third-party request to any page. **Absent from the brief, and the highest-leverage item in this phase.** | `[ACCOUNT]` | S | — |
+| **SEO-10** | Add `datePublished` / `dateModified` to the existing Article JSON-LD. Real dates only. | `[DEV]` | S | — |
+| **SEO-11** | Internal links to the genealogy page using "relational sovereignty" as the anchor text, from Learn, Archive, and Behind the Scenes. | `[DEV]` | XS | SEO-06 |
+| **SEO-12** | Run the new page through the existing gates: `robots.txt` allow (reading-page policy, **not** the Practise/Contribute `noindex` pattern), `sitemap.xml` entry, self-referencing canonical, content present in prerendered HTML, mobile parity. | `[DEV]` | S | SEO-06 |
+
+**Not doing, and why.** A named-person `author` in the Article schema is FLAG-04, standing answer **no** — the anonymous commons is deliberate, and the brief's sample JSON-LD assumes otherwise. Search-volume estimation from Trends ratios is deprioritised: approximate by the brief's own admission, and it changes nothing about what gets built. The brief also assumes Netlify hosting; this site is GitHub Pages behind Fastly, and pending SEC-03.0, Cloudflare — its technical checklist needs translating, not pasting.
+
+---
+
 ## Parked / backlog
 
-| ID | Task | Reason parked |
+| ID | Task | Tags |
 |---|---|---|
 | **RS-018** | Plain-language edition + translation pipeline | Large, no current translator capacity |
 | **RS-019** | Name the state machinery (Indian Act, residential schools, Sixties Scoop, child apprehension, immigration sponsorship, marriage law, guardianship, benefits conditionality) on relevant Learn topic pages | Large `[COPY]` lift, not urgent relative to Phase 1–3 |
 | **RS-040** | The Consent Domains Map's seventeen general domains carry no cited source — checked specs, audits, and the changelog on 2026-08-15, found none. Only the later three-domain addition (RS-028, Access Intimacy & Body Support) is attributed, to the disability-justice lineage already on the archive shelf. Either name a source or state in Behind the Scenes / the fault list that the domain list was assembled for this project rather than adapted from one named exercise. | Needs the author's memory of where it came from, not something findable in the repo |
 
----
+## Suggestions
 
-## Rejected (kept for the record — do not re-propose)
-
-Per `docs/spec/addendum-a.md` §1 and §6:
-
-- **Home limit #3 revision ("a necessary first step in picking up your bundle")** — inverts the site's own anti-appropriation guardrail; uses an unsourced, nation-specific ceremonial term as a general metaphor for settler self-work; creates an indefinite-deferral structure ("prerequisite," "doorway"); contradicts adjacent copy on the same page. **No change to Home limit #3** stands as the resolution (D10) — one outbound link added instead.
-- **Thesis 16 as originally drafted** ("de-colonizing your relationships," "staging ground," "trustworthy ally") — same deferral problem. Salvaged as RS-034 without the metaphor.
-- **"Third-Party Triangulation"** as the Repair Protocol's step-3 name — names a dysfunctional clinical pattern; renamed "Pods and stewards" (RS-029).
-- **Prescribed 4-7 breathing + interoceptive "are your shoulders tense?" check as the grounding default** — not universally safe, inaccessible to the alexithymic/autistic users the same spec's non-verbal-mode section exists to include. Rewritten in RS-032.
-- **"If dysregulated, stop here"** — reproduces the same self-diagnosis error RS-001 exists to remove.
-- **The Non-Abandonment Clause as originally drafted** ("without executing a responsible, community-supported transition plan") — creates a duty to stay that is directly quotable by a controlling partner against someone trying to leave. Rewritten as RS-030.
-- **Polyvagal theory, shelved with the dispute named (Addendum A's original recommendation)** — Decision Record D13 further tightens this to full omission; a starter shelf doesn't need to carry a theoretical dispute it can avoid entirely.
-- **Mailing list → RSS/Atom + mailto (Decision Record D5, and RS-021 as originally scoped)** — **overridden by explicit author decision, 2026-08-07.** See Resolved decisions log at the top of this file.
-
----
-
-## My suggestions (raised during codebase familiarization, 2026-08-07)
-
-Not in any spec document — surfaced from reading `support.js`, the build scripts, and the Worker source directly.
-
-| ID | Suggestion | Rationale |
+| ID | Task | Tags |
 |---|---|---|
 | **SUGGEST-03** | Evaluate removing the dormant Babel/unpkg CDN path in `support.js` (`BABEL_URL = "https://unpkg.com/@babel/standalone@..."`, loaded only if a page ever uses `x-import` with a `.jsx`/`.tsx` module). No current page uses it, and RS-020's CSP (now shipped) does **not** allow-list unpkg.com anywhere — deliberately, since no page currently needs it. If this code path is ever triggered, it will hit a CSP violation rather than silently working around one, which surfaces the dead-code question at the moment it'd matter instead of before. Dead code still contradicts D2's stated preference for "no supply chain, nothing to rot." | `Practise.dc.html` is now the only page still on the runtime and it never needs JSX import, so this capability may be safe to delete outright. Needs a decision, not just a fix — flagging here rather than acting unilaterally. |
 | **SUGGEST-06** | Consider routing the dispatch Worker behind a same-origin path (e.g. `relationalsovereignty.com/api/*` via the eventual host's routing, if RS-022's host supports it) rather than a bare `*.workers.dev` subdomain. | Would tighten SUGGEST-05's CSP carve-out to same-origin and remove the one cross-origin `fetch` the site currently makes, strengthening the "zero third-party requests" claim rather than just disclosing around it. Depends on RS-022's hosting decision, so sequenced after Phase 2. **Update 2026-08-11:** FLAG-08 option (A) would make this nearly free — proxying the site through Cloudflare puts the Worker and the pages on one origin, so `/api/*` routing becomes configuration rather than a migration. If (A) is chosen, do this at the same time and drop the `connect-src` carve-out entirely. |
@@ -1020,9 +1008,11 @@ Not in any spec document — surfaced from reading `support.js`, the build scrip
 
 ---
 
-## Verification queue (consolidated `[VERIFY]` tracker)
+## Housekeeping
 
-Bulk list, independent of phase, so link/citation verification can be worked in parallel with dev/copy work. **Never guess — leave blank and named per the site's existing practice if a stable link can't be found.**
+| Task |
+|---|
+| Add the externally-supplied source documents to the repo: the `Website Cache & Clickjacking Security Audit` (Phase 10) and `design-review-2026-08-10.md` (Phase 9). Both were pasted into sessions and never committed; both phases record their findings, but the originals are gone. |
 
 **The three bulk archive-link passes are all complete** — RS-015's ~20 corrections, the eighteen new entries for RS-006/007/016/033, and RS-040's five. Every entry was fetched or Crossref-confirmed rather than trusted from the draft. Full records, including the two judgement calls (Hemphill counted once, not twice; the two "brown" entries are different books by the same author), are in `completed.tasks.md`. Struck rows removed here 2026-08-13.
 
@@ -1035,52 +1025,52 @@ Bulk list, independent of phase, so link/citation verification can be worked in 
 
 ## Definition of Done / QA checklist
 
-Applies to every page, every release — from `docs/spec/base-work-order.md` §7, unchanged:
+Every page, every release. From `docs/spec/base-work-order.md` §7.
 
-- [x] Renders with JavaScript disabled — Manifesto, Learn, Archive, Resources, BehindTheScenes all confirmed (RS-004, done). Home, Practise, Contribute, index.html remain runtime-dependent by design (Home/Contribute have live interactive forms; Practise is the tool)
+- [x] Renders with JavaScript disabled — the six reading pages. Home, Practise, Contribute are runtime-dependent by design
 - [ ] No duplicate content in the DOM
-- [ ] Zero external network requests on load, except the disclosed dispatch Worker call on user-initiated form submit (devtools Network, 3rd-party filter)
-- [ ] No storage API called except where explicitly disclosed (Application → Local Storage / Session Storage / Cookies)
-- [ ] CSP header present (or meta-CSP if host requires it) and not reporting violations — **note (2026-08-11): the parenthetical is not a full substitute.** Meta-CSP carries every directive this site currently uses, but browsers ignore `frame-ancestors` in meta delivery, so anti-framing cannot ship until SEC-03 resolves. Verified absent on the live site, not assumed.
-- [ ] Page weight stated accurately in the colophon (see SUGGEST-01 — don't just re-assert "under 60 KB" without checking)
-- [ ] All outbound links resolve; no external link resolved relative to site root
+- [ ] Zero external requests on load, except the disclosed Turnstile widget and the dispatch Worker on user-initiated submit
+- [ ] No storage API called except where disclosed
+- [ ] CSP present and not reporting violations — meta CSP cannot carry `frame-ancestors`; anti-framing waits on SEC-03
+- [ ] Page weight stated accurately in the colophon
+- [ ] All outbound links resolve
 - [ ] Prints cleanly
-- [x] Skip link reaches `#main-content` — verified with a real keyboard-navigation test (Practise): first Tab focuses it, activating it lands the very next Tab on the interstitial's first button, not somewhere in the header nav
+- [x] Skip link reaches `#main-content`
 - [ ] Heading order sequential, no skipped levels
 - [ ] `prefers-reduced-motion` honoured
-- [x] Reflow at 320px, no horizontal scroll except the documented Archive diagram (with text equivalent) — checked via `responsive-audit.mjs` across 320/375/768/1280/1920px on every page; the Archive diagram's three lists now carry `aria-labelledby`/a hidden label naming their category, verified by resolving the reference in a live DOM, not just present in markup
-- [ ] Screen-reader pass on ≥2 of NVDA/Firefox, JAWS/Chrome, VoiceOver/Safari, TalkBack/Chrome — **not done, needs a human tester with real assistive technology; nothing in this session substitutes for it**
+- [x] Reflow at 320px, no horizontal scroll except the documented Archive diagram
+- [ ] Screen-reader pass on ≥2 real AT setups — **needs a human tester**
 - [ ] Every diacritic checked against the notdef box on the target platform
 
-**Practise page specifically:**
-- [ ] RS-001/032 sequence cannot be bypassed by disabling JavaScript once RS-004 principles apply here too, or is explicitly documented as the one page still requiring the runtime
+**Practise:**
+- [ ] RS-001/032 sequence cannot be bypassed, or is documented as requiring the runtime
 - [ ] Resources link present on every interstitial step
-- [x] Nothing typed is transmitted or persisted (except an explicit, warned RS-027 export action) — RS-027 shipped: export is a direct user click only (no auto-save, no timer), a non-dismissible warning sits above the control, there is no `localStorage` anywhere in the file, and resume works only by re-importing a file the user chose to keep. Verified with real Playwright interaction (mouse and keyboard-triggered export, a round-trip import, and a malformed-file import that errors without wiping existing state), not just read off the markup.
+- [x] Nothing typed is transmitted or persisted, except an explicit warned export
 - [ ] Back-navigation leaves no partial state visible
-- [ ] Still disallowed in robots.txt, and `noindex`'d (SUGGEST-02)
+- [ ] Still disallowed in robots.txt and `noindex`'d
 
-**Resources page specifically:**
-- [ ] Every entry has a `verified` date within the last 90 days
+**Resources:**
+- [ ] Every entry `verified` within 90 days
 - [ ] Every link resolves to the organisation's own domain
 - [ ] Jurisdictional scope stated at the top
 - [ ] Allowed to every crawler, in sitemap, reachable from the footer
 
-**Dispatch form specifically (both instances — Home + Contribute):**
-- [x] Colophon discloses the Worker/Resend/GitHub-storage architecture accurately (RS-021 rescoped, done) — four substrate rows name the Worker as self-operated processor, Resend's transactional-only role, the private-repo/AES-256-GCM storage, and the aggregate-only interest data; Home/Contribute copy no longer claims no processor exists
-- [ ] Honeypot remains `aria-hidden`, `tabindex="-1"`, `autocomplete="off"`, doesn't trip password managers
-- [x] Confirm/unsubscribe links resist prefetch-triggered false actions (SEC-02.3, done 2026-08-11 — was SUGGEST-04) — proven in `worker/test/flow.test.mjs`: a bare GET to either endpoint writes nothing and sends no email; only a POST (the button's real target) acts
-- [ ] `/api/subscribe` refuses a burst from one address and from one IP (SEC-01.1), and the daily ceiling holds (SEC-01.2) — logic unit-tested against a fake KV (`worker/test/abuse.test.mjs`); behaviour against real Cloudflare KV under real concurrent traffic is not yet verified, and can't be until the Worker is actually deployed
-- [x] A freshly issued confirm token decodes to an opaque ID and nothing else — no address, no name, no interests (SEC-02.1) — `worker/test/flow.test.mjs` decodes a real token and asserts its keys are exactly `{id, t}`
-- [x] The double opt-in claim is literally true: a link fetched by a scanner does not confirm anyone (SEC-02.3) — `worker/test/flow.test.mjs` proves a bare GET writes nothing and sends no email on either endpoint
-- [x] Whatever was decided about git history (SEC-02.2) matches what the unsubscribe email and the fault list say — decided 2026-08-11 (keep as-is, disclose); fault 05's title and body rewritten to state the decision, and the removal confirmation page's own copy ("You've been removed. Nothing further will be sent.") was already accurate under this decision without needing a change
+**Dispatch form (Home + Contribute):**
+- [x] Colophon discloses the Worker/Resend/GitHub-storage architecture accurately
+- [ ] Honeypot stays `aria-hidden`, `tabindex="-1"`, `autocomplete="off"`
+- [x] Confirm/unsubscribe links resist prefetch-triggered false actions
+- [ ] `/api/subscribe` refuses a burst from one address and one IP; the daily ceiling holds — unit-tested, not yet verified against real KV
+- [x] A confirm token decodes to an opaque ID and nothing else
+- [x] The double opt-in claim is literally true
+- [x] The git-history decision matches what the fault list and removal page say
 
-**Security posture, every release:**
-- [ ] No secret in the repo, in `wrangler.toml`'s `[vars]`, or in a build log — `[vars]` is public config by design; the four secrets stay in `wrangler secret`
-- [ ] `GITHUB_TOKEN` is fine-grained, single-repo, `contents:write`, and unexpired (SEC-00.1)
-- [ ] Every `uses:` in both workflows pins a 40-char SHA (SEC-04.1)
-- [ ] Response headers present and unregressed: `frame-ancestors`, HSTS, `nosniff`, `Referrer-Policy` (SEC-03, asserted in CI by SEC-04.3)
-- [ ] Per-page CSP scoping intact — no reading page has acquired `unsafe-eval` or the Worker origin (SEC-03.4)
-- [ ] The live domain serves the commit the deploy thought it shipped (SEC-04.4)
+**Security, every release:**
+- [ ] No secret in the repo, in `wrangler.toml`'s `[vars]`, or in a build log
+- [ ] `GITHUB_TOKEN` is fine-grained, single-repo, `contents:write`, unexpired
+- [x] Every `uses:` in both workflows pins a 40-char SHA
+- [ ] Response headers present and unregressed
+- [ ] Per-page CSP scoping intact — no reading page has acquired `unsafe-eval` or the Worker origin
+- [x] The live domain serves the commit the deploy thought it shipped
 
 ---
 

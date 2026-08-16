@@ -17,13 +17,13 @@ const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 
 // The dispatch Worker is the one legitimate cross-origin fetch on the
 // site (Home + Contribute's signup forms) — see SUGGEST-05/RS-020 in
-// tasks.md. It's called from JS as a string, never as an href/src, so
+// completed.tasks.md. It's called from JS as a string, never as an href/src, so
 // it never appears as a match below; listed here only so a reviewer
 // scanning this file for the allowlist finds it in one place.
 const KNOWN_CROSS_ORIGIN_FETCH = "https://rs-dispatch-worker.rssite.workers.dev";
 
 // Cloudflare Turnstile: the one <script src> allowed off-origin, and
-// only on Home and Contribute (see tasks.md SEC-01.3). Added after an
+// only on Home and Contribute (see SEC-01.3 in completed.tasks.md). Added after an
 // external security audit and an independent review both found the
 // signup endpoint had no defense against being used to send unwanted
 // email to a stranger's address at scale — a real new third-party

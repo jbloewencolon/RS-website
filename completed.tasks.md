@@ -1,6 +1,8 @@
 # Relational Sovereignty — Completed Tasks
 
-Append-only log. When a task moves out of `tasks.md`, add an entry here in the site's own changelog register — `~~was:~~` / `now:` — plus the task ID, the date, and the commit or PR it shipped in. Don't delete or rewrite past entries; if a completed task is later found wanting, note that as a new entry pointing back at this one, the same way `Colophon.dc.html`'s change log handles corrections.
+Append-only log of **shipped work**. When a task moves out of `tasks.md`, add an entry here in the site's own changelog register — `~~was:~~` / `now:` — plus the task ID, the date, and the commit or PR it shipped in. Don't delete or rewrite past entries; if a completed task is later found wanting, note that as a new entry pointing back at this one, the same way `Colophon.dc.html`'s change log handles corrections.
+
+**Sibling files:** `tasks.md` holds open work only, one line per task. `archived.tasks.md` holds what was rejected, parked, or resolved-as-a-decision, plus the detailed reference notes for open tasks. Work that *shipped* belongs here, not there.
 
 This file is a working log, not the public-facing changelog — but entries here should be written so they could be trimmed straight into `Colophon.dc.html`'s `log` array with minimal editing, since that's where the finished, user-facing version of this record belongs.
 
