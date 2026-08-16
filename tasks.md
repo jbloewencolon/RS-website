@@ -572,28 +572,25 @@ No new rows. `HUGO2-01` (Contribute) → `HUGO2-02` (Home) → `HUGO2-03` (Pract
 
 **14.0 shipped 2026-08-16 — see `docs/research/relational-sovereignty-genealogy.md` and `completed.tasks.md`.** Full citation table, every entry checked against Crossref/JSTOR/Cambridge Core. Two findings beyond the brief's own list, both flagged rather than asserted: a 2001 John Hoffman chapter titled "A Relational View of Sovereignty" that may (unconfirmed — paywalled, no full text reachable) predate Stacy as the first exact-phrase use; and a 2026 CHI paper (Jang/Carrington/Begel) that is the strongest found candidate for the site's own "independently, from work on assistive technology" line, though no source doc on this site names it.
 
-### 14.1 — The page
+### 14.1 — The page `shipped 2026-08-16`
 
-| ID | Task | Tags | Effort | Depends on |
-|---|---|---|---|---|
-| **SEO-05** | Decide where the genealogy lives: a new `/relational-sovereignty/` page, or a section of Learn. If a new page — primary nav as a 9th item, or reachable from Learn, Archive and the footer only? **Recommendation: build the page, keep it out of the primary nav** — eight items is already the product of an IA *simplification* pass (Phase 2.5), and a ninth is a real cost for a page that can be reached contextually. | `[DECISION]` | XS |
-| **SEO-06** | Write it. Definition in the opening paragraph, dated timeline, the separate scholarly lineages named as separate, uncertainty stated plainly where it exists, every citation carrying a DOI or stable link. | `[COPY]` `[DEV]` | M | SEO-04, SEO-05 |
+**SEO-05 answered by the author: fold into Learn, no new page.** SEO-06 shipped the same day — a new box in Learn's "Four things this word is doing" pocket (`#sovereignty-senses`), right after the four-senses grid and before the Alfred objection box. States Stacy 2003 predates Wildcat by seventeen years, names the Jang/Carrington/Begel 2026 paper as the strongest found candidate for "work on assistive technology" with the honest caveat that no source document names it directly, and links both directly to their sources (JSTOR, DOI) rather than to `docs/research/` — a repo path isn't a citation a reader can follow. See `completed.tasks.md`.
 
-### 14.2 — Copy this research may correct
+### 14.2 — Copy this research may correct `done`
 
-| ID | Task | Tags | Effort | Depends on |
-|---|---|---|---|---|
-| **SEO-07** | Learn's four-senses section is accurate about *this site's* source and silent on whether the phrase predates Wildcat. If SEO-04 shows it does, say so — one clause, not a rewrite. | `[COPY]` | XS | SEO-04 |
-| **SEO-08** | Archive's Wildcat entry — same distinction, if the genealogy warrants it. | `[COPY]` | XS | SEO-04 |
+**SEO-07 shipped as part of SEO-06** — the new box states the predates-Wildcat fact directly, which was the one clause this row asked for. **SEO-08 reviewed, no change made:** Archive's Wildcat entry (`hugo/data/archive.yaml`) describes what Wildcat's article argues, not when the phrase originated — it makes no priority claim to correct. Also: Archive's `why` field renders via `{{ .why }}`, HTML-escaped by design, so it cannot carry an inline link without a template change (`safeHTML`) that widens that field's injection surface — out of proportion to what this row asked for.
 
 ### 14.3 — Discoverability plumbing `unblocked`
 
 | ID | Task | Tags | Effort | Depends on |
 |---|---|---|---|---|
 | **SEO-09** | Google Search Console: verify ownership by DNS TXT, submit `sitemap.xml`, then read what the site actually ranks for. Adds no script, no cookie, no third-party request to any page. **Absent from the brief, and the highest-leverage item in this phase.** | `[ACCOUNT]` | S | — |
-| **SEO-10** | Add `datePublished` / `dateModified` to the existing Article JSON-LD. Real dates only. | `[DEV]` | S | — |
-| **SEO-11** | Internal links to the genealogy page using "relational sovereignty" as the anchor text, from Learn, Archive, and Behind the Scenes. | `[DEV]` | XS | SEO-06 |
-| **SEO-12** | Run the new page through the existing gates: `robots.txt` allow (reading-page policy, **not** the Practise/Contribute `noindex` pattern), `sitemap.xml` entry, self-referencing canonical, content present in prerendered HTML, mobile parity. | `[DEV]` | S | SEO-06 |
+
+**SEO-10 shipped 2026-08-16** — `datePublished`/`dateModified` added to all six reading pages' Article JSON-LD, sourced from each page's actual git history (first and most recent commit touching its `hugo/layouts/*.html` template), not invented. Home, Practise, and Contribute carry no Article block to date — unchanged, consistent with SEO-01's original reading-pages-only scope.
+
+**SEO-11 partially shipped.** Learn's new box links out to its own two sources; it doesn't need to link to itself. Cross-links *from* Archive and Behind the Scenes are still open — Archive's structural block (above) applies here too, and Behind the Scenes has no existing sentence that mentions the term in a context a link would fit without adding new prose nobody asked for.
+
+**SEO-12 verified 2026-08-16.** `npm run check` green: Learn's Hugo output matches source, page weight within tolerance (Archive now 131.5 KB, still inside the colophon's stated range), no CSP/console errors on the two new outbound links (JSTOR, DOI — `<a href>` targets are exempt from `connect-src` by construction). No new page, so `robots.txt`/`sitemap.xml`/canonical were already correct and untouched.
 
 **Not doing, and why.** A named-person `author` in the Article schema is FLAG-04, standing answer **no** — the anonymous commons is deliberate, and the brief's sample JSON-LD assumes otherwise. Search-volume estimation from Trends ratios is deprioritised: approximate by the brief's own admission, and it changes nothing about what gets built. The brief also assumes Netlify hosting; this site is GitHub Pages behind Fastly, and pending SEC-03.0, Cloudflare — its technical checklist needs translating, not pasting.
 
