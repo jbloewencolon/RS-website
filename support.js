@@ -170,9 +170,37 @@
     // commit replaces it — so the page paints real content immediately,
     // and non-JS readers plus AI/search crawlers (which do not run JS)
     // get the full page instead of an empty shell. See scripts/prerender.mjs.
-    const hostEl = doc.getElementById("dc-root") || doc.createElement("div");
+    //
+    // hydrateRoot() was tried here instead of the createRoot() below, to
+    // attach to that prerendered markup in place rather than discarding
+    // and rebuilding it. Reverted: React's own hydration check compares
+    // the captured markup against a fresh render and finds it mismatched
+    // on every element with an inline style (prerender.mjs captures
+    // innerHTML, which the browser re-serializes — hex colours become
+    // rgb(), quotes and spacing change — so the "same" style string never
+    // byte-matches what a fresh render produces) plus a handful of
+    // un-camelCased DOM props this runtime's own attribute mapping
+    // doesn't cover yet (tabindex, autocomplete). Both are pervasive
+    // enough that hydration fails outside any Suspense boundary and React
+    // falls back to a full client re-render anyway — the same replace as
+    // createRoot(), now also logging real errors on every load. Left as
+    // createRoot(); revisit once the runtime itself emits hydration-safe
+    // markup.
+    const prerendered = doc.getElementById("dc-root");
+    const hostEl = prerendered || doc.createElement("div");
     hostEl.id = "dc-root";
-    dc.replaceWith(hostEl);
+    if (prerendered) {
+      // Still worth keeping on its own: leave the prerendered root where
+      // the build placed it rather than running it through
+      // dc.replaceWith(hostEl), which used to detach and reattach it
+      // even though createRoot() was about to discard its contents
+      // anyway. x-dc is already display:none on any page with
+      // prerendered content (see scripts/prerender.mjs), so the raw
+      // template node can just be dropped.
+      dc.remove();
+    } else {
+      dc.replaceWith(hostEl);
+    }
     if (!parsed.preview) {
       const s = doc.createElement("style");
       s.textContent = FULL_PAGE_CSS;
