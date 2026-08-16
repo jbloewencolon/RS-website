@@ -1,7 +1,40 @@
 # The understory — botanical visual system
 
-**Status:** proposed. Nothing here is built yet; no shipped page has changed.
-**Companion:** `scripts/botanical-gen.mjs` (the drawing generator).
+**Status:** Phase 0 shipped 2026-08-16. The mechanism exists on every page;
+nothing draws yet. Phases 1–4 are still proposals.
+**Companion:** `scripts/botanical-gen.mjs` (the drawing generator),
+`/botanical.js` (the runtime), `scripts/check-botanical.mjs` (its tests).
+**Phase 12 in `tasks.md` is the ratified plan** and its `BM-nn` IDs are
+authoritative where the two differ; §9 below maps this document's phases
+onto them.
+
+## 0. Removing this layer
+
+Two ways out, both cheap, both deliberate.
+
+**Switch it off** — set `ENABLED = false` at the top of `/botanical.js`.
+One line, one file, no rebuild. Nothing is injected on any page and the
+`BM` global is never created. The ~1 KB of CSS stays but matches nothing.
+
+**Delete it entirely** — three steps:
+
+1. `rm botanical.js`
+2. delete the `botanical:start … botanical:end` region in
+   `hugo/layouts/partials/head-base.html` (it is a `{{/* … */}}` Go
+   template comment, not a CSS one — Go strips CSS comments, which that
+   partial's own header explains)
+3. `npm run build:hugo`
+
+Optionally also `rm scripts/botanical-gen.mjs scripts/check-botanical.mjs`
+and drop the `check:botanical` line from `package.json`.
+
+**Nothing is orphaned by this, by design.** No page contains botanical
+markup: `/botanical.js` builds every container itself from a recipe table
+keyed by pathname. There is no `data-bo` attribute, no `.bo-layer` div and
+no wrapper element authored into any of the nine pages, so a deleted layer
+leaves nothing behind to find later. Passing `"botanical" false` to the
+head-base partial is a third, softer option: it strikes the CSS everywhere
+while leaving the code in place.
 **Read alongside:** `docs/design-palette.md` (§ "Deliberate exceptions"),
 `docs/web-design.md` §1 (build architecture), `docs/audits/design-review-2026-08-10.md`.
 
@@ -158,16 +191,55 @@ severed stem→rust (where the framework fails).
 
 ## 9. Phased plan
 
-### Phase 0 — Foundations · *no visible change*
-Register, tokens and delivery, with nothing switched on. Add the `.bo-*`
-classes, both ground calibrations and the motion rules to
-`hugo/layouts/partials/head-base.html` (one-file edit, reaches all nine
-pages). Create `/botanical.js`. Teach `prerender.mjs` to strip
-`[data-bo]`. Reconcile the weight colophon. Add §7 above to
-`docs/design-palette.md`.
+### Phase 0 — Foundations · *no visible change* — **SHIPPED 2026-08-16**
+*(= BM-06, BM-07 mechanism, BM-08.)*
 
-**Done when:** `npm run check` green including `checkPageWeight` and the
-base-block drift test; rendered pages byte-identical apart from new CSS.
+What shipped:
+
+- **Shared CSS register** in `hugo/layouts/partials/head-base.html`, between
+  Go-template markers. `+964 bytes per page`, measured, identical on all
+  nine. Uniform by necessity, not by preference: `sync-base.mjs` asserts
+  the three hand-authored pages match Archive's block byte-for-byte, so a
+  per-page variant would break that invariant.
+- **`/botanical.js`** — the `BM.register`/`BM.init` API, a path-keyed
+  recipe table, `IntersectionObserver` reveal, stagger applied at mount,
+  the `ENABLED` kill switch, the prerender guard. **No page loads it and
+  the recipe table is empty**, so Phase 0 adds no request and draws
+  nothing.
+- **Prerender guard** (BM-C6): `prerender.mjs` sets `__RS_PRERENDER__`,
+  which the layer checks and declines to run under; it also strips
+  `.bo-layer` before capture as a second line of defence. Verified by
+  diffing `_site/` — zero injected containers.
+- **Colophon** (BM-08): range and script figures corrected against
+  measurement, the *"no images, no icon fonts, no video"* clause removed
+  on the author's instruction, shipped in the same commit as the code.
+
+Two things found while building, both now fixed in place:
+
+- **A `started` flag made `BM.register()` inert after boot**, and would
+  have blocked exactly the re-mount that Home, Practise and Contribute
+  need after the runtime discards their subtree (BM-C5). Replaced with a
+  presence test — re-mount if the container is gone, skip if it is still
+  standing — which makes `init()` safe to call repeatedly and fixes the
+  runtime case as a side effect.
+- **The site's CSP (`script-src 'self'`) refuses inline scripts**, so the
+  layer has to be a real same-origin file. It is. The test harness had to
+  be rewritten to fetch it the same way a page does.
+
+**Verified:** `npm run check` green including `checkPageWeight`
+(Invitation 20.8 KB – Archive 131.4 KB) and the base-block drift test;
+`npm run check:botanical` 14/14 — mount, `aria-hidden`, non-focusable,
+`pointer-events:none`, nothing tabbable, scroll-draw, kill switch,
+prerender guard, and reduced motion resolving to the complete drawing with
+no partial stems. The only two failures in `npm run check` are the
+pre-existing `ERR_CONNECTION_RESET` on Home and Contribute, which this
+sandbox produces by blocking Cloudflare Turnstile; confirmed identical on
+a clean tree.
+
+**Not done, deliberately:** no paragraph was added to
+`docs/design-palette.md`. Phase 0 originally proposed one; the author's
+instruction was to leave that file alone. The decision is recorded in
+`tasks.md` under 12.0 instead, which is what BM-01 asks for.
 
 ### Phase 1 — Home · *the proof*
 Every surface type the site owns appears on this one page. Retire

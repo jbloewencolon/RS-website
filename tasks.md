@@ -820,9 +820,40 @@ None of these is in the document, all three are load-bearing, and all three are 
 
 ### 12.0 — Answer the two questions `blocks everything below`
 
+> **BM-01 answered by the author, 2026-08-16: yes.** The layer ships, and
+> the copy that made it a contradiction came out rather than the layer
+> being argued into compliance. The colophon's page-weight row no longer
+> claims *"no images, no icon fonts, no video"* — see **BM-08** below,
+> where that copy change shipped in the same commit as the code, as
+> **BM-C7** requires.
+>
+> Two things this decision deliberately did **not** do, both on the
+> author's instruction, and both worth stating so a later reader does not
+> "fix" them:
+>
+> - **`docs/design-palette.md` is untouched.** Its governing rule — *"a
+>   design that signals warmth while leaving power unmapped has produced
+>   decoration, not sovereignty"* — stands, and so does the four-register
+>   scheme. The botanical layer is simply outside it (see
+>   `docs/understory-visual-system.md` §7), the same way Manifesto and
+>   Invitation already are.
+> - **Learn's closing caution is untouched.** The sentence
+>   `docs/design-palette.md` quotes lives at `hugo/layouts/learn.html:925`
+>   and is an argument about relationships and power, not about site
+>   ornamentation. It was raised as a removal candidate and explicitly
+>   kept.
+>
+> **BM-02 is not answered, and does not block what shipped.** The built
+> layer introduces **zero** new colour values: one ink per ground, drawn
+> from the existing palette (`#0F2A2E` on paper, sage on dark), at 6.8%
+> and 17%. That is FLAG-12 option (A) by construction, so the register
+> collision the flag describes cannot arise — there is no red-family form
+> to read as the rust register. BM-02 becomes live again only if bloom
+> hues are ever wanted.
+
 | ID | Task | Tags | Effort | Depends on |
 |---|---|---|---|---|
-| **BM-01** | **FLAG-12, editorial half.** Does this site want a layer whose stated job is to have no job? Answer on the record — a line in `docs/design-palette.md` or the colophon, not a commit message. If the answer is no, close Phase 12 here and keep the document as the record of a good idea that lost to the site's own austerity. | `[DECISION]` | — | — |
+| ~~**BM-01**~~ | ~~**FLAG-12, editorial half.** Does this site want a layer whose stated job is to have no job?~~ **Answered 2026-08-16 — yes, see above.** | `[DECISION]` | — | — |
 | **BM-02** | **FLAG-12, palette half.** Pick (A) line-and-green only, (B) blooms but never on a register-coded page, or (C) an admitted non-semantic family in `docs/design-palette.md`. **(B) is the recommendation** — it keeps the flowers, needs no palette rewrite, and costs only Home's signature composition, which is the one place the collision is sharpest. | `[DECISION]` | — | BM-01 |
 | **BM-03** | Confirm **BM-C4**: Manifesto exempted rather than spec'd. | `[DECISION]` | XS | BM-01 |
 
@@ -839,9 +870,9 @@ Deliberately not the full build. One composition, one page, no tokens promoted, 
 
 | ID | Task | Tags | Effort | Notes |
 |---|---|---|---|---|
-| **BM-06** | Promote §05's token block into `hugo/layouts/partials/head-base.html`, minus whatever BM-02 struck. Inlined, not linked (**BM-C1**). `scripts/sync-base.mjs` carries it to the three hand-authored pages; `npm run check` fails on drift, as it already does. | `[DEV]` | S | One edit plus `npm run build:hugo`, because 11.1 already paid for that. |
-| **BM-07** | `/botanical.js` — geometry, species table, `IntersectionObserver`, the `BM.register`/`BM.init` API, and the page recipes, in one root-level file beside `/sections.js` (**BM-C1**). §07's own build notes are correct and worth following as written, particularly `transform-box:fill-box` on an inner `<g>`. | `[DEV]` | L | The document's rect-scan is a preview-frame workaround it says so itself; production uses `IntersectionObserver`. |
-| **BM-08** | Update the colophon page-weight row and re-run `checkPageWeight()` **in the same commit** (**BM-C7**). | `[DEV]` `[COPY]` | S | Non-negotiable. Third time this figure would have drifted. |
+| ~~**BM-06**~~ | ~~Promote §05's token block into `hugo/layouts/partials/head-base.html`~~ **Shipped 2026-08-16.** Stroke register, ground calibration, growth transitions, the ≤760px gutter rule and the print rule, inlined in the shared block between the `botanical:start`/`botanical:end` **Go template** comments — CSS comments could not be used, for the reason this partial's own header records. `sync:base` carries it to the three hand-authored pages and reports no drift. Uniform on every page by necessity: `sync-base.mjs` asserts they are byte-identical, so a per-page variant would break the invariant. **+964 bytes per page, measured, all nine identical.** | `[DEV]` | S | One edit plus `npm run build:hugo`. |
+| **BM-07** | `/botanical.js` — one root-level file beside `/sections.js` (**BM-C1**). **Shipped 2026-08-16 as the mechanism; the geometry is not in it yet.** Built: the `BM.register`/`BM.init` API, the path-keyed recipe table, `IntersectionObserver` reveal, per-mark stagger set at mount, the `ENABLED` kill switch, and the prerender guard. **No page loads it yet** — Phase 0 deliberately adds no request anywhere, and the recipe table is empty, so nothing draws. Still to come with the first composition: the species geometry (`scripts/botanical-gen.mjs` emits it) and the `<script src="/botanical.js">` tag on whichever page goes first. | `[DEV]` | L | `npm run check:botanical` exercises all of it — 14 assertions, mount, a11y, kill switch, prerender guard, reduced motion. |
+| ~~**BM-08**~~ | ~~Update the colophon page-weight row and re-run `checkPageWeight()` **in the same commit**~~ **Shipped 2026-08-16, same commit as BM-06.** Range corrected 19→21 KB / 130→131 KB; the shared-script figure corrected 69→70 KB, which had already drifted to the 1.5 KB tolerance edge on main and was not this layer's doing. The *"no images, no icon fonts, no video"* clause removed on the author's instruction (**BM-01**). The row now states the ~1 KB the layer costs and that no page draws with it yet. | `[DEV]` `[COPY]` | S | `checkPageWeight()` green: Invitation 20.8 KB – Archive 131.4 KB. |
 
 ### 12.3 — Roll out, cheapest ground first `after 12.2`
 
