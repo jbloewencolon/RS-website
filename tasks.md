@@ -876,7 +876,7 @@ Do not start this until BM-C5 and BM-C6 both have a written answer and a test.
 
 ---
 
-## Phase 13 — The runtime handoff (author-supplied review, 2026-08-16) `13.0 + 13.1 shipped 2026-08-16 — see completed.tasks.md`
+## Phase 13 — The runtime handoff (author-supplied review, 2026-08-16)
 
 *(A review of the initial-load instability fix shipped in `bc4b6dc`, supplied by the author. IDs below are `RT-nn`, assigned here — the review has no ID scheme of its own. Its central move is to stop treating this as one problem: **first paint** (does the browser's own initial frame look right) and **runtime takeover** (is React's replacement of the static snapshot atomic, measured, and warning-free) are separable, and only the first is actually fixed. Everything structural in it was checked against the code before planning; all four load-bearing claims hold.)*
 
@@ -896,8 +896,8 @@ All four checked directly, not read off the review:
 | Claim | Verdict |
 |---|---|
 | The runtime's initial template comes from `x-dc.innerHTML`, so the browser has already parsed and normalised the source before the compiler sees it | **Holds** — `parseDcDocument()`, `support.js:32`: `template: dc.innerHTML`. The later raw-source `fetch` (`support.js:159`) updates the registered template afterwards, but boot begins from the DOM-parsed form, exactly as described |
-| `collectProps()` special-cases `class`/`for`/events but not `tabindex`/`autocomplete` | **Held at the time this was checked** — pre-RT-02 state, `support.js:450` then, with `class`→`className` (471), `for`→`htmlFor` (472), `EVENT_MAP` (474), and nothing else. RT-02 (below) deliberately made this no longer true — see `completed.tasks.md` for the current `DOM_PROP_MAP` (`support.js:461-466,488`) |
-| `window.__dcRootName?.()` exists as a boot signal the proposed test can wait on | **Holds** — `support.js:1945` (line shifted by RT-01/02's edits; was `:1929` when first checked), `__dcRootName: () => rootName`. RT-04 (below) uses exactly this signal |
+| `collectProps()` special-cases `class`/`for`/events but not `tabindex`/`autocomplete` | **Holds exactly** — `support.js:450`, with `class`→`className` (471), `for`→`htmlFor` (472), `EVENT_MAP` (474), and nothing else |
+| `window.__dcRootName?.()` exists as a boot signal the proposed test can wait on | **Holds** — `support.js:1929`, `__dcRootName: () => rootName` |
 | The repo already stages a Contribute → Home → Practise hybrid-Hugo migration | **Holds** — `HUGO2-01`/`02`/`03`, Phase 5, in that order and for the reasons the review gives |
 
 ### Three corrections, none fatal to the plan
@@ -910,19 +910,28 @@ All four checked directly, not read off the review:
 
 **One thing to note for whoever reads the review next:** it says "changing source markup from `tabindex` to `tabIndex`… is understandable." Nobody did that. No source markup was changed in `bc4b6dc` — the shipped change is the critical CSS plus the non-moving prerendered host. The review is arguing against a fix that was never applied, and there is nothing to go looking for.
 
-### 13.0 — Stabilise the current handoff `shipped 2026-08-16`
+### 13.0 — Stabilise the current handoff `next`
 
-RT-01/02/03 shipped — see `completed.tasks.md` (Phase 13) for the `~~was:~~ now:` record of each. Summary: the `hydrateRoot()` post-mortem comment in `support.js` now states the architectural reason (browser-serialization round trip, not SSR) instead of the symptom list; `DOM_PROP_MAP` was added to `collectProps()` with exactly the two entries a real grep confirmed are load-bearing (`tabindex`, `autocomplete`), `class`/`for` folded in from their prior inline special-cases; `html{background:#E7E5DC}` was added to the three critical-CSS blocks as the redundant belt-and-braces version, correctly not recorded as itself fixing anything.
+| ID | Task | Tags | Effort | Notes |
+|---|---|---|---|---|
+| **RT-01** | Rewrite the `hydrateRoot()` post-mortem comment in `support.js` to give the architectural reason (the build is a serialization round-trip, not SSR) rather than the symptom list it currently gives. The present wording invites someone to "fix the mismatches and try again," which is the wrong conclusion. | `[DEV]` | S | The review's own diagram is the clearest statement of this; adapt it. |
+| **RT-02** | Add `DOM_PROP_MAP` to `collectProps()` — `tabindex`→`tabIndex`, `autocomplete`→`autoComplete`, with `class`/`for` folded in from their current inline special-cases. **Two new entries only** (RT-C2). Fixes the mapping at the lowercase-parsed-HTML→React-props boundary, which is where it belongs. | `[DEV]` | S | Dev-warning hygiene, not a live defect (RT-C1). |
+| **RT-03** | Optionally add `html{background:#E7E5DC}` to the three critical blocks. Redundant (RT-C3), defensive. **Do not grow the critical block beyond canvas-flash and layout-shift properties.** | `[DEV]` | XS | |
 
-### 13.1 — Measure the takeover, do not infer it `shipped 2026-08-16`
+### 13.1 — Measure the takeover, do not infer it `blocks 13.2`
 
-RT-04/05 shipped — see `completed.tasks.md` (Phase 13) for the full method and evidence. Summary: `scripts/test-runtime-handoff.mjs` (`npm run test:runtime-handoff`) is a standing regression test with the four assertions this section originally specified. Its own screenshot-diffing caught a real bug in itself on the first run — an unmasked, permanently-animating decorative SVG on Home (`index.html:509-515`) — which doubled as proof the test has real detection power before it was trusted to report a clean pass elsewhere.
+**This is the most valuable part of the review and the part with no existing coverage.** `check-pages.mjs` verifies that rendering completed and that no template placeholders leaked; nothing measures whether boot causes a *visible* discontinuity. This session's own verification has the same gap: it proved the prerendered node survives boot and that `body` computes to `rgb(231,229,220)`, both of which are DOM assertions. Neither shows a reader what they'd see.
 
-**RT-05's answer: no, `createRoot()` does not produce a visible blank frame, on any of the three pages, at real or artificially-delayed boot speed.** Measured with a real CDP `Page.startScreencast` filmstrip (not DOM mutation timing), method validated against a synthetic positive control proven to catch an actual blank frame when one exists. **13.2 is therefore not needed for the reason originally scoped** — but the same filmstrip found a different, real, self-correcting header-layout discontinuity (~20-70 ms, after commit, not a blank canvas, not a form field) that doesn't meet 13.2's own gating condition (a pre-commit window reachable by typing into a form) and so doesn't reopen it. Left as a candidate for its own future task if the author wants it gone; not built here, per scope.
+The open question the review names precisely: React may remove and re-insert nodes within a single commit without the browser painting an intermediate blank frame. **Whether `createRoot()` produces a visible flash is currently unknown**, and both the original bug report and this session's fix assumed it does. That assumption should be tested before anything is built on it.
 
-### 13.2 — Protect typed input across a slow boot `not triggered — see RT-05`
+| ID | Task | Tags | Effort | Notes |
+|---|---|---|---|---|
+| **RT-04** | Playwright regression test for the handoff, four assertions: **(a)** no hydration diagnostics in console or `pageerror`; **(b)** canvas is `rgb(231,229,220)` from the first observable frame, with the React bundles deliberately delayed via `page.route()` so the prerendered state stays inspectable; **(c)** geometry stable across boot — header box, hero top, document width/height within tolerance, `scrollY` — waiting on `window.__dcRootName?.()`; **(d)** masked screenshot pair, React-delayed vs. post-boot, with Turnstile and any animation masked out. | `[DEV]` | M | Playwright is already a devDependency and already drives `npm run check`. Test all three runtime pages. |
+| **RT-05** | **Answer the question RT-04 exists to settle: does `createRoot()` actually produce a displayed blank frame?** Filmstrip capture, not DOM mutation events. Record the answer here either way — it decides whether 13.2 is needed at all. | `[VERIFY]` | S | If there is no visible discontinuity, 13.2 closes unbuilt and the handoff work is done at 13.0. |
 
-**RT-05 found no visible pre-commit window, so this section's own gating condition isn't met — stays unbuilt, correctly.** Kept here rather than deleted since the reasoning (why RT-07/RT-08 are rejected outright, why RT-06 would be the right shape *if* this were ever triggered) stays valid should a future, different finding trigger it. Only real if some later measurement finds a visible window before React commits, reachable by someone typing into a prerendered form. The review is right that this is possible on a stalled bundle and right that it should not be built on principle otherwise.
+### 13.2 — Protect typed input across a slow boot `gated on RT-05`
+
+Only real if RT-05 finds a visible window, and only reachable by someone who types into a prerendered form before React commits. The review is right that this is possible on a stalled bundle and right that it should not be built on principle.
 
 | ID | Task | Tags | Effort | Notes |
 |---|---|---|---|---|
@@ -938,9 +947,8 @@ No new rows here. **`HUGO2-01` (Contribute) → `HUGO2-02` (Home) → `HUGO2-03`
 
 ### What this phase cannot verify in this environment
 
-- **Real-network boot timing.** Every measurement here is a local static server, with the bundles either artificially delayed or loading at local-disk speed. How wide the pre-boot window actually is on a genuinely slow connection is not answerable from this host — moot for RT-06 specifically (not triggered, see 13.2), but still true of the boot sequence generally.
-- **Whether the flash the author originally reported was this repo's white-canvas flash (confirmed fixed, RT-03/RT-C3) or the header-layout transient RT-05 found (real, self-correcting in ~20-70 ms, never previously measured).** Both are now mechanically explained and measured on their own terms; which one (if either) is what prompted the original bug report was never separately confirmed, and can't be from this host.
-- **Whether the RT-05 header transient is perceptible to a human.** 20-70 ms is below common flicker-fusion thresholds for a static layout shift, but this was measured with a camera (CDP screencast), not an observer — stated as unmeasured rather than assumed dismissable.
+- **Real-network boot timing.** Every measurement here is a local static server with the bundles artificially delayed. How wide the pre-boot window actually is on a slow connection, and therefore how often RT-06's scenario occurs in life, is not answerable from this host.
+- **Whether the flash was ever visible to the author in the first place.** The bug report describes an apparent colour change and a flash/reset. The colour half is confirmed fixed and was mechanically explained. The flash/reset half is still, strictly, an unreproduced report — RT-05 is what turns it into a measurement.
 
 ---
 
