@@ -398,8 +398,6 @@ Both shipped 2026-08-11 — see the struck line above and `completed.tasks.md`.
 
 ### Phase 10.3 — Delivery headers `week 3 · gated on the Cloudflare proxy going live, not on a decision anymore`
 
-## Phase 5 — Hugo migration, phase 2
-
 | ID | Task | Tags | Files | Effort | Depends on |
 |---|---|---|---|---|---|
 | **SEC-03.1** | `frame-ancestors 'none'` + `X-Frame-Options: DENY` on every HTML response — successes, redirects, the 404, and all nine `*.dc.html` redirect stubs. **Exact rule prepared, see `docs/spec/cloudflare-headers.md`** — not applied; needs the Cloudflare proxy live first. | `[DEV]` | host header config | S | SEC-03.0 |
@@ -408,44 +406,20 @@ Both shipped 2026-08-11 — see the struck line above and `completed.tasks.md`.
 | **SEC-03.4** | **Port the per-page CSPs; do not flatten them into the audit's site-wide union.** RS-020 already shipped scoped policies — `/archive/` carries bare `script-src 'self'` with no `unsafe-eval` and no Worker origin, and only Home/Contribute reach the Worker. The audit says to preserve this in prose and then supplies copy-pasteable examples that don't, and the examples are what gets pasted. **All ten current page CSPs read directly from the shipped `<meta>` tags (not re-derived from the audit or from memory), grouped into four buckets, each with `frame-ancestors 'none'` added — the one thing a meta tag can never carry. Exact Transform Rules prepared, see `docs/spec/cloudflare-headers.md`.** | `[DEV]` | host header config, all pages | M | SEC-03.0 |
 | **SEC-03.5** | Once header CSP is proven at parity, remove the duplicate meta policies so the two cannot drift. Not before. **Verification checklist prepared alongside the rules, same file** — nothing in it has been checked off; it's staged for whoever confirms the live headers, not treated as already true. | `[DEV]` | all pages | S | SEC-03.4 |
 
-| ID | Task | Tags |
-|---|---|---|
-| **HUGO2-01** | Migrate Contribute — prose to `hugo/data/contribute.yaml`, form logic stays hardcoded. | `[DEV]` |
-| **HUGO2-02** | Migrate Home — six-doors grid, roadmap lists, dispatch copy to `hugo/data/home.yaml`. | `[DEV]` |
-| **HUGO2-03** | Migrate Practise — static framing prose only; every tool's state machine stays hardcoded. | `[DEV]` |
-
-## Phase 7 — Technical SEO / AEO
+### Phase 10.4 — Build and supply chain `week 4`
 
 | ID | Task | Tags | Files | Effort | Depends on |
 |---|---|---|---|---|---|
 | **SEC-04.3** | Assert the security headers in CI, same pattern `check-pages.mjs` already uses to guard the prerender against silent regression. Fail the build if CSP loses `frame-ancestors`, if HSTS disappears, or if a reading page acquires `unsafe-eval`. A header that silently stops shipping looks exactly like one that ships. | `[DEV]` | `scripts/check-pages.mjs` | M | SEC-03.1–03.4 |
 
-## Phase 9 — Web design spec v0.3
+### Phase 10.5 — Standing practice `ongoing`
 
 | ID | Task | Tags |
 |---|---|---|
-| **WD-11** (second half) | Migrate literal hex values to `var(--token)` references, page by page. | `[DEV]` |
-| **WD-18** | Decide the `--sans` stack. | `[DECISION]` `[VERIFY]` · sequence after RS-024 |
-| **WD-29** | The Consent Domains Map codes `no` as rust — the failure register — against thesis 09. Re-decide all five scale values together. | `[DECISION]` |
-
-## Phase 10 — Security remediation
-
-### 10.0 — Accounts and keys · no code
-
-| ID | Task | Tags |
-|---|---|---|
-| **SEC-00.1** | Determine whether `GITHUB_TOKEN` is a classic PAT. If so, replace with a fine-grained token scoped to `rs-dispatch-storage`, `contents:write`, with an expiry. **Most urgent item in this phase.** | `[ACCOUNT]` |
-| **SEC-00.2** | Passkey or hardware MFA on GitHub, Cloudflare, Resend, registrar. SMS does not count. | `[ACCOUNT]` |
-| **SEC-00.3** | Rotate all five Worker secrets once for a known-good baseline. Sequence carefully — rotating `TOKEN_SECRET` invalidates confirm links in flight; `ENCRYPTION_KEY` requires re-encrypting the store. | `[ACCOUNT]` · after SEC-00.1 |
-| **SEC-00.4** | Registrar transfer lock; confirm `rs-dispatch-storage` is private. | `[ACCOUNT]` |
-
-### 10.1 — Deploy what's already built
-
-| ID | Task | Tags |
-|---|---|---|
-| **SEC-01** (deploy) | Rate limiting and Turnstile are code-complete and tested but **not live** — needs the `WORKER_KV` namespace created and a Turnstile widget registered (`worker/README.md` Steps 6–9). Worker and site deploy together, not separately. | `[ACCOUNT]` |
-
-### 10.3 — Delivery headers
+| **SEC-05.1** | Rotate the five Worker secrets quarterly — in a calendar, not in intentions. | `[ACCOUNT]` |
+| **SEC-05.2** | Alert on anomalous Resend daily volume. | `[ACCOUNT]` |
+| **SEC-05.3** | Retire `'unsafe-eval'` when Practise leaves the `dc-runtime`. If the standing decision that Practise keeps the runtime holds, this becomes "document, don't fix." | `[DECISION]` |
+| **SEC-05.4** | Re-run the security review after any architecture change. | `[DEV]` |
 
 ## Phase 11 — Heuristic and source/DOM audit (external, 2026-08-13)
 
@@ -937,6 +911,54 @@ No new rows here. **`HUGO2-01` (Contribute) → `HUGO2-02` (Home) → `HUGO2-03`
 
 ---
 
+## Phase 14 — Term genealogy and discoverability (author-supplied brief, 2026-08-16)
+
+*(Source: a research brief on tracing the history of "relational sovereignty" and making the site findable for it. Not in `docs/` — same pattern as the Phase 9, 10, 11 and 12 sources. **Add it to `docs/external/`.** IDs continue the `SEO-` series from Phase 7.)*
+
+**The core of this is scholarship the site's own citation ethic already implies, not an SEO tactic.** Learn names where this project got the term — "the sense borrowed from Matthew Wildcat and, independently, from work on assistive technology" — but the site carries no genealogy anywhere: nothing separating *where we found the phrase* from *where the phrase came from*. On a site whose stated ethic is not putting claims in people's mouths, and which already publishes a fault list, that is a real gap. Filling it also happens to be the strongest available move for ranking on the exact phrase. Do it because it is owed; take the ranking as a side effect.
+
+**The brief's own timeline is wrong in at least two places, found by spot-checking two of its rows.** This is why SEO-04 gates the phase and why nothing from the brief may be pasted in as given:
+
+- It attributes Stacy's 2003 article to *Law & Social Inquiry*. Preliminary checking points to ***Stanford Law Review*** — 55 Stan. L. Rev. 2029 (2003).
+- It presents "2003 vs 2005" as one article with a date to resolve. They appear to be **two separate publications** — the 2003 Stanford piece, and a shorter 2005 article of the same title in *Proceedings of the ASIL Annual Meeting* 99, 396–400.
+
+Both corrections are themselves search-derived and **still need confirming against publisher or DOI metadata** before anything ships — the same standard every Archive entry is held to. The brief's other rows (D'Arcangelis 2010, Bannerman 2024, Hester 2001 as a precursor that may never use the phrase) are unchecked.
+
+**Four claims the page has to keep apart,** which the brief gets right and which collapsing into "X coined it" is the failure mode of: first documented use of the exact phrase · first definition of the concept · earlier precursors using different words · later applications in other fields.
+
+### 14.0 — Verify first `gates everything below`
+
+| ID | Task | Tags | Effort |
+|---|---|---|---|
+| **SEO-04** | Build the citation table: year, author, discipline, exact wording, whether they define the term or merely cite it, the page it first appears on, and any predecessor they cite. Confirm every date and journal against publisher/DOI metadata, not search summaries. | `[VERIFY]` | M |
+
+### 14.1 — The page
+
+| ID | Task | Tags | Effort | Depends on |
+|---|---|---|---|---|
+| **SEO-05** | Decide where the genealogy lives: a new `/relational-sovereignty/` page, or a section of Learn. If a new page — primary nav as a 9th item, or reachable from Learn, Archive and the footer only? **Recommendation: build the page, keep it out of the primary nav** — eight items is already the product of an IA *simplification* pass (Phase 2.5), and a ninth is a real cost for a page that can be reached contextually. | `[DECISION]` | XS |
+| **SEO-06** | Write it. Definition in the opening paragraph, dated timeline, the separate scholarly lineages named as separate, uncertainty stated plainly where it exists, every citation carrying a DOI or stable link. | `[COPY]` `[DEV]` | M | SEO-04, SEO-05 |
+
+### 14.2 — Copy this research may correct
+
+| ID | Task | Tags | Effort | Depends on |
+|---|---|---|---|---|
+| **SEO-07** | Learn's four-senses section is accurate about *this site's* source and silent on whether the phrase predates Wildcat. If SEO-04 shows it does, say so — one clause, not a rewrite. | `[COPY]` | XS | SEO-04 |
+| **SEO-08** | Archive's Wildcat entry — same distinction, if the genealogy warrants it. | `[COPY]` | XS | SEO-04 |
+
+### 14.3 — Discoverability plumbing `unblocked`
+
+| ID | Task | Tags | Effort | Depends on |
+|---|---|---|---|---|
+| **SEO-09** | Google Search Console: verify ownership by DNS TXT, submit `sitemap.xml`, then read what the site actually ranks for. Adds no script, no cookie, no third-party request to any page. **Absent from the brief, and the highest-leverage item in this phase.** | `[ACCOUNT]` | S | — |
+| **SEO-10** | Add `datePublished` / `dateModified` to the existing Article JSON-LD. Real dates only. | `[DEV]` | S | — |
+| **SEO-11** | Internal links to the genealogy page using "relational sovereignty" as the anchor text, from Learn, Archive, and Behind the Scenes. | `[DEV]` | XS | SEO-06 |
+| **SEO-12** | Run the new page through the existing gates: `robots.txt` allow (reading-page policy, **not** the Practise/Contribute `noindex` pattern), `sitemap.xml` entry, self-referencing canonical, content present in prerendered HTML, mobile parity. | `[DEV]` | S | SEO-06 |
+
+**Not doing, and why.** A named-person `author` in the Article schema is FLAG-04, standing answer **no** — the anonymous commons is deliberate, and the brief's sample JSON-LD assumes otherwise. Search-volume estimation from Trends ratios is deprioritised: approximate by the brief's own admission, and it changes nothing about what gets built. The brief also assumes Netlify hosting; this site is GitHub Pages behind Fastly, and pending SEC-03.0, Cloudflare — its technical checklist needs translating, not pasting.
+
+---
+
 ## Parked / backlog
 
 | ID | Task | Tags |
@@ -944,21 +966,6 @@ No new rows here. **`HUGO2-01` (Contribute) → `HUGO2-02` (Home) → `HUGO2-03`
 | **RS-018** | Plain-language edition + translation pipeline | Large, no current translator capacity |
 | **RS-019** | Name the state machinery (Indian Act, residential schools, Sixties Scoop, child apprehension, immigration sponsorship, marriage law, guardianship, benefits conditionality) on relevant Learn topic pages | Large `[COPY]` lift, not urgent relative to Phase 1–3 |
 | **RS-040** | The Consent Domains Map's seventeen general domains carry no cited source — checked specs, audits, and the changelog on 2026-08-15, found none. Only the later three-domain addition (RS-028, Access Intimacy & Body Support) is attributed, to the disability-justice lineage already on the archive shelf. Either name a source or state in Behind the Scenes / the fault list that the domain list was assembled for this project rather than adapted from one named exercise. | Needs the author's memory of where it came from, not something findable in the repo |
-
-### 10.4 — Build and supply chain
-
-| ID | Task | Tags |
-|---|---|---|
-| **SEC-04.3** | Assert the security headers in CI. Fail the build if CSP loses `frame-ancestors`, HSTS disappears, or a reading page acquires `unsafe-eval`. | `[DEV]` · after SEC-03.1–03.4 |
-
-### 10.5 — Standing practice
-
-| ID | Task | Tags |
-|---|---|---|
-| **SEC-05.1** | Rotate the five Worker secrets quarterly — in a calendar, not in intentions. | `[ACCOUNT]` |
-| **SEC-05.2** | Alert on anomalous Resend daily volume. | `[ACCOUNT]` |
-| **SEC-05.3** | Retire `'unsafe-eval'` when Practise leaves the `dc-runtime`. If the standing decision that Practise keeps the runtime holds, this becomes "document, don't fix." | `[DECISION]` |
-| **SEC-05.4** | Re-run the security review after any architecture change. | `[DEV]` |
 
 ## Suggestions
 
