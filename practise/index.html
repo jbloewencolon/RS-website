@@ -15,7 +15,11 @@
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
-<style>.skip-link{position:absolute;left:-9999px;top:0}.nav-toggle{display:none}</style>
+<!-- Critical CSS, ahead of the blocking support.js below: the page's
+     real background/text colours live inside <helmet>, which support.js
+     itself only reveals once it boots. Without this, a slow first paint
+     shows the browser's default white canvas until then. -->
+<style>body{margin:0;background:#E7E5DC;color:#191B18}.skip-link{position:absolute;left:-9999px;top:0}.nav-toggle{display:none}</style>
 <script src="/support.js"></script>
 </head>
 <body>

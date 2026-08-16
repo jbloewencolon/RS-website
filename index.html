@@ -36,7 +36,11 @@
   ]
 }
 </script>
-<style>.skip-link{position:absolute;left:-9999px;top:0}.nav-toggle{display:none}</style>
+<!-- Critical CSS, ahead of the blocking support.js below: the page's
+     real background/text colours live inside <helmet>, which support.js
+     itself only reveals once it boots. Without this, a slow first paint
+     shows the browser's default white canvas until then. -->
+<style>body{margin:0;background:#E7E5DC;color:#191B18}.skip-link{position:absolute;left:-9999px;top:0}.nav-toggle{display:none}</style>
 <script src="/support.js"></script>
 <!-- The one third-party request on this site: Cloudflare's own bot check
      on the dispatch form below, disclosed in the footer and on Behind
