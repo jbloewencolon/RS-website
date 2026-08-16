@@ -5,7 +5,7 @@
   color: "#509C64"
 - state: "real, by having nothing"
   what: "There is no consent banner"
-  why: "Not because consent was waived, but because nothing is tracked, no cookie is set, and nothing is stored. The strongest refusal of consent theatre is having nothing to recite at you."
+  why: "Not because consent was waived, but because nothing is tracked, no cookie is set, and nothing is stored. Because the site sets no tracking cookie and stores no analytics, it needs no tracking-consent banner."
   color: "#509C64"
 - state: "real, as absence"
   what: "Some things are simply not here"

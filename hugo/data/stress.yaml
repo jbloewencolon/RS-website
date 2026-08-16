@@ -23,8 +23,8 @@
   holds: ["01", "04"]
   fails: ["07"]
   holdsNote: >-
-    Principles 01 and 04 still name exactly what's wrong with using that
-    leverage.
+    Principles 01 and 04 identify ownership and consent problems, but
+    neither changes immigration status or supplies safe housing.
   failsNote: >-
     Principle 07, refusal without retaliation. Leaving can mean losing
     status, family separation, deportation. The retaliation isn't the
@@ -46,10 +46,11 @@
     Principles 01 and 08 both strain. Funding bodies can require
     disclosure of the relationship's nature to keep the funding flowing. That is
     08's own carve-out: opacity isn't available against institutions that
-    compel disclosure to release money. Neither person can cleanly refuse
-    one role without risking the other, and this framework has no separate
-    words for "this is paid labour" and "this is chosen intimacy" when
-    they're the same person, the same hours.
+    compel disclosure to release money. Funding rules can entangle paid
+    labour and intimacy so that changing either role threatens income,
+    care, or both, and this framework has no separate words for "this is
+    paid labour" and "this is chosen intimacy" when they're the same
+    person, the same hours.
 
 - id: "carer-dependent-adult"
   title: "A carer of a dependent adult"
@@ -72,9 +73,9 @@
 - id: "coercive-control"
   title: "A person under coercive control"
   setup: >-
-    A partner who monitors, isolates, or punishes disagreement: the
-    situation the safety gate on <a href="/practise/">Practise</a> exists
-    for.
+    A partner who monitors, isolates, or punishes disagreement: a
+    situation that should lead away from a joint worksheet and toward
+    specialist safety support.
   holds: []
   fails: ["02", "04", "07"]
   broadly: "Nearly every principle at once, not only the three marked."
@@ -100,12 +101,11 @@
     Principle 08 still distinguishes opacity owed to intimates from
     disclosure compelled by institutions.
   failsNote: >-
-    Principle 02, self-determination, by legal design. This framework has
-    no stated position on when that's a justified response to genuine
-    incapacity versus a form of the possession thesis 01 refuses: a tool
-    with a long history of use against disabled, elderly, and
-    disproportionately Indigenous and Black people. Naming the gap here
-    rather than claiming a position it hasn't earned the standing to take.
+    Principle 02, self-determination, by legal design. This draft does not
+    yet distinguish supported decision-making, limited guardianship, and
+    plenary guardianship, or state when any restriction could be
+    justified — a tool with a long history of use against disabled,
+    elderly, and disproportionately Indigenous and Black people.
 
 - id: "precarious-housing"
   title: "A precarious worker in shared housing"
@@ -139,4 +139,7 @@
     household's restructuring than almost anyone in it, and nothing in
     these thirteen principles, written for adults capable of exercising
     refusal and self-determination directly, has an age-appropriate theory
-    of a child's own voice in that process.
+    of a child's own voice in that process. A future principle should
+    address children's evolving capacity, age-appropriate participation,
+    safety, and continuity of care; it needs specialist review before
+    drafting.

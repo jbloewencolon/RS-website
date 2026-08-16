@@ -31,6 +31,8 @@
       "name": "Behind the Scenes: How This Site Is Made",
       "description": "The substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.",
       "url": "https://relationalsovereignty.com/behind-the-scenes/",
+      "datePublished": "2026-08-06",
+      "dateModified": "2026-08-16",
       "inLanguage": "en",
       "isPartOf": { "@id": "https://relationalsovereignty.com/#website" }
     }
@@ -112,6 +114,24 @@
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;border-radius:2px}
   .skip-link:focus{left:1rem;top:1rem}
+
+  .bo-layer{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+  .bo{display:block;color:#0F2A2E;opacity:.068}
+  .bo-line{fill:none;stroke:currentColor;stroke-width:1.05;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+  .bo-fine{fill:none;stroke:currentColor;stroke-width:.62;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+  .bo-hair{fill:none;stroke:currentColor;stroke-width:.4;stroke-linecap:round;vector-effect:non-scaling-stroke}
+  .bo-stipple circle{fill:currentColor;stroke:none}
+  circle.bo-line,circle.bo-fine{fill:none}
+   
+  .bo-grow{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1900ms cubic-bezier(.22,.61,.36,1)}
+  .bo-anim.is-in .bo-grow{stroke-dashoffset:0}
+  .bo-anim>g{opacity:0;transition:opacity 700ms ease}
+  .bo-anim.is-in>g{opacity:1}
+   
+   
+  @media (max-width:760px){.bo-gutter{display:none}}
+  @media print{.bo-layer{display:none}}
+
 </style>
 
 <style>
@@ -188,7 +208,7 @@
 <section id="main-content" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Behind the Scenes · exposed structure · about 12 minutes</p>
-    <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.1rem,5.6vw,3.8rem);line-height:1;letter-spacing:-.03em;margin:0 0 1.4rem;max-width:17ch">How this site is made, including where it fails.</h1>
+    <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.1rem,5.6vw,3.8rem);line-height:1;letter-spacing:-.03em;margin:0 0 1.4rem;max-width:17ch">How the site is made, governed, funded, and corrected.</h1>
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">A site arguing against domination cannot keep its own workings private. What follows is the substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.</p>
     <p style="max-width:52ch;margin:0 0 1.6rem;color:#3C3E38">Some of these fields are marked <em>not yet known</em>. That is the accurate answer at v0.2, and a blank is more honest than a placeholder.</p>
     <p class="legend-key"><span class="swatch s-teal"></span>Teal marks what's built and asserted below. <span class="swatch s-fails"></span>Rust marks the fault list. <span class="swatch s-ask"></span>Ochre marks what's named but not yet built or paid for. Nothing here is signalled by colour alone.</p>
@@ -211,7 +231,7 @@
 <section id="limits" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1rem">What this is not</p>
-    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.4vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Five limits, stated before anything else.</h2>
+    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.4vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Five limits on the framework</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem 2.6rem;max-width:1000px">
       <div>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.1rem;margin:0 0 .5rem;line-height:1.15">Not radical individualism</h3>
@@ -271,7 +291,7 @@
             
             <div style="border-top:2px solid #6B4C12;padding-top:.7rem">
               <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6B4C12;margin:0 0 .35rem">Page weight</dt>
-              <dd style="margin:0;font-size:16px;line-height:1.5">Ranges from about 19 KB (the Invitation) to about 130 KB (the Archive) per page, uncompressed HTML: no images, no icon fonts, no video. Three pages (Home, Practise, Contribute) additionally load a shared ~71 KB script once per browser session, cached rather than re-downloaded on every page view. This figure has drifted stale twice before: first a flat &#34;under 60 KB&#34; claim outgrown by the site&#39;s own content, then a range that drifted 10&#43; KB out of date as pages kept changing after it was written. It is now checked in the build&#39;s own test suite (checkPageWeight in scripts/check-pages.mjs) against every shipped file&#39;s actual size, so a future edit that moves this number without updating the words here fails the build instead of quietly becoming untrue a third time. It rose by about 2 KB per page in August 2026, when the CSS every page had been carrying its own copy of was extracted into one shared block: that block now also holds a set of control styles the pages have not yet been switched over to, so for the moment each page ships a little more than it uses. Switching them over removes the per-element styling those replace, and should return the figure below where it started.</dd>
+              <dd style="margin:0;font-size:16px;line-height:1.5">Ranges from about 21 KB (the Invitation) to about 131 KB (the Archive) per page, uncompressed HTML. Three pages (Home, Practise, Contribute) additionally load a shared ~70 KB script once per browser session, cached rather than re-downloaded on every page view. This figure has drifted stale twice before: first a flat &#34;under 60 KB&#34; claim outgrown by the site&#39;s own content, then a range that drifted 10&#43; KB out of date as pages kept changing after it was written. It is now checked in the build&#39;s own test suite (checkPageWeight in scripts/check-pages.mjs) against every shipped file&#39;s actual size, so a future edit that moves this number without updating the words here fails the build instead of quietly becoming untrue a third time. It rose by about 2 KB per page in August 2026, when the CSS every page had been carrying its own copy of was extracted into one shared block: that block now also holds a set of control styles the pages have not yet been switched over to, so for the moment each page ships a little more than it uses. Switching them over removes the per-element styling those replace. A further ~1 KB per page went into the same shared block in August 2026 for the botanical layer&#39;s stroke, growth and print rules; no page draws anything with them yet, and the layer adds no request to any page.</dd>
             </div>
             
             <div style="border-top:2px solid #366943;padding-top:.7rem">
@@ -316,7 +336,7 @@
             
             <div style="border-top:2px solid #366943;padding-top:.7rem">
               <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Build</dt>
-              <dd style="margin:0;font-size:16px;line-height:1.5">Every reading page (Manifesto, Invitation, Learn, Archive, Resources, this page) is generated from plain data files into plain HTML by Hugo (a single static binary, no dependency tree): the output is committed and is what ships, no runtime, no framework, opens offline from a saved file. The generator exists for whoever maintains this, not for whoever reads it. Home, Practise, and Contribute keep the dc-runtime instead, since each carries live interactive logic (forms, a stateful tool) Hugo&#39;s static output can&#39;t hold. Archive keeps one small script of its own, archive-filter.js, for its filter-by-tag convenience, the one piece of client-side JavaScript on a Hugo-generated page, and a plain progressive enhancement: every entry renders regardless, the script only ever narrows what is already there.</dd>
+              <dd style="margin:0;font-size:16px;line-height:1.5">The reading pages (Manifesto, Invitation, Learn, Archive, Resources, this page) are static: each is generated from plain data files into plain HTML by Hugo (a single static binary, no dependency tree), and the committed output is what ships, opening offline from a saved file. The generator exists for whoever maintains this, not for whoever reads it. Home, Practise, and Contribute use a small local runtime (dc-runtime) instead, since each carries live interactive logic (forms, a stateful tool) Hugo&#39;s static output can&#39;t hold. Archive keeps one small script of its own, archive-filter.js, for its filter-by-tag convenience, the one piece of client-side JavaScript on a Hugo-generated page, and a plain progressive enhancement: every entry renders regardless, the script only ever narrows what is already there.</dd>
             </div>
             
             <div style="border-top:2px solid #366943;padding-top:.7rem">
