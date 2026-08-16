@@ -101,6 +101,14 @@ async function main() {
     const errors = [];
     page.on("pageerror", (e) => errors.push(e.message));
 
+    // The botanical layer must not be baked into the shipped HTML. What
+    // this capture writes to _site/ is what a crawler and a script-blocked
+    // reader are served, and it is what checkPageWeight() measures; a
+    // drawing frozen at whatever growth state it reached by the settle
+    // wait below would be counted, shipped, and permanently half-drawn.
+    // /botanical.js checks this flag and declines to run. BM-C6.
+    await page.addInitScript(() => { window.__RS_PRERENDER__ = true; });
+
     // "load" rather than "networkidle": completion here is gated by
     // #dc-root existing plus the settle wait below, not by the network
     // going quiet. It has to be — Home and Contribute load the real
@@ -116,7 +124,15 @@ async function main() {
     await page.waitForSelector("#dc-root", { timeout: 15000 });
     await page.waitForTimeout(700); // let any post-mount state settle
 
-    const rendered = await page.evaluate(() => document.getElementById("dc-root").innerHTML);
+    // Second line of defence behind the __RS_PRERENDER__ flag: strip any
+    // botanical container that reached the DOM anyway. Cheap, and it means
+    // a future change to the layer's boot path cannot quietly start
+    // shipping drawings into the prerendered HTML. BM-C6.
+    const rendered = await page.evaluate(() => {
+      const root = document.getElementById("dc-root");
+      root.querySelectorAll(".bo-layer").forEach((n) => n.remove());
+      return root.innerHTML;
+    });
     await context.close();
 
     if (errors.length) {
