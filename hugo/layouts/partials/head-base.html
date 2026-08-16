@@ -62,6 +62,13 @@
   "utilityEdge"   "#C9C6BA"
   "utilityFg"     "#585B4F"
   "tokens"        true
+  "botanical"     true
+  "boInk"         "#0F2A2E"
+  "boAlpha"       ".068"
+  "boAlphaHover"  ".115"
+  "boLine"        "1.05"
+  "boFine"        ".62"
+  "boHair"        ".4"
 ) . -}}
 <style>
   html{scroll-behavior:smooth}
@@ -208,4 +215,51 @@
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
   .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:{{ $c.skipBg | safeCSS }};color:{{ $c.skipFg | safeCSS }};padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;border-radius:2px}
   .skip-link:focus{left:1rem;top:1rem}
+{{ if $c.botanical }}{{/* ---------------------------------------------------
+  botanical:start — the understory layer (docs/understory-visual-system.md).
+
+  DELETING THIS LAYER: remove this whole {{ if $c.botanical }}…{{ end }}
+  region, delete /botanical.js, and run `npm run build:hugo`. Nothing else
+  refers to it. No page carries botanical markup — /botanical.js builds its
+  own containers from a recipe table keyed by path — so there is nothing
+  orphaned to find afterwards. To switch it off without deleting anything,
+  set ENABLED = false at the top of /botanical.js: one line, no rebuild,
+  and no page injects anything.
+
+  The marker above is a Go template comment, not a CSS one, because this
+  partial's own header records that Go strips both HTML comments and
+  comments inside <style>. Template comments survive in *this* file, which
+  is the only place the delete has to be legible.
+
+  "botanical" defaults true and is deliberately uniform across every page.
+  sync-base.mjs lifts Archive's rendered block and splices it into the
+  three hand-authored pages, and `npm run check` fails on any drift — so a
+  block that varied page to page would break the invariant that makes this
+  a *shared* block at all. Passing "botanical" false strikes the layer
+  everywhere in one edit; per-page opt-out is not offered, for that reason.
+------------------------------------------------------------------- */}}
+  .bo-layer{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+  .bo{display:block;color:{{ $c.boInk | safeCSS }};opacity:{{ $c.boAlpha | safeCSS }}}
+  .bo-line{fill:none;stroke:currentColor;stroke-width:{{ $c.boLine | safeCSS }};stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+  .bo-fine{fill:none;stroke:currentColor;stroke-width:{{ $c.boFine | safeCSS }};stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+  .bo-hair{fill:none;stroke:currentColor;stroke-width:{{ $c.boHair | safeCSS }};stroke-linecap:round;vector-effect:non-scaling-stroke}
+  .bo-stipple circle{fill:currentColor;stroke:none}
+  circle.bo-line,circle.bo-fine{fill:none}
+  /* Growth is a stroke-dash reveal on pathLength="1" stems, so no path
+     measurement is needed. Per-element delays are set by the script when
+     it mounts, which keeps nine pages from carrying a stagger table. */
+  .bo-grow{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1900ms cubic-bezier(.22,.61,.36,1)}
+  .bo-anim.is-in .bo-grow{stroke-dashoffset:0}
+  .bo-anim>g{opacity:0;transition:opacity 700ms ease}
+  .bo-anim.is-in>g{opacity:1}
+  /* Under reduced motion the rule above this block neutralises both
+     transitions, so .is-in resolves instantly to the finished drawing —
+     complete, still, no partial stems. Nothing extra is needed here. */
+  /* Below 760px there is no gutter for a vertical mark to occupy without
+     sitting behind the text, which is what UX-08 caught the drift circles
+     doing. Gutter marks are withheld; seam marks sit between sections and
+     stay. */
+  @media (max-width:760px){.bo-gutter{display:none}}
+  @media print{.bo-layer{display:none}}
+{{/* botanical:end */}}{{ end }}
 </style>
