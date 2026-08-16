@@ -86,7 +86,7 @@
      "Filter" label, or the status line changes: these are rendered
      heights, not theory. */
   @media (max-width:1023px){
-    [data-group],article[data-tags]{scroll-margin-top:10rem!important}
+    article[data-tags]{scroll-margin-top:10rem!important}
   }
   .venn-scroll{position:relative}
   .venn-scroll::after{content:"";position:absolute;top:0;right:0;bottom:.5rem;width:32px;background:linear-gradient(to right,rgba(231,229,220,0),#E7E5DC 90%);pointer-events:none}
@@ -96,6 +96,59 @@
      no layout or repaint of the surrounding text. */
   .arr{display:inline-block;transition:transform .15s ease}
   a:hover .arr,a:focus-visible .arr{transform:translateX(3px)}
+
+  /* AR-05/06/07: pocket navigation, the pattern IA-20/RS-049 already
+     proved on Learn and Behind the Scenes — a hero grid opens one shelf
+     at a time instead of a long scroll. nav[aria-label="Contents"]'s base
+     border/hover/transition already ship from head-base.html.
+     Deliberately hue-free, unlike Learn's and BTS's grids: those pages
+     have sections that genuinely differ in register (asserted / failed /
+     named-but-unbuilt); Archive's nine groups don't — they're all the
+     same kind of thing, a reading list on a different subject — so
+     colour-coding them would be exactly the decoration design-palette.md
+     warns against (FLAG-14, decided 2026-08-16: hue-free only). The grid
+     boxes get the same neutral rule-edge language as the entry cards
+     below (AR-09), not a register. */
+  .kick{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:none;margin:0 0 .5rem;color:#5A5D53}
+  h2.sec{font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0}
+  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px}
+  nav[aria-label="Contents"] a{display:flex;flex-direction:column;gap:.35rem;height:100%;box-sizing:border-box;border:1px solid #C9C6BA;border-left:3px solid #C9C6BA;border-radius:2px;padding:.8rem .9rem;text-decoration:none;color:#191B18;min-height:44px}
+  nav[aria-label="Contents"] a:hover{border-left-color:#2C5A38}
+  nav[aria-label="Contents"] a:hover .door-t{color:#2C5A38}
+  nav[aria-label="Contents"] a[aria-current]{background:rgba(63,122,78,.08);border-color:rgba(44,90,56,.3);border-left-color:#2C5A38}
+  nav[aria-label="Contents"] a[aria-current]::after{content:"Open ▾";font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#2C5A38;margin-top:auto;padding-top:.3rem}
+  .door-t{font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1rem;line-height:1.25;letter-spacing:-.01em}
+  .door-d{font-size:11.5px;line-height:1.45;color:#5A5D53}
+  .door-n{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;color:#585B4F}
+  [data-open-all]{display:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:none;color:#0F2A2E;border:1px solid #C9C6BA;border-radius:2px;padding:.45rem .8rem;min-height:44px;cursor:pointer;white-space:nowrap}
+  [data-open-all].is-ready{display:inline-flex;align-items:center}
+  [data-open-all]:hover{border-color:#2C5A38;background:rgba(63,122,78,.08);color:#2C5A38}
+  .pocket{border:none;background:none;margin:0}
+  .pocket-summary{cursor:pointer;list-style:none;display:block;padding:.3rem 0}
+  .pocket-summary::-webkit-details-marker{display:none}
+  .pocket-summary:hover .sec{color:#2C5A38}
+  @media screen{main.js-pockets>section[data-pocket].is-shut{display:none}}
+  .pocket-body{padding-top:.4rem}
+  .pocket-body[id]{scroll-margin-top:6rem}
+  @media (max-width:1023px){.pocket-body[id]{scroll-margin-top:10rem!important}}
+  @media print{details:not([open])>*{display:block!important}}
+
+  /* AR-09/10/11: the bookshelf. Structural and hue-free per FLAG-14 —
+     no register colour is introduced or reassigned; the existing per-
+     entry register edge (teal/rust/ochre/green, archive.html:200-201)
+     keeps its exact current meaning and its existing doubling by the
+     "use" line's text. What changes is which side it's drawn on, plus a
+     shelf rule under each group that gives the row of spines something
+     to stand on. */
+  .shelf-grid{border-bottom:3px solid #C9C6BA;box-shadow:0 6px 10px -8px rgba(25,27,24,.35);padding-bottom:1.6rem}
+  /* AR-13: wood-grain trial, one shelf only, greyscale not brown — a hue
+     would contradict FLAG-14's "no hue introduced" resolution before
+     the question of keeping this at all has even been answered. If kept,
+     any warm tone is a separate decision. Delete this rule and its one
+     class reference below to revert. */
+  .shelf-wood-trial{position:relative}
+  .shelf-wood-trial::after{content:"";position:absolute;left:0;right:0;bottom:-1.7rem;height:12px;pointer-events:none;background:repeating-linear-gradient(93deg,rgba(25,27,24,.09) 0px,rgba(25,27,24,.09) 1px,transparent 1px,transparent 6px,rgba(25,27,24,.04) 6px,rgba(25,27,24,.04) 7px,transparent 7px,transparent 15px)}
+  .shelf-count{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:.6em;font-weight:400;letter-spacing:.04em;color:#585B4F;vertical-align:.15em;border:1px solid #C9C6BA;border-radius:2px;padding:.05em .4em;margin-left:.3em}
 </style>
 </head>
 <body>
@@ -138,15 +191,17 @@
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">No single source contains this whole framework. It is assembled from Indigenous political thought, feminist relational autonomy, disability justice, care ethics, and transformative-justice practice, each with its own authors, nations, and arguments.</p>
     <p style="max-width:52ch;margin:0 0 1.4rem;color:#3C3E38">Every entry links away from here, to the author, the publisher, or the open-access copy. Where no stable public link exists, the holder is named instead of a guess. This site is a door; its success is how quickly you stop needing it.</p>
     <details class="note" style="max-width:58ch"><summary>⌖ Indigenous relationality, sovereignty, refusal, and survivance are not a generic radical style.</summary><p>These traditions are nation-specific, and borrowing them as atmosphere reproduces colonial extraction even when it calls itself rebellion. Every note below is provisional and awaiting paid Indigenous review.</p></details>
-    <nav aria-label="Contents">
-      <ul style="list-style:none;margin:0;padding:0;max-width:900px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0 1.5rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px">
+    <nav aria-label="Contents" style="margin-top:1.5rem">
+      <ul>
         {{ range hugo.Data.archive.groups }}
-        <li><a href="#{{ .title | anchorize }}" style="display:inline-flex;align-items:center;min-height:44px">{{ .title }}</a></li>
+        <li><a href="#{{ .title | anchorize }}"><span class="door-t">{{ .title }}</span><span class="door-d">{{ .note }}</span><span class="door-n">{{ len .items }} {{ if eq (len .items) 1 }}entry{{ else }}entries{{ end }}</span></a></li>
         {{ end }}
-        <li><a href="#fastest-route" style="display:inline-flex;align-items:center;min-height:44px">The fastest honest route in</a></li>
-        <li><a href="#absence" style="display:inline-flex;align-items:center;min-height:44px">Absence &amp; incompleteness</a></li>
       </ul>
     </nav>
+    <p style="margin:1rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px">
+      <a href="#fastest-route" style="display:inline-flex;align-items:center;min-height:44px;margin-right:1.5rem">The fastest honest route in</a><a href="#absence" style="display:inline-flex;align-items:center;min-height:44px">Absence &amp; incompleteness</a>
+    </p>
+    <button type="button" data-open-all aria-pressed="false" style="margin-top:.6rem" aria-controls="{{ range hugo.Data.archive.groups }}{{ .title | anchorize }} {{ end }}">Open every shelf</button>
   </div>
 </section>
 
@@ -185,39 +240,47 @@
   </div>
 </section>
 
-<section style="padding:0 0 clamp(3rem,6vw,4.5rem)">
+{{ range hugo.Data.archive.groups }}
+<section data-pocket="{{ .title | anchorize }}" data-group style="padding:0 0 1.8rem">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    {{ range hugo.Data.archive.groups }}
-    <div data-group id="{{ .title | anchorize }}" style="margin-bottom:3rem;scroll-margin-top:6rem">
-      <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">{{ .title }} <span data-count style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:.62em;font-weight:400;letter-spacing:.06em;color:#585B4F;vertical-align:.15em">{{ len .items }}</span></h2>
-      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:.6rem 0 1.4rem">{{ .note }}</p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem">
-        {{ range .items }}
-        {{/* WD-12: teal, not the site's #2B4C9B hyperlink blue, for the
-             default register. Blue means "this is a link" on every page,
-             and each of these cards contains a real one — the same hue
-             doing two jobs inside one card blurred the site's own
-             semantics. Teal is the correct claim here: these are the
-             texts the framework asserts as its foundations. */}}
-        {{ $rule := "#0F2A2E" }}
-        {{ if in .tags "counter" }}{{ $rule = "#8B3A2F" }}{{ else if in .tags "start" }}{{ $rule = "#6B4C12" }}{{ else if in .tags "free" }}{{ $rule = "#366943" }}{{ end }}
-        <article data-tags="{{ delimit .tags " " }}" id="entry-{{ .title | anchorize }}" style="border-top:2px solid {{ $rule }};padding-top:.9rem;scroll-margin-top:6rem">
-          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ $rule }};margin:0 0 .5rem">{{ if in .tags "counter" }}⚑ we have no answer to this · {{ else if in .tags "start" }}★ a first route · {{ end }}{{ .use }}</p>
-          <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">{{ .title }}</h3>
-          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">{{ .by }}</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">{{ .why }}</p>
-          {{ if .link }}
-          <p style="margin:0 0 0 -.4rem"><a href="{{ .link }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">{{ .linkLabel }} <span class="arr" aria-hidden="true">→</span></a></p>
-          {{ else }}
-          <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;color:#5A5D53">{{ .linkLabel }}</p>
+    <details class="pocket" data-collapsible>
+      <summary class="pocket-summary">
+        <span class="kick">{{ .note }}</span>
+        <h2 class="sec">{{ .title }} <span data-count class="shelf-count">{{ len .items }}</span></h2>
+      </summary>
+      <div class="pocket-body" id="{{ .title | anchorize }}">
+        <div class="shelf-grid{{ if eq .title "Relational sovereignty & Indigenous relational freedom" }} shelf-wood-trial{{ end }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+          {{ range .items }}
+          {{/* WD-12: teal, not the site's #2B4C9B hyperlink blue, for the
+               default register. Blue means "this is a link" on every page,
+               and each of these cards contains a real one — the same hue
+               doing two jobs inside one card blurred the site's own
+               semantics. Teal is the correct claim here: these are the
+               texts the framework asserts as its foundations.
+               AR-09: edge moved from border-top to border-left — the
+               register keeps its exact meaning, doubled by the "use"
+               line's text as before, but the cards now read as spines on
+               a shelf rather than stacked slabs. */}}
+          {{ $rule := "#0F2A2E" }}
+          {{ if in .tags "counter" }}{{ $rule = "#8B3A2F" }}{{ else if in .tags "start" }}{{ $rule = "#6B4C12" }}{{ else if in .tags "free" }}{{ $rule = "#366943" }}{{ end }}
+          <article data-tags="{{ delimit .tags " " }}" id="entry-{{ .title | anchorize }}" style="border-left:3px solid {{ $rule }};padding:.1rem 0 .1rem 1rem;scroll-margin-top:6rem">
+            <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ $rule }};margin:0 0 .5rem">{{ if in .tags "counter" }}⚑ we have no answer to this · {{ else if in .tags "start" }}★ a first route · {{ end }}{{ .use }}</p>
+            <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">{{ .title }}</h3>
+            <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">{{ .by }}</p>
+            <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">{{ .why }}</p>
+            {{ if .link }}
+            <p style="margin:0 0 0 -.4rem"><a href="{{ .link }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">{{ .linkLabel }} <span class="arr" aria-hidden="true">→</span></a></p>
+            {{ else }}
+            <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;color:#5A5D53">{{ .linkLabel }}</p>
+            {{ end }}
+          </article>
           {{ end }}
-        </article>
-        {{ end }}
+        </div>
       </div>
-    </div>
-    {{ end }}
+    </details>
   </div>
 </section>
+{{ end }}
 
 <section id="fastest-route" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:3rem">
@@ -284,6 +347,7 @@
   </div>
 </footer>
 
+<script src="/sections.js"></script>
 <script src="/archive-filter.js"></script>
 <script src="/notes.js"></script>
 </body>

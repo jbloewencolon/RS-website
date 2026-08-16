@@ -16,15 +16,17 @@
 // script-src 'self' with no 'unsafe-inline' — an inline handler is
 // exactly what that CSP is there to refuse.
 (function () {
-  // px of the sticky jump bar to keep clear of the viewport top, measured
-  // rather than hardcoded: Behind the Scenes still carries one (WD-14, the
-  // only long page with no other orientation), but Learn no longer does —
-  // its sections became closed-by-default pockets (IA-15-adjacent, direct
-  // author instruction) opened from the hero grid instead of a scroll-spy
-  // bar, which removed the bar's reason to exist on that page specifically.
-  // A page with no .jump gets a small flat default instead of a stale
+  // px of the sticky bar to keep clear of the viewport top, measured rather
+  // than hardcoded: Behind the Scenes still carries a .jump (WD-14, the
+  // only long page with no other orientation), Archive carries a
+  // .filterbar (AR-03 — its sticky tag filter, up to 150px, is a second
+  // shape of the same obstruction), but Learn has neither — its sections
+  // became closed-by-default pockets (IA-15-adjacent, direct author
+  // instruction) opened from the hero grid instead of a scroll-spy bar,
+  // which removed the bar's reason to exist on that page specifically.
+  // A page with neither gets a small flat default instead of a stale
   // number left over from a bar that isn't there to clear.
-  var jumpEl = document.querySelector(".jump");
+  var jumpEl = document.querySelector(".jump, .filterbar");
   var BAR = jumpEl ? jumpEl.getBoundingClientRect().height : 24;
 
   // Set by section 0 if the page has the chart/rows switch, so section 1's
