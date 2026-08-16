@@ -8,7 +8,7 @@
 
 ## How to use this file
 
-- Every task keeps its source ID (`RS-0xx`) so it can be cross-referenced against the docs in `docs/spec/`. Tasks with no source ID are prefixed `SUGGEST-` (raised during codebase familiarization, not in any spec doc), `FLAG-` (a gap or contradiction found in the spec docs themselves that needs author input before work can proceed), `HUGO2-` (Phase 5, a direct author instruction with no `docs/spec/` origin — see that phase's header), `UX-` (Phase 6, IDs kept identical to `docs/audits/ux-audit-2026-08-08.html`'s own numbering), `SEO-` (Phase 7, reconciled from an external technical SEO/AEO specification against this project's own ethos and conventions — see that phase's header for what was kept, rejected, and why), `BUG-` (Phase 8, live-site defects the author found by visiting the deployed site after PR #13 merged, numbered in the order the author reported them), `WD-` (Phase 9, IDs kept identical to the web design spec's own `§3.n` numbering, same convention as `UX-`; `WD-25`/`WD-26` are follow-ups that spec names but deliberately scopes out), `SEC-` (Phase 10, security remediation — numbered by phase-and-item as `SEC-0n.x` rather than flat, because the ordering *is* the finding), `BM-` (Phase 12, assigned here — the author-supplied motion system has no ID scheme of its own, so each row cites its section number alongside; `BM-C1`–`BM-C7` are corrections and build landmines rather than tasks), `RT-` (Phase 13, assigned here — an author-supplied review of the runtime handoff, likewise with no ID scheme of its own; `RT-C1`–`RT-C3` are corrections rather than tasks), or `IA-` (Phase 11, assigned here rather than inherited — that audit has no ID scheme of its own, so each row cites the audit's section number alongside; `IA-C1`–`IA-C4` are its four claims that measurement contradicted). See each phase's header.
+- Every task keeps its source ID (`RS-0xx`) so it can be cross-referenced against the docs in `docs/spec/`. Tasks with no source ID are prefixed `SUGGEST-` (raised during codebase familiarization, not in any spec doc), `FLAG-` (a gap or contradiction found in the spec docs themselves that needs author input before work can proceed), `HUGO2-` (Phase 5, a direct author instruction with no `docs/spec/` origin — see that phase's header), `UX-` (Phase 6, IDs kept identical to `docs/audits/ux-audit-2026-08-08.html`'s own numbering), `SEO-` (Phase 7, reconciled from an external technical SEO/AEO specification against this project's own ethos and conventions — see that phase's header for what was kept, rejected, and why), `BUG-` (Phase 8, live-site defects the author found by visiting the deployed site after PR #13 merged, numbered in the order the author reported them), `WD-` (Phase 9, IDs kept identical to the web design spec's own `§3.n` numbering, same convention as `UX-`; `WD-25`/`WD-26` are follow-ups that spec names but deliberately scopes out), `SEC-` (Phase 10, security remediation — numbered by phase-and-item as `SEC-0n.x` rather than flat, because the ordering *is* the finding), `BM-` (Phase 12, assigned here — the author-supplied motion system has no ID scheme of its own, so each row cites its section number alongside; `BM-C1`–`BM-C7` are corrections and build landmines rather than tasks), `RT-` (Phase 13, assigned here — an author-supplied review of the runtime handoff, likewise with no ID scheme of its own; `RT-C1`–`RT-C3` are corrections rather than tasks), `AR-` (Phase 14, assigned here — a direct author instruction to give Archive Learn's organisational treatment plus a bookshelf register; `AR-C1`–`AR-C3` are the collisions that make it not a repeat of RS-049), or `IA-` (Phase 11, assigned here rather than inherited — that audit has no ID scheme of its own, so each row cites the audit's section number alongside; `IA-C1`–`IA-C4` are its four claims that measurement contradicted). See each phase's header.
 - Tags: `[DEV]` buildable now · `[COPY]` blocked on author-approved text (drafts exist in `docs/spec/`, not final) · `[VERIFY]` requires checking a live source before publish — never guess a URL, number, or DOI · `[DECISION]` blocked on a human call.
 - Phases mirror the Decision Record's "Consolidated build order" (Cycles 1–4), with one Phase 0 for blockers that gate everything else, and my own resequencing note on where the Hugo migration (RS-004) should actually land within Phase 1 — see that phase's header.
 - **Draft copy lives in `docs/spec/`, not here.** This file tracks status, files touched, effort, and dependencies so it stays a working checklist instead of a second copy of 1,900 lines of markdown.
@@ -949,6 +949,112 @@ No new rows here. **`HUGO2-01` (Contribute) → `HUGO2-02` (Home) → `HUGO2-03`
 
 - **Real-network boot timing.** Every measurement here is a local static server with the bundles artificially delayed. How wide the pre-boot window actually is on a slow connection, and therefore how often RT-06's scenario occurs in life, is not answerable from this host.
 - **Whether the flash was ever visible to the author in the first place.** The bug report describes an apparent colour change and a flash/reset. The colour half is confirmed fixed and was mechanically explained. The flash/reset half is still, strictly, an unreproduced report — RT-05 is what turns it into a measurement.
+
+---
+
+## Phase 14 — Archive: pockets, and a shelf to put them on (direct author instruction, 2026-08-16)
+
+*(Two requests, planned together because one constrains the other: give Archive the organisational treatment Learn got under IA-20/IA-21 and Behind the Scenes got under RS-049, and add subtle visual language that makes the page feel like a bookshelf. IDs are `AR-nn`, assigned here. **The first half is not a repeat of RS-049.** Archive is the only one of the three long pages carrying a live, cross-cutting control — the tag filter — and single-open pockets and a whole-shelf filter answer incompatible questions. That collision is the substance of this phase; the shelf styling is the smaller, safer half.)*
+
+### Measured first, planned second
+
+Rendered at 1280px against the built page, not read off a comment:
+
+| | |
+|---|---|
+| Page height | **11,165px** — the longest page on the site now that Learn and Behind the Scenes are pocketed (BTS is 3,748px closed) |
+| Structure | 9 groups, 60 entries, 11 `nav[aria-label="Contents"]` links (9 groups + 2 framing sections) |
+| `.filterbar` height | 89px ≥1024 · **141px** 768–1023 · 150px ≤700 |
+| Words in `<main>` | 3,230 — the hero's "about 11 minutes" is **accurate** at the site's own ~297 wpm convention, and pockets don't change word count, so unlike RS-049 there is no stale reading-time figure to fix |
+
+**The organisational case is therefore strong and needs no argument**: same problem Learn and BTS had, larger, and the fix is proven twice.
+
+### AR-C1 — the collision that makes this not-a-repeat-of-RS-049 `[DECISION]`
+
+Learn's model is **single-open**: one pocket at a time, every other `section[data-pocket]` set `display:none` (`sections.js` §1.5/1.6). Archive's filter is **cross-cutting**: `archive-filter.js` hides non-matching `[data-tags]` across every group at once and hides any `[data-group]` left with zero matches.
+
+Applied naively, the filter stops working. From the data:
+
+| Filter | Entries | Groups containing ≥1 | What single-open shows |
+|---|---|---|---|
+| `toolkit` | 1 | **1 of 9** | If any other shelf is open: an empty shelf, and the one match hidden inside a closed pocket |
+| `counter` | 4 | **3 of 9** | At most 1 of the 3 groups that have matches |
+| `article` | 18 | 6 of 9 | At most 1 of 6 |
+| `start` | 14 | 7 of 9 | At most 1 of 7 |
+
+A status line reading "Showing 4 of 60 entries" above a visibly empty shelf is a worse version of exactly the defect **WD-06** was raised to fix (the filter narrowing 60 entries to 36 while announcing nothing). Regressing it into "announces a count you cannot see" is not an acceptable trade for shorter scroll.
+
+**Recommended resolution — the two controls answer different questions, so let them:**
+
+- **Pockets are browsing.** Nine shelves, closed by default, grid is the index, one open at a time. This is the Learn model, unchanged, and it is what the page does at rest.
+- **The filter is searching, and pressing it suspends single-open.** Any filter other than `everything` opens *every* group with ≥1 match, hides non-matching entries as it does today, and leaves zero-match groups shut. Pressing `everything` returns to browse mode with all shelves closed.
+
+That keeps both behaviours honest and needs no new UI: the filter already knows the per-group match count (`archive-filter.js:22`), and the pocket layer already syncs from real `open` state rather than from what last clicked (`sections.js` §1.6), so the two compose rather than fight. **This is the one deliberate divergence from Learn's model, and it should be decided before markup, not discovered during it.**
+
+### AR-C2 — the landmine, which is `sections.js`'s and fires the moment Archive loads it
+
+`sections.js:27-28` measures the sticky obstruction as `document.querySelector(".jump")`, **falling back to a flat 24px when there is no `.jump`.** Archive has no `.jump` and never will — but it has `.filterbar`, sticky, at up to 150px. So `reveal()`'s scroll correction (`sections.js:306`) would land every fragment target **behind the filter bar**, at every width, reintroducing precisely the defect **IA-02** measured and fixed.
+
+Archive does not load `sections.js` today (`archive.html:285-286` is `archive-filter.js` + `notes.js` only), so this is a landmine, not a live bug. **Fix `sections.js` to measure `.jump, .filterbar` before adding the script to Archive, not after.** IA-02's own table is the regression test.
+
+### AR-C3 — two sections stay out of the pocket system
+
+The Contents nav has 11 links, but only 9 are groups. `#fastest-route` (the ten-item reading sequence, dark band) and `#absence` are framing, and belong outside the pockets exactly as `#limits` does on Behind the Scenes. There is a specific reason beyond symmetry: the sequence's ten links point at `#entry-*` ids that live *inside* the group pockets, so following one force-opens the containing pocket via `reveal()`'s ancestor walk. If `#fastest-route` were itself a pocket, single-open would close the list the reader is reading from the moment they used it.
+
+### FLAG-14 — the bookshelf is decoration, and this site has a standing objection to that `[DECISION]`
+
+The same question **FLAG-12** raises about the botanical layer applies here in a smaller way. `docs/design-palette.md` is explicit: accent colour "is not mood," every use is a claim about the content it marks, and "a fifth hue would have to mean something the other four cannot." A bookshelf motif is atmosphere. It asserts nothing.
+
+**The defensible line, and the reason this is a smaller question than FLAG-12:** a shelf is *structural*, not chromatic. It says "these nine things are groups" — which is true, and already true in the markup. So the treatment below is constrained to **neutral rules and edges drawn from the existing `#C9C6BA` / paper / ink set, introducing no hue and making no claim.** Every register colour on the page keeps its current meaning and its current doubling by word or glyph. If even that reads as decoration the site should refuse, AR-09/AR-10 are the rows to strike; nothing above them depends on it.
+
+### 14.0 — Decide, before any markup `blocks everything below`
+
+| ID | Task | Tags | Effort |
+|---|---|---|---|
+| **AR-01** | Answer **AR-C1**: filter suspends single-open (recommended), or one of the alternatives considered and rejected below. | `[DECISION]` | — |
+| **AR-02** | Answer **FLAG-14**: does a structural, hue-free shelf treatment clear the palette doc's decoration bar? | `[DECISION]` | — |
+
+*Alternatives considered for AR-C1 and not recommended, recorded so they aren't re-proposed: **(a) filter narrows the grid instead of the entries** — changes the filter from an entry-level to a group-level control and silently drops the per-entry precision the tags exist for; **(b) an explicit Browse/Filter mode switch** — honest, but adds a control to a page whose whole problem is that it already has a lot of them; **(c) multi-open pockets** — every pocket independently collapsible, no single-open. Cheapest and lowest-risk, and it makes the filter a non-issue, but it is no longer the Learn treatment the request asked for and it gives up the "grid is the only index" property that made RS-049 worth doing.*
+
+### 14.1 — Fix the shared machinery first `after AR-01`
+
+| ID | Task | Tags | Effort | Notes |
+|---|---|---|---|---|
+| **AR-03** | **AR-C2**: teach `sections.js` to measure `.jump, .filterbar` for `BAR`, keeping the 24px fallback for pages with neither. One-line selector change plus a comment naming why Archive is different. | `[DEV]` | S | Ships and is verified against Learn + BTS *before* Archive loads the file, so a regression there is impossible to blame on Archive. |
+| **AR-04** | Extend `archive-filter.js` to implement the AR-01 decision: on a non-`all` filter, open every group with ≥1 match and leave zero-match groups shut; on `all`, return every pocket to closed. Keep the existing `hidden` behaviour for entries and the WD-06 status line exactly as-is. | `[DEV]` | M | The two scripts must not both own pocket state. Decide which is authoritative and say so in a comment. |
+
+### 14.2 — Pocket the nine shelves `after 14.1`
+
+| ID | Task | Tags | Effort | Notes |
+|---|---|---|---|---|
+| **AR-05** | Wrap each of the nine `[data-group]` divs in `section[data-pocket] > details.pocket[data-collapsible] > summary.pocket-summary + div.pocket-body[id]`, migrating the group `id` onto `.pocket-body` per the RS-049 pattern (the reveal algorithm needs the id on a descendant, not on the `<details>`). **Keep `data-group` on the element `archive-filter.js` already queries** so its per-group count logic is untouched. | `[DEV]` | M | `data-collapsible` is required for `sections.js`'s `beforeprint` sweep to reach them. |
+| **AR-06** | Rebuild the hero `nav[aria-label="Contents"]` as the register-coloured grid (Learn/BTS `.door-t`/`.door-d` pattern). Each group's existing `.note` line is its description — no new copy. **Selector is already correct**: Archive's nav is already `aria-label="Contents"`, which is what `sections.js` keys on. Keep `#fastest-route` and `#absence` as plain links outside the grid (**AR-C3**). | `[DEV]` | M | The 9 group notes are already written; unlike RS-049 there is no blocked-on-copy dependency. |
+| **AR-07** | Port the pocket CSS block (`.pocket`, `.pocket-summary`, `.pocket-body`, the `@media screen` `.js-pockets .is-shut` rule, the print rule) and add `<script src="/sections.js">`. | `[DEV]` | S | Third consumer of this block. If a fourth is coming, promote it to `head-base.html` instead of a third copy — but not as part of this phase. |
+| **AR-08** | Re-check the colophon page-weight sentence. **Archive is the named maximum** in it (130.5 KB), `check-pages.mjs:230` parses that sentence by regex, and pocket markup + CSS will move the figure. | `[DEV]` | S | Same trap RS-049 hit. Build fails loudly rather than silently, which is the point. |
+
+### 14.3 — The shelf `after 14.2 · gated on AR-02`
+
+Restrained on purpose. Two moves carry almost all of the effect; the rest are optional and should be looked at before being kept.
+
+| ID | Task | Tags | Effort | Notes |
+|---|---|---|---|---|
+| **AR-09** | **Turn the entry card's register edge from `border-top` to `border-left`.** One property, 60 cards, and the cards stop reading as stacked slabs and start reading as spines standing on a shelf. **The register survives intact** — same hue, same meaning, and the `use` line already repeats it as text, so the palette doc's "never carried by colour alone" rule is unaffected. Highest effect-to-risk ratio in this phase. | `[DEV]` | S | Check the 4 `counter` and 14 `start` cards specifically: their edge is the loudest and moves furthest. |
+| **AR-10** | **Give each group a shelf.** A 3px `#C9C6BA` rule under the card grid with a soft downward `box-shadow`, full grid width, so the row of spines sits *on* something. Neutral, hue-free, survives greyscale and print. | `[DEV]` | S | This is the whole bookshelf idea. If it works, stop here. |
+| **AR-11** | *Optional:* style the existing `<span data-count>` as a small shelf label (bracketed monospace, set into the shelf rule). Uses a number already on the page and already kept truthful while filtered (`archive-filter.js:27`). | `[DEV]` | S | Cheap, and the only shelf element that carries information. |
+| ~~**AR-12**~~ | ~~Staggered card heights / vertical offsets so the books look unevenly shelved.~~ **Do not build.** Breaks the grid's scannability across 60 entries to buy realism nobody asked for, and fights the `auto-fit` layout at every breakpoint. | — | — |
+| ~~**AR-13**~~ | ~~Wood-grain texture behind the shelf rule.~~ **Do not build without looking at it first.** A repeating gradient on `#E7E5DC` paper is far more likely to read as compression noise than as wood, and it is the one item here that would make the page feel like a skeuomorph rather than a document. If tried at all, try it once at very low opacity on one group and decide by eye. | — | — |
+
+### 14.4 — Verify `after 14.3`
+
+| ID | Task | Tags | Effort |
+|---|---|---|---|
+| **AR-14** | Single-open browse; filter opens all matching shelves and returns to closed on `everything`; the WD-06 status line stays truthful in both modes; `#fastest-route`'s ten sequence links each open the right pocket and land in view; **IA-02's clearance table re-measured at 1440/1024/900/768/700/390/320** (AR-C2); print expands everything with scripting both on and off; no-JS renders the complete unfiltered shelf exactly as today; `npm run check` green. | `[DEV]` | M |
+
+### What this phase should not be allowed to quietly change
+
+- **The unfiltered no-JS baseline.** Phase 2's binding constraint names "the Archive's unfiltered baseline" explicitly. Every one of the 60 entries must still render, unfiltered and readable, with scripting off — pockets included, since a closed `<details>` is still in the DOM and `.is-shut` is `@media screen` + `.js-pockets` only.
+- **`archive-filter.js`'s progressive-enhancement promise.** Its own header says it "never draws content — it only narrows what's already there." Opening pockets is still narrowing-adjacent, but the comment needs updating to stay true, not left to drift.
+- **The two open Archive rows this phase does not close.** `SEO-03` (cross-references from entries to Learn principles) and `IA-14`'s "Archive filter feedback and metadata hierarchy" both touch this page and are unaffected — `IA-14` in particular may be partly satisfied by AR-04/AR-11 and should be re-read, not assumed closed.
 
 ---
 
