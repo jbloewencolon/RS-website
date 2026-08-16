@@ -563,20 +563,14 @@ No new rows. `HUGO2-01` (Contribute) → `HUGO2-02` (Home) → `HUGO2-03` (Pract
 
 **The core of this is scholarship the site's own citation ethic already implies, not an SEO tactic.** Learn names where this project got the term — "the sense borrowed from Matthew Wildcat and, independently, from work on assistive technology" — but the site carries no genealogy anywhere: nothing separating *where we found the phrase* from *where the phrase came from*. On a site whose stated ethic is not putting claims in people's mouths, and which already publishes a fault list, that is a real gap. Filling it also happens to be the strongest available move for ranking on the exact phrase. Do it because it is owed; take the ranking as a side effect.
 
-**The brief's own timeline is wrong in at least two places, found by spot-checking two of its rows.** This is why SEO-04 gates the phase and why nothing from the brief may be pasted in as given:
+**The brief's own timeline was wrong in two places — confirmed, not just spot-checked.** Verified 2026-08-16 against Crossref, JSTOR, and Cambridge Core directly, not search summaries — see **SEO-04**, shipped.
 
-- It attributes Stacy's 2003 article to *Law & Social Inquiry*. Preliminary checking points to ***Stanford Law Review*** — 55 Stan. L. Rev. 2029 (2003).
-- It presents "2003 vs 2005" as one article with a date to resolve. They appear to be **two separate publications** — the 2003 Stanford piece, and a shorter 2005 article of the same title in *Proceedings of the ASIL Annual Meeting* 99, 396–400.
-
-Both corrections are themselves search-derived and **still need confirming against publisher or DOI metadata** before anything ships — the same standard every Archive entry is held to. The brief's other rows (D'Arcangelis 2010, Bannerman 2024, Hester 2001 as a precursor that may never use the phrase) are unchecked.
+- It attributes Stacy's 2003 article to *Law & Social Inquiry*. It is ***Stanford Law Review*** 55 (2003), pp. 2029–2045 — confirmed via JSTOR and HeinOnline.
+- It presents "2003 vs 2005" as one article with a date to resolve. They are **two separate publications** — the 2003 Stanford piece, and a shorter 2005 article of the same title in *Proceedings of the ASIL Annual Meeting* 99, 396–400 — confirmed via Cambridge Core.
 
 **Four claims the page has to keep apart,** which the brief gets right and which collapsing into "X coined it" is the failure mode of: first documented use of the exact phrase · first definition of the concept · earlier precursors using different words · later applications in other fields.
 
-### 14.0 — Verify first `gates everything below`
-
-| ID | Task | Tags | Effort |
-|---|---|---|---|
-| **SEO-04** | Build the citation table: year, author, discipline, exact wording, whether they define the term or merely cite it, the page it first appears on, and any predecessor they cite. Confirm every date and journal against publisher/DOI metadata, not search summaries. | `[VERIFY]` | M |
+**14.0 shipped 2026-08-16 — see `docs/research/relational-sovereignty-genealogy.md` and `completed.tasks.md`.** Full citation table, every entry checked against Crossref/JSTOR/Cambridge Core. Two findings beyond the brief's own list, both flagged rather than asserted: a 2001 John Hoffman chapter titled "A Relational View of Sovereignty" that may (unconfirmed — paywalled, no full text reachable) predate Stacy as the first exact-phrase use; and a 2026 CHI paper (Jang/Carrington/Begel) that is the strongest found candidate for the site's own "independently, from work on assistive technology" line, though no source doc on this site names it.
 
 ### 14.1 — The page
 
