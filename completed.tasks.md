@@ -1595,3 +1595,35 @@ Headline: **the site's default sentence engine is definition by negation** — 1
 Counter-finding worth recording: the site is **entirely clean of the LLM lexicon**. Zero instances of *delve, tapestry, testament, crucial, robust, leverage, landscape, realm, navigate, underscore, pivotal, multifaceted, nuanced, holistic, seamless, myriad, moreover, furthermore, in conclusion, it's worth noting, that said*. The fingerprint here is structural, not verbal, which is why it survived a copy revision by the author (COPY-01) that rewrote 23 passages without touching it.
 
 Eight ranked candidates with counts and `file:line` locations are in the audit. Also recorded there, against this session's own work: COPY-02's colon-density side effect. Nothing has been applied — the audit proposes a four-step order in which steps 1–3 are mechanical and step 4 touches the site's honesty posture and should be the author's own pass.
+
+### RS-049 — Behind the Scenes page redesign: pocket navigation, register-colour grid
+**Shipped:** 2026-08-15
+
+~~was: nine sections (What this is not, Substrate, Type, Crawler, Reuse, Faults, Roadmap, Changelog, Labour) stacked as one long scroll, oriented by a sticky "Sections" jump bar (WD-14) that duplicated the same nine names in a dropdown.~~
+now: `#limits` ("What this is not") stays as framing above a register-coloured hero grid; the other eight are closed-by-default `details.pocket` sections opened one at a time from the grid, exactly the pattern IA-20 shipped on Learn. The sticky jump bar is gone — sections.js's existing generic machinery (`nav[aria-label="Contents"]` + `main details.pocket`) needed no changes at all to drive it.
+
+Register colours on the grid: teal (asserts/real) on Substrate, Type, Crawler, Reuse, Changelog; rust (fails) on Faults; ochre (named, not built) on Roadmap, Labour. A `.legend-key` line states the three meanings in words, matching Learn's own doubling rule — nothing here is signalled by colour alone.
+
+**The five grid-description lines flagged as blocked (Substrate, Reuse, Faults, Roadmap, Labour) were drafted rather than left blocking the work**, each grounded in the section's own already-published wording rather than invented:
+- Substrate: *"The material facts of the machine you're reading on"* — the section's own opening sentence, trimmed of the resulting duplicate once promoted to the kicker.
+- Reuse: *"Terms that bind the project, not just the reader"* — a compression of the section's own first sentence.
+- Faults: *"Known and unfixed, published rather than quietly carried"* — quoted verbatim from the section's own intro, which was then trimmed to drop the now-redundant clause.
+- Roadmap: *"Named, not yet built, no dates promised"* — a compression of the section's own "no dates are given" reasoning.
+- Labour: *"Who worked on this, what's paid, and what it costs"* — a structural summary of the section's own four subheadings.
+
+The other three (Type, Crawler, Changelog) needed no new copy at all: Crawler and Changelog already carried their own kicker paragraphs ("Opacity as governance, not as a button"; "Change log · repair in view"), reused verbatim as both the pocket kicker and the grid description, same convention Learn's own IA-21 established. Type had no section-level kicker, so it reuses the credibility box's own existing label, "Coverage, checked not assumed," verbatim.
+
+**These five are drafts, not author-approved copy, and are flagged here for that reason.** Nothing on the page is a new claim — every line traces to text already published on this same page — but per this project's own `[COPY]` convention they haven't been signed off. Swapping any of them is a one-line edit to `hugo/layouts/behindthescenes.html`.
+
+**"Open every section"** (`[data-open-all]`) was added, matching Learn's own affordance for a reader who wants the old everything-at-once page — not one of RS-049's six enumerated steps, but implied by "matching the Learn pattern IA-20 established," and free to add since sections.js already supports it generically.
+
+**Reading time and page height, both re-measured rather than guessed.** The stale WD-14 code comment claimed "~39 minutes, roughly 18,600px" — a figure for the old fully-open layout, and never reader-facing itself (only the "about 39 minutes" line was). That comment is gone; the whole justification for a sticky orientation bar it was written to support no longer applies. Measured via a real headless-browser render at 1280px: **closed-by-default height is 3,748px** (down from the old always-open 18,600px, which is the entire point of pocket navigation), full-page word count in `main` is 3,606. Applying this project's own back-derived reading-speed convention (Archive: 3,267 words → "about 11 minutes," ≈297 wpm) gives 3,606 / 297 ≈ 12.1 minutes — the page now reads **"about 12 minutes"**, replacing the stale "about 39 minutes."
+
+**Folded in while touching the same file:** three leftover `#7D5915` occurrences in `hugo/data/substrate.yaml` (the Page weight, Security headers, and What is logged rows) — a genuine `#6B4C12` semantic-ochre use that FLAG-07's original resolution (2026-08-11) listed under "author call, not in the spec's scope" and never actioned. Design-palette.md's own rule (every semantic ochre use is `#6B4C12`) already settles this; it was just never applied here.
+
+Verified with a real HTTP server, not `file://` (root-absolute `/sections.js` silently fails to resolve under the file protocol — the same trap IA-22's own record already names, hit again and caught the same way):
+- Single-open behaviour: clicking a different grid box closes whichever pocket was open and opens the new one; a second click on the open box's own box closes it back to just the grid.
+- Deep link `/behind-the-scenes/#roadmap` (linked twice from Learn) opens the roadmap pocket and scrolls it into view on a cold load.
+- The page's own internal links — `#substrate` from the limits section, `#changelog` from the reuse note — correctly open their target pocket.
+- Print, both with scripting on (`beforeprint`/`afterprint` force every pocket open, then restore) and with scripting off (`@media print{details:not([open])>*{display:block!important}}` alone forces every pocket's content visible regardless of `open` state) — checked both paths independently, not just the JS one.
+- `npm run check` clean for every page this change touched; the two failures it reports (`index.html`, `contribute/`) are the pre-existing sandbox-only Cloudflare Turnstile connection resets, unrelated to this change and present on unrelated pages.
