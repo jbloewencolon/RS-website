@@ -9,7 +9,7 @@
   color: "#509C64"
 - state: "real, as absence"
   what: "Some things are simply not here"
-  why: "No intimate data is collected because it is technically possible. The tools keep their answers in your browser. An archive record can exist while its content does not — absence is not incompleteness."
+  why: "No intimate data is collected because it is technically possible. The tools keep their answers in your browser. An archive record can exist while its content does not. Absence is not incompleteness."
   color: "#509C64"
 - state: "not built"
   what: "Community-set access rules"

@@ -11,6 +11,7 @@ import { chromium } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
 import { HtmlValidate } from "html-validate";
 import { buildHugo, HUGO_PAGES } from "./build-hugo.mjs";
+import { sync as syncBase, TARGETS as BASE_TARGETS } from "./sync-base.mjs";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const htmlValidateConfig = JSON.parse(fs.readFileSync(path.join(root, ".htmlvalidate.json"), "utf8"));
@@ -31,6 +32,27 @@ const pages = [
   "resources/",
   "glyph-check.html",
 ];
+
+// The ground colour each page's shared base block is supposed to paint
+// (partials/head-base.html: `body{background:...}`). Asserted live, per
+// page, because a CSS *syntax* error is otherwise invisible to everything
+// else in this suite — HTML validation, axe and the console all pass on a
+// page whose stylesheet the browser gave up parsing halfway through. The
+// first sync of the extracted base block did exactly that: a marker comment
+// that ran onto a second line swallowed the rest of the stylesheet, and the
+// only symptom was a white page. glyph-check.html is a standalone test
+// harness and carries no base block, so it is not listed.
+const GROUND = {
+  "index.html": "rgb(231, 229, 220)",
+  "manifesto/": "rgb(15, 42, 46)",
+  "invitation/": "rgb(231, 229, 220)",
+  "learn/": "rgb(231, 229, 220)",
+  "practise/": "rgb(231, 229, 220)",
+  "archive/": "rgb(231, 229, 220)",
+  "contribute/": "rgb(231, 229, 220)",
+  "behind-the-scenes/": "rgb(231, 229, 220)",
+  "resources/": "rgb(231, 229, 220)",
+};
 // The nine redirect stubs left at the old flat *.dc.html paths (BUG-03,
 // plus Home.dc.html folded in by WD-26). Checked separately, by raw fetch
 // rather than browser navigation — each carries a <meta http-equiv="refresh">,
@@ -285,6 +307,37 @@ async function checkPageWeight() {
   return 0;
 }
 
+// The three hand-authored pages carry a copy of the shared base block that
+// Hugo renders from partials/head-base.html (IA-10a). Same guarantee as
+// checkHugoPagesInSync above, for the half of the site Hugo doesn't build:
+// if someone edits the base CSS in one of these files by hand, or edits the
+// partial without re-running the build, this catches it rather than letting
+// the nine pages drift apart again — which is the condition the extraction
+// existed to end.
+function checkBaseInSync() {
+  let results;
+  try {
+    results = syncBase({ write: false });
+  } catch (e) {
+    console.log(`\n✗ shared base block — 1 problem(s)`);
+    console.log(`    ${e.message.split("\n").join("\n    ")}`);
+    return 1;
+  }
+  let problems = 0;
+  for (const r of results) {
+    if (r.inSync) {
+      console.log(`✓ ${r.page} matches the shared base block`);
+    } else {
+      console.log(`\n✗ ${r.page} — 1 problem(s)`);
+      console.log(`    Base CSS differs from what hugo/layouts/partials/head-base.html renders.`);
+      console.log(`    Either this file was hand-edited between the base:start/base:end markers,`);
+      console.log(`    or the partial changed without re-syncing. Fix: npm run build:hugo`);
+      problems++;
+    }
+  }
+  return problems;
+}
+
 async function main() {
   const server = await serve();
   const { port } = server.address();
@@ -294,7 +347,7 @@ async function main() {
   const browser = await chromium.launch(executablePath ? { executablePath } : {});
   const htmlValidate = new HtmlValidate(htmlValidateConfig);
 
-  let problems = checkPrerender() + checkHugoPagesInSync();
+  let problems = checkPrerender() + checkHugoPagesInSync() + checkBaseInSync();
   problems += await checkRedirectStubs(base);
   problems += await checkPageWeight();
 
@@ -304,8 +357,28 @@ async function main() {
     const consoleErrors = [];
     page.on("console", (msg) => { if (msg.type() === "error") consoleErrors.push(msg.text()); });
     page.on("pageerror", (err) => consoleErrors.push(`pageerror: ${err.message}`));
+    // Turnstile's own API rejects a render request from a hostname its
+    // widget isn't configured for — by design, that's the whole security
+    // property (SEC-01.3). This suite serves every page from an ephemeral
+    // http://127.0.0.1 port, which is never going to be on that list, so
+    // Home and Contribute (the only two pages that load Turnstile) throw a
+    // generic "Failed to load resource: ...400" console error on every run,
+    // forever, independent of anything this repo's own code does. Tracked
+    // separately from consoleErrors, by response rather than by matching
+    // the generic message text, so a real new console error on these two
+    // pages still fails the build same as anywhere else.
+    let turnstileRejections = 0;
+    page.on("response", (r) => {
+      if (r.url().startsWith("https://challenges.cloudflare.com") && r.status() >= 400) turnstileRejections++;
+    });
 
-    const resp = await page.goto(base + pg, { waitUntil: "networkidle", timeout: 30000 });
+    // "load" rather than "networkidle" — same reason as prerender.mjs's
+    // identical fix: Home and Contribute load the real Turnstile widget
+    // (IA-03), which keeps background network activity going indefinitely,
+    // so "networkidle" never resolves and this hits its 30s timeout. The
+    // 800ms wait below is the actual settle signal this loop depends on,
+    // not network silence.
+    const resp = await page.goto(base + pg, { waitUntil: "load", timeout: 30000 });
     await page.waitForTimeout(800);
 
     const pageProblems = [];
@@ -313,8 +386,36 @@ async function main() {
     if (!resp || resp.status() !== 200) {
       pageProblems.push(`HTTP ${resp ? resp.status() : "no response"}`);
     }
-    if (consoleErrors.length) {
-      pageProblems.push(...consoleErrors.map((e) => `console error: ${e}`));
+    // Exclude exactly as many generic "Failed to load resource" messages
+    // as confirmed Turnstile rejections were observed above — never more,
+    // so an unrelated real console error on these two pages still fails
+    // the build. The browser's own console text for a failed resource
+    // load never carries the URL (only DevTools' UI does), which is why
+    // this can't just string-match the message itself.
+    let excusable = turnstileRejections;
+    const realErrors = consoleErrors.filter((e) => {
+      if (excusable > 0 && /Failed to load resource.*(status of )?4\d\d/.test(e)) {
+        excusable--;
+        return false;
+      }
+      return true;
+    });
+    if (turnstileRejections) {
+      console.log(`  ℹ ${pg}: Turnstile rejected ${turnstileRejections} request(s) from this non-production host — expected, see SEC-01.3`);
+    }
+    if (realErrors.length) {
+      pageProblems.push(...realErrors.map((e) => `console error: ${e}`));
+    }
+
+    if (GROUND[pg]) {
+      const ground = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+      if (ground !== GROUND[pg]) {
+        pageProblems.push(
+          `base block not applying: body background is ${ground}, expected ${GROUND[pg]}. ` +
+            `Usually a CSS syntax error earlier in the stylesheet — check the shared ` +
+            `block (hugo/layouts/partials/head-base.html) and this page's own <style>.`
+        );
+      }
     }
 
     const html = await page.content();

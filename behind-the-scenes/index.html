@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Behind the Scenes — How This Site Is Made</title>
+<title>Behind the Scenes: How This Site Is Made</title>
 <meta name="description" content="The substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.">
 <link rel="canonical" href="https://relationalsovereignty.com/behind-the-scenes/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Relational Sovereignty">
 <meta property="og:url" content="https://relationalsovereignty.com/behind-the-scenes/">
-<meta property="og:title" content="Behind the Scenes — How This Site Is Made">
+<meta property="og:title" content="Behind the Scenes: How This Site Is Made">
 <meta property="og:description" content="The substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
@@ -27,8 +27,8 @@
     {
       "@type": "Article",
       "@id": "https://relationalsovereignty.com/behind-the-scenes/#article",
-      "headline": "Behind the Scenes — How This Site Is Made",
-      "name": "Behind the Scenes — How This Site Is Made",
+      "headline": "Behind the Scenes: How This Site Is Made",
+      "name": "Behind the Scenes: How This Site Is Made",
       "description": "The substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.",
       "url": "https://relationalsovereignty.com/behind-the-scenes/",
       "inLanguage": "en",
@@ -43,17 +43,20 @@
   a{color:#2B4C9B;text-underline-offset:3px;text-decoration-thickness:1px}
   a:hover{color:#2C5A38}
    
-  a,button,summary,[data-filter],.card-title{
+  a,button,summary,[data-filter],nav[aria-label="Contents"] a,.card-title{
     transition:color .14s ease,background-color .14s ease,border-color .14s ease
   }
    
   a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none;display:inline-block;transition:transform .14s ease}
   a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before,
   a[href*="#"]:not(.skip-link):not([style*="border-radius"]):focus-visible::before{transform:translateX(2px)}
+  nav[aria-label="Contents"] a{border:1px solid #C9C6BA;border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:#585B4F}
+  nav[aria-label="Contents"] a:hover{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
+  nav[aria-label="Contents"] a::before{content:none!important}
   summary::before{content:"▸";display:inline-block;margin-right:.6rem;color:currentColor;flex-shrink:0;transition:transform .15s ease}
   details[open]>summary::before{transform:rotate(90deg)}
   .nav-toggle{display:none}
-  .nav-toggle>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:#585B4F}
+  .nav-toggle>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:#585B4F}
   .nav-toggle>summary::-webkit-details-marker{display:none}
   .nav-toggle>nav{display:flex;flex-direction:column;align-items:flex-start;gap:.4rem;padding:.5rem 0 .8rem}
   @media (max-width:700px){
@@ -62,38 +65,91 @@
   }
    
   :root{
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  }
+   
+  :root{
     --paper:#E7E5DC;--paper-2:#EFEEE7;--ink:#191B18;--ink-2:#3C3E38;--ink-3:#585B4F;--rule:#C9C6BA;
     --teal:#0F2A2E;--teal-2:#2A4C4C;--sage:#8FA9A2;
     --holds:#2C5A38;--holds-fill:rgba(63,122,78,.13);--holds-edge:rgba(44,90,56,.35);
     --fails:#8B3A2F;--fails-fill:rgba(139,58,47,.10);--fails-edge:rgba(139,58,47,.24);
     --ask:#6B4C12;--ask-edge:#DB9E2A;--ask-fill:rgba(219,158,42,.13);
-    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;
-    --sans:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;
   }
   *{box-sizing:border-box}
-  h1,h2,h3{text-wrap:balance}  
+   
+  h1,h2,h3{text-wrap:balance}
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
    
   .dark :focus-visible{outline-color:#DB9E2A}
    
-  .jump{position:sticky;top:0;z-index:30;background:#E7E5DC;border-top:1px solid #C9C6BA;border-bottom:1px solid #C9C6BA;box-shadow:0 10px 18px -16px rgba(25,27,24,.6)}
-  .jump-inner{position:relative;max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:nowrap;align-items:center;gap:0 1rem;justify-content:space-between}
-  .jump-menu{flex:1 1 auto;min-width:0}
-  .jump-menu>summary{cursor:pointer;list-style:none;display:flex;align-items:center;min-height:48px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:#585B4F}
-  .jump-menu>summary::-webkit-details-marker{display:none}
-  #jump-current{color:#0F2A2E;text-transform:none;letter-spacing:.01em;margin-left:.5rem;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .jump-menu>nav{position:absolute;left:0;right:0;top:100%;z-index:5;background:#E7E5DC;border-bottom:1px solid #C9C6BA;box-shadow:0 12px 20px -14px rgba(25,27,24,.65);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(215px,100%),1fr));gap:0 1.4rem;padding:.3rem clamp(1.1rem,4vw,3rem) 1rem}
-  .jump-menu>nav a{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;text-decoration:none;display:flex;align-items:center;min-height:40px;border-bottom:2px solid transparent}
-  .jump-menu>nav a::before{content:none!important}
-  .jump-menu>nav a:hover{color:#2C5A38}
-  .jump-menu>nav a[aria-current]{color:#0F2A2E;border-bottom-color:#DB9E2A}
+  .action,.action-utility,.nav-link,.disclosure,.form-error{font-family:var(--mono);font-size:14px}
+  .action,.action-utility,.nav-link,.disclosure{text-transform:uppercase;min-height:44px;display:inline-flex;align-items:center;border-radius:2px}
+  .action,.action-utility{cursor:pointer;letter-spacing:.05em}
+  .action{background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem}
+  .action[disabled]{cursor:default;opacity:.55}
+  .action-utility{background:transparent;color:#585B4F;border:1px solid #C9C6BA;padding:.6rem .8rem}
+  .action-utility:hover,.action-utility[aria-pressed="true"],.action-utility.is-active{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
+  .nav-link,.disclosure{color:#585B4F;letter-spacing:.04em;padding:.4rem 0}
+  .nav-link{text-decoration:none}
+  .nav-link:hover,.disclosure:hover{color:#2C5A38}
+  .nav-link[aria-current]{color:#191B18;text-decoration:underline;text-underline-offset:5px}
+  .disclosure{cursor:pointer}
    
-  main [id]{scroll-margin-top:5.4rem}
-  @media print{.jump{display:none!important}}
-  @media print{body{background:#fff}.noprint{display:none!important}details:not([open])>*{display:block!important}}
+  .form-error{line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem}
+  .form-status{border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;background:rgba(63,122,78,.06);padding:1.6rem 1.5rem}
+  .field-invalid{border-color:#8B3A2F!important}
+   
+  details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid #DB9E2A;margin:1.6rem 0 0}
+  details.note>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0 .9rem;color:#585B4F}
+  details.note>summary::-webkit-details-marker{display:none}
+  details.note>summary:hover,details.note>summary:focus-visible{color:#191B18}
+  details.note>p{margin:0 .9rem .7rem .9rem}
+  details.note.note-fails{border-left-color:#8B3A2F}
+  details.note.note-holds{border-left-color:#3F7A4E}
+  @media print{details.note:not([open])>*{display:block!important}}
+  @media print{body{background:#fff}.noprint{display:none!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
-  .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
+  .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;border-radius:2px}
   .skip-link:focus{left:1rem;top:1rem}
+</style>
+
+<style>
+   
+  .kick{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 1.1rem;display:flex;align-items:center;gap:.75rem;color:#585B4F}
+  .kick::before{content:"";flex:0 0 auto;width:2.2rem;height:3px;background:#C9C6BA}
+  .kick-teal{color:#0F2A2E}.kick-teal::before{background:#0F2A2E}
+  .kick-fails{color:#8B3A2F}.kick-fails::before{background:#8B3A2F}
+  .kick-ask{color:#6B4C12}.kick-ask::before{background:#DB9E2A}
+  h2.sec{font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.2rem}
+  .swatch{display:inline-block;width:.62rem;height:.62rem;flex:0 0 auto;border-radius:1px;margin-right:.5rem;vertical-align:baseline}
+  .s-teal{background:#0F2A2E}.s-fails{background:#8B3A2F}.s-ask{background:#DB9E2A}
+  .legend-key{max-width:66ch;margin:1.1rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.7;color:#585B4F}
+  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:.7rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px}
+  nav[aria-label="Contents"] a{display:flex;flex-direction:column;gap:.45rem;height:100%;box-sizing:border-box;border:1px solid #C9C6BA;border-top:3px solid #C9C6BA;border-radius:2px;padding:.9rem 1rem 1rem;background:#EFEEE7;text-decoration:none;color:#191B18;min-height:44px}
+  .door-t{font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.06rem;line-height:1.25;letter-spacing:-.01em}
+  .door-d{font-size:12px;line-height:1.5;color:#585B4F}
+  nav[aria-label="Contents"] .d-teal{border-top-color:#0F2A2E}
+  nav[aria-label="Contents"] .d-fails{border-top-color:#8B3A2F}
+  nav[aria-label="Contents"] .d-ask{border-top-color:#DB9E2A}
+  nav[aria-label="Contents"] a:hover .door-t{color:#2C5A38}
+  nav[aria-label="Contents"] a[aria-current]{background:rgba(63,122,78,.13);border-color:rgba(44,90,56,.35)}
+  nav[aria-label="Contents"] a[aria-current]::after{content:"Open ▾";font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#2C5A38;margin-top:auto;padding-top:.5rem}
+  [data-open-all]{display:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.07em;text-transform:uppercase;background:none;color:#0F2A2E;border:1px solid #C9C6BA;border-radius:2px;padding:.45rem .8rem;min-height:44px;cursor:pointer;white-space:nowrap}
+  [data-open-all].is-ready{display:inline-flex;align-items:center}
+  [data-open-all]:hover{border-color:#2C5A38;background:rgba(63,122,78,.13);color:#2C5A38}
+  .pocket{border:none;background:none;margin:0}
+  .pocket-summary{cursor:pointer;list-style:none;display:block;padding:.3rem 0}
+  .pocket-summary::-webkit-details-marker{display:none}
+  .pocket-summary .kick{margin-bottom:.5rem}
+  .pocket-summary:hover .sec{color:#2C5A38}
+  .dark .pocket-summary:hover .sec{color:#DB9E2A}
+   
+  @media screen{main.js-pockets>section[data-pocket].is-shut{display:none}}
+  .pocket-body{padding-top:.4rem}
+  main [id]{scroll-margin-top:1.5rem}
+  .pocket-body[id]{scroll-margin-top:2.5rem}
+  @media print{details:not([open])>*{display:block!important}}
 </style>
 </head>
 <body>
@@ -102,7 +158,7 @@
 <header style="border-bottom:1px solid #C9C6BA">
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="/" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
-    <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+    <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
       <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
       <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
       <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
@@ -113,8 +169,8 @@
       <a href="/behind-the-scenes/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
     </nav>
     <details class="nav-toggle">
-      <summary aria-label="Menu">Menu</summary>
-      <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+      <summary>Menu</summary>
+      <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
         <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
         <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
         <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
@@ -131,36 +187,31 @@
 <main>
 <section id="main-content" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Behind the Scenes · exposed structure · about 39 minutes</p>
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Behind the Scenes · exposed structure · about 12 minutes</p>
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.1rem,5.6vw,3.8rem);line-height:1;letter-spacing:-.03em;margin:0 0 1.4rem;max-width:17ch">How this site is made, including where it fails.</h1>
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">A site arguing against domination cannot keep its own workings private. What follows is the substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.</p>
-    <p style="max-width:52ch;margin:0;color:#3C3E38">Some of these fields are marked <em>not yet known</em>. That is the accurate answer at v0.2, and a blank is more honest than a placeholder.</p>
+    <p style="max-width:52ch;margin:0 0 1.6rem;color:#3C3E38">Some of these fields are marked <em>not yet known</em>. That is the accurate answer at v0.2, and a blank is more honest than a placeholder.</p>
+    <p class="legend-key"><span class="swatch s-teal"></span>Teal marks what's built and asserted below. <span class="swatch s-fails"></span>Rust marks the fault list. <span class="swatch s-ask"></span>Ochre marks what's named but not yet built or paid for. Nothing here is signalled by colour alone.</p>
+    <nav aria-label="Contents" style="margin-top:1.5rem">
+      <ul>
+        <li><a href="#substrate" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Substrate</span><span class="door-d">The material facts of the machine you're reading on</span></a></li>
+        <li><a href="#type" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Accessibility &amp; type</span><span class="door-d">Coverage, checked not assumed</span></a></li>
+        <li><a href="#crawler" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Crawler policy</span><span class="door-d">Opacity as governance, not as a button</span></a></li>
+        <li><a href="#reuse" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Reuse terms</span><span class="door-d">Terms that bind the project, not just the reader</span></a></li>
+        <li><a href="#faults" class="d-fails"><span class="door-t"><span class="swatch s-fails"></span>Current faults</span><span class="door-d">Known and unfixed, published rather than quietly carried</span></a></li>
+        <li><a href="#roadmap" class="d-ask"><span class="door-t"><span class="swatch s-ask"></span>Roadmap</span><span class="door-d">Named, not yet built, no dates promised</span></a></li>
+        <li><a href="#changelog" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Change history</span><span class="door-d">Change log · repair in view</span></a></li>
+        <li><a href="#labour" class="d-ask"><span class="door-t"><span class="swatch s-ask"></span>Labour &amp; money</span><span class="door-d">Who worked on this, what's paid, and what it costs</span></a></li>
+      </ul>
+    </nav>
+    <button type="button" data-open-all aria-pressed="false" style="margin-top:1.2rem" aria-controls="substrate type crawler reuse faults roadmap changelog labour">Open every section</button>
   </div>
 </section>
-
-<div class="jump noprint">
-  <div class="jump-inner">
-    <details class="jump-menu">
-      <summary>Sections<span id="jump-current"></span></summary>
-      <nav aria-label="Sections">
-        <a href="#limits">What this is not</a>
-        <a href="#substrate">Substrate</a>
-        <a href="#type">Accessibility &amp; type</a>
-        <a href="#crawler">Crawler policy</a>
-        <a href="#reuse">Reuse terms</a>
-        <a href="#faults">Current faults</a>
-        <a href="#roadmap">Roadmap</a>
-        <a href="#changelog">Change history</a>
-        <a href="#labour">Labour &amp; money</a>
-      </nav>
-    </details>
-  </div>
-</div>
 
 <section id="limits" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1rem">What this is not</p>
-    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.4vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Four limits, stated before anything else.</h2>
+    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.4vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Five limits, stated before anything else.</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem 2.6rem;max-width:1000px">
       <div>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.1rem;margin:0 0 .5rem;line-height:1.15">Not radical individualism</h3>
@@ -178,101 +229,116 @@
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.1rem;margin:0 0 .5rem;line-height:1.15">Not one universal Indigenous philosophy</h3>
         <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">Indigenous nations hold distinct laws, teachings, kinship systems, territories, languages, and protocols. Relationality, reciprocity, survivance, and sovereignty are not interchangeable spiritual principles. Sources here are named by author, nation, and intellectual tradition.</p>
       </div>
+      <div>
+        <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.1rem;margin:0 0 .5rem;line-height:1.15">Not a preference for non-monogamy</h3>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">Chosen monogamy is not a lesser or unexamined form of this framework's promise, and this site does not treat non-monogamy as more evolved. What it does not protect is coercion running the other way: being pressured, guilt-tripped, or worn down into opening a relationship you did not want opened, sometimes in this exact vocabulary. Wanting one partner, on your own terms, is not a pathology this framework is trying to cure.</p>
+      </div>
     </div>
-    <p style="max-width:56ch;margin:1.8rem 0 0;font-size:15.5px;line-height:1.55;color:#3C3E38">One clarification that belongs beside these four, not folded into any of them: chosen monogamy is not a lesser or unexamined form of this framework's promise, and this site does not treat non-monogamy as more evolved. What it does not protect is coercion running the other way — being pressured, guilt-tripped, or worn down into opening a relationship you did not want opened, sometimes in this exact vocabulary. Wanting one partner, on your own terms, is not a pathology this framework is trying to cure.</p>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.55;color:#585B4F;border-left:2px solid #DB9E2A;padding:.2rem 0 .2rem .9rem;margin:1.6rem 0 0;max-width:56ch">⌖ Safety — relationship exercises can be dangerous where coercive control or violence is present. Joint communication tools are not appropriate when one participant is violent, coercive, retaliatory, or controlling. See the notices beside each tool.</p>
+    <details class="note note-fails" style="max-width:56ch"><summary>⌖ Safety</summary><p>relationship exercises can be dangerous where coercive control or violence is present. Joint communication tools are not appropriate when one participant is violent, coercive, retaliatory, or controlling. See the notices beside each tool.</p></details>
 
     <div style="border-top:2px solid #8B3A2F;padding-top:1.6rem;margin-top:2.6rem;max-width:720px">
-      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#8B3A2F;margin:0 0 1rem">And the fifth limit, about this website</p>
+      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#8B3A2F;margin:0 0 1rem">And the sixth limit, about this website</p>
       <p style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(1.4rem,3.4vw,2.1rem);line-height:1.12;letter-spacing:-.03em;margin:0 0 1.2rem">A website returns no land.</p>
-      <p style="margin:0 0 1rem;max-width:52ch">This site refuses to reproduce colonial form — no trackers, no third parties, no consent theatre, no attempt to keep you here. That is anti-colonial design, which is a real but modest achievement. It is not decolonization, and sufficiently thoughtful design never will be.</p>
+      <p style="margin:0 0 1rem;max-width:52ch">This site refuses to reproduce colonial form: no trackers, no third parties, no consent theatre, no attempt to keep you here. That is anti-colonial design, which is a real but modest achievement. It is not decolonization, and sufficiently thoughtful design never will be.</p>
       <p style="margin:0 0 1rem;max-width:52ch;color:#3C3E38">Where this work touches actual sovereignty it is jurisdictional: whose law governs a community's data, on whose territory the servers sit, who holds deletion authority, who may crawl and train. <a href="#substrate">The substrate below</a> states what is known, what is not, and where this build currently fails.</p>
-      <p style="margin:0;max-width:52ch;color:#3C3E38">Territory this site doesn't know how to name, on the device you're reading this from, is not something a website should guess at either — <a href="https://native-land.ca">native-land.ca</a> is a starting point, not a legal record; the organisation says so itself, and its map stays a work in progress rather than a finished boundary line. Nothing from it is embedded or reproduced here — this is a link out, not a lookup built in.</p>
+      <p style="margin:0;max-width:52ch;color:#3C3E38">Territory this site doesn't know how to name, on the device you're reading this from, is not something a website should guess at either. <a href="https://native-land.ca">native-land.ca</a> is a starting point, not a legal record; the organisation says so itself, and its map stays a work in progress rather than a finished boundary line. Nothing from it is embedded or reproduced here. This is a link out, not a lookup built in.</p>
     </div>
   </div>
 </section>
 
-<section id="substrate" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
+<section data-pocket="substrate" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">The substrate</h2>
-    <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">A land acknowledgement in a footer is decoration. These are the material facts of the machine you are reading on, as far as they are currently known.</p>
-    <details>
-      <summary style="cursor:pointer;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:#585B4F;min-height:44px;display:flex;align-items:center;padding:.2rem 0">Show the 13 substrate fields</summary>
-      <dl style="margin:1.2rem 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem 2.4rem">
-        
-        <div style="border-top:2px solid #8B3A2F;padding-top:.7rem">
-          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8B3A2F;margin:0 0 .35rem">Server location</dt>
-          <dd style="margin:0;font-size:16px;line-height:1.5">Hosted on GitHub Pages (GitHub, Inc.) — this project&#39;s actual current host, not a future plan; see the security-headers row below for why that matters. GitHub does not publish which physical data centre or region serves a given Pages deployment, so the city, operator, and territory this field is meant to name are genuinely unstated, not merely undocumented. Moving to a host that discloses this is what RS-022/FLAG-02 would resolve.</dd>
-        </div>
-        
-        <div style="border-top:2px solid #8B3A2F;padding-top:.7rem">
-          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8B3A2F;margin:0 0 .35rem">Watershed</dt>
-          <dd style="margin:0;font-size:16px;line-height:1.5">Not statable for the same reason as server location: the current host doesn&#39;t disclose which facility serves this site, so there is no watershed to name yet — not because nobody looked, but because the information isn&#39;t published anywhere to find.</dd>
-        </div>
-        
-        <div style="border-top:2px solid #7D5915;padding-top:.7rem">
-          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .35rem">Page weight</dt>
-          <dd style="margin:0;font-size:16px;line-height:1.5">Ranges from about 17 KB (the Invitation) to about 128 KB (the Archive) per page, uncompressed HTML — no images, no icon fonts, no video. Three pages (Home, Practise, Contribute) additionally load a shared ~69 KB script once per browser session, cached rather than re-downloaded on every page view. This figure has drifted stale twice before — first a flat &#34;under 60 KB&#34; claim outgrown by the site&#39;s own content, then a range that drifted 10&#43; KB out of date as pages kept changing after it was written. It is now checked in the build&#39;s own test suite (checkPageWeight in scripts/check-pages.mjs) against every shipped file&#39;s actual size, so a future edit that moves this number without updating the words here fails the build instead of quietly becoming untrue a third time.</dd>
-        </div>
-        
-        <div style="border-top:2px solid #366943;padding-top:.7rem">
-          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Third-party requests</dt>
-          <dd style="margin:0;font-size:16px;line-height:1.5">Zero, with two deliberate, disclosed exceptions, both on Home and Contribute only. First: submitting the dispatch signup form sends the address you typed to the Worker described below. Second: both forms load Cloudflare&#39;s Turnstile, a bot check that runs before the form will submit at all — added after an external security audit and an independent review both flagged the same gap: nothing stopped the signup endpoint from being used to send unwanted email to a stranger&#39;s address, repeatedly, from many machines at once. It&#39;s verified on the Worker itself, not just displayed, so a script can&#39;t skip it by forging success. No fonts, analytics, embeds, tag managers, or ad tech, on any page — and nothing on the other five pages phones anywhere at all.</dd>
-        </div>
-        
-        <div style="border-top:2px solid #366943;padding-top:.7rem">
-          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Mailing-list processor</dt>
-          <dd style="margin:0;font-size:16px;line-height:1.5">A Cloudflare Worker — self-operated, not a third-party mailing-list platform — is the one piece of this site&#39;s infrastructure that isn&#39;t purely static. It receives the two signup forms (Home, Contribute), sends the confirmation and unsubscribe emails, and writes the encrypted subscriber file. Source: worker/ in this repository.</dd>
-        </div>
-        
-        <div style="border-top:2px solid #366943;padding-top:.7rem">
-          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Transactional email</dt>
-          <dd style="margin:0;font-size:16px;line-height:1.5">Sent through Resend&#39;s API — confirmation and unsubscribe messages only, plain text, no tracking pixel, no click-tracking redirect. Resend receives an address and the text of that one message; it never receives the interests picked at signup, is never handed the subscriber list, and is never used to send anything else.</dd>
-        </div>
-        
-        <div style="border-top:2px solid #366943;padding-top:.7rem">
-          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Where the list lives</dt>
-          <dd style="margin:0;font-size:16px;line-height:1.5">A private, operator-controlled GitHub repository — separate from this public one — holding a single file encrypted with AES-256-GCM. The decryption key exists only as a Cloudflare Worker secret; it is never written to any repository, public or private. That file, taken on its own, decrypts to nothing.</dd>
-        </div>
-        
-        <div style="border-top:2px solid #366943;padding-top:.7rem">
-          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">What&#39;s actually stored</dt>
-          <dd style="margin:0;font-size:16px;line-height:1.5">Per subscriber: the address they confirmed and the time they confirmed it. What they were interested in — the zine, the reading circle, a workshop — is recorded only as a site-wide count, never attached to an address. A leaked or subpoenaed copy of the file can say how many people want what; it cannot say who. The confirmation link itself used to undercut this — it carried the chosen name and interests in a signed but unencrypted token, readable by anything the link passed through before it was clicked. As of 2026-08-11 the link carries only a meaningless random id; the actual signup details live in short-lived storage the link points to, not in the link itself. Removing someone updates this file; the encrypted version of it from before they left still exists in this repository&#39;s own git history, unless that history is deliberately rewritten — see the fault list.</dd>
-        </div>
-        
-        <div style="border-top:2px solid #366943;padding-top:.7rem">
-          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Cookies and storage</dt>
-          <dd style="margin:0;font-size:16px;line-height:1.5">None set. Nothing is written to your device, so nothing needs consenting to and there is no banner to recite at you.</dd>
-        </div>
-        
-        <div style="border-top:2px solid #7D5915;padding-top:.7rem">
-          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .35rem">Security headers</dt>
-          <dd style="margin:0;font-size:16px;line-height:1.5">A Content-Security-Policy on every page, machine-checked in CI (a build fails if any page loads a script, stylesheet, or CSS import/url() from off this domain — outbound prose links are exempt on purpose, that&#39;s citation, not a subresource load). Each page&#39;s policy is only as permissive as that specific page needs: the four reading pages allow no script execution beyond their own same-origin file, Practise/Home/Contribute need a narrow eval allowance for the page-template runtime they still run on, and only Home and Contribute&#39;s script-src/connect-src/frame-src additionally name the dispatch Worker and Cloudflare Turnstile — the one third-party addition either page carries, and only those two. Delivered as a &lt;meta&gt; tag, not a response header, because GitHub Pages — this site&#39;s current host — cannot set response headers. That has one real consequence: frame-ancestors (clickjacking protection) cannot be delivered via &lt;meta&gt; at all, by the CSP specification itself, so this site currently has none. Fault below.</dd>
-        </div>
-        
-        <div style="border-top:2px solid #7D5915;padding-top:.7rem">
-          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7D5915;margin:0 0 .35rem">What is logged</dt>
-          <dd style="margin:0;font-size:16px;line-height:1.5">Whatever GitHub Pages, this project&#39;s current host, logs by default — not yet audited or reduced, and not yet stated here in specific terms. This project inherited a host before confirming its logging practices meet the minimisation this page states as a goal, which is backwards, and this row says so rather than implying the sequencing went the other way.</dd>
-        </div>
-        
-        <div style="border-top:2px solid #366943;padding-top:.7rem">
-          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Build</dt>
-          <dd style="margin:0;font-size:16px;line-height:1.5">Every reading page — Manifesto, Invitation, Learn, Archive, Resources, this page — is generated from plain data files into plain HTML by Hugo (a single static binary, no dependency tree): the output is committed and is what ships, no runtime, no framework, opens offline from a saved file. The generator exists for whoever maintains this, not for whoever reads it. Home, Practise, and Contribute keep the dc-runtime instead, since each carries live interactive logic (forms, a stateful tool) Hugo&#39;s static output can&#39;t hold. Archive keeps one small script of its own, archive-filter.js, for its filter-by-tag convenience — the one piece of client-side JavaScript on a Hugo-generated page, and a plain progressive enhancement: every entry renders regardless, the script only ever narrows what is already there.</dd>
-        </div>
-        
-        <div style="border-top:2px solid #366943;padding-top:.7rem">
-          <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Durability</dt>
-          <dd style="margin:0;font-size:16px;line-height:1.5">Met, for the reading pages — all four now render and read fully with scripting off, not asserted but verified against a real headless browser with JavaScript disabled. Practise is the one page that still needs its runtime, deliberately: it is interactive by nature, not a reading page.</dd>
-        </div>
-        
-      </dl>
+    <details class="pocket" data-collapsible>
+      <summary class="pocket-summary">
+        <span class="kick kick-teal">The material facts of the machine you're reading on</span>
+        <h2 class="sec">The substrate</h2>
+      </summary>
+      <div class="pocket-body" id="substrate">
+        <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">A land acknowledgement in a footer is decoration. What follows is known, as far as it currently is.</p>
+        <details>
+          <summary style="cursor:pointer;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:#585B4F;min-height:44px;display:flex;align-items:center;padding:.2rem 0">Show the 13 substrate fields</summary>
+          <dl style="margin:1.2rem 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem 2.4rem">
+            
+            <div style="border-top:2px solid #8B3A2F;padding-top:.7rem">
+              <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8B3A2F;margin:0 0 .35rem">Server location</dt>
+              <dd style="margin:0;font-size:16px;line-height:1.5">Hosted on GitHub Pages (GitHub, Inc.), this project&#39;s actual current host, not a future plan; see the security-headers row below for why that matters. GitHub does not publish which physical data centre or region serves a given Pages deployment, so the city, operator, and territory this field is meant to name are genuinely unstated, not merely undocumented. Moving to a host that discloses this is what RS-022/FLAG-02 would resolve.</dd>
+            </div>
+            
+            <div style="border-top:2px solid #8B3A2F;padding-top:.7rem">
+              <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8B3A2F;margin:0 0 .35rem">Watershed</dt>
+              <dd style="margin:0;font-size:16px;line-height:1.5">Not statable for the same reason as server location: the current host doesn&#39;t disclose which facility serves this site, so there is no watershed to name yet, not because nobody looked, but because the information isn&#39;t published anywhere to find.</dd>
+            </div>
+            
+            <div style="border-top:2px solid #6B4C12;padding-top:.7rem">
+              <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6B4C12;margin:0 0 .35rem">Page weight</dt>
+              <dd style="margin:0;font-size:16px;line-height:1.5">Ranges from about 19 KB (the Invitation) to about 130 KB (the Archive) per page, uncompressed HTML: no images, no icon fonts, no video. Three pages (Home, Practise, Contribute) additionally load a shared ~69 KB script once per browser session, cached rather than re-downloaded on every page view. This figure has drifted stale twice before: first a flat &#34;under 60 KB&#34; claim outgrown by the site&#39;s own content, then a range that drifted 10&#43; KB out of date as pages kept changing after it was written. It is now checked in the build&#39;s own test suite (checkPageWeight in scripts/check-pages.mjs) against every shipped file&#39;s actual size, so a future edit that moves this number without updating the words here fails the build instead of quietly becoming untrue a third time. It rose by about 2 KB per page in August 2026, when the CSS every page had been carrying its own copy of was extracted into one shared block: that block now also holds a set of control styles the pages have not yet been switched over to, so for the moment each page ships a little more than it uses. Switching them over removes the per-element styling those replace, and should return the figure below where it started.</dd>
+            </div>
+            
+            <div style="border-top:2px solid #366943;padding-top:.7rem">
+              <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Third-party requests</dt>
+              <dd style="margin:0;font-size:16px;line-height:1.5">Zero, with two deliberate, disclosed exceptions, both on Home and Contribute only. First: submitting the dispatch signup form sends the address you typed to the Worker described below. Second: both forms load Cloudflare&#39;s Turnstile, a bot check that runs before the form will submit at all, added after an external security audit and an independent review both flagged the same gap: nothing stopped the signup endpoint from being used to send unwanted email to a stranger&#39;s address, repeatedly, from many machines at once. It&#39;s verified on the Worker itself, not just displayed, so a script can&#39;t skip it by forging success. No fonts, analytics, embeds, tag managers, or ad tech, on any page, and nothing on the other five pages phones anywhere at all.</dd>
+            </div>
+            
+            <div style="border-top:2px solid #366943;padding-top:.7rem">
+              <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Mailing-list processor</dt>
+              <dd style="margin:0;font-size:16px;line-height:1.5">A Cloudflare Worker (self-operated, not a third-party mailing-list platform) is the one piece of this site&#39;s infrastructure that isn&#39;t purely static. It receives the two signup forms (Home, Contribute), sends the confirmation and unsubscribe emails, and writes the encrypted subscriber file. Source: worker/ in this repository.</dd>
+            </div>
+            
+            <div style="border-top:2px solid #366943;padding-top:.7rem">
+              <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Transactional email</dt>
+              <dd style="margin:0;font-size:16px;line-height:1.5">Sent through Resend&#39;s API: confirmation and unsubscribe messages only, plain text, no tracking pixel, no click-tracking redirect. Resend receives an address and the text of that one message; it never receives the interests picked at signup, is never handed the subscriber list, and is never used to send anything else.</dd>
+            </div>
+            
+            <div style="border-top:2px solid #366943;padding-top:.7rem">
+              <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Where the list lives</dt>
+              <dd style="margin:0;font-size:16px;line-height:1.5">A private, operator-controlled GitHub repository, separate from this public one, holding a single file encrypted with AES-256-GCM. The decryption key exists only as a Cloudflare Worker secret; it is never written to any repository, public or private. That file, taken on its own, decrypts to nothing.</dd>
+            </div>
+            
+            <div style="border-top:2px solid #366943;padding-top:.7rem">
+              <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">What&#39;s actually stored</dt>
+              <dd style="margin:0;font-size:16px;line-height:1.5">Per subscriber: the address they confirmed and the time they confirmed it. What they were interested in (the zine, the reading circle, a workshop) is recorded only as a site-wide count, never attached to an address. A leaked or subpoenaed copy of the file can say how many people want what; it cannot say who. The confirmation link itself used to undercut this: it carried the chosen name and interests in a signed but unencrypted token, readable by anything the link passed through before it was clicked. As of 2026-08-11 the link carries only a meaningless random id; the actual signup details live in short-lived storage the link points to, not in the link itself. Removing someone updates this file; the encrypted version of it from before they left still exists in this repository&#39;s own git history, unless that history is deliberately rewritten. See the fault list.</dd>
+            </div>
+            
+            <div style="border-top:2px solid #366943;padding-top:.7rem">
+              <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Cookies and storage</dt>
+              <dd style="margin:0;font-size:16px;line-height:1.5">None set. Nothing is written to your device, so nothing needs consenting to and there is no banner to recite at you.</dd>
+            </div>
+            
+            <div style="border-top:2px solid #6B4C12;padding-top:.7rem">
+              <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6B4C12;margin:0 0 .35rem">Security headers</dt>
+              <dd style="margin:0;font-size:16px;line-height:1.5">A Content-Security-Policy on every page, machine-checked in CI (a build fails if any page loads a script, stylesheet, or CSS import/url() from off this domain; outbound prose links are exempt on purpose, that&#39;s citation, not a subresource load). Each page&#39;s policy is only as permissive as that specific page needs: the four reading pages allow no script execution beyond their own same-origin file, Practise/Home/Contribute need a narrow eval allowance for the page-template runtime they still run on, and only Home and Contribute&#39;s script-src/connect-src/frame-src additionally name the dispatch Worker and Cloudflare Turnstile, the one third-party addition either page carries, and only those two. Delivered as a &lt;meta&gt; tag, not a response header, because GitHub Pages, this site&#39;s current host, cannot set response headers. That has one real consequence: frame-ancestors (clickjacking protection) cannot be delivered via &lt;meta&gt; at all, by the CSP specification itself, so this site currently has none. Fault below.</dd>
+            </div>
+            
+            <div style="border-top:2px solid #6B4C12;padding-top:.7rem">
+              <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6B4C12;margin:0 0 .35rem">What is logged</dt>
+              <dd style="margin:0;font-size:16px;line-height:1.5">Whatever GitHub Pages, this project&#39;s current host, logs by default, not yet audited or reduced, and not yet stated here in specific terms. This project inherited a host before confirming its logging practices meet the minimisation this page states as a goal, which is backwards, and this row says so rather than implying the sequencing went the other way.</dd>
+            </div>
+            
+            <div style="border-top:2px solid #366943;padding-top:.7rem">
+              <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Build</dt>
+              <dd style="margin:0;font-size:16px;line-height:1.5">Every reading page (Manifesto, Invitation, Learn, Archive, Resources, this page) is generated from plain data files into plain HTML by Hugo (a single static binary, no dependency tree): the output is committed and is what ships, no runtime, no framework, opens offline from a saved file. The generator exists for whoever maintains this, not for whoever reads it. Home, Practise, and Contribute keep the dc-runtime instead, since each carries live interactive logic (forms, a stateful tool) Hugo&#39;s static output can&#39;t hold. Archive keeps one small script of its own, archive-filter.js, for its filter-by-tag convenience, the one piece of client-side JavaScript on a Hugo-generated page, and a plain progressive enhancement: every entry renders regardless, the script only ever narrows what is already there.</dd>
+            </div>
+            
+            <div style="border-top:2px solid #366943;padding-top:.7rem">
+              <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Durability</dt>
+              <dd style="margin:0;font-size:16px;line-height:1.5">Met, for the reading pages: all four now render and read fully with scripting off, not asserted but verified against a real headless browser with JavaScript disabled. Practise is the one page that still needs its runtime, deliberately: it is interactive by nature, not a reading page.</dd>
+            </div>
+            
+          </dl>
+        </details>
+      </div>
     </details>
   </div>
 </section>
 
-<section id="type" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
+<section data-pocket="type" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Type, and why it changed</h2>
+    <details class="pocket" data-collapsible>
+      <summary class="pocket-summary">
+        <span class="kick kick-teal">Coverage, checked not assumed</span>
+        <h2 class="sec">Type, and why it changed</h2>
+      </summary>
+      <div class="pocket-body" id="type">
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem 2.6rem">
       <div>
         <p style="margin:0 0 1rem;max-width:46ch">Version 0.1 loaded three faces from a font CDN. That disclosed every reader's address to a third party on page load, while the footer claimed no third parties. The claim was false, so the fonts went.</p>
@@ -284,31 +350,37 @@
         <p style="margin:0 0 .9rem;font-size:15.5px;line-height:1.5">A font that turns a nation's name into boxes makes a people unwritable in their own name. Every diacritic this site carries was measured against the notdef box in each stack, rather than trusted.</p>
         <ul style="list-style:none;margin:0 0 .9rem;padding:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.7;color:#3C3E38">
           
-          <li><span style="color:#366943">ok</span> ʔ  U&#43;0294 glottal stop — Skarù·ręʔ</li>
+          <li><span style="color:#366943">ok</span> ʔ  U&#43;0294 glottal stop: Skarù·ręʔ</li>
           
-          <li><span style="color:#366943">ok</span> ·  U&#43;00B7 middle dot — Skarù·ręʔ</li>
+          <li><span style="color:#366943">ok</span> ·  U&#43;00B7 middle dot: Skarù·ręʔ</li>
           
-          <li><span style="color:#366943">ok</span> à ù ê î é  precomposed diacritics — Kahnawà:ke, nêhiyawêwin</li>
+          <li><span style="color:#366943">ok</span> à ù ê î é  precomposed diacritics: Kahnawà:ke, nêhiyawêwin</li>
           
           <li><span style="color:#366943">ok</span> ę ř  ogonek, caron</li>
           
-          <li><span style="color:#366943">ok</span> ʼ  U&#43;02BC modifier apostrophe — Kwakwaka&#39;wakw</li>
+          <li><span style="color:#366943">ok</span> ʼ  U&#43;02BC modifier apostrophe: Kwakwaka&#39;wakw</li>
           
-          <li><span style="color:#366943">ok</span> x̂  x &#43; U&#43;0302 combining circumflex — Unangax̂, rendered live in the mono stack (Archive&#39;s by-line). Previously flagged at-risk because advance-width measurement was inconclusive on some faces; the check now compares rendered pixels instead and gives a definite answer. Confirmed present on the one platform re-verified this session.</li>
+          <li><span style="color:#366943">ok</span> x̂  x &#43; U&#43;0302 combining circumflex: Unangax̂, rendered live in the mono stack (Archive&#39;s by-line). Previously flagged at-risk because advance-width measurement was inconclusive on some faces; the check now compares rendered pixels instead and gives a definite answer. Confirmed present on the one platform re-verified this session.</li>
           
-          <li><span style="color:#366943">ok</span> ★ ⌖ ▪ □ —  interface marks</li>
+          <li><span style="color:#366943">ok</span> ★ ⌖ ▪ □  interface marks</li>
           
         </ul>
-        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.55;color:#5A5D53">Re-measured 2026 with a pixel-comparison check: the previous method compared advance widths against the .notdef box, which cannot detect a missing glyph in a monospace face at all — every character there shares one fixed advance width by design, present or not. That was a real gap in "checked, not assumed," not a platform-coverage gap, and it's fixed now. Confirmed clean this session on Chrome / Linux, the one platform available to re-verify it on. Windows, macOS, iOS, and Android — and Safari, Firefox, and Edge — have not been independently re-checked and are a known gap. Results can vary by platform, which is why each stack names several faces. The check itself is <a href="/glyph-check.html">viewable and re-runnable</a>.</p>
+        <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.55;color:#5A5D53">Re-measured 2026 with a pixel-comparison check: the previous method compared advance widths against the .notdef box, which cannot detect a missing glyph in a monospace face at all: every character there shares one fixed advance width by design, present or not. That was a real gap in "checked, not assumed," not a platform-coverage gap, and it's fixed now. Confirmed clean this session on Chrome / Linux, the one platform available to re-verify it on. Windows, macOS, iOS, and Android (and Safari, Firefox, and Edge) have not been independently re-checked and are a known gap. Results can vary by platform, which is why each stack names several faces. The check itself is <a href="/glyph-check.html">viewable and re-runnable</a>.</p>
       </div>
     </div>
+      </div>
+    </details>
   </div>
 </section>
 
-<section id="crawler" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
+<section data-pocket="crawler" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">Opacity as governance, not as a button</p>
-    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.2rem;max-width:24ch;color:#E7E5DC">What this site refuses to the crawler.</h2>
+    <details class="pocket" data-collapsible>
+      <summary class="pocket-summary">
+        <span class="kick" style="color:#DB9E2A;margin-bottom:1rem">Opacity as governance, not as a button</span>
+        <h2 class="sec" style="max-width:24ch;color:#E7E5DC">What this site refuses to the crawler.</h2>
+      </summary>
+      <div class="pocket-body" id="crawler">
     <p style="max-width:54ch;margin:0 0 1.6rem;color:#B8C7C1">Discovery by a third party is not a condition of existing. A publisher can decline the index, and this one does, selectively. The policy is a real file, not a claim: <a href="/robots.txt" style="color:#DB9E2A">read robots.txt</a>.</p>
     
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:0;border-top:1px solid #2A4C4C;border-left:1px solid #2A4C4C;margin-bottom:1.8rem">
@@ -322,7 +394,7 @@
       <div style="background:#0F2A2E;border-right:1px solid #2A4C4C;border-bottom:1px solid #2A4C4C;padding:1.2rem 1.3rem 1.4rem">
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#DB9E2A;margin:0 0 .5rem">disallowed</p>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">Practise</h3>
-        <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">What a person marks about their own relationships is not material for a register, a snapshot, or a training set — even though nothing they type ever leaves their browser.</p>
+        <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">What a person marks about their own relationships is not material for a register, a snapshot, or a training set, even though nothing they type ever leaves their browser.</p>
       </div>
       
       <div style="background:#0F2A2E;border-right:1px solid #2A4C4C;border-bottom:1px solid #2A4C4C;padding:1.2rem 1.3rem 1.4rem">
@@ -340,18 +412,25 @@
       <div style="background:#0F2A2E;border-right:1px solid #2A4C4C;border-bottom:1px solid #2A4C4C;padding:1.2rem 1.3rem 1.4rem">
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#509C64;margin:0 0 .5rem">allowed, with limits</p>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC">Retrieval crawlers</h3>
-        <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">Training and retrieval are different acts. A crawler fetching this page to answer a person&#39;s question, and citing it back, may read the public pages — it is refused the workshop and the contribution page like anyone else. Refusing to become training data is not the same as refusing to be found.</p>
+        <p style="margin:0;font-size:15px;line-height:1.5;color:#8FA9A2">Training and retrieval are different acts. A crawler fetching this page to answer a person&#39;s question, and citing it back, may read the public pages. It is refused the workshop and the contribution page like anyone else. Refusing to become training data is not the same as refusing to be found.</p>
       </div>
       
     </div>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#73968D;border-left:2px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:0 0 1.6rem;max-width:58ch">⌖ The caveat that governs all of this: opacity is owed to the crawler and the market, never to the disabled reader. Nothing here is hidden from assistive technology, and no semantic structure is removed to look less legible. Withhold from extraction; disclose fully to those who need access to participate.</p>
-    <p style="max-width:54ch;margin:0;color:#B8C7C1">Protocol-gated access — where a community, not this project, sets who may see what and under which relationship — is not built yet. When it is, it will follow work that already exists rather than a scheme invented here: <a href="https://mukurtu.org" style="color:#DB9E2A">Mukurtu CMS</a>, built with the Warumungu community; <a href="https://localcontexts.org" style="color:#DB9E2A">Local Contexts</a> TK and BC Labels; and the <a href="https://www.gida-global.org/care" style="color:#DB9E2A">CARE Principles</a> for Indigenous data governance.</p>
+    <details class="note" style="color:#73968D;max-width:58ch"><summary style="color:#73968D">⌖ The caveat that governs all of this</summary><p>opacity is owed to the crawler and the market, never to the disabled reader. Nothing here is hidden from assistive technology, and no semantic structure is removed to look less legible. Withhold from extraction; disclose fully to those who need access to participate.</p></details>
+    <p style="max-width:54ch;margin:0;color:#B8C7C1">Protocol-gated access, where a community rather than this project sets who may see what and under which relationship, is not built yet. When it is, it will follow work that already exists rather than a scheme invented here: <a href="https://mukurtu.org" style="color:#DB9E2A">Mukurtu CMS</a>, built with the Warumungu community; <a href="https://localcontexts.org" style="color:#DB9E2A">Local Contexts</a> TK and BC Labels; and the <a href="https://www.gida-global.org/care" style="color:#DB9E2A">CARE Principles</a> for Indigenous data governance.</p>
+      </div>
+    </details>
   </div>
 </section>
 
-<section id="reuse" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(2.5rem,5vw,3.5rem)">
+<section data-pocket="reuse" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Reuse terms, version 0.2</h2>
+    <details class="pocket" data-collapsible>
+      <summary class="pocket-summary">
+        <span class="kick kick-teal">Terms that bind the project, not just the reader</span>
+        <h2 class="sec">Reuse terms, version 0.2</h2>
+      </summary>
+      <div class="pocket-body" id="reuse">
     <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">Terms that only bind the reader are not terms; they are imposed law. These bind the project too.</p>
     <ul style="list-style:none;margin:0 0 1.4rem;padding:0;max-width:760px;display:flex;flex-direction:column;gap:.7rem">
       
@@ -370,14 +449,21 @@
       <li style="border-top:1px solid #C9C6BA;padding-top:.7rem;font-size:16px;line-height:1.5">This site claims no jurisdiction over anyone who reads it.</li>
       
     </ul>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #3F7A4E;padding:.3rem 0 .3rem .9rem;margin:0;max-width:58ch">⌖ No unilateral amendment. These terms carry a version number; changes are recorded with the previous wording left legible, in the project's <a href="#changelog" style="color:#585B4F">version history</a>. A change cannot apply retroactively to material already contributed under earlier terms.</p>
+    <details class="note note-holds" style="margin:0;max-width:58ch"><summary>⌖ No unilateral amendment.</summary><p>These terms carry a version number; changes are recorded with the previous wording left legible, in the project's <a href="#changelog" style="color:#585B4F">version history</a>. A change cannot apply retroactively to material already contributed under earlier terms.</p></details>
+      </div>
+    </details>
   </div>
 </section>
 
-<section id="faults" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
+<section data-pocket="faults" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .5rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">The fault list</h2>
-    <p style="max-width:56ch;margin:1rem 0 1.6rem;color:#3C3E38">Known and unfixed, published rather than quietly carried. Naming them is not absolution; it is the work list.</p>
+    <details class="pocket" data-collapsible>
+      <summary class="pocket-summary">
+        <span class="kick kick-fails">Known and unfixed, published rather than quietly carried</span>
+        <h2 class="sec">The fault list</h2>
+      </summary>
+      <div class="pocket-body" id="faults">
+    <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">Naming them is not absolution; it is the work list.</p>
     <ol style="list-style:none;counter-reset:f;margin:0;padding:0;display:flex;flex-direction:column;gap:1.2rem;max-width:820px">
       
       
@@ -385,7 +471,7 @@
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#6B4C12">01</span>
         <div>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .3rem;line-height:1.2">The server has no declared territory yet</h3>
-          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">The site is hosted — GitHub Pages, live at this domain — but the most material fields in the colophon (server location, watershed) are blank for a different reason than this fault used to say: not because nothing exists yet, but because the current host doesn&#39;t disclose which facility it uses. Naming the actual machine&#39;s location and watershed, on a host that can name them, is a launch condition this project has not met, not an optional extra.</p>
+          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">The site is hosted (GitHub Pages, live at this domain), but the most material fields in the colophon (server location, watershed) are blank for a different reason than this fault used to say: not because nothing exists yet, but because the current host doesn&#39;t disclose which facility it uses. Naming the actual machine&#39;s location and watershed, on a host that can name them, is a launch condition this project has not met, not an optional extra.</p>
         </div>
       </li>
       
@@ -393,7 +479,7 @@
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#6B4C12">02</span>
         <div>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .3rem;line-height:1.2">Protocol-gated access is not built</h3>
-          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">Opacity is currently expressed as a crawler policy and as honest absence. Community-defined access rules — the Mukurtu and TK Label model — are not implemented, so no material that genuinely needs protocol is held here yet.</p>
+          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">Opacity is currently expressed as a crawler policy and as honest absence. Community-defined access rules (the Mukurtu and TK Label model) are not implemented, so no material that genuinely needs protocol is held here yet.</p>
         </div>
       </li>
       
@@ -409,7 +495,7 @@
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#6B4C12">04</span>
         <div>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .3rem;line-height:1.2">No clickjacking protection yet</h3>
-          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">The CSP is delivered as a &lt;meta&gt; tag because the current host cannot set response headers — and frame-ancestors, the directive that would stop this site being framed inside someone else&#39;s page, is one of a small number the CSP specification refuses to honour outside a real header, on any browser, no matter how it&#39;s written. A fix is decided but not yet live: proxying the site through Cloudflare, which can set response headers without a hosting migration. Same root cause as fault 01, and that one isn&#39;t resolved by this either — a proxy doesn&#39;t give GitHub Pages a single declarable location.</p>
+          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">The CSP is delivered as a &lt;meta&gt; tag because the current host cannot set response headers, and frame-ancestors, the directive that would stop this site being framed inside someone else&#39;s page, is one of a small number the CSP specification refuses to honour outside a real header, on any browser, no matter how it&#39;s written. A fix is decided but not yet live: proxying the site through Cloudflare, which can set response headers without a hosting migration. Same root cause as fault 01, and that one isn&#39;t resolved by this either: a proxy doesn&#39;t give GitHub Pages a single declarable location.</p>
         </div>
       </li>
       
@@ -417,18 +503,25 @@
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#6B4C12">05</span>
         <div>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.05rem;margin:0 0 .3rem;line-height:1.2">A removed subscriber&#39;s encrypted history outlives their removal</h3>
-          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">Every write to the subscriber list is a git commit to a private repository. Removing someone updates the file at HEAD, but the prior encrypted version — the one that still listed them — stays in that repository&#39;s git history indefinitely. If the encryption key were ever compromised, the recoverable list would include people who left, against a removal message that told them nothing further would be sent. This is a known, accepted limitation of git-commit-as-datastore, not an unexamined one: periodically rewriting that history and migrating to a datastore where deletion is real were both considered and set aside, in favour of disclosing this plainly instead.</p>
+          <p style="margin:0;font-size:16px;line-height:1.5;color:#3C3E38">Every write to the subscriber list is a git commit to a private repository. Removing someone updates the file at HEAD, but the prior encrypted version (the one that still listed them) stays in that repository&#39;s git history indefinitely. If the encryption key were ever compromised, the recoverable list would include people who left, against a removal message that told them nothing further would be sent. This is a known, accepted limitation of git-commit-as-datastore, not an unexamined one: periodically rewriting that history and migrating to a datastore where deletion is real were both considered and set aside, in favour of disclosing this plainly instead.</p>
         </div>
       </li>
       
     </ol>
+      </div>
+    </details>
   </div>
 </section>
 
-<section id="roadmap" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
+<section data-pocket="roadmap" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .5rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Roadmap</h2>
-    <p style="max-width:56ch;margin:1rem 0 1.6rem;color:#3C3E38">Learn names twenty-four topics. Twelve have a drafted outline; none are linked or published from this list, because an unfinished page marked <em>drafted</em> would be the small lie this site is trying not to tell. No dates are given, for the same reason <a href="/practise/">Practise's own unbuilt-tools list</a> gives none: a date this project couldn't keep would be its own small domination.</p>
+    <details class="pocket" data-collapsible>
+      <summary class="pocket-summary">
+        <span class="kick kick-ask">Named, not yet built, no dates promised</span>
+        <h2 class="sec">Roadmap</h2>
+      </summary>
+      <div class="pocket-body" id="roadmap">
+    <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">Learn names twenty-four topics. Twelve have a drafted outline; none are linked or published from this list, because an unfinished page marked <em>drafted</em> would be the small lie this site is trying not to tell. No dates are given, for the same reason <a href="/practise/">Practise's own unbuilt-tools list</a> gives none: a date this project couldn't keep would be its own small domination.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.6rem">
       
       
@@ -576,21 +669,34 @@
       </div>
       
     </div>
+      </div>
+    </details>
   </div>
 </section>
 
-<section id="changelog" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
+<section data-pocket="changelog" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">Change log — repair in view</p>
-    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.2rem;max-width:24ch;color:#E7E5DC">Corrections are shown, not overwritten.</h2>
+    <details class="pocket" data-collapsible>
+      <summary class="pocket-summary">
+        <span class="kick" style="color:#DB9E2A;margin-bottom:1rem">Change log · repair in view</span>
+        <h2 class="sec" style="max-width:24ch;color:#E7E5DC">Corrections are shown, not overwritten.</h2>
+      </summary>
+      <div class="pocket-body" id="changelog">
     <p style="max-width:54ch;margin:0 0 1.6rem;color:#B8C7C1">The record of what this site used to say, and what it says now, is kept in the project's own version history rather than reproduced on this page.</p>
-    <a href="https://github.com/jbloewencolon/RS-website" style="display:inline-flex;align-items:center;min-height:44px;color:#DB9E2A;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13.5px">See the change history on GitHub</a>
+    <a href="https://github.com/jbloewencolon/RS-website" style="display:inline-flex;align-items:center;min-height:44px;color:#DB9E2A;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px">See the change history on GitHub</a>
+      </div>
+    </details>
   </div>
 </section>
 
-<section id="labour" style="padding:clamp(3rem,6vw,4.5rem) 0">
+<section data-pocket="labour" style="padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Labour and money</h2>
+    <details class="pocket" data-collapsible>
+      <summary class="pocket-summary">
+        <span class="kick kick-ask">Who worked on this, what's paid, and what it costs</span>
+        <h2 class="sec">Labour and money</h2>
+      </summary>
+      <div class="pocket-body" id="labour">
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.6rem 2.4rem;max-width:1000px">
       <div>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.05rem;margin:0 0 .4rem">Who has worked on this</h3>
@@ -606,9 +712,11 @@
       </div>
       <div>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.05rem;margin:0 0 .4rem">Sources this site is built from</h3>
-        <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">Four research documents and a manifesto held by the project, and the writers named in the <a href="/archive/">archive</a> — who are owed the credit, and to whom this site is only a door.</p>
+        <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">Four research documents and a manifesto held by the project, and the writers named in the <a href="/archive/">archive</a>, who are owed the credit, and to whom this site is only a door.</p>
       </div>
     </div>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -618,7 +726,16 @@
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#8B3A2F;margin:0 0 1rem">The limit</p>
       <p style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(1.3rem,3.2vw,1.9rem);line-height:1.14;letter-spacing:-.02em;margin:0 0 1.2rem">A website returns no land.</p>
       <p style="margin:0 0 1rem;max-width:52ch">Everything on this page is more accurately called anti-colonial design: a refusal to reproduce colonial form. That is a real but modest achievement, and it is not the repatriation of territory or life. Sufficiently thoughtful design is not decolonization.</p>
-      <p style="margin:0;max-width:52ch;color:#3C3E38">The substrate is not exited either — a naming registry, two browser engines, corporate networks, and a physical data centre remain. Where this work touches actual sovereignty it is jurisdictional: whose law governs a community's data, on whose territory the servers sit, who holds deletion authority, who may crawl and train. That is a question about land, not layout.</p>
+      <p style="margin:0;max-width:52ch;color:#3C3E38">The substrate is not exited either: a naming registry, two browser engines, corporate networks, and a physical data centre remain. Where this work touches actual sovereignty it is jurisdictional: whose law governs a community's data, on whose territory the servers sit, who holds deletion authority, who may crawl and train. That is a question about land, not layout.</p>
+    </div>
+  </div>
+</section>
+
+<section style="padding:clamp(2rem,4vw,3rem) 0">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <div style="border-top:1px solid #C9C6BA;padding-top:1.6rem;max-width:700px">
+      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 1rem">About this site</p>
+      <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">This website was drafted with the assistance of generative LLMs (local and frontier models). The thinking, resources, research, core design, and critical arguments are human-first. Copy and coding have gone through LLM input and output cycles.</p>
     </div>
   </div>
 </section>
@@ -626,7 +743,7 @@
 </main>
 
 <footer class="dark" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:44ch">v0.2 · no fonts, scripts, or requests from third parties · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
       <a href="/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>
@@ -642,5 +759,6 @@
 </footer>
 
 <script src="/sections.js"></script>
+<script src="/notes.js"></script>
 </body>
 </html>

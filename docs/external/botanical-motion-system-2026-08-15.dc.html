@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#E7E5DC;color:#191B18;font-family:Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  *{box-sizing:border-box}
+  h1,h2,h3{text-wrap:balance}
+  p,li{text-wrap:pretty}
+  a{color:#2B4C9B;text-underline-offset:3px;text-decoration-thickness:1px}
+  a:hover{color:#2C5A38}
+  :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
+  @keyframes bm-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+  @keyframes bm-in{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+  @keyframes bm-out{from{opacity:1}to{opacity:0}}
+  @keyframes bm-open{0%{opacity:0;transform:scale(.34) rotate(-11deg)}34%{opacity:.6;transform:scale(.66) rotate(-6deg)}68%{opacity:.92;transform:scale(.9) rotate(-2deg)}100%{opacity:1;transform:scale(1) rotate(0deg)}}
+  @keyframes bm-sway{0%,100%{transform:translate3d(0,0,0) rotate(0deg)}50%{transform:translate3d(-5px,4px,0) rotate(.55deg)}}
+  @keyframes bm-drift{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(9px,-7px,0)}}
+  @keyframes bm-breathe{0%,100%{opacity:.5}50%{opacity:.9}}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+
+<header style="position:relative;overflow:hidden;border-bottom:1px solid #C9C6BA">
+  <div style="position:absolute;inset:-6% -4% auto auto;pointer-events:none;z-index:0">{{ hero }}</div>
+  <div style="position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:clamp(2.4rem,6vw,4.5rem) clamp(1.1rem,4vw,3rem) clamp(2.4rem,5vw,3.6rem)">
+    <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.4rem;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center"><span style="width:7px;height:7px;border-radius:50%;background:#A8374C;display:inline-block"></span> Motion system · draft 0.1 · for relationalsovereignty.com</p>
+    <h1 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(1.7rem,6.2vw,4.2rem);line-height:1;letter-spacing:-.035em;margin:0 0 1.6rem;max-width:16ch">BOTANICAL<br>MOTION SYSTEM</h1>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.6rem 3rem;align-items:start">
+      <p style="font-size:clamp(1.05rem,2.2vw,1.3rem);line-height:1.5;max-width:44ch;margin:0">A pendant botanical layer for the site: how it grows, where it appears on each page, and what it is never allowed to do.</p>
+      <div style="border-top:1px solid #C9C6BA;border-bottom:1px solid #C9C6BA;padding:1.2rem 0;max-width:420px;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:#585B4F">
+        <p style="margin:0 0 .5rem;color:#191B18">Three flora, one structure</p>
+        <p style="margin:0;display:flex;flex-direction:column;gap:.25rem">
+          <span><span style="display:inline-block;width:.62rem;height:.62rem;border-radius:1px;margin-right:.55rem;background:#A8374C"></span>Flor de Maga · <em>Thespesia grandiflora</em></span>
+          <span><span style="display:inline-block;width:.62rem;height:.62rem;border-radius:1px;margin-right:.55rem;background:#2E8F7E"></span>Jade vine · <em>Strongylodon macrobotrys</em></span>
+          <span><span style="display:inline-block;width:.62rem;height:.62rem;border-radius:1px;margin-right:.55rem;background:#6C63A6"></span>Wisteria · <em>W. floribunda</em></span>
+        </p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section style="padding:clamp(2.6rem,5vw,4rem) 0;border-bottom:1px solid #C9C6BA">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:minmax(0,7rem) minmax(0,1fr);gap:1.4rem 2.6rem">
+    <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:.45rem 0 0">01 · Premise</p>
+    <div>
+      <h2 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.4rem);line-height:1.04;letter-spacing:-.03em;margin:0 0 1.4rem;max-width:20ch">Everything hangs.</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.4rem 3rem;max-width:900px">
+        <div>
+          <p style="margin:0 0 1rem">Flor de Maga, jade vine, and wisteria share one structure: the raceme. A stem descends and buds hang off it in sequence, opening from the top down over days. Nothing on any of the three reaches upward.</p>
+          <p style="margin:0 0 1rem">That single fact settles most of the art direction. A climbing vine reads as ornament ascending a frame — Art Nouveau, wedding stationery, a border. A pendant raceme reads as weather: something that arrived, is hanging there, and will pass. It occupies the top and the margins, which is exactly where a text site has room.</p>
+        </div>
+        <div>
+          <p style="margin:0 0 1rem">The site's own constraints are the brief, not obstacles to it. A content security policy of <code style="font-family:ui-monospace,monospace;font-size:.88em">script-src 'self'</code> and a footer that promises exactly one third-party request rule out a CDN animation library. A hard contrast floor rules out anything drifting under body copy. A printable manifesto rules out a layer that has to be there for the page to make sense.</p>
+          <p style="margin:0">The result is a layer with no job. It carries no meaning, marks no state, and signals nothing. It breathes, and it gets out of the way.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:clamp(2.6rem,5vw,4rem) 0;border-bottom:1px solid #C9C6BA">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:minmax(0,7rem) minmax(0,1fr);gap:1.4rem 2.6rem">
+    <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:.45rem 0 0">02 · Visual language</p>
+    <div>
+      <h2 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.4rem);line-height:1.04;letter-spacing:-.03em;margin:0 0 1.6rem;max-width:22ch">Botanical illustration, not botanical decoration.</h2>
+      <p style="margin:0 0 2rem;max-width:62ch">Everything is drawn as line first. Stems, pedicels, buds, and petals are strokes of 0.5–2.1px with round caps — the register of a hand-coloured engraving, held at a weight just above the paper's own texture. Under the line, each corolla carries a graded wash: dark at the throat, thinning toward the tips, capped at 0.36 before the layer's own opacity is applied, so a petal lands near 0.22 on paper. Nothing is ever drawn as a silhouette without its line. Nothing is blurred, nothing glows.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:#C9C6BA;border:1px solid #C9C6BA;margin-bottom:2.2rem">
+        <div style="background:#E7E5DC;padding:1.3rem 1.3rem 1.5rem">
+          <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#585B4F;margin:0 0 .7rem">Structure</p>
+          <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">One dominant raceme per page. At most two faint echoes behind it at 40% of its opacity. Branching is sparse and alternate — never symmetrical, never a fan, never a tree diagram.</p>
+        </div>
+        <div style="background:#E7E5DC;padding:1.3rem 1.3rem 1.5rem">
+          <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#585B4F;margin:0 0 .7rem">Line</p>
+          <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">Stem 1.7–2.1px, pedicel 1.1–1.35px, petal 1–1.15px, echo layers 0.7–1.05px. Every vine run takes its own thickening factor between 20% and 50%, applied to weight and to length together, so a group reads as several plants rather than one stroke repeated. Weight tapers with depth, never with length — a stem does not thin as it falls.</p>
+        </div>
+        <div style="background:#E7E5DC;padding:1.3rem 1.3rem 1.5rem">
+          <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#585B4F;margin:0 0 .7rem">Colour</p>
+          <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">No new hues. The three bloom accents are saturated cousins of accents the site already uses — brick, sage, link blue. Each carries a throat tone and a tip tone derived from it, which is what lets a petal read as a petal. Vines run in a family of six greens rather than neutral ink, one shade held per run.</p>
+        </div>
+        <div style="background:#E7E5DC;padding:1.3rem 1.3rem 1.5rem">
+          <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#585B4F;margin:0 0 .7rem">Density</p>
+          <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">A composition is capped at 14 blooms and 60 path nodes. If it needs more to read, the drawing is wrong, not too small.</p>
+        </div>
+      </div>
+
+      <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#585B4F;margin:0 0 .9rem">Bloom accents against the existing palette</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:1.1rem .9rem;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;line-height:1.5;color:#585B4F">
+        <div><div style="background:#A8374C;height:76px;border:1px solid rgba(25,27,24,.14)"></div><p style="margin:.55rem 0 0"><span style="color:#191B18">#A8374C</span><br>maga · new</p></div>
+        <div><div style="background:#8B3A2F;height:76px;border:1px solid rgba(25,27,24,.14)"></div><p style="margin:.55rem 0 0"><span style="color:#191B18">#8B3A2F</span><br>brick · existing</p></div>
+        <div><div style="background:#2E8F7E;height:76px;border:1px solid rgba(25,27,24,.14)"></div><p style="margin:.55rem 0 0"><span style="color:#191B18">#2E8F7E</span><br>jade · new</p></div>
+        <div><div style="background:#8FA9A2;height:76px;border:1px solid rgba(25,27,24,.14)"></div><p style="margin:.55rem 0 0"><span style="color:#191B18">#8FA9A2</span><br>sage · existing</p></div>
+        <div><div style="background:#6C63A6;height:76px;border:1px solid rgba(25,27,24,.14)"></div><p style="margin:.55rem 0 0"><span style="color:#191B18">#6C63A6</span><br>wisteria · new</p></div>
+        <div><div style="background:#2B4C9B;height:76px;border:1px solid rgba(25,27,24,.14)"></div><p style="margin:.55rem 0 0"><span style="color:#191B18">#2B4C9B</span><br>link · existing</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:clamp(2.6rem,5vw,4rem) 0;border-bottom:1px solid #C9C6BA">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <div style="display:grid;grid-template-columns:minmax(0,7rem) minmax(0,1fr);gap:1.4rem 2.6rem;margin-bottom:2.4rem">
+      <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:.45rem 0 0">03 · Motion grammar</p>
+      <div>
+        <h2 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.4rem);line-height:1.04;letter-spacing:-.03em;margin:0 0 1.2rem;max-width:22ch">Seven behaviours, all of them slow.</h2>
+        <p style="margin:0;max-width:62ch">Every specimen below is live and running at the system's real timings. Nothing starts until it is scrolled into view, and nothing loops faster than forty seconds. Press replay to watch a growth cycle from the start.</p>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:1px;background:#C9C6BA;border:1px solid #C9C6BA">
+
+      <div style="background:#EFEEE7;padding:0 0 1.5rem">
+        <div style="position:relative;height:250px;overflow:hidden;border-bottom:1px solid #C9C6BA;background:#E7E5DC">{{ specRaceme }}</div>
+        <div style="padding:1.3rem 1.4rem 0">
+          <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#A8374C;margin:0 0 .5rem">M1 · signature</p>
+          <h3 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:1.2rem;margin:0 0 .6rem;letter-spacing:-.02em">Raceme descent</h3>
+          <p style="margin:0 0 .9rem;font-size:15.5px;line-height:1.5;color:#3C3E38">The stem draws downward over 22s and buds ride the tip as it goes. Nothing opens until the stem lands: after a settling beat the buds unfurl in sequence from the base down, one every <code style="font-family:ui-monospace,monospace;font-size:.88em">dur × 0.5 ÷ count</code> seconds, over 3.4s each. The whole cycle takes about 50 seconds and then simply stops, grown.</p>
+          <p style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;line-height:1.6;color:#585B4F">Use · once per page, on load, in the masthead or outer gutter. This is the only behaviour permitted to be noticed.</p>
+        </div>
+      </div>
+
+      <div style="background:#EFEEE7;padding:0 0 1.5rem">
+        <div style="position:relative;height:250px;overflow:hidden;border-bottom:1px solid #C9C6BA;background:#E7E5DC">{{ specRhizome }}</div>
+        <div style="padding:1.3rem 1.4rem 0">
+          <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#585B4F;margin:0 0 .5rem">M2 · connective</p>
+          <h3 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:1.2rem;margin:0 0 .6rem;letter-spacing:-.02em">Rhizome run</h3>
+          <p style="margin:0 0 .9rem;font-size:15.5px;line-height:1.5;color:#3C3E38">A horizontal root travels the width of a section rule, throwing short branches and nodes as it goes. Ink only, no colour, no blooms. It reads as substrate, not subject.</p>
+          <p style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;line-height:1.6;color:#585B4F">Use · section boundaries and long lists. Replaces a hairline rule; never sits alongside one.</p>
+        </div>
+      </div>
+
+      <div style="background:#EFEEE7;padding:0 0 1.5rem">
+        <div style="position:relative;height:250px;overflow:hidden;border-bottom:1px solid #C9C6BA;background:#E7E5DC">{{ specEmerge }}</div>
+        <div style="padding:1.3rem 1.4rem 0">
+          <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#585B4F;margin:0 0 .5rem">M3 · scroll</p>
+          <h3 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:1.2rem;margin:0 0 .6rem;letter-spacing:-.02em">Emergence</h3>
+          <p style="margin:0 0 .9rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Growth begins when a composition crosses 35% into the viewport, and never reverses. Scrolling back up does not rewind it. Nothing is scrubbed to scroll position — the reader triggers growth, they do not drive it.</p>
+          <p style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;line-height:1.6;color:#585B4F">Use · every composition below the fold, without exception.</p>
+        </div>
+      </div>
+
+      <div style="background:#EFEEE7;padding:0 0 1.5rem">
+        <div style="position:relative;height:250px;overflow:hidden;border-bottom:1px solid #C9C6BA;background:#E7E5DC">{{ specTendril }}</div>
+        <div style="padding:1.3rem 1.4rem 0">
+          <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#2E8F7E;margin:0 0 .5rem">M4 · cursor</p>
+          <h3 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:1.2rem;margin:0 0 .6rem;letter-spacing:-.02em">Tendril lean</h3>
+          <p style="margin:0 0 .9rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Move the pointer across the panel. A tendril leans toward it by at most 8px over 1.2s of easing, and uncurls back when the pointer leaves. It follows late and arrives after you have stopped — that lag is the whole effect.</p>
+          <p style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;line-height:1.6;color:#585B4F">Use · at most one per viewport, near a card grid. Pointer devices only; never bound to touch or scroll.</p>
+        </div>
+      </div>
+
+      <div style="background:#EFEEE7;padding:0 0 1.5rem">
+        <div style="position:relative;height:250px;overflow:hidden;border-bottom:1px solid #C9C6BA;background:#E7E5DC">{{ specGraft }}</div>
+        <div style="padding:1.3rem 1.4rem 0">
+          <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#585B4F;margin:0 0 .5rem">M5 · composition</p>
+          <h3 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:1.2rem;margin:0 0 .6rem;letter-spacing:-.02em">Inosculation</h3>
+          <p style="margin:0 0 .9rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Two runners enter from opposite corners, grow toward each other at different rates, and fuse. The join is a single 2px node — the smallest mark in the system and the only one placed with any drama.</p>
+          <p style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;line-height:1.6;color:#585B4F">Use · pages built around meeting: Contribute, Invitation. Once per page, below the fold.</p>
+        </div>
+      </div>
+
+      <div style="background:#EFEEE7;padding:0 0 1.5rem">
+        <div style="position:relative;height:250px;overflow:hidden;border-bottom:1px solid #C9C6BA;background:#E7E5DC">{{ specSway }}</div>
+        <div style="padding:1.3rem 1.4rem 0">
+          <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#585B4F;margin:0 0 .5rem">M6 · ambient</p>
+          <h3 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:1.2rem;margin:0 0 .6rem;letter-spacing:-.02em">Sway</h3>
+          <p style="margin:0 0 .9rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Once grown, a composition never freezes. Each layer translates ±5px and rotates ±0.55° on its own 60–90s cycle, deliberately out of phase, so the group never returns to the same arrangement twice within a reading session.</p>
+          <p style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;line-height:1.6;color:#585B4F">Use · permanently, on every grown composition. The resting state of the entire system.</p>
+        </div>
+      </div>
+
+      <div style="background:#EFEEE7;padding:0 0 1.5rem">
+        <div style="position:relative;height:250px;overflow:hidden;border-bottom:1px solid #C9C6BA;background:#E7E5DC">{{ specRetreat }}</div>
+        <div style="padding:1.3rem 1.4rem 0">
+          <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#6C63A6;margin:0 0 .5rem">M7 · deference</p>
+          <h3 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:1.2rem;margin:0 0 .6rem;letter-spacing:-.02em">Retreat</h3>
+          <p style="margin:0 0 .9rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Hover the panel. Growth withdraws toward its origin over 900ms and opacity halves. Any moment the reader needs to concentrate — a focused field, an open tool, a filter query — the layer recedes and stays back until they are done.</p>
+          <p style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;line-height:1.6;color:#585B4F">Use · Practise and Contribute, mandatory. Everywhere a form field takes focus.</p>
+        </div>
+      </div>
+
+      <div style="background:#EFEEE7;padding:1.4rem 1.4rem 1.6rem;display:flex;flex-direction:column;justify-content:center;gap:.9rem">
+        <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#585B4F;margin:0">Not in the grammar</p>
+        <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">Parallax. Scroll-scrubbed growth. Petals falling. Anything that spins, pulses on a beat, follows the cursor 1:1, or grows on hover. Each was drawn, tested, and cut — they read as toys, and this site is not one.</p>
+        <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">Also cut: blooms that open on click. Making the flower a reward for interaction turns an atmosphere into a slot machine.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section style="padding:clamp(2.6rem,5vw,4rem) 0;border-bottom:1px solid #C9C6BA">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <div style="display:grid;grid-template-columns:minmax(0,7rem) minmax(0,1fr);gap:1.4rem 2.6rem;margin-bottom:2.4rem">
+      <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:.45rem 0 0">04 · Page framework</p>
+      <div>
+        <h2 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.4rem);line-height:1.04;letter-spacing:-.03em;margin:0 0 1rem">One structure, eight compositions</h2>
+        <p style="margin:0;max-width:62ch">Pages differ by which behaviours they are allowed, not by which drawing they use. Home is the only page granted a full raceme with blooms at signature opacity. Reading pages drop to runners and then to almost nothing. Each preview below runs the exact configuration listed beside it.</p>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:#C9C6BA;border:1px solid #C9C6BA">
+
+      <div style="background:#EFEEE7">
+        <div style="position:relative;height:176px;overflow:hidden;border-bottom:1px solid #C9C6BA;background:#E7E5DC">{{ pgHome }}</div>
+        <div style="padding:1.2rem 1.3rem 1.4rem">
+          <h3 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;margin:0 0 .8rem;letter-spacing:-.02em">Home</h3>
+          <div style="display:grid;grid-template-columns:5.4rem minmax(0,1fr);gap:.34rem .8rem;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11.5px;line-height:1.5;color:#585B4F">
+            <span>Form</span><span style="color:#191B18">Maga raceme, two layers</span>
+            <span>Place</span><span style="color:#191B18">Masthead, upper right, bleeding off the top edge</span>
+            <span>Density</span><span style="color:#191B18">5 blooms + 3 at quarter opacity</span>
+            <span>Motion</span><span style="color:#191B18">M1 on load, M6 forever after</span>
+            <span>Intensity</span><span style="color:#191B18">6 / 10 — the site's one signature</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#EFEEE7">
+        <div style="position:relative;height:176px;overflow:hidden;border-bottom:1px solid #C9C6BA;background:#E7E5DC">{{ pgInvitation }}</div>
+        <div style="padding:1.2rem 1.3rem 1.4rem">
+          <h3 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;margin:0 0 .8rem;letter-spacing:-.02em">Invitation</h3>
+          <div style="display:grid;grid-template-columns:5.4rem minmax(0,1fr);gap:.34rem .8rem;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11.5px;line-height:1.5;color:#585B4F">
+            <span>Form</span><span style="color:#191B18">Wisteria, one short raceme</span>
+            <span>Place</span><span style="color:#191B18">Right gutter, aligned to the invitation's first line</span>
+            <span>Density</span><span style="color:#191B18">3 blooms</span>
+            <span>Motion</span><span style="color:#191B18">M1 at half speed, M6</span>
+            <span>Intensity</span><span style="color:#191B18">4 / 10</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#EFEEE7">
+        <div style="position:relative;height:176px;overflow:hidden;border-bottom:1px solid #C9C6BA;background:#E7E5DC">{{ pgLearn }}</div>
+        <div style="padding:1.2rem 1.3rem 1.4rem">
+          <h3 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;margin:0 0 .8rem;letter-spacing:-.02em">Learn</h3>
+          <div style="display:grid;grid-template-columns:5.4rem minmax(0,1fr);gap:.34rem .8rem;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11.5px;line-height:1.5;color:#585B4F">
+            <span>Form</span><span style="color:#191B18">Rhizome runner, ascending, no blooms</span>
+            <span>Place</span><span style="color:#191B18">Left gutter, one run per article</span>
+            <span>Density</span><span style="color:#191B18">7 branch nodes</span>
+            <span>Motion</span><span style="color:#191B18">M2 + M3, no ambient sway</span>
+            <span>Intensity</span><span style="color:#191B18">3 / 10 — reading page</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#EFEEE7">
+        <div style="position:relative;height:176px;overflow:hidden;border-bottom:1px solid #C9C6BA;background:#E7E5DC">{{ pgPractise }}</div>
+        <div style="padding:1.2rem 1.3rem 1.4rem">
+          <h3 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;margin:0 0 .8rem;letter-spacing:-.02em">Practise</h3>
+          <div style="display:grid;grid-template-columns:5.4rem minmax(0,1fr);gap:.34rem .8rem;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11.5px;line-height:1.5;color:#585B4F">
+            <span>Form</span><span style="color:#191B18">One thin runner, two branches</span>
+            <span>Place</span><span style="color:#191B18">Left margin, page top only</span>
+            <span>Density</span><span style="color:#191B18">Minimum permitted by the system</span>
+            <span>Motion</span><span style="color:#191B18">M3 alone — it grows once and stops</span>
+            <span>Intensity</span><span style="color:#191B18">2 / 10 — exercises need the room</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#EFEEE7">
+        <div style="position:relative;height:176px;overflow:hidden;border-bottom:1px solid #C9C6BA;background:#E7E5DC">{{ pgArchive }}</div>
+        <div style="padding:1.2rem 1.3rem 1.4rem">
+          <h3 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;margin:0 0 .8rem;letter-spacing:-.02em">Archive</h3>
+          <div style="display:grid;grid-template-columns:5.4rem minmax(0,1fr);gap:.34rem .8rem;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11.5px;line-height:1.5;color:#585B4F">
+            <span>Form</span><span style="color:#191B18">Three horizontal runners, stacked, fading back</span>
+            <span>Place</span><span style="color:#191B18">Behind the index, full width, below the type</span>
+            <span>Density</span><span style="color:#191B18">One run per screenful, never more</span>
+            <span>Motion</span><span style="color:#191B18">M2 + M3, staggered 1.4s per layer</span>
+            <span>Intensity</span><span style="color:#191B18">3 / 10</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#EFEEE7">
+        <div style="position:relative;height:176px;overflow:hidden;border-bottom:1px solid #C9C6BA;background:#E7E5DC">{{ pgContribute }}</div>
+        <div style="padding:1.2rem 1.3rem 1.4rem">
+          <h3 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;margin:0 0 .8rem;letter-spacing:-.02em">Contribute</h3>
+          <div style="display:grid;grid-template-columns:5.4rem minmax(0,1fr);gap:.34rem .8rem;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11.5px;line-height:1.5;color:#585B4F">
+            <span>Form</span><span style="color:#191B18">Two runners, opposite corners, fusing</span>
+            <span>Place</span><span style="color:#191B18">Behind the form, join above the submit control</span>
+            <span>Density</span><span style="color:#191B18">3 branches each, one maga node at the join</span>
+            <span>Motion</span><span style="color:#191B18">M5, arriving at 12s</span>
+            <span>Intensity</span><span style="color:#191B18">4 / 10</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#EFEEE7">
+        <div style="position:relative;height:176px;overflow:hidden;border-bottom:1px solid #C9C6BA;background:#E7E5DC">{{ pgResources }}</div>
+        <div style="padding:1.2rem 1.3rem 1.4rem">
+          <h3 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;margin:0 0 .8rem;letter-spacing:-.02em">Resources</h3>
+          <div style="display:grid;grid-template-columns:5.4rem minmax(0,1fr);gap:.34rem .8rem;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11.5px;line-height:1.5;color:#585B4F">
+            <span>Form</span><span style="color:#191B18">Jade vine raceme, low opacity</span>
+            <span>Place</span><span style="color:#191B18">Right edge, clear of the link list</span>
+            <span>Density</span><span style="color:#191B18">4 blooms</span>
+            <span>Motion</span><span style="color:#191B18">M1 slow (14s), M6</span>
+            <span>Intensity</span><span style="color:#191B18">3 / 10</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#EFEEE7">
+        <div style="position:relative;height:176px;overflow:hidden;border-bottom:1px solid #C9C6BA;background:#E7E5DC">{{ pgBts }}</div>
+        <div style="padding:1.2rem 1.3rem 1.4rem">
+          <h3 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;margin:0 0 .8rem;letter-spacing:-.02em">Behind the Scenes</h3>
+          <div style="display:grid;grid-template-columns:5.4rem minmax(0,1fr);gap:.34rem .8rem;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11.5px;line-height:1.5;color:#585B4F">
+            <span>Form</span><span style="color:#191B18">Maga raceme with blooms suppressed</span>
+            <span>Place</span><span style="color:#191B18">Centred, construction grid left visible</span>
+            <span>Density</span><span style="color:#191B18">6 buds, no flowers</span>
+            <span>Motion</span><span style="color:#191B18">M1 with <code style="font-family:ui-monospace,monospace;font-size:.92em">noBloom</code>, showing the armature</span>
+            <span>Intensity</span><span style="color:#191B18">4 / 10 — the page about method shows method</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section style="padding:clamp(2.6rem,5vw,4rem) 0;border-bottom:1px solid #C9C6BA">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:minmax(0,7rem) minmax(0,1fr);gap:1.4rem 2.6rem">
+    <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:.45rem 0 0">05 · Tokens</p>
+    <div>
+      <h2 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.4rem);line-height:1.04;letter-spacing:-.03em;margin:0 0 1rem">Every number in one place</h2>
+      <p style="margin:0 0 1.6rem;max-width:62ch">Ship these as one stylesheet. No component reads a raw value; if a timing needs to change it changes here, once. The three duration tokens are the only ones a designer should be adjusting after launch.</p>
+
+      <div style="background:#EFEEE7;border:1px solid #C9C6BA;padding:1.1rem 1.2rem;overflow-x:auto;margin-bottom:1.6rem"><pre style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.75;color:#3C3E38">:root{
+  /* line — multiplied per run by a 1.20–1.50 thickening factor */
+  --bm-stem:      1.4px;   --bm-pedicel: 0.9px;
+  --bm-petal:     1.05px;  --bm-hair:    0.42px;
+
+  /* flora: hue / throat / tip */
+  --bm-maga:      #A8374C; --bm-maga-deep: #6E1F31; --bm-maga-pale: #D4788C;
+  --bm-jade:      #2E8F7E; --bm-jade-deep: #1B5C52; --bm-jade-pale: #79CDBC;
+  --bm-wist:      #6C63A6; --bm-wist-deep: #443C78; --bm-wist-pale: #A79CD4;
+  --bm-nectar:    #B98B36; /* wisteria guide only, never structural */
+
+  /* stems — six greens, one held per run */
+  --bm-green-1:#3D6B3A; --bm-green-2:#2F6B4E; --bm-green-3:#4A7040;
+  --bm-green-4:#356043; --bm-green-5:#537A3C; --bm-green-6:#2C5A38;
+
+  /* opacity ceilings */
+  --bm-layer-signature: 0.55;  --bm-layer-support: 0.22;
+  --bm-layer-ghost:     0.14;  --bm-wash-max:     0.36;
+
+  /* time */
+  --bm-grow:   20s;    /* stem draw, 8–30s by page      */
+  --bm-settle: 2.2s;   /* pause after growth, before bloom */
+  --bm-bloom:  3.4s;   /* one flower opening            */
+  --bm-sway:   74s;    /* ambient cycle, 60–92s         */
+  --bm-lean:   1.2s;   /* pointer response              */
+
+  --bm-ease-grow:  cubic-bezier(.22,.61,.36,1);
+  --bm-ease-bloom: cubic-bezier(.18,.72,.3,1);
+  --bm-ease-lean:  cubic-bezier(.16,1,.3,1);
+}</pre></div>
+
+      <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#585B4F;margin:0 0 .9rem">Derived, not authored</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:#C9C6BA;border:1px solid #C9C6BA">
+        <div style="background:#EFEEE7;padding:1.1rem 1.2rem 1.3rem">
+          <p style="margin:0 0 .5rem;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;color:#191B18">bloom stagger</p>
+          <p style="margin:0;font-size:15px;line-height:1.5;color:#3C3E38"><code style="font-family:ui-monospace,monospace;font-size:.92em">grow × 0.5 ÷ count</code>. A slower stem blooms slower with no second number to tune.</p>
+        </div>
+        <div style="background:#EFEEE7;padding:1.1rem 1.2rem 1.3rem">
+          <p style="margin:0 0 .5rem;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;color:#191B18">bud birth</p>
+          <p style="margin:0;font-size:15px;line-height:1.5;color:#3C3E38"><code style="font-family:ui-monospace,monospace;font-size:.92em">grow × t × 0.9</code>, where <code style="font-family:ui-monospace,monospace;font-size:.92em">t</code> is the bud's position along the stem. Buds ride the drawing tip.</p>
+        </div>
+        <div style="background:#EFEEE7;padding:1.1rem 1.2rem 1.3rem">
+          <p style="margin:0 0 .5rem;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;color:#191B18">intensity</p>
+          <p style="margin:0;font-size:15px;line-height:1.5;color:#3C3E38">One page-level 1–10 scalar multiplies every opacity by <code style="font-family:ui-monospace,monospace;font-size:.92em">n ÷ 6</code>, capped. Geometry and timing never scale with it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:clamp(2.6rem,5vw,4rem) 0;border-bottom:1px solid #C9C6BA">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:minmax(0,7rem) minmax(0,1fr);gap:1.4rem 2.6rem">
+    <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:.45rem 0 0">06 · Interaction</p>
+    <div>
+      <h2 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.4rem);line-height:1.04;letter-spacing:-.03em;margin:0 0 1rem">What it responds to</h2>
+      <p style="margin:0 0 1.6rem;max-width:62ch">The layer is not a control surface. It answers to arrival and to the passage of time, and otherwise ignores the reader. Anything not listed here is a no.</p>
+
+      <div style="border-top:1px solid #C9C6BA">
+        <div style="display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);gap:.6rem 1.6rem;padding:.95rem 0;border-bottom:1px solid #C9C6BA">
+          <p style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F">Page load</p>
+          <p style="margin:0;font-size:16px;line-height:1.5">Above-fold composition begins growing after a 300ms hold, so it starts under the reader's eye rather than mid-flight. Nothing below the fold is running.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);gap:.6rem 1.6rem;padding:.95rem 0;border-bottom:1px solid #C9C6BA">
+          <p style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F">Scroll</p>
+          <p style="margin:0;font-size:16px;line-height:1.5">A composition starts once, at 35% into the viewport, and is unobserved immediately after. Scrolling back never rewinds or replays it. Scroll position is never mapped to growth progress.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);gap:.6rem 1.6rem;padding:.95rem 0;border-bottom:1px solid #C9C6BA">
+          <p style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F">Hover</p>
+          <p style="margin:0;font-size:16px;line-height:1.5">Nothing. Links, cards, and buttons keep their existing states; no botanical element reacts to hovering content, and the layer itself is <code style="font-family:ui-monospace,monospace;font-size:.92em">pointer-events:none</code>.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);gap:.6rem 1.6rem;padding:.95rem 0;border-bottom:1px solid #C9C6BA">
+          <p style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F">Cursor</p>
+          <p style="margin:0;font-size:16px;line-height:1.5">One tendril per viewport may lean toward the pointer, 8px maximum over 1.2s, and uncurl over 1.6s when it leaves. Never 1:1, never a follow. Written straight to a transform, outside the framework's render path.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);gap:.6rem 1.6rem;padding:.95rem 0;border-bottom:1px solid #C9C6BA">
+          <p style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F">Section change</p>
+          <p style="margin:0;font-size:16px;line-height:1.5">A runner may cross a section rule and continue into the next block, but no composition animates <em>because</em> a section changed. Sections are not events.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);gap:.6rem 1.6rem;padding:.95rem 0;border-bottom:1px solid #C9C6BA">
+          <p style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F">Navigation</p>
+          <p style="margin:0;font-size:16px;line-height:1.5">Each page grows once per visit, from nothing. No cross-page continuity, no transition choreography, no state persisted between loads. A returning reader sees it grow again.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);gap:.6rem 1.6rem;padding:.95rem 0;border-bottom:1px solid #C9C6BA">
+          <p style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F">Touch</p>
+          <p style="margin:0;font-size:16px;line-height:1.5">M4 is omitted entirely below <code style="font-family:ui-monospace,monospace;font-size:.92em">(hover:hover)</code>. Under 768px the layer drops to one composition per page, ghost layers removed, opacity ceiling 0.4, and it never sits behind body copy — only in the masthead and the page's outer edges.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);gap:.6rem 1.6rem;padding:.95rem 0;border-bottom:1px solid #C9C6BA">
+          <p style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F">Reduced motion</p>
+          <p style="margin:0;font-size:16px;line-height:1.5">The site's existing <code style="font-family:ui-monospace,monospace;font-size:.92em">prefers-reduced-motion</code> rule already sets <code style="font-family:ui-monospace,monospace;font-size:.92em">animation:none</code> globally, which lands the layer fully grown and still — the intended fallback, not a degraded one. Every drawing must therefore be composed to look finished at rest.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);gap:.6rem 1.6rem;padding:.95rem 0;border-bottom:1px solid #C9C6BA">
+          <p style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F">Backgrounded tab</p>
+          <p style="margin:0;font-size:16px;line-height:1.5">On <code style="font-family:ui-monospace,monospace;font-size:.92em">visibilitychange</code> to hidden, pause every running animation; resume on return. Sway must not burn cycles in a tab nobody is looking at.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr);gap:.6rem 1.6rem;padding:.95rem 0;border-bottom:1px solid #C9C6BA">
+          <p style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F">Print</p>
+          <p style="margin:0;font-size:16px;line-height:1.5">Hidden. <code style="font-family:ui-monospace,monospace;font-size:.92em">@media print{.bm-layer{display:none}}</code></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:clamp(2.6rem,5vw,4rem) 0;border-bottom:1px solid #C9C6BA">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:minmax(0,7rem) minmax(0,1fr);gap:1.4rem 2.6rem">
+    <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:.45rem 0 0">07 · Build</p>
+    <div>
+      <h2 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.4rem);line-height:1.04;letter-spacing:-.03em;margin:0 0 1rem">Three files, no dependencies</h2>
+      <p style="margin:0 0 1.6rem;max-width:62ch">Everything here is inline SVG generated once at mount, animated by CSS. No canvas, no WebGL, no animation library. That is not a compromise: the drawing is a few hundred vector nodes with stroke-dashoffset on them, which CSS does on the compositor for free, and it keeps <code style="font-family:ui-monospace,monospace;font-size:.88em">script-src 'self'</code> intact and the footer's one-request promise honest.</p>
+
+      <div style="background:#EFEEE7;border:1px solid #C9C6BA;padding:1.1rem 1.2rem;overflow-x:auto;margin-bottom:1.6rem"><pre style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.75;color:#3C3E38">assets/botanical/
+  bm.css        tokens + keyframes + layer positioning   ~2 KB
+  bm.js         geometry, species table, observer        ~7 KB
+  bm-pages.js   one recipe per page                      ~1 KB</pre></div>
+
+      <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#585B4F;margin:0 0 .9rem">Markup contract</p>
+      <div style="background:#EFEEE7;border:1px solid #C9C6BA;padding:1.1rem 1.2rem;overflow-x:auto;margin-bottom:1.6rem"><pre style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.75;color:#3C3E38">&lt;!-- first child of a positioned ancestor; content sits above it --&gt;
+&lt;div class="bm-layer" data-bm="home" aria-hidden="true"&gt;&lt;/div&gt;
+
+.bm-layer{position:absolute;inset:0;z-index:0;pointer-events:none;
+          overflow:hidden;contain:layout paint}
+.bm-layer &gt; svg{display:block;width:100%;height:100%}</pre></div>
+
+      <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#585B4F;margin:0 0 .9rem">Recipe API</p>
+      <div style="background:#EFEEE7;border:1px solid #C9C6BA;padding:1.1rem 1.2rem;overflow-x:auto;margin-bottom:1.6rem"><pre style="margin:0;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.75;color:#3C3E38">BM.register('home', {
+  viewBox: [0, 0, 660, 600],
+  intensity: 6,
+  layers: [
+    { type:'raceme', species:'maga', stem:[352,-24,468,118,296,250,344,588],
+      count:7, alpha:.50, grow:20, settle:3.6, sway:78 },
+    { type:'raceme', species:'maga', stem:[524,-30,566,140,452,244,486,470],
+      count:4, alpha:.22, grow:26, delay:2.5, w:.8, sway:92, swayDelay:-20 },
+    { type:'raceme', species:'maga', stem:[618,-14,668,160,594,268,626,452],
+      count:3, alpha:.14, grow:30, delay:5,   w:.6, sway:66, swayDelay:-40 }
+  ]
+});
+
+BM.init();  // finds every [data-bm], observes, mounts on first sight</pre></div>
+
+      <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#585B4F;margin:0 0 .9rem">Notes for the build</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:#C9C6BA;border:1px solid #C9C6BA">
+        <div style="background:#EFEEE7;padding:1.1rem 1.2rem 1.3rem">
+          <p style="margin:0 0 .5rem;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;color:#191B18">Stems are cubics</p>
+          <p style="margin:0;font-size:15px;line-height:1.5;color:#3C3E38">A stem is four points: <code style="font-family:ui-monospace,monospace;font-size:.92em">[x0,y0,c1x,c1y,c2x,c2y,x1,y1]</code>. Buds are placed by evaluating the curve at <code style="font-family:ui-monospace,monospace;font-size:.92em">t</code>, so composition changes need no hand-authored path data.</p>
+        </div>
+        <div style="background:#EFEEE7;padding:1.1rem 1.2rem 1.3rem">
+          <p style="margin:0 0 .5rem;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;color:#191B18">One gradient set per page</p>
+          <p style="margin:0;font-size:15px;line-height:1.5;color:#3C3E38">Petal washes reference six shared <code style="font-family:ui-monospace,monospace;font-size:.92em">linearGradient</code> defs in <code style="font-family:ui-monospace,monospace;font-size:.92em">objectBoundingBox</code> units. Emit them once per SVG; every petal in the document grades correctly off them.</p>
+        </div>
+        <div style="background:#EFEEE7;padding:1.1rem 1.2rem 1.3rem">
+          <p style="margin:0 0 .5rem;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;color:#191B18">Animate two properties</p>
+          <p style="margin:0;font-size:15px;line-height:1.5;color:#3C3E38"><code style="font-family:ui-monospace,monospace;font-size:.92em">transform</code>, <code style="font-family:ui-monospace,monospace;font-size:.92em">opacity</code>, plus <code style="font-family:ui-monospace,monospace;font-size:.92em">stroke-dashoffset</code> for growth. Nothing else. No filters, no blur, no blend modes, no <code style="font-family:ui-monospace,monospace;font-size:.92em">will-change</code> left on after growth.</p>
+        </div>
+        <div style="background:#EFEEE7;padding:1.1rem 1.2rem 1.3rem">
+          <p style="margin:0 0 .5rem;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;color:#191B18">Scaled transforms need a box</p>
+          <p style="margin:0;font-size:15px;line-height:1.5;color:#3C3E38">A keyframe <code style="font-family:ui-monospace,monospace;font-size:.92em">transform</code> replaces the SVG <code style="font-family:ui-monospace,monospace;font-size:.92em">transform</code> attribute rather than composing with it. Position on an outer <code style="font-family:ui-monospace,monospace;font-size:.92em">&lt;g&gt;</code>, animate an inner one, and set <code style="font-family:ui-monospace,monospace;font-size:.92em">transform-box:fill-box</code> — or the whole raceme collapses onto the origin.</p>
+        </div>
+        <div style="background:#EFEEE7;padding:1.1rem 1.2rem 1.3rem">
+          <p style="margin:0 0 .5rem;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;color:#191B18">Budget per page</p>
+          <p style="margin:0;font-size:15px;line-height:1.5;color:#3C3E38">≤ 3 SVGs, ≤ 3 stems each, ≤ 240 path nodes total, ≤ 1 pointer listener. If a composition needs more than that it is the wrong composition.</p>
+        </div>
+        <div style="background:#EFEEE7;padding:1.1rem 1.2rem 1.3rem">
+          <p style="margin:0 0 .5rem;font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;color:#191B18">No-JS and no-CLS</p>
+          <p style="margin:0;font-size:15px;line-height:1.5;color:#3C3E38">The layer is absolutely positioned and empty until mounted, so a failed or blocked script costs nothing and shifts nothing. Never let the layer size a container.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:clamp(2.6rem,5vw,4rem) 0;border-bottom:1px solid #C9C6BA">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:minmax(0,7rem) minmax(0,1fr);gap:1.4rem 2.6rem">
+    <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:.45rem 0 0">08 · Restraint</p>
+    <div>
+      <h2 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.4rem);line-height:1.04;letter-spacing:-.03em;margin:0 0 1rem">Ten rules that keep it quiet</h2>
+      <p style="margin:0 0 1.6rem;max-width:62ch">These are the load-bearing part of the system. The drawing survives being ignored; it does not survive being enthusiastically extended.</p>
+      <ol style="margin:0;padding:0 0 0 1.4rem;max-width:64ch;display:flex;flex-direction:column;gap:.7rem">
+        <li>One signature composition per page. If a second one is tempting, the first one is too weak.</li>
+        <li>Never behind body copy above 0.2 opacity, and never behind a heading at all.</li>
+        <li>No flower opens before its stem has finished drawing. Growth precedes bloom, always.</li>
+        <li>Nothing loops faster than 60 seconds. Anything a reader can feel keeping time is out.</li>
+        <li>The layer never indicates state. It is not a progress bar, a hover cue, a section marker, or a scroll indicator.</li>
+        <li>No parallax, no scroll-scrubbed growth, no petals falling, no spin, no pulse, no cursor follow.</li>
+        <li>Maximum three layers, and the back two never exceed a quarter of the front one's opacity.</li>
+        <li>No blur, no glow, no drop shadow, no blend mode. Line and flat wash only.</li>
+        <li>Growth happens once per page visit. Replay is a review affordance, not a feature.</li>
+        <li>If it reads as decoration in a screenshot with the motion frozen, it is decoration. Cut it.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section style="padding:clamp(2.6rem,5vw,4rem) 0;border-bottom:1px solid #C9C6BA">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <div style="display:grid;grid-template-columns:minmax(0,7rem) minmax(0,1fr);gap:1.4rem 2.6rem;margin-bottom:2.4rem">
+      <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:.45rem 0 0">09 · Directions</p>
+      <div>
+        <h2 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.4rem);line-height:1.04;letter-spacing:-.03em;margin:0 0 1rem">Three ways this could have gone</h2>
+        <p style="margin:0;max-width:62ch">All three were developed far enough to judge. The built system is B, holding A's line register and using C's runners as connective tissue between sections.</p>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:#C9C6BA;border:1px solid #C9C6BA">
+
+      <div style="background:#EFEEE7;padding:1.4rem 1.4rem 1.6rem">
+        <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#585B4F;margin:0 0 .5rem">A · not taken</p>
+        <h3 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:1.2rem;margin:0 0 .8rem;letter-spacing:-.02em">Pressed Herbarium</h3>
+        <div style="display:grid;grid-template-columns:5.2rem minmax(0,1fr);gap:.42rem .8rem;font-size:15px;line-height:1.5;color:#3C3E38">
+          <span style="font-family:ui-monospace,&#39;SF Mono&#39;,Menlo,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F;padding-top:.22rem">Look</span><span>Flattened specimens, engraved line, pinned and labelled. Type and plant share one plane.</span>
+          <span style="font-family:ui-monospace,&#39;SF Mono&#39;,Menlo,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F;padding-top:.22rem">Source</span><span>Nineteenth-century botanical plates; the archive drawer.</span>
+          <span style="font-family:ui-monospace,&#39;SF Mono&#39;,Menlo,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F;padding-top:.22rem">Motion</span><span>Almost none. A specimen fades up over 4s and holds. Archival, deliberate, still.</span>
+          <span style="font-family:ui-monospace,&#39;SF Mono&#39;,Menlo,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F;padding-top:.22rem">Variation</span><span>A different species per page, same plate treatment.</span>
+          <span style="font-family:ui-monospace,&#39;SF Mono&#39;,Menlo,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F;padding-top:.22rem">Verdict</span><span style="color:#191B18">Cheapest to build and impossible to make feel alive. Without growth it is illustration, and illustration on a page about relations reads as wallpaper.</span>
+        </div>
+      </div>
+
+      <div style="background:#E7E5DC;padding:1.4rem 1.4rem 1.6rem;box-shadow:inset 3px 0 0 #A8374C">
+        <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#A8374C;margin:0 0 .5rem">B · built</p>
+        <h3 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:1.2rem;margin:0 0 .8rem;letter-spacing:-.02em">Pendant Raceme</h3>
+        <div style="display:grid;grid-template-columns:5.2rem minmax(0,1fr);gap:.42rem .8rem;font-size:15px;line-height:1.5;color:#3C3E38">
+          <span style="font-family:ui-monospace,&#39;SF Mono&#39;,Menlo,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F;padding-top:.22rem">Look</span><span>Stems descend from off the top edge; buds hang and open from the base down. Line first, graded wash under it.</span>
+          <span style="font-family:ui-monospace,&#39;SF Mono&#39;,Menlo,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F;padding-top:.22rem">Source</span><span>Flor de Maga, jade vine, wisteria — three flora, one shared inflorescence.</span>
+          <span style="font-family:ui-monospace,&#39;SF Mono&#39;,Menlo,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F;padding-top:.22rem">Motion</span><span>Slow descent, a settling beat, then sequential opening. Patient, gravitational, never hurried.</span>
+          <span style="font-family:ui-monospace,&#39;SF Mono&#39;,Menlo,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F;padding-top:.22rem">Variation</span><span>Species, density, and permitted behaviours per page; the structure never changes.</span>
+          <span style="font-family:ui-monospace,&#39;SF Mono&#39;,Menlo,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F;padding-top:.22rem">Verdict</span><span style="color:#191B18">Pendant, not climbing — which is what keeps it out of Art Nouveau border territory. Growth downward from the margin never crosses the reading column, so the one composition doing the most work is also the one least in the way.</span>
+        </div>
+      </div>
+
+      <div style="background:#EFEEE7;padding:1.4rem 1.4rem 1.6rem">
+        <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#585B4F;margin:0 0 .5rem">C · partly absorbed</p>
+        <h3 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:1.2rem;margin:0 0 .8rem;letter-spacing:-.02em">Substrate</h3>
+        <div style="display:grid;grid-template-columns:5.2rem minmax(0,1fr);gap:.42rem .8rem;font-size:15px;line-height:1.5;color:#3C3E38">
+          <span style="font-family:ui-monospace,&#39;SF Mono&#39;,Menlo,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F;padding-top:.22rem">Look</span><span>No flowers at all. A root and mycelial network runs beneath the whole document, surfacing at section rules.</span>
+          <span style="font-family:ui-monospace,&#39;SF Mono&#39;,Menlo,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F;padding-top:.22rem">Source</span><span>Rhizomes, fungal networks, the parts of a plant nobody photographs.</span>
+          <span style="font-family:ui-monospace,&#39;SF Mono&#39;,Menlo,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F;padding-top:.22rem">Motion</span><span>Continuous slow extension, no beginning or end. Subterranean, patient, faintly unsettling.</span>
+          <span style="font-family:ui-monospace,&#39;SF Mono&#39;,Menlo,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F;padding-top:.22rem">Variation</span><span>Density and depth per page; one continuous organism across the site.</span>
+          <span style="font-family:ui-monospace,&#39;SF Mono&#39;,Menlo,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#585B4F;padding-top:.22rem">Verdict</span><span style="color:#191B18">Conceptually the strongest and the easiest to mistake for a network-graph background. Alone it also forfeits colour entirely. Kept as M2 and M5, where connective tissue is the actual job.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section style="padding:clamp(2.6rem,5vw,4rem) 0 clamp(3.4rem,7vw,5rem)">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:minmax(0,7rem) minmax(0,1fr);gap:1.4rem 2.6rem">
+    <p style="font-family:ui-monospace,&#39;SF Mono&#39;,&#39;Cascadia Mono&#39;,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:.45rem 0 0">10 · Sign-off</p>
+    <div>
+      <h2 style="font-family:ui-sans-serif,system-ui,&#39;Helvetica Neue&#39;,Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.4rem);line-height:1.04;letter-spacing:-.03em;margin:0 0 1rem">Done means all of these</h2>
+      <div style="border-top:1px solid #C9C6BA;max-width:64ch">
+        <p style="margin:0;padding:.8rem 0;border-bottom:1px solid #C9C6BA;font-size:16px;line-height:1.5">No flower is mid-open while its stem is still drawing, on any page, at any viewport.</p>
+        <p style="margin:0;padding:.8rem 0;border-bottom:1px solid #C9C6BA;font-size:16px;line-height:1.5">With <code style="font-family:ui-monospace,monospace;font-size:.88em">prefers-reduced-motion</code> set, every composition renders complete, still, and correct — no partial stems, no invisible blooms.</p>
+        <p style="margin:0;padding:.8rem 0;border-bottom:1px solid #C9C6BA;font-size:16px;line-height:1.5">Body copy contrast is unchanged with the layer on. Measured, not eyeballed.</p>
+        <p style="margin:0;padding:.8rem 0;border-bottom:1px solid #C9C6BA;font-size:16px;line-height:1.5">Every SVG is <code style="font-family:ui-monospace,monospace;font-size:.88em">aria-hidden</code>, unfocusable, and absent from the tab order and the accessibility tree.</p>
+        <p style="margin:0;padding:.8rem 0;border-bottom:1px solid #C9C6BA;font-size:16px;line-height:1.5">Sustained 60fps during growth on a mid-range Android; no layout thrash, no CLS attributable to the layer.</p>
+        <p style="margin:0;padding:.8rem 0;border-bottom:1px solid #C9C6BA;font-size:16px;line-height:1.5">Below 768px: one composition, no pointer behaviours, nothing behind text.</p>
+        <p style="margin:0;padding:.8rem 0;border-bottom:1px solid #C9C6BA;font-size:16px;line-height:1.5">Script blocked or failed: page is visually intact and unshifted.</p>
+        <p style="margin:0;padding:.8rem 0;border-bottom:1px solid #C9C6BA;font-size:16px;line-height:1.5">CSP unchanged, and the site still makes exactly one third-party request.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&#34;$preview&#34;:{&#34;width&#34;:1280,&#34;height&#34;:900},&#34;intensity&#34;:{&#34;editor&#34;:&#34;range&#34;,&#34;default&#34;:6,&#34;min&#34;:1,&#34;max&#34;:10,&#34;step&#34;:1,&#34;tsType&#34;:&#34;number&#34;,&#34;section&#34;:&#34;System&#34;,&#34;unit&#34;:&#34;/10&#34;},&#34;reducedMotionPreview&#34;:{&#34;editor&#34;:&#34;boolean&#34;,&#34;default&#34;:false,&#34;tsType&#34;:&#34;boolean&#34;,&#34;section&#34;:&#34;System&#34;},&#34;heroFlora&#34;:{&#34;editor&#34;:&#34;enum&#34;,&#34;default&#34;:&#34;maga&#34;,&#34;options&#34;:[&#34;maga&#34;,&#34;jade&#34;,&#34;wisteria&#34;],&#34;tsType&#34;:&#34;string&#34;,&#34;section&#34;:&#34;System&#34;}}">
+class Component extends DCLogic {
+  state = { n: {} };
+
+  get k() { return (this.props.intensity ?? 6) / 6; }
+  get still() { return !!this.props.reducedMotionPreview; }
+
+  // Growth is gated on visibility rather than run on load: a long
+  // document would otherwise burn every cycle before the reader
+  // arrives and they'd scroll into finished drawings.
+  //
+  // Production should use IntersectionObserver — it is the right API and
+  // costs nothing. This document uses a rect scan instead because IO
+  // does not fire inside the preview frame it is being reviewed in.
+  _roots = [];
+
+  ioRef = (el) => {
+    if (!el || el.__bm) return;
+    el.__bm = 1;
+    this._roots.push(el);
+    this.scan();
+  };
+
+  scan = () => {
+    const h = window.innerHeight || 800;
+    this._roots = this._roots.filter((el) => {
+      if (!el.isConnected) return false;
+      const r = el.getBoundingClientRect();
+      if (!r.height) return true;
+      const vis = Math.min(r.bottom, h) - Math.max(r.top, 0);
+      if (vis / Math.min(r.height, h) > 0.3) {
+        el.querySelectorAll("[data-anim]").forEach((n) => { n.style.animationPlayState = "running"; });
+        return false;
+      }
+      return true;
+    });
+  };
+
+  componentDidMount() {
+    this._tick = setInterval(this.scan, 400);
+    window.addEventListener("scroll", this.scan, { passive: true });
+    requestAnimationFrame(this.scan);
+  }
+  componentWillUnmount() {
+    clearInterval(this._tick);
+    window.removeEventListener("scroll", this.scan);
+  }
+
+  // CSS animation rather than SMIL, so the site's existing
+  // prefers-reduced-motion rule (*{animation:none!important}) switches
+  // the whole layer off without any JS having to know about it.
+  anim(name, dur, delay, ease) {
+    if (this.still) return {};
+    return {
+      animation: name + " " + dur + "s " + (ease || "cubic-bezier(.22,.61,.36,1)") + " " + delay + "s both",
+      animationPlayState: "paused",
+    };
+  }
+  mark() { return this.still ? {} : { "data-anim": "" }; }
+
+  cubic(p, t) {
+    const u = 1 - t, a = u * u * u, b = 3 * u * u * t, c = 3 * u * t * t, d = t * t * t;
+    return [a * p[0] + b * p[2] + c * p[4] + d * p[6], a * p[1] + b * p[3] + c * p[5] + d * p[7]];
+  }
+  d(p) { return "M" + p[0] + " " + p[1] + " C " + p[2] + " " + p[3] + " " + p[4] + " " + p[5] + " " + p[6] + " " + p[7]; }
+
+  // Every flower hangs from the pedicel tip at (0,0) and is drawn
+  // downward: a corolla in profile, not a radial star seen from above.
+  // A rosette of spokes reads as an asterisk at this scale, which is
+  // what the first pass looked like.
+  // Each species is drawn as a corolla in profile, hanging from the
+  // pedicel tip at (0,0): calyx, petal edges, interior overlap, and the
+  // one feature that identifies the plant — Thespesia's staminal column,
+  // the jade vine's recurved keel, wisteria's reflexed standard.
+  // Paths are [d, strokeWidth, opacity?]; fills are a wash under the line.
+  species = {
+    maga: {
+      hue: "#A8374C", deep: "#6E1F31", pale: "#D4788C", stems: ["#3F6B38", "#356240", "#4A7239"], scale: 0.9, leaf: "cordate",
+      fills: [
+        ["M-2.4 2.6 C -5.4 6.4 -8.4 10.2 -9.4 15.4 C -9.7 17.2 -9.2 18.2 -8.4 18.6 C -7.8 21 -5.9 21.4 -5.2 19.6 C -4.4 22 -2.6 22.4 -1.9 20.4 C -1 22.8 1 22.8 1.9 20.4 C 2.6 22.4 4.4 22 5.2 19.6 C 5.9 21.4 7.8 21 8.4 18.6 C 9.2 18.2 9.7 17.2 9.4 15.4 C 8.4 10.2 5.4 6.4 2.4 2.6 Z", 0.34],
+        ["M-2.4 2.6 C -4.6 6 -6.4 9.4 -7.3 12.8 C -4.6 14.2 -2.2 14.8 0 14.8 C 2.2 14.8 4.6 14.2 7.3 12.8 C 6.4 9.4 4.6 6 2.4 2.6 Z", 0.3, "#6E1F31"],
+        ["M-2.7 -1.4 C -3 2 -2.2 4.2 0 4.7 C 2.2 4.2 3 2 2.7 -1.4 Z", 0.34, "#5C1A2A"],
+      ],
+      paths: [
+        ["M-2.7 -1.4 C -3 2 -2.2 4.2 0 4.7 C 2.2 4.2 3 2 2.7 -1.4", 0.9],
+        ["M-2.7 -1.1 C -4.3 -0.2 -5.2 1.3 -5.4 3.2", 0.5, 0.55],
+        ["M2.7 -1.1 C 4.3 -0.2 5.2 1.3 5.4 3.2", 0.5, 0.55],
+        ["M-1.3 -1.1 C -1.4 1.4 -0.9 3.3 0 4.5", 0.5, 0.75],
+        ["M1.3 -1.1 C 1.4 1.4 0.9 3.3 0 4.5", 0.5, 0.75],
+        ["M-2.4 2.6 C -5.4 6.4 -8.4 10.2 -9.4 15.4 C -9.7 17.2 -9.2 18.2 -8.4 18.6", 1.1],
+        ["M2.4 2.6 C 5.4 6.4 8.4 10.2 9.4 15.4 C 9.7 17.2 9.2 18.2 8.4 18.6", 1.1],
+        ["M-8.4 18.6 C -7.8 21 -5.9 21.4 -5.2 19.6 C -4.4 22 -2.6 22.4 -1.9 20.4 C -1 22.8 1 22.8 1.9 20.4 C 2.6 22.4 4.4 22 5.2 19.6 C 5.9 21.4 7.8 21 8.4 18.6", 1.05],
+        ["M-3.9 4.1 C -5.2 9.4 -5.5 15 -5.2 19.6", 0.6, 0.8],
+        ["M3.9 4.1 C 5.2 9.4 5.5 15 5.2 19.6", 0.6, 0.8],
+        ["M-1.5 4.8 C -1.9 10 -2 15.6 -1.9 20.4", 0.55, 0.7],
+        ["M1.5 4.8 C 1.9 10 2 15.6 1.9 20.4", 0.55, 0.7],
+        ["M-6.6 8.4 C -7.5 12.2 -7.9 15.7 -7.8 18.1", 0.45, 0.45],
+        ["M6.6 8.4 C 7.5 12.2 7.9 15.7 7.8 18.1", 0.45, 0.45],
+        ["M-4.8 13.1 C -3.3 13.9 -1.7 14.3 0 14.4 C 1.7 14.3 3.3 13.9 4.8 13.1", 0.4, 0.38],
+        ["M0 4.7 C 0.4 11 0.7 17.4 0.8 22.6", 0.85],
+        ["M0.8 22.6 C 0.6 24.4 0 25.6 -0.9 26.4", 0.55, 0.8],
+      ],
+      dots: [[-1, 19.6, 0.4, 0.55], [1.2, 20.5, 0.42, 0.6], [-1.2, 21.5, 0.42, 0.65], [1.4, 22.4, 0.45, 0.7], [-1.1, 23.3, 0.42, 0.65], [1.4, 24.2, 0.45, 0.7], [-0.6, 25, 0.42, 0.7], [1, 25.7, 0.4, 0.6], [-1.5, 26.4, 0.48, 0.85], [-0.3, 27, 0.46, 0.8], [-2.4, 26.8, 0.42, 0.7]],
+      bud: [
+        ["M0 -0.6 C -2.9 3.6 -3.3 9.4 0 13.4 C 3.3 9.4 2.9 3.6 0 -0.6 Z", 0.9],
+        ["M-2.7 1.4 C -2.5 3.8 -1.5 5 0 5.4 C 1.5 5 2.5 3.8 2.7 1.4", 0.7, 0.8],
+        ["M-2.6 1.6 C -3.9 2.4 -4.6 3.6 -4.8 5.2", 0.45, 0.5],
+        ["M2.6 1.6 C 3.9 2.4 4.6 3.6 4.8 5.2", 0.45, 0.5],
+        ["M0 0.4 C 1.5 4.6 1.3 9.6 0 13.4", 0.5, 0.6],
+        ["M0 0.4 C -1.5 4.6 -1.3 9.6 0 13.4", 0.45, 0.45],
+      ],
+    },
+    jade: {
+      hue: "#2E8F7E", deep: "#1B5C52", pale: "#79CDBC", stems: ["#2F6B4E", "#3A7350", "#276046"], scale: 1, leaf: "pinnate",
+      fills: [
+        ["M-1 4.8 C 2.6 8.4 6.2 13 8.8 16.9 C 9.9 18.5 10.6 19.7 11 20.7 C 10.7 18.3 10.1 15.9 8.9 13.4 C 7.2 10 4.6 6.6 1.6 4.2 Z", 0.36],
+        ["M-1.6 3.8 C -5.6 2.8 -9.2 4.6 -10 8.2 C -10.4 10.2 -9.6 11.9 -8 12.6 C -7 9.8 -5.2 6.4 -1.6 3.8 Z", 0.24],
+        ["M-0.6 5 C 1.4 8.2 3 12 3.6 15.6 C 3.8 17 3.2 17.8 2.2 17.4 C 1.6 13.2 0.6 9 -1.2 5.4 Z", 0.22],
+        ["M-2.5 -1 C -2.9 1.8 -1.7 3.9 0 4.4 C 1.7 3.9 2.9 1.8 2.5 -1 Z", 0.32, "#174E46"],
+      ],
+      paths: [
+        ["M-2.5 -1 C -2.9 1.8 -1.7 3.9 0 4.4 C 1.7 3.9 2.9 1.8 2.5 -1", 0.85],
+        ["M-2.2 2.4 C -1.2 3.4 1.2 3.4 2.2 2.4", 0.5, 0.6],
+        ["M-1.6 3.8 C -5.6 2.8 -9.2 4.6 -10 8.2 C -10.4 10.2 -9.6 11.9 -8 12.6", 0.95],
+        ["M-2.2 4.9 C -5.2 5.6 -7.4 7.7 -8 10.5", 0.5, 0.7],
+        ["M-4.8 3.5 C -6.4 5.6 -7.4 8.4 -7.3 11.1", 0.45, 0.5],
+        ["M-0.6 5 C 1.4 8.2 3 12 3.6 15.6 C 3.8 17 3.2 17.8 2.2 17.4", 0.7, 0.85],
+        ["M-1 4.8 C 2.6 8.4 6.2 13 8.8 16.9 C 9.9 18.5 10.6 19.7 11 20.7", 1.05],
+        ["M1.6 4.2 C 4.6 6.6 7.2 10 8.9 13.4 C 10.1 15.9 10.7 18.3 11 20.7", 0.9],
+        ["M11 20.7 C 12.3 20.1 12.9 18.7 12.6 17.2 C 12.5 16.5 12.2 16 11.8 15.6", 0.85],
+        ["M0.8 5.8 C 3 9 4.6 12.4 5.4 15.8", 0.5, 0.55],
+        ["M2.4 6.8 C 4.8 9.8 6.8 13.2 8 16.6", 0.45, 0.45],
+        ["M11.4 19.6 C 11.9 18.8 12.1 18 12.1 17.2", 0.4, 0.5],
+      ],
+      dots: [],
+      bud: [
+        ["M0 -0.6 C 2.6 2.8 4.3 6.9 4.5 11.2 C 4.5 12.8 3.6 13.6 2.4 13.1 C 0.6 9.4 -0.7 4.8 0 -0.6 Z", 0.9],
+        ["M-2.4 -0.8 C -2.7 1.6 -1.6 3.4 0 3.8", 0.65, 0.8],
+        ["M0.6 1.4 C 2.4 4.6 3.4 8.2 3.5 11.6", 0.45, 0.5],
+      ],
+    },
+    wisteria: {
+      hue: "#6C63A6", deep: "#443C78", pale: "#A79CD4", stems: ["#4A7040", "#3E6B3C", "#557A3E"], scale: 1.02, leaf: "pinnate",
+      fills: [
+        ["M-6.8 1.6 C -6.4 -3.4 -3.3 -6 0 -6 C 3.3 -6 6.4 -3.4 6.8 1.6 C 4.1 3.5 2 4.1 0 4.1 C -2 4.1 -4.1 3.5 -6.8 1.6 Z", 0.34, null, 1],
+        ["M-2.4 4.2 C -3 8.4 -1.9 12.4 0 14.4 C 1.9 12.4 3 8.4 2.4 4.2 Z", 0.34],
+        ["M-3.6 3.2 C -5.1 6.1 -5.2 9.1 -3.8 11.4 C -2.9 12.8 -1.8 13.2 -0.9 12.6 C -1.9 9.4 -2.4 6.2 -2.4 4.1 Z", 0.22],
+        ["M3.6 3.2 C 5.1 6.1 5.2 9.1 3.8 11.4 C 2.9 12.8 1.8 13.2 0.9 12.6 C 1.9 9.4 2.4 6.2 2.4 4.1 Z", 0.22],
+        ["M-2.7 1.1 C -2.9 3.5 -1.7 4.9 0 5.3 C 1.7 4.9 2.9 3.5 2.7 1.1 Z", 0.3, "#3B336B"],
+        ["M-2.5 0.5 C -1.6 -0.4 1.6 -0.4 2.5 0.5 C 1.7 1.9 -1.7 1.9 -2.5 0.5 Z", 0.5, "#B98B36"],
+      ],
+      paths: [
+        ["M-6.8 1.6 C -6.4 -3.4 -3.3 -6 0 -6 C 3.3 -6 6.4 -3.4 6.8 1.6", 1.05],
+        ["M-1.5 -5.9 C -0.9 -5 -0.9 -4.4 -1.4 -3.7", 0.5, 0.6],
+        ["M1.5 -5.9 C 0.9 -5 0.9 -4.4 1.4 -3.7", 0.5, 0.6],
+        ["M-6.8 1.6 C -4.1 3.5 -2 4.1 0 4.1 C 2 4.1 4.1 3.5 6.8 1.6", 0.7, 0.75],
+        ["M-3.6 -4.6 C -4.8 -2.4 -5.4 -0.2 -5.6 1.9", 0.5, 0.55],
+        ["M3.6 -4.6 C 4.8 -2.4 5.4 -0.2 5.6 1.9", 0.5, 0.55],
+        ["M-1.9 -4.1 C -2.4 -1.6 -2.4 0.6 -2 2.6", 0.45, 0.45],
+        ["M1.9 -4.1 C 2.4 -1.6 2.4 0.6 2 2.6", 0.45, 0.45],
+        ["M-2.5 0.5 C -1.6 -0.4 1.6 -0.4 2.5 0.5 C 1.7 1.9 -1.7 1.9 -2.5 0.5 Z", 0.4, 0.5],
+        ["M-2.7 1.1 C -2.9 3.5 -1.7 4.9 0 5.3 C 1.7 4.9 2.9 3.5 2.7 1.1", 0.6, 0.6],
+        ["M-3.6 3.2 C -5.1 6.1 -5.2 9.1 -3.8 11.4 C -2.9 12.8 -1.8 13.2 -0.9 12.6", 0.9],
+        ["M3.6 3.2 C 5.1 6.1 5.2 9.1 3.8 11.4 C 2.9 12.8 1.8 13.2 0.9 12.6", 0.9],
+        ["M-3.4 5 C -4.2 7.6 -4.1 9.9 -3.1 11.5", 0.42, 0.45],
+        ["M3.4 5 C 4.2 7.6 4.1 9.9 3.1 11.5", 0.42, 0.45],
+        ["M-2.4 4.2 C -3 8.4 -1.9 12.4 0 14.4 C 1.9 12.4 3 8.4 2.4 4.2", 1],
+        ["M0 5 C 0.2 8.8 0.2 11.9 0 14.4", 0.5, 0.6],
+        ["M-1.2 5.2 C -1.7 9 -1.1 12.2 0 14", 0.42, 0.4],
+      ],
+      dots: [],
+      bud: [
+        ["M0 -0.8 C -2.6 2.8 -2.6 7.2 0 10.4 C 2.6 7.2 2.6 2.8 0 -0.8 Z", 0.9],
+        ["M-2.4 0.6 C -2.6 2.8 -1.5 4.2 0 4.6 C 1.5 4.2 2.6 2.8 2.4 0.6", 0.65, 0.8],
+        ["M-2.3 0.9 C -3.5 1.7 -4.1 2.9 -4.2 4.3", 0.42, 0.5],
+        ["M2.3 0.9 C 3.5 1.7 4.1 2.9 4.2 4.3", 0.42, 0.5],
+        ["M0 0.2 C 1.4 3.6 1.4 7.4 0 10.2", 0.45, 0.5],
+      ],
+    },
+  };
+
+  // One gradient per species, throat to tip, in objectBoundingBox units —
+  // a single definition therefore grades correctly against every petal that
+  // references it, including petals in other inline SVGs on the page.
+  defs() {
+    const e = React.createElement, out = [];
+    Object.keys(this.species).forEach((k) => {
+      const s = this.species[k];
+      const stops = [
+        e("stop", { key: 0, offset: "0", stopColor: s.deep }),
+        e("stop", { key: 1, offset: "0.52", stopColor: s.hue }),
+        e("stop", { key: 2, offset: "1", stopColor: s.pale }),
+      ];
+      out.push(e("linearGradient", { key: k, id: "bmg-" + k, x1: "0", y1: "0", x2: "0", y2: "1" }, stops));
+      out.push(e("linearGradient", { key: k + "r", id: "bmg-" + k + "-r", x1: "0", y1: "1", x2: "0", y2: "0" }, stops));
+    });
+    return e("defs", { key: "bmdefs" }, out);
+  }
+
+  // Washes sit under the line and grade dark-at-the-throat to pale-at-the-tip,
+  // topping out at 0.36 inside a group already held at 0.6-0.9 — so a petal
+  // lands near 0.22 on paper. Enough tonal depth to read as a petal rather
+  // than a wireframe; not enough to become a solid shape.
+  // A fill is [d, opacity, flatColour?, reversed?]; no colour means the
+  // species gradient, reversed for petals that hang upward.
+  bloom(key, o) {
+    const e = React.createElement, s = this.species[key] || this.species.maga;
+    const out = [];
+    (s.fills || []).forEach((f, i) => out.push(e("path", { key: "f" + i, d: f[0], stroke: "none",
+      fill: f[2] || "url(#bmg-" + (this.species[key] ? key : "maga") + (f[3] ? "-r" : "") + ")",
+      opacity: f[1] == null ? 0.3 : f[1] })));
+    s.paths.forEach((p, i) => out.push(e("path", { key: i, d: p[0], fill: "none", stroke: s.hue,
+      strokeWidth: p[1], strokeLinecap: "round", strokeLinejoin: "round", opacity: p[2] == null ? 1 : p[2] })));
+    (s.dots || []).forEach((c, i) => out.push(e("circle", { key: "d" + i, cx: c[0], cy: c[1], r: c[2], fill: s.hue, opacity: c[3] })));
+    return e("g", { opacity: o }, out);
+  }
+
+  budShape(key) {
+    const e = React.createElement, s = this.species[key] || this.species.maga;
+    return e("g", { opacity: 0.66 }, s.bud.map((p, i) => e("path", { key: i, d: p[0], fill: "none",
+      stroke: s.hue, strokeWidth: p[1], strokeLinejoin: "round", strokeLinecap: "round",
+      opacity: p[2] == null ? 1 : p[2] })));
+  }
+
+  // Foliage in the site's existing hover green rather than the bloom hue,
+  // so leaves stay substrate and the flower keeps the only colour note.
+  // Wisteria and the jade vine are pinnate; Thespesia is cordate.
+  leaf(key, rk, x, y, rot, sc, alpha, delay) {
+    const e = React.createElement, s = this.species[key] || this.species.maga;
+    const ink = "#2C5A38", A = Math.min(alpha * 0.8, 0.62), kids = [];
+    if (s.leaf === "pinnate") {
+      kids.push(e("path", { key: "r", d: "M0 0 C 8 -1 17 -1.6 25.6 -1.5", fill: "none",
+        stroke: ink, strokeWidth: 0.7, strokeLinecap: "round" }));
+      for (let i = 0; i < 5; i++) {
+        const x0 = 2.4 + i * 4.6, y0 = -0.25 - i * 0.26, f = 1 - i * 0.08, L = 6.6 * f, D = 2.5 * f;
+        kids.push(e("path", { key: "u" + i,
+          d: "M" + x0 + " " + y0 + " C " + (x0 + 1.4) + " " + (y0 - D * 1.5) + " " + (x0 + 4.4) + " " + (y0 - D * 1.7) + " " + (x0 + L) + " " + (y0 - D * 0.5) + " C " + (x0 + 4.4) + " " + (y0 + D * 0.2) + " " + (x0 + 1.8) + " " + (y0 + 0.3) + " " + x0 + " " + y0 + " Z",
+          fill: ink, fillOpacity: 0.22, stroke: ink, strokeWidth: 0.55, strokeLinejoin: "round" }));
+        kids.push(e("path", { key: "d" + i,
+          d: "M" + x0 + " " + y0 + " C " + (x0 + 1.4) + " " + (y0 + D * 1.5) + " " + (x0 + 4.4) + " " + (y0 + D * 1.7) + " " + (x0 + L) + " " + (y0 + D * 0.5) + " C " + (x0 + 4.4) + " " + (y0 - D * 0.2) + " " + (x0 + 1.8) + " " + (y0 - 0.3) + " " + x0 + " " + y0 + " Z",
+          fill: ink, fillOpacity: 0.14, stroke: ink, strokeWidth: 0.55, strokeLinejoin: "round" }));
+      }
+      kids.push(e("path", { key: "t", d: "M25.6 -1.5 C 26.6 -4 29.6 -4.4 31.4 -2.6 C 30.2 -0.2 27.2 0.4 25.6 -1.5 Z",
+        fill: ink, fillOpacity: 0.2, stroke: ink, strokeWidth: 0.55, strokeLinejoin: "round" }));
+    } else {
+      kids.push(e("path", { key: "b", d: "M1.4 0 C 0.4 -1.5 0.7 -3.7 2.7 -4.9 C 7.1 -7.5 14.6 -6.6 18.8 -2 C 19.8 -0.9 19.8 0.9 18.8 2 C 14.6 6.6 7.1 7.5 2.7 4.9 C 0.7 3.7 0.4 1.5 1.4 0 Z",
+        fill: ink, fillOpacity: 0.21, stroke: ink, strokeWidth: 0.8, strokeLinejoin: "round" }));
+      kids.push(e("path", { key: "m", d: "M1.4 0 C 7 -0.4 13.6 -0.5 19.1 0", fill: "none", stroke: ink, strokeWidth: 0.6, opacity: 0.8 }));
+      for (let i = 0; i < 3; i++) {
+        const x0 = 4.2 + i * 4.6, r = 4.4 - i * 0.9;
+        kids.push(e("path", { key: "v" + i, d: "M" + x0 + " -0.3 C " + (x0 + 2.2) + " " + (-r * 0.55) + " " + (x0 + 3.6) + " " + (-r * 0.85) + " " + (x0 + 4.6) + " " + -r,
+          fill: "none", stroke: ink, strokeWidth: 0.45, opacity: 0.55 }));
+        kids.push(e("path", { key: "w" + i, d: "M" + x0 + " 0.3 C " + (x0 + 2.2) + " " + (r * 0.55) + " " + (x0 + 3.6) + " " + (r * 0.85) + " " + (x0 + 4.6) + " " + r,
+          fill: "none", stroke: ink, strokeWidth: 0.45, opacity: 0.55 }));
+      }
+    }
+    return e("g", { key: rk, transform: "translate(" + x.toFixed(1) + "," + y.toFixed(1) + ") rotate(" + rot + ") scale(" + sc.toFixed(2) + ")" },
+      e("g", { opacity: A, style: { ...this.anim("bm-in", 2.8, delay), transformBox: "fill-box", transformOrigin: "left center" }, ...this.mark() }, kids));
+  }
+
+  // The vine is the load-bearing drawing, so it runs in green rather than
+  // neutral ink. Every run also takes its own thickening factor between 20%
+  // and 50% — a group of stems then reads as several plants of different
+  // ages, not one stroke repeated at one weight.
+  greens = ["#3D6B3A", "#2F6B4E", "#4A7040", "#356043", "#537A3C", "#2C5A38"];
+  vine(seed) { return this.greens[Math.abs(seed | 0) % this.greens.length]; }
+  vt(seed) { return 1.2 + (Math.abs((seed * 41) | 0) % 31) / 100; }
+
+  // A raceme: one descending stem, buds hung off it at intervals, each
+  // opening a fixed interval after it appears — top-down, the order the
+  // real inflorescence opens in.
+  //
+  // Every animated group is nested inside a plain translate group. A CSS
+  // `transform` in a keyframe overrides the SVG transform *attribute*
+  // outright rather than composing with it, so animating scale on the
+  // positioned node collapses the whole raceme onto the origin.
+  raceme(cfg) {
+    const e = React.createElement, k = this.k, still = this.still;
+    const p = cfg.stem, n = cfg.count, sp = cfg.species || "maga";
+    const A = (cfg.alpha != null ? cfg.alpha : 0.55) * Math.min(k, 1.4);
+    const dur = cfg.dur || 18, d0 = cfg.delay || 0, gap = cfg.gap != null ? cfg.gap : 3.4;
+    // No flower opens while the stem is still drawing. Buds ride the growing
+    // tip; the raceme then waits out a settling beat and opens in sequence
+    // from the base down, the order a real inflorescence goes. The stagger is
+    // derived from the stem's own duration, so a slow composition also blooms
+    // slowly without anyone tuning a second number.
+    const grown = d0 + dur, settle = Math.min(gap, 2.2);
+    const stagger = (dur * 0.5) / Math.max(n, 1);
+    const sd = this.species[sp] || this.species.maga;
+    const vs = cfg.seed != null ? cfg.seed : n * 5 + Math.round((cfg.dur || 18) * 7);
+    const T = this.vt(vs);
+    const ink = cfg.stroke || (sd.stems ? sd.stems[Math.abs(vs) % sd.stems.length] : this.vine(vs));
+    const kids = [e("path", { key: "s", d: this.d(p), fill: "none", stroke: ink,
+      strokeWidth: (cfg.w || 1.4) * T, strokeLinecap: "round", pathLength: 1, strokeDasharray: 1,
+      strokeDashoffset: still ? 0 : 1, opacity: A, style: this.anim("bm-draw", dur, d0), ...this.mark() })];
+    // Foliage rides the top of the stem only — the raceme hangs clear of it,
+    // which is how the real inflorescence presents.
+    if (cfg.leaves != null ? cfg.leaves : (A >= 0.34 && n >= 3)) {
+      (cfg.leafAt || [0.04, 0.24]).forEach((lt, i) => {
+        const lp = this.cubic(p, lt), left = i % 2 === 0;
+        kids.push(this.leaf(sp, "lf" + i, lp[0], lp[1], left ? 152 - i * 6 : 30 + i * 6,
+          (cfg.leafScale || 1) * (0.95 + i * 0.12) * T, A, d0 + dur * lt * 0.9 + 0.5));
+      });
+    }
+    for (let i = 0; i < n; i++) {
+      const t = 0.12 + (i / Math.max(n - 1, 1)) * 0.82;
+      const pt = this.cubic(p, t), side = i % 2 ? 1 : -1;
+      const px = +(side * 7 * T).toFixed(1), py = +(18 * T).toFixed(1);
+      const born = d0 + dur * t * 0.9 + 0.3;
+      const open = grown + settle + i * stagger + ((i * 7) % 3) * stagger * 0.22;
+      kids.push(e("g", { key: "h" + i, transform: "translate(" + pt[0].toFixed(1) + "," + pt[1].toFixed(1) + ")" },
+        e("g", { style: { ...this.anim("bm-in", 1.8, born), transformBox: "fill-box", transformOrigin: "top center" }, ...this.mark() },
+          e("path", { d: "M0 0 C " + (side * 3.6 * T).toFixed(1) + " " + (7.5 * T).toFixed(1) + " " + px + " " + (13 * T).toFixed(1) + " " + px + " " + py,
+            fill: "none", stroke: ink, strokeWidth: 0.9 * T, strokeLinecap: "round", opacity: A * 0.95 })),
+        cfg.noBloom ? null : e("g", { transform: "translate(" + px + "," + py + ")" },
+          e("g", { style: { ...this.anim("bm-out", 2.2, open), transformBox: "fill-box", transformOrigin: "top center" },
+            opacity: still ? 0 : undefined, ...this.mark() }, this.budShape(sp)),
+          e("g", { transform: "translate(0,5) rotate(" + (side * (5 + (i % 3) * 4)) + ") scale(" + ((0.82 + ((i * 7) % 5) * 0.05) * sd.scale).toFixed(2) + ")" },
+            e("g", { style: { ...this.anim("bm-open", 3.4, open + 0.35, "cubic-bezier(.18,.72,.3,1)"), transformBox: "fill-box", transformOrigin: "top center" },
+              opacity: still ? 1 : undefined, ...this.mark() }, this.bloom(sp, Math.min(A * 1.3, 0.95)))))));
+    }
+    const swayStyle = still ? {} : { animation: "bm-sway " + (cfg.sway || 74) + "s ease-in-out " + (cfg.swayDelay || 0) + "s infinite", transformBox: "fill-box", transformOrigin: "top center" };
+    return e("g", { style: swayStyle }, kids);
+  }
+
+  runner(cfg) {
+    const e = React.createElement, k = this.k, still = this.still, p = cfg.stem;
+    const vs = cfg.seed != null ? cfg.seed : Math.round((cfg.dur || 18) * 7) + (cfg.branches != null ? cfg.branches : 5) * 3;
+    const T = this.vt(vs), ink = cfg.stroke || this.vine(vs);
+    const kids = [e("path", { key: "m", d: this.d(p), fill: "none", stroke: ink,
+      strokeWidth: (cfg.w || 1.1) * T, strokeLinecap: "round", pathLength: 1, strokeDasharray: 1,
+      strokeDashoffset: still ? 0 : 1, opacity: (cfg.alpha || 0.42) * k,
+      style: this.anim("bm-draw", cfg.dur || 18, cfg.delay || 0), ...this.mark() })];
+    const n = cfg.branches != null ? cfg.branches : 5;
+    if (cfg.hairs !== false && (cfg.alpha || 0.42) >= 0.3) {
+      for (let i = 0; i < 9; i++) {
+        const t = 0.1 + (i / 8) * 0.78, hp = this.cubic(p, t), sd2 = i % 2 ? 1 : -1;
+        const a = (sd2 * (52 + (i % 3) * 22)) * Math.PI / 180, L = (3.4 + ((i * 5) % 3) * 1.6) * T;
+        kids.push(e("path", { key: "hr" + i,
+          d: "M" + hp[0].toFixed(1) + " " + hp[1].toFixed(1) + " C " + (hp[0] + Math.cos(a) * L * 0.5).toFixed(1) + " " + (hp[1] + Math.sin(a) * L * 0.5).toFixed(1) + " " + (hp[0] + Math.cos(a) * L * 0.8).toFixed(1) + " " + (hp[1] + Math.sin(a) * L * 0.85).toFixed(1) + " " + (hp[0] + Math.cos(a + 0.4) * L).toFixed(1) + " " + (hp[1] + Math.sin(a + 0.4) * L).toFixed(1),
+          fill: "none", stroke: ink, strokeWidth: 0.4 * T, strokeLinecap: "round",
+          opacity: (cfg.alpha || 0.42) * 0.5 * k,
+          style: { ...this.anim("bm-in", 1.8, (cfg.delay || 0) + (cfg.dur || 18) * t + 1.2), transformBox: "fill-box", transformOrigin: "center" },
+          ...this.mark() }));
+      }
+    }
+    for (let i = 0; i < n; i++) {
+      const t = 0.16 + (i / Math.max(n - 1, 1)) * 0.72, pt = this.cubic(p, t), side = i % 2 ? 1 : -1;
+      const len = (14 + (i % 3) * 9) * T;
+      kids.push(e("path", { key: "br" + i,
+        d: "M" + pt[0].toFixed(1) + " " + pt[1].toFixed(1) + " C " + (pt[0] + side * 4).toFixed(1) + " " + (pt[1] + side * len * 0.4).toFixed(1) + " " + (pt[0] + side * 12).toFixed(1) + " " + (pt[1] + side * len * 0.7).toFixed(1) + " " + (pt[0] + side * 19).toFixed(1) + " " + (pt[1] + side * len).toFixed(1),
+        fill: "none", stroke: ink, strokeWidth: 0.7 * T, strokeLinecap: "round",
+        pathLength: 1, strokeDasharray: 1, strokeDashoffset: still ? 0 : 1, opacity: (cfg.alpha || 0.42) * 0.8 * k,
+        style: this.anim("bm-draw", 7, (cfg.delay || 0) + (cfg.dur || 18) * t + 0.6), ...this.mark() }));
+      const nx = +(pt[0] + side * 19).toFixed(1), ny = +(pt[1] + side * len).toFixed(1);
+      const nodeIn = { ...this.anim("bm-in", 2, (cfg.delay || 0) + (cfg.dur || 18) * t + 3), transformBox: "fill-box", transformOrigin: "center" };
+      kids.push(e("circle", { key: "nd" + i, cx: nx, cy: ny, r: 1.3 * T, fill: ink,
+        opacity: 0.55 * k, style: nodeIn, ...this.mark() }));
+      // Rootlets: a node on a rhizome is a growing point, not a bullet.
+      for (let h = 0; h < 3; h++) {
+        const a = (side * (26 + h * 34) + (i % 2) * 12) * Math.PI / 180, L = (6.5 + ((i + h) % 3) * 2.6) * T;
+        kids.push(e("path", { key: "rl" + i + h,
+          d: "M" + nx + " " + ny + " C " + (nx + Math.cos(a) * L * 0.4).toFixed(1) + " " + (ny + Math.sin(a) * L * 0.5).toFixed(1) + " " + (nx + Math.cos(a) * L * 0.8).toFixed(1) + " " + (ny + Math.sin(a) * L * 0.7).toFixed(1) + " " + (nx + Math.cos(a - 0.3) * L).toFixed(1) + " " + (ny + Math.sin(a - 0.3) * L).toFixed(1),
+          fill: "none", stroke: ink, strokeWidth: 0.42 * T, strokeLinecap: "round",
+          opacity: 0.4 * k, style: nodeIn, ...this.mark() }));
+      }
+    }
+    return e("g", null, kids);
+  }
+
+  panel(id, h, kids, extra) {
+    const e = React.createElement;
+    return e("div", { key: id + (this.state.n[id] || 0), ref: this.ioRef,
+      style: { position: "absolute", inset: 0, ...(extra && extra.style) }, ...(extra && extra.on) },
+      e("svg", { viewBox: "0 0 420 " + h, width: "100%", height: "100%", preserveAspectRatio: "xMidYMid slice",
+        "aria-hidden": "true", focusable: "false", style: { display: "block" } }, this.defs(), kids),
+      extra && extra.noReplay ? null : e("button", { type: "button", onClick: () => this.replay(id),
+        style: { position: "absolute", right: "10px", bottom: "10px", font: "11px ui-monospace,'SF Mono',Menlo,monospace",
+          letterSpacing: ".09em", textTransform: "uppercase", background: "transparent", color: "#585B4F",
+          border: "1px solid #C9C6BA", borderRadius: "2px", padding: "6px 9px", cursor: "pointer" } }, "replay"));
+  }
+
+  mini(id, kids) { return this.panel(id, 176, kids, { noReplay: true }); }
+
+  replay(id) { this.setState((s) => ({ n: { ...s.n, [id]: (s.n[id] || 0) + 1 } })); }
+
+  // The pointer is read straight into a transform on a ref'd group.
+  // Routing it through setState would re-render the document on every
+  // mousemove; this touches one node and stays off React's path.
+  tendrilMove = (ev) => {
+    if (!this._tend || this.still) return;
+    const r = ev.currentTarget.getBoundingClientRect();
+    const dx = ((ev.clientX - r.left) / r.width - 0.5) * 2, dy = ((ev.clientY - r.top) / r.height - 0.5) * 2;
+    this._tend.style.transform = "translate(" + (dx * 8).toFixed(2) + "px," + (dy * 5).toFixed(2) + "px) rotate(" + (dx * 2.2).toFixed(2) + "deg)";
+  };
+  tendrilLeave = () => { if (this._tend) this._tend.style.transform = "translate(0,0) rotate(0deg)"; };
+  tendrilRef = (el) => { this._tend = el; };
+
+  heroComp() {
+    const e = React.createElement, sp = this.props.heroFlora || "maga";
+    return e("svg", { width: 660, height: 600, viewBox: "0 0 660 600", "aria-hidden": "true", focusable: "false",
+      style: { display: "block", maxWidth: "100%" }, ref: this.ioRef },
+      this.defs(),
+      this.raceme({ stem: [352, -24, 468, 118, 296, 250, 344, 588], count: 7, species: sp, alpha: 0.5, dur: 20, gap: 3.6, sway: 78 }),
+      this.raceme({ stem: [524, -30, 566, 140, 452, 244, 486, 470], count: 4, species: sp, alpha: 0.22, dur: 26, delay: 2.5, w: 0.8, gap: 4.5, sway: 92, swayDelay: -20 }),
+      this.raceme({ stem: [618, -14, 668, 160, 594, 268, 626, 452], count: 3, species: sp, alpha: 0.14, dur: 30, delay: 5, w: 0.6, gap: 5.5, sway: 66, swayDelay: -40 }));
+  }
+
+  renderVals() {
+    const e = React.createElement;
+    return {
+      hero: this.heroComp(),
+
+      specRaceme: this.panel("raceme", 250,
+        this.raceme({ stem: [210, -14, 300, 62, 142, 128, 196, 268], count: 7, species: "maga", alpha: 0.62, dur: 11, gap: 2.4 })),
+
+      specRhizome: this.panel("rhizome", 250,
+        e("g", null,
+          this.runner({ stem: [-14, 132, 118, 96, 268, 168, 436, 124], branches: 6, alpha: 0.44, dur: 18 }),
+          this.runner({ stem: [-14, 176, 130, 152, 286, 206, 436, 170], branches: 4, alpha: 0.2, dur: 24, delay: 2, w: 0.7 }))),
+
+      specEmerge: this.panel("emerge", 250,
+        e("g", null,
+          this.runner({ stem: [16, 262, 58, 168, 152, 158, 184, 36], branches: 4, alpha: 0.44, dur: 9 }),
+          this.raceme({ stem: [304, -12, 366, 74, 258, 138, 300, 258], count: 5, species: "jade", alpha: 0.5, dur: 10, delay: 1.2, gap: 2.4 }))),
+
+      specTendril: this.panel("tendril", 250,
+        e("g", { ref: this.tendrilRef, style: { transition: "transform 1.2s cubic-bezier(.16,1,.3,1)", transformBox: "fill-box", transformOrigin: "center" } },
+          this.raceme({ stem: [196, -12, 276, 70, 136, 132, 190, 262], count: 6, species: "jade", alpha: 0.56, dur: 10, gap: 2.4 })),
+        { on: { onPointerMove: this.tendrilMove, onPointerLeave: this.tendrilLeave }, style: { cursor: "crosshair" } }),
+
+      specGraft: this.panel("graft", 250,
+        e("g", null,
+          this.runner({ stem: [-16, 22, 96, 82, 132, 152, 206, 128], branches: 3, alpha: 0.46, dur: 8 }),
+          this.runner({ stem: [436, 240, 328, 192, 284, 110, 208, 130], branches: 3, alpha: 0.46, dur: 11 }),
+          e("circle", { cx: 207, cy: 129, r: 2.2, fill: "#A8374C", opacity: 0.9 * Math.min(this.k, 1.3),
+            style: { ...this.anim("bm-in", 2.6, 12), transformBox: "fill-box", transformOrigin: "center" }, ...this.mark() }))),
+
+      specSway: this.panel("sway", 250,
+        e("g", null,
+          this.raceme({ stem: [128, -12, 200, 68, 78, 136, 124, 258], count: 5, species: "wisteria", alpha: 0.52, dur: 3, gap: 1.4, sway: 22 }),
+          this.raceme({ stem: [296, -16, 356, 84, 242, 148, 292, 252], count: 4, species: "wisteria", alpha: 0.34, dur: 4, delay: .8, w: 0.8, gap: 1.8, sway: 31, swayDelay: -9 }))),
+
+      specRetreat: this.panel("retreat", 250,
+        this.raceme({ stem: [206, -14, 292, 66, 142, 134, 194, 264], count: 6, species: "wisteria", alpha: 0.56, dur: 8, gap: 2 }),
+        { on: {
+            onPointerEnter: (ev) => { if (this.still) return; ev.currentTarget.querySelectorAll("path[stroke-dasharray],g").forEach(() => {}); const s = ev.currentTarget.querySelector("svg"); if (s) { s.style.transition = "opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1)"; s.style.opacity = "0.28"; s.style.transform = "translateY(-16px)"; } },
+            onPointerLeave: (ev) => { const s = ev.currentTarget.querySelector("svg"); if (s) { s.style.opacity = "1"; s.style.transform = "translateY(0)"; } },
+          } }),
+
+      pgHome: this.mini("pgHome", e("g", null,
+        this.raceme({ stem: [286, -14, 372, 54, 246, 106, 292, 190], count: 5, species: "maga", alpha: 0.54, dur: 9, gap: 2.2 }),
+        this.raceme({ stem: [366, -18, 408, 60, 336, 108, 360, 164], count: 3, species: "maga", alpha: 0.2, dur: 13, delay: 1.6, w: 0.7, gap: 3, sway: 88, swayDelay: -22 }))),
+
+      pgInvitation: this.mini("pgInvitation", e("g", null,
+        this.raceme({ stem: [212, -14, 244, 52, 190, 100, 214, 188], count: 3, species: "wisteria", alpha: 0.44, dur: 12, gap: 4 }))),
+
+      pgLearn: this.mini("pgLearn", e("g", null,
+        this.runner({ stem: [46, -12, 76, 52, 30, 116, 58, 190], branches: 7, alpha: 0.4, dur: 11 }))),
+
+      pgPractise: this.mini("pgPractise", e("g", null,
+        this.runner({ stem: [-14, 40, 22, 74, 14, 122, 40, 178], branches: 2, alpha: 0.28, dur: 12, w: 0.8 }))),
+
+      pgArchive: this.mini("pgArchive", e("g", null,
+        this.runner({ stem: [-16, 44, 108, 88, 250, 30, 436, 74], branches: 6, alpha: 0.3, dur: 13, w: 0.8 }),
+        this.runner({ stem: [-16, 128, 132, 92, 268, 158, 436, 116], branches: 6, alpha: 0.26, dur: 16, delay: 1.4, w: 0.7 }),
+        this.runner({ stem: [-16, 172, 148, 148, 274, 196, 436, 162], branches: 4, alpha: 0.18, dur: 19, delay: 2.6, w: 0.6 }))),
+
+      pgContribute: this.mini("pgContribute", e("g", null,
+        this.runner({ stem: [-16, 16, 76, 62, 128, 106, 206, 92], branches: 3, alpha: 0.42, dur: 8 }),
+        this.runner({ stem: [436, 170, 330, 138, 282, 76, 208, 94], branches: 3, alpha: 0.42, dur: 11 }),
+        e("circle", { cx: 207, cy: 93, r: 2.2, fill: "#A8374C", opacity: 0.85 * Math.min(this.k, 1.3),
+          style: { ...this.anim("bm-in", 2.4, 12), transformBox: "fill-box", transformOrigin: "center" }, ...this.mark() }))),
+
+      pgResources: this.mini("pgResources", e("g", null,
+        this.raceme({ stem: [352, -14, 396, 48, 330, 96, 358, 182], count: 4, species: "jade", alpha: 0.38, dur: 14, gap: 3.4 }))),
+
+      pgBts: this.mini("pgBts", e("g", null,
+        e("path", { d: "M0 88 H420", stroke: "#585B4F", strokeWidth: 0.5, strokeDasharray: "2 5", opacity: 0.5 }),
+        e("path", { d: "M210 0 V176", stroke: "#585B4F", strokeWidth: 0.5, strokeDasharray: "2 5", opacity: 0.5 }),
+        this.raceme({ stem: [210, -14, 292, 50, 152, 104, 208, 190], count: 6, species: "maga", alpha: 0.46, dur: 10, noBloom: true }))),
+    };
+  }
+}
+</script>
+</body>
+</html>

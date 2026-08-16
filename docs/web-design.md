@@ -47,7 +47,7 @@ change disappears the next time anyone runs the build.
 
 | Shipped page | Source | Note |
 |---|---|---|
-| `index.html` (Home) | `index.html` **and** `Home.dc.html` | Two byte-identical copies; **both must be edited** |
+| `index.html` (Home) | itself | Single source; see the note below |
 | `practise/index.html` | itself | Interactive tool, stays on the prerender path |
 | `contribute/index.html` | itself | Interactive tool |
 
@@ -55,40 +55,75 @@ These carry live `dc-runtime` logic that Hugo's static output cannot
 hold. `scripts/prerender.mjs` renders them in a real browser and bakes
 the HTML into `_site/`, so a no-JS reader and a crawler see full content.
 
-> **The `index.html` / `Home.dc.html` duplication is a live bug source.**
-> The homepage typo in §3.1 exists in both files precisely because they
-> are maintained by hand in parallel. Any Home change must be applied
-> twice, verified with `diff index.html Home.dc.html` (should output
-> nothing). Consider collapsing this to one file in a follow-up.
+> **Corrected 2026-08-13 (IA-07).** This section previously said Home was
+> two byte-identical copies — `index.html` **and** `Home.dc.html` — that
+> both had to be edited, with `diff index.html Home.dc.html` as the check.
+> **That has not been true since WD-26.** `Home.dc.html` is now a ~1.3 KB
+> redirect stub carrying `<meta http-equiv="refresh">`, like the other
+> eight stubs left at the old flat paths; the homepage's real content
+> lives only in `index.html`, and `scripts/prerender.mjs` treats the stub
+> as copy-as-is. Editing it, or diffing it against `index.html`, is work
+> against a file that is no longer a copy of anything. The 2026-08-13
+> heuristic audit re-reported the duplication as a live finding after
+> reading this section, which is what surfaced the staleness.
 
-### 1c. There is no shared CSS — this is the single most important fact
+### 1c. There is one shared base block — ~~this is the single most important fact~~
 
-Every page carries **its own inline `<style>` block in its own `<head>`**.
-There is no partial, no stylesheet, no import. The same ~25 lines of base
-CSS are duplicated across **ten files**.
+> **Superseded 2026-08-14 by IA-10a.** ~~Every page carries its own inline
+> `<style>` block… the same ~25 lines of base CSS are duplicated across ten
+> files… every site-wide rule in §3 is a ten-file edit.~~ That was true
+> through Phase 9 and is the reason every §3 spec below lists its files
+> explicitly. **It is no longer true.** The follow-up this section
+> recommended has been done; the original text is struck rather than
+> deleted, because the per-file instructions in §3 were written against it.
 
-That means: **every site-wide rule in §3 is a ten-file edit.** They are
-listed explicitly each time. Do not assume one edit propagates.
+The base block now lives in **one file**:
 
-Nine of the ten share an identical base block, anchored by this line:
-
-```css
-a:hover{color:#2C5A38}
+```
+hugo/layouts/partials/head-base.html
 ```
 
-Files containing it: `hugo/layouts/{archive,behindthescenes,invitation,learn,resources}.html`,
-`index.html`, `Home.dc.html`, `practise/index.html`, `contribute/index.html`.
+Every page gets it from there. A site-wide base rule is **a one-file edit**,
+followed by `npm run build:hugo`.
 
-**`hugo/layouts/manifesto.html` is the exception.** It is dark-ground
-throughout and has its own base palette (`a{color:#DB9E2A}`,
-`a:hover{color:#509C64}`). Site-wide rules must be adapted for it, not
-pasted. Each spec below states the Manifesto variant where one is needed.
+How it reaches each page:
 
-**Recommended follow-up (not specified here):** extract the shared base
-into `hugo/layouts/partials/head-base.html` plus one `/base.css` for the
-two hand-authored pages. This pass is deliberately scoped to *not* do
-that, because it is a refactor and would collide with everything below.
-Do it after, or before — not during.
+- **The six Hugo pages** call `{{ partial "head-base.html" … }}`. The partial
+  takes a dict of palette overrides; anything not passed falls back to the
+  light ground.
+- **The three hand-authored pages** (`index.html`, `practise/index.html`,
+  `contribute/index.html`) are not Hugo pages and cannot call a partial.
+  `scripts/sync-base.mjs` lifts the block Hugo just rendered and splices it
+  into each one between its `/* base:start */` and `/* base:end */` markers.
+  `npm run build:hugo` does this automatically; `npm run check` fails if any
+  of the three has drifted.
+
+**Do not edit the base CSS in a page file.** In the three hand-authored ones
+it is overwritten on the next build and fails the check meanwhile; in the six
+Hugo ones it is regenerated away.
+
+**The two page-level palette exceptions are now parameters, not forks.**
+`hugo/layouts/manifesto.html` passes the dark ground plus `"tokens" false`
+(its register is rhetorical, not analytical — see `docs/design-palette.md`);
+`hugo/layouts/invitation.html` passes its ochre link and focus colours
+(FLAG-07). Both share the same structural rules as everything else, so a
+site-wide rule no longer needs a hand-adapted Manifesto variant — it needs a
+palette key.
+
+**What still belongs in a page's own `<style>`:** anything one page needs and
+the others do not. The cascade puts each page's block after the shared one,
+so page rules still win. Current examples: Learn's Contents-nav sizing,
+Home's `.door` hover edges, Behind the Scenes' `.jump` bar, and every page's
+print extensions.
+
+**Two traps, both found the hard way while doing this.** Go's `html/template`
+strips HTML comments *and* comments inside `<style>`, so no marker can be
+emitted into Hugo output — the sync locates the block structurally instead,
+by taking the first `<style>` in the generated page. And Hugo's CSS
+sanitiser rewrites unrecognised values in CSS context to the literal string
+`ZgotmplZ`: a bare `rgba(…)` interpolated without `| safeCSS` becomes a
+silently dead rule, not a build error. Every interpolated value in the
+partial is filtered. Keep it that way.
 
 ### 1d. Content Security Policy
 
@@ -118,9 +153,10 @@ them to achieve anything in this document.
    }
    ```
    Everything in §3 inherits this automatically. **Exception:** SVG SMIL
-   `<animate>` ignores CSS and must be withheld in JS — `Home.dc.html`
+   `<animate>` ignores CSS and must be withheld in JS — `index.html`
    already does this correctly in `drift()`. Copy that pattern if you add
-   any SMIL.
+   any SMIL. (This said `Home.dc.html` until 2026-08-13; the code has been
+   in `index.html` alone since WD-26. IA-07.)
 4. **Colour is never the sole carrier of meaning.** Every coloured state
    is doubled by a glyph or a word. See §2.3.
 
@@ -217,6 +253,14 @@ Everything else — every hover, every filter, every disclosure — snaps.
 Ordered by leverage. Tier A is the cheap high-yield set; Tier B is
 structural; Tier C is optional.
 
+> **Read §1c first if you are working from this section.** Every spec below
+> that says "all ten files" or "the nine light-base files" was written when
+> the base CSS was duplicated per page. Since IA-10a (2026-08-14) it is not:
+> a site-wide base rule is one edit to
+> `hugo/layouts/partials/head-base.html`, then `npm run build:hugo`. These
+> items have all shipped, so the file lists below are a record of where the
+> change landed at the time, not instructions to repeat. Left as written.
+
 ---
 
 ### TIER A — high impact, low effort
@@ -230,9 +274,11 @@ structural; Tier C is optional.
 **Why.** It is the largest type on the site, set up to 4.4rem, and it is
 the first thing most visitors read.
 
-**Where.** Two files, same line number, both must change:
+**Where.** ~~Two files, same line number, both must change:~~
+**Shipped; and since WD-26 there is only one file.** `index.html` only —
+`Home.dc.html` is a redirect stub (§1b, IA-07).
 - `index.html:109`
-- `Home.dc.html:109`
+- ~~`Home.dc.html:109`~~
 
 **Code.**
 ```diff
@@ -240,8 +286,9 @@ the first thing most visitors read.
 +FREEDOM THROUGH RELATIONSHIP, NOT FROM IT. NO OWNERS. NO OBJECTS.
 ```
 
-**Verify.** `diff index.html Home.dc.html` prints nothing; `grep -c FREDOM
-index.html Home.dc.html` returns 0 for both.
+**Verify.** `grep -c FREDOM index.html` returns 0. (The `diff index.html
+Home.dc.html` half of this step is obsolete — it now reports a full page
+against a redirect stub. IA-07.)
 
 **Risk.** None. The `max-width:18ch` on the `h1` absorbs one extra
 character without reflowing the line breaks meaningfully.
@@ -373,14 +420,15 @@ near-identical browns reading as one colour with two values is exactly
 the kind of drift that makes a deliberate system look accidental.
 
 **Where.**
-- `index.html` and `Home.dc.html` — six door kickers, `color:#7D5915`
+- `index.html` — six door kickers, `color:#7D5915` (`Home.dc.html` is a
+  stub since WD-26, IA-07)
 - `hugo/layouts/archive.html:150` — `{{ $rule = "#7D5915" }}`
 - `hugo/layouts/invitation.html:61` — `:focus-visible` outline
 
 **Code.** Replace `#7D5915` with `#6B4C12` at all occurrences.
 
 ```bash
-grep -rn "7D5915" index.html Home.dc.html hugo/layouts/
+grep -rn "7D5915" index.html hugo/layouts/
 ```
 
 **Decision point.** The Archive's `$rule` value is used as a **border
@@ -1261,7 +1309,18 @@ Things that will look like improvements and are not. Do not do these.
 8. **Do not let colour carry meaning alone.** Every coloured state gets a
    word or a glyph too.
 9. **Do not hand-edit Hugo output.** See §1a.
-10. **Do not edit `index.html` without editing `Home.dc.html`.** See §1b.
+10. ~~**Do not edit `index.html` without editing `Home.dc.html`.**~~
+    **Struck 2026-08-13 (IA-07)** — obsolete since WD-26 made `Home.dc.html`
+    a redirect stub. Home is a single source. See §1b.
+10b. **Do not edit base CSS inside a page file.** It lives in
+    `hugo/layouts/partials/head-base.html` and nowhere else (§1c). In the six
+    Hugo pages an edit is regenerated away; in the three hand-authored pages
+    it sits between `/* base:start */` and `/* base:end */` and is
+    overwritten by the next `npm run build:hugo`, failing `npm run check`
+    until then. If a rule genuinely belongs to one page, put it in that
+    page's own `<style>`, which the cascade already places after the shared
+    block. If it needs a different *colour* on one page, add a palette key —
+    do not fork the rule.
 11. **Do not use `aria-live="assertive"`** for filter results. Polite
     only.
 12. **Do not remove the `prefers-reduced-motion` block** from any file,
@@ -1278,7 +1337,8 @@ Run before merging any group of changes.
 npm run check           # HTML validation + origin/page checks
 npm run check:responsive
 npm run build:hugo      # only if a hugo/layouts file changed
-diff index.html Home.dc.html   # must print nothing
+# (the `diff index.html Home.dc.html` check that used to live here was
+# removed 2026-08-13 — Home.dc.html is a redirect stub, not a copy. IA-07.)
 ```
 
 **Cross-cutting manual**

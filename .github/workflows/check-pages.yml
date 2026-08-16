@@ -15,7 +15,7 @@ jobs:
       # together current.
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 20
           cache: npm
@@ -29,14 +29,21 @@ jobs:
       # Hugo is a single static binary, deliberately not an npm
       # dependency). This is what npm run check's Hugo-pages-in-sync
       # check needs to run for real here instead of soft-skipping.
-      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
-        with:
-          go-version: "1.24"
-
+      #
+      # Prebuilt binary, not `go install` (no actions/setup-go needed):
+      # Hugo's own go.mod can (and did) bump its minimum Go version ahead
+      # of whatever's pinned here, breaking this step on an otherwise-
+      # unrelated upstream release — go install github.com/gohugoio/hugo@v0.164.0
+      # started requiring Go >= 1.26 partway through this pin's life, with
+      # the runner on 1.24. The prebuilt binary has no such second version
+      # to track; hugo/README.md documents this as the other supported
+      # install method for exactly this reason.
       - name: Install Hugo v0.164.0
         run: |
-          go install github.com/gohugoio/hugo@v0.164.0
-          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+          curl -sSL -o /tmp/hugo.tar.gz https://github.com/gohugoio/hugo/releases/download/v0.164.0/hugo_0.164.0_linux-amd64.tar.gz
+          tar -xzf /tmp/hugo.tar.gz -C /tmp hugo
+          sudo mv /tmp/hugo /usr/local/bin/hugo
+          hugo version
 
       - name: HTML validation + accessibility (axe-core) check
         run: npm run check
@@ -46,7 +53,7 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 20
 

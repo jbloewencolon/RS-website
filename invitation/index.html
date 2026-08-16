@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>An Invitation — Relational Sovereignty</title>
+<title>An Invitation: Relational Sovereignty</title>
 <meta name="description" content="A second, warmer door into relational sovereignty, running parallel to the manifesto rather than introducing it. On wanting each other's growth, and on what's owed at the end.">
 <link rel="canonical" href="https://relationalsovereignty.com/invitation/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Relational Sovereignty">
 <meta property="og:url" content="https://relationalsovereignty.com/invitation/">
-<meta property="og:title" content="An Invitation — Relational Sovereignty">
+<meta property="og:title" content="An Invitation: Relational Sovereignty">
 <meta property="og:description" content="A second, warmer door into relational sovereignty, running parallel to the manifesto rather than introducing it. On wanting each other's growth, and on what's owed at the end.">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
@@ -27,8 +27,8 @@
     {
       "@type": "Article",
       "@id": "https://relationalsovereignty.com/invitation/#article",
-      "headline": "An Invitation — Relational Sovereignty",
-      "name": "An Invitation — Relational Sovereignty",
+      "headline": "An Invitation: Relational Sovereignty",
+      "name": "An Invitation: Relational Sovereignty",
       "description": "A second, warmer door into relational sovereignty, running parallel to the manifesto rather than introducing it. On wanting each other's growth, and on what's owed at the end.",
       "url": "https://relationalsovereignty.com/invitation/",
       "inLanguage": "en",
@@ -57,7 +57,7 @@
   summary::before{content:"▸";display:inline-block;margin-right:.6rem;color:currentColor;flex-shrink:0;transition:transform .15s ease}
   details[open]>summary::before{transform:rotate(90deg)}
   .nav-toggle{display:none}
-  .nav-toggle>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:#585B4F}
+  .nav-toggle>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:#585B4F}
   .nav-toggle>summary::-webkit-details-marker{display:none}
   .nav-toggle>nav{display:flex;flex-direction:column;align-items:flex-start;gap:.4rem;padding:.5rem 0 .8rem}
   @media (max-width:700px){
@@ -66,24 +66,55 @@
   }
    
   :root{
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  }
+   
+  :root{
     --paper:#E7E5DC;--paper-2:#EFEEE7;--ink:#191B18;--ink-2:#3C3E38;--ink-3:#585B4F;--rule:#C9C6BA;
     --teal:#0F2A2E;--teal-2:#2A4C4C;--sage:#8FA9A2;
     --holds:#2C5A38;--holds-fill:rgba(63,122,78,.13);--holds-edge:rgba(44,90,56,.35);
     --fails:#8B3A2F;--fails-fill:rgba(139,58,47,.10);--fails-edge:rgba(139,58,47,.24);
     --ask:#6B4C12;--ask-edge:#DB9E2A;--ask-fill:rgba(219,158,42,.13);
-    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;
-    --sans:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;
   }
   *{box-sizing:border-box}
-  h1,h2,h3{text-wrap:balance}  
+   
+  h1,h2,h3{text-wrap:balance}
   :focus-visible{outline:2.5px solid #7D5915;outline-offset:3px}
    
   .dark :focus-visible{outline-color:#DB9E2A}
+   
+  .action,.action-utility,.nav-link,.disclosure,.form-error{font-family:var(--mono);font-size:14px}
+  .action,.action-utility,.nav-link,.disclosure{text-transform:uppercase;min-height:44px;display:inline-flex;align-items:center;border-radius:2px}
+  .action,.action-utility{cursor:pointer;letter-spacing:.05em}
+  .action{background:#7D5915;color:#E7E5DC;border:none;padding:.85rem 1.2rem}
+  .action[disabled]{cursor:default;opacity:.55}
+  .action-utility{background:transparent;color:#585B4F;border:1px solid #C9C6BA;padding:.6rem .8rem}
+  .action-utility:hover,.action-utility[aria-pressed="true"],.action-utility.is-active{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
+  .nav-link,.disclosure{color:#585B4F;letter-spacing:.04em;padding:.4rem 0}
+  .nav-link{text-decoration:none}
+  .nav-link:hover,.disclosure:hover{color:#2C5A38}
+  .nav-link[aria-current]{color:#191B18;text-decoration:underline;text-underline-offset:5px}
+  .disclosure{cursor:pointer}
+   
+  .form-error{line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem}
+  .form-status{border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;background:rgba(63,122,78,.06);padding:1.6rem 1.5rem}
+  .field-invalid{border-color:#8B3A2F!important}
+   
+  details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid #DB9E2A;margin:1.6rem 0 0}
+  details.note>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0 .9rem;color:#585B4F}
+  details.note>summary::-webkit-details-marker{display:none}
+  details.note>summary:hover,details.note>summary:focus-visible{color:#191B18}
+  details.note>p{margin:0 .9rem .7rem .9rem}
+  details.note.note-fails{border-left-color:#8B3A2F}
+  details.note.note-holds{border-left-color:#3F7A4E}
+  @media print{details.note:not([open])>*{display:block!important}}
   @media print{body{background:#fff}.noprint{display:none!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
-  .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
+  .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;border-radius:2px}
   .skip-link:focus{left:1rem;top:1rem}
 </style>
+
 </head>
 <body>
 
@@ -91,7 +122,7 @@
 <header class="noprint" style="border-bottom:1px solid #C9C6BA">
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="/" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
-    <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+    <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
       <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
       <a href="/invitation/" aria-current="page" style="color:#7D5915;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
       <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
@@ -102,8 +133,8 @@
       <a href="/behind-the-scenes/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
     </nav>
     <details class="nav-toggle">
-      <summary aria-label="Menu">Menu</summary>
-      <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+      <summary>Menu</summary>
+      <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
         <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
         <a href="/invitation/" aria-current="page" style="color:#7D5915;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
         <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
@@ -131,10 +162,10 @@
     <div style="max-width:60ch;font-size:18px;line-height:1.68;color:#191B18;display:flex;flex-direction:column;gap:1.3rem">
       <p style="margin:0">If we're going to be in each other's lives, I want it to be the kind of thing where we both come out more ourselves than we went in.</p>
       <p style="margin:0">Not improved. Not fixed. More ourselves.</p>
-      <p style="margin:0">That means I want to know what you're growing toward, and I want to be useful to it — sometimes by helping, sometimes by getting out of the way, sometimes by saying the thing you'd rather I didn't. And I want the same back. Not because we owe each other a project, but because it's a better way to spend the time we have.</p>
+      <p style="margin:0">That means I want to know what you're growing toward, and I want to be useful to it, sometimes by helping, sometimes by getting out of the way, sometimes by saying the thing you'd rather I didn't. And I want the same back. Not because we owe each other a project, but because it's a better way to spend the time we have.</p>
       <p style="margin:0">It probably means falling in love a little. Maybe a lot. That's fine.</p>
       <p style="margin:0">It probably means one of us being ready to stop before the other one is. That's fine too, and it's going to hurt.</p>
-      <p style="margin:0">Leaning on someone isn't failure. Most of a life is other people. The question was never whether we'd need each other — it's whether either of us could say no and still be alright.</p>
+      <p style="margin:0">Leaning on someone isn't failure. Most of a life is other people. The question was never whether we'd need each other. It's whether either of us could say no and still be alright.</p>
       <p style="margin:1rem 0 0;font-weight:700;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:1.15rem;line-height:1.4;color:#191B18">That last part isn't romantic. It's the floor. Everything soft in this rests on it.</p>
     </div>
   </div>
@@ -154,16 +185,16 @@
         <li>making sure whatever they depended on you for lands somewhere before you go, if you can go safely</li>
         <li>letting them grieve at their own speed, which will not be yours</li>
       </ul>
-      <p style="margin:.4rem 0 0;font-weight:700;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:1.1rem;line-height:1.4;color:#E7E5DC">And if going safely means going suddenly — go. Nothing in any of this is a reason to stay.</p>
+      <p style="margin:.4rem 0 0;font-weight:700;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:1.1rem;line-height:1.4;color:#E7E5DC">And if going safely means going suddenly, go. Nothing in any of this is a reason to stay.</p>
     </div>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#8FA9A2;border-left:2px solid #DB9E2A;padding:.2rem 0 .2rem .9rem;margin:2.2rem 0 0;max-width:56ch">⌖ This section, plus the logistics — money, medication, the school run, paperwork, a lease, a visa, a pet, a phone plan, who holds each after and whether they know — is built out as an actual tool on <a href="/practise/" style="color:#DB9E2A">Practise</a>, once it ships. The safety gate sits at the top of that tool, not the bottom, and says the same thing this paragraph does: if leaving safely means leaving suddenly, close it and go.</p>
+    <details class="note" style="color:#8FA9A2;max-width:56ch"><summary style="color:#8FA9A2">⌖ This section, plus the logistics</summary><p>Money, medication, the school run, paperwork, a lease, a visa, a pet, a phone plan, who holds each after and whether they know: all of it is built out as an actual tool on <a href="/practise/" style="color:#DB9E2A">Practise</a>, once it ships. The safety gate sits at the top of that tool, not the bottom, and says the same thing this paragraph does: if leaving safely means leaving suddenly, close it and go.</p></details>
   </div>
 </section>
 
 <section style="padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7D5915;margin:0 0 1rem">Said as an invitation, not as a call to join</p>
-    <p style="max-width:56ch;margin:0 0 1rem;font-size:16.5px;line-height:1.6;color:#3C3E38">There's no roster here, no cohort of people doing this correctly, nothing to sign. If any of the above lands, that's the whole of what it asks — not agreement, not membership, not proof you're able to. And everything soft in it still answers to the same floor as <a href="/manifesto/">the manifesto</a>: consent that isn't materially survivable isn't consent, the coercive-control gate still routes to <a href="/resources/">resources</a> rather than a tool, and this framework still doesn't rank relationship forms against each other. Warmth is a door here, not a floor to stand on instead of one.</p>
+    <p style="max-width:56ch;margin:0 0 1rem;font-size:16.5px;line-height:1.6;color:#3C3E38">There's no roster here, no cohort of people doing this correctly, nothing to sign. If any of the above lands, that's the whole of what it asks: not agreement, not membership, not proof you're able to. And everything soft in it still answers to the same floor as <a href="/manifesto/">the manifesto</a>: consent that isn't materially survivable isn't consent, the coercive-control gate still routes to <a href="/resources/">resources</a> rather than a tool, and this framework still doesn't rank relationship forms against each other. Warmth is a door here, not a floor to stand on instead of one.</p>
     <p style="max-width:56ch;margin:0;font-size:14.5px;line-height:1.55;color:#585B4F">Everything above is also exactly the kind of language that gets turned around and used on someone. <a href="/learn/#field-guide">Learn keeps a guide</a> to how that happens with this site's own words, including this page's.</p>
   </div>
 </section>
@@ -172,11 +203,11 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <div class="noprint" style="border-top:1px solid #C9C6BA;padding-top:1.6rem;max-width:640px">
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#2C5A38;margin:0 0 .8rem">You have reached the end of the invitation</p>
-      <p style="margin:0;font-size:17px;line-height:1.55;color:#3C3E38">The other door is <a href="/manifesto/">the manifesto</a> — same floor, colder light, thirteen more theses. What's under both is unpacked in <a href="/learn/">Learn</a>, and the people whose thinking either page compresses are named, in full, in <a href="/archive/">the archive</a>.</p>
+      <p style="margin:0;font-size:17px;line-height:1.55;color:#3C3E38">The other door is <a href="/manifesto/">the manifesto</a>: same floor, colder light, thirteen more theses. What's under both is unpacked in <a href="/learn/">Learn</a>, and the people whose thinking either page compresses are named, in full, in <a href="/archive/">the archive</a>.</p>
     </div>
     <div class="noprint" style="display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.8rem">
-      <button type="button" data-print style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;background:#7D5915;color:#E7E5DC;border:none;padding:.8rem 1.1rem;min-height:44px;cursor:pointer;border-radius:2px">Print this invitation</button>
-      <a href="/manifesto/" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;border:1px solid #C9C6BA;color:#585B4F;padding:.8rem 1.1rem;min-height:44px;text-decoration:none;border-radius:2px;display:inline-flex;align-items:center">Read the manifesto instead</a>
+      <button type="button" data-print style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:#7D5915;color:#E7E5DC;border:none;padding:.8rem 1.1rem;min-height:44px;cursor:pointer;border-radius:2px">Print this invitation</button>
+      <a href="/manifesto/" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;border:1px solid #C9C6BA;color:#585B4F;padding:.8rem 1.1rem;min-height:44px;text-decoration:none;border-radius:2px;display:inline-flex;align-items:center">Read the manifesto instead</a>
     </div>
   </div>
 </section>
@@ -184,12 +215,13 @@
 </main>
 
 <footer class="noprint" style="border-top:1px solid #C9C6BA;padding:clamp(2rem,4vw,3rem) 0;color:#585B4F">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.7">
     <p style="margin:0 0 .6rem;max-width:60ch">This page and <a href="/manifesto/">the manifesto</a> are two ways into the same framework, not a soft version and a real one. The citations live in the <a href="/archive/">archive</a>; the ideas are unpacked in <a href="/learn/">Learn</a>; the build is laid open in <a href="/behind-the-scenes/">Behind the Scenes</a>.</p>
     <p style="margin:0">v0.2 · fork with attribution and consent · no third-party requests, including fonts · <a href="/behind-the-scenes/">what changed</a></p>
   </div>
 </footer>
 
 <script src="/print.js"></script>
+<script src="/notes.js"></script>
 </body>
 </html>

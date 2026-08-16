@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Archive — Relational Sovereignty</title>
+<title>Archive: Relational Sovereignty</title>
 <meta name="description" content="Thirty-odd texts on relational sovereignty, Indigenous relationality, care ethics, and transformative justice, each linking away to the people who wrote them.">
 <link rel="canonical" href="https://relationalsovereignty.com/archive/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Relational Sovereignty">
 <meta property="og:url" content="https://relationalsovereignty.com/archive/">
-<meta property="og:title" content="Archive — Relational Sovereignty">
+<meta property="og:title" content="Archive: Relational Sovereignty">
 <meta property="og:description" content="Thirty-odd texts on relational sovereignty, Indigenous relationality, care ethics, and transformative justice, each linking away to the people who wrote them.">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
@@ -27,8 +27,8 @@
     {
       "@type": "Article",
       "@id": "https://relationalsovereignty.com/archive/#article",
-      "headline": "Archive — Relational Sovereignty",
-      "name": "Archive — Relational Sovereignty",
+      "headline": "Archive: Relational Sovereignty",
+      "name": "Archive: Relational Sovereignty",
       "description": "Thirty-odd texts on relational sovereignty, Indigenous relationality, care ethics, and transformative justice, each linking away to the people who wrote them.",
       "url": "https://relationalsovereignty.com/archive/",
       "inLanguage": "en",
@@ -57,7 +57,7 @@
   summary::before{content:"▸";display:inline-block;margin-right:.6rem;color:currentColor;flex-shrink:0;transition:transform .15s ease}
   details[open]>summary::before{transform:rotate(90deg)}
   .nav-toggle{display:none}
-  .nav-toggle>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:#585B4F}
+  .nav-toggle>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:#585B4F}
   .nav-toggle>summary::-webkit-details-marker{display:none}
   .nav-toggle>nav{display:flex;flex-direction:column;align-items:flex-start;gap:.4rem;padding:.5rem 0 .8rem}
   @media (max-width:700px){
@@ -66,25 +66,58 @@
   }
    
   :root{
+    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  }
+   
+  :root{
     --paper:#E7E5DC;--paper-2:#EFEEE7;--ink:#191B18;--ink-2:#3C3E38;--ink-3:#585B4F;--rule:#C9C6BA;
     --teal:#0F2A2E;--teal-2:#2A4C4C;--sage:#8FA9A2;
     --holds:#2C5A38;--holds-fill:rgba(63,122,78,.13);--holds-edge:rgba(44,90,56,.35);
     --fails:#8B3A2F;--fails-fill:rgba(139,58,47,.10);--fails-edge:rgba(139,58,47,.24);
     --ask:#6B4C12;--ask-edge:#DB9E2A;--ask-fill:rgba(219,158,42,.13);
-    --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;
-    --sans:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;
   }
   *{box-sizing:border-box}
-  h1,h2,h3{text-wrap:balance}  
+   
+  h1,h2,h3{text-wrap:balance}
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
    
   .dark :focus-visible{outline-color:#DB9E2A}
+   
+  .action,.action-utility,.nav-link,.disclosure,.form-error{font-family:var(--mono);font-size:14px}
+  .action,.action-utility,.nav-link,.disclosure{text-transform:uppercase;min-height:44px;display:inline-flex;align-items:center;border-radius:2px}
+  .action,.action-utility{cursor:pointer;letter-spacing:.05em}
+  .action{background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem}
+  .action[disabled]{cursor:default;opacity:.55}
+  .action-utility{background:transparent;color:#585B4F;border:1px solid #C9C6BA;padding:.6rem .8rem}
+  .action-utility:hover,.action-utility[aria-pressed="true"],.action-utility.is-active{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
+  .nav-link,.disclosure{color:#585B4F;letter-spacing:.04em;padding:.4rem 0}
+  .nav-link{text-decoration:none}
+  .nav-link:hover,.disclosure:hover{color:#2C5A38}
+  .nav-link[aria-current]{color:#191B18;text-decoration:underline;text-underline-offset:5px}
+  .disclosure{cursor:pointer}
+   
+  .form-error{line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem}
+  .form-status{border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;background:rgba(63,122,78,.06);padding:1.6rem 1.5rem}
+  .field-invalid{border-color:#8B3A2F!important}
+   
+  details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid #DB9E2A;margin:1.6rem 0 0}
+  details.note>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0 .9rem;color:#585B4F}
+  details.note>summary::-webkit-details-marker{display:none}
+  details.note>summary:hover,details.note>summary:focus-visible{color:#191B18}
+  details.note>p{margin:0 .9rem .7rem .9rem}
+  details.note.note-fails{border-left-color:#8B3A2F}
+  details.note.note-holds{border-left-color:#3F7A4E}
+  @media print{details.note:not([open])>*{display:block!important}}
   @media print{body{background:#fff}.noprint{display:none!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
-  .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;border-radius:2px}
+  .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#0F2A2E;color:#E7E5DC;padding:.8rem 1.2rem;text-decoration:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;border-radius:2px}
   .skip-link:focus{left:1rem;top:1rem}
+</style>
+
+<style>
    
-  [data-filter]{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.03em;padding:.6rem .8rem;min-height:44px;cursor:pointer;border-radius:2px;border:1px solid #C9C6BA;background:transparent;color:#585B4F}
+  [data-filter]{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.03em;padding:.6rem .8rem;min-height:44px;cursor:pointer;border-radius:2px;border:1px solid #C9C6BA;background:transparent;color:#585B4F}
   [data-filter].is-active{border-color:#3F7A4E;background:rgba(63,122,78,.1);color:#2C5A38}
    
   .filterbar{position:sticky;top:0;z-index:30;background:#E7E5DC;border-top:1px solid #C9C6BA;border-bottom:1px solid #C9C6BA;box-shadow:0 10px 18px -16px rgba(25,27,24,.6);padding:.55rem 0}
@@ -92,8 +125,10 @@
      
     .filterbar .chips{flex-wrap:nowrap!important;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
     .filterbar .chips::-webkit-scrollbar{display:none}
-     
-    [data-group],article[data-tags]{scroll-margin-top:7.5rem!important}
+  }
+   
+  @media (max-width:1023px){
+    [data-group],article[data-tags]{scroll-margin-top:10rem!important}
   }
   .venn-scroll{position:relative}
   .venn-scroll::after{content:"";position:absolute;top:0;right:0;bottom:.5rem;width:32px;background:linear-gradient(to right,rgba(231,229,220,0),#E7E5DC 90%);pointer-events:none}
@@ -108,7 +143,7 @@
 <header class="noprint" style="border-bottom:1px solid #C9C6BA">
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="/" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
-    <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+    <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
       <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
       <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
       <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
@@ -119,8 +154,8 @@
       <a href="/behind-the-scenes/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
     </nav>
     <details class="nav-toggle">
-      <summary aria-label="Menu">Menu</summary>
-      <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase">
+      <summary>Menu</summary>
+      <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
         <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
         <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
         <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
@@ -137,13 +172,13 @@
 <main>
 <section id="main-content" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Archive — a starter shelf, nothing ranked · about 11 minutes</p>
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Archive · a starter shelf, nothing ranked · about 11 minutes</p>
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.2rem,6vw,4rem);line-height:1;letter-spacing:-.035em;margin:0 0 1.4rem;max-width:15ch">Read the people, not the summary.</h1>
-    <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">No single source contains this whole framework. It is assembled from Indigenous political thought, feminist relational autonomy, disability justice, care ethics, and transformative-justice practice — each with its own authors, nations, and arguments.</p>
+    <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">No single source contains this whole framework. It is assembled from Indigenous political thought, feminist relational autonomy, disability justice, care ethics, and transformative-justice practice, each with its own authors, nations, and arguments.</p>
     <p style="max-width:52ch;margin:0 0 1.4rem;color:#3C3E38">Every entry links away from here, to the author, the publisher, or the open-access copy. Where no stable public link exists, the holder is named instead of a guess. This site is a door; its success is how quickly you stop needing it.</p>
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #DB9E2A;padding:.3rem 0 .3rem .9rem;margin:0 0 1.6rem;max-width:58ch">⌖ Indigenous relationality, sovereignty, refusal, and survivance are not a generic radical style. These traditions are nation-specific, and borrowing them as atmosphere reproduces colonial extraction even when it calls itself rebellion. Every note below is provisional and awaiting paid Indigenous review.</p>
+    <details class="note" style="max-width:58ch"><summary>⌖ Indigenous relationality, sovereignty, refusal, and survivance are not a generic radical style.</summary><p>These traditions are nation-specific, and borrowing them as atmosphere reproduces colonial extraction even when it calls itself rebellion. Every note below is provisional and awaiting paid Indigenous review.</p></details>
     <nav aria-label="Contents">
-      <ul style="list-style:none;margin:0;padding:0;max-width:900px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0 1.5rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px">
+      <ul style="list-style:none;margin:0;padding:0;max-width:900px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0 1.5rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px">
         
         <li><a href="#relational-sovereignty--indigenous-relational-freedom" style="display:inline-flex;align-items:center;min-height:44px">Relational sovereignty &amp; Indigenous relational freedom</a></li>
         
@@ -199,8 +234,8 @@
 </div>
 <section class="noprint" style="padding:0 0 1.6rem">
   <div style="max-width:1120px;margin:0 auto;padding:.9rem clamp(1.1rem,4vw,3rem) 0">
-    <p style="margin:0 0 .3rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">"★ a first route" marks a suggested way in, not a ranking — everything else on this shelf carries the same weight, not runner-up status.</p>
-    <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">Every entry below is shown by default. These buttons narrow the list if your browser runs the small script that does it — nothing is ever hidden without a click, and the full shelf renders either way.</p>
+    <p style="margin:0 0 .3rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">"★ a first route" marks a suggested way in, not a ranking. Everything else on this shelf carries the same weight, not runner-up status.</p>
+    <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">Every entry below is shown by default. These buttons narrow the list if your browser runs the small script that does it. Nothing is ever hidden without a click, and the full shelf renders either way.</p>
   </div>
 </section>
 
@@ -245,7 +280,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#0F2A2E;margin:0 0 .5rem">Review of International Studies 51(1): 1–21, 2025</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Are Indigenous Conceptions of Sovereignty as Non-Interference Patriarchal?</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Rauna Kuokkanen (Sámi), Sheryl Lightfoot (Anishinaabe), Gina Starblanket (Cree/Saulteaux), Matthew Wildcat (Cree)</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Non-interference secures a unit&#39;s autonomy from outside intervention and leaves domination inside the unit untouched. The most directly relevant recent work to this site&#39;s central question — including to its own author, above.</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Non-interference secures a unit&#39;s autonomy from outside intervention and leaves domination inside the unit untouched. The most directly relevant recent work to this site&#39;s central question, including to its own author, above.</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://doi.org/10.1017/S0260210524000846" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">Review of International Studies, Cambridge Core <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -258,7 +293,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .5rem">AlterNative 19(2): 475–483, 2023</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Indigenous Relationality: Definitions and Methods</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Matthew Wildcat and Daniel Voth</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Distinguishes global Indigenous relationality, nation-specific relational systems, and inter-Indigenous relations — essential for avoiding vague or pan-Indigenous uses of the word.</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Distinguishes global Indigenous relationality, nation-specific relational systems, and inter-Indigenous relations: essential for avoiding vague or pan-Indigenous uses of the word.</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://doi.org/10.1177/11771801231168380" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">read it free, AlterNative <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -297,7 +332,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8B3A2F;margin:0 0 .5rem">⚑ we have no answer to this · edited collection</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Sovereignty Matters: Locations of Contestation and Possibility in Indigenous Struggles for Self-Determination</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Joanne Barker (Lenape), ed.</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Barker traces sovereignty&#39;s European juridical and theological genealogy. Taiaiake Alfred&#39;s chapter argues the concept is inseparable from colonisation — the strongest case against this site&#39;s own master term, and it belongs here, not just cited from a distance.</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Barker traces sovereignty&#39;s European juridical and theological genealogy. Taiaiake Alfred&#39;s chapter argues the concept is inseparable from colonisation: the strongest case against this site&#39;s own master term, and it belongs here, not just cited from a distance.</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://www.nebraskapress.unl.edu/nebraska-paperback/9780803262515" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">University of Nebraska Press <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -310,7 +345,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#0F2A2E;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Red Skin, White Masks: Rejecting the Colonial Politics of Recognition</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Glen Coulthard (Yellowknives Dene)</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Grounded normativity — obligation generated by place-based practice — is the concept that licenses the move from land relation to human relation.</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Grounded normativity (obligation generated by place-based practice) is the concept that licenses the move from land relation to human relation.</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://www.upress.umn.edu/9780816679652/red-skin-white-masks/" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">University of Minnesota Press <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -396,7 +431,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#0F2A2E;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Mohawk Interruptus: Political Life Across the Borders of Settler States</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Audra Simpson (Kahnawà:ke Mohawk)</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">A politics of refusal, sovereignty, membership, and self-representation — supporting the distinction between recognition granted by dominant powers and sovereignty enacted through refusal.</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">A politics of refusal, sovereignty, membership, and self-representation, supporting the distinction between recognition granted by dominant powers and sovereignty enacted through refusal.</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://www.dukeupress.edu/mohawk-interruptus" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">Duke University Press <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -461,7 +496,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#0F2A2E;margin:0 0 .5rem">Hypatia 22(1): 186–209, 2007</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Heterosexualism and the Colonial/Modern Gender System</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">María Lugones</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Colonialism installed the gender system and the modern family rather than merely distorting them — which is thesis 02&#39;s subject, currently unsourced.</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Colonialism installed the gender system and the modern family rather than merely distorting them, which is thesis 02&#39;s subject, currently unsourced.</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://doi.org/10.1111/j.1527-2001.2007.tb01156.x" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">Hypatia, Wiley Online Library <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -495,7 +530,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#0F2A2E;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Scenes of Subjection</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Saidiya Hartman</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Freedom as burdened individuality — what it means to be released into self-ownership by a system that made ownership of persons thinkable.</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Freedom as burdened individuality: what it means to be released into self-ownership by a system that made ownership of persons thinkable.</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://global.oup.com/academic/product/scenes-of-subjection-9780195089837" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">Oxford University Press <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -521,7 +556,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8B3A2F;margin:0 0 .5rem">⚑ we have no answer to this · book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">The Poverty of Privacy Rights</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Khiara M. Bridges</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Privacy is distributed unequally. Poor mothers are subject to state inquiry that wealthier families are shielded from — which is why &#34;no private empires&#34; cannot be stated without saying who may ask.</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Privacy is distributed unequally. Poor mothers are subject to state inquiry that wealthier families are shielded from, which is why &#34;no private empires&#34; cannot be stated without saying who may ask.</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://www.sup.org/books/law/poverty-privacy-rights" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">Stanford University Press <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -555,7 +590,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#0F2A2E;margin:0 0 .5rem">book chapter</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Imaginary Spaces of Conciliation and Reconciliation</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">David Garneau (Métis)</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Indigenous spaces not organized for settler access, interpretation, or consumption — the defence of protocol, withholding, and culturally governed knowledge.</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Indigenous spaces not organized for settler access, interpretation, or consumption: the defence of protocol, withholding, and culturally governed knowledge.</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://www.wlupress.wlu.ca/Books/A/Arts-of-Engagement" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">in Arts of Engagement, Wilfrid Laurier University Press <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -568,7 +603,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#0F2A2E;margin:0 0 .5rem">peer-reviewed</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Visualizing Sovereignty in the Time of Biometric Sensors</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Jolene Rickard (Tuscarora / Skarù·ręʔ)</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Indigenous visual production as an exercise of sovereignty and political continuity — sovereignty includes control over the conditions under which one is seen.</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Indigenous visual production as an exercise of sovereignty and political continuity. Sovereignty includes control over the conditions under which one is seen.</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://doi.org/10.1215/00382876-1162543" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">South Atlantic Quarterly, Duke <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -594,7 +629,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6B4C12;margin:0 0 .5rem">★ a first route · open access, Forerunners: Ideas First</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Trans Care</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Hil Malatino</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Dominant framings of care ethics entrench cisnormative family arrangements. Trans care webs are the most developed live practice of what this site theorises, and the strongest correction to principle 08 — opacity is not available against people with power to compel disclosure.</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Dominant framings of care ethics entrench cisnormative family arrangements. Trans care webs are the most developed live practice of what this site theorises, and the strongest correction to principle 08: opacity is not available against people with power to compel disclosure.</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://www.upress.umn.edu/9781517911188/trans-care/" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">read it free, University of Minnesota Press <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -641,7 +676,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#0F2A2E;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Caring Democracy: Markets, Equality, and Justice</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Joan Tronto</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Care as a public and political responsibility rather than private feminine labour — make it visible, distribute it fairly, connect freedom to collective responsibility.</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Care as a public and political responsibility rather than private feminine labour: make it visible, distribute it fairly, connect freedom to collective responsibility.</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://nyupress.org/9780814782781/caring-democracy/" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">NYU Press <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -706,7 +741,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .5rem">Disability Studies Quarterly 37(3), 2017</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Six Ways of Looking at Crip Time</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Ellen Samuels</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Crip time from lived experience rather than theory alone — six concrete senses in which disabled and chronically ill time does not match the clock most systems, including this one&#39;s tools, are built around.</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Crip time from lived experience rather than theory alone: six concrete senses in which disabled and chronically ill time does not match the clock most systems, including this one&#39;s tools, are built around.</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://doi.org/10.18061/dsq.v37i3.5824" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">read it free, Disability Studies Quarterly <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -813,7 +848,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#0F2A2E;margin:0 0 .5rem">GLQ 3(4), 1997</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Punks, Bulldaggers, and Welfare Queens: The Radical Potential of Queer Politics?</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Cathy J. Cohen</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Anti-normativity organised around escaping the couple form assumes the couple form was available and protective. For many households — poor, Black, queer, or all three — it was neither.</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Anti-normativity organised around escaping the couple form assumes the couple form was available and protective. For many households (poor, Black, queer, or all three) it was neither.</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://read.dukeupress.edu/glq/article/3/4/437/9940/Punks-Bulldaggers-and-Welfare-Queens-The-Radical" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">GLQ, Duke University Press <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -826,7 +861,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#0F2A2E;margin:0 0 .5rem">Sexualities 9(5): 602–620, 2006</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Progressive Polyamory: Considering Issues of Diversity</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Melita J. Noël</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Content analysis of twelve polyamory guides: written by and for an assumed audience of white, middle-class, able-bodied, educated Americans. A standing caution for anything built next to relationship anarchy — including this site.</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Content analysis of twelve polyamory guides: written by and for an assumed audience of white, middle-class, able-bodied, educated Americans. A standing caution for anything built next to relationship anarchy, including this site.</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://doi.org/10.1177/1363460706070003" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">Sexualities <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -998,7 +1033,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6B4C12;margin:0 0 .5rem">★ a first route · in Sister Outsider, Crossing Press</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Uses of the Erotic: The Erotic as Power</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Audre Lorde</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">The erotic as a source of knowledge and power, distinct from the pornographic — and the argument that we are taught to distrust it precisely because it measures what we will settle for. The missing limb of a framework about intimacy that never mentions desire.</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">The erotic as a source of knowledge and power, distinct from the pornographic, and the argument that we are taught to distrust it precisely because it measures what we will settle for. The missing limb of a framework about intimacy that never mentions desire.</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://www.penguinrandomhouse.com/books/608235/sister-outsider-by-audre-lorde/" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">Sister Outsider, Penguin Random House <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -1011,7 +1046,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#0F2A2E;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">All About Love: New Visions</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">bell hooks</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Love as something you do rather than something you feel — the will to extend yourself for another&#39;s growth. Also the sentence this site needs most: love and abuse cannot occupy the same relationship, whatever is being said about why.</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Love as something you do rather than something you feel: the will to extend yourself for another&#39;s growth. Also the sentence this site needs most: love and abuse cannot occupy the same relationship, whatever is being said about why.</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://harpercollins.co.in/product/all-about-love-2/" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">HarperCollins <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -1024,7 +1059,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#0F2A2E;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">Pleasure Activism: The Politics of Feeling Good</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">adrienne maree brown</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Builds directly on Lorde&#39;s erotic. Pleasure as political information rather than reward — what feels good tells you something about what arrangements are working.</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Builds directly on Lorde&#39;s erotic. Pleasure as political information rather than reward: what feels good tells you something about what arrangements are working.</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://www.akpress.org/pleasure-activism.html" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">AK Press <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -1050,7 +1085,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#0F2A2E;margin:0 0 .5rem">book</p>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.1rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 .3rem">What It Takes to Heal: How Transforming Ourselves Can Change the World</h3>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;color:#585B4F;margin:0 0 .6rem;line-height:1.45">Prentis Hemphill</p>
-          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Boundaries as the distance at which you can love someone and still love yourself — embodiment and repair as the practice underneath what the manifesto states as principle. The clearest bridge this shelf has between the somatic register (Menakem) and the erotic one (Lorde, brown).</p>
+          <p style="margin:0 0 .7rem;font-size:15.5px;line-height:1.5;color:#3C3E38">Boundaries as the distance at which you can love someone and still love yourself: embodiment and repair as the practice underneath what the manifesto states as principle. The clearest bridge this shelf has between the somatic register (Menakem) and the erotic one (Lorde, brown).</p>
           
           <p style="margin:0 0 0 -.4rem"><a href="https://www.penguinrandomhouse.com/books/726173/what-it-takes-to-heal-by-prentis-hemphill/" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.5;display:inline-flex;align-items:center;min-height:44px;padding:.1rem .4rem">Penguin Random House <span class="arr" aria-hidden="true">→</span></a></p>
           
@@ -1073,52 +1108,52 @@
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">01</span>
-        <a href="#entry-replacing-exclusive-sovereignty-with-a-relational-sovereignty" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Wildcat — Replacing Exclusive Sovereignty</a>
+        <a href="#entry-replacing-exclusive-sovereignty-with-a-relational-sovereignty" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Wildcat, Replacing Exclusive Sovereignty</a>
       </li>
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">02</span>
-        <a href="#entry-its-about-all-relations-indigenous-feminist-theory-of-relational-freedom" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Kuokkanen — It&#39;s About All Relations</a>
+        <a href="#entry-its-about-all-relations-indigenous-feminist-theory-of-relational-freedom" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Kuokkanen, It&#39;s About All Relations</a>
       </li>
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">03</span>
-        <a href="#entry-caretaking-relations-not-american-dreaming" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">TallBear — Caretaking Relations, Not American Dreaming</a>
+        <a href="#entry-caretaking-relations-not-american-dreaming" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">TallBear, Caretaking Relations, Not American Dreaming</a>
       </li>
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">04</span>
-        <a href="#entry-decolonization-is-not-a-metaphor" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Tuck and Yang — Decolonization Is Not a Metaphor</a>
+        <a href="#entry-decolonization-is-not-a-metaphor" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Tuck and Yang, Decolonization Is Not a Metaphor</a>
       </li>
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">05</span>
-        <a href="#entry-mamas-baby-papas-maybe-an-american-grammar-book" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Spillers — Mama&#39;s Baby, Papa&#39;s Maybe</a>
+        <a href="#entry-mamas-baby-papas-maybe-an-american-grammar-book" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Spillers, Mama&#39;s Baby, Papa&#39;s Maybe</a>
       </li>
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">06</span>
-        <a href="#entry-feminist-perspectives-on-autonomy" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Stanford Encyclopedia — Feminist Perspectives on Autonomy</a>
+        <a href="#entry-feminist-perspectives-on-autonomy" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Stanford Encyclopedia, Feminist Perspectives on Autonomy</a>
       </li>
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">07</span>
-        <a href="#entry-access-intimacy-the-missing-link" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Mingus — Access Intimacy</a>
+        <a href="#entry-access-intimacy-the-missing-link" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Mingus, Access Intimacy</a>
       </li>
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">08</span>
-        <a href="#entry-trans-care" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Malatino — Trans Care</a>
+        <a href="#entry-trans-care" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Malatino, Trans Care</a>
       </li>
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">09</span>
-        <a href="#entry-coercive-control-how-men-entrap-women-in-personal-life" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Stark — Coercive Control</a>
+        <a href="#entry-coercive-control-how-men-entrap-women-in-personal-life" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Stark, Coercive Control</a>
       </li>
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">10</span>
-        <a href="#entry-toolkit-a-practical-guide-to-stop-interpersonal-violence" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Creative Interventions — Toolkit</a>
+        <a href="#entry-toolkit-a-practical-guide-to-stop-interpersonal-violence" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Creative Interventions, Toolkit</a>
       </li>
       
     </ol>
@@ -1129,11 +1164,11 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1rem">Opacity as archive design</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1.2rem;max-width:24ch">Absence does not mean the archive is incomplete.</h2>
-    <p style="max-width:54ch;margin:0 0 1.8rem;color:#3C3E38">Most archives assume more access is always better. This one will hold seven access states, with consent as a metadata field rather than an afterthought. Sometimes withholding is part of ethical preservation. None of it is built yet, and the model it will follow already exists — <a href="https://mukurtu.org">Mukurtu</a>, <a href="https://localcontexts.org">Local Contexts</a>, <a href="https://www.gida-global.org/care">CARE</a>.</p>
+    <p style="max-width:54ch;margin:0 0 1.8rem;color:#3C3E38">Most archives assume more access is always better. This one will hold seven access states, with consent as a metadata field rather than an afterthought. Sometimes withholding is part of ethical preservation. None of it is built yet, and the model it will follow already exists: <a href="https://mukurtu.org">Mukurtu</a>, <a href="https://localcontexts.org">Local Contexts</a>, <a href="https://www.gida-global.org/care">CARE</a>.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.6rem;max-width:1000px">
       
       
-      <div style="border:1px dashed #DB9E2A;padding:.8rem .9rem;border-radius:2px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5;color:#6B4C12">public — read freely</div>
+      <div style="border:1px dashed #DB9E2A;padding:.8rem .9rem;border-radius:2px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5;color:#6B4C12">public: read freely</div>
       
       <div style="border:1px dashed #DB9E2A;padding:.8rem .9rem;border-radius:2px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5;color:#6B4C12">contributor-controlled</div>
       
@@ -1163,8 +1198,8 @@
 </main>
 
 <footer class="dark" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
-    <p style="margin:0;max-width:46ch">v0.2 · every note provisional, awaiting paid Indigenous review · corrections are shown, not overwritten — <a href="/contribute/" style="color:#DB9E2A">send one</a> · <a href="/behind-the-scenes/" style="color:#8FA9A2">what changed</a></p>
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
+    <p style="margin:0;max-width:46ch">v0.2 · every note provisional, awaiting paid Indigenous review · corrections are shown, not overwritten · <a href="/contribute/" style="color:#DB9E2A">send one</a> · <a href="/behind-the-scenes/" style="color:#8FA9A2">what changed</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
       <a href="/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>
       <a href="/manifesto/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
@@ -1179,5 +1214,6 @@
 </footer>
 
 <script src="/archive-filter.js"></script>
+<script src="/notes.js"></script>
 </body>
 </html>

@@ -1306,36 +1306,326 @@ now: `docs/spec/cloudflare-headers.md` (new) — one universal Transform Rule (H
 
 Verified: cross-checked all four CSP bucket strings, directive-by-directive, against the exact `grep` output pulled from the ten live page sources plus all nine redirect stubs before writing them into the file — not retyped from memory. Confirmed the Resources/redirect-stub bucket really is one identical string across all ten of those files, not nine-similar-but-different ones that happened to look alike at a glance.
 
-### UX-20 — the last open item from the original UX audit, reviewed and closed without a code change
+### FLAG-06 — the `.dc.html` URL scheme, decided
+**Shipped:** 2026-08-08 · **Commit/PR:** see BUG-03
 
-**Shipped:** 2026-08-11 · **Commit/PR:** (pending)
+~~was: every URL on the live site ended in `.dc.html`, an artifact of the authoring format leaking into the address bar~~
+now: author chose option (C) — full pretty URLs. Each page's path is set by an explicit `url:` field in its `hugo/content/*.md` front matter, with redirect stubs left at the nine old flat paths so bookmarked and already-indexed links still land somewhere real.
 
-~~was: the audit's own §5 finding, unresolved since 2026-08-08 — "roughly 40% of the desktop container is permanently empty" on Home, Learn, Practise, and Invitation, filed as `[L]`/strategic rather than a granular fix. Every other row in the original 22-finding audit had shipped; this was the one left open.~~
-now: reviewed against Learn specifically — the one of the four pages that changed most since the audit was written, since the entire four-register redesign, progressive disclosure, and this session's own hero/reorder work all landed on it afterward, and the audit's original data predates all of it. Re-measured at 1440px with a real browser rather than trusting five-day-old numbers. Author's decision, asked directly rather than assumed: leave the measure as-is.
+Notes: recorded here 2026-08-13 during the Phase 11 cleanup — the row had been struck through in `tasks.md` since it shipped but never got an entry in this file. Reconstructed from the `tasks.md` row and the BUG-03 write-up; treat the BUG-03 entry as the fuller record.
 
-**The re-check found the pattern real, but not uniform, which changes what "leave it" actually means.** The hero and the intro prose at the top of every one of Learn's nine sections do sit in a ~60ch measure with roughly 45% of the 1120px container empty to the right — confirmed with screenshots at six scroll depths down the full page, not sampled from one screen. But the page's grid-based content — the 13 principle cards, the four-sense grid, the opacity grid, the field guide — already fills the container edge to edge; the empty-space pattern belongs to the prose sections specifically, not "40% of the page" as a blanket figure. Sent three of the screenshots to the author directly (hero, Forms & Labels, and the principles grid for contrast) so the decision was made against the real, current page rather than a description of it.
+### WD-10b — the "no fourteenth principle yet" cell, and a real grid defect found while shipping it
+**Shipped:** 2026-08-11 · **Commit/PR:** PR #26
 
-**Checked whether the audit's own suggested fix even applies here before recommending against it.** The audit's proposed change was "where a section has a natural second element — a pull quote, a rotating question — place it in the right track instead of stacking it below," and named Home's rotating question and dispatch form as the working example. Learn has no equivalent secondary content sitting unused; inventing a pull quote or a decorative element solely to fill the gap would be manufacturing content for a layout reason, on a page whose entire register is about not doing that. Recommended leaving the measure as-is — a close-to-ideal reading width on the site's most text-dense page — and the author agreed rather than asking for the alternative (moving the hero's existing tally/legend into a right-side column, which was offered as a real option using only content already there).
+~~was: `.principles` (13 items, 3 columns) left a filled hairline slab where the fourteenth cell would be~~
+now: the gap carries an authored "no fourteenth principle yet" card, author copy approved as drafted; `/behind-the-scenes/#roadmap` confirmed to resolve.
 
-Closes out Phase 6 in full: all 22 findings from `docs/audits/ux-audit-2026-08-08.html` now have a shipped fix or a reviewed, deliberate decision not to change anything — none remain open.
+Notes:
+- **The originally-planned fix was wrong and was caught before it shipped.** `grid-column:span 2` on the filler works at 3 columns and breaks at 2 — the filler can't fit beside principle 13 in the remaining single-column space, so it wraps to its own row and leaves 13 with a genuinely empty cell beside it. A hard-coded breakpoint would have papered over that and gone stale the moment the grid's column minimum or gutters changed.
+- Fixed properly instead: `.principles` now draws hairlines per-cell (`border-top`/`border-left` on the container, `border-right`/`border-bottom` on each `<li>`) — the same technique WD-10a already shipped for `.fg` and the Behind the Scenes crawler grid — so a genuinely empty trailing cell shows page ground and the filler stays a plain, unspanned grid item.
+- Verified by binary-searching the 2↔3 column transition (982/983px) plus visual checks at 1920/1280/1024/768/500/390/320px. No dead cell at any width.
 
-Verified: no code or template touched — this is a decision record, not a fix. `tasks.md` updated in place; Home, Practise, and Invitation (the other three pages UX-20 named) were not re-measured, since the decision doesn't hinge on their numbers and the row is explicit that Learn is the one that was actually re-checked.
+### WD-15 — palette rollout to Behind the Scenes, Practise, Resources, Archive
+**Shipped:** 2026-08-11 · **Commit/PR:** PR #26 (Resources half) + `bb94c0d`
 
-### WD-05, WD-08b, WD-10b, WD-12, WD-15, WD-16, WD-17, WD-28 — the palette and register batch (PRs #26–#29)
+~~was: the four semantic registers were applied systematically only on Learn; four other pages carried the colours without the meaning~~
+now: all four pages carry the register system, each decision recorded rather than applied uniformly.
 
-**Shipped:** 2026-08-11 · **Commit/PR:** #26, #27, #28, #29
+Notes:
+- **Resources** — the one genuinely empty category (`mutual-aid`) takes ochre on its dashed rule and `Not yet built` scope label. No author judgement was needed: `resources.yaml` already carried `scope: "Not yet built"` and the category already had an explanatory paragraph, so this only added the colour.
+- **Behind the Scenes** — author's call: all five faults take ochre even though that renders them uniformly, because every one is currently unfixed. The numeral moved from rust to ochre in the process — rust means "where the framework fails or runs out," but these are things *named and not yet built*, which is ochre's job. If faults ever carry mixed states, a per-fault status field is where the register would start doing finer work.
+- **Practise** — the seven unbuilt tools' status labels are ochre for both `in progress` and `not started` (author's call): both are "named, not built" in register terms, and the status *words* carry the finer distinction, so nothing is encoded by hue alone. `#DB9E2A` is text-safe on that section's `#0F2A2E` ground (6.42:1).
+- **Archive** — see WD-16.
+- **The Practise rust carve-out, settled 2026-08-11:** rust means *safety surface*, and every current use on that page qualifies, so no rust was changed.
+- Recorded here 2026-08-13 during the Phase 11 cleanup.
 
-**Record migrated from `tasks.md`, not authored here.** This work shipped in another
-session; these notes were written inline in that file's Phase 9 tables and are preserved
-here verbatim in substance so they survive that file being slimmed to open tasks only.
-The verification claims below are that session's, not re-confirmed independently.
+### WD-16 — Archive's seven access-state chips take the "named, not built" register
+**Shipped:** 2026-08-11 · **Commit/PR:** PR #26
 
-- **WD-05 — one ochre.** Resolved via FLAG-07 (see `archived.tasks.md`). Home's six door kickers and Archive's `start` register are now `#6B4C12`. Invitation's `#7D5915` is an untouched, documented page-level exception — it is that page's base link colour, `aria-current` state, two kickers, and print button, not a stray kicker colour.
-- **WD-08b — generated `::before` arrows travel on hover/focus.** Shipped in all 9 base files, the same rule byte-identical everywhere. Screenshot-diffed Learn's and Archive's `nav[aria-label="Contents"]` before/after: no wrapping change at any tested width. Live hover confirmed `::before` transform going `none` → `matrix(1, 0, 0, 1, 2, 0)`, a single arrow with no doubling against the CSS-generated prefix. Reduced motion already covered by WD-20's earlier `*::before,*::after` fix.
-- **WD-10b — the "no fourteenth principle yet" cell.** Author copy approved as drafted; `/behind-the-scenes/#roadmap` confirmed to resolve. **A real defect was found and fixed while shipping it:** the original plan (`grid-column:span 2` on the filler to cover both empty trailing cells at 3 columns) works at 3 columns but breaks at 2 — the filler can't fit beside principle 13 in the remaining single column, so it wraps to its own row and leaves 13 with a genuinely empty cell beside it. A hard-coded breakpoint would fix that but silently goes stale if the grid's column minimum or gutters change. Fixed properly instead: `.principles` now draws hairlines per-cell (`border-top`/`border-left` on the container, `border-right`/`border-bottom` on each `<li>`) — the same technique WD-10a shipped for `.fg` and the crawler grid — so an empty trailing cell shows plain page ground and the filler stays an unspanned grid item. Verified by binary-searching the 2↔3 column transition (982/983px) plus screenshots at 1920/1280/1024/768/500/390/320px.
-- **WD-12 (rust `counter` register).** Label approved as `⚑ we have no answer to this` — deliberately *not* the spec's proposed `⚑ argues against this site`, which was a category error: Alfred's chapter is from 2005 and argues sovereignty is inseparable from colonial frameworks, not against a website he never saw. The chosen label locates the claim on the framework rather than putting an intention in an author's mouth. Author approved all four candidates: Barker/Alfred, Freeman (*The Tyranny of Structurelessness*), Roberts (*Torn Apart*), Bridges (*The Poverty of Privacy Rights*). Tagged `counter` in `archive.yaml`; rust takes priority over `start`/`free` in both rule colour and kicker prefix (no entry currently carries both, so the priority order is untested by real data but correct if one arrives); filter chip added.
-- **WD-12 (default register).** Link-blue `#2B4C9B` retired as the default category colour; default is now teal `#0F2A2E`. On Archive, `#2B4C9B` now appears exactly twice — the base `a{}` rule and the `:focus-visible` outline — so blue means "this is a link" and nothing else. Register distribution verified across all 60 entries: 34 teal, 14 ochre (`start`), 8 green (`free`), 4 rust (`counter`). *(An earlier pass through the tracking table wrongly recorded this as already shipped; corrected before it was actually done.)*
-- **WD-15 — palette rollout,** all four pages. **Resources:** the one genuinely empty category (`mutual-aid`) carries ochre on its dashed rule and `Not yet built` scope label; no author judgement was needed since `resources.yaml` already stated that scope. **Behind the Scenes:** all faults take ochre even though that renders them uniformly, since every one is currently unfixed — the numeral moved from rust to ochre in the process, because rust means "where the framework fails or runs out" but these are things *named and not yet built*, which is ochre's job. **Practise:** the unbuilt tools' status labels are ochre for both `in progress` and `not started`; both are "named, not built" in register terms and the status *words* carry the finer distinction, so nothing is encoded by hue alone. `#DB9E2A` is text-safe on that section's `#0F2A2E` ground (6.42:1).
-- **WD-16 — Archive's seven access-state chips.** Ochre text (`#6B4C12`, 6.24:1) on a **dashed** `#DB9E2A` edge — dashed specifically so they can't be mistaken for the solid, clickable filter chips higher up the page, which was the spec's own stated failure mode. Not carried by colour: the section's paragraph already reads "None of it is built yet," and dashed-vs-solid survives greyscale (verified with achromatopsia emulation). The chips were **already** in gradient order in `archive.yaml`, so no reordering was needed.
-- **WD-17 — Home's six doors register-coded.** Author overrode the ranking caution directly ("I don't think the color indicates ranking"): teal on Manifesto/Learn, green on Practise/Archive, ochre on Contribute/dispatch, plus a hover/focus top-edge accent per register (`.door-teal`, `.door-holds`, `.door-ask`). Greyscale-emulation screenshot taken post-ship to confirm the six cards still read as evenly weighted — they do.
-- **WD-28 — the orphaned "second way in" framing.** Author chose to drop the pairing rather than restore it. Invitation's kicker is now "A warmer register · about 4 minutes," tying to the existing subtitle ("What relational sovereignty sounds like:") instead of referencing a first-of-two that no longer exists on Home.
+~~was: the seven access-state chips were styled like the clickable filter chips higher up the page~~
+now: ochre text (`#6B4C12`, 6.24:1) on a **dashed** `#DB9E2A` edge.
+
+Notes:
+- Dashed specifically so they cannot be mistaken for the solid, clickable filter chips above them — the spec's own stated failure mode.
+- Not carried by colour: the section's paragraph already reads "None of it is built yet," and dashed-vs-solid survives greyscale (verified with achromatopsia emulation).
+- **The chips were already in gradient order in `archive.yaml`** (public → contributor-controlled → community-specific → temporarily restricted → excerpt only → metadata only → exists-but-unavailable), so no reordering was needed — checked rather than assumed.
+- Recorded here 2026-08-13 during the Phase 11 cleanup.
+
+### WD-28 — the orphaned "second way in" framing
+**Shipped:** 2026-08-11 · **Commit/PR:** PR #26
+
+~~was: Invitation's kicker referenced being the second of two ways in, after the pairing it referred to had been removed from Home~~
+now: "A warmer register · about 4 minutes" — author chose to drop the pairing rather than restore it, tying the kicker to the existing subtitle ("What relational sovereignty sounds like:") instead of to a first-of-two that no longer exists.
+
+Notes: recorded here 2026-08-13 during the Phase 11 cleanup.
+
+### WD-12 — Archive's register system: a rust `counter` class, and teal as the default
+**Shipped:** 2026-08-11 · **Commit/PR:** `307fa5f`, `d61f40f`
+
+Two halves of one change, tracked as separate rows in `tasks.md` and recorded together here.
+
+**Rust `counter` register.**
+
+~~was: the Archive had no way to mark a text that cuts against the framework's own argument~~
+now: a `counter` tag in `archive.yaml`, rendered in the rust register under the label `⚑ we have no answer to this`.
+
+Notes:
+- Label approved by the author; all four candidates approved — Barker/Alfred, Freeman (*The Tyranny of Structurelessness*), Roberts (*Torn Apart*), Bridges (*The Poverty of Privacy Rights*).
+- Rust takes priority over `start`/`free` in both the rule colour and the kicker prefix. **Checked and stated honestly:** no entry currently carries both `counter` and `start`, so that priority order is untested against real data — correct if such an entry ever arrives, but not currently exercised.
+- Filter chip added alongside.
+
+**Teal as the default register.**
+
+~~was: link-blue `#2B4C9B` doubled as the default category colour for ordinary Archive entries, so blue meant both "this is a link" and "this is an entry"~~
+now: the default register is teal `#0F2A2E`. On Archive, `#2B4C9B` appears exactly twice — the base `a{}` rule and the `:focus-visible` outline — so blue means "this is a link" and nothing else.
+
+Notes:
+- Verified register distribution across all 60 entries: 34 teal (default), 14 ochre (`start`), 8 green (`free`), 4 rust (`counter`).
+- **An earlier pass through the `tasks.md` table wrongly recorded this half as already shipped; that was caught and corrected before the work was actually done.** Kept here because a status field that was once wrong is worth knowing about.
+- Recorded in this file 2026-08-13 during the Phase 11 cleanup — both rows had been struck through in `tasks.md` since they shipped but never got an entry here.
+
+---
+
+## Phase 11.1 — The shared layer
+
+### IA-10a / IA-10b — one base CSS block instead of nine
+**Shipped:** 2026-08-14 · **Commit:** `b76a656`
+
+~~was: every page carried its own inline copy of the same ~60 lines of base CSS — nine hand-maintained copies, which is why `docs/web-design.md` §1c called every site-wide rule "a ten-file edit," and which is what produced the drift that section exists to warn about~~
+now: the block lives in `hugo/layouts/partials/head-base.html` and nowhere else. A site-wide base rule is one edit plus `npm run build:hugo`.
+
+Notes:
+- The partial takes a dict of palette overrides, so the two page-level exceptions stopped being forks. Manifesto passes the dark ground plus `"tokens" false`; Invitation passes its ochre link and focus ring (FLAG-07). Structural rules ship to every page even where a page has no element to match — Behind the Scenes has no Contents nav, Manifesto has no filters — because inert selectors cost a few bytes and unifying them is what keeps this one block rather than three.
+- The three hand-authored pages can't call a partial. `scripts/sync-base.mjs` lifts the block Hugo just rendered and splices it between markers in each; `npm run build:hugo` syncs, `npm run check` fails on drift. One source, one renderer — reimplementing the template in JavaScript would have been a fourth copy.
+- **IA-10b came out in the wash.** The `:root` token block is defined once rather than in eight files, and Learn's duplicate is gone. Migrating literal hex to `var()` is still open — that is WD-11's second half.
+- **Three traps, all now guarded.** (1) Hugo's CSS sanitiser rewrites unrecognised values in CSS context to the literal string `ZgotmplZ`; an unfiltered `rgba()` became a silently dead hover rule, not a build error. Every interpolated value goes through `safeCSS`. (2) `html/template` strips HTML comments *and* comments inside `<style>`, so no marker survives into Hugo output — the sync locates the block structurally instead. (3) A marker comment that ran onto a second line lost its closing `*/` on the first sync and commented out the rest of the stylesheet. Three pages rendered unstyled and the entire existing suite passed: html-validate, axe and the console are all blind to a stylesheet the browser gave up parsing. `sync-base.mjs` now rejects a multi-line marker, and `check-pages.mjs` asserts every page's body actually paints its intended ground colour.
+- Verified: all nine pages pixel-identical at 390/768/1440 against pre-extraction screenshots. Home at 768px differed by 0.11% until the SMIL drift animation was frozen, after which byte-identical — animation phase, not layout.
+- `docs/web-design.md` §1c rewritten (original struck, not deleted, since §3's per-file instructions were written against it), §3 given a pointer, and guardrail 10b added: do not edit base CSS inside a page file.
+
+### IA-08 / IA-C3 — a 14px floor on interactive microtype
+**Shipped:** 2026-08-14 · **Commit:** `17d0832`
+
+~~was: the audit named three sub-14px controls; measuring every interactive element on all nine pages at 390 and 1440 found 97. The whole nav and utility chrome sat at 12–13.5px~~
+now: 77 declarations raised to 14px — both nav copies, skip link, jump bars, filter chips, the open-all button, print and submit buttons, disclosure summaries, form labels, and the export filename/file inputs.
+
+Notes:
+- Scoped to controls. Decorative microtype is untouched, and so are the 55 sub-14px links inside sentences of prose, which WCAG 2.5.8 exempts — the measurement classifies those separately rather than by eye.
+- **Two deliberate exclusions.** The stress-matrix headers (20 links at 12.5px) were left to IA-05, since that table already overflowed and raising its type first would have widened the overflow and then been redone; settled there. And the dispatch honeypot input, whose 13.33px is the browser default on a field deliberately hidden from people and password managers.
+- **IA-C3 folded in**, being the same markup: the mobile nav's `aria-label="Menu"` duplicated the summary's own visible text. The audit's claim that open/closed state was missing did not survive checking — native `<summary>` exposes it — but the redundant label was noise, and removing it leaves the visible text as the accessible name.
+- Verified: no horizontal body overflow at 320/390/768/1440 on any page, which is the real risk in a type change since the desktop nav is a single wrapping row. Desktop nav still fits one line at 1440; mobile nav wraps to four rows at 390 and stays inside the viewport.
+
+### IA-10c / IA-10d — four components and three form states
+**Shipped:** 2026-08-14 · **Commit:** `14cf2dd`
+
+~~was: every control's treatment was written per instance, inline, so a reader could not tell what a control would do before clicking it and a change meant finding every copy~~
+now: `.action`, `.action-utility`, `.nav-link`, `.disclosure`, plus `.form-error`, `.form-status` and `.field-invalid`, written once in the shared base from the treatments already shipped.
+
+Notes:
+- **Deliberately inert on arrival**, the same pattern WD-11 used for the token block. Applying them is IA-11/IA-12 in Phase 11.3, page by page and checkable one page at a time; defining them first is what makes that a swap instead of nine more rewrites. Verified inert: all nine pages pixel-identical at 390/768/1440 against the previous commit.
+- Colours come from the palette dict rather than the register tokens, so the components work on Manifesto, which ships `"tokens" false` and has no `--teal` to reference. Manifesto and Invitation each pass their own action ground, so a primary button keeps its page's identity without forking the rule.
+- The type stacks moved out of the token block and are now defined for every page including Manifesto. `design-palette.md` excludes Manifesto from the semantic *colour* register, which is a claim about what a hue means; a font stack makes no such claim.
+- **Page weight rose ~2 KB per page and the build's own check caught it**, which is what that check is for. The colophon figure is updated to 19–130 KB and now says plainly that pages currently ship slightly more CSS than they use, why, and that 11.3 should return it below where it started. Grouping declarations rather than repeating them per class cut about a third of the addition.
+
+## Phase 11.2 — Learn, in the cheap order
+
+### IA-16 / IA-04 — principles first, and an honestly scoped bulk control
+**Shipped:** 2026-08-14 · **Commit:** `7469a28`
+
+~~was: the page is titled "Relationships, Principles, and Limits" and its hero promises thirteen principles, then opened with a terminology section~~
+now: "Forms and labels" sits after the principles it defines vocabulary for.
+
+Notes:
+- Pure source reorder: no copy changed, every anchor kept, body text length identical before and after (19,092 chars), which is the check that it was a move and not an edit.
+- **Measured at 390px:** the first principle section starts at 1396px instead of 2946px — 3.49 viewports of scrolling down to 1.65. Every fragment still resolves; the page renders identically with scripting off.
+- **Both indexes had to move too, and not for tidiness.** `sections.js` builds its scroll-spy list from the DOM order of `nav[aria-label="Sections"]` links and then walks it assuming that order matches the document. Leaving the navs alone would have left the sticky bar naming the wrong section.
+- **The spacing override moved with the section.** `#forms-and-labels` carried a top-padding override for being the first section under the sticky jump bar; every other `.band` relies on the preceding section's bottom padding. This file records that the same override was moved once before, when the section moved up. It moved back: `#principles` takes it, `#forms-and-labels` becomes a plain `.band`, bottom padding unchanged because `.band`'s value is the one it had inline.
+- **IA-04:** the bulk control carries `aria-controls` naming the nine regions it governs, generated from the same data the cards are so the list cannot drift. All nine ids resolve and are exactly the nine `[data-collapsible]` elements `sections.js` sweeps. It deliberately does not name the four sexual-content disclosures — IA-01 removed those from the sweep because the page promises "opening one is the only thing that changes."
+
+### IA-05 — the stress chart and the full rows as labelled alternate views
+**Shipped:** 2026-08-14 · **Commit:** `a31be6a`
+
+~~was: the chart and the seven full rows are the same seven situations, and the page showed both to everyone while the chart quietly needed sideways scrolling on anything narrower than a laptop~~
+now: two labelled views of one dataset with an explicit switch, and the narrow-width overflow is gone rather than annotated.
+
+Notes:
+- **The breakpoint is 860px, not the audit's 820px.** 820px is where the overflow was observed, not where it stops. `table.matrix` carries `min-width:760px` and the wrap pads 4vw a side, so the container first clears 760px between 820px (752px, still scrolls) and 860px (789px, fits). Measured across 768/820/860/900/940/980/1024/1100.
+- **Scripting off:** the rows always render, because they hold the content, and the chart renders only at 860px and up. That is what removes the defect rather than warning about it. Confirmed map hidden at 390/820, shown at 860/1440, rows shown at all four, switch not drawn.
+- **Scripting on:** the switch decides at any width. The chart stays reachable on a phone inside its labelled scroller — the documented exception to this site's no-horizontal-scroll rule — and the scroll hint appears only when the chart is both current and narrow.
+- **Deep links work across the switch**, which is the part that needed care: the chart's row headers point at ids inside the rows view, so following one must change view before the browser resolves the fragment or it scrolls to a `display:none` element. Handled in the capture phase, plus on load and on `hashchange`. Verified `#stress-map` lands visibly at 320/390/820 where it is not the default, and card ids land at 76px — exactly the sticky-bar offset — with the right card open.
+- **Printing gets both views**, the same reason `sections.js` already opens every `<details>` before printing.
+- The legend and the ★ note moved outside both views: those marks appear on the chart's cells and the rows' chips alike, so the key belongs to neither view.
+- **Settles IA-08's deferral.** The chart keeps its 12.5px row headers rather than taking the control floor: it is a summary index whose every row and column links to the same content at full reading size in the rows view, and widening the table to satisfy a type floor would push the fitting threshold back up and reintroduce the overflow this change removes.
+- First real consumer of IA-10c's `.action-utility`, including its `aria-pressed` state.
+
+## Phase 11 addendum — Deploy pipeline fixes, and the Learn pocketed-navigation redesign
+
+### The deploy pipeline: two independent CI breaks, both from real network access
+**Shipped:** 2026-08-14 · **PR:** #39, merged
+
+~~was: merging PR #38 put the real Turnstile site key into production for the first time — and broke both CI workflows on the next run, neither failure caused by that PR's own content~~
+now: both fixed; the merge onto `main` that carried the fix produced the first fully green `Deploy to GitHub Pages` and `Check pages` runs since PR #38 landed.
+
+Notes:
+- **`prerender.mjs`, `check-pages.mjs`, and `responsive-audit.mjs`** all used `page.goto(..., { waitUntil: "networkidle" })`. With a real Turnstile key, the widget keeps background network activity going indefinitely, so `networkidle` never resolves — the CHANGE_ME placeholder had failed the challenge instantly, with nothing left to wait out, and this sandbox's own network policy blocks `challenges.cloudflare.com` outright, so neither environment could have caught this before a real CI run against a real key did. Fixed by switching all three to `waitUntil: "load"`; the two that run in CI already gate real completion on a DOM selector or an explicit settle wait, not on network silence.
+- **`check-pages.yml`'s Hugo install** separately broke: `go install github.com/gohugoio/hugo@v0.164.0` started requiring Go ≥ 1.26 sometime after the pin was written, on an ordinary Hugo-side release unrelated to this repo. Fixed by switching to the prebuilt-binary install method `hugo/README.md` already documented as the supported alternative — removes the second version number to track rather than bumping the Go pin to match today's Hugo and leaving the same drift to recur on Hugo's next `go.mod` bump. `actions/setup-go` is no longer needed and was removed.
+- **A third failure surfaced once the first two were fixed and CI actually reached real assertions:** Turnstile's own API correctly rejects a render request from `http://127.0.0.1` (the local test server), since the widget is scoped to `relationalsovereignty.com` — that's the whole security property (SEC-01.3), not a bug. `check-pages.mjs` now tracks real Turnstile HTTP failures via a `response` listener and excuses exactly that many matching console messages, so a genuine new console error on Home/Contribute still fails the build.
+- Turnstile itself confirmed working end-to-end on the live domain by the author after this shipped.
+
+### IA-20 — Learn's ten sections become closed-by-default pockets, keyed to the hero grid
+**Shipped:** 2026-08-14 · direct author instruction, not from the audit
+
+~~was: all ten sections rendered fully, always, making Learn a ~15-minute, ~4,500-word scroll regardless of what a reader came for~~
+now: every section is a closed `<details>`. The hero grid — the same ten boxes IA-06 found duplicated against the sticky bar — opens exactly one and closes the rest; a second click on the box for the section that's open closes it. "Open every section" now opens all ten pockets too (nine of them; sexual content is still excluded, IA-01), not only the stress-test/adjudication cards nested inside as before.
+
+Notes:
+- **The sticky "Sections" bar is gone from Learn, not the hero grid.** IA-06 proposed the opposite direction (delete the grid, keep the bar as the single index) — reasonable when the page was one long scroll and the bar was the only thing that still worked once you'd scrolled past the hero. Once sections themselves are pocketed, that reasoning inverts: the grid is the fixed, always-findable reference point, and a bar naming "which of ten short, independently-openable sections you're in" has nothing left to answer. Confirmed with the author before removing the bar rather than the grid, given it reversed a documented recommendation. `sections.js` is shared with Behind the Scenes, which keeps its own sticky bar untouched — verified directly (`.jump` still present, `position:sticky`, scroll-spy still naming the current section) after every change to the shared file below.
+- **The anchor ids had to move**, not just get wrapped. This codebase's own established pattern (already used for the stress-test/adjudication cards, and Resources' categories) puts a fragment id on a *descendant* of the `<details>` it should open, never on an ancestor — the reveal algorithm only opens ancestor details of the target, and an id on the `<details>` itself has no ancestor details to open. All ten ids moved from the outer `<section>` onto a new `.pocket-body[id]` wrapper inside each `<details>`. Checked for external references first: only `#field-guide` is linked from elsewhere (Invitation, Contribute, Resources, Practise, all pointing to `/learn/#field-guide`) — moving the id doesn't break those, since a browser resolves an id wherever it now lives.
+- **`#field-guide`'s print-isolate CSS broke the same way**, less obviously: `body.print-isolate>main>section:not(#field-guide)` stopped matching anything once the id left the `<section>` tag, which would have hidden the field guide too under its own "print only this" button. Fixed with a `data-pocket="field-guide"` attribute on the section instead, and the same attribute was added to all ten for consistency (used again by the opacity section's kicker-colour rule, which had the same problem).
+- **`<summary>` cannot contain a `<p>`** — html-validate caught this immediately on the first build: each pocket's kicker (previously a `<p class="kick">`) had to become a `<span>` with the same CSS, since `.kick`'s own rules (`display:flex` etc.) don't care what tag carries them.
+- **Sexual content is a pocket like the other nine, but not a `data-collapsible` one.** IA-01's promise — "opening one is the only thing that changes" — now composes with an extra layer rather than being loosened by it: reaching one of the four cards takes opening the section *and then* a card, stricter than before. The bulk sweep and the no-JS print CSS fallback (below) both stay scoped away from it, matching what the JS-driven print handler already did.
+- **A real latent bug in the pre-existing `reveal()` mechanism, exposed by pockets' much larger height swings.** Two separate, genuine problems, found by testing the same navigation repeatedly rather than once:
+  1. Clicking a same-page anchor fires both a `click` listener and the `hashchange` event that follows it, and both called `reveal()` — a pre-existing overlap (for two different real triggers: a click; Back/Forward or a typed URL) that only doubles up for the click case. Each call scheduled its own independent `requestAnimationFrame`-deferred scroll. Fixed with a `lastClickedHash` guard so the `hashchange` a click causes recognises it and skips re-running.
+  2. Separately, and more consequentially: this site sets `html{scroll-behavior:smooth}` sitewide, and the browser's own native fragment-scroll (toward the id'd element's own `scroll-margin-top`, not the ancestor `<details>` reveal() needs to clear) runs as an internal animation that never goes through `window.scrollTo` and can't be detected or pre-empted — only outlasted. `reveal()`'s single corrective scroll would win the instant it ran, then get quietly overwritten a few frames later as that native animation kept creeping toward its own, different target. Confirmed by instrumenting every `scroll` event: scrollY kept climbing for ~150–250ms with no further JS calls in that window. Never caught on the small cards this code was written for — a card barely moves the two targets apart — until a pocket that can resize the page by thousands of pixels made both the gap and the ongoing drift obvious. An early-exit "two stable frames" heuristic was tried first and failed: the native animation pauses irregularly rather than creeping at a steady one-tick-per-frame rate, so a brief pause was mistaken for settling. Fixed by re-snapping unconditionally, every frame, `behavior:"instant"` (bypassing the smooth CSS setting rather than starting a second competing animation), for a flat 500ms window — comfortably past every native-scroll duration measured here.
+- **Verified exhaustively, not spot-checked**, after both fixes: all ten pockets' summaries land at exactly the same offset (matching the computed `BAR`) at 390px and 1440px, both via a fresh page load with the fragment already in the URL and via clicking the hero grid live — 21 landing checks, all passing, run repeatedly to confirm the result was no longer non-deterministic (it had reproduced two visibly different wrong positions across otherwise-identical runs before the fix).
+- **The bulk sweep and IA-05's view-switch now coordinate.** Opening the stress-test cards via "Open every section" does nothing visible if the chart/rows switch is still on "map" — the cards live only in "rows." The bulk-open handler now calls into IA-05's `showView` (exposed via a small shared variable) when it opens, not when it closes, so what it just opened is actually visible.
+- **Print, verified two ways.** With scripting, `sections.js`'s existing `beforeprint` handler correctly force-opens all nine `data-collapsible` pockets and leaves sexual content closed — confirmed by dispatching the event directly. Without scripting, the established `details:not([open])>*{display:block!important}` fallback pattern (already used on Resources and Behind the Scenes) was added, deliberately scoped with `main>section:not([data-pocket="sexual-content"])` so a no-JS reader printing the page gets the same exclusion a scripted one already gets — verified via `.matches()` that the scoping selector correctly excludes the sexual-content section. Full paginated-print rendering inside a closed `<details>` isn't reliably verifiable via headless DOM queries in this environment (`getComputedStyle` and `checkVisibility()` both proved unable to reflect the browser's internal `<details>` suppression) — same class of limitation already recorded elsewhere in this file for screen readers and cross-platform type.
+- **`main [id]{scroll-margin-top}`** dropped from `5.4rem` (calibrated for the old sticky bar) to `1.5rem` — there's nothing fixed left at the top of the page to clear. `.pocket-body[id]` carries its own `9rem` on top of that, matching `.card-body[id]`'s existing value, for the same reason: overshoot enough to clear a summary sitting above the id'd element.
+- **`BAR` (the sticky-bar clearance constant in `sections.js`) is now measured, not hardcoded.** `document.querySelector(".jump")`'s real height if present, else a flat 24px default. Behind the Scenes measures out at 50px now — more accurate than the stale 76px both pages shared before, not just preserved.
+- Full `npm run check` clean (html-validate, axe, page weight, redirect stubs) apart from the two pre-existing sandbox-only failures to reach `challenges.cloudflare.com`, which reproduce identically on `main`.
+
+### IA-21 — The Learn hero becomes the whole navigation, and Home's six doors carry their register at rest
+**Shipped:** 2026-08-15 · direct author instruction, not from the audit · **follows** IA-20
+
+Four changes the author raised together. The first three are one idea taken to its conclusion; the fourth is the same reasoning applied to Home.
+
+**~~was:~~ Learn's hero carried three tally boxes — `13 principles` / `7 places they break` / `1 question each`.**
+now: removed. Every figure in them was already in the sentence directly above ("Thirteen principles follow. Each carries a question you can actually ask") and in the grid's own "Seven stress tests" — they restated the hero rather than adding to it. The colour legend they sat above is kept and now sits directly on top of the ten swatches that are its first real use. `.tally`, `.t-teal`, `.t-fails`, `.t-ask` deleted; `.swatch`/`.s-*`/`.legend-key` all still in use and untouched.
+
+**~~was:~~ ten closed section headers stacked below the grid — the same ten items, twice.**
+now: a closed section takes no space on screen at all. This is the duplication IA-06 was originally about, recreated one layer down by IA-20 itself: a compact ten-box grid followed immediately by ~1,000px of ten large kicker + `<h2>` headers saying the same ten things. It also meant IA-20's own brief — "the info appears below the boxes" — was only literally true for the first box; choosing the tenth opened its content a thousand pixels further down. With the other nine absent, every box opens its content directly beneath the grid.
+
+Notes:
+- **The whole `<section>` is hidden, not just its `<details>`.** Every `.band` carries its own bottom padding and the opacity band carries a full-bleed dark background, so hiding only the disclosure would have left nine strips of empty paper and one empty dark stripe.
+- **Two guards, both load-bearing.** The rule lives inside `@media screen`, so paper is untouched — printing still lays out every section regardless of what was open, which is the same reason `sections.js` opens the collapsibles on `beforeprint`. And it is keyed on a `.js-pockets` class added by `sections.js`, so with scripting off all ten headers stay: they are that reader's only way in, since the grid's links can *open* a pocket (the HTML reveal algorithm walks a fragment target's ancestors) but have no way to close one. Both verified — no-JS shows ten section headers and still opens one from a grid link; `emulateMedia({media:"print"})` lays out all ten with nothing open.
+- **The accordion mechanism itself stays.** The question asked was whether the section titles still needed to be an accordion; the answer is that the *closed* headers are redundant with the grid, but the open one's summary is not — it is that section's heading and its close control, and it is what no-JS depends on entirely.
+- **"Open every section" had to start reaching the sexual-content pocket.** It was excluded from the `data-collapsible` sweep (IA-01), which was invisible while a closed section still showed its header — but with closed sections hidden, the button would have *deleted a section from the page*. `sections.js` now composes an explicit `sweep` list (the collapsibles, plus every pocket, deduped) for the button, `allOpen()` and the label sync. IA-01 is not loosened by this and arguably tightened: opening that pocket reveals an intro and four still-closed card summaries, nothing more. `beforeprint` deliberately keeps using `collapsible`, not `sweep`, so the printed page's exclusion is exactly what it was.
+- **The grid now says which section is open**, which it did not need to when ten headers were visible. `aria-current="true"` is what assistive technology reads; a visible tinted state, register-coloured edge and an `Open ▾` badge are the sighted equivalent. Both are set from the pockets' real state by a single `toggle` listener, so a section opened from its own summary, a pasted deep link, or the bulk control marks the grid exactly as clicking a box does — verified for each path, including that closing from the summary clears the mark.
+
+**~~was:~~ the ten choice boxes were 44px-tall pills, `inline-flex` so they didn't fill their grid cells, in a grid with a `0` row gap.**
+now: full-cell cards at ~81–120px, with a real gap on both axes, each carrying the section's own kicker verbatim as a description line — so the choice is made on what a section says rather than on a two-word label. Separate bordered cards on the paper ground rather than the hairline slab Home's doors use: ten is enough weight already, and the open one has to stand out from its neighbours. Register now reads on each card's top edge at rest, matching Home.
+
+**~~was:~~ Home's six doors showed their register only on hover (WD-17).**
+now: every door wears it at rest — a 3px top edge plus a shallow wash of the same hue — so the six read as three pairs before a word is read, and the scheme is visible to a reader who never points at anything and on a touch screen at all. Hover deepens the same wash rather than switching to the old neutral `#DDDAD0`, so a door never loses its register at the moment of contact. A legend below the grid names all three registers in words; per the site's standing constraint, colour is not the sole carrier and each door's own kicker still says what it is.
+
+Notes:
+- **The washes are opaque, pre-composited over paper, not `rgba()` of the register hue — and that is the finding here, caught by axe rather than by eye.** The doors' grid paints `#C9C6BA` behind them and shows it through a 1px gap to draw the hairlines between cards. The doors' original opaque `#E7E5DC` inline background covered it; replacing that with a translucent wash composited over the *grey*, not over paper, and dropped every card's body copy to 3.68–3.92:1. Ten serious `color-contrast` violations on a page that was clean before. Fixed by using the same washes pre-composited over `#E7E5DC`.
+- **Contrast measured across all 18 combinations** (three registers × rest/hover × kicker/body/title), not just the ones axe happens to sample in the resting state: worst case 4.66:1, against the 4.5:1 floor. Learn's new `aria-current` state was scanned the same way, with a section open and with all ten open, at 1280px and 390px — axe clean at every one.
+- The doors' `background` moved out of six inline `style` attributes into the stylesheet, and the `style-hover="background:#DDDAD0"` attributes went with it — the register-aware hover is a real CSS rule now.
+
+Verification: 47 behaviour assertions across eleven scenarios (no-JS, nothing-open, single-select, toggle-close, deep link, close-from-summary, bulk open/close, print media, repeated landing position, box geometry, 320px reflow, Home's doors, and Behind the Scenes' untouched sticky bar and scroll-spy), green on three consecutive runs. `npm run check` and `npm run check:responsive` both back to their exact pre-change baselines — the only remaining failures are the two pre-existing sandbox-only `challenges.cloudflare.com` connection resets and six pre-existing sub-44px inline prose links on Home, all of which reproduce identically on `main`.
+
+Notes on what did *not* change:
+- **IA-17 is still open and still untouched.** The thirteen principles render exactly as before once their own pocket is opened.
+- **Behind the Scenes**, the other consumer of `sections.js`, is unaffected: it has no pockets and no `[data-open-all]`, so `sweep` is empty and the new section 1.6 no-ops. Verified live — sticky bar present, scroll-spy still naming the current section, no page errors.
+
+### COPY-01 — Author revision of all sixteen manifesto theses
+**Shipped:** 2026-08-15 · direct author instruction · words only, no markup changed
+
+The author supplied a revised full text of the manifesto and asked for the wording to be brought into line with it. 23 replacements across `hugo/layouts/manifesto.html`, each asserted to match exactly once before anything was written; the rendered page was then extracted from a live DOM and diffed against the supplied copy, which came back identical line for line. No element, attribute, style, id or link was touched — thesis 16's `<a href="/archive/">a movement that cannot survive its own kitchen</a>` is intact, and `html-validate` is clean.
+
+What changed, in short: the standfirst loses its third sentence; theses 01, 02, 07, 09, 11 and 16 get substantive rewrites; 03, 04, 05, 06, 08, 13 and 14 get smaller ones (mostly em-dash asides becoming parentheses or separate sentences); thesis 10's title becomes *Liberation is material*; kickers change on 03, 04, 06, 08, 10, 11, 12 and 13. Theses 12 (body) and 15 are unchanged.
+
+Notes, and two things the author should know were affected:
+- **Thesis 01 no longer names two genealogies of possession — this rewrites what RS-006 shipped.** ~~was: "There is more than one road into that grammar. Settler sovereignty made land into property and then made people into holdings. Chattel slavery made the person into property directly, and made kinship legally void — a different mechanism, a different afterlife… Both are here. Neither stands in for the other."~~ now: "The ideology of settler colonialism made land and people into property and rendered kinship legally void." The distinction is the thing RS-006 existed to insert, placed at that exact point on `base-work-order.md` §5's instruction, and kinship rendered legally void is specifically the chattel-slavery mechanism (Patterson's natal alienation, by way of Spillers) rather than a settler-colonial one — so the new sentence attributes it to the road the old text was written to distinguish it from. **Nothing broke:** the archive group "Possession, the person, and kinship made void" (Spillers, Hartman, Roberts, Bridges) is untouched and still live, and the Archive's reading-ten standfirst still promises "two genealogies of possession." But the shelf now supports a distinction the manifesto does not make, and RS-006's open residual — adding Patterson and Collins once FLAG-03 answers which books — was to add them *for* that distinction. Flagged on RS-006's row in `tasks.md` as a reconciliation question, not silently absorbed.
+- **Thesis 11 loses its own guardrail sentence.** ~~was: "…not the state, not a crowd with an opinion. Collapse that distinction and this thesis becomes a rationale for the surveillance already aimed at the families it should be protecting."~~ now: "We are accountable to those that absorb the consequences (not the state or crowds with an opinion)." The core distinction survives; the named consequence of collapsing it does not, and the kicker's qualifier ("and only the people who absorb it get to ask") is gone with it. Worth a second look given the site's standing rule that a qualification protecting a specific group stays declarative and unhedged, but the replacement is not itself wrong — recorded rather than argued.
+- **One correction to the supplied copy:** thesis 05 read "Relationships recquire authority to be named"; shipped as *require*. Nothing else was altered.
+- Two smaller usage points left exactly as written rather than quietly edited, since the instruction was to change the words to these words: thesis 11's "those that absorb the consequences" (of people, "who" is the usual choice), and thesis 06's "(trust, care, history, risk, labour) not by the rank", where the parentheses no longer supply the pause the em-dashes did.
+- `npm run check` back to baseline — the only failures are the two pre-existing sandbox-only `challenges.cloudflare.com` connection resets, identical on `main`.
+
+### IA-22 — The ⌖ marginal notes become pop-open disclosures, site-wide
+**Shipped:** 2026-08-15 · direct author instruction, not from the audit
+
+~~was: eighteen ⌖ notes across nine pages (Home, Manifesto, Invitation, Archive, Resources, Behind the Scenes, Learn ×6, Practise ×2, Contribute ×2) — always-visible bordered paragraphs, each carrying a caveat, safety warning, or provenance note.~~
+now: every one is a `details.note`, closed by default. A click opens and holds one via native `<details>` — no script required, so this works on mobile and with scripting off exactly as well as it did before this shipped. `notes.js` layers a second path on top for a mouse or a keyboard: hovering, or tabbing to, the summary previews the note without a click.
+
+The component (`.note` / `.note-fails` / `.note-holds`, register colours matching what each note already used — rust for the two genuine safety warnings, green for the two privacy/procedural ones, ochre for the rest) is promoted to `hugo/layouts/partials/head-base.html`, the same "define once, apply everywhere" move IA-10a made for the four interactive components. Learn's pre-existing `.note`/`.note-fails` (the only page that already had this pattern, unstyled as a disclosure) was deleted from its own `<style>` in favour of the shared definition.
+
+**No copy was written.** Every collapsed label is a verbatim substring of the note's own leading clause, split only at punctuation the original text already had (an em dash, a colon, or a short sentence's own full stop) — e.g. "Safety —" becomes the label "Safety"; "No unilateral amendment. These terms carry…" becomes label "No unilateral amendment." and body "These terms carry…". Two notes had no clean short lead-in and kept their full first sentence as the label rather than have one invented (Archive's "Indigenous relationality…are not a generic radical style", Contribute's "Moderation prioritizes safety…"). One note (Learn, field-guide section, "The Repair Protocol…") has a hyperlink inside what would otherwise be its lead clause; the label was cut back to "The Repair Protocol" and the link stayed in the body, since a link nested inside a `<summary>` is a nested-interactive-control accessibility anti-pattern (the click bubbles to both).
+
+Notes:
+- **A genuine colour-contrast bug, caught by axe, not by eye.** Five of the eighteen notes sit on dark ground and need a lighter summary colour than the shared component's light-ground default. The first attempt set `color` as an inline style on the `<details>` wrapper, expecting it to reach the `<summary>` by inheritance — it doesn't, because the base stylesheet has an explicit rule targeting `details.note>summary` directly, and an explicit rule for an element always wins over an inherited value from its parent regardless of specificity. The five summaries rendered at `#585B4F` (the light-ground default) on `#0F2A2E` backgrounds — five new serious violations. Fixed by setting the dark colour explicitly on the `<summary>` itself as well as the `<details>` wrapper (the wrapper's copy is still needed, for the body `<p>`, which has no such explicit rule and correctly inherits).
+- **Resources' CSP blocked its own new script.** The page had `script-src 'none'` — accurate when it carried no scripts at all — and silently dropped `notes.js` with a CSP console error once one was added. Changed to `script-src 'self'`.
+- **A real bug in `notes.js` itself, found by testing rather than assumed away: listeners attached directly to each `details.note` at load time went dead on Home, Practise and Contribute.** Those three pages run on the dc-runtime (`support.js`): `boot()` parses the static, server-rendered `<x-dc>...</x-dc>` markup, then replaces the whole subtree with a freshly React-rendered `#dc-root` a moment after first paint. The static nodes notes.js originally attached `mouseenter`/`focusin` listeners to are the ones that get discarded; the visually-identical nodes a reader actually hovers moments later are new DOM objects that never had a listener attached. Playwright's `hover()` and `evaluate()` calls confirmed this precisely: `matchMedia` true, the element found, hover reported successful by Playwright's own actionability checks, `.open` still false — while a listener attached fresh via `page.evaluate()` after the swap fired correctly. Fixed by delegating on `document` instead of on each element: `mouseover`/`mouseout` (bubbling) and `focusin`/`focusout` (bubbling) resolve their target via `event.target.closest("details.note")` at dispatch time, which is always after whatever DOM swap has already happened, rather than caching a node reference at attach time. This also simplified the six static pages' behaviour for free — one code path instead of two.
+- **`click` is prevented on the summary, on hover-capable devices only.** Without it, a mouse click while already hovering (the normal case — you hover before you click) would fight the hover state: native `<details>` toggles on click, and since hover already forced `open` true, the click would immediately flip it back to false. Gated behind the same `(hover:hover) and (pointer:fine)` media check as the rest of the file, so a touchscreen never has this handler attached and keeps plain native click-to-toggle.
+- **`focusin`/`focusout` on the whole `<details>`, not `focus`/`blur` on the `<summary>`.** Several notes contain a link in their body (Learn's Repair Protocol and Contribute-routed notes, Invitation's Practise link). `focus`/`blur` fire per-element and would close the note the instant focus moved from the summary onto that link — hiding the very element a keyboard user just tabbed onto. `focusin`/`focusout` bubble and fire once for the subtree, so the note stays open while focus is anywhere inside it and only closes once focus actually leaves. Verified directly: tab to a note's summary (opens), tab again onto the link inside its now-open body (stays open, and the link itself has focus), tab a third time past it (closes).
+- **Print unaffected.** `@media print{details.note:not([open])>*{display:block!important}}` added to the shared base, scoped to the class so it can't interact with Learn's existing, deliberately narrower `main>section:not([data-pocket="sexual-content"]) details:not([open])>*` rule (IA-01) — including for the one note that happens to sit inside the sexual-content pocket (Learn, "These four are closed rather than open…", explaining why the pocket's four cards are closed): unlike the pocket's actual sensitive contents, that explanatory note was never gated before, and paper has no hover or click, so it stays print-visible like all seventeen others rather than newly becoming unreachable on a printout.
+- Verified with Playwright against a local static server (not `file://`, which silently breaks every root-absolute script path including `/notes.js` — the first test run's false "hover does nothing" result, on every page, was this rather than a real bug): closed by default, opens on hover, closes on mouse-leave, opens on keyboard focus, stays open while tabbing through a link in the body and only then closes, and native click-to-toggle on a touch/no-hover emulated device with no involvement from `notes.js` at all.
+- `npm run check` clean apart from the two pre-existing sandbox-only `challenges.cloudflare.com` connection resets (confirmed identical via `git stash` against the prior commit before concluding they weren't a regression).
+
+### COPY-02 — Every em dash removed from reader-visible copy
+**Shipped:** 2026-08-15 · direct author instruction, not from the audit
+
+~~was: 306 em dashes across the nine shipped pages, carrying four distinct grammatical jobs and one typographic one.~~
+now: none. The count is verified two ways: a tag-stripped scan of all nine committed files, and a real headless browser reading `document.body.innerText` with every pocket and `<details>` forced open, which also covers the three dc-runtime pages whose DOM is rebuilt by React after first paint.
+
+Replaced by role rather than by a single global swap, since one character was doing five different things:
+
+| job | replacement | example |
+|---|---|---|
+| appositive / explanation | colon | "Not legal advice: a starting point for finding who can give it." |
+| paired interruptive aside | parentheses | "because GitHub Pages, this site's current host, cannot set response headers" |
+| two independent clauses | full stop | "It also stands on its own. You don't need a reason to be here." |
+| light coordination | comma | "no watershed to name yet, not because nobody looked" |
+| bullet / table marker | middle dot | "· When you disagree, what happens afterwards?" |
+
+Notes:
+- **Fifty of the 306 were never prose.** Forty-nine were bullet markers (`<li>— …` and the `<br>`-separated safety questions on Resources), and one was `td.c-none::before{content:"—"}`, the stress matrix's "not engaged" cell mark. All became `·`, which the site already uses as a separator in every footer and kicker line and which is already covered by the glyph-coverage table and `glyph-check.js`, so no new character was introduced. The matrix legend entry was changed in the same commit as the CSS that draws the cell, so the key and the chart cannot drift.
+- **Applied through an anchor map, not sed.** Each entry is a `[file, old, new]` triple; the applier refuses to write anything unless every `old` matches **exactly once** in its file, and additionally rejects any replacement that still contains an em dash. Two ambiguous anchors were caught this way and lengthened. Nothing was replaced by regex.
+- **`hugo/data/changelog.yaml` was deliberately skipped** — 140 em dashes, and no layout references it. It is dead data, not copy. Left for whoever decides whether the file should exist at all.
+- **One specimen removed rather than converted.** `hugo/data/glyphs.yaml` listed `★ ⌖ ▪ □ —  interface marks` as a font-coverage row. The em dash was itself the specimen there, and the site no longer uses the character, so it was dropped from the displayed list. `glyph-check.js` still tests U+2014 and was left alone: it is a diagnostic tool, its output is not prose, and removing a character from a coverage test is a decision worth making deliberately rather than as a side effect.
+- **Two sign-off dashes in generated output**, not page copy, also changed: Practise's consent-scale option label `"not yet — ask me"` (a control the reader picks) became `"not yet, ask me"`, and Contribute's mailto body builder no longer prefixes the signature line with a dash.
+- **This roughly doubled mid-sentence colon density**, from about 2.8 to 6.35 per 1,000 words, because ~60 dashes became colons. Behind the Scenes (32) and Learn (20) carry the most. Flagged as item 8 of the voice audit below rather than silently corrected — rebalancing means a second editorial pass over copy the author has not reviewed yet.
+- `npm run check` and `npm run check:origins` both back to baseline: the only failures are the two pre-existing sandbox-only `challenges.cloudflare.com` connection resets, confirmed identical on the prior commit.
+
+### COPY-03 — Voice audit: what still reads as machine-written
+**Shipped:** 2026-08-15 · `docs/audits/voice-audit-2026-08-15.md` · **audit only, nothing applied**
+
+Run immediately after COPY-02, on the theory that removing the loudest tell makes the next ones audible. Corpus is 16,706 words of rendered `innerText` from all nine pages with everything expanded, measured by pattern counts normalised per 1,000 words and then hand-checked against source to separate deliberate voice from mechanical repetition.
+
+Headline: **the site's default sentence engine is definition by negation** — 195 explicit negative constructions (11.7 per 1,000 words), and the `X, not Y.` terminal antithesis closing paragraphs on all nine pages, in registers as far apart as the manifesto's polemic and the colophon's engineering notes. A house style does not do that; a generator does.
+
+Counter-finding worth recording: the site is **entirely clean of the LLM lexicon**. Zero instances of *delve, tapestry, testament, crucial, robust, leverage, landscape, realm, navigate, underscore, pivotal, multifaceted, nuanced, holistic, seamless, myriad, moreover, furthermore, in conclusion, it's worth noting, that said*. The fingerprint here is structural, not verbal, which is why it survived a copy revision by the author (COPY-01) that rewrote 23 passages without touching it.
+
+Eight ranked candidates with counts and `file:line` locations are in the audit. Also recorded there, against this session's own work: COPY-02's colon-density side effect. Nothing has been applied — the audit proposes a four-step order in which steps 1–3 are mechanical and step 4 touches the site's honesty posture and should be the author's own pass.
+
+### RS-049 — Behind the Scenes page redesign: pocket navigation, register-colour grid
+**Shipped:** 2026-08-15
+
+~~was: nine sections (What this is not, Substrate, Type, Crawler, Reuse, Faults, Roadmap, Changelog, Labour) stacked as one long scroll, oriented by a sticky "Sections" jump bar (WD-14) that duplicated the same nine names in a dropdown.~~
+now: `#limits` ("What this is not") stays as framing above a register-coloured hero grid; the other eight are closed-by-default `details.pocket` sections opened one at a time from the grid, exactly the pattern IA-20 shipped on Learn. The sticky jump bar is gone — sections.js's existing generic machinery (`nav[aria-label="Contents"]` + `main details.pocket`) needed no changes at all to drive it.
+
+Register colours on the grid: teal (asserts/real) on Substrate, Type, Crawler, Reuse, Changelog; rust (fails) on Faults; ochre (named, not built) on Roadmap, Labour. A `.legend-key` line states the three meanings in words, matching Learn's own doubling rule — nothing here is signalled by colour alone.
+
+**The five grid-description lines flagged as blocked (Substrate, Reuse, Faults, Roadmap, Labour) were drafted rather than left blocking the work**, each grounded in the section's own already-published wording rather than invented:
+- Substrate: *"The material facts of the machine you're reading on"* — the section's own opening sentence, trimmed of the resulting duplicate once promoted to the kicker.
+- Reuse: *"Terms that bind the project, not just the reader"* — a compression of the section's own first sentence.
+- Faults: *"Known and unfixed, published rather than quietly carried"* — quoted verbatim from the section's own intro, which was then trimmed to drop the now-redundant clause.
+- Roadmap: *"Named, not yet built, no dates promised"* — a compression of the section's own "no dates are given" reasoning.
+- Labour: *"Who worked on this, what's paid, and what it costs"* — a structural summary of the section's own four subheadings.
+
+The other three (Type, Crawler, Changelog) needed no new copy at all: Crawler and Changelog already carried their own kicker paragraphs ("Opacity as governance, not as a button"; "Change log · repair in view"), reused verbatim as both the pocket kicker and the grid description, same convention Learn's own IA-21 established. Type had no section-level kicker, so it reuses the credibility box's own existing label, "Coverage, checked not assumed," verbatim.
+
+**These five are drafts, not author-approved copy, and are flagged here for that reason.** Nothing on the page is a new claim — every line traces to text already published on this same page — but per this project's own `[COPY]` convention they haven't been signed off. Swapping any of them is a one-line edit to `hugo/layouts/behindthescenes.html`.
+
+**"Open every section"** (`[data-open-all]`) was added, matching Learn's own affordance for a reader who wants the old everything-at-once page — not one of RS-049's six enumerated steps, but implied by "matching the Learn pattern IA-20 established," and free to add since sections.js already supports it generically.
+
+**Reading time and page height, both re-measured rather than guessed.** The stale WD-14 code comment claimed "~39 minutes, roughly 18,600px" — a figure for the old fully-open layout, and never reader-facing itself (only the "about 39 minutes" line was). That comment is gone; the whole justification for a sticky orientation bar it was written to support no longer applies. Measured via a real headless-browser render at 1280px: **closed-by-default height is 3,748px** (down from the old always-open 18,600px, which is the entire point of pocket navigation), full-page word count in `main` is 3,606. Applying this project's own back-derived reading-speed convention (Archive: 3,267 words → "about 11 minutes," ≈297 wpm) gives 3,606 / 297 ≈ 12.1 minutes — the page now reads **"about 12 minutes"**, replacing the stale "about 39 minutes."
+
+**Folded in while touching the same file:** three leftover `#7D5915` occurrences in `hugo/data/substrate.yaml` (the Page weight, Security headers, and What is logged rows) — a genuine `#6B4C12` semantic-ochre use that FLAG-07's original resolution (2026-08-11) listed under "author call, not in the spec's scope" and never actioned. Design-palette.md's own rule (every semantic ochre use is `#6B4C12`) already settles this; it was just never applied here.
+
+Verified with a real HTTP server, not `file://` (root-absolute `/sections.js` silently fails to resolve under the file protocol — the same trap IA-22's own record already names, hit again and caught the same way):
+- Single-open behaviour: clicking a different grid box closes whichever pocket was open and opens the new one; a second click on the open box's own box closes it back to just the grid.
+- Deep link `/behind-the-scenes/#roadmap` (linked twice from Learn) opens the roadmap pocket and scrolls it into view on a cold load.
+- The page's own internal links — `#substrate` from the limits section, `#changelog` from the reuse note — correctly open their target pocket.
+- Print, both with scripting on (`beforeprint`/`afterprint` force every pocket open, then restore) and with scripting off (`@media print{details:not([open])>*{display:block!important}}` alone forces every pocket's content visible regardless of `open` state) — checked both paths independently, not just the JS one.
+- `npm run check` clean for every page this change touched; the two failures it reports (`index.html`, `contribute/`) are the pre-existing sandbox-only Cloudflare Turnstile connection resets, unrelated to this change and present on unrelated pages.
