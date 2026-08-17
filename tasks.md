@@ -1,14 +1,14 @@
 # Relational Sovereignty — Active Tasks
 
 **Last reconciled:** 2026-08-16
-**Reconciles:** `docs/spec/base-work-order.md`, `docs/spec/addendum-a.md`, `docs/spec/decision-record-d1-d15.md` (authoritative on all `[DECISION]`/`D#` items), `docs/spec/warm-register-review-v2.md` (new content initiative, the warm register), an author review of navigation/disclosure/IA delivered directly into this session (no separate file — see Phase 2.5), the author-supplied `Web Design Spec — v0.3 refinement pass` (Phase 9; its cited source `docs/audits/design-review-2026-08-10.md` is now in the repository — it was not when that phase was planned), an author-supplied `Website Cache & Clickjacking Security Audit` dated 2026-08-11 (Phase 10; **not in this repository either**, and its own findings were re-checked against the live site — two did not survive contact, see that phase's header), a heuristic/source-DOM audit dated 2026-08-13 (Phase 11; `docs/audits/heuristic-audit-2026-08-13.md`, saved on arrival — four of its claims did not survive measurement and three of its recommendations collide with published commitments, see that phase's header), an author-supplied review of the runtime handoff dated 2026-08-16 (Phase 13; **not in this repository** — its four structural claims about `support.js` were each checked against the code and all four hold, see that phase's header for the three corrections), a sentence-by-sentence language audit supplied as a `.docx` dated 2026-08-16 (Phase 15; `docs/audits/language-audit-2026-08-16.md`, saved on arrival — opens mid-document with no title or summary, see that phase's header), plus findings from a full read of the shipped code on this branch.
+**Reconciles:** `docs/spec/base-work-order.md`, `docs/spec/addendum-a.md`, `docs/spec/decision-record-d1-d15.md` (authoritative on all `[DECISION]`/`D#` items), `docs/spec/warm-register-review-v2.md` (new content initiative, the warm register), an author review of navigation/disclosure/IA delivered directly into this session (no separate file — see Phase 2.5), the author-supplied `Web Design Spec — v0.3 refinement pass` (Phase 9; its cited source `docs/audits/design-review-2026-08-10.md` is now in the repository — it was not when that phase was planned), an author-supplied `Website Cache & Clickjacking Security Audit` dated 2026-08-11 (Phase 10; **not in this repository either**, and its own findings were re-checked against the live site — two did not survive contact, see that phase's header), a heuristic/source-DOM audit dated 2026-08-13 (Phase 11; `docs/audits/heuristic-audit-2026-08-13.md`, saved on arrival — four of its claims did not survive measurement and three of its recommendations collide with published commitments, see that phase's header), an author-supplied review of the runtime handoff dated 2026-08-16 (Phase 13; **not in this repository** — its four structural claims about `support.js` were each checked against the code and all four hold, see that phase's header for the three corrections), plus findings from a full read of the shipped code on this branch.
 **Companion file:** `completed.tasks.md` — when a task ships, move its row there with a dated `~~was:~~ now:` entry in the site's own changelog voice. Don't delete history; strike it.
 
 > **Housekeeping, 2026-08-13.** This file had drifted into holding both the working list and a second copy of the completed one: 82 rows whose IDs were struck through remained here alongside their `completed.tasks.md` entries, which is the duplication the companion-file convention above exists to avoid. Those rows were removed. Seven of them (`FLAG-06`, `WD-10b`, `WD-12` ×2, `WD-15`, `WD-16`, `WD-28`) turned out to have **no** entry in `completed.tasks.md` despite being marked shipped here — their detail was written into that file first, so nothing was lost. Every one of the 82 was checked individually against `completed.tasks.md` before and after removal, not spot-checked. Rows with a live residual under a struck heading were kept in full (`RS-006`, `RS-029`, `WD-11`, `SEC-02.2`). Three stale claims in this file's own prose were corrected rather than deleted, each dated. What remains here is open work.
 
 ## How to use this file
 
-- Every task keeps its source ID (`RS-0xx`) so it can be cross-referenced against the docs in `docs/spec/`. Tasks with no source ID are prefixed `SUGGEST-` (raised during codebase familiarization, not in any spec doc), `FLAG-` (a gap or contradiction found in the spec docs themselves that needs author input before work can proceed), `HUGO2-` (Phase 5, a direct author instruction with no `docs/spec/` origin — see that phase's header), `UX-` (Phase 6, IDs kept identical to `docs/audits/ux-audit-2026-08-08.html`'s own numbering), `SEO-` (Phase 7, reconciled from an external technical SEO/AEO specification against this project's own ethos and conventions — see that phase's header for what was kept, rejected, and why), `BUG-` (Phase 8, live-site defects the author found by visiting the deployed site after PR #13 merged, numbered in the order the author reported them), `WD-` (Phase 9, IDs kept identical to the web design spec's own `§3.n` numbering, same convention as `UX-`; `WD-25`/`WD-26` are follow-ups that spec names but deliberately scopes out), `SEC-` (Phase 10, security remediation — numbered by phase-and-item as `SEC-0n.x` rather than flat, because the ordering *is* the finding), `BM-` (Phase 12, assigned here — the author-supplied motion system has no ID scheme of its own, so each row cites its section number alongside; `BM-C1`–`BM-C7` are corrections and build landmines rather than tasks), `RT-` (Phase 13, assigned here — an author-supplied review of the runtime handoff, likewise with no ID scheme of its own; `RT-C1`–`RT-C3` are corrections rather than tasks), `IA-` (Phase 11, assigned here rather than inherited — that audit has no ID scheme of its own, so each row cites the audit's section number alongside; `IA-C1`–`IA-C4` are its four claims that measurement contradicted), or `LA-` (Phase 15, assigned here — a sentence-by-sentence language audit with no ID scheme of its own, keyed to page + location instead). See each phase's header.
+- Every task keeps its source ID (`RS-0xx`) so it can be cross-referenced against the docs in `docs/spec/`. Tasks with no source ID are prefixed `SUGGEST-` (raised during codebase familiarization, not in any spec doc), `FLAG-` (a gap or contradiction found in the spec docs themselves that needs author input before work can proceed), `HUGO2-` (Phase 5, a direct author instruction with no `docs/spec/` origin — see that phase's header), `UX-` (Phase 6, IDs kept identical to `docs/audits/ux-audit-2026-08-08.html`'s own numbering), `SEO-` (Phase 7, reconciled from an external technical SEO/AEO specification against this project's own ethos and conventions — see that phase's header for what was kept, rejected, and why), `BUG-` (Phase 8, live-site defects the author found by visiting the deployed site after PR #13 merged, numbered in the order the author reported them), `WD-` (Phase 9, IDs kept identical to the web design spec's own `§3.n` numbering, same convention as `UX-`; `WD-25`/`WD-26` are follow-ups that spec names but deliberately scopes out), `SEC-` (Phase 10, security remediation — numbered by phase-and-item as `SEC-0n.x` rather than flat, because the ordering *is* the finding), `BM-` (Phase 12, assigned here — the author-supplied motion system has no ID scheme of its own, so each row cites its section number alongside; `BM-C1`–`BM-C7` are corrections and build landmines rather than tasks), `RT-` (Phase 13, assigned here — an author-supplied review of the runtime handoff, likewise with no ID scheme of its own; `RT-C1`–`RT-C3` are corrections rather than tasks), `AR-` (Phase 14, assigned here — a direct author instruction to give Archive Learn's organisational treatment plus a bookshelf register; `AR-C1`–`AR-C3` are the collisions that make it not a repeat of RS-049), or `IA-` (Phase 11, assigned here rather than inherited — that audit has no ID scheme of its own, so each row cites the audit's section number alongside; `IA-C1`–`IA-C4` are its four claims that measurement contradicted). See each phase's header.
 - Tags: `[DEV]` buildable now · `[COPY]` blocked on author-approved text (drafts exist in `docs/spec/`, not final) · `[VERIFY]` requires checking a live source before publish — never guess a URL, number, or DOI · `[DECISION]` blocked on a human call.
 - Phases mirror the Decision Record's "Consolidated build order" (Cycles 1–4), with one Phase 0 for blockers that gate everything else, and my own resequencing note on where the Hugo migration (RS-004) should actually land within Phase 1 — see that phase's header.
 - **Draft copy lives in `docs/spec/`, not here.** This file tracks status, files touched, effort, and dependencies so it stays a working checklist instead of a second copy of 1,900 lines of markdown.
@@ -876,7 +876,7 @@ Do not start this until BM-C5 and BM-C6 both have a written answer and a test.
 
 ---
 
-## Phase 13 — The runtime handoff (author-supplied review, 2026-08-16) `13.0 + 13.1 shipped 2026-08-16 — see completed.tasks.md`
+## Phase 13 — The runtime handoff (author-supplied review, 2026-08-16)
 
 *(A review of the initial-load instability fix shipped in `bc4b6dc`, supplied by the author. IDs below are `RT-nn`, assigned here — the review has no ID scheme of its own. Its central move is to stop treating this as one problem: **first paint** (does the browser's own initial frame look right) and **runtime takeover** (is React's replacement of the static snapshot atomic, measured, and warning-free) are separable, and only the first is actually fixed. Everything structural in it was checked against the code before planning; all four load-bearing claims hold.)*
 
@@ -896,8 +896,8 @@ All four checked directly, not read off the review:
 | Claim | Verdict |
 |---|---|
 | The runtime's initial template comes from `x-dc.innerHTML`, so the browser has already parsed and normalised the source before the compiler sees it | **Holds** — `parseDcDocument()`, `support.js:32`: `template: dc.innerHTML`. The later raw-source `fetch` (`support.js:159`) updates the registered template afterwards, but boot begins from the DOM-parsed form, exactly as described |
-| `collectProps()` special-cases `class`/`for`/events but not `tabindex`/`autocomplete` | **Held at the time this was checked** — pre-RT-02 state, `support.js:450` then, with `class`→`className` (471), `for`→`htmlFor` (472), `EVENT_MAP` (474), and nothing else. RT-02 (below) deliberately made this no longer true — see `completed.tasks.md` for the current `DOM_PROP_MAP` (`support.js:461-466,488`) |
-| `window.__dcRootName?.()` exists as a boot signal the proposed test can wait on | **Holds** — `support.js:1945` (line shifted by RT-01/02's edits; was `:1929` when first checked), `__dcRootName: () => rootName`. RT-04 (below) uses exactly this signal |
+| `collectProps()` special-cases `class`/`for`/events but not `tabindex`/`autocomplete` | **Holds exactly** — `support.js:450`, with `class`→`className` (471), `for`→`htmlFor` (472), `EVENT_MAP` (474), and nothing else |
+| `window.__dcRootName?.()` exists as a boot signal the proposed test can wait on | **Holds** — `support.js:1929`, `__dcRootName: () => rootName` |
 | The repo already stages a Contribute → Home → Practise hybrid-Hugo migration | **Holds** — `HUGO2-01`/`02`/`03`, Phase 5, in that order and for the reasons the review gives |
 
 ### Three corrections, none fatal to the plan
@@ -910,19 +910,28 @@ All four checked directly, not read off the review:
 
 **One thing to note for whoever reads the review next:** it says "changing source markup from `tabindex` to `tabIndex`… is understandable." Nobody did that. No source markup was changed in `bc4b6dc` — the shipped change is the critical CSS plus the non-moving prerendered host. The review is arguing against a fix that was never applied, and there is nothing to go looking for.
 
-### 13.0 — Stabilise the current handoff `shipped 2026-08-16`
+### 13.0 — Stabilise the current handoff `next`
 
-RT-01/02/03 shipped — see `completed.tasks.md` (Phase 13) for the `~~was:~~ now:` record of each. Summary: the `hydrateRoot()` post-mortem comment in `support.js` now states the architectural reason (browser-serialization round trip, not SSR) instead of the symptom list; `DOM_PROP_MAP` was added to `collectProps()` with exactly the two entries a real grep confirmed are load-bearing (`tabindex`, `autocomplete`), `class`/`for` folded in from their prior inline special-cases; `html{background:#E7E5DC}` was added to the three critical-CSS blocks as the redundant belt-and-braces version, correctly not recorded as itself fixing anything.
+| ID | Task | Tags | Effort | Notes |
+|---|---|---|---|---|
+| **RT-01** | Rewrite the `hydrateRoot()` post-mortem comment in `support.js` to give the architectural reason (the build is a serialization round-trip, not SSR) rather than the symptom list it currently gives. The present wording invites someone to "fix the mismatches and try again," which is the wrong conclusion. | `[DEV]` | S | The review's own diagram is the clearest statement of this; adapt it. |
+| **RT-02** | Add `DOM_PROP_MAP` to `collectProps()` — `tabindex`→`tabIndex`, `autocomplete`→`autoComplete`, with `class`/`for` folded in from their current inline special-cases. **Two new entries only** (RT-C2). Fixes the mapping at the lowercase-parsed-HTML→React-props boundary, which is where it belongs. | `[DEV]` | S | Dev-warning hygiene, not a live defect (RT-C1). |
+| **RT-03** | Optionally add `html{background:#E7E5DC}` to the three critical blocks. Redundant (RT-C3), defensive. **Do not grow the critical block beyond canvas-flash and layout-shift properties.** | `[DEV]` | XS | |
 
-### 13.1 — Measure the takeover, do not infer it `shipped 2026-08-16`
+### 13.1 — Measure the takeover, do not infer it `blocks 13.2`
 
-RT-04/05 shipped — see `completed.tasks.md` (Phase 13) for the full method and evidence. Summary: `scripts/test-runtime-handoff.mjs` (`npm run test:runtime-handoff`) is a standing regression test with the four assertions this section originally specified. Its own screenshot-diffing caught a real bug in itself on the first run — an unmasked, permanently-animating decorative SVG on Home (`index.html:509-515`) — which doubled as proof the test has real detection power before it was trusted to report a clean pass elsewhere.
+**This is the most valuable part of the review and the part with no existing coverage.** `check-pages.mjs` verifies that rendering completed and that no template placeholders leaked; nothing measures whether boot causes a *visible* discontinuity. This session's own verification has the same gap: it proved the prerendered node survives boot and that `body` computes to `rgb(231,229,220)`, both of which are DOM assertions. Neither shows a reader what they'd see.
 
-**RT-05's answer: no, `createRoot()` does not produce a visible blank frame, on any of the three pages, at real or artificially-delayed boot speed.** Measured with a real CDP `Page.startScreencast` filmstrip (not DOM mutation timing), method validated against a synthetic positive control proven to catch an actual blank frame when one exists. **13.2 is therefore not needed for the reason originally scoped** — but the same filmstrip found a different, real, self-correcting header-layout discontinuity (~20-70 ms, after commit, not a blank canvas, not a form field) that doesn't meet 13.2's own gating condition (a pre-commit window reachable by typing into a form) and so doesn't reopen it. Left as a candidate for its own future task if the author wants it gone; not built here, per scope.
+The open question the review names precisely: React may remove and re-insert nodes within a single commit without the browser painting an intermediate blank frame. **Whether `createRoot()` produces a visible flash is currently unknown**, and both the original bug report and this session's fix assumed it does. That assumption should be tested before anything is built on it.
 
-### 13.2 — Protect typed input across a slow boot `not triggered — see RT-05`
+| ID | Task | Tags | Effort | Notes |
+|---|---|---|---|---|
+| **RT-04** | Playwright regression test for the handoff, four assertions: **(a)** no hydration diagnostics in console or `pageerror`; **(b)** canvas is `rgb(231,229,220)` from the first observable frame, with the React bundles deliberately delayed via `page.route()` so the prerendered state stays inspectable; **(c)** geometry stable across boot — header box, hero top, document width/height within tolerance, `scrollY` — waiting on `window.__dcRootName?.()`; **(d)** masked screenshot pair, React-delayed vs. post-boot, with Turnstile and any animation masked out. | `[DEV]` | M | Playwright is already a devDependency and already drives `npm run check`. Test all three runtime pages. |
+| **RT-05** | **Answer the question RT-04 exists to settle: does `createRoot()` actually produce a displayed blank frame?** Filmstrip capture, not DOM mutation events. Record the answer here either way — it decides whether 13.2 is needed at all. | `[VERIFY]` | S | If there is no visible discontinuity, 13.2 closes unbuilt and the handoff work is done at 13.0. |
 
-**RT-05 found no visible pre-commit window, so this section's own gating condition isn't met — stays unbuilt, correctly.** Kept here rather than deleted since the reasoning (why RT-07/RT-08 are rejected outright, why RT-06 would be the right shape *if* this were ever triggered) stays valid should a future, different finding trigger it. Only real if some later measurement finds a visible window before React commits, reachable by someone typing into a prerendered form. The review is right that this is possible on a stalled bundle and right that it should not be built on principle otherwise.
+### 13.2 — Protect typed input across a slow boot `gated on RT-05`
+
+Only real if RT-05 finds a visible window, and only reachable by someone who types into a prerendered form before React commits. The review is right that this is possible on a stalled bundle and right that it should not be built on principle.
 
 | ID | Task | Tags | Effort | Notes |
 |---|---|---|---|---|
@@ -938,66 +947,116 @@ No new rows here. **`HUGO2-01` (Contribute) → `HUGO2-02` (Home) → `HUGO2-03`
 
 ### What this phase cannot verify in this environment
 
-- **Real-network boot timing.** Every measurement here is a local static server, with the bundles either artificially delayed or loading at local-disk speed. How wide the pre-boot window actually is on a genuinely slow connection is not answerable from this host — moot for RT-06 specifically (not triggered, see 13.2), but still true of the boot sequence generally.
-- **Whether the flash the author originally reported was this repo's white-canvas flash (confirmed fixed, RT-03/RT-C3) or the header-layout transient RT-05 found (real, self-correcting in ~20-70 ms, never previously measured).** Both are now mechanically explained and measured on their own terms; which one (if either) is what prompted the original bug report was never separately confirmed, and can't be from this host.
-- **Whether the RT-05 header transient is perceptible to a human.** 20-70 ms is below common flicker-fusion thresholds for a static layout shift, but this was measured with a camera (CDP screencast), not an observer — stated as unmeasured rather than assumed dismissable.
+- **Real-network boot timing.** Every measurement here is a local static server with the bundles artificially delayed. How wide the pre-boot window actually is on a slow connection, and therefore how often RT-06's scenario occurs in life, is not answerable from this host.
+- **Whether the flash was ever visible to the author in the first place.** The bug report describes an apparent colour change and a flash/reset. The colour half is confirmed fixed and was mechanically explained. The flash/reset half is still, strictly, an unreproduced report — RT-05 is what turns it into a measurement.
 
 ---
 
-## Phase 14 — Term genealogy and discoverability (author-supplied brief, 2026-08-16)
+## Phase 14 — Archive: pockets, and a shelf to put them on (direct author instruction, 2026-08-16)
 
-*(Source: a research brief on tracing the history of "relational sovereignty" and making the site findable for it. Not in `docs/` — same pattern as the Phase 9, 10, 11 and 12 sources. **Add it to `docs/external/`.** IDs continue the `SEO-` series from Phase 7.)*
+*(Two requests, planned together because one constrains the other: give Archive the organisational treatment Learn got under IA-20/IA-21 and Behind the Scenes got under RS-049, and add subtle visual language that makes the page feel like a bookshelf. IDs are `AR-nn`, assigned here. **The first half is not a repeat of RS-049.** Archive is the only one of the three long pages carrying a live, cross-cutting control — the tag filter — and single-open pockets and a whole-shelf filter answer incompatible questions. That collision is the substance of this phase; the shelf styling is the smaller, safer half.)*
 
-**The core of this is scholarship the site's own citation ethic already implies, not an SEO tactic.** Learn names where this project got the term — "the sense borrowed from Matthew Wildcat and, independently, from work on assistive technology" — but the site carries no genealogy anywhere: nothing separating *where we found the phrase* from *where the phrase came from*. On a site whose stated ethic is not putting claims in people's mouths, and which already publishes a fault list, that is a real gap. Filling it also happens to be the strongest available move for ranking on the exact phrase. Do it because it is owed; take the ranking as a side effect.
+### Measured first, planned second
 
-**The brief's own timeline was wrong in two places — confirmed, not just spot-checked.** Verified 2026-08-16 against Crossref, JSTOR, and Cambridge Core directly, not search summaries — see **SEO-04**, shipped.
+Rendered at 1280px against the built page, not read off a comment:
 
-- It attributes Stacy's 2003 article to *Law & Social Inquiry*. It is ***Stanford Law Review*** 55 (2003), pp. 2029–2045 — confirmed via JSTOR and HeinOnline.
-- It presents "2003 vs 2005" as one article with a date to resolve. They are **two separate publications** — the 2003 Stanford piece, and a shorter 2005 article of the same title in *Proceedings of the ASIL Annual Meeting* 99, 396–400 — confirmed via Cambridge Core.
+| | |
+|---|---|
+| Page height | **11,165px** — the longest page on the site now that Learn and Behind the Scenes are pocketed (BTS is 3,748px closed) |
+| Structure | 9 groups, 60 entries, 11 `nav[aria-label="Contents"]` links (9 groups + 2 framing sections) |
+| `.filterbar` height | ~~89px ≥1024 · 141px 768–1023 · 150px ≤700~~ **Correction, found during AR-14 verification: this row was carried from IA-02's citation, not independently re-measured, despite this table's own header claiming otherwise.** The real current baseline (confirmed against the pre-Phase-14 file, so not something this phase's own changes caused) is **141px ≥1024 · 141px 768–1023 · 162px ≤700** — something changed it between IA-02 shipping and now, uninvestigated. IA-02's existing 10rem/160px clearance and this phase's 96px/160px both still cover it; no reader was ever affected. |
+| Words in `<main>` | 3,230 — the hero's "about 11 minutes" is **accurate** at the site's own ~297 wpm convention, and pockets don't change word count, so unlike RS-049 there is no stale reading-time figure to fix |
 
-**Four claims the page has to keep apart,** which the brief gets right and which collapsing into "X coined it" is the failure mode of: first documented use of the exact phrase · first definition of the concept · earlier precursors using different words · later applications in other fields.
+**The organisational case is therefore strong and needs no argument**: same problem Learn and BTS had, larger, and the fix is proven twice.
 
-**14.0 shipped 2026-08-16 — see `docs/research/relational-sovereignty-genealogy.md` and `completed.tasks.md`.** Full citation table, every entry checked against Crossref/JSTOR/Cambridge Core. Two findings beyond the brief's own list, both flagged rather than asserted: a 2001 John Hoffman chapter titled "A Relational View of Sovereignty" that may (unconfirmed — paywalled, no full text reachable) predate Stacy as the first exact-phrase use; and a 2026 CHI paper (Jang/Carrington/Begel) that is the strongest found candidate for the site's own "independently, from work on assistive technology" line, though no source doc on this site names it.
+### AR-C1 — the collision that makes this not-a-repeat-of-RS-049 `[DECISION]`
 
-### 14.1 — The page `shipped 2026-08-16`
+Learn's model is **single-open**: one pocket at a time, every other `section[data-pocket]` set `display:none` (`sections.js` §1.5/1.6). Archive's filter is **cross-cutting**: `archive-filter.js` hides non-matching `[data-tags]` across every group at once and hides any `[data-group]` left with zero matches.
 
-**SEO-05 answered by the author: fold into Learn, no new page.** SEO-06 shipped the same day — a new box in Learn's "Four things this word is doing" pocket (`#sovereignty-senses`), right after the four-senses grid and before the Alfred objection box. States Stacy 2003 predates Wildcat by seventeen years, names the Jang/Carrington/Begel 2026 paper as the strongest found candidate for "work on assistive technology" with the honest caveat that no source document names it directly, and links both directly to their sources (JSTOR, DOI) rather than to `docs/research/` — a repo path isn't a citation a reader can follow. See `completed.tasks.md`.
+Applied naively, the filter stops working. From the data:
 
-### 14.2 — Copy this research may correct `done`
+| Filter | Entries | Groups containing ≥1 | What single-open shows |
+|---|---|---|---|
+| `toolkit` | 1 | **1 of 9** | If any other shelf is open: an empty shelf, and the one match hidden inside a closed pocket |
+| `counter` | 4 | **3 of 9** | At most 1 of the 3 groups that have matches |
+| `article` | 18 | 6 of 9 | At most 1 of 6 |
+| `start` | 14 | 7 of 9 | At most 1 of 7 |
 
-**SEO-07 shipped as part of SEO-06** — the new box states the predates-Wildcat fact directly, which was the one clause this row asked for. **SEO-08 reviewed, no change made:** Archive's Wildcat entry (`hugo/data/archive.yaml`) describes what Wildcat's article argues, not when the phrase originated — it makes no priority claim to correct. Also: Archive's `why` field renders via `{{ .why }}`, HTML-escaped by design, so it cannot carry an inline link without a template change (`safeHTML`) that widens that field's injection surface — out of proportion to what this row asked for.
+A status line reading "Showing 4 of 60 entries" above a visibly empty shelf is a worse version of exactly the defect **WD-06** was raised to fix (the filter narrowing 60 entries to 36 while announcing nothing). Regressing it into "announces a count you cannot see" is not an acceptable trade for shorter scroll.
 
-### 14.3 — Discoverability plumbing `unblocked`
+**Recommended resolution — the two controls answer different questions, so let them:**
 
-| ID | Task | Tags | Effort | Depends on |
+- **Pockets are browsing.** Nine shelves, closed by default, grid is the index, one open at a time. This is the Learn model, unchanged, and it is what the page does at rest.
+- **The filter is searching, and pressing it suspends single-open.** Any filter other than `everything` opens *every* group with ≥1 match, hides non-matching entries as it does today, and leaves zero-match groups shut. Pressing `everything` returns to browse mode with all shelves closed.
+
+That keeps both behaviours honest and needs no new UI: the filter already knows the per-group match count (`archive-filter.js:22`), and the pocket layer already syncs from real `open` state rather than from what last clicked (`sections.js` §1.6), so the two compose rather than fight. **This is the one deliberate divergence from Learn's model, and it should be decided before markup, not discovered during it.**
+
+### AR-C2 — the landmine, which is `sections.js`'s and fires the moment Archive loads it
+
+`sections.js:27-28` measures the sticky obstruction as `document.querySelector(".jump")`, **falling back to a flat 24px when there is no `.jump`.** Archive has no `.jump` and never will — but it has `.filterbar`, sticky, at up to 150px. So `reveal()`'s scroll correction (`sections.js:306`) would land every fragment target **behind the filter bar**, at every width, reintroducing precisely the defect **IA-02** measured and fixed.
+
+Archive does not load `sections.js` today (`archive.html:285-286` is `archive-filter.js` + `notes.js` only), so this is a landmine, not a live bug. **Fix `sections.js` to measure `.jump, .filterbar` before adding the script to Archive, not after.** IA-02's own table is the regression test.
+
+### AR-C3 — two sections stay out of the pocket system
+
+The Contents nav has 11 links, but only 9 are groups. `#fastest-route` (the ten-item reading sequence, dark band) and `#absence` are framing, and belong outside the pockets exactly as `#limits` does on Behind the Scenes. There is a specific reason beyond symmetry: the sequence's ten links point at `#entry-*` ids that live *inside* the group pockets, so following one force-opens the containing pocket via `reveal()`'s ancestor walk. If `#fastest-route` were itself a pocket, single-open would close the list the reader is reading from the moment they used it.
+
+### FLAG-14 — the bookshelf is decoration, and this site has a standing objection to that `[DECISION]`
+
+The same question **FLAG-12** raises about the botanical layer applies here in a smaller way. `docs/design-palette.md` is explicit: accent colour "is not mood," every use is a claim about the content it marks, and "a fifth hue would have to mean something the other four cannot." A bookshelf motif is atmosphere. It asserts nothing.
+
+**The defensible line, and the reason this is a smaller question than FLAG-12:** a shelf is *structural*, not chromatic. It says "these nine things are groups" — which is true, and already true in the markup. So the treatment below is constrained to **neutral rules and edges drawn from the existing `#C9C6BA` / paper / ink set, introducing no hue and making no claim.** Every register colour on the page keeps its current meaning and its current doubling by word or glyph. If even that reads as decoration the site should refuse, AR-09/AR-10 are the rows to strike; nothing above them depends on it.
+
+### 14.0 — Decide, before any markup `done 2026-08-16`
+
+| ID | Task | Tags | Effort |
+|---|---|---|---|
+| ~~**AR-01**~~ | ~~Answer **AR-C1**.~~ **Decided 2026-08-16, author: filter suspends single-open** (the recommended option) — a non-`all` filter opens every group with ≥1 match, `all` returns every pocket to closed. | `[DECISION]` | — |
+| ~~**AR-02**~~ | ~~Answer **FLAG-14**.~~ **Decided 2026-08-16, author: minimal version ships, plus AR-11.** Hue-free register-edge + shelf rule clears the decoration bar; the count badge also gets the shelf-label treatment. | `[DECISION]` | — |
+
+*Alternatives considered for AR-C1 and not recommended, recorded so they aren't re-proposed: **(a) filter narrows the grid instead of the entries** — changes the filter from an entry-level to a group-level control and silently drops the per-entry precision the tags exist for; **(b) an explicit Browse/Filter mode switch** — honest, but adds a control to a page whose whole problem is that it already has a lot of them; **(c) multi-open pockets** — every pocket independently collapsible, no single-open. Cheapest and lowest-risk, and it makes the filter a non-issue, but it is no longer the Learn treatment the request asked for and it gives up the "grid is the only index" property that made RS-049 worth doing.*
+
+### 14.1 — Fix the shared machinery first `shipped 2026-08-16`
+
+| ID | Task | Tags | Effort | Notes |
 |---|---|---|---|---|
-| **SEO-09** | Google Search Console: verify ownership by DNS TXT, submit `sitemap.xml`, then read what the site actually ranks for. Adds no script, no cookie, no third-party request to any page. **Absent from the brief, and the highest-leverage item in this phase.** | `[ACCOUNT]` | S | — |
+| ~~**AR-03**~~ | ~~**AR-C2**: teach `sections.js` to measure `.jump, .filterbar` for `BAR`.~~ **Shipped — see `completed.tasks.md`.** | `[DEV]` | S | — |
+| ~~**AR-04**~~ | ~~Extend `archive-filter.js` to implement the AR-01 decision.~~ **Shipped — see `completed.tasks.md`.** | `[DEV]` | M | — |
 
-**SEO-10 shipped 2026-08-16** — `datePublished`/`dateModified` added to all six reading pages' Article JSON-LD, sourced from each page's actual git history (first and most recent commit touching its `hugo/layouts/*.html` template), not invented. Home, Practise, and Contribute carry no Article block to date — unchanged, consistent with SEO-01's original reading-pages-only scope.
+### 14.2 — Pocket the nine shelves `shipped 2026-08-16`
 
-**SEO-11 partially shipped.** Learn's new box links out to its own two sources; it doesn't need to link to itself. Cross-links *from* Archive and Behind the Scenes are still open — Archive's structural block (above) applies here too, and Behind the Scenes has no existing sentence that mentions the term in a context a link would fit without adding new prose nobody asked for.
+| ID | Task | Tags | Effort | Notes |
+|---|---|---|---|---|
+| ~~**AR-05**~~ | ~~Wrap each of the nine groups in `section[data-pocket]>details.pocket>summary.pocket-summary+div.pocket-body[id]`.~~ **Shipped, one deviation from spec — see `completed.tasks.md`.** `data-group` moved to the outer `section`, not the old div (the div itself no longer exists as a single unit — its h2 went into the summary, its note+entries into the body). | `[DEV]` | M | — |
+| ~~**AR-06**~~ | ~~Rebuild the hero grid as the register-coloured pattern.~~ **Shipped hue-free instead — see `completed.tasks.md` for why.** Archive's nine groups don't differ in register the way Learn's/BTS's sections do, so colour-coding them would itself be the decoration FLAG-14 exists to catch. `#fastest-route`/`#absence` stayed outside the grid as planned (AR-C3). | `[DEV]` | M | — |
+| ~~**AR-07**~~ | ~~Port the pocket CSS block and add `sections.js`.~~ **Shipped — see `completed.tasks.md`.** | `[DEV]` | S | — |
+| ~~**AR-08**~~ | ~~Re-check the colophon page-weight sentence.~~ **Shipped.** Archive rose to 135.8 KB (was 130); `hugo/data/substrate.yaml`'s Page weight row updated to "about 136 KB" with a one-line note on why. | `[DEV]` | S | — |
 
-**SEO-12 verified 2026-08-16.** `npm run check` green: Learn's Hugo output matches source, page weight within tolerance (Archive now 131.5 KB, still inside the colophon's stated range), no CSP/console errors on the two new outbound links (JSTOR, DOI — `<a href>` targets are exempt from `connect-src` by construction). No new page, so `robots.txt`/`sitemap.xml`/canonical were already correct and untouched.
+### 14.3 — The shelf `shipped 2026-08-16 · AR-13 open`
 
-**Not doing, and why.** A named-person `author` in the Article schema is FLAG-04, standing answer **no** — the anonymous commons is deliberate, and the brief's sample JSON-LD assumes otherwise. Search-volume estimation from Trends ratios is deprioritised: approximate by the brief's own admission, and it changes nothing about what gets built. The brief also assumes Netlify hosting; this site is GitHub Pages behind Fastly, and pending SEC-03.0, Cloudflare — its technical checklist needs translating, not pasting.
+Restrained on purpose. Two moves carry almost all of the effect; the rest are optional and should be looked at before being kept.
+
+| ID | Task | Tags | Effort | Notes |
+|---|---|---|---|---|
+| ~~**AR-09**~~ | ~~Register edge from `border-top` to `border-left`.~~ **Shipped.** | `[DEV]` | S | — |
+| ~~**AR-10**~~ | ~~A shelf rule under each card grid.~~ **Shipped** as `.shelf-grid` (3px `#C9C6BA` bottom border + soft shadow). | `[DEV]` | S | — |
+| ~~**AR-11**~~ | ~~Style the count badge as a shelf label.~~ **Shipped** as `.shelf-count` (bracketed monospace). | `[DEV]` | S | — |
+| ~~**AR-12**~~ | ~~Staggered card heights / vertical offsets so the books look unevenly shelved.~~ **Do not build.** Breaks the grid's scannability across 60 entries to buy realism nobody asked for, and fights the `auto-fit` layout at every breakpoint. | — | — |
+| **AR-13** | Wood-grain texture behind the shelf rule. **Built and scoped to one group (`.shelf-wood-trial`, greyscale not brown — a hue would contradict FLAG-14 before the keep/revert question is even answered), screenshotted, reported to the author 2026-08-16. Reads as fine grain texture, not compression noise, but closer to "textured pinstripe" than "wood."** Awaiting the author's keep/revert call — CSS is isolated to two rules and one class reference, one-line revert either way. | `[DEV]` | S |
+
+### 14.4 — Verify `shipped 2026-08-16`
+
+| ID | Task | Tags | Effort |
+|---|---|---|---|
+| ~~**AR-14**~~ | ~~Full verification pass.~~ **Done — see `completed.tasks.md`.** Every listed check passed on a real headless-browser run, including a genuine `color-contrast` failure axe caught (`.door-n`'s grey was 2.68:1, fixed to 5.5:1) and a discovered-not-introduced correction to this phase's own planning note (**AR-C2's cited 89/141/150px filterbar heights don't match measurement** — the true baseline, confirmed against the pre-Phase-14 file, is 141/141/162px; the shipped clearance values cover it regardless, so nothing needed fixing, only the record). | `[DEV]` | M |
+
+### What this phase should not be allowed to quietly change
+
+- **The unfiltered no-JS baseline.** Phase 2's binding constraint names "the Archive's unfiltered baseline" explicitly. Every one of the 60 entries must still render, unfiltered and readable, with scripting off — pockets included, since a closed `<details>` is still in the DOM and `.is-shut` is `@media screen` + `.js-pockets` only.
+- **`archive-filter.js`'s progressive-enhancement promise.** Its own header says it "never draws content — it only narrows what's already there." Opening pockets is still narrowing-adjacent, but the comment needs updating to stay true, not left to drift.
+- **The two open Archive rows this phase does not close.** `SEO-03` (cross-references from entries to Learn principles) and `IA-14`'s "Archive filter feedback and metadata hierarchy" both touch this page and are unaffected — `IA-14` in particular may be partly satisfied by AR-04/AR-11 and should be re-read, not assumed closed.
 
 ---
-
-## Phase 15 — Language audit (author-supplied review, 2026-08-16) `shipped 2026-08-16 — see completed.tasks.md`
-
-*(A sentence-by-sentence editorial review supplied as a `.docx`, saved to `docs/audits/language-audit-2026-08-16.md`. IDs continue as `LA-` rows keyed to page + location, since the review has no ID scheme of its own. The file opens mid-document at "Sentence-by-sentence suggestions" with no title, summary, or executive framing, and its closing numbered list jumps straight to item 6 — items 1–5 are referenced nowhere in the supplied file. Treated as complete on the author's confirmation rather than assumed truncated.)*
-
-**Scope: every row applied in one pass, across all priorities (P0–P3), per the author's explicit instruction rather than staged by priority.** ~65 rows spanning Home, Manifesto, Invitation, Learn, Practise, Archive, Resources, Behind the Scenes, Contribute, plus a site-wide microcopy section. Full row-by-row record, including the handful the audit's own claims required correcting before applying, is in `completed.tasks.md` (Phase 15).
-
-**The two highest-stakes corrections were P0 factual claims on Practise, both wrong as shipped:** "Closing the tab erases it" claimed a guarantee the site cannot make (a browser's own screenshot/print/download history survives independent of what this site does); "Nothing is lost by working in one sitting and closing the tab" was self-contradictory with the sentence immediately before it, which already explains a saved file *is* the loss vector. Both rewritten to state what the site can actually promise. A third P0 pattern ran across Learn, Practise, Resources, and Archive: the five safety-screening prompts were referred to in several places as "the safety gate" or implied to validate coercive control, which the review's own cited source (Kelly & Johnson, on the Archive shelf) argues against directly — every instance now states the prompts are not a validated screening instrument.
-
-**One row's own claim needed checking rather than trusting, per this repo's standing practice.** "Sixty works" (replacing "Thirty-odd texts" on Home) was verified by parsing `hugo/data/archive.yaml` directly (`python3 -c "import yaml; ..."`) rather than taken from the review — the count is exactly 60, so the figure shipped as given.
-
-**Two site-wide rows didn't survive contact with the actual copy and were not applied, with reasoning kept here rather than silently dropped:**
-- **"nothing is signalled by colour alone," repeated across Home/Behind the Scenes/Learn** — flagged for removal with no rationale given (the review's own table has an empty cell here, unlike every other row). Each instance is a distinct, page-specific colour-legend disclosure, not a duplicated stock sentence, and each is a real accessibility guarantee for that page's own colour coding. Removing it would reduce disclosure for no stated reason. Left as-is.
-- **"material floor," to be defined once** — the literal phrase does not occur anywhere in the current site copy (confirmed by grep across every hand-authored and generated page). It may have existed in an earlier draft of the Invitation's "It's the floor" line, which this same audit's own Invitation row already replaced. Nothing to define.
-
-The "framework" and "holds/fails/bears load" site-wide rules were applied within the specific rows the audit itself flagged, not as a separate blanket search-and-replace — an unscoped sweep of every occurrence of "framework" across nine pages is exactly the kind of speculative surface this repo's prior phases (RT-C2, IA-C2–C4) have consistently declined to do without a specific instance in hand.
 
 ## Parked / backlog
 
