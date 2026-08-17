@@ -163,7 +163,9 @@
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Contribute · on terms you set, and can withdraw · about 5 minutes</p>
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.2rem,6vw,4rem);line-height:.98;letter-spacing:-.02em;margin:0 0 1.4rem;max-width:16ch">Contribute without disclosing yourself.</h1>
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">The most useful contributions are rarely accounts of perfect relationships. They concern uncertainty, contradiction, breakdown, accountability, and gradual change.</p>
-    <p style="max-width:52ch;margin:0;color:#3C3E38">Nothing is published without the terms you choose below, and you can revise or remove your work later. The archive should practise the consent it argues for.</p>
+    <p style="max-width:52ch;margin:0 0 1rem;color:#3C3E38">Nothing is published without the terms you choose below, and you can revise or remove your work later. The archive should practise the consent it argues for.</p>
+    <p style="max-width:52ch;margin:0 0 1rem;color:#585B4F;font-size:15px">Withdrawal can remove the site's copy and future use. It cannot retrieve downloads, screenshots, caches, printed copies, or prior authorised reuse.</p>
+    <p style="max-width:52ch;margin:0;color:#8B3A2F;font-size:15px;font-weight:700">This form is not a crisis or abuse-response service and is not monitored continuously. Use <a href="/resources/" style="color:#8B3A2F">Resources</a> for immediate support.</p>
   </div>
 </section>
 
@@ -177,13 +179,14 @@
         </sc-for>
       </div>
       <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0 0 1rem;line-height:1.1">Every submission chooses its own terms</h2>
+      <p style="margin:0 0 1rem;font-size:15px;line-height:1.5;color:#585B4F">Submitting does not transfer ownership. State exactly what the project may publish, adapt, archive, and share, for how long, and under what name.</p>
       <ul style="list-style:none;margin:0 0 1.2rem;padding:0;display:flex;flex-direction:column;gap:.55rem">
-        <sc-for list="{{ terms }}" as="t" hint-placeholder-count="9">
+        <sc-for list="{{ terms }}" as="t" hint-placeholder-count="10">
           <li style="border-top:1px solid #C9C6BA;padding-top:.55rem;font-size:16px;line-height:1.5;color:#3C3E38">{{ t }}</li>
         </sc-for>
       </ul>
       <p style="margin:0 0 2rem;font-size:16px;line-height:1.55;color:#3C3E38">The project's side of the agreement is written down too, and carries a version number: <a href="/behind-the-scenes/">reuse terms v0.2</a>. No unilateral amendment, no arbitration clause, and no change applies retroactively to work already given under earlier terms.</p>
-      <details class="note" style="margin:0;max-width:56ch"><summary>⌖ Do not send material that belongs to a community rather than to you.</summary><p>Cultural knowledge, ceremony, and restricted teachings require permission from the people who hold them, not from us.</p></details>
+      <details class="note" style="margin:0;max-width:56ch"><summary>⌖ Do not send material that belongs to a community rather than to you.</summary><p>Cultural knowledge, ceremony, and restricted teachings require permission from the people who hold them, not from us. Do not submit knowledge, stories, images, or names you lack authority to share; individual consent may not be sufficient for community-governed material.</p></details>
     </div>
 
     <div>
@@ -237,7 +240,7 @@
           </p>
           <div ref="{{ turnstileRef }}" style="margin:0 0 1.2rem"></div>
           <button type="submit" disabled="{{ sending }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px;opacity:{{ sendingOpacity }}">{{ submitLabel }}</button>
-          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.6;color:#5A5D53;margin:1rem 0 0">No tracking pixels. A transactional email service sends the confirmation and unsubscribe messages and never receives the list itself. Full architecture in the colophon. No schedule promised. Your address is confirmed by email before anything is stored, and one link in every letter removes you.</p>
+          <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.6;color:#5A5D53;margin:1rem 0 0">The site does not use analytics or outbound-link tracking. The form sends only the fields needed to review your submission. A transactional email service sends the confirmation and unsubscribe messages and never receives the list itself. Full architecture in the colophon. No schedule promised. Your address is confirmed by email before anything is stored, and one link in every letter removes you.</p>
         </form>
       </sc-if>
     </div>
@@ -403,7 +406,8 @@ class Component extends DCLogic {
     "Whether it may be translated",
     "How much editing is permitted",
     "How long it stays in the archive",
-    "Withdrawal: at any point, where feasible"
+    "Withdrawal: at any point, where feasible",
+    "Whether it may be processed by an LLM (default: no, unless given as separate, specific consent)"
   ];
 
   governance = [
