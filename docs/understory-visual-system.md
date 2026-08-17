@@ -1,7 +1,12 @@
 # The understory — botanical visual system
 
-**Status:** Phase 0 shipped 2026-08-16. The mechanism exists on every page;
-nothing draws yet. Phases 1–4 are still proposals.
+**Status:** Phase 0 shipped 2026-08-16. BM-04's one-page proof (Behind the
+Scenes: a hardcoded stem and six buds, no flowers, no new colour) shipped
+2026-08-17, outside `/botanical.js` and its recipe table by design — see
+that file's own header. Every other page still carries the mechanism with
+nothing wired to it. Phase 1 (Home) and onward are still proposals, and
+still gated on the `BM-02` palette decision this proof deliberately did not
+need.
 **Companion:** `scripts/botanical-gen.mjs` (the drawing generator),
 `/botanical.js` (the runtime), `scripts/check-botanical.mjs` (its tests).
 **Phase 12 in `tasks.md` is the ratified plan** and its `BM-nn` IDs are

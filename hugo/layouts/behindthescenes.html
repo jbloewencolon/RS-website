@@ -90,6 +90,19 @@
   main [id]{scroll-margin-top:1.5rem}
   .pocket-body[id]{scroll-margin-top:2.5rem}
   @media print{details:not([open])>*{display:block!important}}
+  /* BM-04 — one hardcoded composition trialling M1 (raceme descent) +
+     M6 (sway), page-owned rather than promoted to the shared
+     head-base.html block: this is deliberately a one-page proof, not a
+     new site-wide token. noBloom, so no new hue enters — every stroke
+     uses the .bo/.bo-line/.bo-fine/.bo-hair register head-base.html
+     already ships. Delay picked to roughly clear the stem's 1.9s grow
+     plus the last bud's ~1.82s fade-in stagger, so sway reads as
+     starting once the drawing has settled rather than mid-growth; a
+     precise transitionend handshake was judged more machinery than a
+     throwaway trial warrants. Reduced motion neutralises this animation
+     via head-base.html's global rule — nothing extra needed here. */
+  @keyframes bo-sway{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(-3px,3px) rotate(.4deg)}}
+  .bo-anim.is-in{transform-origin:50% 0%;animation:bo-sway 76s ease-in-out 2.4s infinite}
 </style>
 </head>
 <body>
@@ -125,8 +138,54 @@
 </header>
 
 <main>
-<section id="main-content" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+<section id="main-content" style="position:relative;padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
+  <!-- BM-04: the botanical proof, one hardcoded composition. M1 (raceme
+       descent, buds only — noBloom, no new hue) + M6 (sway). Reveals
+       once on scroll via /botanical-trial.js; absent entirely with
+       scripting off or ≤760px (.bo-gutter, head-base.html). No page
+       markup elsewhere refers to it, so deleting these three pieces —
+       this comment block, /botanical-trial.js, and the .bo-anim.is-in
+       rule in this page's own <style> — removes it cleanly. -->
+  <div class="bo-layer" aria-hidden="true">
+    <div class="bo-slot bo-gutter" style="position:absolute;right:0;top:0;width:170px;height:340px">
+      <svg class="bo bo-anim" data-bo-trial viewBox="0 0 160 320" aria-hidden="true" focusable="false">
+        <g>
+          <path class="bo-line bo-grow" pathLength="1" d="M92 -6 C 104 26 78 58 92 90 C 106 122 78 154 92 186 C 106 218 80 250 92 282 C 100 296 96 308 92 320"/>
+        </g>
+        <g style="transition-delay:420ms">
+          <path class="bo-hair bo-grow" pathLength="1" d="M98 28 C 108 24 118 20 128 20"/>
+          <path class="bo-fine" transform="translate(128,20)" d="M0 -2 C -5 3 -5.5 10 0 15 C 5.5 10 5 3 0 -2 Z"/>
+          <path class="bo-hair" transform="translate(128,20)" d="M0 0 C -0.4 5 -0.3 9.5 0 14"/>
+        </g>
+        <g style="transition-delay:560ms">
+          <path class="bo-hair bo-grow" pathLength="1" d="M82 76 C 70 72 58 70 48 68"/>
+          <path class="bo-fine" transform="translate(48,68)" d="M0 -2 C -5 3 -5.5 10 0 15 C 5.5 10 5 3 0 -2 Z"/>
+          <path class="bo-hair" transform="translate(48,68)" d="M0 0 C -0.4 5 -0.3 9.5 0 14"/>
+        </g>
+        <g style="transition-delay:700ms">
+          <path class="bo-hair bo-grow" pathLength="1" d="M100 124 C 111 120 122 118 132 116"/>
+          <path class="bo-fine" transform="translate(132,116)" d="M0 -2 C -5 3 -5.5 10 0 15 C 5.5 10 5 3 0 -2 Z"/>
+          <path class="bo-hair" transform="translate(132,116)" d="M0 0 C -0.4 5 -0.3 9.5 0 14"/>
+        </g>
+        <g style="transition-delay:840ms">
+          <path class="bo-hair bo-grow" pathLength="1" d="M80 172 C 68 170 56 168 46 166"/>
+          <path class="bo-fine" transform="translate(46,166)" d="M0 -2 C -5 3 -5.5 10 0 15 C 5.5 10 5 3 0 -2 Z"/>
+          <path class="bo-hair" transform="translate(46,166)" d="M0 0 C -0.4 5 -0.3 9.5 0 14"/>
+        </g>
+        <g style="transition-delay:980ms">
+          <path class="bo-hair bo-grow" pathLength="1" d="M98 220 C 109 216 120 214 130 212"/>
+          <path class="bo-fine" transform="translate(130,212)" d="M0 -2 C -5 3 -5.5 10 0 15 C 5.5 10 5 3 0 -2 Z"/>
+          <path class="bo-hair" transform="translate(130,212)" d="M0 0 C -0.4 5 -0.3 9.5 0 14"/>
+        </g>
+        <g style="transition-delay:1120ms">
+          <path class="bo-hair bo-grow" pathLength="1" d="M84 268 C 72 266 62 264 52 262"/>
+          <path class="bo-fine" transform="translate(52,262)" d="M0 -2 C -5 3 -5.5 10 0 15 C 5.5 10 5 3 0 -2 Z"/>
+          <path class="bo-hair" transform="translate(52,262)" d="M0 0 C -0.4 5 -0.3 9.5 0 14"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div style="position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Behind the Scenes · exposed structure · about 12 minutes</p>
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.1rem,5.6vw,3.8rem);line-height:1;letter-spacing:-.03em;margin:0 0 1.4rem;max-width:17ch">How the site is made, governed, funded, and corrected.</h1>
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">A site arguing against domination cannot keep its own workings private. What follows is the substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.</p>
@@ -375,7 +434,7 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.6rem 2.4rem;max-width:1000px">
       <div>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.05rem;margin:0 0 .4rem">Who has worked on this</h3>
-        <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">At v0.2: one unpaid person, writing and building. Every future contributor, translator, reviewer, and maintainer will be named here individually, not aggregated into a credit line.</p>
+        <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">The initial and primary author of this site is the scholar poet al colibrí, a Taíno in diaspora living and working on the lands of the peoples of Tkaronto. At v0.2: one unpaid person, writing and building. Every future contributor, translator, reviewer, and maintainer will be named here individually, not aggregated into a credit line.</p>
       </div>
       <div>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.05rem;margin:0 0 .4rem">What is paid</h3>
@@ -395,19 +454,15 @@
   </div>
 </section>
 
-<section style="padding:clamp(2rem,4vw,3rem) 0">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <div style="border-top:1px solid #C9C6BA;padding-top:1.6rem;max-width:700px">
-      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 1rem">About this site</p>
-      <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">This website was drafted with the assistance of generative LLMs (local and frontier models). The thinking, resources, research, core design, and critical arguments are human-first. Copy and coding have gone through LLM input and output cycles.</p>
-    </div>
-  </div>
-</section>
-
 </main>
 
 <footer class="dark" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+    <div style="margin:0 0 1.6rem;max-width:700px">
+      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#DB9E2A;margin:0 0 .8rem">About this site</p>
+      <p style="margin:0;font-size:15px;line-height:1.6;color:#8FA9A2">This website was drafted with the assistance of generative LLMs (local and frontier models). The thinking, resources, research, core design, and critical arguments are human-first. Copy and coding have gone through LLM input and output cycles.</p>
+    </div>
+    <div style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:44ch">v0.2 · no fonts, scripts, or requests from third parties · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
       <a href="/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>
@@ -419,10 +474,12 @@
       <a href="/contribute/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
       <a href="/resources/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
     </nav>
+    </div>
   </div>
 </footer>
 
 <script src="/sections.js"></script>
+<script src="/botanical-trial.js"></script>
 <script src="/notes.js"></script>
 </body>
 </html>
