@@ -1932,3 +1932,35 @@ Every item in the row's checklist, run against a real headless browser, not eyeb
 **Verified:** `npm run build:hugo`, `npm run build`, `npm run check` (clean apart from the two pre-existing sandbox-only Turnstile resets), `npm run test:runtime-handoff` (unaffected — Behind the Scenes isn't one of the three dc-runtime pages), and a direct screenshot comparison confirming the composition renders cleanly hidden, cleanly grown, and cleanly absent on mobile and no-JS.
 
 **`docs/understory-visual-system.md`'s status line updated** to state BM-04 shipped rather than continuing to claim "nothing draws yet," which stopped being true.
+
+---
+
+## Phase 19 — Contribute copy removal, footer grid fix, authorship verification (2026-08-17)
+
+*(Three direct instructions given in session. IDs continue `AC-nn`.)*
+
+### AC-08 — Three lines removed from Contribute's hero `shipped`
+
+Removed on direct author instruction, exact text quoted: the consent-practice line ("Nothing is published without the terms you choose below..."), the withdrawal-materiality paragraph ("Withdrawal can remove the site's copy and future use..."), and the crisis-service disclaimer ("This form is not a crisis or abuse-response service..."). All three were additions from the Phase 15 language audit — the third specifically flagged there as a P0 harm-disclosure line. Noted for the record rather than argued with: removing it means Contribute no longer tells a reader in crisis that the form isn't monitored and to use Resources instead. The instruction was specific, quoted, and unambiguous, so it shipped as given; flagging here is documentation, not a held objection.
+
+Contribute's hero is now two paragraphs: the H1 and the "most useful contributions" lead. Nothing else on the page changed — the actual submission form, its terms checkboxes, and the LLM-processing consent item from Phase 15 are untouched.
+
+### AC-09 — Home's footer grid, corrected `shipped`
+
+**Root cause, confirmed by rendering at three widths, not assumed:** Phase 17's AC-05 added "About this site" as a fifth item to a `grid-template-columns:repeat(auto-fit,minmax(200px,1fr))` grid that previously held exactly four. `auto-fit` doesn't reserve a partial row — at 1280px only four 200px+gap columns fit across 1120px, so the fifth item wrapped to a new row *alone*, leaving three empty column-widths of dead space beside it. At 900px only three columns fit, producing the same lopsided gap one row earlier. This reproduced at every width between roughly 700px and 1400px; only the single-column mobile stack and the already-two-column ≥1400px case happened to look fine.
+
+**Fixed by taking "About this site" out of the grid entirely**, into its own full-width block below it with a `border-top:1px solid #2A4C4C` divider — the same pattern Behind the Scenes' footer already uses for the identical content (Phase 17, AC-05), so the two pages' footers are now visually consistent with each other rather than one being a grid column and the other a stacked block. This also restores the original four-column grid to exactly the layout it had before AC-05, so the pre-existing (and pre-existing-fine) wrap behavior at 900px — Reuse alone on its own row — is untouched; only the newly-lopsided five-column case is what changed.
+
+**Verified:** rendered and screenshotted at 1280/900/600px. All three balanced, no orphaned columns, no dead space. `npm run check` green (index.html's base-block sync, prerender, and axe checks all pass — the footer restructure didn't touch `sync-base.mjs`'s tracked region, only content below it).
+
+### AC-10 — al colibrí authorship copy, verified `verified, no defect`
+
+Checked three things a reader could plausibly mean by "not appearing":
+
+1. **Encoding.** Read the shipped bytes directly (not the editor's rendering) and decoded as UTF-8: `colibrí, a Taíno in diaspora` — both accented characters correct, `<meta charset="utf-8">` present on the page. No mojibake.
+2. **DOM/browser rendering.** Loaded the real page in a headless browser and read `document.body.textContent` at that location — matches exactly, and a screenshot of the opened section shows both accents rendering with the page's normal serif typography, no fallback glyph or tofu box.
+3. **Visibility.** The text lives inside the "Labour and money" `<details>` pocket, which — like all seven other sections on this page (Substrate, Type, Crawler, Reuse, Faults, Roadmap, Changelog) — is **closed by default**, the site's established single-open pocket pattern since IA-20/21. `elementVisibleHeight` is correctly `0` while closed and renders fully once the section is opened (confirmed by clicking the "Labour & money" door link and re-measuring). This is not a defect — it's the same behavior every other section on the page has — but it's the most likely reason a quick look at the page would miss it: it's one click away, not on first paint.
+
+No code changed for this item; reported back once confirmed clean.
+
+**Verified across all three:** `npm run build`, `npm run check` (clean apart from the two pre-existing sandbox-only Turnstile resets), `npm run test:runtime-handoff` (Home and Contribute both touched this phase; all three dc-runtime pages still pass).

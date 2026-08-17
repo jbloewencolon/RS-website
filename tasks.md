@@ -1103,6 +1103,18 @@ The "framework" and "holds/fails/bears load" site-wide rules were applied within
 
 ---
 
+## Phase 19 — Contribute copy removal, footer grid fix, authorship verification (2026-08-17) `shipped 2026-08-17 — see completed.tasks.md`
+
+*(Three direct instructions given in session. IDs continue `AC-nn`.)*
+
+| ID | Task | Outcome |
+|---|---|---|
+| ~~**AC-08**~~ | ~~Remove three lines from Contribute's hero: the consent-practice line, the withdrawal-materiality paragraph, and the crisis-service disclaimer.~~ | **Shipped**, exact text as quoted. The third line was a Phase 15 P0 harm-disclosure addition — noted for the record, not held back; the instruction was specific and unambiguous. |
+| ~~**AC-09**~~ | ~~Fix awkward spacing on Home's footer.~~ | **Root cause found and fixed.** Phase 17's AC-05 made the footer grid 5-`auto-fit` items where it used to be 4; at most common widths the 5th item wrapped alone, leaving a lopsided empty gap. Fixed by pulling "About this site" out of the grid into its own full-width block below (matching Behind the Scenes' own footer pattern), restoring the original 4-column grid. Verified at 1280/900/600px. |
+| ~~**AC-10**~~ | ~~Check the al colibrí authorship copy is appearing properly.~~ | **Verified clean, no defect.** UTF-8 correct at the byte level, renders correctly in a real browser (both accents), and lives inside the "Labour and money" pocket — closed by default like every other section on the page, so it's a click away, not hidden or broken. |
+
+---
+
 ## Parked / backlog
 
 | ID | Task | Reason parked |
