@@ -1796,3 +1796,61 @@ Full row-by-row action from an author-supplied `.docx` editorial pass, applied a
 **Verified:** `npm run build:hugo` (all six Hugo pages regenerated clean against their templates/data files — the pinned Hugo v0.164.0 binary was not present in this environment and was installed from the project's GitHub releases before building, per `hugo/README.md`), `npm run build` (all three dc-runtime pages prerendered clean), and `npm run check` clean apart from the two pre-existing sandbox-only `challenges.cloudflare.com` connection resets on `index.html`/`contribute/` that reproduce identically on every prior commit. `npm run test:runtime-handoff` (Phase 13's regression suite) re-run after these edits since three of the touched pages are exactly what it covers — all three pages still pass, confirming the copy changes didn't disturb the createRoot() takeover.
 
 **A separate, unrelated problem was found and fixed while shipping this phase: `tasks.md` had been silently reverted by an earlier bad merge.** Before this session's edits, resolving a `main`-branch merge conflict in `tasks.md` had used `git checkout --ours` for the whole file, which discarded `origin/main`'s legitimate, already-shipped Phase 14 (term genealogy) section rather than merging around just the conflicting lines. A second, fully-automatic merge later in the same session (`git pull --no-rebase` against a stale remote tip) then silently reverted Phase 13's status markers back to unshipped, with no conflict reported, because the three-way diff happened to align without triggering one. Neither loss touched any other file — confirmed by diffing every file between the last known-good merge commit and the current tip, which showed only `tasks.md` differing — and neither touched `completed.tasks.md`, which had recorded the real Phase 13 work correctly the whole time. Both were repaired by restoring the correct Phase 13 status lines and re-inserting Phase 14 verbatim from `origin/main`'s own commit before this phase's own Phase 15 section was added on top.
+
+---
+
+## Phase 16 — Four direct author corrections (2026-08-17)
+
+*(Four numbered instructions given directly in the session, not from a supplied audit document. IDs are `AC-nn`, assigned here.)*
+
+### AC-01 — The duplicated limit block on Behind the Scenes `shipped`
+
+The page carried "A website returns no land." **twice**: once as the sixth limit closing the "Five limits on the framework" section (`hugo/layouts/behindthescenes.html:179-185`), and again as a standalone "The limit" section near the page end (formerly `:398-407`), quoted verbatim by the author. The two blocks are near-identical in claim and in wording ("anti-colonial design", "sufficiently thoughtful design is not decolonization", the jurisdictional sentence).
+
+**Removed the later one, kept the earlier.** The earlier block is strictly the richer of the two: it carries the same three claims *plus* the `#substrate` cross-reference and the native-land.ca paragraph, and it sits where the argument is actually being made rather than orphaned after the colophon. The only sentence unique to the removed block — "The substrate is not exited either: a naming registry, two browser engines, corporate networks, and a physical data centre remain" — is a compressed restatement of what `hugo/data/substrate.yaml` already states row-by-row on the same page (server location, page weight, third-party requests, build, durability), and the surviving block links directly to it. No claim was lost, only a second copy of one.
+
+### AC-02 — Archive shelf buttons verified, no defect found `verified`
+
+Checked every control on the page against a real headless browser (Chromium via Playwright, 1280px), not by reading markup:
+
+| Control | Result |
+|---|---|
+| 9 contents-grid doors | **All 9 open their shelf**, every entry rendered (8/8, 11/11, 4/4, 5/5, 11/11, 1/1, 9/9, 6/6, 5/5 = 60), single-open honoured (0 other shelves left open) |
+| "Open every shelf" | 9/9 open, 9/9 shown, **60/60 entries visible** |
+| 7 tag filters | All correct: **no match ever hidden inside a shut shelf**, no empty shelf left open, and every `<span data-count>` badge matched its shelf's live filtered count |
+| Deep link to `#entry-*` | Resolves and reveals: 353px tall, containing `<details>` force-opened, scrolled to position |
+| Console | **No errors on any path** |
+
+**Two failures the first test run reported were the test's bugs, not the page's**, and are recorded because both were nearly mistaken for real defects. (1) `archive-filter.js` hides entries with the `hidden` **property** (`it.hidden = !on`, `:23`), not inline `style.display`, so a check reading `style.display` counted every non-matching entry as a wrongly-hidden match. (2) The `all` filter closing every pocket is **AR-01's decided behaviour**, not a regression — "picking everything returns every shelf to closed" (`archive-filter.js:29-41`) — so asserting shelves-open under `all` asserted against spec. A third apparent failure, a deep link measuring 0px, was a stale-state artifact of navigating by hash alone from a page that still had the `counter` filter applied; forcing a real load showed it working. Closed shelves being `display:none` (`main.js-pockets>section[data-pocket].is-shut`) is likewise deliberate — the grid is the only way in, so the summaries are not clickable targets and a test that clicks them times out.
+
+### AC-03 — Named works now link to the work `shipped`
+
+**The two the author named.** Learn's "Forms and labels" pointed both `Andie Nordgren's manifesto` and `Elizabeth Brake's` at `/archive/` — the archive page top, 60 entries, no anchor. Both now go to the work itself, using the URLs the archive's own entries already carry: the Anarchist Library's copy of the Short Instructional Manifesto, and OUP's page for *Minimizing Marriage*.
+
+**Then the rest of the site, checked rather than assumed.** Extracted every `<a href>` with its link text from all nine pages plus both YAML data files and reviewed the internal ones by hand. Two more links named specific intellectual content while pointing at a page:
+
+- **Learn's Alfred objection** — "That argument is `on the shelf`" → now "his chapter in Joanne Barker's *Sovereignty Matters*", linked to the University of Nebraska Press page. Alfred's argument is a chapter in that edited collection, which the archive already carries.
+- **Manifesto thesis 13** — "a movement that cannot survive its own kitchen" → now links to *The Revolution Starts at Home* (AK Press), the book the phrase alludes to and which the archive already carries.
+- **Learn's closing cross-reference** — "Work through the Consent Domains Map" pointed at `/practise/`, which under AC-04 is no longer the map's own page; retargeted to `/practise/#consent-map`.
+
+The remaining `/archive/` links are generic by intent ("the citations live in the archive", "go to the writers", nav) and were left alone.
+
+**One genuinely dead URL found and fixed, on three pages.** All 88 unique outbound URLs were requested. `https://www.gida-global.org/care` returns **404** while the site root returns 200 — the CARE Principles page is at `/careprinciples`. Corrected in `learn.html`, `behindthescenes.html`, and `archive.html`. Every other non-200 was checked individually and is an origin bot-block on a live page, not a broken link: the 403s are Cloudflare (`server: cloudflare` on nebraskapress, dl.acm.org via DOI, Duke, Wiley, UTP), the 202/203/307s are challenge-or-redirect responses from OUP/211.ca/NWAC/Egale/PubMed, and the one 429 (sup.org) is rate-limiting. The `doi.org` links resolve correctly (302 → publisher) before the publisher blocks the bot. Separately, all **97 in-page fragment links across all nine pages resolve to a real `id`** — zero broken.
+
+### AC-04 — Practise's hero generalised `shipped`
+
+The page holds two working tools and names seven more, but its `<h1>` was **"The Consent Domains Map"** — the whole page titled after tool 01, with the hero's lead and description both describing only that tool, and tool 02 ("An ending, prepared for", `#endings-tool`) arriving with no page-level acknowledgement that it existed.
+
+**The map's framing moved down to the map; the hero became the page's.** New `<h1>` "Tools for the actual relationship", with a lead that says what the page is for and a description that states honestly what is built (two) versus named (seven). The map's kicker, title, and its two paragraphs of specific framing now open `#consent-map` as an `<h2>`, mirroring exactly how `#endings-tool` already titled itself. `<title>`, `og:title`, `description`, and `og:description` updated to match.
+
+**The new `<h2>` is deliberately outside the `sc-if` state blocks.** Placing it inside `{{ atSafety }}` — the obvious spot, since that gate is the map's entry state — would have made the map's own title vanish the moment a reader clicked Continue. It sits in its own always-rendered section instead, so the tool stays titled through all three states (safety → grounding → tool) and on the printed sheet, with the surrounding prose marked `noprint`.
+
+**One inherited inaccuracy corrected while rewriting.** The hero's safety note was generalised to "Each tool opens with a safety check before it starts" rather than the tempting "prompts that may help you notice control" — the five control-noticing prompts gate tool 01 only; tool 02 opens on a different gate ("if leaving safely means leaving suddenly, close this and go"). Home's Practise door was also updated, since it too described the page as only the Consent Map.
+
+Verified: heading order on load is now one `H1` followed by `H2` per tool, no page errors.
+
+### Also repaired: Phase 15 lost from `tasks.md` by conflict resolution
+
+Resolving this branch's conflicts against `main` by taking `main`'s whole `tasks.md` — the author's chosen strategy, since `main` carried Phase 14, which the branch lacked — necessarily dropped the branch's own **Phase 15** section, the reverse of the loss recorded at the end of Phase 15 above. Restored: Phase 15 re-inserted verbatim from commit `5d46030` after Phase 14, and the `LA-` prefix put back into the ID legend, so the file now carries **both** phases. `completed.tasks.md` was never affected. The generated `archive/index.html` also taken from `main` in that resolution was regenerated from the Hugo sources, which had merged cleanly and retained the Phase 15 copy edits.
+
+**Verified:** `npm run build:hugo`, `npm run build`, `npm run check` (clean but for the two pre-existing sandbox-only Turnstile connection resets on `index.html`/`contribute/`; page weight in range at Archive 137.0 KB, all six Hugo pages match their generated output, all 19 pages same-origin), and `npm run test:runtime-handoff` (all three dc-runtime pages pass — Practise is one of them and took the largest edit this phase).

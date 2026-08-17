@@ -291,7 +291,7 @@
             
             <div style="border-top:2px solid #6B4C12;padding-top:.7rem">
               <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6B4C12;margin:0 0 .35rem">Page weight</dt>
-              <dd style="margin:0;font-size:16px;line-height:1.5">Ranges from about 21 KB (the Invitation) to about 131 KB (the Archive) per page, uncompressed HTML. Three pages (Home, Practise, Contribute) additionally load a shared ~70 KB script once per browser session, cached rather than re-downloaded on every page view. This figure has drifted stale twice before: first a flat &#34;under 60 KB&#34; claim outgrown by the site&#39;s own content, then a range that drifted 10&#43; KB out of date as pages kept changing after it was written. It is now checked in the build&#39;s own test suite (checkPageWeight in scripts/check-pages.mjs) against every shipped file&#39;s actual size, so a future edit that moves this number without updating the words here fails the build instead of quietly becoming untrue a third time. It rose by about 2 KB per page in August 2026, when the CSS every page had been carrying its own copy of was extracted into one shared block: that block now also holds a set of control styles the pages have not yet been switched over to, so for the moment each page ships a little more than it uses. Switching them over removes the per-element styling those replace. A further ~1 KB per page went into the same shared block in August 2026 for the botanical layer&#39;s stroke, growth and print rules; no page draws anything with them yet, and the layer adds no request to any page.</dd>
+              <dd style="margin:0;font-size:16px;line-height:1.5">Ranges from about 21 KB (the Invitation) to about 137 KB (the Archive) per page, uncompressed HTML: no images, no icon fonts, no video. Three pages (Home, Practise, Contribute) additionally load a shared ~70 KB script once per browser session, cached rather than re-downloaded on every page view. This figure has drifted stale twice before: first a flat &#34;under 60 KB&#34; claim outgrown by the site&#39;s own content, then a range that drifted 10&#43; KB out of date as pages kept changing after it was written. It is now checked in the build&#39;s own test suite (checkPageWeight in scripts/check-pages.mjs) against every shipped file&#39;s actual size, so a future edit that moves this number without updating the words here fails the build instead of quietly becoming untrue a third time. It rose by about 2 KB per page in August 2026, when the CSS every page had been carrying its own copy of was extracted into one shared block: that block now also holds a set of control styles the pages have not yet been switched over to, so for the moment each page ships a little more than it uses. Switching them over removes the per-element styling those replace. A further ~1 KB per page went into the same shared block in August 2026 for the botanical layer&#39;s stroke, growth and print rules; no page draws anything with them yet, and the layer adds no request to any page. The Archive figure rose again in August 2026 with two additions: the groups became pockets with their own hero grid (AR-05/06/07), and the botanical layer shipped (BM-06) — together these account for the rise from 131 KB to 137 KB.</dd>
             </div>
             
             <div style="border-top:2px solid #366943;padding-top:.7rem">
@@ -437,7 +437,7 @@
       
     </div>
     <details class="note" style="color:#73968D;max-width:58ch"><summary style="color:#73968D">⌖ The caveat that governs all of this</summary><p>opacity is owed to the crawler and the market, never to the disabled reader. Nothing here is hidden from assistive technology, and no semantic structure is removed to look less legible. Withhold from extraction; disclose fully to those who need access to participate.</p></details>
-    <p style="max-width:54ch;margin:0;color:#B8C7C1">Protocol-gated access, where a community rather than this project sets who may see what and under which relationship, is not built yet. When it is, it will follow work that already exists rather than a scheme invented here: <a href="https://mukurtu.org" style="color:#DB9E2A">Mukurtu CMS</a>, built with the Warumungu community; <a href="https://localcontexts.org" style="color:#DB9E2A">Local Contexts</a> TK and BC Labels; and the <a href="https://www.gida-global.org/care" style="color:#DB9E2A">CARE Principles</a> for Indigenous data governance.</p>
+    <p style="max-width:54ch;margin:0;color:#B8C7C1">Protocol-gated access, where a community rather than this project sets who may see what and under which relationship, is not built yet. When it is, it will follow work that already exists rather than a scheme invented here: <a href="https://mukurtu.org" style="color:#DB9E2A">Mukurtu CMS</a>, built with the Warumungu community; <a href="https://localcontexts.org" style="color:#DB9E2A">Local Contexts</a> TK and BC Labels; and the <a href="https://www.gida-global.org/careprinciples" style="color:#DB9E2A">CARE Principles</a> for Indigenous data governance.</p>
       </div>
     </details>
   </div>
@@ -737,17 +737,6 @@
     </div>
       </div>
     </details>
-  </div>
-</section>
-
-<section style="padding:0 0 clamp(3rem,6vw,4.5rem)">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <div style="border-top:2px solid #8B3A2F;padding-top:1.6rem;max-width:700px">
-      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#8B3A2F;margin:0 0 1rem">The limit</p>
-      <p style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(1.3rem,3.2vw,1.9rem);line-height:1.14;letter-spacing:-.02em;margin:0 0 1.2rem">A website returns no land.</p>
-      <p style="margin:0 0 1rem;max-width:52ch">Everything on this page is more accurately called anti-colonial design: a refusal to reproduce colonial form. That is a real but modest achievement, and it is not the repatriation of territory or life. Sufficiently thoughtful design is not decolonization.</p>
-      <p style="margin:0;max-width:52ch;color:#3C3E38">The substrate is not exited either: a naming registry, two browser engines, corporate networks, and a physical data centre remain. Where this work touches actual sovereignty it is jurisdictional: whose law governs a community's data, on whose territory the servers sit, who holds deletion authority, who may crawl and train. That is a question about land, not layout.</p>
-    </div>
   </div>
 </section>
 
