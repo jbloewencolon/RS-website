@@ -72,6 +72,8 @@
   *{box-sizing:border-box}
    
   h1,h2,h3{text-wrap:balance}
+   
+  body{overflow-wrap:break-word}
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
    
   .dark :focus-visible{outline-color:#DB9E2A}
@@ -167,7 +169,7 @@
 </section>
 
 <section style="padding:0 0 clamp(3rem,6vw,4.5rem)">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:3rem;align-items:start">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:3rem;align-items:start">
     <div>
       <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0 0 1rem;line-height:1.1">What can be sent</h2>
       <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem">
@@ -192,7 +194,7 @@
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 .6rem">received</p>
           <p style="margin:0 0 .8rem;font-size:17px;line-height:1.5">Check your email. There is a confirmation link waiting, and nothing is recorded until you click it.</p>
           <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F">The link expires in 48 hours. Nothing will be published, quoted, or archived beyond the terms you chose, and an address that is never confirmed is never stored at all.</p>
-          <button type="button" onClick="{{ edit }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.45rem .8rem;margin-top:1.2rem;cursor:pointer;border-radius:2px">use a different address</button>
+          <button type="button" onClick="{{ edit }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:none;border:1px solid #C9C6BA;color:#585B4F;padding:.7rem 1rem;min-height:44px;margin-top:1.2rem;cursor:pointer;border-radius:2px">use a different address</button>
         </div>
       </sc-if>
       <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
@@ -233,9 +235,12 @@
           <p id="contribute-note-hint" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#5A5D53;margin:0 0 .5rem;line-height:1.5">Optional. A sentence is enough. Do not put anything here you would not want read by a stranger. Submitting the form below does not send it anywhere by itself. Use the email link underneath the box for that.</p>
           <textarea id="contribute-note" rows="4" aria-describedby="contribute-note-hint" value="{{ offer }}" onChange="{{ setOffer }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.7rem .8rem;margin-bottom:.7rem;font-family:Georgia,'Iowan Old Style',Palatino,serif;font-size:16px;line-height:1.5;color:#191B18;resize:vertical"></textarea>
           <p style="margin:0 0 1.4rem">
-            <a href="{{ noteMailto }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;display:inline-flex;align-items:center;min-height:44px">Email this note to relationalsovereignty@gmail.com →</a>
+            <a href="{{ noteMailto }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;display:inline-flex;align-items:center;min-height:44px;min-width:0;overflow-wrap:anywhere">Email this note to relationalsovereignty@gmail.com →</a>
           </p>
-          <div ref="{{ turnstileRef }}" style="margin:0 0 1.2rem"></div>
+          <div ref="{{ turnstileRef }}" style="margin:0 0 1.2rem;min-height:65px"></div>
+          <sc-if value="{{ turnstileFailed }}" hint-placeholder-val="{{ false }}">
+            <p role="status" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #C9C6BA;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem">The verification above didn't load — a content blocker or network issue can do that. Use the "Email this note" link above instead.</p>
+          </sc-if>
           <button type="submit" disabled="{{ sending }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px;opacity:{{ sendingOpacity }}">{{ submitLabel }}</button>
           <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.6;color:#5A5D53;margin:1rem 0 0">The site does not use analytics or outbound-link tracking. The form sends only the fields needed to review your submission. A transactional email service sends the confirmation and unsubscribe messages and never receives the list itself. Full architecture in the colophon. No schedule promised. Your address is confirmed by email before anything is stored, and one link in every letter removes you.</p>
         </form>
@@ -248,7 +253,7 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">Community agreements</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.01em;margin:0 0 2rem;max-width:24ch;color:#E7E5DC">What the commons refuses.</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2.6rem;max-width:1000px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:2.6rem;max-width:1000px">
       <div>
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#73968D;margin:0 0 .9rem;border-bottom:1px solid #2A4C4C;padding-bottom:.5rem">The obvious</p>
         <p style="margin:0;font-size:16px;line-height:1.6;color:#B8C7C1">Racism. Colonial appropriation. Misogyny. Homophobia. Transphobia. Ableism. Coercion. Harassment. Stalking. Threats. Non-consensual disclosure. Punitive pile-ons.</p>
@@ -275,7 +280,7 @@
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.01em;margin:0 0 1.2rem;max-width:26ch">A site about non-domination cannot be governed by invisible authority.</h2>
     <p style="max-width:54ch;margin:0 0 1.4rem;color:#3C3E38">These structures do not exist yet. Naming them before there is a community is the only way they can be built with one, rather than announced to one.</p>
     <p style="max-width:54ch;margin:0 0 2rem;color:#3C3E38;font-size:15px;line-height:1.55">One thing that will need a channel here, once there's a community to route it to: what got said to you, in this site's own vocabulary, to avoid answering something. <a href="/learn/#field-guide">Learn's field guide</a> names it as the strongest candidate this site has for something a reader could add, parked here rather than built, per fault 03.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.6rem 2.4rem;max-width:1000px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:1.6rem 2.4rem;max-width:1000px">
       <sc-for list="{{ governance }}" as="g" hint-placeholder-count="6">
         <div>
           <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15">{{ g.q }}</h3>
@@ -315,7 +320,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
 class Component extends DCLogic {
-  state = { sent: false, email: "", name: "", offer: "", interests: [], hp: "", sending: false, error: "", emailInvalid: false, turnstileToken: "" };
+  state = { sent: false, email: "", name: "", offer: "", interests: [], hp: "", sending: false, error: "", emailInvalid: false, turnstileToken: "", turnstileFailed: false };
 
   // The dispatch signup endpoint. Nothing is stored there until the
   // reader clicks the confirmation link this call triggers.
@@ -354,15 +359,27 @@ class Component extends DCLogic {
         sitekey: Component.TURNSTILE_SITE_KEY,
         callback: (token) => this.setState({ turnstileToken: token }),
         "expired-callback": () => this.setState({ turnstileToken: "" }),
-        "error-callback": () => this.setState({ turnstileToken: "" }),
+        // A widget that rendered and then failed (not one that simply
+        // never arrived, handled by the poll timeout below) — MC-08.
+        "error-callback": () => this.setState({ turnstileToken: "", turnstileFailed: true }),
       });
     };
     if (window.turnstile) render();
     else {
       // api.js loads async and can finish after this div mounts —
       // poll briefly rather than depending on script/render order.
+      // MC-08 (Phase 20): bounded, not indefinite — a content blocker or
+      // a network failure means window.turnstile never arrives, and an
+      // unbounded poll left the reader looking at permanently empty
+      // space with no way to know the widget had failed rather than
+      // just being slow. 8s is generous for a script that normally
+      // resolves in well under one; past that, this stops polling and
+      // surfaces the non-widget recovery route below instead.
+      let elapsed = 0;
       const poll = setInterval(() => {
-        if (window.turnstile) { clearInterval(poll); render(); }
+        elapsed += 100;
+        if (window.turnstile) { clearInterval(poll); render(); return; }
+        if (elapsed >= 8000) { clearInterval(poll); this.setState({ turnstileFailed: true }); }
       }, 100);
     }
   }
@@ -451,6 +468,7 @@ class Component extends DCLogic {
       setName: (ev) => this.setState({ name: ev.target.value }),
       setOffer: (ev) => this.setState({ offer: ev.target.value }),
       turnstileRef: this.turnstileRef,
+      turnstileFailed: this.state.turnstileFailed,
       sending: this.state.sending,
       sendingOpacity: this.state.sending ? "0.6" : "1",
       submitLabel: this.state.sending ? "Sending…" : "Send",

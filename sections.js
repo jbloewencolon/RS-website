@@ -17,17 +17,35 @@
 // exactly what that CSP is there to refuse.
 (function () {
   // px of the sticky bar to keep clear of the viewport top, measured rather
-  // than hardcoded: Behind the Scenes still carries a .jump (WD-14, the
-  // only long page with no other orientation), Archive carries a
-  // .filterbar (AR-03 — its sticky tag filter, up to 150px, is a second
-  // shape of the same obstruction), but Learn has neither — its sections
-  // became closed-by-default pockets (IA-15-adjacent, direct author
-  // instruction) opened from the hero grid instead of a scroll-spy bar,
-  // which removed the bar's reason to exist on that page specifically.
-  // A page with neither gets a small flat default instead of a stale
-  // number left over from a bar that isn't there to clear.
+  // than hardcoded: Archive carries a .filterbar (AR-03 — its sticky tag
+  // filter, up to 150px, is the one case of this on the site today).
+  // Behind the Scenes and Learn have neither a .jump nor a .filterbar in
+  // their current markup (WD-14's .jump was since removed from Behind
+  // the Scenes; Learn's sections became closed-by-default pockets opened
+  // from the hero grid instead of a scroll-spy bar) — both get the flat
+  // default below rather than a stale number left over from a bar that
+  // isn't there to clear.
   var jumpEl = document.querySelector(".jump, .filterbar");
   var BAR = jumpEl ? jumpEl.getBoundingClientRect().height : 24;
+
+  // MC-09 (Phase 20): keep BAR live, not a single measurement frozen at
+  // script load. The chip row can wrap onto a different number of lines
+  // as fonts finish loading, as filters are chosen/cleared, or on
+  // rotation — any of which changes .filterbar's real height after this
+  // script already ran once. Published as --sticky-offset so the CSS
+  // scroll-margin-top rules that govern *native* fragment scrolling (a
+  // typed #hash, a plain <a href="#…"> with JS off, a screen reader's
+  // "go to heading") read the same live number this file's own
+  // programmatic scrolls below already do, instead of each maintaining
+  // its own guess that can drift out of sync with the other.
+  if (jumpEl && typeof ResizeObserver === "function") {
+    var publishStickyOffset = function () {
+      BAR = jumpEl.getBoundingClientRect().height;
+      document.documentElement.style.setProperty("--sticky-offset", BAR + "px");
+    };
+    publishStickyOffset();
+    new ResizeObserver(publishStickyOffset).observe(jumpEl);
+  }
 
   // Set by section 0 if the page has the chart/rows switch, so section 1's
   // bulk-open can put the switch on "rows" when it opens the stress cards —

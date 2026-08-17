@@ -1,8 +1,18 @@
 // Serves the static site, then for each page: renders it in a real browser
 // and runs (1) an HTML-validity check against the rendered DOM (the raw
 // `.dc.html` source is a template — `<x-dc>`, `sc-for`, `sc-if`, `{{ }}` —
-// and isn't meaningful HTML on its own) and (2) an axe-core accessibility
-// scan. Exits non-zero if either check finds a problem on any page.
+// and isn't meaningful HTML on its own), (2) an axe-core accessibility
+// scan, and (3) mobile reflow/target-size checks (MC-01/MC-02, Phase 20).
+// Exits non-zero if any check finds a problem on any page.
+//
+// MC-01: reflow and target-size checks used to live in the separate
+// responsive-audit.mjs, gated on nine paths — but six of those nine were
+// 1.4 KB <meta http-equiv="refresh"> redirect stubs (BUG-03), not the real
+// pages, so that suite was passing by testing almost nothing. This file
+// already serves all nine real directory routes and already launches
+// Chromium correctly, so the checks moved here instead of the stub list
+// being extended. responsive-audit.mjs now only takes screenshots, as a
+// manual review tool, at the same nine real routes.
 import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
@@ -75,6 +85,115 @@ const MIME = { ".html": "text/html", ".js": "application/javascript" };
 // Phone width for the second accessibility pass on every page — narrow
 // enough that anything with a fixed min-width actually overflows.
 const NARROW_WIDTH = 375;
+
+// MC-02: widths and text-zoom levels for the reflow check (WCAG 1.4.10),
+// checked against the page already loaded for the axe pass above — a
+// resize + re-measure, not a fresh navigation, so this stays cheap. 320
+// is 1.4.10's own floor; 200% is the other axis Phase 20's own testing
+// found necessary (MC-C3): the shell's padding is a clamp() that shrinks
+// as root font-size grows, so a grid track that clears the viewport at
+// 100% text can land past it once text doubles. A 320px-only overflow
+// test — which is all responsive-audit.mjs ever ran — would keep passing
+// on that bug forever.
+const MOBILE_WIDTHS = [
+  { width: 320, height: 568 },
+  { width: 390, height: 844 },
+];
+const TEXT_ZOOMS = [100, 200];
+
+// Runs in the browser: finds elements whose right edge sits past the
+// viewport. Two categories are not real overflow bugs and are excluded:
+// (1) anything inside an element that itself scrolls horizontally on
+// purpose (e.g. Learn's matrix wrapper, Archive's filter chips) — WCAG
+// 1.4.10 explicitly permits two-dimensional scrolling to be contained
+// within such a component; (2) off-canvas skip links, parked at a large
+// negative left offset until focused, which is the standard technique
+// for that pattern and not a layout defect.
+function findOverflowCulprits(vw) {
+  const found = [];
+  const seen = new Set();
+  for (const el of document.querySelectorAll("body *")) {
+    if (el.closest('[aria-hidden="true"]')) continue;
+    const r = el.getBoundingClientRect();
+    if (r.width === 0 && r.height === 0) continue;
+    if (r.left < -100) continue; // off-canvas until focused (skip links)
+    if (r.right <= vw + 2) continue;
+    let scroller = null;
+    for (let p = el.parentElement; p; p = p.parentElement) {
+      const ov = getComputedStyle(p).overflowX;
+      if (ov === "auto" || ov === "scroll") { scroller = p; break; }
+    }
+    if (scroller) continue;
+    const cls = typeof el.className === "string" && el.className ? "." + el.className.split(" ").filter(Boolean).slice(0, 2).join(".") : "";
+    const key = el.tagName + cls;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    found.push(`${el.tagName.toLowerCase()}${cls} (right edge ${Math.round(r.right)}px, viewport ${vw}px)`);
+    if (found.length >= 5) break;
+  }
+  return found;
+}
+
+// Runs in the browser: WCAG 2.5.8's 24 CSS px floor, on real interactive
+// controls only. A radio/checkbox's real tap target is the label
+// wrapping it, not the tiny native glyph. Inline links inside a run of
+// prose are exempt under 2.5.8's own inline exception — approximated
+// here as "this is a CSS-inline <a> whose parent contains substantially
+// more text than the link itself," which is what a sentence link looks
+// like and a standalone nav/button link does not.
+function findSmallTargets() {
+  const found = [];
+  for (const el of document.querySelectorAll('button, a, input, [role="button"]')) {
+    if (el.closest('[aria-hidden="true"]')) continue;
+    if (el.tagName === "A") {
+      const cs = getComputedStyle(el);
+      const parent = el.parentElement;
+      if (cs.display === "inline" && parent) {
+        const parentText = parent.textContent.trim();
+        const linkText = el.textContent.trim();
+        if (parentText.length > linkText.length + 10) continue; // inline prose, exempt
+      }
+    }
+    const target = (el.tagName === "INPUT" && (el.type === "radio" || el.type === "checkbox") && el.closest("label")) || el;
+    const r = target.getBoundingClientRect();
+    if (r.width > 0 && r.height > 0 && (r.height < 24 || r.width < 24)) {
+      found.push(`${el.tagName.toLowerCase()} "${(el.textContent || el.getAttribute("aria-label") || "").trim().slice(0, 30)}" — ${Math.round(r.width)}x${Math.round(r.height)}px`);
+    }
+  }
+  return found.slice(0, 8);
+}
+
+// Runs the reflow + target-size checks against a page already navigated
+// and settled (called from the per-page loop in main(), after the axe
+// passes). Restores the viewport/zoom it found the page in when done,
+// since nothing downstream depends on either.
+async function checkMobile(page, restoreViewport) {
+  const problems = [];
+  for (const vp of MOBILE_WIDTHS) {
+    await page.setViewportSize(vp);
+    for (const zoom of TEXT_ZOOMS) {
+      await page.evaluate((z) => {
+        document.documentElement.style.fontSize = z === 100 ? "" : `${z}%`;
+      }, zoom);
+      await page.waitForTimeout(100);
+      const { scrollWidth, clientWidth } = await page.evaluate(() => ({
+        scrollWidth: document.documentElement.scrollWidth,
+        clientWidth: document.documentElement.clientWidth,
+      }));
+      if (scrollWidth > clientWidth + 1) {
+        const culprits = await page.evaluate(findOverflowCulprits, vp.width);
+        const detail = culprits.length ? culprits.join("; ") : "no isolated culprit (likely inside a permitted scroller)";
+        problems.push(`reflow @${vp.width}px/${zoom}% text: ${scrollWidth}px content in ${clientWidth}px viewport — ${detail}`);
+      }
+    }
+  }
+  await page.evaluate(() => { document.documentElement.style.fontSize = ""; });
+  await page.setViewportSize({ width: 320, height: 568 });
+  const smallTargets = await page.evaluate(findSmallTargets);
+  for (const t of smallTargets) problems.push(`touch target under 24px: ${t}`);
+  await page.setViewportSize(restoreViewport);
+  return problems;
+}
 
 function serve() {
   return new Promise((resolve) => {
@@ -448,6 +567,14 @@ async function main() {
     for (const v of axeNarrow.violations) {
       if (seenAtDesktop.has(v.id)) continue;
       pageProblems.push(`axe @${NARROW_WIDTH}px [${v.impact}] ${v.id}: ${v.help} (${v.nodes.length} node(s))`);
+    }
+
+    // MC-01/MC-02: reflow and target-size, on the nine real routes only
+    // (the same set GROUND is keyed to — glyph-check.html is a standalone
+    // diagnostic harness with no base block and no mobile-layout claim).
+    if (GROUND[pg]) {
+      const mobileProblems = await checkMobile(page, { width: NARROW_WIDTH, height: 800 });
+      pageProblems.push(...mobileProblems);
     }
 
     if (pageProblems.length) {

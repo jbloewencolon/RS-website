@@ -82,6 +82,8 @@
   *{box-sizing:border-box}
    
   h1,h2,h3{text-wrap:balance}
+   
+  body{overflow-wrap:break-word}
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
    
   .dark :focus-visible{outline-color:#DB9E2A}
@@ -148,7 +150,7 @@
   }
    
   @media (max-width:1023px){
-    article[data-tags]{scroll-margin-top:10rem!important}
+    article[data-tags]{scroll-margin-top:var(--sticky-offset,10rem)!important}
   }
   .venn-scroll{position:relative}
   .venn-scroll::after{content:"";position:absolute;top:0;right:0;bottom:.5rem;width:32px;background:linear-gradient(to right,rgba(231,229,220,0),#E7E5DC 90%);pointer-events:none}
@@ -159,7 +161,7 @@
    
   .kick{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:none;margin:0 0 .5rem;color:#5A5D53}
   h2.sec{font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0}
-  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px}
+  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px}
   nav[aria-label="Contents"] a{display:flex;flex-direction:column;gap:.35rem;height:100%;box-sizing:border-box;border:1px solid #C9C6BA;border-left:3px solid #C9C6BA;border-radius:2px;padding:.8rem .9rem;text-decoration:none;color:#191B18;min-height:44px}
   nav[aria-label="Contents"] a:hover{border-left-color:#2C5A38}
   nav[aria-label="Contents"] a:hover .door-t{color:#2C5A38}
@@ -178,7 +180,7 @@
   @media screen{main.js-pockets>section[data-pocket].is-shut{display:none}}
   .pocket-body{padding-top:.4rem}
   .pocket-body[id]{scroll-margin-top:6rem}
-  @media (max-width:1023px){.pocket-body[id]{scroll-margin-top:10rem!important}}
+  @media (max-width:1023px){.pocket-body[id]{scroll-margin-top:var(--sticky-offset,10rem)!important}}
   @media print{details:not([open])>*{display:block!important}}
 
    
@@ -302,7 +304,7 @@
         <h2 class="sec">Relational sovereignty &amp; Indigenous relational freedom <span data-count class="shelf-count">8</span></h2>
       </summary>
       <div class="pocket-body" id="relational-sovereignty--indigenous-relational-freedom">
-        <div class="shelf-grid shelf-wood-trial" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid shelf-wood-trial" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           
           
           
@@ -422,7 +424,7 @@
         <h2 class="sec">Decolonization, possession, land, kinship, intimacy <span data-count class="shelf-count">11</span></h2>
       </summary>
       <div class="pocket-body" id="decolonization-possession-land-kinship-intimacy">
-        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           
           
           
@@ -581,7 +583,7 @@
         <h2 class="sec">Possession, the person, and kinship made void <span data-count class="shelf-count">4</span></h2>
       </summary>
       <div class="pocket-body" id="possession-the-person-and-kinship-made-void">
-        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           
           
           
@@ -649,7 +651,7 @@
         <h2 class="sec">Relation, opacity, refusal, survivance <span data-count class="shelf-count">5</span></h2>
       </summary>
       <div class="pocket-body" id="relation-opacity-refusal-survivance">
-        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           
           
           
@@ -730,7 +732,7 @@
         <h2 class="sec">Relational autonomy, interdependence, care <span data-count class="shelf-count">11</span></h2>
       </summary>
       <div class="pocket-body" id="relational-autonomy-interdependence-care">
-        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           
           
           
@@ -889,7 +891,7 @@
         <h2 class="sec">Bodies, regulation, and what happens before words <span data-count class="shelf-count">1</span></h2>
       </summary>
       <div class="pocket-body" id="bodies-regulation-and-what-happens-before-words">
-        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           
           
           
@@ -918,7 +920,7 @@
         <h2 class="sec">Hierarchy, custom commitments, possession <span data-count class="shelf-count">9</span></h2>
       </summary>
       <div class="pocket-body" id="hierarchy-custom-commitments-possession">
-        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           
           
           
@@ -1051,7 +1053,7 @@
         <h2 class="sec">Accountability, repair, transformative justice <span data-count class="shelf-count">6</span></h2>
       </summary>
       <div class="pocket-body" id="accountability-repair-transformative-justice">
-        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           
           
           
@@ -1145,7 +1147,7 @@
         <h2 class="sec">Love, eros, and why any of this is worth doing <span data-count class="shelf-count">5</span></h2>
       </summary>
       <div class="pocket-body" id="love-eros-and-why-any-of-this-is-worth-doing">
-        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           
           
           
@@ -1220,7 +1222,7 @@
 
 
 <section id="fastest-route" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:3rem">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:3rem">
     <div>
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">If you read ten things</p>
       <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1.2rem;max-width:18ch;color:#E7E5DC">The fastest honest route in.</h2>
@@ -1230,52 +1232,52 @@
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">01</span>
-        <a href="#entry-replacing-exclusive-sovereignty-with-a-relational-sovereignty" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Wildcat, Replacing Exclusive Sovereignty</a>
+        <a href="#entry-replacing-exclusive-sovereignty-with-a-relational-sovereignty" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">Wildcat, Replacing Exclusive Sovereignty</a>
       </li>
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">02</span>
-        <a href="#entry-its-about-all-relations-indigenous-feminist-theory-of-relational-freedom" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Kuokkanen, It&#39;s About All Relations</a>
+        <a href="#entry-its-about-all-relations-indigenous-feminist-theory-of-relational-freedom" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">Kuokkanen, It&#39;s About All Relations</a>
       </li>
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">03</span>
-        <a href="#entry-caretaking-relations-not-american-dreaming" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">TallBear, Caretaking Relations, Not American Dreaming</a>
+        <a href="#entry-caretaking-relations-not-american-dreaming" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">TallBear, Caretaking Relations, Not American Dreaming</a>
       </li>
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">04</span>
-        <a href="#entry-decolonization-is-not-a-metaphor" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Tuck and Yang, Decolonization Is Not a Metaphor</a>
+        <a href="#entry-decolonization-is-not-a-metaphor" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">Tuck and Yang, Decolonization Is Not a Metaphor</a>
       </li>
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">05</span>
-        <a href="#entry-mamas-baby-papas-maybe-an-american-grammar-book" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Spillers, Mama&#39;s Baby, Papa&#39;s Maybe</a>
+        <a href="#entry-mamas-baby-papas-maybe-an-american-grammar-book" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">Spillers, Mama&#39;s Baby, Papa&#39;s Maybe</a>
       </li>
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">06</span>
-        <a href="#entry-feminist-perspectives-on-autonomy" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Stanford Encyclopedia, Feminist Perspectives on Autonomy</a>
+        <a href="#entry-feminist-perspectives-on-autonomy" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">Stanford Encyclopedia, Feminist Perspectives on Autonomy</a>
       </li>
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">07</span>
-        <a href="#entry-access-intimacy-the-missing-link" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Mingus, Access Intimacy</a>
+        <a href="#entry-access-intimacy-the-missing-link" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">Mingus, Access Intimacy</a>
       </li>
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">08</span>
-        <a href="#entry-trans-care" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Malatino, Trans Care</a>
+        <a href="#entry-trans-care" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">Malatino, Trans Care</a>
       </li>
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">09</span>
-        <a href="#entry-coercive-control-how-men-entrap-women-in-personal-life" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Stark, Coercive Control</a>
+        <a href="#entry-coercive-control-how-men-entrap-women-in-personal-life" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">Stark, Coercive Control</a>
       </li>
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">10</span>
-        <a href="#entry-toolkit-a-practical-guide-to-stop-interpersonal-violence" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Creative Interventions, Toolkit</a>
+        <a href="#entry-toolkit-a-practical-guide-to-stop-interpersonal-violence" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">Creative Interventions, Toolkit</a>
       </li>
       
     </ol>
@@ -1287,7 +1289,7 @@
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1rem">Opacity as archive design</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1.2rem;max-width:24ch">The planned archive will record restricted and unavailable material without publishing it.</h2>
     <p style="max-width:54ch;margin:0 0 1.8rem;color:#3C3E38">Most archives assume more access is always better. This one will hold seven access states, with consent as a metadata field rather than an afterthought. Sometimes withholding is part of ethical preservation. None of it is built yet, and the model it will follow already exists: <a href="https://mukurtu.org">Mukurtu</a>, <a href="https://localcontexts.org">Local Contexts</a>, <a href="https://www.gida-global.org/careprinciples">CARE</a>.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.6rem;max-width:1000px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:.6rem;max-width:1000px">
       
       
       <div style="border:1px dashed #DB9E2A;padding:.8rem .9rem;border-radius:2px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5;color:#6B4C12">public: read freely</div>
