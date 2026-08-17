@@ -202,6 +202,13 @@
   .pocket-body{padding-top:.4rem}
    
   .pocket-body[id]{scroll-margin-top:9rem}
+   
+  .section-rail{display:none}
+  .section-rail.is-visible{display:block;position:sticky;top:var(--sticky-offset,0px);z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+  .section-rail a{display:flex;align-items:center;gap:.5rem;min-height:44px;padding:.3rem clamp(1.1rem,4vw,3rem);font-family:var(--mono);font-size:13px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-3);text-decoration:none}
+  .section-rail a:hover{color:var(--holds)}
+  .section-rail-current{color:var(--ink);font-weight:600}
+  .section-rail-current::before{content:"Reading: "}
 
    
   .principles{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:0;border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
@@ -366,7 +373,9 @@
     <p style="max-width:52ch;margin:0 0 1.6rem;color:#3C3E38">This draft contains thirteen principles and the questions each one raises. Each carries a question you can actually ask of a relationship you are in.</p>
     <p class="legend-key"><span class="swatch s-teal"></span>Teal marks what the framework asserts. <span class="swatch s-fails"></span>Rust marks where it breaks, or where its own vocabulary gets turned on someone. <span class="swatch s-ask"></span>Ochre marks a question being put to you. Nothing on this page is signalled by colour alone. Every mark is also a word.</p>
     
-    <nav aria-label="Contents" style="margin-top:1.5rem">
+    <nav aria-label="Contents" id="contents" style="margin-top:1.5rem">
+      
+      <span id="contents-sentinel" aria-hidden="true" style="display:block;height:1px"></span>
       <ul>
         <li><a href="#principles" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>The thirteen principles</span><span class="door-d">Thirteen, each with one question</span></a></li>
         <li><a href="#forms-and-labels" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Forms &amp; labels</span><span class="door-d">A field, not a ladder</span></a></li>
@@ -385,6 +394,11 @@
             aria-controls="sponsored-partner funded-attendant carer-dependent-adult coercive-control guardianship precarious-housing child-restructuring adj-06-07 adj-08-11">Open every section</button>
   </div>
 </section>
+
+
+<div class="section-rail noprint">
+  <a href="#contents"><span class="section-rail-current"></span><span aria-hidden="true">— all sections</span></a>
+</div>
 
 <section class="band" data-pocket="principles" style="padding-top:clamp(1.6rem,3vw,2.2rem)">
   <div class="wrap">

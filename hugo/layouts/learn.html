@@ -196,6 +196,18 @@
      and matching its 9rem: both are "clear a summary sitting above the
      id'd element," and pocket summaries run up to two lines. */
   .pocket-body[id]{scroll-margin-top:9rem}
+  /* MC-12 (Phase 20): named, not scroll-spied — see sections.js's own
+     comment and MC-C11 in tasks.md for why this replaced the retired
+     IA-06 jump bar rather than reviving it (comment just above the
+     hero's Contents grid has the page's own account of that removal).
+     display:none until sections.js adds .is-visible, same reveal-by-
+     class convention [data-open-all] uses just above. */
+  .section-rail{display:none}
+  .section-rail.is-visible{display:block;position:sticky;top:var(--sticky-offset,0px);z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+  .section-rail a{display:flex;align-items:center;gap:.5rem;min-height:44px;padding:.3rem clamp(1.1rem,4vw,3rem);font-family:var(--mono);font-size:13px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-3);text-decoration:none}
+  .section-rail a:hover{color:var(--holds)}
+  .section-rail-current{color:var(--ink);font-weight:600}
+  .section-rail-current::before{content:"Reading: "}
 
   /* The thirteen. Number in teal because it is the framework speaking;
      the question band in ochre because it is the framework asking. */
@@ -449,7 +461,15 @@
          Repeating it here rather than writing new label copy keeps the
          two in step: a reader who picks "A field, not a ladder" opens a
          section that greets them with the same six words. -->
-    <nav aria-label="Contents" style="margin-top:1.5rem">
+    <nav aria-label="Contents" id="contents" style="margin-top:1.5rem">
+      {{/* MC-12 (Phase 20): current-route-first-style compact local nav —
+           see Behind the Scenes' identical sentinel comment
+           (hugo/layouts/behindthescenes.html) and sections.js's own
+           comment/MC-C11 in tasks.md for the full reasoning, including
+           why this is a real 1px sentinel inside the nav's own top
+           (matching where reveal() actually lands a same-page click),
+           not a sibling before it or the 800+px grid itself. */}}
+      <span id="contents-sentinel" aria-hidden="true" style="display:block;height:1px"></span>
       <ul>
         <li><a href="#principles" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>The thirteen principles</span><span class="door-d">Thirteen, each with one question</span></a></li>
         <li><a href="#forms-and-labels" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Forms &amp; labels</span><span class="door-d">A field, not a ladder</span></a></li>
@@ -488,6 +508,12 @@
             aria-controls="{{ range hugo.Data.stress }}{{ .id }} {{ end }}adj-06-07 adj-08-11">Open every section</button>
   </div>
 </section>
+
+{{/* MC-12 (Phase 20): see Behind the Scenes' identical markup comment
+     and sections.js's own comment/MC-C11 in tasks.md. */}}
+<div class="section-rail noprint">
+  <a href="#contents"><span class="section-rail-current"></span><span aria-hidden="true">— all sections</span></a>
+</div>
 
 <section class="band" data-pocket="principles" style="padding-top:clamp(1.6rem,3vw,2.2rem)">
   <div class="wrap">

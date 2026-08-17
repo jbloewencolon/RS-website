@@ -359,64 +359,86 @@
   });
   if (location.hash) reveal(location.hash);
 
-  // 3. Track which section the reader is currently in, and name it in
-  //    the jump menu's own label.
+  // 3. MC-12 (Phase 20) — a compact "currently reading: X" bar, shown
+  // only once the open pocket's own summary has scrolled out of view,
+  // linking straight back to the hero grid — and hidden again once
+  // either the grid itself scrolls back into view (picking a different
+  // section makes naming the old one pointless) or the pocket closes.
   //
-  // Plain scroll maths rather than IntersectionObserver: the question is
-  // "which section heading did I last pass," which is a comparison
-  // against one line, not a visibility ratio. rAF-throttled so a fast
-  // scroll can't queue more work than a frame can spend.
-  var label = document.getElementById("jump-current");
-  var links = [].slice.call(
-    document.querySelectorAll('nav[aria-label="Sections"] a[href^="#"]')
-  );
-  var sections = links
-    .map(function (a) {
-      var el = document.getElementById(a.getAttribute("href").slice(1));
-      return el ? { el: el, link: a } : null;
-    })
-    .filter(Boolean);
+  // This is not the scroll-spy that used to live here (removed — see
+  // MC-C11 in tasks.md): that tracked position across many sections that
+  // could all be open and visible at once, a layout RS-049/IA-20 retired
+  // in favour of one pocket open at a time from a hero grid. With at
+  // most one section ever open, "which section did I scroll past" no
+  // longer has an answer worth tracking; the real question is simpler —
+  // is the reader far enough into the one open section that the grid
+  // they picked it from is no longer visible. Two IntersectionObservers
+  // (the grid, and every summary) feed one evaluateRail() so there is a
+  // single place that decides visibility, not two independent paths that
+  // could disagree — at whatever scroll position, without a per-frame
+  // scroll handler.
+  var railEl = document.querySelector(".section-rail");
+  var railLink = railEl && railEl.querySelector("a");
+  var railLabel = railEl && railEl.querySelector(".section-rail-current");
+  // #contents-sentinel, not #contents itself — see its own markup
+  // comment (hugo/layouts/behindthescenes.html and learn.html) for why a
+  // real 1px marker at the grid's top edge, not the 800+px grid itself,
+  // is what decides whether the picker still counts as "in view."
+  var contentsEl = document.getElementById("contents-sentinel");
+  if (railEl && railLink && railLabel && contentsEl && pockets.length && "IntersectionObserver" in window) {
+    var summaryToPocket = pockets
+      .map(function (d) {
+        var s = d.querySelector(":scope > summary");
+        var name = s && s.querySelector(".sec");
+        // Assume visible until the observer's first callback says
+        // otherwise — matches the rail's own default-hidden state, so
+        // there is no flash of a stale name before the first measurement.
+        return s && name ? { summary: s, pocket: d, name: name.textContent.trim(), intersecting: true } : null;
+      })
+      .filter(Boolean);
+    var contentsIntersecting = true;
 
-  if (label && sections.length) {
-    var ticking = false;
-    var currentLink = null;
-
-    function spy() {
-      ticking = false;
-      var found = null;
-      for (var i = 0; i < sections.length; i++) {
-        if (sections[i].el.getBoundingClientRect().top <= BAR + 8) found = sections[i];
+    function evaluateRail() {
+      if (contentsIntersecting) {
+        railEl.classList.remove("is-visible");
+        return;
       }
-      // The final section sits close enough to the end of the document
-      // that the scroll clamps before it can reach the line, so it would
-      // otherwise never be markable. At the bottom of the page, it is
-      // the answer by definition.
-      var atEnd =
-        window.innerHeight + window.pageYOffset >=
-        document.documentElement.scrollHeight - 2;
-      if (atEnd) found = sections[sections.length - 1];
-      var link = found ? found.link : null;
-      if (link === currentLink) return;
-      if (currentLink) currentLink.removeAttribute("aria-current");
-      currentLink = link;
-      if (link) {
-        link.setAttribute("aria-current", "true");
-        label.textContent = "· " + link.textContent.trim();
+      var match = summaryToPocket.filter(function (m) { return m.pocket.open && !m.intersecting; })[0];
+      if (match) {
+        railLabel.textContent = match.name;
+        railEl.classList.add("is-visible");
       } else {
-        label.textContent = "";
+        railEl.classList.remove("is-visible");
       }
     }
 
-    window.addEventListener(
-      "scroll",
-      function () {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(spy);
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.target === contentsEl) {
+            contentsIntersecting = entry.isIntersecting;
+            return;
+          }
+          var match = summaryToPocket.filter(function (m) { return m.summary === entry.target; })[0];
+          if (match) match.intersecting = entry.isIntersecting;
+        });
+        evaluateRail();
       },
-      { passive: true }
+      // A few px less than BAR, not exactly BAR: reveal()'s own scroll
+      // correction (above) lands a same-page click on a target's top at
+      // exactly BAR, which is this observer's own threshold line —
+      // landing a target and the line meant to detect it in the exact
+      // same place is a tie sub-pixel rounding can settle either way,
+      // confirmed flipping the wrong way via a real click-through in
+      // testing. A little daylight avoids the coin flip.
+      { rootMargin: "-" + Math.max(0, Math.round(BAR) - 8) + "px 0px 0px 0px", threshold: 0 }
     );
-    spy();
+    io.observe(contentsEl);
+    summaryToPocket.forEach(function (m) { io.observe(m.summary); });
+
+    // A pocket that opens or closes changes which match evaluateRail()
+    // finds even when no observed element's own intersection changed.
+    pockets.forEach(function (d) { d.addEventListener("toggle", evaluateRail); });
   }
 
   // 4. Print the whole page, not the parts that happen to be open.
