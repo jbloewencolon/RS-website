@@ -70,23 +70,18 @@
   /* The bar is taller below desktop than the inline scroll-margin-top on
      [data-group] and article[data-tags] was sized for, so every contents
      link (UX-07) and every "fastest route in" deep link (UX-08) landed
-     its target *behind* the bar. Measured heights of .filterbar, against
-     the clearance actually in effect before this rule:
-
-       width        bar     clearance   result
-       ≥1024px       89px   96px inline  clear
-       768–1023px   141px   96px inline  covered by 45px
-       ≤700px       150px   120px (7.5rem) covered by 30px
-
-     One band, one value: 10rem = 160px clears the tallest case (150px)
-     with room to spare and replaces the old 7.5rem rule, which was both
-     too small and scoped to the wrong breakpoint — the 701–1023px band
-     had no override at all. !important for the same inline-beats-external
-     reason as the .chips rule above. Re-measure if the chip row, the
-     "Filter" label, or the status line changes: these are rendered
-     heights, not theory. */
+     its target *behind* the bar. Originally a single hand-measured 10rem
+     band (see completed.tasks.md/AR history for the measurements that
+     produced it), replaced under MC-09 (Phase 20) with the live value
+     sections.js publishes to --sticky-offset, updated on every
+     .filterbar resize (chip wrap, filter change, rotation) instead of
+     re-measured by hand whenever the chip row, "Filter" label, or status
+     line changes. 10rem stays only as the no-JS/pre-measurement
+     fallback — real content with scripting on never reads it.
+     !important for the same inline-beats-external reason as the .chips
+     rule above. */
   @media (max-width:1023px){
-    article[data-tags]{scroll-margin-top:10rem!important}
+    article[data-tags]{scroll-margin-top:var(--sticky-offset,10rem)!important}
   }
   .venn-scroll{position:relative}
   .venn-scroll::after{content:"";position:absolute;top:0;right:0;bottom:.5rem;width:32px;background:linear-gradient(to right,rgba(231,229,220,0),#E7E5DC 90%);pointer-events:none}
@@ -130,7 +125,7 @@
   @media screen{main.js-pockets>section[data-pocket].is-shut{display:none}}
   .pocket-body{padding-top:.4rem}
   .pocket-body[id]{scroll-margin-top:6rem}
-  @media (max-width:1023px){.pocket-body[id]{scroll-margin-top:10rem!important}}
+  @media (max-width:1023px){.pocket-body[id]{scroll-margin-top:var(--sticky-offset,10rem)!important}}
   @media print{details:not([open])>*{display:block!important}}
 
   /* AR-09/10/11: the bookshelf. Structural and hue-free per FLAG-14 —

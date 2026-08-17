@@ -376,7 +376,10 @@
               </sc-for>
             </div>
           </fieldset>
-          <div ref="{{ turnstileRef }}" style="margin:0 0 1.2rem"></div>
+          <div ref="{{ turnstileRef }}" style="margin:0 0 1.2rem;min-height:65px"></div>
+          <sc-if value="{{ turnstileFailed }}" hint-placeholder-val="{{ false }}">
+            <p role="status" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #C9C6BA;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem">The verification above didn't load — a content blocker or network issue can do that. <a href="mailto:relationalsovereignty@gmail.com?subject=Dispatch%20signup" style="color:#2B4C9B">Email us directly</a> to join instead.</p>
+          </sc-if>
           <button type="submit" disabled="{{ sending }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem;min-height:44px;cursor:pointer;border-radius:2px;opacity:{{ sendingOpacity }}">{{ submitLabel }}</button>
         </form>
       </sc-if>
@@ -433,7 +436,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
 class Component extends DCLogic {
-  state = { qi: 0, sent: false, email: "", name: "", interests: [], hp: "", sending: false, error: "", emailInvalid: false, turnstileToken: "" };
+  state = { qi: 0, sent: false, email: "", name: "", interests: [], hp: "", sending: false, error: "", emailInvalid: false, turnstileToken: "", turnstileFailed: false };
 
   // The dispatch signup endpoint. Nothing is stored there until the
   // reader clicks the confirmation link this call triggers.
@@ -472,15 +475,27 @@ class Component extends DCLogic {
         sitekey: Component.TURNSTILE_SITE_KEY,
         callback: (token) => this.setState({ turnstileToken: token }),
         "expired-callback": () => this.setState({ turnstileToken: "" }),
-        "error-callback": () => this.setState({ turnstileToken: "" }),
+        // A widget that rendered and then failed (not one that simply
+        // never arrived, handled by the poll timeout above) — MC-08.
+        "error-callback": () => this.setState({ turnstileToken: "", turnstileFailed: true }),
       });
     };
     if (window.turnstile) render();
     else {
       // api.js loads async and can finish after this div mounts —
       // poll briefly rather than depending on script/render order.
+      // MC-08 (Phase 20): bounded, not indefinite — a content blocker or
+      // a network failure means window.turnstile never arrives, and an
+      // unbounded poll left the reader looking at permanently empty
+      // space with no way to know the widget had failed rather than
+      // just being slow. 8s is generous for a script that normally
+      // resolves in well under one; past that, this stops polling and
+      // surfaces the non-widget recovery route below instead.
+      let elapsed = 0;
       const poll = setInterval(() => {
-        if (window.turnstile) { clearInterval(poll); render(); }
+        elapsed += 100;
+        if (window.turnstile) { clearInterval(poll); render(); return; }
+        if (elapsed >= 8000) { clearInterval(poll); this.setState({ turnstileFailed: true }); }
       }, 100);
     }
   }
@@ -553,6 +568,7 @@ class Component extends DCLogic {
       setHp: (ev) => this.setState({ hp: ev.target.value }),
       setName: (ev) => this.setState({ name: ev.target.value }),
       turnstileRef: this.turnstileRef,
+      turnstileFailed: this.state.turnstileFailed,
       sending: this.state.sending,
       sendingOpacity: this.state.sending ? "0.6" : "1",
       submitLabel: this.state.sending ? "Sending…" : "Join the dispatch",
