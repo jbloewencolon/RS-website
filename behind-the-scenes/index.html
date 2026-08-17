@@ -170,6 +170,9 @@
   main [id]{scroll-margin-top:1.5rem}
   .pocket-body[id]{scroll-margin-top:2.5rem}
   @media print{details:not([open])>*{display:block!important}}
+   
+  @keyframes bo-sway{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(-3px,3px) rotate(.4deg)}}
+  .bo-anim.is-in{transform-origin:50% 0%;animation:bo-sway 76s ease-in-out 2.4s infinite}
 </style>
 </head>
 <body>
@@ -205,8 +208,48 @@
 </header>
 
 <main>
-<section id="main-content" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+<section id="main-content" style="position:relative;padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
+  
+  <div class="bo-layer" aria-hidden="true">
+    <div class="bo-slot bo-gutter" style="position:absolute;right:0;top:0;width:170px;height:340px">
+      <svg class="bo bo-anim" data-bo-trial viewBox="0 0 160 320" aria-hidden="true" focusable="false">
+        <g>
+          <path class="bo-line bo-grow" pathLength="1" d="M92 -6 C 104 26 78 58 92 90 C 106 122 78 154 92 186 C 106 218 80 250 92 282 C 100 296 96 308 92 320"/>
+        </g>
+        <g style="transition-delay:420ms">
+          <path class="bo-hair bo-grow" pathLength="1" d="M98 28 C 108 24 118 20 128 20"/>
+          <path class="bo-fine" transform="translate(128,20)" d="M0 -2 C -5 3 -5.5 10 0 15 C 5.5 10 5 3 0 -2 Z"/>
+          <path class="bo-hair" transform="translate(128,20)" d="M0 0 C -0.4 5 -0.3 9.5 0 14"/>
+        </g>
+        <g style="transition-delay:560ms">
+          <path class="bo-hair bo-grow" pathLength="1" d="M82 76 C 70 72 58 70 48 68"/>
+          <path class="bo-fine" transform="translate(48,68)" d="M0 -2 C -5 3 -5.5 10 0 15 C 5.5 10 5 3 0 -2 Z"/>
+          <path class="bo-hair" transform="translate(48,68)" d="M0 0 C -0.4 5 -0.3 9.5 0 14"/>
+        </g>
+        <g style="transition-delay:700ms">
+          <path class="bo-hair bo-grow" pathLength="1" d="M100 124 C 111 120 122 118 132 116"/>
+          <path class="bo-fine" transform="translate(132,116)" d="M0 -2 C -5 3 -5.5 10 0 15 C 5.5 10 5 3 0 -2 Z"/>
+          <path class="bo-hair" transform="translate(132,116)" d="M0 0 C -0.4 5 -0.3 9.5 0 14"/>
+        </g>
+        <g style="transition-delay:840ms">
+          <path class="bo-hair bo-grow" pathLength="1" d="M80 172 C 68 170 56 168 46 166"/>
+          <path class="bo-fine" transform="translate(46,166)" d="M0 -2 C -5 3 -5.5 10 0 15 C 5.5 10 5 3 0 -2 Z"/>
+          <path class="bo-hair" transform="translate(46,166)" d="M0 0 C -0.4 5 -0.3 9.5 0 14"/>
+        </g>
+        <g style="transition-delay:980ms">
+          <path class="bo-hair bo-grow" pathLength="1" d="M98 220 C 109 216 120 214 130 212"/>
+          <path class="bo-fine" transform="translate(130,212)" d="M0 -2 C -5 3 -5.5 10 0 15 C 5.5 10 5 3 0 -2 Z"/>
+          <path class="bo-hair" transform="translate(130,212)" d="M0 0 C -0.4 5 -0.3 9.5 0 14"/>
+        </g>
+        <g style="transition-delay:1120ms">
+          <path class="bo-hair bo-grow" pathLength="1" d="M84 268 C 72 266 62 264 52 262"/>
+          <path class="bo-fine" transform="translate(52,262)" d="M0 -2 C -5 3 -5.5 10 0 15 C 5.5 10 5 3 0 -2 Z"/>
+          <path class="bo-hair" transform="translate(52,262)" d="M0 0 C -0.4 5 -0.3 9.5 0 14"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div style="position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Behind the Scenes · exposed structure · about 12 minutes</p>
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.1rem,5.6vw,3.8rem);line-height:1;letter-spacing:-.03em;margin:0 0 1.4rem;max-width:17ch">How the site is made, governed, funded, and corrected.</h1>
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">A site arguing against domination cannot keep its own workings private. What follows is the substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.</p>
@@ -291,7 +334,7 @@
             
             <div style="border-top:2px solid #6B4C12;padding-top:.7rem">
               <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6B4C12;margin:0 0 .35rem">Page weight</dt>
-              <dd style="margin:0;font-size:16px;line-height:1.5">Ranges from about 21 KB (the Invitation) to about 137 KB (the Archive) per page, uncompressed HTML: no images, no icon fonts, no video. Three pages (Home, Practise, Contribute) additionally load a shared ~70 KB script once per browser session, cached rather than re-downloaded on every page view. This figure has drifted stale twice before: first a flat &#34;under 60 KB&#34; claim outgrown by the site&#39;s own content, then a range that drifted 10&#43; KB out of date as pages kept changing after it was written. It is now checked in the build&#39;s own test suite (checkPageWeight in scripts/check-pages.mjs) against every shipped file&#39;s actual size, so a future edit that moves this number without updating the words here fails the build instead of quietly becoming untrue a third time. It rose by about 2 KB per page in August 2026, when the CSS every page had been carrying its own copy of was extracted into one shared block: that block now also holds a set of control styles the pages have not yet been switched over to, so for the moment each page ships a little more than it uses. Switching them over removes the per-element styling those replace. A further ~1 KB per page went into the same shared block in August 2026 for the botanical layer&#39;s stroke, growth and print rules; no page draws anything with them yet, and the layer adds no request to any page. The Archive figure rose again in August 2026 with two additions: the groups became pockets with their own hero grid (AR-05/06/07), and the botanical layer shipped (BM-06) — together these account for the rise from 131 KB to 137 KB.</dd>
+              <dd style="margin:0;font-size:16px;line-height:1.5">Ranges from about 21 KB (the Invitation) to about 137 KB (the Archive) per page, uncompressed HTML: no images, no icon fonts, no video. Three pages (Home, Practise, Contribute) additionally load a shared ~70 KB script once per browser session, cached rather than re-downloaded on every page view. This figure has drifted stale twice before: first a flat &#34;under 60 KB&#34; claim outgrown by the site&#39;s own content, then a range that drifted 10&#43; KB out of date as pages kept changing after it was written. It is now checked in the build&#39;s own test suite (checkPageWeight in scripts/check-pages.mjs) against every shipped file&#39;s actual size, so a future edit that moves this number without updating the words here fails the build instead of quietly becoming untrue a third time. It rose by about 2 KB per page in August 2026, when the CSS every page had been carrying its own copy of was extracted into one shared block: that block now also holds a set of control styles the pages have not yet been switched over to, so for the moment each page ships a little more than it uses. Switching them over removes the per-element styling those replace. A further ~1 KB per page went into the same shared block in August 2026 for the botanical layer&#39;s stroke, growth and print rules. The Archive figure rose again in August 2026 with two additions: the groups became pockets with their own hero grid (AR-05/06/07), and the botanical layer shipped (BM-06) — together these account for the rise from 131 KB to 137 KB. This page&#39;s own weight rose by about 3.3 KB in August 2026 (BM-04): one hardcoded composition — a stem and six buds, no flowers, no new colour — proving the mechanism before any shared recipe table is built. It draws once, on scroll, from a dedicated one-page script, botanical-trial.js (about 1.2 KB, cached like every other root-level script here, not counted in the shared ~70 KB figure below since only this page loads it).</dd>
             </div>
             
             <div style="border-top:2px solid #366943;padding-top:.7rem">
@@ -336,7 +379,7 @@
             
             <div style="border-top:2px solid #366943;padding-top:.7rem">
               <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#366943;margin:0 0 .35rem">Build</dt>
-              <dd style="margin:0;font-size:16px;line-height:1.5">The reading pages (Manifesto, Invitation, Learn, Archive, Resources, this page) are static: each is generated from plain data files into plain HTML by Hugo (a single static binary, no dependency tree), and the committed output is what ships, opening offline from a saved file. The generator exists for whoever maintains this, not for whoever reads it. Home, Practise, and Contribute use a small local runtime (dc-runtime) instead, since each carries live interactive logic (forms, a stateful tool) Hugo&#39;s static output can&#39;t hold. Archive keeps one small script of its own, archive-filter.js, for its filter-by-tag convenience, the one piece of client-side JavaScript on a Hugo-generated page, and a plain progressive enhancement: every entry renders regardless, the script only ever narrows what is already there.</dd>
+              <dd style="margin:0;font-size:16px;line-height:1.5">The reading pages (Manifesto, Invitation, Learn, Archive, Resources, this page) are static: each is generated from plain data files into plain HTML by Hugo (a single static binary, no dependency tree), and the committed output is what ships, opening offline from a saved file. The generator exists for whoever maintains this, not for whoever reads it. Home, Practise, and Contribute use a small local runtime (dc-runtime) instead, since each carries live interactive logic (forms, a stateful tool) Hugo&#39;s static output can&#39;t hold. Archive keeps one small script of its own, archive-filter.js, for its filter-by-tag convenience, and this page keeps one of its own too, botanical-trial.js, for the one drawn composition above. Both are plain progressive enhancement: everything either page needs to say is already in the HTML, and the script only ever adds or narrows what is already there.</dd>
             </div>
             
             <div style="border-top:2px solid #366943;padding-top:.7rem">
@@ -765,6 +808,7 @@
 </footer>
 
 <script src="/sections.js"></script>
+<script src="/botanical-trial.js"></script>
 <script src="/notes.js"></script>
 </body>
 </html>

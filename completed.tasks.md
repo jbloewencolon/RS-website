@@ -1893,3 +1893,42 @@ Asked to check why the floral animations and prints weren't appearing. **They ar
 **Aside, not acted on:** `scripts/check-botanical.mjs` (the Phase 0 mechanism test, 14 assertions) calls `chromium.launch()` with no `executablePath`, unlike every other Playwright-driving script in this repo (`check-pages.mjs`, `prerender.mjs`, `test-runtime-handoff.mjs`), which all resolve a pinned local Chromium via `findChromium()`/`PLAYWRIGHT_CHROMIUM_PATH`. It fails to launch in this sandbox as a result. Not part of `npm run check`, so it doesn't affect the verified build; left alone since fixing it wasn't asked for.
 
 **Not fixed, because fixing it is out of scope for a diagnosis and gated on a decision that belongs to the author:** building `BM-04` (~M effort per `tasks.md`) or answering `BM-02` and continuing the rollout are both real next steps, but neither is a bug fix — flagged back rather than started speculatively.
+
+---
+
+## Phase 18 — BM-04/BM-05: the botanical layer's first real composition (2026-08-17)
+
+*(Direct follow-up to Phase 17/AC-07's diagnosis, same session. The author chose "build the Behind the Scenes proof first" from the three options offered — Phase 12's own recommended next step, `tasks.md` 12.1.)*
+
+### BM-04 — one hardcoded composition, Behind the Scenes `shipped`
+
+**M1 (raceme descent) + M6 (sway), `noBloom`, per §04's own configuration for this page.** Built exactly to the row's constraint — a single self-contained inline `<svg>`, hardcoded, no `BM.register` API, no shared token block — because the point of this row is to trial the mechanism before any shared system exists, not to route it through one.
+
+- **Geometry:** one descending stem (a gentle S-curve, `pathLength="1"`, `.bo-line.bo-grow`) with six buds along it, alternating sides, each its own `<g>` containing a pedicel (`.bo-hair.bo-grow`) and a bud outline + midrib (`.bo-fine`/`.bo-hair`, no fill). No bloom heads, no species colour — every stroke uses the `.bo`/`.bo-line`/`.bo-fine`/`.bo-hair` register `head-base.html` already ships site-wide, so **zero new colour values enter**, which is what keeps this buildable ahead of `BM-02` (the still-open palette decision) rather than blocked on it.
+- **Stagger:** each bud's `<g>` carries `transition-delay:420ms + n×140ms` (420/560/700/840/980/1120ms) — the exact formula `botanical.js`'s own `buildMark()` already uses for secondary marks, applied by hand since this composition doesn't go through that file.
+- **Reveal:** a new dedicated file, `/botanical-trial.js` (1.2 KB), not `/botanical.js`. `IntersectionObserver` at the same `rootMargin`/`threshold` `botanical.js`'s `watch()` uses, unobserve-after-fire, and a `prefers-reduced-motion` short-circuit that adds `.is-in` immediately with no wait — mirrors the shipped mechanism's shape without depending on it, so this trial can be deleted on its own later without touching the shared file.
+- **Sway:** `@keyframes bo-sway` and `.bo-anim.is-in{animation:...}`, page-owned in Behind the Scenes' own `<style>` block (not promoted to `head-base.html` — this is deliberately a one-page trial, not a new site-wide token), gated on `.is-in` with a 2.4s delay chosen to roughly clear the stem's 1.9s grow plus the last bud's ~1.82s fade-in.
+- **Placement:** hero right gutter (`.bo-slot.bo-gutter`, 170×340px), auto-hidden ≤760px via the `.bo-gutter` rule `head-base.html` already ships (BM-06) — no new media query needed. The hero `<section>` got `position:relative`, its content `<div>` got `position:relative;z-index:1` so text stacks correctly above the `position:absolute` decorative layer regardless of paint-order edge cases, rather than relying on the layer's ~0.07 alpha to make the question moot.
+- **Accessibility:** `aria-hidden="true"` and `focusable="false"` on the `<svg>`, `aria-hidden="true"` and `pointer-events:none` on the wrapper — same convention `botanical.js`'s `buildMark()`/`.bo-layer` already use.
+
+### BM-05 — measured, one real defect found and fixed `shipped`
+
+Every item in the row's checklist, run against a real headless browser, not eyeballed:
+
+| Check | Result |
+|---|---|
+| `npm run check` | Green — axe clean on Behind the Scenes, page-weight regex still parses (min/max page names unchanged, both within tolerance) |
+| `aria-hidden`, non-focusable, tab order | `svg[aria-hidden]="true"`, `focusable="false"`, `tabIndex:-1`, confirmed absent from `document.querySelectorAll('a,button,[tabindex]')` |
+| No CLS | `.bo-layer` is `position:absolute`, out of flow; the sway animation is `transform`-only, which the CLS spec excludes from scoring by construction |
+| Reduced motion | Resolves straight to the finished drawing — `is-in` added with no scroll wait, `animationName:"none"`, `transitionDuration:"0s"` (the sitewide `*{animation:none!important;transition:none!important}` rule reaches both the shared grow transition and this page's own sway animation without anything extra needed here) |
+| Scroll-triggered growth | Fires once, correctly, `IntersectionObserver` unobserves after |
+| Body-copy contrast | Unchanged — confirmed by axe (which checks contrast) passing, and by construction: no text colour touched |
+| No-JS durability | Markup present (static Hugo HTML), `.is-in` never added, drawing stays fully undrawn — matches the page's own "reader who blocks scripts gets a site exactly as complete as it is today" pledge; headline and all real content render and read fully regardless |
+| Page-weight delta | Measured, not estimated: 76,872 → 80,226 bytes (+3.28 KB). `substrate.yaml`'s Page weight and Build rows both updated in the same commit (**BM-C7**, "non-negotiable") — the new figure, the new one-page script, and the corrected claim that `archive-filter.js` is uniquely "the one piece of client-side JavaScript on a Hugo-generated page" (no longer true now that this page has one too) |
+| 60fps during growth | **Not verifiable in this environment**, same standing caveat Phase 12's own §9 already states for real-device frame timing — recorded as unmeasured, not assumed passing |
+
+**One real defect found during measurement, fixed before shipping, not after.** The no-JS check first showed a faint ~2px diagonal sliver near the stem's endpoint that should have been fully invisible (`stroke-dashoffset:1`, the standard SVG dash-hide technique). Confirmed genuine by diffing against the pre-BM-04 page at the identical screen region (clean) versus the new page (sliver present) — not a screenshot artifact. Root cause: the stem was a *bare* `.bo-grow` path, a direct child of `.bo-anim`, relying solely on the dash-hide for invisibility — and `check-botanical.mjs`'s own 14 assertions never literally screenshot the pre-reveal state, so this edge case had no prior coverage. **Fixed by wrapping the stem in its own `<g>`**, giving it the same opacity-based hide (`.bo-anim>g{opacity:0}`) the six bud groups already had as a second, more robust mechanism alongside the dash-hide — confirmed clean by re-running the identical no-JS diff. **Flagged forward, not just fixed locally:** `check-botanical.mjs`'s own reference `MARK` fixture (used to test the shared mechanism) uses the identical bare-stem pattern this bug came from, so the same sliver likely exists latently in `botanical.js`'s own convention today, just never caught because nothing pixel-inspects the pre-reveal state. Worth a line in whoever builds the shared system next: wrap growable stems in their own `<g>`, not just secondary branches.
+
+**Verified:** `npm run build:hugo`, `npm run build`, `npm run check` (clean apart from the two pre-existing sandbox-only Turnstile resets), `npm run test:runtime-handoff` (unaffected — Behind the Scenes isn't one of the three dc-runtime pages), and a direct screenshot comparison confirming the composition renders cleanly hidden, cleanly grown, and cleanly absent on mobile and no-JS.
+
+**`docs/understory-visual-system.md`'s status line updated** to state BM-04 shipped rather than continuing to claim "nothing draws yet," which stopped being true.
