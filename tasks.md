@@ -1091,6 +1091,18 @@ The "framework" and "holds/fails/bears load" site-wide rules were applied within
 
 ---
 
+## Phase 17 — Footer consolidation, named authorship, and the botanical layer's actual state (2026-08-17) `shipped 2026-08-17 — see completed.tasks.md`
+
+*(Three direct instructions given in session. IDs are `AC-nn`, continuing Phase 16's series.)*
+
+| ID | Task | Outcome |
+|---|---|---|
+| ~~**AC-05**~~ | ~~Move "About this site" from the bottom of the page into the footer, on both pages that carry it.~~ | **Shipped.** Home: a fifth column in the four-column footer grid. Behind the Scenes: its own stacked block above the footer's colophon row, recoloured for the dark ground. Each page kept its own existing wording. |
+| ~~**AC-06**~~ | ~~Add named authorship to Behind the Scenes: "The initial and primary author of this site is the scholar poet, al colibrí. A Taíno in diaspora, living and working on the lands of the peoples of Tkaronto."~~ | **Shipped**, into the existing "Who has worked on this" box in Labour and money — the one place already asking this question. **Resolves `FLAG-04`**: the standing rule was "if the author wants this, they supply the identity; none is invented here," and it's now supplied on the page. `FLAG-04`'s JSON-LD/structured-data half is untouched — a further step, not asked for here. |
+| ~~**AC-07**~~ | ~~Check why the floral animations and prints aren't appearing.~~ | **Diagnosed, not a defect.** This is Phase 12's own documented stopping point: `BM-06`/`BM-07`/`BM-08` shipped (CSS tokens on every page, the mount mechanism, the corrected colophon), but `botanical.js`'s `RECIPES` table is deliberately empty and no page loads the script — `substrate.yaml` already says so in words. `BM-02` (which palette treatment) is an open `[DECISION]`, the author's call, and gates the rollout; `BM-04` (the first real, ink-only composition on Behind the Scenes) doesn't need `BM-02` answered but hasn't been built. Nothing coded this pass — the two real next steps (answer `BM-02`, or build `BM-04`) are both scope calls, not bug fixes. |
+
+---
+
 ## Parked / backlog
 
 | ID | Task | Reason parked |

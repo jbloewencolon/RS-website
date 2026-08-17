@@ -1854,3 +1854,42 @@ Verified: heading order on load is now one `H1` followed by `H2` per tool, no pa
 Resolving this branch's conflicts against `main` by taking `main`'s whole `tasks.md` — the author's chosen strategy, since `main` carried Phase 14, which the branch lacked — necessarily dropped the branch's own **Phase 15** section, the reverse of the loss recorded at the end of Phase 15 above. Restored: Phase 15 re-inserted verbatim from commit `5d46030` after Phase 14, and the `LA-` prefix put back into the ID legend, so the file now carries **both** phases. `completed.tasks.md` was never affected. The generated `archive/index.html` also taken from `main` in that resolution was regenerated from the Hugo sources, which had merged cleanly and retained the Phase 15 copy edits.
 
 **Verified:** `npm run build:hugo`, `npm run build`, `npm run check` (clean but for the two pre-existing sandbox-only Turnstile connection resets on `index.html`/`contribute/`; page weight in range at Archive 137.0 KB, all six Hugo pages match their generated output, all 19 pages same-origin), and `npm run test:runtime-handoff` (all three dc-runtime pages pass — Practise is one of them and took the largest edit this phase).
+
+---
+
+## Phase 17 — Footer consolidation, named authorship, and the botanical layer's actual state (2026-08-17)
+
+*(Three direct instructions given in session. IDs are `AC-nn`, continuing Phase 16's series.)*
+
+### AC-05 — "About this site" moved into the footer `shipped`
+
+Both pages that carried it (Home, Behind the Scenes) had it as a standalone `<section>` between the last content block and `</main>` — bottom-of-page, not footer. Moved into each page's own `<footer>`, adapted to each footer's actual structure rather than pasted in unchanged:
+
+- **Home** — a fifth column in the existing four-column grid footer (Relational Sovereignty / Pages / Build / Reuse), kicker in the same `#DB9E2A` accent the other three column headers use.
+- **Behind the Scenes** — its footer is a single flex row (colophon line + nav), not a grid, so the block became its own `<div>` stacked above that row, same kicker treatment, body text recoloured for the dark footer ground (`#8FA9A2`, footer's own text colour, in place of the light-background `#3C3E38` it was written in).
+
+Each page's own text was kept as-is — Home already carries the P0-corrected wording from Phase 15 ("A human editor selected the sources…"), Behind the Scenes still carries the earlier "human-first" phrasing. Not unified; not asked for, and the two pages have carried independently-edited copy before.
+
+### AC-06 — Named authorship added to Behind the Scenes `shipped`
+
+Added to the existing "Who has worked on this" box in the Labour and money pocket, the one place on the page already asking exactly this question: *"The initial and primary author of this site is the scholar poet al colibrí, a Taíno in diaspora living and working on the lands of the peoples of Tkaronto."* Kept the existing sentence after it ("At v0.2: one unpaid person, writing and building…") rather than replacing it — both are true and the second still states the credit policy for future contributors.
+
+**This resolves `FLAG-04`** (Phase 0), which declined to invent an author identity for the site's structured-data/E-E-A-T question and stated the standing rule explicitly: *"If the author wants this, they supply the identity; none is invented here."* The identity is now supplied, on the page. `FLAG-04`'s own scope was the JSON-LD `author`/credential schema specifically (SEO Phase 7's Task #5) — this only adds the name to the page's own prose, not to any structured-data node. Flagged, not changed: `FLAG-04` can now be closed for real if a named `author` in JSON-LD is wanted, but that's a separate, further step nobody asked for this session.
+
+**Verified:** `npm run build:hugo` regenerated `behind-the-scenes/index.html` from the changed template; `npm run build`, `npm run check` (clean apart from the two pre-existing sandbox-only Turnstile resets), both footers rendered and screenshotted at 1280px to confirm layout, and the author-bio text confirmed present in the rendered DOM.
+
+### AC-07 — Why the botanical layer draws nothing: diagnosed, not a defect `investigated, no code change`
+
+Asked to check why the floral animations and prints weren't appearing. **They are not appearing because they were never wired up — this is Phase 12's own documented, deliberate stopping point, not a regression.** Traced precisely:
+
+- `hugo/layouts/partials/head-base.html` ships the botanical CSS token block (`.bo-layer`, `.bo-grow`, the growth transition, the print rule) on **every page**, inlined via `botanical:start`/`botanical:end`, per `BM-06`, shipped.
+- `/botanical.js` exists (163 lines) with a real mechanism — mount API, `IntersectionObserver` reveal, per-mark stagger, a kill switch, a prerender guard — per `BM-07`, shipped. Its own header states the deletion/disable procedure in detail.
+- **`RECIPES = {}` is empty.** The file's own comment says so: *"Phase 0 ships the mechanism with no page wired up."*
+- **No page loads the script.** Confirmed by grep across every layout and generated page: zero `<script src="/botanical.js">` tags anywhere. `substrate.yaml`'s page-weight row already states this in words: *"no page draws anything with them yet, and the layer adds no request to any page."*
+- `scripts/botanical-gen.mjs` (482 lines) is a real, working SVG geometry generator for the plant forms — but it's a build-time tool nothing currently calls to populate `RECIPES`; it isn't imported by `botanical.js` or run by any build step.
+
+**Why it stalled here, per `tasks.md` Phase 12's own record:** `BM-01` (should the layer exist at all) was answered yes by the author. `BM-02` (which palette treatment — line-and-green only, blooms-but-never-on-a-register-coded-page, or an admitted non-semantic colour family) is still an **open `[DECISION]`**, explicitly the author's call, and it gates every row after `BM-06`/`07`/`08` except `BM-04` (a single ink-only, no-bloom proof composition on Behind the Scenes, which needs no palette answer and is Hugo-only so it can't hit the two runtime landmines `BM-C5`/`BM-C6`). `BM-04` itself — the actual first drawing — hasn't been built yet either. Full rollout beyond it (`BM-09` through `BM-13`) touches all nine pages, including three `dc-runtime` pages where a mounted SVG would be destroyed by `support.js`'s `dc.replaceWith()` unless `BM-C5` is resolved and proven with a real interaction test, not a source read.
+
+**Aside, not acted on:** `scripts/check-botanical.mjs` (the Phase 0 mechanism test, 14 assertions) calls `chromium.launch()` with no `executablePath`, unlike every other Playwright-driving script in this repo (`check-pages.mjs`, `prerender.mjs`, `test-runtime-handoff.mjs`), which all resolve a pinned local Chromium via `findChromium()`/`PLAYWRIGHT_CHROMIUM_PATH`. It fails to launch in this sandbox as a result. Not part of `npm run check`, so it doesn't affect the verified build; left alone since fixing it wasn't asked for.
+
+**Not fixed, because fixing it is out of scope for a diagnosis and gated on a decision that belongs to the author:** building `BM-04` (~M effort per `tasks.md`) or answering `BM-02` and continuing the rollout are both real next steps, but neither is a bug fix — flagged back rather than started speculatively.
