@@ -152,7 +152,9 @@ marker participates as a **third flex item**. With marker pinned left and the
 meta span pinned right, the `<h2>` is centred in the space between them — and
 that space changes with the length of the right-hand meta text.
 
-Measured left edges of three consecutive category titles at 1100px:
+Measured left edges of three consecutive category titles at a 1100px viewport,
+where the page's own content edge — and every entry title beneath these
+headings — sits at **44px**:
 
 | Title | Meta text | h2 left edge |
 |---|---|---|
@@ -160,9 +162,10 @@ Measured left edges of three consecutive category titles at 1100px:
 | Intimate partner violence and coercive control | `1 entry · Canada, national directory` | **124px** |
 | Legal aid and family law | `1 entry · Canada: thin coverage, stated honestly` | **219px** |
 
-A 116px swing. On a site whose every other element aligns to 208px, on the one
-page a reader may arrive at in a crisis. This is the single most damaging
-finding in the audit and it is a two-line fix.
+A 116px swing between headings, none of them meeting the content edge their own
+entries align to. On a site whose shell never moves, on the one page a reader
+may arrive at in a crisis. This is the single most damaging finding in the audit
+and it is a two-line fix.
 
 ### 3.2 It is the only page claiming `v0.3`
 
@@ -350,8 +353,8 @@ thing that will stop a fourth green appearing.
 
 ### 21.1 — Resources rebuild · **M** · *the author's own call-out*
 
-- Fix the `<summary>` flex so category titles share the 208px left edge
-  (§3.1). **Do this first and independently** — it is the highest
+- Fix the `<summary>` flex so category titles share the page's content left
+  edge (§3.1). **Do this first and independently** — it is the highest
   visible-damage-per-line fix on the site and should not wait for the rest.
 - Adopt `.pocket` for the four unclassed `<details>`; adopt a member of the
   tile family (§2.1) for the category index.
@@ -361,9 +364,9 @@ thing that will stop a fourth green appearing.
 - Fix the jump-link arrow spacing and hanging indent (§3.3).
 - Correct `v0.3` → `v0.2` (§3.2), or correct the other eight — but pick one.
 
-**Done when:** every category title left edge measures 208px; the page declares
-its components as classes rather than 84 inline attributes; `npm run check`
-green.
+**Done when:** every category title shares one left edge with the entries
+beneath it; the page declares its components as classes rather than 84 inline
+attributes; `npm run check` green.
 **Note:** this is `MC-14`'s job arriving early. Resources is the worst case in
 the codebase and the smallest file to do it in, which makes it the right pilot
 for the inline-style migration rather than a separate effort. Fold the result
