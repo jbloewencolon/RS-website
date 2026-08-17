@@ -1,13 +1,13 @@
-// Run on demand (npm run check:responsive) to spot-check every page at
-// mobile/tablet/desktop widths: horizontal overflow (the most common
-// responsive bug — content wider than the viewport, forcing sideways
-// scroll), touch-target size on mobile, and a screenshot at each
-// breakpoint for visual review. Not wired into `npm run check` / CI,
-// because the touch-target check needs a human to interpret it: links
-// inside a sentence of body text are legitimately small under WCAG's
-// own exception (2.5.8), so a flag there isn't automatically a bug —
-// only a real interactive control (nav link, button) being undersized
-// is. Screenshots land in audit-screenshots/ (gitignored).
+// Run on demand (npm run check:responsive) for a visual review pass:
+// screenshots of every real route at mobile/tablet/desktop widths, to
+// look at rather than assert against. Overflow and touch-target checks
+// used to live here too, but this file only ever served nine paths, six
+// of which had been 1.4 KB <meta http-equiv="refresh"> redirect stubs
+// since BUG-03 moved every route to a directory URL — so those checks
+// were passing by testing almost nothing (MC-01/MC-C2, Phase 20). They
+// now live in scripts/check-pages.mjs, which already serves the real
+// directory routes and already runs in CI. This file keeps only what a
+// machine assertion can't replace: a screenshot a person actually looks at.
 import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
@@ -15,19 +15,26 @@ import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
+
+// The same nine real routes scripts/check-pages.mjs checks (its `pages`
+// array, minus glyph-check.html — a standalone diagnostic harness with no
+// page identity worth screenshotting here).
 const pages = [
   "index.html",
-  "Manifesto.dc.html",
-  "Learn.dc.html",
-  "Practise.dc.html",
-  "Archive.dc.html",
-  "Contribute.dc.html",
-  "BehindTheScenes.dc.html",
+  "manifesto/",
+  "invitation/",
+  "learn/",
+  "practise/",
+  "archive/",
+  "contribute/",
+  "behind-the-scenes/",
+  "resources/",
 ];
 
 const VIEWPORTS = [
-  { name: "mobile-375", width: 375, height: 812 },
   { name: "mobile-320", width: 320, height: 568 }, // smallest common phone width
+  { name: "mobile-375", width: 375, height: 812 },
+  { name: "mobile-390", width: 390, height: 844 },
   { name: "tablet-768", width: 768, height: 1024 },
   { name: "desktop-1280", width: 1280, height: 900 },
   { name: "desktop-1920", width: 1920, height: 1080 },
@@ -39,7 +46,13 @@ function serve() {
   return new Promise((resolve) => {
     const server = http.createServer((req, res) => {
       const reqPath = decodeURIComponent(req.url.split("?")[0]);
-      const filePath = path.join(root, reqPath === "/" ? "/index.html" : reqPath);
+      let filePath = path.join(root, reqPath === "/" ? "/index.html" : reqPath);
+      // Same directory-index resolution as check-pages.mjs's serve(): a
+      // pretty URL like /manifesto/ has to resolve to manifesto/index.html
+      // against this local server the same way it does once deployed.
+      if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
+        filePath = path.join(filePath, "index.html");
+      }
       fs.readFile(filePath, (err, data) => {
         if (err) { res.writeHead(404); res.end("not found"); return; }
         res.writeHead(200, { "Content-Type": MIME[path.extname(filePath)] || "application/octet-stream" });
@@ -50,17 +63,26 @@ function serve() {
   });
 }
 
+function findChromium() {
+  const candidates = [
+    process.env.PLAYWRIGHT_CHROMIUM_PATH,
+    "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
+  ].filter(Boolean);
+  for (const c of candidates) if (fs.existsSync(c)) return c;
+  return undefined; // let Playwright resolve its own install
+}
+
 async function main() {
   const server = await serve();
   const { port } = server.address();
   const base = `http://127.0.0.1:${port}/`;
-  const executablePath = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
-  const browser = await chromium.launch({ executablePath: fs.existsSync(executablePath) ? executablePath : undefined });
+  const executablePath = findChromium();
+  const browser = await chromium.launch(executablePath ? { executablePath } : {});
 
   const screenshotDir = path.join(root, "audit-screenshots");
   fs.mkdirSync(screenshotDir, { recursive: true });
 
-  let problems = 0;
+  let navErrors = 0;
 
   for (const pg of pages) {
     for (const vp of VIEWPORTS) {
@@ -68,67 +90,21 @@ async function main() {
       const page = await context.newPage();
       // "load" not "networkidle" — Home and Contribute's real Turnstile
       // widget (IA-03) keeps background network activity going
-      // indefinitely, so "networkidle" hangs to the timeout on both. Not
-      // run in CI, but the same landmine as prerender.mjs/check-pages.mjs.
-      await page.goto(base + pg, { waitUntil: "load", timeout: 30000 });
+      // indefinitely, so "networkidle" hangs to the timeout on both.
+      let resp;
+      try {
+        resp = await page.goto(base + pg, { waitUntil: "load", timeout: 30000 });
+      } catch (e) {
+        console.log(`✗ ${pg} @ ${vp.name} — navigation failed: ${e.message}`);
+        navErrors++;
+        await context.close();
+        continue;
+      }
       await page.waitForTimeout(600);
 
-      const { scrollWidth, clientWidth } = await page.evaluate(() => ({
-        scrollWidth: document.documentElement.scrollWidth,
-        clientWidth: document.documentElement.clientWidth,
-      }));
-      const overflowsHorizontally = scrollWidth > clientWidth + 1; // +1 for sub-pixel rounding
-
-      // Find the specific element(s) causing overflow, if any.
-      let culprits = [];
-      if (overflowsHorizontally) {
-        culprits = await page.evaluate((vw) => {
-          const found = [];
-          for (const el of document.querySelectorAll("body *")) {
-            const r = el.getBoundingClientRect();
-            if (r.right > vw + 2 && el.children.length === 0) {
-              found.push(`${el.tagName.toLowerCase()}${el.className ? "." + String(el.className).split(" ")[0] : ""} (right edge ${Math.round(r.right)}px, viewport ${vw}px)`);
-            }
-          }
-          return found.slice(0, 5);
-        }, vp.width);
-      }
-
-      // On mobile widths, spot-check that interactive elements still meet
-      // a 44px touch-target minimum (already a design intent in the CSS —
-      // verifying it actually holds after layout, not just in the source).
-      let smallTargets = [];
-      if (vp.width <= 480) {
-        smallTargets = await page.evaluate(() => {
-          const found = [];
-          for (const el of document.querySelectorAll('button, a, input, [role="button"]')) {
-            if (el.closest('[aria-hidden="true"]')) continue; // not a real target
-            // A radio/checkbox's real tap target is the label wrapping it,
-            // not the tiny native control itself — measure that instead.
-            const target = (el.tagName === "INPUT" && (el.type === "radio" || el.type === "checkbox") && el.closest("label")) || el;
-            const r = target.getBoundingClientRect();
-            if (r.width > 0 && r.height > 0 && (r.height < 24 || r.width < 24)) {
-              found.push(`${el.tagName.toLowerCase()} "${(el.textContent || el.getAttribute("aria-label") || "").trim().slice(0, 30)}" — ${Math.round(r.width)}x${Math.round(r.height)}px`);
-            }
-          }
-          return found.slice(0, 8);
-        });
-      }
-
-      const shotName = `${pg.replace(/\.html$/, "")}-${vp.name}.png`;
+      const shotName = `${(pg === "index.html" ? "home" : pg.replace(/\/$/, ""))}-${vp.name}.png`;
       await page.screenshot({ path: path.join(screenshotDir, shotName), fullPage: false });
-
-      if (overflowsHorizontally || smallTargets.length) {
-        problems++;
-        console.log(`\n✗ ${pg} @ ${vp.name} (${vp.width}px)`);
-        if (overflowsHorizontally) {
-          console.log(`    horizontal overflow: content is ${scrollWidth}px wide in a ${clientWidth}px viewport`);
-          for (const c of culprits) console.log(`      - ${c}`);
-        }
-        for (const t of smallTargets) console.log(`    touch target under 44px: ${t}`);
-      } else {
-        console.log(`✓ ${pg} @ ${vp.name}`);
-      }
+      console.log(`✓ ${pg} @ ${vp.name} (${resp ? resp.status() : "?"})`);
 
       await context.close();
     }
@@ -136,9 +112,11 @@ async function main() {
 
   await browser.close();
   server.close();
-  console.log(`\nScreenshots saved to ${screenshotDir}/`);
-  console.log(problems ? `\n${problems} viewport/page combination(s) with issues.` : "\nNo horizontal overflow or undersized touch targets found at any tested width.");
-  process.exit(problems > 0 ? 1 : 0);
+  console.log(`\nScreenshots saved to ${screenshotDir}/ (gitignored, for review only).`);
+  if (navErrors) {
+    console.log(`\n${navErrors} page/viewport combination(s) failed to navigate.`);
+    process.exit(1);
+  }
 }
 
 main();

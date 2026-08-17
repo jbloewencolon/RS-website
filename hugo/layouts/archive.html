@@ -111,7 +111,7 @@
      below (AR-09), not a register. */
   .kick{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:none;margin:0 0 .5rem;color:#5A5D53}
   h2.sec{font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0}
-  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px}
+  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px}
   nav[aria-label="Contents"] a{display:flex;flex-direction:column;gap:.35rem;height:100%;box-sizing:border-box;border:1px solid #C9C6BA;border-left:3px solid #C9C6BA;border-radius:2px;padding:.8rem .9rem;text-decoration:none;color:#191B18;min-height:44px}
   nav[aria-label="Contents"] a:hover{border-left-color:#2C5A38}
   nav[aria-label="Contents"] a:hover .door-t{color:#2C5A38}
@@ -249,7 +249,7 @@
         <h2 class="sec">{{ .title }} <span data-count class="shelf-count">{{ len .items }}</span></h2>
       </summary>
       <div class="pocket-body" id="{{ .title | anchorize }}">
-        <div class="shelf-grid{{ if eq .title "Relational sovereignty & Indigenous relational freedom" }} shelf-wood-trial{{ end }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid{{ if eq .title "Relational sovereignty & Indigenous relational freedom" }} shelf-wood-trial{{ end }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           {{ range .items }}
           {{/* WD-12: teal, not the site's #2B4C9B hyperlink blue, for the
                default register. Blue means "this is a link" on every page,
@@ -283,7 +283,7 @@
 {{ end }}
 
 <section id="fastest-route" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:3rem">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:3rem">
     <div>
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">If you read ten things</p>
       <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1.2rem;max-width:18ch;color:#E7E5DC">The fastest honest route in.</h2>
@@ -293,7 +293,7 @@
       {{ range $i, $s := hugo.Data.archive.sequence }}
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">{{ printf "%02d" (add $i 1) }}</span>
-        <a href="#entry-{{ $s.title | anchorize }}" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">{{ $s.display }}</a>
+        <a href="#entry-{{ $s.title | anchorize }}" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">{{ $s.display }}</a>
       </li>
       {{ end }}
     </ol>
@@ -305,7 +305,7 @@
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1rem">Opacity as archive design</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1.2rem;max-width:24ch">The planned archive will record restricted and unavailable material without publishing it.</h2>
     <p style="max-width:54ch;margin:0 0 1.8rem;color:#3C3E38">Most archives assume more access is always better. This one will hold seven access states, with consent as a metadata field rather than an afterthought. Sometimes withholding is part of ethical preservation. None of it is built yet, and the model it will follow already exists: <a href="https://mukurtu.org">Mukurtu</a>, <a href="https://localcontexts.org">Local Contexts</a>, <a href="https://www.gida-global.org/careprinciples">CARE</a>.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.6rem;max-width:1000px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:.6rem;max-width:1000px">
       {{/* WD-16: the ochre "named, not built" register, and a dashed edge
            rather than the solid one the real filter chips upstream use.
            None of these seven states is implemented — the paragraph above

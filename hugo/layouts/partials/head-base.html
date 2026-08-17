@@ -131,6 +131,18 @@
   *{box-sizing:border-box}
   /* WD-03 */
   h1,h2,h3{text-wrap:balance}
+  /* MC-04 (Phase 20): rhetorical text set at large clamp()'d size inside a
+     narrow max-width:Nch measure can, at 200% text zoom, contain a single
+     word wider than that measure — "invitation.", "Relationships,",
+     "refusal." — with no space left to wrap on. Without this, that one
+     word overflows its box in a way no element's own bounding rect
+     reveals (the box stays clipped to its container; only the glyph run
+     inside it draws past), which is why it read as page-level overflow
+     with no isolated culprit until measured directly, on five separate
+     pages. break-word only engages when a line has no other break
+     opportunity, so ordinary multi-word wrapping is unaffected — this is
+     a safety net under the existing measures, not a replacement for them. */
+  body{overflow-wrap:break-word}
   :focus-visible{outline:2.5px solid {{ $c.focus | safeCSS }};outline-offset:3px}
   /* Every light-ground ring goes invisible on this site's dark bands:
      #2B4C9B is 1.88:1 on the #0F2A2E teal, and Invitation's own #7D5915

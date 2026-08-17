@@ -61,7 +61,7 @@
   .swatch{display:inline-block;width:.62rem;height:.62rem;flex:0 0 auto;border-radius:1px;margin-right:.5rem;vertical-align:baseline}
   .s-teal{background:#0F2A2E}.s-fails{background:#8B3A2F}.s-ask{background:#DB9E2A}
   .legend-key{max-width:66ch;margin:1.1rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.7;color:#585B4F}
-  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:.7rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px}
+  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,248px),1fr));gap:.7rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px}
   nav[aria-label="Contents"] a{display:flex;flex-direction:column;gap:.45rem;height:100%;box-sizing:border-box;border:1px solid #C9C6BA;border-top:3px solid #C9C6BA;border-radius:2px;padding:.9rem 1rem 1rem;background:#EFEEE7;text-decoration:none;color:#191B18;min-height:44px}
   .door-t{font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.06rem;line-height:1.25;letter-spacing:-.01em}
   .door-d{font-size:12px;line-height:1.5;color:#585B4F}
@@ -211,7 +211,7 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1rem">What this is not</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.4vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Five limits on the framework</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem 2.6rem;max-width:1000px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:2rem 2.6rem;max-width:1000px">
       <div>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.1rem;margin:0 0 .5rem;line-height:1.15">Not radical individualism</h3>
         <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">It does not mean doing whatever one wants, refusing all obligations, treating people as interchangeable, or using therapeutic language to escape accountability. People are interdependent. Freedom exists through relationships, resources, care, community, and material support.</p>
@@ -256,7 +256,7 @@
         <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">A land acknowledgement in a footer is decoration. What follows is known, as far as it currently is.</p>
         <details>
           <summary style="cursor:pointer;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:#585B4F;min-height:44px;display:flex;align-items:center;padding:.2rem 0">Show the {{ len hugo.Data.substrate }} substrate fields</summary>
-          <dl style="margin:1.2rem 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem 2.4rem">
+          <dl style="margin:1.2rem 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1.2rem 2.4rem">
             {{ range hugo.Data.substrate }}
             <div style="border-top:2px solid {{ .rule }};padding-top:.7rem">
               <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ .rule }};margin:0 0 .35rem">{{ .k }}</dt>
@@ -278,7 +278,7 @@
         <h2 class="sec">Type, and why it changed</h2>
       </summary>
       <div class="pocket-body" id="type">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem 2.6rem">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:2rem 2.6rem">
       <div>
         <p style="margin:0 0 1rem;max-width:46ch">Version 0.1 loaded three faces from a font CDN. That disclosed every reader's address to a third party on page load, while the footer claimed no third parties. The claim was false, so the fonts went.</p>
         <p style="margin:0 0 1rem;max-width:46ch">What replaced them is a system stack: no request leaves your device for type, and the faces already on your machine carry far wider orthographic coverage than the display faces did. The identity is quieter. That is the correct trade.</p>
@@ -314,7 +314,7 @@
          leaves 3 empty cells in the final row; the old background+gap:1px
          trick painted #2A4C4C through those empty gaps as a solid slab.
          An empty cell now has no border and no background of its own. */}}
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:0;border-top:1px solid #2A4C4C;border-left:1px solid #2A4C4C;margin-bottom:1.8rem">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:0;border-top:1px solid #2A4C4C;border-left:1px solid #2A4C4C;margin-bottom:1.8rem">
       {{ range hugo.Data.crawler }}
       <div style="background:#0F2A2E;border-right:1px solid #2A4C4C;border-bottom:1px solid #2A4C4C;padding:1.2rem 1.3rem 1.4rem">
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ .color }};margin:0 0 .5rem">{{ .state }}</p>
@@ -394,7 +394,7 @@
       </summary>
       <div class="pocket-body" id="roadmap">
     <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">Learn names twenty-four topics. Twelve have a drafted outline; none are linked or published from this list, because an unfinished page marked <em>drafted</em> would be the small lie this site is trying not to tell. No dates are given, for the same reason <a href="/practise/">Practise's own unbuilt-tools list</a> gives none: a date this project couldn't keep would be its own small domination.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.6rem">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:.6rem">
       {{ range hugo.Data.topics }}
       {{ $accent := cond .drafted "#366943" "#64665D" }}
       <div style="border:1px solid #C9C6BA;border-left:3px solid {{ $accent }};padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
@@ -431,7 +431,7 @@
         <h2 class="sec">Labour and money</h2>
       </summary>
       <div class="pocket-body" id="labour">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.6rem 2.4rem;max-width:1000px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:1.6rem 2.4rem;max-width:1000px">
       <div>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.05rem;margin:0 0 .4rem">Who has worked on this</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">The initial and primary author of this site is the scholar poet al colibrí, a Taíno in diaspora living and working on the lands of the peoples of Tkaronto. At v0.2: one unpaid person, writing and building. Every future contributor, translator, reviewer, and maintainer will be named here individually, not aggregated into a credit line.</p>

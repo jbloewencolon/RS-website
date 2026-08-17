@@ -94,6 +94,8 @@
   *{box-sizing:border-box}
    
   h1,h2,h3{text-wrap:balance}
+   
+  body{overflow-wrap:break-word}
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
    
   .dark :focus-visible{outline-color:#DB9E2A}
@@ -223,7 +225,7 @@
   <div style="position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.4rem;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center"><span style="width:7px;height:7px;border-radius:50%;background:#3F7A4E;display:inline-block"></span> v0.2 · a commons under construction · about 4 minutes to read this page</p>
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(1.55rem,6.4vw,4.4rem);line-height:1;letter-spacing:-.035em;margin:0 0 1.6rem;max-width:20ch">FREEDOM WITHIN<br>RELATIONSHIP, NOT<br>FROM IT.<br><span style="display:inline-block;margin-top:.2em;font-size:.72em">NO OWNERS.<br>NO OBJECTS.</span></h1>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.6rem 3rem;align-items:start">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.6rem 3rem;align-items:start">
       <p style="font-size:clamp(1.1rem,2.3vw,1.35rem);line-height:1.5;max-width:42ch;margin:0">Relational sovereignty asks how we can build relationships that protect self-determination while recognizing interdependence, care, responsibility, and the living worlds to which we belong.</p>
       <div style="border-top:1px solid #C9C6BA;border-bottom:1px solid #C9C6BA;padding:1.4rem 0;max-width:420px;display:flex;flex-direction:column;gap:1rem;align-items:flex-start">
         <p aria-live="polite" style="margin:0;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.1rem,2.6vw,1.5rem);line-height:1.15;letter-spacing:-.02em;max-width:22ch">{{ question }}</p>
@@ -236,7 +238,7 @@
 <section style="padding:clamp(2.5rem,5vw,4rem) 0;border-top:1px solid #C9C6BA">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <h2 style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.8rem;font-weight:400">Six ways in. Choose by what you need.</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:#C9C6BA;border:1px solid #C9C6BA">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1px;background:#C9C6BA;border:1px solid #C9C6BA">
       <a href="/manifesto/" class="door door-teal" style="padding:1.6rem 1.5rem 1.8rem;text-decoration:none;color:#191B18;display:block">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--teal)">the threshold · 9 min</span>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.25rem;margin:.6rem 0 .5rem;line-height:1.1;letter-spacing:-.02em">Read the manifesto</h3>
@@ -277,7 +279,7 @@
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">Roadmap: open, in progress, and proposed</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.6rem,4vw,2.6rem);line-height:1.03;letter-spacing:-.03em;margin:0 0 1rem;max-width:20ch;color:#E7E5DC">A draft that stays a draft.</h2>
     <p style="max-width:56ch;margin:0 0 2.2rem;color:#B8C7C1">There are no launch dates. Work moves when labour, funding, and consent are in place, and the <a href="/behind-the-scenes/" style="color:#DB9E2A">change log</a> stays visible when it does.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2.4rem">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:2.4rem">
       <div>
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#509C64;margin:0 0 .9rem;border-bottom:1px solid #2A4C4C;padding-bottom:.5rem">Open now</p>
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.7rem;font-size:16px;line-height:1.45">
@@ -323,7 +325,7 @@
 </section>
 
 <section id="dispatch" style="padding:clamp(3rem,6vw,5rem) 0;border-top:1px solid #C9C6BA">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:3rem">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:3rem">
     <div>
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1rem">The dispatch</p>
       <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.6rem,4vw,2.6rem);line-height:1.03;letter-spacing:-.03em;margin:0 0 1.2rem;max-width:16ch">Leave an email address.</h2>
@@ -368,7 +370,7 @@
             <div style="display:grid;gap:.5rem">
               <sc-for list="{{ interests }}" as="it" hint-placeholder-count="4">
                 <label style="display:flex;gap:.7rem;align-items:flex-start;cursor:pointer;border-radius:2px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.4;padding:.7rem .75rem;min-height:44px;border:1px solid {{ it.border }};background:{{ it.bg }};color:{{ it.fg }}">
-                  <input type="checkbox" checked="{{ it.on }}" onChange="{{ it.toggle }}" style="margin:.1rem 0 0;width:18px;height:18px;flex:0 0 auto;accent-color:#3F7A4E">
+                  <input type="checkbox" checked="{{ it.on }}" onChange="{{ it.toggle }}" style="margin:.1rem 0 0;width:20px;height:20px;flex:0 0 auto;accent-color:#3F7A4E">
                   <span>{{ it.label }}</span>
                 </label>
               </sc-for>
@@ -395,7 +397,7 @@
 </main>
 
 <footer class="dark" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2.5rem,5vw,3.5rem) 0">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.7">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:2rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.7">
     <div>
       <p style="margin:0 0 .5rem;color:#E7E5DC;font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em">Relational Sovereignty</p>
       <p style="margin:0">v0.2 · a commons under construction · <a href="/behind-the-scenes/" style="color:#DB9E2A">what changed</a></p>
