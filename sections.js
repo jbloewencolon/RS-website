@@ -71,7 +71,21 @@
   var vmap = document.getElementById("view-map");
   var vrows = document.getElementById("view-rows");
   if (scen && vmap && vrows) {
-    var WIDE = 860; // px; where table.matrix's 760px min-width clears the wrap
+    // MC-13 (Phase 20): the 860 lives once, in Hugo (learn.html), and
+    // reaches both the CSS media query and here via data-matrix-wide —
+    // not two independently maintained copies of the number. A live CSS
+    // container query looked like the more elegant single source of
+    // truth and was tried first, but every wrapper between here and the
+    // page shell sits inside this section's own
+    // main.js-pockets>section[data-pocket].is-shut{display:none} rule
+    // (1.6, below) — the *whole* <section>, not just the inner
+    // <details>, so its width is 0 until a reader has opened it, which
+    // for most readers is never true at the moment this runs. Confirmed
+    // via getComputedStyle before assuming a build-time value was
+    // necessary. A data attribute has no such problem: it reads
+    // correctly regardless of what's visible.
+    var wide = parseInt(scen.getAttribute("data-matrix-wide"), 10) || 860;
+    var fitsChart = window.innerWidth >= wide;
     var buttons = [].slice.call(scen.querySelectorAll("[data-view]"));
 
     // Focus deliberately stays on the pressed button. aria-pressed already
@@ -118,7 +132,7 @@
     window.addEventListener("hashchange", syncToHash);
 
     scen.classList.add("js-views");
-    showView(window.innerWidth >= WIDE ? "map" : "rows");
+    showView(fitsChart ? "map" : "rows");
     syncToHash();
     showScenariosRows = function () { showView("rows"); };
   }
