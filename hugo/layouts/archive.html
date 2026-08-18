@@ -269,10 +269,7 @@
         {{ end }}
       </ul>
     </nav>
-    <p style="margin:1rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px">
-      <a href="#fastest-route" style="display:inline-flex;align-items:center;min-height:44px;margin-right:1.5rem">The fastest honest route in</a><a href="#absence" style="display:inline-flex;align-items:center;min-height:44px">Absence &amp; incompleteness</a>
-    </p>
-    <button type="button" data-open-all aria-pressed="false" class="action-utility" style="margin-top:.6rem" aria-controls="{{ range hugo.Data.archive.groups }}{{ .title | anchorize }} {{ end }}">Open every shelf</button>
+    <button type="button" data-open-all aria-pressed="false" class="action-utility" style="margin-top:1rem" aria-controls="{{ range hugo.Data.archive.groups }}{{ .title | anchorize }} {{ end }}">Open every shelf</button>
   </div>
 </section>
 
@@ -313,12 +310,6 @@
     <p data-empty-filter class="form-error" style="display:none;margin:.5rem 0 0">Nothing on this shelf matches that filter. <button type="button" data-clear-filters style="font-family:inherit;font-size:inherit;color:#2C5A38;text-decoration:underline;background:none;border:none;padding:0;cursor:pointer;min-height:44px">Show everything</button></p>
   </div>
 </div>
-<section class="noprint" style="padding:0 0 1.6rem">
-  <div style="max-width:1120px;margin:0 auto;padding:.9rem clamp(1.1rem,4vw,3rem) 0">
-    <p style="margin:0 0 .3rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">"★ a first route" marks a suggested way in, not a ranking. Everything else on this shelf carries the same weight, not runner-up status.</p>
-    <p style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">Every entry below is shown by default. These buttons narrow the list if your browser runs the small script that does it. Nothing is ever hidden without a click, and the full shelf renders either way.</p>
-  </div>
-</section>
 
 {{ range hugo.Data.archive.groups }}
 <section data-pocket="{{ .title | anchorize }}" data-group style="padding:0 0 1.8rem">

@@ -17,8 +17,33 @@
 <!-- Critical CSS, ahead of the blocking support.js below: the page's
      real background/text colours live inside <helmet>, which support.js
      itself only reveals once it boots. Without this, a slow first paint
-     shows the browser's default white canvas until then. -->
-<style>html{background:#E7E5DC}body{margin:0;background:#E7E5DC;color:#191B18}.skip-link{position:absolute;left:-9999px;top:0}.nav-toggle{display:none}</style>
+     shows the browser's default white canvas until then. MC-C20 (Phase
+     20): a second reason now — support.js's boot briefly removes the
+     <helmet> stylesheet before its replacement is ready, and this block
+     is the one place in this page that copy of the CSS survives that
+     gap. Kept in sync with a subset of hugo/layouts/partials/head-base.html
+     by scripts/sync-base.mjs; edit there, then run `npm run sync:base`. -->
+<style>html{background:#E7E5DC}body{margin:0;background:#E7E5DC;color:#191B18}.skip-link{position:absolute;left:-9999px;top:0}.nav-toggle{display:none}
+/* critical-shared:start */
+.action,.action-utility,.nav-link,.disclosure,.form-error{font-family:var(--mono);font-size:14px}
+.action,.action-utility,.nav-link,.disclosure{text-transform:uppercase;min-height:44px;align-items:center;border-radius:2px}
+.action,.action-utility,.nav-link{display:inline-flex}
+.disclosure{display:flex}
+.action,.action-utility,.disclosure{cursor:pointer;letter-spacing:.05em}
+.action{background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem}
+.action[disabled]{cursor:default;opacity:.55}
+.action-utility{background:transparent;color:#585B4F;border:1px solid #C9C6BA;padding:.6rem .8rem}
+.action-utility:hover,.action-utility[aria-pressed="true"],.action-utility.is-active{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
+.nav-link,.disclosure{color:#585B4F;padding:.4rem 0}
+.nav-link{text-decoration:none;letter-spacing:.04em}
+.nav-link:hover,.disclosure:hover{color:#2C5A38}
+.nav-link[aria-current]{color:#366943;text-decoration:underline;text-underline-offset:4px}
+.dark .nav-link{color:#8FA9A2}
+.form-error{line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem}
+.form-status{border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;background:rgba(63,122,78,.06);padding:1.6rem 1.5rem}
+.field-invalid{border-color:#8B3A2F!important}
+/* critical-shared:end */
+</style>
 <script src="/support.js"></script>
 <!-- The one third-party request on this site: Cloudflare's own bot check
      on the form below, disclosed in the footer and on Behind the Scenes
