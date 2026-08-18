@@ -196,6 +196,18 @@
      and matching its 9rem: both are "clear a summary sitting above the
      id'd element," and pocket summaries run up to two lines. */
   .pocket-body[id]{scroll-margin-top:9rem}
+  /* MC-12 (Phase 20): named, not scroll-spied — see sections.js's own
+     comment and MC-C11 in tasks.md for why this replaced the retired
+     IA-06 jump bar rather than reviving it (comment just above the
+     hero's Contents grid has the page's own account of that removal).
+     display:none until sections.js adds .is-visible, same reveal-by-
+     class convention [data-open-all] uses just above. */
+  .section-rail{display:none}
+  .section-rail.is-visible{display:block;position:sticky;top:var(--sticky-offset,0px);z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+  .section-rail a{display:flex;align-items:center;gap:.5rem;min-height:44px;padding:.3rem clamp(1.1rem,4vw,3rem);font-family:var(--mono);font-size:13px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-3);text-decoration:none}
+  .section-rail a:hover{color:var(--holds)}
+  .section-rail-current{color:var(--ink);font-weight:600}
+  .section-rail-current::before{content:"Reading: "}
 
   /* The thirteen. Number in teal because it is the framework speaking;
      the question band in ochre because it is the framework asking. */
@@ -416,10 +428,17 @@
     </nav>
     <details class="nav-toggle">
       <summary>Menu</summary>
-      <div style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
+      {{/* MC-11 (Phase 20): current route first in this copy only — see
+           Archive's identical comment for the full reasoning. Also
+           restored display:flex;flex-wrap:wrap;gap:1.1rem here, missing
+           only on this page's copy of the eight other pages' identical
+           rule — without it the gap declaration did nothing and this
+           was the one mobile menu on the site with no space between
+           links, caught while this block was open for the reorder. */}}
+      <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
+        <a href="/learn/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
         <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
         <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-        <a href="/learn/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
         <a href="/practise/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
         <a href="/archive/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
         <a href="/contribute/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
@@ -442,7 +461,15 @@
          Repeating it here rather than writing new label copy keeps the
          two in step: a reader who picks "A field, not a ladder" opens a
          section that greets them with the same six words. -->
-    <nav aria-label="Contents" style="margin-top:1.5rem">
+    <nav aria-label="Contents" id="contents" style="margin-top:1.5rem">
+      {{/* MC-12 (Phase 20): current-route-first-style compact local nav —
+           see Behind the Scenes' identical sentinel comment
+           (hugo/layouts/behindthescenes.html) and sections.js's own
+           comment/MC-C11 in tasks.md for the full reasoning, including
+           why this is a real 1px sentinel inside the nav's own top
+           (matching where reveal() actually lands a same-page click),
+           not a sibling before it or the 800+px grid itself. */}}
+      <span id="contents-sentinel" aria-hidden="true" style="display:block;height:1px"></span>
       <ul>
         <li><a href="#principles" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>The thirteen principles</span><span class="door-d">Thirteen, each with one question</span></a></li>
         <li><a href="#forms-and-labels" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Forms &amp; labels</span><span class="door-d">A field, not a ladder</span></a></li>
@@ -481,6 +508,12 @@
             aria-controls="{{ range hugo.Data.stress }}{{ .id }} {{ end }}adj-06-07 adj-08-11">Open every section</button>
   </div>
 </section>
+
+{{/* MC-12 (Phase 20): see Behind the Scenes' identical markup comment
+     and sections.js's own comment/MC-C11 in tasks.md. */}}
+<div class="section-rail noprint">
+  <a href="#contents"><span class="section-rail-current"></span><span aria-hidden="true">— all sections</span></a>
+</div>
 
 <section class="band" data-pocket="principles" style="padding-top:clamp(1.6rem,3vw,2.2rem)">
   <div class="wrap">

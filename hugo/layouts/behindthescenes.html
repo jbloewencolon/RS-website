@@ -90,6 +90,27 @@
   main [id]{scroll-margin-top:1.5rem}
   .pocket-body[id]{scroll-margin-top:2.5rem}
   @media print{details:not([open])>*{display:block!important}}
+  /* MC-12 (Phase 20): named, not scroll-spied — see sections.js's own
+     comment and MC-C11 in tasks.md for why this replaced the retired
+     WD-14 jump bar rather than reviving it. Starts display:none so a
+     no-JS reader never sees a static "Section" label with nothing to
+     update it; sections.js adds .is-visible once it has a real pocket
+     name to show, same reveal-by-class convention [data-open-all] uses. */
+  .section-rail{display:none}
+  .section-rail.is-visible{display:block;position:sticky;top:var(--sticky-offset,0px);z-index:20;background:#E7E5DC;border-bottom:1px solid #C9C6BA}
+  .section-rail a{display:flex;align-items:center;gap:.5rem;min-height:44px;padding:.3rem clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.03em;text-transform:uppercase;color:#585B4F;text-decoration:none}
+  .section-rail a:hover{color:#2C5A38}
+  .section-rail-current{color:#191B18;font-weight:600}
+  .section-rail-current::before{content:"Reading: "}
+  /* #contents inherits main [id]{scroll-margin-top:1.5rem} above, which
+     is inert for the rail's own #contents link — sections.js's reveal()
+     intercepts every same-page click and positions the target by its
+     own JS-computed BAR offset, not CSS scroll-margin-top, so this rule
+     only matters for a no-JS visit that lands on #contents directly.
+     Kept at the page's own convention regardless, harmless either way;
+     the actual tie this page hit (see sections.js's own rootMargin
+     comment) was between reveal()'s landing point and the observer's
+     threshold, not this. */
   /* BM-04 — one hardcoded composition trialling M1 (raceme descent) +
      M6 (sway), page-owned rather than promoted to the shared
      head-base.html block: this is deliberately a one-page proof, not a
@@ -123,7 +144,10 @@
     </nav>
     <details class="nav-toggle">
       <summary>Menu</summary>
+      {{/* MC-11 (Phase 20): current route first in this copy only — see
+           Archive's identical comment for the full reasoning. */}}
       <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
+        <a href="/behind-the-scenes/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
         <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
         <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
         <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
@@ -131,7 +155,6 @@
         <a href="/archive/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
         <a href="/contribute/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
         <a href="/resources/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
-        <a href="/behind-the-scenes/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
       </div>
     </details>
   </div>
@@ -191,7 +214,22 @@
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">A site arguing against domination cannot keep its own workings private. What follows is the substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.</p>
     <p style="max-width:52ch;margin:0 0 1.6rem;color:#3C3E38">Some of these fields are marked <em>not yet known</em>. That is the accurate answer at v0.2, and a blank is more honest than a placeholder.</p>
     <p class="legend-key"><span class="swatch s-teal"></span>Teal marks what's built and asserted below. <span class="swatch s-fails"></span>Rust marks the fault list. <span class="swatch s-ask"></span>Ochre marks what's named but not yet built or paid for. Nothing here is signalled by colour alone.</p>
-    <nav aria-label="Contents" style="margin-top:1.5rem">
+    <nav aria-label="Contents" id="contents" style="margin-top:1.5rem">
+      {{/* MC-12 (Phase 20): a real 1px sentinel, not the grid itself — at
+           eight cards deep the grid can run 800+px tall on a narrow
+           phone, and IntersectionObserver's threshold:0 only reports
+           "not intersecting" once an *entire* target has cleared the
+           viewport, which for something that tall would need almost
+           that much scroll. This marks the grid's own visible top edge
+           (inside the nav, past its own margin-top, matching where
+           reveal() in sections.js actually lands a same-page click on
+           #contents — a sibling placed *before* the nav landed a full
+           margin-top short of that, confirmed wrong via a real
+           click-through in testing, not assumed correct from markup
+           order alone), so scrolling past *that* line — not the whole
+           grid's height — is what tells sections.js the picker is no
+           longer where the reader is. */}}
+      <span id="contents-sentinel" aria-hidden="true" style="display:block;height:1px"></span>
       <ul>
         <li><a href="#substrate" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Substrate</span><span class="door-d">The material facts of the machine you're reading on</span></a></li>
         <li><a href="#type" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Accessibility &amp; type</span><span class="door-d">Coverage, checked not assumed</span></a></li>
@@ -206,6 +244,15 @@
     <button type="button" data-open-all aria-pressed="false" style="margin-top:1.2rem" aria-controls="substrate type crawler reuse faults roadmap changelog labour">Open every section</button>
   </div>
 </section>
+
+{{/* MC-12 (Phase 20): see sections.js's own comment and MC-C11 in
+     tasks.md. display:none until sections.js adds .is-visible — same
+     reveal-by-class convention as [data-open-all].is-ready just above,
+     so a no-JS reader, or one whose JS hasn't run yet, never sees a bar
+     with nothing behind it. */}}
+<div class="section-rail noprint">
+  <a href="#contents"><span class="section-rail-current"></span><span aria-hidden="true">— all sections</span></a>
+</div>
 
 <section id="limits" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">

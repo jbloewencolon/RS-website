@@ -173,6 +173,14 @@
   .pocket-body[id]{scroll-margin-top:2.5rem}
   @media print{details:not([open])>*{display:block!important}}
    
+  .section-rail{display:none}
+  .section-rail.is-visible{display:block;position:sticky;top:var(--sticky-offset,0px);z-index:20;background:#E7E5DC;border-bottom:1px solid #C9C6BA}
+  .section-rail a{display:flex;align-items:center;gap:.5rem;min-height:44px;padding:.3rem clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.03em;text-transform:uppercase;color:#585B4F;text-decoration:none}
+  .section-rail a:hover{color:#2C5A38}
+  .section-rail-current{color:#191B18;font-weight:600}
+  .section-rail-current::before{content:"Reading: "}
+   
+   
   @keyframes bo-sway{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(-3px,3px) rotate(.4deg)}}
   .bo-anim.is-in{transform-origin:50% 0%;animation:bo-sway 76s ease-in-out 2.4s infinite}
 </style>
@@ -195,7 +203,9 @@
     </nav>
     <details class="nav-toggle">
       <summary>Menu</summary>
+      
       <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
+        <a href="/behind-the-scenes/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
         <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
         <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
         <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
@@ -203,7 +213,6 @@
         <a href="/archive/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
         <a href="/contribute/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
         <a href="/resources/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
-        <a href="/behind-the-scenes/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
       </div>
     </details>
   </div>
@@ -257,7 +266,9 @@
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">A site arguing against domination cannot keep its own workings private. What follows is the substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.</p>
     <p style="max-width:52ch;margin:0 0 1.6rem;color:#3C3E38">Some of these fields are marked <em>not yet known</em>. That is the accurate answer at v0.2, and a blank is more honest than a placeholder.</p>
     <p class="legend-key"><span class="swatch s-teal"></span>Teal marks what's built and asserted below. <span class="swatch s-fails"></span>Rust marks the fault list. <span class="swatch s-ask"></span>Ochre marks what's named but not yet built or paid for. Nothing here is signalled by colour alone.</p>
-    <nav aria-label="Contents" style="margin-top:1.5rem">
+    <nav aria-label="Contents" id="contents" style="margin-top:1.5rem">
+      
+      <span id="contents-sentinel" aria-hidden="true" style="display:block;height:1px"></span>
       <ul>
         <li><a href="#substrate" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Substrate</span><span class="door-d">The material facts of the machine you're reading on</span></a></li>
         <li><a href="#type" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Accessibility &amp; type</span><span class="door-d">Coverage, checked not assumed</span></a></li>
@@ -272,6 +283,11 @@
     <button type="button" data-open-all aria-pressed="false" style="margin-top:1.2rem" aria-controls="substrate type crawler reuse faults roadmap changelog labour">Open every section</button>
   </div>
 </section>
+
+
+<div class="section-rail noprint">
+  <a href="#contents"><span class="section-rail-current"></span><span aria-hidden="true">— all sections</span></a>
+</div>
 
 <section id="limits" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
