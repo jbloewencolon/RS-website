@@ -291,9 +291,23 @@
     </div>
     <ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.65rem">
       {{ range $i, $s := hugo.Data.archive.sequence }}
+      {{/* UX-08 originally pointed each of these ten at its own card
+           further down this same page (#entry-…) — a "fastest route in"
+           that was itself a detour through the archive's own scaffolding
+           rather than the source. This looks the matching item up by
+           title in `groups` (same fragile match the file's own header
+           comment already documents for this list) and links straight to
+           its real `link` field: the publisher, journal, or author's own
+           page, exactly like every card below does with `.link`. */}}
+      {{- $href := "" -}}
+      {{- range hugo.Data.archive.groups -}}
+        {{- range .items -}}
+          {{- if eq .title $s.title }}{{ $href = .link }}{{ end -}}
+        {{- end -}}
+      {{- end }}
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">{{ printf "%02d" (add $i 1) }}</span>
-        <a href="#entry-{{ $s.title | anchorize }}" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">{{ $s.display }}</a>
+        <a href="{{ $href }}" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">{{ $s.display }}</a>
       </li>
       {{ end }}
     </ol>
