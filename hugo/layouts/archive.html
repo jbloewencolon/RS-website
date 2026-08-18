@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Archive: Relational Sovereignty</title>
 <meta name="description" content="Thirty-odd texts on relational sovereignty, Indigenous relationality, care ethics, and transformative justice, each linking away to the people who wrote them.">
 <link rel="canonical" href="https://relationalsovereignty.com/archive/">
@@ -55,7 +55,14 @@
      reachable without a trip back to the top. Only the controls stick;
      the explanatory paragraphs below stay in normal flow, since they're
      one-time context, not chrome a reader needs at every scroll depth. */
-  .filterbar{position:sticky;top:0;z-index:30;background:#E7E5DC;border-top:1px solid #C9C6BA;border-bottom:1px solid #C9C6BA;box-shadow:0 10px 18px -16px rgba(25,27,24,.6);padding:.55rem 0}
+  /* MC-17: top:env(safe-area-inset-top), not a bare 0 — this is the
+     only sticky-to-the-physical-edge surface on this page, so it's the
+     one place that inset belongs; every other <section> on this page
+     scrolls normally and never sits pinned against a hardware edge, so
+     none of them get it (see head-base.html's --shell-left/right
+     comment for the rest of this row's reasoning, including why it's a
+     no-op without this page's own viewport-fit=cover). */
+  .filterbar{position:sticky;top:env(safe-area-inset-top);z-index:30;background:#E7E5DC;border-top:1px solid #C9C6BA;border-bottom:1px solid #C9C6BA;box-shadow:0 10px 18px -16px rgba(25,27,24,.6);padding:.55rem 0}
   @media (max-width:700px){
     /* !important: .chips carries an inline style="…flex-wrap:wrap…" (it
        wraps at every width above 700px), and an inline style attribute
@@ -67,6 +74,18 @@
        write-up in completed.tasks.md) for exactly this situation. */
     .filterbar .chips{flex-wrap:nowrap!important;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;position:relative}
     .filterbar .chips::-webkit-scrollbar{display:none}
+    /* MC-17 (Phase 20): BUG-04's flex-wrap:nowrap above stops the *row*
+       from wrapping onto several lines, but says nothing about the text
+       inside each chip — a long label ("we have no answer to this",
+       "★ a first route") still wrapped across two or three lines within
+       its own button, which is what was actually inflating the bar.
+       Confirmed by measuring each chip's own rendered height at 568×320:
+       three of seven were 69-117px against the other four's 44px, and
+       .filterbar as a whole came out to 161.8px against this row's own
+       25%-of-viewport budget (80px at this height) — over twice it.
+       white-space:nowrap keeps every chip single-line; the row already
+       scrolls horizontally for exactly this overflow. */
+    .filterbar .chips button{white-space:nowrap}
     /* MC-15 (Phase 20): same fade-cue pattern as .venn-scroll (this file)
        and Learn's .matrix-scroll — a hint that the row continues past
        the edge, not a scroll-position tracker. Two-sided, unlike those:
@@ -75,6 +94,21 @@
     .filterbar .chips::before,.filterbar .chips::after{content:"";position:absolute;top:0;bottom:0;width:20px;pointer-events:none;z-index:1}
     .filterbar .chips::before{left:0;background:linear-gradient(to right,#E7E5DC,rgba(0,0,0,0))}
     .filterbar .chips::after{right:0;background:linear-gradient(to left,#E7E5DC,rgba(0,0,0,0))}
+  }
+  /* MC-17 (Phase 20): the single-line fix above still left .filterbar at
+     88.6px against this row's own 25%-of-viewport budget at 568×320
+     (80px) — the chip row's own 44px WCAG 2.5.8 touch target (MC-02)
+     plus the bar's vertical padding and the "Showing N entries" status
+     line add up past it. Keyed on viewport height, not width or
+     orientation, since height is the actual scarce dimension a
+     landscape phone screen has; the button height itself (the one
+     thing 25% exists to protect a reader from losing) is untouched.
+     !important on the second rule for the same reason as BUG-04 above:
+     .chips carries its own inline margin-bottom, which otherwise beats
+     any external rule regardless of media query or specificity. */
+  @media (max-height:420px){
+    .filterbar{padding:.3rem 0}
+    .filterbar .chips{margin-bottom:.2rem!important}
   }
   /* The bar is taller below desktop than the inline scroll-margin-top on
      [data-group] and article[data-tags] was sized for, so every contents
@@ -227,7 +261,7 @@
      ~12,000px page. Matches how Learn's .jump bar is placed, for the
      same reason. */}}
 <div class="filterbar noprint">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+  <div style="max-width:1120px;margin:0 auto;padding:0 var(--shell-right) 0 var(--shell-left)">
     <div class="chips" style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.4rem">
       <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-right:.4rem">Filter</span>
       {{ range hugo.Data.archive.filters }}
