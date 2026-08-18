@@ -248,7 +248,21 @@
      static position — up to 760px in — and stretch the whole document
      sideways on a phone. */
   .matrix-scroll{position:relative;overflow-x:auto;border:1px solid var(--rule);background:var(--paper-2)}
+  /* MC-13 (Phase 20): the same overflow-fade cue .venn-scroll already
+     uses on Archive (archive.html), reused here rather than a second
+     pattern invented for the same job — a hint that there is more
+     table to the right, not a scroll-position tracker; it fades toward
+     .matrix-scroll's own background so it reads as an edge of the
+     surface, not a highlight. */
+  .matrix-scroll::after{content:"";position:absolute;top:0;right:0;bottom:0;width:28px;background:linear-gradient(to right,rgba(0,0,0,0),var(--paper-2) 90%);pointer-events:none}
   table.matrix{border-collapse:collapse;width:100%;min-width:760px;font-family:var(--mono);font-size:12.5px}
+  /* Row headers (first column, both axes) stay put as the table pans
+     right — the reader can lose track of which of the seven situations
+     a distant column belongs to otherwise. Opaque backgrounds already
+     set below are load-bearing here too: a sticky cell with no
+     background lets the scrolled-past columns show through underneath
+     it. */
+  table.matrix thead th:first-child,table.matrix tbody th{position:sticky;left:0;z-index:1;box-shadow:2px 0 4px -2px rgba(25,27,24,.25)}
   /* The explanation is a <p> above the scroller, not a <caption>, because
      a caption is a child of the table and inherits its 760px min-width —
      on a phone that puts the sentence explaining the chart inside the
@@ -256,14 +270,28 @@
      still has an accessible name. */
   .matrix-intro{max-width:80ch;margin:0 0 .9rem;font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--ink-3)}
   .matrix-hint{display:none;margin:.6rem 0 0;font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+  {{/* MC-13 (Phase 20): the one place this number is written. Was
+       860 in a CSS media query here and a second, independent
+       WIDE=860 in sections.js — two copies of the same fact that
+       could drift apart. A live CSS container query looked like a
+       cleaner single source of truth and was tried first, but this
+       section (like every pocket on the site) is hidden by
+       main.js-pockets>section[data-pocket].is-shut{display:none}
+       until a reader opens it — not just the inner <details>, the
+       whole <section> — so it has no real layout width for a
+       container query to measure at the moment a first-time reader's
+       page loads. Reaching sections.js as a data attribute instead
+       (§ below, data-matrix-wide) has no such problem: it reads
+       correctly whether the section is visible or not. */}}
+  {{ $matrixWide := 860 }}
   /* IA-05, the two views of the stress data. Three states, in order of
      increasing specificity so each beats the one above it:
 
        1. No scripting. #view-rows always renders; #view-map renders only
-          at 860px and up, where the 760px table fits its container. Below
-          that the chart is not shown at all, which is what removes the
-          horizontal-scroll defect for a reader without JavaScript rather
-          than merely warning them about it.
+          at {{ $matrixWide }}px and up, where the 760px table fits its
+          container. Below that the chart is not shown at all, which is
+          what removes the horizontal-scroll defect for a reader without
+          JavaScript rather than merely warning them about it.
        2. Scripting ready (.js-views on the section). Neither view shows
           until one is marked current, so the switch is in charge at every
           width — including widths where the chart must scroll, which is
@@ -275,7 +303,7 @@
      drawn. */
   .views{display:none;gap:.5rem;flex-wrap:wrap;margin:0 0 1.1rem}
   .js-views .views{display:flex}
-  @media (max-width:859px){#view-map{display:none}}
+  @media (max-width:{{ sub $matrixWide 1 }}px){#view-map{display:none}}
   .js-views #view-map,.js-views #view-rows{display:none}
   .js-views #view-map.is-current,.js-views #view-rows.is-current{display:block}
   .js-views #view-map.is-current .matrix-hint{display:none}
@@ -583,7 +611,7 @@
       <span class="kick kick-fails">Seven situations, traced through, failures marked as failures</span>
       <h2 class="sec">What these principles are like to actually be inside.</h2>
     </summary>
-    <div class="pocket-body" id="scenarios">
+    <div class="pocket-body" id="scenarios" data-matrix-wide="{{ $matrixWide }}">
     <p class="lede">Thirteen principles read cleanly in the abstract. Some of them strain, bend, or fail outright for specific people in specific situations, and a framework that only ever illustrates itself with its easy cases is quietly asking readers whose situation is a hard case to notice the gap themselves. These seven situations test where the principles help, where they conflict, and where they offer no material remedy.</p>
 
     {{ $prin := hugo.Data.principles }}
@@ -598,7 +626,11 @@
          min-width:760px, the wrap's padding is 4vw a side, and the
          container first clears 760px between 820px (752px, scrolls) and
          860px (789px, fits). The audit proposed 820px, which is where the
-         overflow was *observed*, not where it stops.
+         overflow was *observed*, not where it stops. The live value is
+         $matrixWide, declared once near the top of this file's style
+         block (MC-13, Phase 20) — update it there, not the number in
+         this sentence, which is a record of how 860 was derived rather
+         than the thing that decides anything at runtime.
 
          With scripting the switch decides at any width, so the chart stays
          reachable on a phone — in its labelled scroller, which is the one
