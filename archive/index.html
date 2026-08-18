@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Archive: Relational Sovereignty</title>
 <meta name="description" content="Thirty-odd texts on relational sovereignty, Indigenous relationality, care ethics, and transformative justice, each linking away to the people who wrote them.">
 <link rel="canonical" href="https://relationalsovereignty.com/archive/">
@@ -51,7 +51,9 @@
   }
    
   a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none;display:inline-block;transition:transform .14s ease}
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before,
+  @media (hover:hover) and (pointer:fine){
+    a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before{transform:translateX(2px)}
+  }
   a[href*="#"]:not(.skip-link):not([style*="border-radius"]):focus-visible::before{transform:translateX(2px)}
   nav[aria-label="Contents"] a{border:1px solid #C9C6BA;border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:#585B4F}
   nav[aria-label="Contents"] a:hover{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
@@ -73,6 +75,11 @@
   }
    
   :root{
+    --shell-left:max(clamp(1.1rem,4vw,3rem), env(safe-area-inset-left));
+    --shell-right:max(clamp(1.1rem,4vw,3rem), env(safe-area-inset-right));
+  }
+   
+  :root{
     --paper:#E7E5DC;--paper-2:#EFEEE7;--ink:#191B18;--ink-2:#3C3E38;--ink-3:#585B4F;--rule:#C9C6BA;
     --teal:#0F2A2E;--teal-2:#2A4C4C;--sage:#8FA9A2;
     --holds:#2C5A38;--holds-fill:rgba(63,122,78,.13);--holds-edge:rgba(44,90,56,.35);
@@ -82,26 +89,43 @@
   *{box-sizing:border-box}
    
   h1,h2,h3{text-wrap:balance}
+   
+  body{overflow-wrap:break-word}
   :focus-visible{outline:2.5px solid #2B4C9B;outline-offset:3px}
    
   .dark :focus-visible{outline-color:#DB9E2A}
    
   .action,.action-utility,.nav-link,.disclosure,.form-error{font-family:var(--mono);font-size:14px}
-  .action,.action-utility,.nav-link,.disclosure{text-transform:uppercase;min-height:44px;display:inline-flex;align-items:center;border-radius:2px}
-  .action,.action-utility{cursor:pointer;letter-spacing:.05em}
+  .action,.action-utility,.nav-link,.disclosure{text-transform:uppercase;min-height:44px;align-items:center;border-radius:2px}
+  
+  .action,.action-utility,.nav-link{display:inline-flex}
+  .disclosure{display:flex}
+  
+  .action,.action-utility,.disclosure{cursor:pointer;letter-spacing:.05em}
   .action{background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem}
   .action[disabled]{cursor:default;opacity:.55}
   .action-utility{background:transparent;color:#585B4F;border:1px solid #C9C6BA;padding:.6rem .8rem}
   .action-utility:hover,.action-utility[aria-pressed="true"],.action-utility.is-active{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
-  .nav-link,.disclosure{color:#585B4F;letter-spacing:.04em;padding:.4rem 0}
-  .nav-link{text-decoration:none}
+  .nav-link,.disclosure{color:#585B4F;padding:.4rem 0}
+  .nav-link{text-decoration:none;letter-spacing:.04em}
   .nav-link:hover,.disclosure:hover{color:#2C5A38}
-  .nav-link[aria-current]{color:#191B18;text-decoration:underline;text-underline-offset:5px}
-  .disclosure{cursor:pointer}
+  
+  .nav-link[aria-current]{color:#366943;text-decoration:underline;text-underline-offset:4px}
+  
+  .dark .nav-link{color:#8FA9A2}
    
   .form-error{line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem}
   .form-status{border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;background:rgba(63,122,78,.06);padding:1.6rem 1.5rem}
   .field-invalid{border-color:#8B3A2F!important}
+  
+  .pocket-summary .tab-num{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:#5A5D53;flex:0 0 auto}
+  details[open]>.pocket-summary.d-teal{background:rgba(15,42,46,.05)}
+  details[open]>.pocket-summary.d-fails{background:var(--fails-fill)}
+  details[open]>.pocket-summary.d-ask{background:var(--ask-fill)}
+  details[open]>.pocket-summary.d-holds{background:var(--holds-fill)}
+  
+  .dark .tab-num{color:#8FA9A2}
+  .dark details[open]>.pocket-summary{background:rgba(219,158,42,.08)}
    
   details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid #DB9E2A;margin:1.6rem 0 0}
   details.note>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0 .9rem;color:#585B4F}
@@ -137,29 +161,44 @@
 
 <style>
    
-  [data-filter]{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.03em;padding:.6rem .8rem;min-height:44px;cursor:pointer;border-radius:2px;border:1px solid #C9C6BA;background:transparent;color:#585B4F}
+  
   [data-filter].is-active{border-color:#3F7A4E;background:rgba(63,122,78,.1);color:#2C5A38}
+  [data-empty-filter].is-visible{display:block!important}
    
-  .filterbar{position:sticky;top:0;z-index:30;background:#E7E5DC;border-top:1px solid #C9C6BA;border-bottom:1px solid #C9C6BA;box-shadow:0 10px 18px -16px rgba(25,27,24,.6);padding:.55rem 0}
+   
+  .filterbar{position:sticky;top:env(safe-area-inset-top);z-index:30;background:#E7E5DC;border-top:1px solid #C9C6BA;border-bottom:1px solid #C9C6BA;box-shadow:0 10px 18px -16px rgba(25,27,24,.6);padding:.55rem 0}
   @media (max-width:700px){
      
-    .filterbar .chips{flex-wrap:nowrap!important;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .filterbar .chips{flex-wrap:nowrap!important;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;position:relative}
     .filterbar .chips::-webkit-scrollbar{display:none}
+     
+    .filterbar .chips button{white-space:nowrap}
+     
+    .filterbar .chips::before,.filterbar .chips::after{content:"";position:absolute;top:0;bottom:0;width:20px;pointer-events:none;z-index:1}
+    .filterbar .chips::before{left:0;background:linear-gradient(to right,#E7E5DC,rgba(0,0,0,0))}
+    .filterbar .chips::after{right:0;background:linear-gradient(to left,#E7E5DC,rgba(0,0,0,0))}
+  }
+   
+  @media (max-height:420px){
+    .filterbar{padding:.3rem 0}
+    .filterbar .chips{margin-bottom:.2rem!important}
   }
    
   @media (max-width:1023px){
-    article[data-tags]{scroll-margin-top:10rem!important}
+    article[data-tags]{scroll-margin-top:var(--sticky-offset,10rem)!important}
   }
   .venn-scroll{position:relative}
   .venn-scroll::after{content:"";position:absolute;top:0;right:0;bottom:.5rem;width:32px;background:linear-gradient(to right,rgba(231,229,220,0),#E7E5DC 90%);pointer-events:none}
    
   .arr{display:inline-block;transition:transform .15s ease}
-  a:hover .arr,a:focus-visible .arr{transform:translateX(3px)}
+  
+  @media (hover:hover) and (pointer:fine){a:hover .arr{transform:translateX(3px)}}
+  a:focus-visible .arr{transform:translateX(3px)}
 
    
   .kick{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:none;margin:0 0 .5rem;color:#5A5D53}
   h2.sec{font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0}
-  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px}
+  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px}
   nav[aria-label="Contents"] a{display:flex;flex-direction:column;gap:.35rem;height:100%;box-sizing:border-box;border:1px solid #C9C6BA;border-left:3px solid #C9C6BA;border-radius:2px;padding:.8rem .9rem;text-decoration:none;color:#191B18;min-height:44px}
   nav[aria-label="Contents"] a:hover{border-left-color:#2C5A38}
   nav[aria-label="Contents"] a:hover .door-t{color:#2C5A38}
@@ -168,7 +207,8 @@
   .door-t{font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1rem;line-height:1.25;letter-spacing:-.01em}
   .door-d{font-size:11.5px;line-height:1.45;color:#5A5D53}
   .door-n{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;color:#585B4F}
-  [data-open-all]{display:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:none;color:#0F2A2E;border:1px solid #C9C6BA;border-radius:2px;padding:.45rem .8rem;min-height:44px;cursor:pointer;white-space:nowrap}
+  
+  [data-open-all]{display:none;color:#0F2A2E;padding:.45rem .8rem;white-space:nowrap}
   [data-open-all].is-ready{display:inline-flex;align-items:center}
   [data-open-all]:hover{border-color:#2C5A38;background:rgba(63,122,78,.08);color:#2C5A38}
   .pocket{border:none;background:none;margin:0}
@@ -178,7 +218,7 @@
   @media screen{main.js-pockets>section[data-pocket].is-shut{display:none}}
   .pocket-body{padding-top:.4rem}
   .pocket-body[id]{scroll-margin-top:6rem}
-  @media (max-width:1023px){.pocket-body[id]{scroll-margin-top:10rem!important}}
+  @media (max-width:1023px){.pocket-body[id]{scroll-margin-top:var(--sticky-offset,10rem)!important}}
   @media print{details:not([open])>*{display:block!important}}
 
    
@@ -196,26 +236,27 @@
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="/" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
     <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
-      <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-      <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-      <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-      <a href="/practise/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-      <a href="/archive/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
-      <a href="/contribute/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-      <a href="/resources/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
-      <a href="/behind-the-scenes/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
+      <a href="/manifesto/" class="nav-link">Manifesto</a>
+      <a href="/invitation/" class="nav-link">Invitation</a>
+      <a href="/learn/" class="nav-link">Learn</a>
+      <a href="/practise/" class="nav-link">Practise</a>
+      <a href="/archive/" aria-current="page" class="nav-link">Archive</a>
+      <a href="/contribute/" class="nav-link">Contribute</a>
+      <a href="/resources/" class="nav-link">Resources</a>
+      <a href="/behind-the-scenes/" class="nav-link">Behind the Scenes</a>
     </nav>
     <details class="nav-toggle">
       <summary>Menu</summary>
+      
       <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
-        <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-        <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-        <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-        <a href="/practise/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-        <a href="/archive/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
-        <a href="/contribute/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-        <a href="/resources/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
-        <a href="/behind-the-scenes/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
+        <a href="/archive/" aria-current="page" class="nav-link">Archive</a>
+        <a href="/manifesto/" class="nav-link">Manifesto</a>
+        <a href="/invitation/" class="nav-link">Invitation</a>
+        <a href="/learn/" class="nav-link">Learn</a>
+        <a href="/practise/" class="nav-link">Practise</a>
+        <a href="/contribute/" class="nav-link">Contribute</a>
+        <a href="/resources/" class="nav-link">Resources</a>
+        <a href="/behind-the-scenes/" class="nav-link">Behind the Scenes</a>
       </div>
     </details>
   </div>
@@ -255,35 +296,37 @@
     <p style="margin:1rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px">
       <a href="#fastest-route" style="display:inline-flex;align-items:center;min-height:44px;margin-right:1.5rem">The fastest honest route in</a><a href="#absence" style="display:inline-flex;align-items:center;min-height:44px">Absence &amp; incompleteness</a>
     </p>
-    <button type="button" data-open-all aria-pressed="false" style="margin-top:.6rem" aria-controls="relational-sovereignty--indigenous-relational-freedom decolonization-possession-land-kinship-intimacy possession-the-person-and-kinship-made-void relation-opacity-refusal-survivance relational-autonomy-interdependence-care bodies-regulation-and-what-happens-before-words hierarchy-custom-commitments-possession accountability-repair-transformative-justice love-eros-and-why-any-of-this-is-worth-doing ">Open every shelf</button>
+    <button type="button" data-open-all aria-pressed="false" class="action-utility" style="margin-top:.6rem" aria-controls="relational-sovereignty--indigenous-relational-freedom decolonization-possession-land-kinship-intimacy possession-the-person-and-kinship-made-void relation-opacity-refusal-survivance relational-autonomy-interdependence-care bodies-regulation-and-what-happens-before-words hierarchy-custom-commitments-possession accountability-repair-transformative-justice love-eros-and-why-any-of-this-is-worth-doing ">Open every shelf</button>
   </div>
 </section>
 
 
 <div class="filterbar noprint">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
+  <div style="max-width:1120px;margin:0 auto;padding:0 var(--shell-right) 0 var(--shell-left)">
     <div class="chips" style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.4rem">
       <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-right:.4rem">Filter</span>
       
-      <button type="button" data-filter="all" aria-pressed="true" class="is-active">everything</button>
+      <button type="button" data-filter="all" aria-pressed="true" class="action-utility is-active" style="text-transform:none;letter-spacing:.03em">everything</button>
       
-      <button type="button" data-filter="start" aria-pressed="false">★ a first route</button>
+      <button type="button" data-filter="start" aria-pressed="false" class="action-utility" style="text-transform:none;letter-spacing:.03em">★ a first route</button>
       
-      <button type="button" data-filter="free" aria-pressed="false">free to read</button>
+      <button type="button" data-filter="free" aria-pressed="false" class="action-utility" style="text-transform:none;letter-spacing:.03em">free to read</button>
       
-      <button type="button" data-filter="book" aria-pressed="false">books</button>
+      <button type="button" data-filter="book" aria-pressed="false" class="action-utility" style="text-transform:none;letter-spacing:.03em">books</button>
       
-      <button type="button" data-filter="article" aria-pressed="false">articles</button>
+      <button type="button" data-filter="article" aria-pressed="false" class="action-utility" style="text-transform:none;letter-spacing:.03em">articles</button>
       
-      <button type="button" data-filter="toolkit" aria-pressed="false">toolkits</button>
+      <button type="button" data-filter="toolkit" aria-pressed="false" class="action-utility" style="text-transform:none;letter-spacing:.03em">toolkits</button>
       
-      <button type="button" data-filter="counter" aria-pressed="false">we have no answer to this</button>
+      <button type="button" data-filter="counter" aria-pressed="false" class="action-utility" style="text-transform:none;letter-spacing:.03em">we have no answer to this</button>
       
     </div>
     
     
     
     <p id="filter-status" role="status" aria-live="polite" style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">Showing all 60 entries</p>
+    
+    <p data-empty-filter class="form-error" style="display:none;margin:.5rem 0 0">Nothing on this shelf matches that filter. <button type="button" data-clear-filters style="font-family:inherit;font-size:inherit;color:#2C5A38;text-decoration:underline;background:none;border:none;padding:0;cursor:pointer;min-height:44px">Show everything</button></p>
   </div>
 </div>
 <section class="noprint" style="padding:0 0 1.6rem">
@@ -302,7 +345,7 @@
         <h2 class="sec">Relational sovereignty &amp; Indigenous relational freedom <span data-count class="shelf-count">8</span></h2>
       </summary>
       <div class="pocket-body" id="relational-sovereignty--indigenous-relational-freedom">
-        <div class="shelf-grid shelf-wood-trial" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid shelf-wood-trial" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           
           
           
@@ -422,7 +465,7 @@
         <h2 class="sec">Decolonization, possession, land, kinship, intimacy <span data-count class="shelf-count">11</span></h2>
       </summary>
       <div class="pocket-body" id="decolonization-possession-land-kinship-intimacy">
-        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           
           
           
@@ -581,7 +624,7 @@
         <h2 class="sec">Possession, the person, and kinship made void <span data-count class="shelf-count">4</span></h2>
       </summary>
       <div class="pocket-body" id="possession-the-person-and-kinship-made-void">
-        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           
           
           
@@ -649,7 +692,7 @@
         <h2 class="sec">Relation, opacity, refusal, survivance <span data-count class="shelf-count">5</span></h2>
       </summary>
       <div class="pocket-body" id="relation-opacity-refusal-survivance">
-        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           
           
           
@@ -730,7 +773,7 @@
         <h2 class="sec">Relational autonomy, interdependence, care <span data-count class="shelf-count">11</span></h2>
       </summary>
       <div class="pocket-body" id="relational-autonomy-interdependence-care">
-        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           
           
           
@@ -889,7 +932,7 @@
         <h2 class="sec">Bodies, regulation, and what happens before words <span data-count class="shelf-count">1</span></h2>
       </summary>
       <div class="pocket-body" id="bodies-regulation-and-what-happens-before-words">
-        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           
           
           
@@ -918,7 +961,7 @@
         <h2 class="sec">Hierarchy, custom commitments, possession <span data-count class="shelf-count">9</span></h2>
       </summary>
       <div class="pocket-body" id="hierarchy-custom-commitments-possession">
-        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           
           
           
@@ -1051,7 +1094,7 @@
         <h2 class="sec">Accountability, repair, transformative justice <span data-count class="shelf-count">6</span></h2>
       </summary>
       <div class="pocket-body" id="accountability-repair-transformative-justice">
-        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           
           
           
@@ -1145,7 +1188,7 @@
         <h2 class="sec">Love, eros, and why any of this is worth doing <span data-count class="shelf-count">5</span></h2>
       </summary>
       <div class="pocket-body" id="love-eros-and-why-any-of-this-is-worth-doing">
-        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+        <div class="shelf-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
           
           
           
@@ -1220,7 +1263,7 @@
 
 
 <section id="fastest-route" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
-  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:3rem">
+  <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:3rem">
     <div>
       <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#DB9E2A;margin:0 0 1rem">If you read ten things</p>
       <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1.2rem;max-width:18ch;color:#E7E5DC">The fastest honest route in.</h2>
@@ -1231,61 +1274,61 @@
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">01</span>
-        <a href="https://doi.org/10.21307/borderlands-2020-014" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Wildcat, Replacing Exclusive Sovereignty</a>
+        <a href="https://doi.org/10.21307/borderlands-2020-014" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">Wildcat, Replacing Exclusive Sovereignty</a>
       </li>
       
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">02</span>
-        <a href="https://www.cambridge.org/core/journals/review-of-international-studies/article/its-about-all-relations-indigenous-feminist-theory-of-relational-freedom/3B1CC4CEBF20925E835EB4C1A7E3E5EF" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Kuokkanen, It&#39;s About All Relations</a>
+        <a href="https://www.cambridge.org/core/journals/review-of-international-studies/article/its-about-all-relations-indigenous-feminist-theory-of-relational-freedom/3B1CC4CEBF20925E835EB4C1A7E3E5EF" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">Kuokkanen, It&#39;s About All Relations</a>
       </li>
       
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">03</span>
-        <a href="https://tupjournals.temple.edu/index.php/kalfou/article/view/228" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">TallBear, Caretaking Relations, Not American Dreaming</a>
+        <a href="https://tupjournals.temple.edu/index.php/kalfou/article/view/228" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">TallBear, Caretaking Relations, Not American Dreaming</a>
       </li>
       
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">04</span>
-        <a href="https://jps.library.utoronto.ca/index.php/des/article/view/18630" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Tuck and Yang, Decolonization Is Not a Metaphor</a>
+        <a href="https://jps.library.utoronto.ca/index.php/des/article/view/18630" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">Tuck and Yang, Decolonization Is Not a Metaphor</a>
       </li>
       
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">05</span>
-        <a href="https://www.jstor.org/stable/464747" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Spillers, Mama&#39;s Baby, Papa&#39;s Maybe</a>
+        <a href="https://www.jstor.org/stable/464747" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">Spillers, Mama&#39;s Baby, Papa&#39;s Maybe</a>
       </li>
       
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">06</span>
-        <a href="https://plato.stanford.edu/entries/feminism-autonomy/" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Stanford Encyclopedia, Feminist Perspectives on Autonomy</a>
+        <a href="https://plato.stanford.edu/entries/feminism-autonomy/" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">Stanford Encyclopedia, Feminist Perspectives on Autonomy</a>
       </li>
       
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">07</span>
-        <a href="https://leavingevidence.wordpress.com/2011/05/05/access-intimacy-the-missing-link/" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Mingus, Access Intimacy</a>
+        <a href="https://leavingevidence.wordpress.com/2011/05/05/access-intimacy-the-missing-link/" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">Mingus, Access Intimacy</a>
       </li>
       
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">08</span>
-        <a href="https://www.upress.umn.edu/9781517911188/trans-care/" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Malatino, Trans Care</a>
+        <a href="https://www.upress.umn.edu/9781517911188/trans-care/" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">Malatino, Trans Care</a>
       </li>
       
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">09</span>
-        <a href="https://global.oup.com/academic/product/coercive-control-9780197639986" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Stark, Coercive Control</a>
+        <a href="https://global.oup.com/academic/product/coercive-control-9780197639986" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">Stark, Coercive Control</a>
       </li>
       
       
       <li style="display:flex;gap:.9rem;align-items:baseline;border-bottom:1px solid #2A4C4C;padding-bottom:.6rem">
         <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#DB9E2A;flex:0 0 auto">10</span>
-        <a href="https://www.creative-interventions.org/toolkit/" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64">Creative Interventions, Toolkit</a>
+        <a href="https://www.creative-interventions.org/toolkit/" style="font-size:16px;line-height:1.4;color:#DDE4DC;text-decoration-color:#509C64;display:inline-flex;align-items:center;min-height:44px">Creative Interventions, Toolkit</a>
       </li>
       
     </ol>
@@ -1297,7 +1340,7 @@
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1rem">Opacity as archive design</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1.2rem;max-width:24ch">The planned archive will record restricted and unavailable material without publishing it.</h2>
     <p style="max-width:54ch;margin:0 0 1.8rem;color:#3C3E38">Most archives assume more access is always better. This one will hold seven access states, with consent as a metadata field rather than an afterthought. Sometimes withholding is part of ethical preservation. None of it is built yet, and the model it will follow already exists: <a href="https://mukurtu.org">Mukurtu</a>, <a href="https://localcontexts.org">Local Contexts</a>, <a href="https://www.gida-global.org/careprinciples">CARE</a>.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.6rem;max-width:1000px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:.6rem;max-width:1000px">
       
       
       <div style="border:1px dashed #DB9E2A;padding:.8rem .9rem;border-radius:2px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5;color:#6B4C12">public: read freely</div>
@@ -1333,14 +1376,14 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:46ch">v0.2 · every note provisional, awaiting paid Indigenous review · corrections are shown, not overwritten · <a href="/contribute/" style="color:#DB9E2A">send one</a> · <a href="/behind-the-scenes/" style="color:#8FA9A2">what changed</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
-      <a href="/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>
-      <a href="/manifesto/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-      <a href="/invitation/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-      <a href="/learn/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-      <a href="/practise/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-      <a href="/contribute/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-      <a href="/resources/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
-      <a href="/behind-the-scenes/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
+      <a href="/" class="nav-link">Home</a>
+      <a href="/manifesto/" class="nav-link">Manifesto</a>
+      <a href="/invitation/" class="nav-link">Invitation</a>
+      <a href="/learn/" class="nav-link">Learn</a>
+      <a href="/practise/" class="nav-link">Practise</a>
+      <a href="/contribute/" class="nav-link">Contribute</a>
+      <a href="/resources/" class="nav-link">Resources</a>
+      <a href="/behind-the-scenes/" class="nav-link">Behind the Scenes</a>
     </nav>
   </div>
 </footer>

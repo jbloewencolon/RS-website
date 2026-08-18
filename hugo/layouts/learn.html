@@ -40,7 +40,21 @@
   ]
 }
 </script>
-{{ partial "head-base.html" dict }}
+{{/* MC-14 (Phase 20): .btn-print (below) generalises into the shared
+     .action class everywhere except colour — this page's print button
+     is rust (var(--fails)), not the site's teal default, and unlike
+     Invitation/Manifesto (which already override actionBg/actionFg
+     because their whole ground differs) that was previously true with
+     no override at all, via a page-local .btn-print rule duplicating
+     everything .action now provides. This page has exactly one .action
+     consumer (the print button), so overriding here can't leak the
+     rust colour onto some other filled button that wants teal — this is
+     the same "one per page, per IA-11" property the class comment
+     documents, just verified against grep before relying on it, not
+     assumed from the phrase. Hardcoded rather than var(--fails), since
+     the palette dict predates this file's own token block and every
+     other page's override already follows the literal-hex convention. */}}
+{{ partial "head-base.html" (dict "actionBg" "#8B3A2F" "actionFg" "#F3E9E6") }}
 <style>
   /* ── The hero chooser ────────────────────────────────────────────────
      Ten boxes, one per section, and the page's only index since the
@@ -56,7 +70,7 @@
      bordered cards on the paper ground, not the hairline slab Home's six
      doors use — ten is enough weight already, and the open one has to be
      able to stand out from its neighbours. */
-  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:.7rem;font-family:var(--mono);font-size:14px}
+  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,248px),1fr));gap:.7rem;font-family:var(--mono);font-size:14px}
   nav[aria-label="Contents"] a{display:flex;flex-direction:column;gap:.45rem;height:100%;box-sizing:border-box;border:1px solid var(--rule);border-top:3px solid var(--rule);border-radius:2px;padding:.9rem 1rem 1rem;background:var(--paper-2);text-decoration:none;color:var(--ink);min-height:44px;transition:border-color .14s ease,background-color .14s ease}
   .door-t{font-family:var(--sans);font-weight:700;font-size:1.06rem;line-height:1.25;letter-spacing:-.01em}
   .door-d{font-size:12px;line-height:1.5;color:var(--ink-3)}
@@ -147,7 +161,10 @@
 
   /* Hidden until sections.js adds .is-ready, so a reader with scripting off
      is never shown a control that cannot do anything. */
-  [data-open-all]{display:none;font-family:var(--mono);font-size:14px;letter-spacing:.07em;text-transform:uppercase;background:none;color:var(--teal);border:1px solid var(--rule);border-radius:2px;padding:.45rem .8rem;min-height:44px;cursor:pointer;white-space:nowrap}
+  {{/* MC-14 (Phase 20): base state now comes from class="action-utility"
+       on the element — see Archive's identical comment for the full
+       reasoning. */}}
+  [data-open-all]{display:none;color:var(--teal);padding:.45rem .8rem;white-space:nowrap}
   [data-open-all].is-ready{display:inline-flex;align-items:center}
   [data-open-all]:hover{border-color:var(--holds);background:var(--holds-fill);color:var(--holds)}
 
@@ -196,10 +213,22 @@
      and matching its 9rem: both are "clear a summary sitting above the
      id'd element," and pocket summaries run up to two lines. */
   .pocket-body[id]{scroll-margin-top:9rem}
+  /* MC-12 (Phase 20): named, not scroll-spied — see sections.js's own
+     comment and MC-C11 in tasks.md for why this replaced the retired
+     IA-06 jump bar rather than reviving it (comment just above the
+     hero's Contents grid has the page's own account of that removal).
+     display:none until sections.js adds .is-visible, same reveal-by-
+     class convention [data-open-all] uses just above. */
+  .section-rail{display:none}
+  .section-rail.is-visible{display:block;position:sticky;top:var(--sticky-offset,0px);z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+  .section-rail a{display:flex;align-items:center;gap:.5rem;min-height:44px;padding:.3rem clamp(1.1rem,4vw,3rem);font-family:var(--mono);font-size:13px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-3);text-decoration:none}
+  .section-rail a:hover{color:var(--holds)}
+  .section-rail-current{color:var(--ink);font-weight:600}
+  .section-rail-current::before{content:"Reading: "}
 
   /* The thirteen. Number in teal because it is the framework speaking;
      the question band in ochre because it is the framework asking. */
-  .principles{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0;border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+  .principles{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:0;border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
   .principles>li{background:var(--paper);border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:1.5rem 1.5rem 0;display:flex;flex-direction:column}
   .p-n{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;font-weight:500;color:#DDE4DC;background:var(--teal);display:inline-flex;align-items:center;justify-content:center;width:2.1rem;height:2.1rem;border-radius:2px;margin:0 0 .75rem}
   .p-t{font-family:var(--sans);font-weight:700;font-size:1.28rem;line-height:1.1;letter-spacing:-.02em;margin:0 0 .5rem}
@@ -236,7 +265,21 @@
      static position — up to 760px in — and stretch the whole document
      sideways on a phone. */
   .matrix-scroll{position:relative;overflow-x:auto;border:1px solid var(--rule);background:var(--paper-2)}
+  /* MC-13 (Phase 20): the same overflow-fade cue .venn-scroll already
+     uses on Archive (archive.html), reused here rather than a second
+     pattern invented for the same job — a hint that there is more
+     table to the right, not a scroll-position tracker; it fades toward
+     .matrix-scroll's own background so it reads as an edge of the
+     surface, not a highlight. */
+  .matrix-scroll::after{content:"";position:absolute;top:0;right:0;bottom:0;width:28px;background:linear-gradient(to right,rgba(0,0,0,0),var(--paper-2) 90%);pointer-events:none}
   table.matrix{border-collapse:collapse;width:100%;min-width:760px;font-family:var(--mono);font-size:12.5px}
+  /* Row headers (first column, both axes) stay put as the table pans
+     right — the reader can lose track of which of the seven situations
+     a distant column belongs to otherwise. Opaque backgrounds already
+     set below are load-bearing here too: a sticky cell with no
+     background lets the scrolled-past columns show through underneath
+     it. */
+  table.matrix thead th:first-child,table.matrix tbody th{position:sticky;left:0;z-index:1;box-shadow:2px 0 4px -2px rgba(25,27,24,.25)}
   /* The explanation is a <p> above the scroller, not a <caption>, because
      a caption is a child of the table and inherits its 760px min-width —
      on a phone that puts the sentence explaining the chart inside the
@@ -244,14 +287,28 @@
      still has an accessible name. */
   .matrix-intro{max-width:80ch;margin:0 0 .9rem;font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--ink-3)}
   .matrix-hint{display:none;margin:.6rem 0 0;font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+  {{/* MC-13 (Phase 20): the one place this number is written. Was
+       860 in a CSS media query here and a second, independent
+       WIDE=860 in sections.js — two copies of the same fact that
+       could drift apart. A live CSS container query looked like a
+       cleaner single source of truth and was tried first, but this
+       section (like every pocket on the site) is hidden by
+       main.js-pockets>section[data-pocket].is-shut{display:none}
+       until a reader opens it — not just the inner <details>, the
+       whole <section> — so it has no real layout width for a
+       container query to measure at the moment a first-time reader's
+       page loads. Reaching sections.js as a data attribute instead
+       (§ below, data-matrix-wide) has no such problem: it reads
+       correctly whether the section is visible or not. */}}
+  {{ $matrixWide := 860 }}
   /* IA-05, the two views of the stress data. Three states, in order of
      increasing specificity so each beats the one above it:
 
        1. No scripting. #view-rows always renders; #view-map renders only
-          at 860px and up, where the 760px table fits its container. Below
-          that the chart is not shown at all, which is what removes the
-          horizontal-scroll defect for a reader without JavaScript rather
-          than merely warning them about it.
+          at {{ $matrixWide }}px and up, where the 760px table fits its
+          container. Below that the chart is not shown at all, which is
+          what removes the horizontal-scroll defect for a reader without
+          JavaScript rather than merely warning them about it.
        2. Scripting ready (.js-views on the section). Neither view shows
           until one is marked current, so the switch is in charge at every
           width — including widths where the chart must scroll, which is
@@ -263,7 +320,7 @@
      drawn. */
   .views{display:none;gap:.5rem;flex-wrap:wrap;margin:0 0 1.1rem}
   .js-views .views{display:flex}
-  @media (max-width:859px){#view-map{display:none}}
+  @media (max-width:{{ sub $matrixWide 1 }}px){#view-map{display:none}}
   .js-views #view-map,.js-views #view-rows{display:none}
   .js-views #view-map.is-current,.js-views #view-rows.is-current{display:block}
   .js-views #view-map.is-current .matrix-hint{display:none}
@@ -338,7 +395,7 @@
 
   /* Four senses of one word, with what this site can actually do about
      each one stated as a status rather than buried in the paragraph. */
-  .senses{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:0 0 1.6rem}
+  .senses{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:0 0 1.6rem}
   .senses>div{background:var(--paper);padding:1.25rem 1.3rem 1.4rem}
   .badge{display:inline-flex;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;padding:.26rem .55rem;border-radius:2px;margin:0 0 .75rem;border:1px solid}
   .b-off{color:var(--ink-3);background:#DDDAD0;border-color:var(--rule)}
@@ -349,7 +406,7 @@
 
   /* Opacity, on the dark ground. Each state's colour comes from the data
      file so the green/ochre split is one edit, not eleven. */
-  .opq{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:var(--teal-2);border:1px solid var(--teal-2);margin-bottom:1.8rem}
+  .opq{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:1px;background:var(--teal-2);border:1px solid var(--teal-2);margin-bottom:1.8rem}
   .opq>div{background:var(--teal);padding:1.3rem 1.3rem 1.5rem;border-left:4px solid}
   .opq-s{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin:0 0 .5rem}
   .opq-w{font-family:var(--sans);font-weight:700;font-size:1.05rem;margin:0 0 .4rem;line-height:1.15;color:#E7E5DC}
@@ -358,7 +415,7 @@
 
   /* A field, not a ladder — every label identical, deliberately. The
      sage edge is the one place a colour means "these are equal." */
-  .forms{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.6rem}
+  .forms{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:.6rem}
   .forms li{background:#DDE4DC;border:1px solid #B8C7C1;border-left:3px solid var(--sage);padding:.7rem .9rem;font-size:14.5px;line-height:1.3;color:var(--ink)}
 
   /* Field guide. Stays fully expanded: ten short entries are the page's
@@ -372,12 +429,11 @@
      rendered as a solid slab of --rule there. Cells with no content have
      no borders and no background now, so an incomplete row shows page
      ground instead. */
-  .fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0;border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+  .fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:0;border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
   .fg>div{background:var(--paper);border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:1.25rem 1.3rem 0;display:flex;flex-direction:column}
   .fg-p{margin:0 0 .5rem;font-family:var(--sans);font-weight:700;font-size:1.02rem;line-height:1.3;color:var(--ink)}
   .fg-g{margin:0 0 1.1rem;font-size:14.5px;line-height:1.5;color:var(--ink-2);flex:1 1 auto}
   .fg-q{margin:0 -1.3rem;padding:.8rem 1.3rem;background:var(--fails-fill);border-top:1px solid var(--fails-edge);font-family:var(--mono);font-size:12.5px;line-height:1.5;color:var(--fails)}
-  .btn-print{font-family:var(--mono);font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:var(--fails);color:#F3E9E6;border:none;padding:.8rem 1.1rem;min-height:44px;cursor:pointer;border-radius:2px}
 
   @media print{
     .matrix-scroll{overflow:visible}
@@ -405,26 +461,33 @@
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="/" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
     <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
-      <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-      <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-      <a href="/learn/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-      <a href="/practise/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-      <a href="/archive/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
-      <a href="/contribute/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-      <a href="/resources/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
-      <a href="/behind-the-scenes/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
+      <a href="/manifesto/" class="nav-link">Manifesto</a>
+      <a href="/invitation/" class="nav-link">Invitation</a>
+      <a href="/learn/" aria-current="page" class="nav-link">Learn</a>
+      <a href="/practise/" class="nav-link">Practise</a>
+      <a href="/archive/" class="nav-link">Archive</a>
+      <a href="/contribute/" class="nav-link">Contribute</a>
+      <a href="/resources/" class="nav-link">Resources</a>
+      <a href="/behind-the-scenes/" class="nav-link">Behind the Scenes</a>
     </nav>
     <details class="nav-toggle">
       <summary>Menu</summary>
-      <div style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
-        <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-        <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-        <a href="/learn/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-        <a href="/practise/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-        <a href="/archive/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
-        <a href="/contribute/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-        <a href="/resources/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
-        <a href="/behind-the-scenes/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
+      {{/* MC-11 (Phase 20): current route first in this copy only — see
+           Archive's identical comment for the full reasoning. Also
+           restored display:flex;flex-wrap:wrap;gap:1.1rem here, missing
+           only on this page's copy of the eight other pages' identical
+           rule — without it the gap declaration did nothing and this
+           was the one mobile menu on the site with no space between
+           links, caught while this block was open for the reorder. */}}
+      <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
+        <a href="/learn/" aria-current="page" class="nav-link">Learn</a>
+        <a href="/manifesto/" class="nav-link">Manifesto</a>
+        <a href="/invitation/" class="nav-link">Invitation</a>
+        <a href="/practise/" class="nav-link">Practise</a>
+        <a href="/archive/" class="nav-link">Archive</a>
+        <a href="/contribute/" class="nav-link">Contribute</a>
+        <a href="/resources/" class="nav-link">Resources</a>
+        <a href="/behind-the-scenes/" class="nav-link">Behind the Scenes</a>
       </div>
     </details>
   </div>
@@ -442,7 +505,15 @@
          Repeating it here rather than writing new label copy keeps the
          two in step: a reader who picks "A field, not a ladder" opens a
          section that greets them with the same six words. -->
-    <nav aria-label="Contents" style="margin-top:1.5rem">
+    <nav aria-label="Contents" id="contents" style="margin-top:1.5rem">
+      {{/* MC-12 (Phase 20): current-route-first-style compact local nav —
+           see Behind the Scenes' identical sentinel comment
+           (hugo/layouts/behindthescenes.html) and sections.js's own
+           comment/MC-C11 in tasks.md for the full reasoning, including
+           why this is a real 1px sentinel inside the nav's own top
+           (matching where reveal() actually lands a same-page click),
+           not a sibling before it or the 800+px grid itself. */}}
+      <span id="contents-sentinel" aria-hidden="true" style="display:block;height:1px"></span>
       <ul>
         <li><a href="#principles" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>The thirteen principles</span><span class="door-d">Thirteen, each with one question</span></a></li>
         <li><a href="#forms-and-labels" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Forms &amp; labels</span><span class="door-d">A field, not a ladder</span></a></li>
@@ -477,16 +548,22 @@
          "opening one is the only thing that changes." What's new is that
          "every section" now also means the ten pockets themselves; see
          sections.js for how the sweep and the pockets compose. -->
-    <button type="button" data-open-all aria-pressed="false" style="margin-top:1.2rem"
+    <button type="button" data-open-all aria-pressed="false" class="action-utility" style="margin-top:1.2rem"
             aria-controls="{{ range hugo.Data.stress }}{{ .id }} {{ end }}adj-06-07 adj-08-11">Open every section</button>
   </div>
 </section>
 
+{{/* MC-12 (Phase 20): see Behind the Scenes' identical markup comment
+     and sections.js's own comment/MC-C11 in tasks.md. */}}
+<div class="section-rail noprint">
+  <a href="#contents"><span class="section-rail-current"></span><span aria-hidden="true">— all sections</span></a>
+</div>
+
 <section class="band" data-pocket="principles" style="padding-top:clamp(1.6rem,3vw,2.2rem)">
   <div class="wrap">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-teal">Thirteen, each with one question</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">01</span>Thirteen, each with one question</span>
         <h2 class="sec">The principles themselves.</h2>
       </summary>
       <div class="pocket-body" id="principles">
@@ -514,8 +591,8 @@
 <section class="band" data-pocket="forms-and-labels">
   <div class="wrap">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-teal">A field, not a ladder</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">02</span>A field, not a ladder</span>
         <h2 class="sec">Forms and labels, none of them the default.</h2>
       </summary>
       <div class="pocket-body" id="forms-and-labels">
@@ -546,11 +623,11 @@
 <section class="band" data-pocket="scenarios">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick kick-fails">Seven situations, traced through, failures marked as failures</span>
+    <summary class="pocket-summary d-fails">
+      <span class="kick kick-fails"><span class="tab-num">03</span>Seven situations, traced through, failures marked as failures</span>
       <h2 class="sec">What these principles are like to actually be inside.</h2>
     </summary>
-    <div class="pocket-body" id="scenarios">
+    <div class="pocket-body" id="scenarios" data-matrix-wide="{{ $matrixWide }}">
     <p class="lede">Thirteen principles read cleanly in the abstract. Some of them strain, bend, or fail outright for specific people in specific situations, and a framework that only ever illustrates itself with its easy cases is quietly asking readers whose situation is a hard case to notice the gap themselves. These seven situations test where the principles help, where they conflict, and where they offer no material remedy.</p>
 
     {{ $prin := hugo.Data.principles }}
@@ -565,7 +642,11 @@
          min-width:760px, the wrap's padding is 4vw a side, and the
          container first clears 760px between 820px (752px, scrolls) and
          860px (789px, fits). The audit proposed 820px, which is where the
-         overflow was *observed*, not where it stops.
+         overflow was *observed*, not where it stops. The live value is
+         $matrixWide, declared once near the top of this file's style
+         block (MC-13, Phase 20) — update it there, not the number in
+         this sentence, which is a record of how 860 was derived rather
+         than the thing that decides anything at runtime.
 
          With scripting the switch decides at any width, so the chart stays
          reachable on a phone — in its labelled scroller, which is the one
@@ -660,8 +741,8 @@
         that promise, and the extra step composes with it rather than
         against it. -->
    <details class="pocket">
-    <summary class="pocket-summary">
-      <span class="kick kick-ask">A framework about intimacy that hadn't mentioned sex</span>
+    <summary class="pocket-summary d-ask">
+      <span class="kick kick-ask"><span class="tab-num">04</span>A framework about intimacy that hadn't mentioned sex</span>
       <h2 class="sec">Four things named plainly, using the vocabulary already here.</h2>
     </summary>
     <div class="pocket-body" id="sexual-content">
@@ -709,8 +790,8 @@
 <section class="band" data-pocket="continuity">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick kick-ask">A clause, not a principle: 06 and 07 without a tiebreaker</span>
+    <summary class="pocket-summary d-ask">
+      <span class="kick kick-ask"><span class="tab-num">05</span>A clause, not a principle: 06 and 07 without a tiebreaker</span>
       <h2 class="sec">Continuity of care</h2>
     </summary>
     <div class="pocket-body" id="continuity">
@@ -729,8 +810,8 @@
 <section class="band" data-pocket="adjudication">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick kick-ask">Which principle wins, answered where it can be and left open where it can't</span>
+    <summary class="pocket-summary d-ask">
+      <span class="kick kick-ask"><span class="tab-num">06</span>Which principle wins, answered where it can be and left open where it can't</span>
       <h2 class="sec">Two adjudication questions, two different answers.</h2>
     </summary>
     <div class="pocket-body" id="adjudication">
@@ -761,8 +842,8 @@
 <section class="band" data-pocket="sovereignty-senses">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick kick-teal">One word, four jobs</span>
+    <summary class="pocket-summary d-teal">
+      <span class="kick kick-teal"><span class="tab-num">07</span>One word, four jobs</span>
       <h2 class="sec">Four things this word is doing.</h2>
     </summary>
     <div class="pocket-body" id="sovereignty-senses">
@@ -811,8 +892,17 @@
 <section class="dark band" data-pocket="opacity" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(1.6rem,3vw,2.2rem) 0 clamp(3rem,6vw,5rem)">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick" style="color:#DB9E2A;margin-bottom:1rem">Principle 08, applied to this website</span>
+    {{/* MC-19 (Phase 20): d-teal, matching this pocket's own contents-nav
+         card — the class stays the pocket's real register regardless of
+         ground. The kicker's ochre (#DB9E2A, via its own inline override
+         predating this row) isn't a different classification, it's this
+         site's one accent readable on dark teal; head-base.html's
+         .dark ... .pocket-summary rule repaints any register's tab
+         background to match on this ground, the same way it already
+         repaints the kicker, rather than this pocket claiming to be
+         "ask" content it isn't. */}}
+    <summary class="pocket-summary d-teal">
+      <span class="kick" style="color:#DB9E2A;margin-bottom:1rem"><span class="tab-num">08</span>Principle 08, applied to this website</span>
       <h2 class="sec" style="max-width:22ch;color:#E7E5DC">Total legibility is a form of domination.</h2>
     </summary>
     <div class="pocket-body" id="opacity">
@@ -836,15 +926,15 @@
 <section class="band" data-pocket="field-guide" style="padding-bottom:clamp(3rem,6vw,4.5rem)">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick kick-fails">This site's own vocabulary, turned around</span>
+    <summary class="pocket-summary d-fails">
+      <span class="kick kick-fails"><span class="tab-num">09</span>This site's own vocabulary, turned around</span>
       <h2 class="sec">How this vocabulary gets used as a weapon.</h2>
     </summary>
     <div class="pocket-body" id="field-guide">
     <p style="max-width:60ch;margin:0 0 .8rem;color:#3C3E38;font-size:16.5px;line-height:1.58">Every word on this site can be turned around and used on someone. That isn't a reason not to write them down. It's a reason to write down how it happens.</p>
     <p class="lede">Ten phrases below, most of them phrases this site's own vocabulary makes available, each with the diagnostic question worth asking when you hear it, from yourself or from someone else. Print it and it carries all ten regardless of whether this section is open when you do.</p>
     <div class="noprint" style="margin:0 0 1.8rem">
-      <button type="button" data-print-isolate class="btn-print">Print this field guide</button>
+      <button type="button" data-print-isolate class="action" style="padding:.8rem 1.1rem">Print this field guide</button>
       <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#585B4F;margin-left:.8rem">One page or two, depending on your browser and paper size. Just this list, not the rest of Learn.</span>
     </div>
     <div id="field-guide-list" class="fg">
@@ -908,8 +998,8 @@
 <section class="band" data-pocket="not-yet-written" style="padding-bottom:clamp(3rem,6vw,4.5rem)">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick kick-fails">What's planned, not what's built</span>
+    <summary class="pocket-summary d-fails">
+      <span class="kick kick-fails"><span class="tab-num">10</span>What's planned, not what's built</span>
       <h2 class="sec" style="max-width:22ch;margin-bottom:1rem">A conceptual map is planned. This page is what's actually written.</h2>
     </summary>
     <div class="pocket-body" id="not-yet-written">
@@ -921,7 +1011,7 @@
 
 <section style="padding:0 0 clamp(3rem,6vw,5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);border-top:1px solid #C9C6BA;padding-top:2.4rem">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem;align-items:start">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:2rem;align-items:start">
       <div>
         <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.2rem;letter-spacing:-.02em;margin:0 0 .6rem">Take it further</h2>
         <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">Read the <a href="/manifesto/">manifesto</a> for the refusal these principles come from. Work through the <a href="/practise/#consent-map">Consent Domains Map</a> to apply them. Use this page as an index, then read the cited writers in the <a href="/archive/">Archive</a>.</p>
@@ -940,14 +1030,14 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:44ch">v0.2 · no third-party requests, including fonts · <a href="/behind-the-scenes/" style="color:#DB9E2A">what changed</a> · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
-      <a href="/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>
-      <a href="/manifesto/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-      <a href="/invitation/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-      <a href="/practise/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-      <a href="/archive/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
-      <a href="/contribute/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-      <a href="/resources/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
-      <a href="/behind-the-scenes/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
+      <a href="/" class="nav-link">Home</a>
+      <a href="/manifesto/" class="nav-link">Manifesto</a>
+      <a href="/invitation/" class="nav-link">Invitation</a>
+      <a href="/practise/" class="nav-link">Practise</a>
+      <a href="/archive/" class="nav-link">Archive</a>
+      <a href="/contribute/" class="nav-link">Contribute</a>
+      <a href="/resources/" class="nav-link">Resources</a>
+      <a href="/behind-the-scenes/" class="nav-link">Behind the Scenes</a>
     </nav>
   </div>
 </footer>

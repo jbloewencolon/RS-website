@@ -40,7 +40,7 @@
   ]
 }
 </script>
-{{ partial "head-base.html" (dict "link" "#7D5915" "focus" "#7D5915" "actionBg" "#7D5915") }}
+{{ partial "head-base.html" (dict "link" "#7D5915" "focus" "#7D5915" "actionBg" "#7D5915" "navCurrent" "#7D5915") }}
 </head>
 <body>
 
@@ -49,26 +49,28 @@
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="/" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
     <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
-      <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-      <a href="/invitation/" aria-current="page" style="color:#7D5915;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-      <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-      <a href="/practise/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-      <a href="/archive/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
-      <a href="/contribute/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-      <a href="/resources/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
-      <a href="/behind-the-scenes/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
+      <a href="/manifesto/" class="nav-link">Manifesto</a>
+      <a href="/invitation/" aria-current="page" class="nav-link">Invitation</a>
+      <a href="/learn/" class="nav-link">Learn</a>
+      <a href="/practise/" class="nav-link">Practise</a>
+      <a href="/archive/" class="nav-link">Archive</a>
+      <a href="/contribute/" class="nav-link">Contribute</a>
+      <a href="/resources/" class="nav-link">Resources</a>
+      <a href="/behind-the-scenes/" class="nav-link">Behind the Scenes</a>
     </nav>
     <details class="nav-toggle">
       <summary>Menu</summary>
+      {{/* MC-11 (Phase 20): current route first in this copy only — see
+           Archive's identical comment for the full reasoning. */}}
       <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
-        <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-        <a href="/invitation/" aria-current="page" style="color:#7D5915;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-        <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-        <a href="/practise/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-        <a href="/archive/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
-        <a href="/contribute/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-        <a href="/resources/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
-        <a href="/behind-the-scenes/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
+        <a href="/invitation/" aria-current="page" class="nav-link">Invitation</a>
+        <a href="/manifesto/" class="nav-link">Manifesto</a>
+        <a href="/learn/" class="nav-link">Learn</a>
+        <a href="/practise/" class="nav-link">Practise</a>
+        <a href="/archive/" class="nav-link">Archive</a>
+        <a href="/contribute/" class="nav-link">Contribute</a>
+        <a href="/resources/" class="nav-link">Resources</a>
+        <a href="/behind-the-scenes/" class="nav-link">Behind the Scenes</a>
       </div>
     </details>
   </div>
@@ -132,8 +134,8 @@
       <p style="margin:0;font-size:17px;line-height:1.55;color:#3C3E38">The other door is <a href="/manifesto/">the manifesto</a>: it states the same limits in a more declarative register and contains thirteen additional theses. What's under both is unpacked in <a href="/learn/">Learn</a>, and the people whose thinking either page compresses are named, in full, in <a href="/archive/">the archive</a>.</p>
     </div>
     <div class="noprint" style="display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.8rem">
-      <button type="button" data-print style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:#7D5915;color:#E7E5DC;border:none;padding:.8rem 1.1rem;min-height:44px;cursor:pointer;border-radius:2px">Print this invitation</button>
-      <a href="/manifesto/" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;border:1px solid #C9C6BA;color:#585B4F;padding:.8rem 1.1rem;min-height:44px;text-decoration:none;border-radius:2px;display:inline-flex;align-items:center">Read the manifesto instead</a>
+      <button type="button" data-print class="action" style="padding:.8rem 1.1rem">Print this invitation</button>
+      <a href="/manifesto/" class="action-utility" style="padding:.8rem 1.1rem;text-decoration:none">Read the manifesto instead</a>
     </div>
   </div>
 </section>

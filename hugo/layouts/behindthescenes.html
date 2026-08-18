@@ -61,7 +61,7 @@
   .swatch{display:inline-block;width:.62rem;height:.62rem;flex:0 0 auto;border-radius:1px;margin-right:.5rem;vertical-align:baseline}
   .s-teal{background:#0F2A2E}.s-fails{background:#8B3A2F}.s-ask{background:#DB9E2A}
   .legend-key{max-width:66ch;margin:1.1rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.7;color:#585B4F}
-  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:.7rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px}
+  nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,248px),1fr));gap:.7rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px}
   nav[aria-label="Contents"] a{display:flex;flex-direction:column;gap:.45rem;height:100%;box-sizing:border-box;border:1px solid #C9C6BA;border-top:3px solid #C9C6BA;border-radius:2px;padding:.9rem 1rem 1rem;background:#EFEEE7;text-decoration:none;color:#191B18;min-height:44px}
   .door-t{font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.06rem;line-height:1.25;letter-spacing:-.01em}
   .door-d{font-size:12px;line-height:1.5;color:#585B4F}
@@ -71,7 +71,13 @@
   nav[aria-label="Contents"] a:hover .door-t{color:#2C5A38}
   nav[aria-label="Contents"] a[aria-current]{background:rgba(63,122,78,.13);border-color:rgba(44,90,56,.35)}
   nav[aria-label="Contents"] a[aria-current]::after{content:"Open ▾";font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#2C5A38;margin-top:auto;padding-top:.5rem}
-  [data-open-all]{display:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.07em;text-transform:uppercase;background:none;color:#0F2A2E;border:1px solid #C9C6BA;border-radius:2px;padding:.45rem .8rem;min-height:44px;cursor:pointer;white-space:nowrap}
+  {{/* MC-14 (Phase 20): base state now comes from class="action-utility"
+       on the element — see Archive's identical comment for the full
+       reasoning. This copy's letter-spacing (.07em) was already
+       inconsistent with Archive's own .05em before this row; the class
+       converges both to .05em rather than preserving three-way drift
+       across a property nobody could see a reason for varying. */}}
+  [data-open-all]{display:none;color:#0F2A2E;padding:.45rem .8rem;white-space:nowrap}
   [data-open-all].is-ready{display:inline-flex;align-items:center}
   [data-open-all]:hover{border-color:#2C5A38;background:rgba(63,122,78,.13);color:#2C5A38}
   .pocket{border:none;background:none;margin:0}
@@ -90,6 +96,27 @@
   main [id]{scroll-margin-top:1.5rem}
   .pocket-body[id]{scroll-margin-top:2.5rem}
   @media print{details:not([open])>*{display:block!important}}
+  /* MC-12 (Phase 20): named, not scroll-spied — see sections.js's own
+     comment and MC-C11 in tasks.md for why this replaced the retired
+     WD-14 jump bar rather than reviving it. Starts display:none so a
+     no-JS reader never sees a static "Section" label with nothing to
+     update it; sections.js adds .is-visible once it has a real pocket
+     name to show, same reveal-by-class convention [data-open-all] uses. */
+  .section-rail{display:none}
+  .section-rail.is-visible{display:block;position:sticky;top:var(--sticky-offset,0px);z-index:20;background:#E7E5DC;border-bottom:1px solid #C9C6BA}
+  .section-rail a{display:flex;align-items:center;gap:.5rem;min-height:44px;padding:.3rem clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;letter-spacing:.03em;text-transform:uppercase;color:#585B4F;text-decoration:none}
+  .section-rail a:hover{color:#2C5A38}
+  .section-rail-current{color:#191B18;font-weight:600}
+  .section-rail-current::before{content:"Reading: "}
+  /* #contents inherits main [id]{scroll-margin-top:1.5rem} above, which
+     is inert for the rail's own #contents link — sections.js's reveal()
+     intercepts every same-page click and positions the target by its
+     own JS-computed BAR offset, not CSS scroll-margin-top, so this rule
+     only matters for a no-JS visit that lands on #contents directly.
+     Kept at the page's own convention regardless, harmless either way;
+     the actual tie this page hit (see sections.js's own rootMargin
+     comment) was between reveal()'s landing point and the observer's
+     threshold, not this. */
   /* BM-04 — one hardcoded composition trialling M1 (raceme descent) +
      M6 (sway), page-owned rather than promoted to the shared
      head-base.html block: this is deliberately a one-page proof, not a
@@ -112,26 +139,28 @@
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="/" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
     <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
-      <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-      <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-      <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-      <a href="/practise/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-      <a href="/archive/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
-      <a href="/contribute/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-      <a href="/resources/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
-      <a href="/behind-the-scenes/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
+      <a href="/manifesto/" class="nav-link">Manifesto</a>
+      <a href="/invitation/" class="nav-link">Invitation</a>
+      <a href="/learn/" class="nav-link">Learn</a>
+      <a href="/practise/" class="nav-link">Practise</a>
+      <a href="/archive/" class="nav-link">Archive</a>
+      <a href="/contribute/" class="nav-link">Contribute</a>
+      <a href="/resources/" class="nav-link">Resources</a>
+      <a href="/behind-the-scenes/" aria-current="page" class="nav-link">Behind the Scenes</a>
     </nav>
     <details class="nav-toggle">
       <summary>Menu</summary>
+      {{/* MC-11 (Phase 20): current route first in this copy only — see
+           Archive's identical comment for the full reasoning. */}}
       <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
-        <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-        <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-        <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-        <a href="/practise/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-        <a href="/archive/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
-        <a href="/contribute/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-        <a href="/resources/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
-        <a href="/behind-the-scenes/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
+        <a href="/behind-the-scenes/" aria-current="page" class="nav-link">Behind the Scenes</a>
+        <a href="/manifesto/" class="nav-link">Manifesto</a>
+        <a href="/invitation/" class="nav-link">Invitation</a>
+        <a href="/learn/" class="nav-link">Learn</a>
+        <a href="/practise/" class="nav-link">Practise</a>
+        <a href="/archive/" class="nav-link">Archive</a>
+        <a href="/contribute/" class="nav-link">Contribute</a>
+        <a href="/resources/" class="nav-link">Resources</a>
       </div>
     </details>
   </div>
@@ -191,7 +220,22 @@
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">A site arguing against domination cannot keep its own workings private. What follows is the substrate, the labour, the money, the crawler policy, the reuse terms, and the current fault list.</p>
     <p style="max-width:52ch;margin:0 0 1.6rem;color:#3C3E38">Some of these fields are marked <em>not yet known</em>. That is the accurate answer at v0.2, and a blank is more honest than a placeholder.</p>
     <p class="legend-key"><span class="swatch s-teal"></span>Teal marks what's built and asserted below. <span class="swatch s-fails"></span>Rust marks the fault list. <span class="swatch s-ask"></span>Ochre marks what's named but not yet built or paid for. Nothing here is signalled by colour alone.</p>
-    <nav aria-label="Contents" style="margin-top:1.5rem">
+    <nav aria-label="Contents" id="contents" style="margin-top:1.5rem">
+      {{/* MC-12 (Phase 20): a real 1px sentinel, not the grid itself — at
+           eight cards deep the grid can run 800+px tall on a narrow
+           phone, and IntersectionObserver's threshold:0 only reports
+           "not intersecting" once an *entire* target has cleared the
+           viewport, which for something that tall would need almost
+           that much scroll. This marks the grid's own visible top edge
+           (inside the nav, past its own margin-top, matching where
+           reveal() in sections.js actually lands a same-page click on
+           #contents — a sibling placed *before* the nav landed a full
+           margin-top short of that, confirmed wrong via a real
+           click-through in testing, not assumed correct from markup
+           order alone), so scrolling past *that* line — not the whole
+           grid's height — is what tells sections.js the picker is no
+           longer where the reader is. */}}
+      <span id="contents-sentinel" aria-hidden="true" style="display:block;height:1px"></span>
       <ul>
         <li><a href="#substrate" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Substrate</span><span class="door-d">The material facts of the machine you're reading on</span></a></li>
         <li><a href="#type" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Accessibility &amp; type</span><span class="door-d">Coverage, checked not assumed</span></a></li>
@@ -203,15 +247,24 @@
         <li><a href="#labour" class="d-ask"><span class="door-t"><span class="swatch s-ask"></span>Labour &amp; money</span><span class="door-d">Who worked on this, what's paid, and what it costs</span></a></li>
       </ul>
     </nav>
-    <button type="button" data-open-all aria-pressed="false" style="margin-top:1.2rem" aria-controls="substrate type crawler reuse faults roadmap changelog labour">Open every section</button>
+    <button type="button" data-open-all aria-pressed="false" class="action-utility" style="margin-top:1.2rem" aria-controls="substrate type crawler reuse faults roadmap changelog labour">Open every section</button>
   </div>
 </section>
+
+{{/* MC-12 (Phase 20): see sections.js's own comment and MC-C11 in
+     tasks.md. display:none until sections.js adds .is-visible — same
+     reveal-by-class convention as [data-open-all].is-ready just above,
+     so a no-JS reader, or one whose JS hasn't run yet, never sees a bar
+     with nothing behind it. */}}
+<div class="section-rail noprint">
+  <a href="#contents"><span class="section-rail-current"></span><span aria-hidden="true">— all sections</span></a>
+</div>
 
 <section id="limits" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1rem">What this is not</p>
     <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.5rem,3.4vw,2.2rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 1.4rem;padding-bottom:.6rem;border-bottom:1px solid #C9C6BA">Five limits on the framework</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem 2.6rem;max-width:1000px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:2rem 2.6rem;max-width:1000px">
       <div>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.1rem;margin:0 0 .5rem;line-height:1.15">Not radical individualism</h3>
         <p style="margin:0;font-size:16px;line-height:1.55;color:#3C3E38">It does not mean doing whatever one wants, refusing all obligations, treating people as interchangeable, or using therapeutic language to escape accountability. People are interdependent. Freedom exists through relationships, resources, care, community, and material support.</p>
@@ -248,15 +301,15 @@
 <section data-pocket="substrate" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-teal">The material facts of the machine you're reading on</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">01</span>The material facts of the machine you're reading on</span>
         <h2 class="sec">The substrate</h2>
       </summary>
       <div class="pocket-body" id="substrate">
         <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">A land acknowledgement in a footer is decoration. What follows is known, as far as it currently is.</p>
         <details>
-          <summary style="cursor:pointer;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:#585B4F;min-height:44px;display:flex;align-items:center;padding:.2rem 0">Show the {{ len hugo.Data.substrate }} substrate fields</summary>
-          <dl style="margin:1.2rem 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem 2.4rem">
+          <summary class="disclosure" style="padding:.2rem 0">Show the {{ len hugo.Data.substrate }} substrate fields</summary>
+          <dl style="margin:1.2rem 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1.2rem 2.4rem">
             {{ range hugo.Data.substrate }}
             <div style="border-top:2px solid {{ .rule }};padding-top:.7rem">
               <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ .rule }};margin:0 0 .35rem">{{ .k }}</dt>
@@ -273,12 +326,12 @@
 <section data-pocket="type" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-teal">Coverage, checked not assumed</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">02</span>Coverage, checked not assumed</span>
         <h2 class="sec">Type, and why it changed</h2>
       </summary>
       <div class="pocket-body" id="type">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem 2.6rem">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:2rem 2.6rem">
       <div>
         <p style="margin:0 0 1rem;max-width:46ch">Version 0.1 loaded three faces from a font CDN. That disclosed every reader's address to a third party on page load, while the footer claimed no third parties. The claim was false, so the fonts went.</p>
         <p style="margin:0 0 1rem;max-width:46ch">What replaced them is a system stack: no request leaves your device for type, and the faces already on your machine carry far wider orthographic coverage than the display faces did. The identity is quieter. That is the correct trade.</p>
@@ -303,8 +356,8 @@
 <section data-pocket="crawler" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick" style="color:#DB9E2A;margin-bottom:1rem">Opacity as governance, not as a button</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick" style="color:#DB9E2A;margin-bottom:1rem"><span class="tab-num">03</span>Opacity as governance, not as a button</span>
         <h2 class="sec" style="max-width:24ch;color:#E7E5DC">What this site refuses to the crawler.</h2>
       </summary>
       <div class="pocket-body" id="crawler">
@@ -314,7 +367,7 @@
          leaves 3 empty cells in the final row; the old background+gap:1px
          trick painted #2A4C4C through those empty gaps as a solid slab.
          An empty cell now has no border and no background of its own. */}}
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:0;border-top:1px solid #2A4C4C;border-left:1px solid #2A4C4C;margin-bottom:1.8rem">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:0;border-top:1px solid #2A4C4C;border-left:1px solid #2A4C4C;margin-bottom:1.8rem">
       {{ range hugo.Data.crawler }}
       <div style="background:#0F2A2E;border-right:1px solid #2A4C4C;border-bottom:1px solid #2A4C4C;padding:1.2rem 1.3rem 1.4rem">
         <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:{{ .color }};margin:0 0 .5rem">{{ .state }}</p>
@@ -333,8 +386,8 @@
 <section data-pocket="reuse" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-teal">Terms that bind the project, not just the reader</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">04</span>Terms that bind the project, not just the reader</span>
         <h2 class="sec">Reuse terms, version 0.2</h2>
       </summary>
       <div class="pocket-body" id="reuse">
@@ -353,8 +406,8 @@
 <section data-pocket="faults" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-fails">Known and unfixed, published rather than quietly carried</span>
+      <summary class="pocket-summary d-fails">
+        <span class="kick kick-fails"><span class="tab-num">05</span>Known and unfixed, published rather than quietly carried</span>
         <h2 class="sec">The fault list</h2>
       </summary>
       <div class="pocket-body" id="faults">
@@ -388,13 +441,13 @@
 <section data-pocket="roadmap" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-ask">Named, not yet built, no dates promised</span>
+      <summary class="pocket-summary d-ask">
+        <span class="kick kick-ask"><span class="tab-num">06</span>Named, not yet built, no dates promised</span>
         <h2 class="sec">Roadmap</h2>
       </summary>
       <div class="pocket-body" id="roadmap">
     <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">Learn names twenty-four topics. Twelve have a drafted outline; none are linked or published from this list, because an unfinished page marked <em>drafted</em> would be the small lie this site is trying not to tell. No dates are given, for the same reason <a href="/practise/">Practise's own unbuilt-tools list</a> gives none: a date this project couldn't keep would be its own small domination.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.6rem">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:.6rem">
       {{ range hugo.Data.topics }}
       {{ $accent := cond .drafted "#366943" "#64665D" }}
       <div style="border:1px solid #C9C6BA;border-left:3px solid {{ $accent }};padding:.75rem .9rem;border-radius:2px;display:flex;flex-direction:column;gap:.25rem">
@@ -411,8 +464,8 @@
 <section data-pocket="changelog" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick" style="color:#DB9E2A;margin-bottom:1rem">Change log · repair in view</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick" style="color:#DB9E2A;margin-bottom:1rem"><span class="tab-num">07</span>Change log · repair in view</span>
         <h2 class="sec" style="max-width:24ch;color:#E7E5DC">Corrections are shown, not overwritten.</h2>
       </summary>
       <div class="pocket-body" id="changelog">
@@ -426,12 +479,12 @@
 <section data-pocket="labour" style="padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-ask">Who worked on this, what's paid, and what it costs</span>
+      <summary class="pocket-summary d-ask">
+        <span class="kick kick-ask"><span class="tab-num">08</span>Who worked on this, what's paid, and what it costs</span>
         <h2 class="sec">Labour and money</h2>
       </summary>
       <div class="pocket-body" id="labour">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.6rem 2.4rem;max-width:1000px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:1.6rem 2.4rem;max-width:1000px">
       <div>
         <h3 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:600;font-size:1.05rem;margin:0 0 .4rem">Who has worked on this</h3>
         <p style="margin:0;font-size:15.5px;line-height:1.5;color:#3C3E38">The initial and primary author of this site is the scholar poet al colibrí, a Taíno in diaspora living and working on the lands of the peoples of Tkaronto. At v0.2: one unpaid person, writing and building. Every future contributor, translator, reviewer, and maintainer will be named here individually, not aggregated into a credit line.</p>
@@ -465,14 +518,14 @@
     <div style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:44ch">v0.2 · no fonts, scripts, or requests from third parties · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
-      <a href="/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>
-      <a href="/manifesto/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-      <a href="/invitation/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-      <a href="/learn/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-      <a href="/practise/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-      <a href="/archive/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
-      <a href="/contribute/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-      <a href="/resources/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
+      <a href="/" class="nav-link">Home</a>
+      <a href="/manifesto/" class="nav-link">Manifesto</a>
+      <a href="/invitation/" class="nav-link">Invitation</a>
+      <a href="/learn/" class="nav-link">Learn</a>
+      <a href="/practise/" class="nav-link">Practise</a>
+      <a href="/archive/" class="nav-link">Archive</a>
+      <a href="/contribute/" class="nav-link">Contribute</a>
+      <a href="/resources/" class="nav-link">Resources</a>
     </nav>
     </div>
   </div>

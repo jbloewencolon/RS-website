@@ -9,6 +9,8 @@
   var items = document.querySelectorAll("[data-tags]");
   var groups = document.querySelectorAll("[data-group]");
   var status = document.getElementById("filter-status");
+  var emptyState = document.querySelector("[data-empty-filter]");
+  var clearBtn = document.querySelector("[data-clear-filters]");
   if (!buttons.length) return;
 
   function apply(filter) {
@@ -40,19 +42,60 @@
       var pocket = g.querySelector("details.pocket");
       if (pocket) pocket.open = filter !== "all" && n > 0;
     });
+    var pressed = null;
     buttons.forEach(function (b) {
       var active = b.getAttribute("data-filter") === filter;
       b.setAttribute("aria-pressed", active ? "true" : "false");
       b.classList.toggle("is-active", active);
+      if (active) pressed = b;
     });
     if (status) {
       status.textContent = shown === items.length
         ? "Showing all " + items.length + " entries"
         : "Showing " + shown + " of " + items.length + " entries";
     }
+
+    // MC-15 (Phase 20): no filter today narrows to zero — the smallest
+    // is toolkit at 1 of 60 — but the filter set is data-driven and
+    // nothing guarantees that stays true. Read from data-empty-filter's
+    // markup comment in archive.html for why display:none rather than
+    // [hidden] here.
+    if (emptyState) emptyState.classList.toggle("is-visible", shown === 0);
+
+    // MC-15: keep the pressed chip inside the visible part of the row —
+    // .chips scrolls horizontally below 700px (archive.html), and
+    // without this a reader could press a chip near the edge, have it
+    // scroll further out of view as neighbouring chips reflow, and lose
+    // track of which one is active.
+    if (pressed && pressed.scrollIntoView) {
+      pressed.scrollIntoView({ block: "nearest", inline: "nearest" });
+    }
+
+    // MC-15: a hard narrow (e.g. toolkit, 1 of 60) can leave a reader
+    // scrolled deep in a page that just lost most of its height — the
+    // browser's own scroll-position clamp still has to put them
+    // *somewhere*, and that somewhere is not guaranteed to show any
+    // matching entry at all. Confirmed by testing a deep scroll (15000px
+    // into a fully-opened, bulk-open page) followed by a hard filter:
+    // the browser clamped to the new document's end, landing on the
+    // footer with the one matching entry over 2000px above, off-screen.
+    // Only steps in when nothing that matched is already visible —
+    // never moves a reader who's already looking at a relevant result.
+    var visible = document.querySelectorAll("[data-tags]:not([hidden])");
+    var anyInView = false;
+    for (var i = 0; i < visible.length; i++) {
+      var r = visible[i].getBoundingClientRect();
+      if (r.bottom > 0 && r.top < window.innerHeight) { anyInView = true; break; }
+    }
+    if (visible.length && !anyInView && visible[0].scrollIntoView) {
+      visible[0].scrollIntoView({ block: "start" });
+    }
   }
 
   buttons.forEach(function (b) {
     b.addEventListener("click", function () { apply(b.getAttribute("data-filter")); });
   });
+  if (clearBtn) {
+    clearBtn.addEventListener("click", function () { apply("all"); });
+  }
 })();

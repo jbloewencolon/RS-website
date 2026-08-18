@@ -17,17 +17,35 @@
 // exactly what that CSP is there to refuse.
 (function () {
   // px of the sticky bar to keep clear of the viewport top, measured rather
-  // than hardcoded: Behind the Scenes still carries a .jump (WD-14, the
-  // only long page with no other orientation), Archive carries a
-  // .filterbar (AR-03 — its sticky tag filter, up to 150px, is a second
-  // shape of the same obstruction), but Learn has neither — its sections
-  // became closed-by-default pockets (IA-15-adjacent, direct author
-  // instruction) opened from the hero grid instead of a scroll-spy bar,
-  // which removed the bar's reason to exist on that page specifically.
-  // A page with neither gets a small flat default instead of a stale
-  // number left over from a bar that isn't there to clear.
+  // than hardcoded: Archive carries a .filterbar (AR-03 — its sticky tag
+  // filter, up to 150px, is the one case of this on the site today).
+  // Behind the Scenes and Learn have neither a .jump nor a .filterbar in
+  // their current markup (WD-14's .jump was since removed from Behind
+  // the Scenes; Learn's sections became closed-by-default pockets opened
+  // from the hero grid instead of a scroll-spy bar) — both get the flat
+  // default below rather than a stale number left over from a bar that
+  // isn't there to clear.
   var jumpEl = document.querySelector(".jump, .filterbar");
   var BAR = jumpEl ? jumpEl.getBoundingClientRect().height : 24;
+
+  // MC-09 (Phase 20): keep BAR live, not a single measurement frozen at
+  // script load. The chip row can wrap onto a different number of lines
+  // as fonts finish loading, as filters are chosen/cleared, or on
+  // rotation — any of which changes .filterbar's real height after this
+  // script already ran once. Published as --sticky-offset so the CSS
+  // scroll-margin-top rules that govern *native* fragment scrolling (a
+  // typed #hash, a plain <a href="#…"> with JS off, a screen reader's
+  // "go to heading") read the same live number this file's own
+  // programmatic scrolls below already do, instead of each maintaining
+  // its own guess that can drift out of sync with the other.
+  if (jumpEl && typeof ResizeObserver === "function") {
+    var publishStickyOffset = function () {
+      BAR = jumpEl.getBoundingClientRect().height;
+      document.documentElement.style.setProperty("--sticky-offset", BAR + "px");
+    };
+    publishStickyOffset();
+    new ResizeObserver(publishStickyOffset).observe(jumpEl);
+  }
 
   // Set by section 0 if the page has the chart/rows switch, so section 1's
   // bulk-open can put the switch on "rows" when it opens the stress cards —
@@ -53,7 +71,21 @@
   var vmap = document.getElementById("view-map");
   var vrows = document.getElementById("view-rows");
   if (scen && vmap && vrows) {
-    var WIDE = 860; // px; where table.matrix's 760px min-width clears the wrap
+    // MC-13 (Phase 20): the 860 lives once, in Hugo (learn.html), and
+    // reaches both the CSS media query and here via data-matrix-wide —
+    // not two independently maintained copies of the number. A live CSS
+    // container query looked like the more elegant single source of
+    // truth and was tried first, but every wrapper between here and the
+    // page shell sits inside this section's own
+    // main.js-pockets>section[data-pocket].is-shut{display:none} rule
+    // (1.6, below) — the *whole* <section>, not just the inner
+    // <details>, so its width is 0 until a reader has opened it, which
+    // for most readers is never true at the moment this runs. Confirmed
+    // via getComputedStyle before assuming a build-time value was
+    // necessary. A data attribute has no such problem: it reads
+    // correctly regardless of what's visible.
+    var wide = parseInt(scen.getAttribute("data-matrix-wide"), 10) || 860;
+    var fitsChart = window.innerWidth >= wide;
     var buttons = [].slice.call(scen.querySelectorAll("[data-view]"));
 
     // Focus deliberately stays on the pressed button. aria-pressed already
@@ -100,7 +132,7 @@
     window.addEventListener("hashchange", syncToHash);
 
     scen.classList.add("js-views");
-    showView(window.innerWidth >= WIDE ? "map" : "rows");
+    showView(fitsChart ? "map" : "rows");
     syncToHash();
     showScenariosRows = function () { showView("rows"); };
   }
@@ -341,64 +373,86 @@
   });
   if (location.hash) reveal(location.hash);
 
-  // 3. Track which section the reader is currently in, and name it in
-  //    the jump menu's own label.
+  // 3. MC-12 (Phase 20) — a compact "currently reading: X" bar, shown
+  // only once the open pocket's own summary has scrolled out of view,
+  // linking straight back to the hero grid — and hidden again once
+  // either the grid itself scrolls back into view (picking a different
+  // section makes naming the old one pointless) or the pocket closes.
   //
-  // Plain scroll maths rather than IntersectionObserver: the question is
-  // "which section heading did I last pass," which is a comparison
-  // against one line, not a visibility ratio. rAF-throttled so a fast
-  // scroll can't queue more work than a frame can spend.
-  var label = document.getElementById("jump-current");
-  var links = [].slice.call(
-    document.querySelectorAll('nav[aria-label="Sections"] a[href^="#"]')
-  );
-  var sections = links
-    .map(function (a) {
-      var el = document.getElementById(a.getAttribute("href").slice(1));
-      return el ? { el: el, link: a } : null;
-    })
-    .filter(Boolean);
+  // This is not the scroll-spy that used to live here (removed — see
+  // MC-C11 in tasks.md): that tracked position across many sections that
+  // could all be open and visible at once, a layout RS-049/IA-20 retired
+  // in favour of one pocket open at a time from a hero grid. With at
+  // most one section ever open, "which section did I scroll past" no
+  // longer has an answer worth tracking; the real question is simpler —
+  // is the reader far enough into the one open section that the grid
+  // they picked it from is no longer visible. Two IntersectionObservers
+  // (the grid, and every summary) feed one evaluateRail() so there is a
+  // single place that decides visibility, not two independent paths that
+  // could disagree — at whatever scroll position, without a per-frame
+  // scroll handler.
+  var railEl = document.querySelector(".section-rail");
+  var railLink = railEl && railEl.querySelector("a");
+  var railLabel = railEl && railEl.querySelector(".section-rail-current");
+  // #contents-sentinel, not #contents itself — see its own markup
+  // comment (hugo/layouts/behindthescenes.html and learn.html) for why a
+  // real 1px marker at the grid's top edge, not the 800+px grid itself,
+  // is what decides whether the picker still counts as "in view."
+  var contentsEl = document.getElementById("contents-sentinel");
+  if (railEl && railLink && railLabel && contentsEl && pockets.length && "IntersectionObserver" in window) {
+    var summaryToPocket = pockets
+      .map(function (d) {
+        var s = d.querySelector(":scope > summary");
+        var name = s && s.querySelector(".sec");
+        // Assume visible until the observer's first callback says
+        // otherwise — matches the rail's own default-hidden state, so
+        // there is no flash of a stale name before the first measurement.
+        return s && name ? { summary: s, pocket: d, name: name.textContent.trim(), intersecting: true } : null;
+      })
+      .filter(Boolean);
+    var contentsIntersecting = true;
 
-  if (label && sections.length) {
-    var ticking = false;
-    var currentLink = null;
-
-    function spy() {
-      ticking = false;
-      var found = null;
-      for (var i = 0; i < sections.length; i++) {
-        if (sections[i].el.getBoundingClientRect().top <= BAR + 8) found = sections[i];
+    function evaluateRail() {
+      if (contentsIntersecting) {
+        railEl.classList.remove("is-visible");
+        return;
       }
-      // The final section sits close enough to the end of the document
-      // that the scroll clamps before it can reach the line, so it would
-      // otherwise never be markable. At the bottom of the page, it is
-      // the answer by definition.
-      var atEnd =
-        window.innerHeight + window.pageYOffset >=
-        document.documentElement.scrollHeight - 2;
-      if (atEnd) found = sections[sections.length - 1];
-      var link = found ? found.link : null;
-      if (link === currentLink) return;
-      if (currentLink) currentLink.removeAttribute("aria-current");
-      currentLink = link;
-      if (link) {
-        link.setAttribute("aria-current", "true");
-        label.textContent = "· " + link.textContent.trim();
+      var match = summaryToPocket.filter(function (m) { return m.pocket.open && !m.intersecting; })[0];
+      if (match) {
+        railLabel.textContent = match.name;
+        railEl.classList.add("is-visible");
       } else {
-        label.textContent = "";
+        railEl.classList.remove("is-visible");
       }
     }
 
-    window.addEventListener(
-      "scroll",
-      function () {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(spy);
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.target === contentsEl) {
+            contentsIntersecting = entry.isIntersecting;
+            return;
+          }
+          var match = summaryToPocket.filter(function (m) { return m.summary === entry.target; })[0];
+          if (match) match.intersecting = entry.isIntersecting;
+        });
+        evaluateRail();
       },
-      { passive: true }
+      // A few px less than BAR, not exactly BAR: reveal()'s own scroll
+      // correction (above) lands a same-page click on a target's top at
+      // exactly BAR, which is this observer's own threshold line —
+      // landing a target and the line meant to detect it in the exact
+      // same place is a tie sub-pixel rounding can settle either way,
+      // confirmed flipping the wrong way via a real click-through in
+      // testing. A little daylight avoids the coin flip.
+      { rootMargin: "-" + Math.max(0, Math.round(BAR) - 8) + "px 0px 0px 0px", threshold: 0 }
     );
-    spy();
+    io.observe(contentsEl);
+    summaryToPocket.forEach(function (m) { io.observe(m.summary); });
+
+    // A pocket that opens or closes changes which match evaluateRail()
+    // finds even when no observed element's own intersection changed.
+    pockets.forEach(function (d) { d.addEventListener("toggle", evaluateRail); });
   }
 
   // 4. Print the whole page, not the parts that happen to be open.

@@ -61,6 +61,7 @@
   "actionFg"      "#E7E5DC"
   "utilityEdge"   "#C9C6BA"
   "utilityFg"     "#585B4F"
+  "navCurrent"    "#366943"
   "tokens"        true
   "botanical"     true
   "boInk"         "#0F2A2E"
@@ -84,9 +85,19 @@
   }
   /* WD-08b: the arrow travels on hover/focus, matching the .arr
      treatment already used for authored arrows. inline-block is
-     required for transform to apply to a pseudo-element. */
+     required for transform to apply to a pseudo-element.
+     MC-20 (Phase 20): the :hover half moved inside @media (hover:hover)
+     and (pointer:fine) — a touchscreen has no real hover, but many
+     mobile browsers apply :hover on tap anyway and don't clear it until
+     the next tap lands somewhere else, so this arrow would jump on tap
+     and then sit shifted until an unrelated tap reset it. Gating :hover
+     itself is what stops that; the media query can't reach :focus-visible,
+     which is unconditional below and gives every keyboard/switch user
+     the same travel a mouse hover gets, regardless of pointer type. */
   a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none;display:inline-block;transition:transform .14s ease}
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before,
+  @media (hover:hover) and (pointer:fine){
+    a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before{transform:translateX(2px)}
+  }
   a[href*="#"]:not(.skip-link):not([style*="border-radius"]):focus-visible::before{transform:translateX(2px)}
   nav[aria-label="Contents"] a{border:1px solid {{ $c.navBorder | safeCSS }};border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:{{ $c.navFg | safeCSS }}}
   nav[aria-label="Contents"] a:hover{border-color:{{ $c.navHoverEdge | safeCSS }};color:{{ $c.navHoverFg | safeCSS }};background:{{ $c.navHoverBg | safeCSS }}}
@@ -110,6 +121,22 @@
     --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;
     --sans:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;
   }
+  /* MC-17 (Phase 20): the shell's own horizontal margin, centralised so a
+     sticky surface can widen it under a landscape notch or rounded
+     corner instead of letting content render partly under one.
+     env(safe-area-inset-*) only returns a non-zero value on a page whose
+     own <meta name="viewport"> carries viewport-fit=cover — without it
+     every browser resolves the inset to 0 and this max() is a silent
+     no-op. That attribute is per-page, not something this shared block
+     can set, so it's added only where something reads the inset it
+     unlocks: today, archive/index.html's sticky .filterbar alone.
+     Defined here regardless, unconsumed by default elsewhere, on the
+     same shared-even-if-unused basis as the rest of this file (see its
+     own top comment). */
+  :root{
+    --shell-left:max(clamp(1.1rem,4vw,3rem), env(safe-area-inset-left));
+    --shell-right:max(clamp(1.1rem,4vw,3rem), env(safe-area-inset-right));
+  }
 {{- if $c.tokens }}
   /* WD-11: the semantic colour register, promoted from Learn (see
      docs/design-palette.md for the full reasoning) — teal for what the
@@ -131,6 +158,18 @@
   *{box-sizing:border-box}
   /* WD-03 */
   h1,h2,h3{text-wrap:balance}
+  /* MC-04 (Phase 20): rhetorical text set at large clamp()'d size inside a
+     narrow max-width:Nch measure can, at 200% text zoom, contain a single
+     word wider than that measure — "invitation.", "Relationships,",
+     "refusal." — with no space left to wrap on. Without this, that one
+     word overflows its box in a way no element's own bounding rect
+     reveals (the box stays clipped to its container; only the glyph run
+     inside it draws past), which is why it read as page-level overflow
+     with no isolated culprit until measured directly, on five separate
+     pages. break-word only engages when a line has no other break
+     opportunity, so ordinary multi-word wrapping is unaffected — this is
+     a safety net under the existing measures, not a replacement for them. */
+  body{overflow-wrap:break-word}
   :focus-visible{outline:2.5px solid {{ $c.focus | safeCSS }};outline-offset:3px}
   /* Every light-ground ring goes invisible on this site's dark bands:
      #2B4C9B is 1.88:1 on the #0F2A2E teal, and Invitation's own #7D5915
@@ -172,17 +211,52 @@
      touch-target floor the responsive audit checks, and several of these
      treatments were carrying it inline on every instance. */
   .action,.action-utility,.nav-link,.disclosure,.form-error{font-family:var(--mono);font-size:14px}
-  .action,.action-utility,.nav-link,.disclosure{text-transform:uppercase;min-height:44px;display:inline-flex;align-items:center;border-radius:2px}
-  .action,.action-utility{cursor:pointer;letter-spacing:.05em}
+  .action,.action-utility,.nav-link,.disclosure{text-transform:uppercase;min-height:44px;align-items:center;border-radius:2px}
+  {{/* MC-14 (Phase 20): a <summary> isn't a flex-row sibling the way a
+       button or nav-link is — one occupies its whole container, and
+       every shipped instance already used display:flex (full click
+       width across the row) rather than the inline-flex the other three
+       share (shrink-to-fit, correct for several sitting in a row).
+       inline-flex here would have shrunk each summary's click/tap area
+       down to its text width — confirmed against all six real instances
+       (none used inline-flex) before splitting this out, not assumed
+       from the other three controls' shared value. */}}
+  .action,.action-utility,.nav-link{display:inline-flex}
+  .disclosure{display:flex}
+  {{/* MC-14 (Phase 20): .disclosure moved here from the .nav-link pairing
+       below — every shipped <summary> generalising into it already used
+       letter-spacing:.05em (matching .action/.action-utility, the other
+       two controls with cursor:pointer), not the .04em .nav-link itself
+       carries. Verified against all six real instances before writing
+       this, not assumed from how the original rule grouped them. */}}
+  .action,.action-utility,.disclosure{cursor:pointer;letter-spacing:.05em}
   .action{background:{{ $c.actionBg | safeCSS }};color:{{ $c.actionFg | safeCSS }};border:none;padding:.85rem 1.2rem}
   .action[disabled]{cursor:default;opacity:.55}
   .action-utility{background:transparent;color:{{ $c.utilityFg | safeCSS }};border:1px solid {{ $c.utilityEdge | safeCSS }};padding:.6rem .8rem}
   .action-utility:hover,.action-utility[aria-pressed="true"],.action-utility.is-active{border-color:{{ $c.navHoverEdge | safeCSS }};color:{{ $c.navHoverFg | safeCSS }};background:{{ $c.navHoverBg | safeCSS }}}
-  .nav-link,.disclosure{color:{{ $c.navFg | safeCSS }};letter-spacing:.04em;padding:.4rem 0}
-  .nav-link{text-decoration:none}
+  .nav-link,.disclosure{color:{{ $c.navFg | safeCSS }};padding:.4rem 0}
+  .nav-link{text-decoration:none;letter-spacing:.04em}
   .nav-link:hover,.disclosure:hover{color:{{ $c.linkHover | safeCSS }}}
-  .nav-link[aria-current]{color:{{ $c.fg | safeCSS }};text-decoration:underline;text-underline-offset:5px}
-  .disclosure{cursor:pointer}
+  {{/* MC-14 (Phase 20): the shipped current-page treatment is a third
+       green (#366943), not this page's own --fg ink, and a 4px underline
+       offset, not 5px — verified against all six default-palette pages
+       plus index/practise/contribute (28 uses site-wide, byte-identical)
+       before writing this rule, not assumed from the pattern's name.
+       Manifesto and Invitation each mark their own current link with
+       their own link colour instead (#DB9E2A / #7D5915) — navCurrent
+       carries that per page rather than hardcoding one hex here. */}}
+  .nav-link[aria-current]{color:{{ $c.navCurrent | safeCSS }};text-decoration:underline;text-underline-offset:4px}
+  {{/* MC-14: the footer is always dark regardless of a page's own ground
+       (Manifesto/Invitation excepted — neither carries this shared
+       footer, confirmed by grep, matching Phase 21's own "deliberate,
+       documented" finding on the same gap), so .nav-link's light-ground
+       colour above is wrong there. #8FA9A2 verified identical across
+       all seven pages that do carry it — not parameterised through the
+       palette dict since nothing here varies it per page. No matching
+       :hover override existed before this rule either, so none is added
+       — hover still falls through to the generic a:hover rule two rules
+       up, unchanged from what shipped before this class existed. */}}
+  .dark .nav-link{color:#8FA9A2}
   /* Form states. The error treatment inherits the 14px above rather than
      keeping the 12.5px it replaces: a message telling someone their address
      was rejected is not microtype, and it is the one piece of text on a form
@@ -191,6 +265,38 @@
   .form-error{line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem}
   .form-status{border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;background:rgba(63,122,78,.06);padding:1.6rem 1.5rem}
   .field-invalid{border-color:#8B3A2F!important}
+  {{/* MC-19 (Phase 20): pockets on Learn/Behind the Scenes/Archive
+       already colour their own kicker rule and label via each page's own
+       kick-teal/kick-fails/kick-ask(/kick-holds on Archive) — found while
+       building this row, not invented for it: [data-pocket="opacity"]
+       .kick::before{background:#DB9E2A} on Learn was already one
+       hand-done instance of exactly this pattern before it had a name.
+       What's shared here is the one piece that pattern didn't cover: the
+       tab number's type, and a background tint for the register when its
+       pocket is open, so "pressed and selected" carries the same colour
+       the closed tab's rule already does. d-teal/d-fails/d-ask/d-holds on
+       the summary itself, not on kick — reusing the same four names this
+       file's own contents-nav cards already use for the same four
+       meanings, just on a different element. */}}
+  .pocket-summary .tab-num{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:#5A5D53;flex:0 0 auto}
+  details[open]>.pocket-summary.d-teal{background:rgba(15,42,46,.05)}
+  details[open]>.pocket-summary.d-fails{background:var(--fails-fill)}
+  details[open]>.pocket-summary.d-ask{background:var(--ask-fill)}
+  details[open]>.pocket-summary.d-holds{background:var(--holds-fill)}
+  {{/* MC-19: a handful of pockets sit on this site's dark ground
+       (Learn's "opacity," Behind the Scenes' "crawler" and "changelog")
+       and keep their real register class (most are d-teal) rather than
+       being reclassified as something they aren't — but none of the
+       four fills above is legible on dark teal, and each of those
+       pockets' own kicker already solves that the same way, with an
+       inline ochre override predating this row. Repainting both here,
+       keyed on .dark rather than on any one register, means a pocket
+       doesn't have to lie about its own content to render correctly on
+       the ground it happens to sit on. Declared after the four rules
+       above so it wins at equal specificity, not by accident of source
+       order. */}}
+  .dark .tab-num{color:#8FA9A2}
+  .dark details[open]>.pocket-summary{background:rgba(219,158,42,.08)}
   /* The ⌖ marginal notes. Closed by default, showing only the glyph and a
      short label taken verbatim from each note's own leading clause — no
      copy is written here. A click opens and holds one via native
