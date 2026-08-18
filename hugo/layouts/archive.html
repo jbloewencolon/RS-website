@@ -48,6 +48,7 @@
      page; it never draws content that wasn't there. */
   [data-filter]{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.03em;padding:.6rem .8rem;min-height:44px;cursor:pointer;border-radius:2px;border:1px solid #C9C6BA;background:transparent;color:#585B4F}
   [data-filter].is-active{border-color:#3F7A4E;background:rgba(63,122,78,.1);color:#2C5A38}
+  [data-empty-filter].is-visible{display:block!important}
   /* WD-13: sixty entries over ~12,000px means the filter scrolls out of
      reach within two viewports. Pinning it — same sticky pattern as
      Learn's .jump bar — keeps the buttons and the WD-06 result count
@@ -64,8 +65,16 @@
        enough to eat most of a phone screen. Same narrow, targeted use of
        !important already established in this codebase (see BUG-04's
        write-up in completed.tasks.md) for exactly this situation. */
-    .filterbar .chips{flex-wrap:nowrap!important;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .filterbar .chips{flex-wrap:nowrap!important;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;position:relative}
     .filterbar .chips::-webkit-scrollbar{display:none}
+    /* MC-15 (Phase 20): same fade-cue pattern as .venn-scroll (this file)
+       and Learn's .matrix-scroll — a hint that the row continues past
+       the edge, not a scroll-position tracker. Two-sided, unlike those:
+       the chip row has no natural "start," so a reader who has scrolled
+       right needs the same cue on the left to know they can go back. */
+    .filterbar .chips::before,.filterbar .chips::after{content:"";position:absolute;top:0;bottom:0;width:20px;pointer-events:none;z-index:1}
+    .filterbar .chips::before{left:0;background:linear-gradient(to right,#E7E5DC,rgba(0,0,0,0))}
+    .filterbar .chips::after{right:0;background:linear-gradient(to left,#E7E5DC,rgba(0,0,0,0))}
   }
   /* The bar is taller below desktop than the inline scroll-margin-top on
      [data-group] and article[data-tags] was sized for, so every contents
@@ -234,6 +243,15 @@
     {{ $total := 0 }}
     {{ range hugo.Data.archive.groups }}{{ $total = add $total (len .items) }}{{ end }}
     <p id="filter-status" role="status" aria-live="polite" style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">Showing all {{ $total }} entries</p>
+    {{/* MC-15 (Phase 20): no filter currently narrows to zero — the
+         smallest is toolkit at 1 entry — but the filter set is data-
+         driven (hugo/data/archive.yaml) and nothing guarantees that
+         stays true as entries or tags change. display:none, not
+         [hidden]: a bare hidden attribute round-trips as hidden="" once
+         a real browser re-serializes the DOM, which html-validate flags
+         (attribute-empty-style) — same reveal-by-class convention
+         [data-open-all] already uses, not a new pattern. */}}
+    <p data-empty-filter style="display:none;margin:.5rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem">Nothing on this shelf matches that filter. <button type="button" data-clear-filters style="font-family:inherit;font-size:inherit;color:#2C5A38;text-decoration:underline;background:none;border:none;padding:0;cursor:pointer;min-height:44px">Show everything</button></p>
   </div>
 </div>
 <section class="noprint" style="padding:0 0 1.6rem">
