@@ -269,6 +269,33 @@ What follows is the part that isn't, or that needs an answer first.)*
 
 **What this phase cannot verify here:** sustained 60fps on a mid-range Android (no such device); whether the drawing is actually good — every finding above is architectural, not aesthetic, which is what BM-04's single-page trial exists to answer with something real; greyscale — with hue gone, does a bloom still read as separate from the rust register, or does the whole layer collapse into the same grey the door cards use.
 
+### Phase 10 — security remediation (2026-08-11): scoped out, on the merits
+
+Recorded here rather than under "Rejected" because these are scoped out of Phase 10
+specifically, not rejected permanently — several become right if the site grows.
+
+- **Content-hashed asset filenames** (the external audit's F-03). Sound in general, and the audit is right that unhashed URLs permit a mixed release. But live headers show ten-minute freshness with working validators, so the window is small, and the fix is a build-system change. Revisit if the site grows or the freshness lifetime changes.
+- **Migrating off GitHub Pages purely to get headers.** The audit's main structural recommendation. FLAG-08 option (A) — proxy through Cloudflare — achieves the same headers for a fraction of the work. A real migration remains live as RS-022, for D6/substrate reasons — which are the *real* reasons to do it, and are not security reasons.
+- **A service worker.** There is none and there should not be. It would add an application-owned cache — a fresh class of staleness bug — to solve a problem that is not occurring. The audit agrees.
+- **reCAPTCHA.** Would work, and profiles readers for a third party to do it — precisely what this site tells people it does not do. Turnstile instead (SEC-01.3, shipped).
+- **`no-store` on HTML.** Reflexive in hardening guides. These pages carry no personalised response data; `no-cache` gives correctness without discarding performance.
+- **Technical defences against legal process.** Out of scope, and worth naming honestly: the likeliest route by which the subscriber list leaves the operator's control is a request to GitHub, Cloudflare, or Resend — not an intrusion. SEC-02's data minimisation is the only real answer and it is a partial one. Belongs in the colophon's limit section, not a task table.
+
+### Phase 14 — Archive: pockets and a shelf (2026-08-16): the design collisions
+
+*(Source instruction, not a spec doc: give Archive the organisational treatment Learn got
+under IA-20/21 and Behind the Scenes got under RS-049, plus subtle shelf styling. Fully
+shipped — see `completed.tasks.md`. This note is the design reasoning that made it not a
+repeat of RS-049.)*
+
+**The collision (AR-C1), and how it was resolved.** Learn's pocket model is single-open: one section at a time, every other closed. Archive's tag filter is cross-cutting: it hides non-matching entries across every group at once. Applied naively, the two fight — e.g. the `toolkit` filter matches 1 entry in 1 of 9 groups, so with any other shelf open the match sits invisible inside a closed pocket while the status line still claims to show it. **Resolution: pockets are for browsing, the filter is for searching and suspends single-open** — any filter but `everything` opens every group with ≥1 match; choosing `everything` returns every shelf to closed. Considered and rejected: the filter narrowing the *grid* instead of entries (drops per-entry precision); an explicit Browse/Filter switch (adds a control to a page whose problem is already too many); multi-open pockets with no single-open (cheapest, but gives up the "grid is the only index" property that made the Learn/BTS treatment worth doing in the first place).
+
+**The landmine (AR-C2).** `sections.js` measured its sticky-bar obstruction as `document.querySelector(".jump")` only, falling back to a flat 24px with none present. Archive has no `.jump` but does have a sticky `.filterbar` up to 150px tall — adding the script unmodified would have landed every fragment target behind it, reintroducing the exact defect IA-02 had already fixed on other pages. Fixed in `sections.js` itself (measure `.jump, .filterbar`) before Archive was wired up to use it, not after.
+
+**The two sections that stay outside the pocket system (AR-C3).** `#fastest-route` (the ten-item "if you read ten things" sequence) and `#absence` are framing, not groups, and sit outside the pockets the same way `#limits` does on Behind the Scenes. Specific reason beyond symmetry: the sequence's links point at `#entry-*` ids that live *inside* the group pockets, so following one force-opens its containing pocket via the reveal algorithm's ancestor walk — if the sequence itself were a pocket, single-open would close the very list the reader just used to navigate.
+
+**FLAG-14 — decided: the shelf motif stays deliberately hue-free.** `docs/design-palette.md` is explicit that accent colour is never mood, every use is a claim about content, and "a fifth hue would have to mean something the other four cannot." A bookshelf motif is atmosphere and asserts nothing — which is the same objection FLAG-12 raises about the botanical layer, in a smaller form. The defensible line: a shelf is *structural*, not chromatic — "these nine things are groups" is already true in the markup. Shipped constrained to neutral rules and edges drawn from the existing `#C9C6BA`/paper/ink set, introducing no hue and making no new claim; every register colour on the page kept its existing meaning.
+
 ### Phase 13 — the runtime handoff (2026-08-16): what was checked and corrected
 
 *(A review of the initial-load fix shipped in `bc4b6dc`. Its central move — separating

@@ -1964,3 +1964,41 @@ Checked three things a reader could plausibly mean by "not appearing":
 No code changed for this item; reported back once confirmed clean.
 
 **Verified across all three:** `npm run build`, `npm run check` (clean apart from the two pre-existing sandbox-only Turnstile resets), `npm run test:runtime-handoff` (Home and Contribute both touched this phase; all three dc-runtime pages still pass).
+
+## Phase 14 — Archive: pockets, and a shelf to put them on (2026-08-16)
+
+*(Backfilled 2026-08-18 during a `tasks.md` cleanup pass — this phase shipped in full but its rows were never migrated here; AR-01 through AR-14 sat struck-through in `tasks.md` instead of moving. Reconstructed from that file's own detailed rows, not re-derived. Full design reasoning — AR-C1's filter/pocket collision, AR-C2's `sections.js` landmine, AR-C3's two framing sections, FLAG-14's decoration question — stays in `archived.tasks.md` under the resolved-decisions section; this entry is what shipped.)*
+
+### AR-01 + AR-04 — the filter suspends single-open instead of colliding with it
+**Shipped:** 2026-08-16 · **Commit/PR:** (pending)
+
+~~was: Archive had no pocket navigation; adding Learn's single-open pattern naively would have broken the tag filter (e.g. `toolkit` matches 1 entry in 1 of 9 groups — with a random other pocket open, the match could be invisible inside a closed shelf while the status line still claimed to be showing it)~~
+now: pockets are for browsing (nine shelves, closed by default, one open at a time, same as Learn); the filter is for searching and suspends single-open — any filter other than `everything` opens every group with ≥1 match and hides non-matching entries as before; choosing `everything` returns every shelf to closed. `archive-filter.js` extended to drive pocket open/closed state directly rather than fighting it.
+
+### AR-03 — `sections.js` taught to measure Archive's filter bar
+**Shipped:** 2026-08-16 · **Commit/PR:** (pending)
+
+~~was: `sections.js`'s scroll correction measured `.jump` only, falling back to a flat 24px with no `.jump` present — Archive has no `.jump` but does have a sticky `.filterbar` up to 150px tall, so every fragment target would have landed behind it the moment the script was added~~
+now: `sections.js` measures `.jump, .filterbar` before Archive was wired up to use it — landmine defused before it could fire, not found after.
+
+### AR-05 through AR-08 — the nine groups become pockets
+**Shipped:** 2026-08-16 · **Commit/PR:** (pending)
+
+~~was: nine archive groups rendered as one long scroll, each a plain `<div data-group>`~~
+now: each wrapped as `section[data-pocket]>details.pocket>summary.pocket-summary+div.pocket-body[id]` (one deviation from the original plan: `data-group` moved to the outer `section`, since the old single div no longer exists as one unit — its `<h2>` moved into the summary, its note and entries into the body). The hero grid was rebuilt as the pocket index, deliberately **hue-free** — Archive's nine groups don't differ in register the way Learn's or Behind the Scenes' sections do, so colour-coding them would have been exactly the decoration FLAG-14 warns against. `#fastest-route` and `#absence` stayed outside the pocket grid as framing (AR-C3). Page weight rose to ~136 KB (was ~130); the colophon's page-weight sentence updated in the same commit.
+
+### AR-09 through AR-11 — the shelf treatment
+**Shipped:** 2026-08-16 · **Commit/PR:** (pending)
+
+~~was: entry cards carried a top-border register edge and a plain numeric count~~
+now: the register edge moved from `border-top` to `border-left` (spines on a shelf rather than stacked slabs); a `.shelf-grid` rule (3px `#C9C6BA` bottom border + soft shadow) sits under each card grid; the count badge became `.shelf-count`, bracketed monospace reading as a shelf label. All three neutral — no new hue, per FLAG-14's decision that a shelf motif is structural, not chromatic.
+
+~~AR-12: staggered card heights/vertical offsets for an unevenly-shelved look~~ — **not built.** Would have broken the grid's scannability across 60 entries and fought `auto-fit` at every breakpoint, for a realism nobody asked for.
+
+**AR-13 (wood-grain texture) was built as a one-group trial (`.shelf-wood-trial`, greyscale, not brown), screenshotted, and reported to the author — reads as fine texture rather than compression noise, closer to "textured pinstripe" than "wood." Left open pending the author's keep/revert call; CSS is isolated to two rules and one class reference either way.**
+
+### AR-14 — full verification pass
+**Shipped:** 2026-08-16 · **Commit/PR:** (pending)
+
+~~was: the pocket/filter/shelf work above shipped without an end-to-end check~~
+now: verified on a real headless-browser run — every check passed, including a genuine `color-contrast` failure axe caught (`.door-n`'s grey was 2.68:1, fixed to 5.5:1) that wasn't part of the plan. One correction to this phase's own planning note: its cited filter-bar heights (89/141/150px) were carried from IA-02's older citation rather than independently re-measured; the true baseline is 141/141/162px. The shipped clearance values (AR-03) cover it regardless — no reader was ever affected, only the record needed fixing.
