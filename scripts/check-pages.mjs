@@ -457,6 +457,96 @@ function checkBaseInSync() {
   return problems;
 }
 
+// DC-04 (Phase 21): docs/design-palette.md documents the accent system, but
+// nothing enforced it — which is how a fourth green (#3F7A4E, #366943, both
+// real interaction-state tokens named in head-base.html's own $c dict but
+// never written into the doc) went undocumented for a full phase before the
+// design-consistency audit's own grep happened to catch two of the four.
+// This is the same "CI-enforced claim" pattern checkPageWeight() already
+// applies to the colophon's page-weight sentence: a canonical list, checked
+// against every shipped hex literal, so the next undocumented colour fails
+// the build instead of accumulating silently.
+//
+// Scope is page markup only — the nine Hugo layouts, the shared partial, and
+// the three hand-authored pages' own inline CSS. support.js is generated
+// (its own header says do not edit — regenerated from dc-runtime/src/*.ts,
+// a toolchain not in this repository) and botanical.js/botanical-trial.js
+// answer to docs/understory-visual-system.md's own calibration table, not
+// this palette — both are out of scope for the same reason WD-11's register
+// tokens never tried to reach them.
+//
+// Adding a colour here without documenting it in docs/design-palette.md (or
+// vice versa) is exactly the drift this check exists to catch — update both
+// in the same commit, the same rule BM-08/checkPageWeight() already holds
+// the botanical layer and the colophon to.
+const ALLOWED_HEX = new Set([
+  // The four registers (docs/design-palette.md "The four registers")
+  "#0F2A2E", "#2A4C4C", // teal — asserts
+  "#2C5A38", "#509C64", // green — holds (paper / on-teal)
+  "#8B3A2F", // rust — fails
+  "#DB9E2A", "#6B4C12", // ochre — asks (edge / text-safe)
+  // The green family's two interaction shades (DC-01/DC-C1, Phase 21) —
+  // navHoverEdge and navCurrent in head-base.html's $c dict, load-bearing
+  // across every .action-utility/.nav-link hover and aria-current state.
+  // Documented in docs/design-palette.md's "The green family" section.
+  "#3F7A4E", "#366943",
+  // Supporting neutrals (docs/design-palette.md, same section)
+  "#E7E5DC", "#EFEEE7", // paper
+  "#191B18", "#3C3E38", "#585B4F", // ink
+  "#C9C6BA", // rule
+  "#8FA9A2", "#DDE4DC", "#B8C7C1", // sage
+  "#2B4C9B", // links
+  // Page-level exceptions ("Deliberate exceptions")
+  "#7D5915", // Invitation's own accent, predates the register system
+  "#C7D5CF", // Manifesto's dark-ground body text (its own tokens false page)
+  // Established secondary neutrals and per-page tints already in use —
+  // kicker/caption ink variants, Home's per-door background washes, and the
+  // #73968D muted-aside override DC-03 found on thirteen bare .note
+  // instances (text colour only; the border now comes from the shared
+  // default, see head-base.html's DC-03 comment).
+  "#5A5D53", "#64665D", "#73968D", "#79948D", "#5C7A72",
+  "#DDDAD0", "#DBDBD2", "#DCDDD2", "#D4D7CC", "#D4D4CC", "#E6DFCC", "#E5DAC1", "#F3E9E6",
+]);
+
+// Layout source filenames, not HUGO_PAGES' shipped-output paths — this
+// check reads what authors actually edit (behindthescenes.html), not what
+// Hugo writes to behind-the-scenes/index.html.
+const HUGO_LAYOUT_FILES = ["manifesto", "invitation", "learn", "archive", "resources", "behindthescenes"];
+
+function checkTokens() {
+  const files = [
+    "index.html",
+    "practise/index.html",
+    "contribute/index.html",
+    "hugo/layouts/partials/head-base.html",
+    ...HUGO_LAYOUT_FILES.map((p) => `hugo/layouts/${p}.html`),
+  ];
+  const found = new Map(); // hex -> Set(file)
+  for (const rel of files) {
+    const p = path.join(root, rel);
+    if (!fs.existsSync(p)) continue;
+    const src = fs.readFileSync(p, "utf8");
+    for (const m of src.matchAll(/#[0-9A-Fa-f]{6}\b/g)) {
+      const hex = m[0].toUpperCase();
+      if (ALLOWED_HEX.has(hex)) continue;
+      if (!found.has(hex)) found.set(hex, new Set());
+      found.get(hex).add(rel);
+    }
+  }
+  if (found.size) {
+    console.log(`\n✗ Accent tokens — ${found.size} problem(s)`);
+    for (const [hex, files] of found) {
+      console.log(`    ${hex} — not in docs/design-palette.md, seen in ${[...files].join(", ")}`);
+    }
+    console.log(`    Fix: either this is a typo for a documented colour, or it's a real`);
+    console.log(`    addition — add it to ALLOWED_HEX in scripts/check-pages.mjs *and*`);
+    console.log(`    docs/design-palette.md in the same commit.`);
+    return found.size;
+  }
+  console.log(`✓ Accent tokens (${ALLOWED_HEX.size} documented, none stray)`);
+  return 0;
+}
+
 async function main() {
   const server = await serve();
   const { port } = server.address();
@@ -466,7 +556,7 @@ async function main() {
   const browser = await chromium.launch(executablePath ? { executablePath } : {});
   const htmlValidate = new HtmlValidate(htmlValidateConfig);
 
-  let problems = checkPrerender() + checkHugoPagesInSync() + checkBaseInSync();
+  let problems = checkPrerender() + checkHugoPagesInSync() + checkBaseInSync() + checkTokens();
   problems += await checkRedirectStubs(base);
   problems += await checkPageWeight();
 

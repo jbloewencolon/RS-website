@@ -397,7 +397,7 @@ All three were caught by driving the actual mechanism end-to-end in a real brows
 - **`.disclosure`'s `letter-spacing` and `display` were both copied from `.nav-link`, and neither matched a single real `<summary>`.** Every shipped disclosure used `.05em` (matching the two other `cursor:pointer` controls, not `.nav-link`'s `.04em`) and `display:flex` — a `<summary>` isn't a flex-row sibling the way a nav-link is, and `inline-flex` would have shrunk the click/tap area down to the text width instead of the full row, on every disclosure on the site. Split both properties out to their own rules rather than leave `.disclosure` grouped with `.nav-link` on values it never actually shared.
 - **Learn's print button is rust, not teal**, and Archive's `.filterbar` chips aren't uppercase — two more per-page divergences from the class defaults, handled the same way Manifesto/Invitation already handle their own ground (an `actionBg`/`actionFg` override for Learn, since it has exactly one `.action` consumer — "one per page, per IA-11" — so the override can't leak; a `text-transform:none` inline override for the chips, which is real content case, not decoration).
 
-**What did not migrate, and why each is a real exclusion rather than an oversight:** the destructive reset button and its two-press warning on Practise (`{{ resetBg }}`/`{{ resetBorder }}`/`{{ resetColor }}`) are genuinely stateful, not a static treatment a shared class can express. `[data-filter]` kept its own `.is-active` rule and `[data-open-all]` kept its own `:hover` — both already correctly override the class's own versions of the same states (equal specificity, declared later in the cascade), so touching them risked nothing but was never necessary. Plain text-styled "buttons" with no border (`data-clear-filters`'s "Show everything," Home's "→ another question") aren't the same component as a bordered chip and weren't forced into one. `.field-invalid` stays defined and unconsumed — `emailBorderColor`'s JS-computed inline border colour already does the same job, and swapping it for a `class="{{ ternary }}"` binding would have introduced this codebase's first conditional-class expression in the dc-runtime pages to save nothing visible. Resources' unclassed `<details>` and its category-tile treatment are `.pocket`-shaped work, not a consumer of any of these five classes — that's Phase 21's `DC-06`, still unstarted, and the grid primitive `MC-C6` flagged (`.cluster-grid`, a `--item-min` convention this codebase doesn't use yet) is a new class to design, not an existing one to apply. Both are real remaining MC-14-adjacent work, left for their own pass rather than folded in as a side effect of this one.
+**What did not migrate, and why each is a real exclusion rather than an oversight:** the destructive reset button and its two-press warning on Practise (`{{ resetBg }}`/`{{ resetBorder }}`/`{{ resetColor }}`) are genuinely stateful, not a static treatment a shared class can express. `[data-filter]` kept its own `.is-active` rule and `[data-open-all]` kept its own `:hover` — both already correctly override the class's own versions of the same states (equal specificity, declared later in the cascade), so touching them risked nothing but was never necessary. Plain text-styled "buttons" with no border (`data-clear-filters`'s "Show everything," Home's "→ another question") aren't the same component as a bordered chip and weren't forced into one. `.field-invalid` stays defined and unconsumed — `emailBorderColor`'s JS-computed inline border colour already does the same job, and swapping it for a `class="{{ ternary }}"` binding would have introduced this codebase's first conditional-class expression in the dc-runtime pages to save nothing visible. Resources' unclassed `<details>` and its category-tile treatment were `.pocket`-shaped work, not a consumer of any of these five classes — **shipped since as Phase 21's `DC-06`, see `completed.tasks.md`.** The grid primitive `MC-C6` flagged (`.cluster-grid`, a `--item-min` convention this codebase doesn't use yet) remains a new class to design, not an existing one to apply, and is still open MC-14-adjacent work.
 
 **Verified with computed-style checks across all nine live pages, not just visual inspection**: background/color/border/padding/min-height/display/text-transform on every migrated `.action`/`.action-utility` instance, `display:flex` and padding on every `.disclosure`, and the `[data-open-all]`/`[data-filter]` base-state colours, against the exact values each replaced. Page weight dropped rather than rose — Archive absorbed MC-15's own addition and still landed at the same 137 KB net, and Invitation dropped 21 KB → 19 KB with zero content change, purely from two controls no longer spelling out the same nine CSS declarations Manifesto's identical two controls also carried inline. `hugo/data/substrate.yaml` updated with a dated account, matching the convention every prior page-weight change on that page already follows. A `README.md` was added — this repo had none — mapping which of the nine routes are Hugo sources, which are hand-authored dc-runtime pages, and how `head-base.html` reaches all nine, since that exact confusion (edit the template or the generated file?) is what most of this migration's own risk came from.
 | ~~**MC-15**~~ | ~~§4/Archive — Filter chips: fade cue, scroll recovery, empty state.~~ | `[DEV]` `[COPY]` | `hugo/layouts/archive.html`, `archive-filter.js`, `hugo/data/substrate.yaml` | S | MC-09 | **Shipped — see MC-C14 for a defect this row found that the audit didn't name.** |
@@ -468,98 +468,7 @@ The audit's own §9 rejections are adopted as written and moved to the Rejected 
 
 ---
 
-## Phase 21 — Design consistency audit (self-supplied, 2026-08-17)
-
-*(Source: `docs/audits/design-consistency-audit-2026-08-17.md`, a cross-page visual consistency audit conducted directly in this session at the author's request — not an external document, no ID scheme of its own, so rows below are `DC-nn`, assigned here. Method: computed-style extraction off the shipped DOM at 1440×1000 and 390×844 in the repo's own pinned Chromium, not inspection of source stylesheets or screenshots alone. Four judgement calls were put to the author before the audit was written; the answers are recorded below and the rows that depend on them are marked.)*
-
-**The headline finding is that the site's shell invariant is intact and most cross-page variation is load-bearing.** Every one of the nine routes places its `<h1>` at a left edge of exactly 208px at 1440 — the spine never moves. Measured against ordinary consistency heuristics the site looks undisciplined (five h1 sizes, four card treatments, four kicker treatments); measured against its own argument, most of that is a page speaking in its own register, which `docs/design-palette.md` and the 2026-08-10 design review both call for. The defects concentrate in three places: Resources, which has no component layer at all; three points of token drift, including a third green in heavy circulation that appears in no design document; and two competing organic-mark systems, one of which (drift) has a live small-screen defect rather than merely being superseded.
-
-### Author calls resolved before this phase was written
-
-| # | Question | Decision |
-|---|---|---|
-| 1 | How far should the Resources fix go? | **Full rebuild onto shared components** — adopt `.pocket`/the tile family, fix the alignment defect, apply the register system `docs/design-palette.md` already recommends for this page. |
-| 2 | Is the five-value `<h1>` scale (60.8/64/67.2/70.4/73.6px) deliberate or drift? | **Three deliberate tiers** — rhetorical (Home, Manifesto) / editorial (the other six reading pages) / intimate (Invitation). Collapses the unmotivated 60.8-vs-64 split; keeps the rhetorical peak. |
-| 3 | Manifesto and Invitation carry no site footer — gap or deliberate? | **Deliberate — document, do not add.** Both are documented register exceptions elsewhere in `docs/design-palette.md`; a governance footer would break the print-and-pass-on character of one and the warm register of the other. Survived a footer-consolidation pass (Phase 17) already. |
-| 4 | The kicker mark (●, a short rule, colour text, or nothing) has four treatments and no documented meaning — normalize, make semantic, or leave as page voice? | **Normalize to one treatment site-wide**, keeping the already-documented per-page colour differences. Fixes the ● orphaning onto its own line at 390px as a side effect. |
-
-### What was verified before planning
-
-- Ground alternation scales with analytical weight (Behind the Scenes 9 dark bands, Archive 4, Learn 3, Home/Practise/Contribute/Invitation 1–2, **Resources 0**) — a real wayfinding rhythm, not noise.
-- The three tile components (`.door` on Home, `.d-teal`/`.d-fails`/`.d-ask` on Learn and Behind the Scenes, the Archive shelf card) are three distinct metaphors — door, index card, book spine — each matching the page's own vocabulary, not three unfinished attempts at one card. **Do not unify these.**
-- Resources carries 3 lines of page-specific CSS (one `@media print` rule) against Behind the Scenes' 402 and Learn's 356, and 84 inline `style=` attributes against one real component class (`note note-holds`). Four `<details>` are unclassed where every sibling page uses `.pocket`.
-- Resources' category `<summary>` is `display:flex;justify-content:space-between` with the disclosure marker joining as a third flex item, so each `<h2>` floats between marker and meta text rather than sitting at a fixed edge. Measured at a 1100px viewport, three consecutive category headings land at 240px, 124px, and 219px — a 116px swing, and none of them meets the 44px content edge every resource entry beneath them aligns to.
-- `#3F7A4E` (34 uses) is the second most-used green on the site and appears in no palette document; `head-base.html`'s own token block disagrees with itself — `--holds` is declared `#2C5A38` while `--holds-fill` resolves to `#3F7A4E`, and `.note-holds` hardcodes the hex rather than consuming either token.
-- `details.note`'s default border is hardcoded `#DB9E2A` (`head-base.html:218`), so any note not explicitly marked `.note-fails`/`.note-holds` renders ochre regardless of content. Ochre is now the site's most-used accent (104 occurrences, ahead of teal's 59), including on prohibitions and cautions that are not "a question put to the reader" — the one job `docs/design-palette.md`'s governing rule reserves for it.
-- Drift (Home's SMIL-animated circles) renders directly behind the `<h1>` at 390px — the exact failure `docs/audits/ux-audit-2026-08-08.html` flagged. The small-screen mitigation the botanical system (Phase 12, `docs/understory-visual-system.md` §4) already applies to its own marks — `display:none` below 760px, reasoned explicitly as "a faint thing behind a headline is still behind the headline" — does not reach drift, which predates it.
-- Resources is the only route declaring `v0.3`; the other eight, including Home's own hero kicker, say `v0.2`.
-
-### 21.0 — Token truth `blocks everything below · no intended visual change`
-
-| ID | Task | Tags | Files | Effort | Depends on |
-|---|---|---|---|---|---|
-| **DC-01** | Resolve the third green: pick one of `#2C5A38` / `#3F7A4E`, apply it everywhere the other currently appears, and add it to `docs/design-palette.md`. Re-check contrast on both grounds. | `[DEV]` | `head-base.html`, all layouts, `docs/design-palette.md` | S | — |
-| **DC-02** | Make `--holds-fill` derive from `--holds` instead of disagreeing with it; make `.note`, `.note-fails`, `.note-holds` consume `var(--holds)`/`var(--fails)`/`var(--ask-edge)` instead of hardcoded hexes. | `[DEV]` | `head-base.html` | S | DC-01 |
-| **DC-03** | Decide and ship the `.note` default: either a neutral rule colour (`#C9C6BA`) that requires an explicit register modifier, or a fourth modifier for cautions/prohibitions that are not a question put to the reader. Either removes ochre-by-omission. | `[DEV]` `[DECISION]` | `head-base.html` | S | — |
-| **DC-04** | Extend `scripts/check-pages.mjs` with a `checkTokens()` pass that fails the build on any accent hex outside the documented palette set, the same CI-enforcement pattern `checkPageWeight()` already applies to the page-weight claim. | `[DEV]` | `scripts/check-pages.mjs` | S | DC-01, DC-02 |
-
-### 21.1 — Resources rebuild `per author call #1`
-
-| ID | Task | Tags | Files | Effort | Depends on |
-|---|---|---|---|---|---|
-| **DC-05** | Fix the `<summary>` flex so category titles share the content edge every entry beneath them aligns to. Highest damage-per-line fix on the site — ship independently of the rest of 21.1, do not wait. | `[DEV]` | `hugo/layouts/resources.html` | XS | — |
-| **DC-06** | Adopt `.pocket` for the four unclassed `<details>`; give the category index a member of the tile family (a shelf-card variant, matching the page's own directory character) instead of ad hoc inline styling. | `[DEV]` | `hugo/layouts/resources.html` | M | DC-05 |
-| **DC-07** | Apply the ochre register to named-but-unpopulated categories and the page's own honest-scoping caveats ("thin coverage, stated honestly," the unbuilt Tier 2), per `docs/design-palette.md` § "Where it should go next" item 3. | `[DEV]` `[COPY]` | `hugo/layouts/resources.html` | S | DC-06, DC-03 |
-| **DC-08** | Introduce ground alternation across the page's thirteen sections so it carries the same density-scaled rhythm as Learn/Archive/Behind the Scenes. | `[DEV]` | `hugo/layouts/resources.html` | S | DC-06 |
-| **DC-09** | Fix the jump-link arrow spacing and hanging indent (`→Immigration…` → `→ Immigration…`, matching Archive's own spacing); correct `v0.3` → `v0.2`. | `[DEV]` | `hugo/layouts/resources.html` | XS | — |
-
-**Note:** this is `MC-14`'s job arriving early. Resources is the worst case in the codebase for the inline-style-to-component migration and the smallest file to do it in, which makes it the right pilot rather than parallel work — fold DC-06/07/08's outcome back into MC-14's plan when that stage starts.
-
-**Done when:** every category title shares one left edge with the entries beneath it; the page declares its components as classes rather than 84 inline attributes; `npm run check` green.
-
-### 21.2 — Scale and rhythm `per author calls #2 and #4`
-
-| ID | Task | Tags | Files | Effort | Depends on |
-|---|---|---|---|---|---|
-| **DC-10** | Collapse `<h1>` to three tiers — rhetorical (Home, Manifesto), editorial (Learn, Archive, Practise, Contribute, Behind the Scenes, Resources), intimate (Invitation). | `[DEV]` | `head-base.html`, all layouts | S | — |
-| **DC-11** | Define a three-or-four-step `<h2>` ladder at one weight; fix Resources' two-sizes-for-two-meanings usage and Home's 12px mono kicker wearing an `<h2>` element. | `[DEV]` | `head-base.html`, all layouts | M | DC-10 |
-| **DC-12** | Normalize the kicker mark to one treatment site-wide, keeping the documented per-page colours. Fixes the `●` orphaning onto its own line at 390px. | `[DEV]` | `head-base.html`, all layouts | S | — |
-| **DC-13** | Collapse section `padding-top` to three steps (tight / default / band-break); `72px` is already the dominant value, Learn's `35px` is the outlier to reconcile. | `[DEV]` | `hugo/layouts/learn.html`, `head-base.html` | S | — |
-
-**Sequencing:** DC-10/DC-12 touch the same page headers as `MC-11`'s compact masthead (Phase 20, Stage 20.2). Run this stage after MC-11 ships, or merge the two — built independently, the header gets rebuilt twice.
-
-### 21.3 — Retire drift `existing BM work, re-prioritised, not a new row`
-
-No new scope. This is `BM`'s own Phase 1 (Phase 12, above) — retire `drift()`, the `{{ drift }}` slot, the SMIL `<animate>` elements, and `.drift-wrap`; promote `botanical-trial.js` into the real `/botanical.js` recipe table or retire it. Recorded here only because this audit found the reason it should move up the queue: drift renders behind Home's `<h1>` at 390px today, against a small-screen rule the botanical system already applies to its own marks (see "What was verified" above). **Raises `BM-04` onward's priority; does not duplicate it.**
-
-### 21.4 — Codify the deliberate variation `no code`
-
-| ID | Task | Tags | Files | Effort | Depends on |
-|---|---|---|---|---|---|
-| **DC-14** | Add the three-member tile family (door / index card / shelf spine — what each means, which pages may use which) to `docs/understory-visual-system.md` or a new `docs/components.md`. | `[COPY]` | `docs/` | S | — |
-| **DC-15** | Add Manifesto's and Invitation's no-footer exception to `docs/design-palette.md` § "Deliberate exceptions," per author call #3. | `[COPY]` | `docs/design-palette.md` | XS | — |
-| **DC-16** | Record the ground-alternation-scales-with-density principle and the two-column-hero-means-an-action principle in the same place, so a future audit stops re-reporting them as gaps. | `[COPY]` | `docs/` | XS | — |
-
-**Done when:** an auditor measuring five card treatments finds the document that says why there are three, and which one Resources should have had.
-
-### Ranked by damage per line of fix
-
-| # | Finding | Row | Effort |
-|---|---|---|---|
-| 1 | Resources category titles don't meet the content edge | DC-05 | XS |
-| 2 | Drift renders behind the h1 at 390px | 21.3 | S |
-| 3 | Third undocumented green, 34 uses | DC-01 | S |
-| 4 | Resources has no component layer | DC-06 | M |
-| 5 | Ochre as default marginalia colour | DC-03 | S |
-| 6 | Resources claims v0.3 | DC-09 | XS |
-| 7 | h1 60.8-vs-64 split | DC-10 | S |
-| 8 | Kicker ● orphans at 390px | DC-12 | XS |
-| 9 | h2 seven sizes, two weights | DC-11 | M |
-| 10 | Resources jump-link arrows | DC-09 | XS |
-
-DC-05, DC-09, and DC-12 total well under an hour between them and remove most of the impression that prompted this audit.
-
----
+## Phase 21 — Design consistency audit (self-supplied, 2026-08-17) `shipped — see completed.tasks.md`
 
 ## Parked / backlog
 

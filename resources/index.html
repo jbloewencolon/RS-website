@@ -81,7 +81,7 @@
   :root{
     --paper:#E7E5DC;--paper-2:#EFEEE7;--ink:#191B18;--ink-2:#3C3E38;--ink-3:#585B4F;--rule:#C9C6BA;
     --teal:#0F2A2E;--teal-2:#2A4C4C;--sage:#8FA9A2;
-    --holds:#2C5A38;--holds-fill:rgba(63,122,78,.13);--holds-edge:rgba(44,90,56,.35);
+    --holds:#2C5A38;--holds-fill:rgba(44,90,56,.13);--holds-edge:rgba(44,90,56,.35);
     --fails:#8B3A2F;--fails-fill:rgba(139,58,47,.10);--fails-edge:rgba(139,58,47,.24);
     --ask:#6B4C12;--ask-edge:#DB9E2A;--ask-fill:rgba(219,158,42,.13);
   }
@@ -126,13 +126,16 @@
   .dark .tab-num{color:#8FA9A2}
   .dark details[open]>.pocket-summary{background:rgba(219,158,42,.08)}
    
-  details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid #DB9E2A;margin:1.6rem 0 0}
+   
+  
+  details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid var(--rule,#C9C6BA);margin:1.6rem 0 0}
   details.note>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0 .9rem;color:#585B4F}
   details.note>summary::-webkit-details-marker{display:none}
   details.note>summary:hover,details.note>summary:focus-visible{color:#191B18}
   details.note>p{margin:0 .9rem .7rem .9rem}
-  details.note.note-fails{border-left-color:#8B3A2F}
-  details.note.note-holds{border-left-color:#3F7A4E}
+  details.note.note-fails{border-left-color:var(--fails,#8B3A2F)}
+  details.note.note-holds{border-left-color:var(--holds,#2C5A38)}
+  details.note.note-ask{border-left-color:var(--ask-edge,#DB9E2A)}
   @media print{details.note:not([open])>*{display:block!important}}
   @media print{body{background:#fff}.noprint{display:none!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
@@ -160,6 +163,15 @@
 
 <style>
   @media print{details:not([open])>*{display:block!important}}
+  
+  .pocket{border:none;background:none;margin:0}
+  .pocket-summary{cursor:pointer;list-style:none;display:block;padding:.3rem 0}
+  .pocket-summary::-webkit-details-marker{display:none}
+  .pocket-summary .kick{margin-bottom:.5rem}
+  .pocket-summary:hover .sec{color:#2C5A38}
+  .pocket-body{padding-top:.4rem}
+  .pocket-body[id]{scroll-margin-top:2.5rem}
+  .kick{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:none;margin:0 0 .5rem;color:#5A5D53}
 </style>
 </head>
 <body>
@@ -198,8 +210,10 @@
 <main>
 <section id="main-content" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center"><span style="width:7px;height:7px;border-radius:50%;background:#366943;display:inline-block"></span> plain HTML · no script on this page · allowed to every crawler</p>
-    <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.1rem,5.6vw,3.8rem);line-height:1;letter-spacing:-.03em;margin:0 0 1.4rem;max-width:15ch">Resources</h1>
+    
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">plain HTML · no script on this page · allowed to every crawler</p>
+    
+    <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.2rem,6vw,4rem);line-height:1;letter-spacing:-.03em;margin:0 0 1.4rem;max-width:15ch">Resources</h1>
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:52ch;margin:0 0 1.2rem">If a page on this site asked whether you're safe, or asked you to reflect on a relationship in writing, this is where it was pointing. It also stands on its own. You don't need a reason to be here.</p>
     <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">This list is partial, and partial in a particular direction. Most of it is directories and national networks rather than single organisations, because directories are maintained by people whose job it is and single groups are not, and directories are prioritised because they can update local contacts; verification dates remain visible. This edition lacks province-, territory-, and locality-specific coverage; everything below is national (Canada) or international in scope. If you are somewhere else, the international entries and the directories are the better starting point.</p>
     <details class="note note-holds" style="margin:0;max-width:58ch"><summary>⌖ Privacy</summary><p>nothing you click here is recorded by this site. There is no analytics, no outbound-link tracking, and no record of who visits this page. What happens after you leave for another organisation's site falls under the other organisation's privacy and safety practices; check them when doing so is safe.</p></details>
@@ -273,14 +287,14 @@
     
     
     
-    <details open style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
-      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
-        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0;min-width:0">Immediate safety and crisis lines</h2>
+    <details class="pocket" data-collapsible open style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary class="pocket-summary">
         
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;min-width:0"><span style="white-space:nowrap">3 entries</span> · Canada, national</span>
+        <span class="kick">3 entries · Canada, national</span>
+        <h2 class="sec" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">Immediate safety and crisis lines</h2>
       </summary>
       
-      <div id="crisis-lines">
+      <div class="pocket-body" id="crisis-lines">
         <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
           
           <div>
@@ -310,14 +324,14 @@
     
     
     
-    <details style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
-      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
-        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0;min-width:0">Intimate partner violence and coercive control</h2>
+    <details class="pocket" data-collapsible style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary class="pocket-summary">
         
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;min-width:0"><span style="white-space:nowrap">1 entry</span> · Canada, national directory</span>
+        <span class="kick">1 entry · Canada, national directory</span>
+        <h2 class="sec" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">Intimate partner violence and coercive control</h2>
       </summary>
       
-      <div id="coercive-control">
+      <div class="pocket-body" id="coercive-control">
         <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
           
           <div>
@@ -337,14 +351,14 @@
     
     
     
-    <details style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
-      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
-        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0;min-width:0">Legal aid and family law</h2>
+    <details class="pocket" data-collapsible style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary class="pocket-summary">
         
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;min-width:0"><span style="white-space:nowrap">1 entry</span> · Canada: thin coverage, stated honestly</span>
+        <span class="kick" style="color:#6B4C12">1 entry · Canada: thin coverage, stated honestly</span>
+        <h2 class="sec" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">Legal aid and family law</h2>
       </summary>
       
-      <div id="legal-aid">
+      <div class="pocket-body" id="legal-aid">
         <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
           
           <div>
@@ -364,14 +378,14 @@
     
     
     
-    <details style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
-      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
-        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0;min-width:0">Immigration and refugee support</h2>
+    <details class="pocket" data-collapsible style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary class="pocket-summary">
         
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;min-width:0"><span style="white-space:nowrap">1 entry</span> · Canada, national network</span>
+        <span class="kick">1 entry · Canada, national network</span>
+        <h2 class="sec" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">Immigration and refugee support</h2>
       </summary>
       
-      <div id="immigration">
+      <div class="pocket-body" id="immigration">
         <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
           
           <div>
@@ -389,14 +403,14 @@
     
     
     
-    <details style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
-      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
-        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0;min-width:0">Housing, tenant organising, and emergency shelter</h2>
+    <details class="pocket" data-collapsible style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary class="pocket-summary">
         
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;min-width:0"><span style="white-space:nowrap">1 entry</span> · Canada, national</span>
+        <span class="kick">1 entry · Canada, national</span>
+        <h2 class="sec" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">Housing, tenant organising, and emergency shelter</h2>
       </summary>
       
-      <div id="housing">
+      <div class="pocket-body" id="housing">
         <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
           
           <div>
@@ -416,14 +430,14 @@
     
     
     
-    <details style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
-      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
-        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0;min-width:0">Income, benefits, and food security</h2>
+    <details class="pocket" data-collapsible style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary class="pocket-summary">
         
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;min-width:0"><span style="white-space:nowrap">1 entry</span> · Canada, national directory</span>
+        <span class="kick">1 entry · Canada, national directory</span>
+        <h2 class="sec" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">Income, benefits, and food security</h2>
       </summary>
       
-      <div id="income">
+      <div class="pocket-body" id="income">
         <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
           
           <div>
@@ -441,14 +455,14 @@
     
     
     
-    <details style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
-      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
-        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0;min-width:0">Disability advocacy and independent living</h2>
+    <details class="pocket" data-collapsible style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary class="pocket-summary">
         
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;min-width:0"><span style="white-space:nowrap">1 entry</span> · Canada, national</span>
+        <span class="kick">1 entry · Canada, national</span>
+        <h2 class="sec" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">Disability advocacy and independent living</h2>
       </summary>
       
-      <div id="disability">
+      <div class="pocket-body" id="disability">
         <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
           
           <div>
@@ -466,14 +480,14 @@
     
     
     
-    <details style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
-      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
-        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0;min-width:0">2SLGBTQ&#43; and trans-specific services</h2>
+    <details class="pocket" data-collapsible style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary class="pocket-summary">
         
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;min-width:0"><span style="white-space:nowrap">1 entry</span> · Canada, national</span>
+        <span class="kick">1 entry · Canada, national</span>
+        <h2 class="sec" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">2SLGBTQ&#43; and trans-specific services</h2>
       </summary>
       
-      <div id="lgbtq">
+      <div class="pocket-body" id="lgbtq">
         <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
           
           <div>
@@ -491,14 +505,14 @@
     
     
     
-    <details style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
-      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
-        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0;min-width:0">Indigenous-specific and Indigenous-led services</h2>
+    <details class="pocket" data-collapsible style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary class="pocket-summary">
         
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;min-width:0"><span style="white-space:nowrap">2 entries</span> · Canada, national</span>
+        <span class="kick">2 entries · Canada, national</span>
+        <h2 class="sec" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">Indigenous-specific and Indigenous-led services</h2>
       </summary>
       
-      <div id="indigenous">
+      <div class="pocket-body" id="indigenous">
         <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
           
           <div>
@@ -525,10 +539,8 @@
     
     
     <div id="mutual-aid" style="margin:0 0 2rem;padding-top:1.6rem;border-top:1px dashed #DB9E2A">
-      <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
-        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0;color:#585B4F;min-width:0">Mutual aid networks</h2>
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#6B4C12;white-space:nowrap">Not yet built</span>
-      </div>
+      <span class="kick" style="color:#6B4C12">Not yet built</span>
+      <h2 class="sec" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0;color:#585B4F">Mutual aid networks</h2>
       
       <div style="margin-top:1.2rem">
         <p style="max-width:56ch;margin:0;color:#3C3E38">This category is genuinely empty, not thin. Mutual aid groups form and dissolve faster than one unpaid maintainer can verify, and a dead contact given to someone in crisis is worse than an honest absence. It stays on the <a href="/behind-the-scenes/">fault list</a> until there's a stable, paid-staff directory to point to instead of individual groups.</p>
@@ -538,14 +550,14 @@
     
     
     
-    <details style="margin:0;padding-top:1.6rem;border-top:1px solid #C9C6BA">
-      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
-        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0;min-width:0">If you are somewhere other than Canada</h2>
+    <details class="pocket" data-collapsible style="margin:0;padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary class="pocket-summary">
         
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;min-width:0"><span style="white-space:nowrap">2 entries</span> · International</span>
+        <span class="kick">2 entries · International</span>
+        <h2 class="sec" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">If you are somewhere other than Canada</h2>
       </summary>
       
-      <div id="international">
+      <div class="pocket-body" id="international">
         <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
           
           <div>
@@ -572,11 +584,12 @@
   </div>
 </section>
 
-<section style="padding:0 0 clamp(3rem,6vw,4.5rem)">
+
+<section class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(2.5rem,5vw,3.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <div style="border-top:1px solid #C9C6BA;padding-top:2rem;max-width:640px">
-      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 .8rem">Nothing here is endorsed</p>
-      <p style="margin:0 0 1rem;font-size:17px;line-height:1.55">Every entry above exists, and was checked against the organisation's own site on the date shown. That's the only claim being made. If one of them is wrong, out of date, or you know a directory that should replace a gap on this page, <a href="/contribute/">say so</a> and it gets fixed in the open: struck, not silently deleted, the same as everything else on this site's <a href="/behind-the-scenes/">change log</a>.</p>
+    <div style="max-width:640px">
+      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#DB9E2A;margin:0 0 .8rem">Nothing here is endorsed</p>
+      <p style="margin:0 0 1rem;font-size:17px;line-height:1.55">Every entry above exists, and was checked against the organisation's own site on the date shown. That's the only claim being made. If one of them is wrong, out of date, or you know a directory that should replace a gap on this page, <a href="/contribute/" style="color:#DB9E2A">say so</a> and it gets fixed in the open: struck, not silently deleted, the same as everything else on this site's <a href="/behind-the-scenes/" style="color:#DB9E2A">change log</a>.</p>
     </div>
   </div>
 </section>
@@ -585,7 +598,8 @@
 
 <footer class="dark" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0;border-top:1px solid #2A4C4C">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
-    <p style="margin:0;max-width:44ch">v0.3 · this page is plain HTML, no script, no third-party requests · <a href="/behind-the-scenes/" style="color:#DB9E2A">what changed</a> · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
+    
+    <p style="margin:0;max-width:44ch">v0.2 · this page is plain HTML, no script, no third-party requests · <a href="/behind-the-scenes/" style="color:#DB9E2A">what changed</a> · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
       <a href="/" class="nav-link">Home</a>
       <a href="/manifesto/" class="nav-link">Manifesto</a>

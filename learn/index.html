@@ -83,7 +83,7 @@
   :root{
     --paper:#E7E5DC;--paper-2:#EFEEE7;--ink:#191B18;--ink-2:#3C3E38;--ink-3:#585B4F;--rule:#C9C6BA;
     --teal:#0F2A2E;--teal-2:#2A4C4C;--sage:#8FA9A2;
-    --holds:#2C5A38;--holds-fill:rgba(63,122,78,.13);--holds-edge:rgba(44,90,56,.35);
+    --holds:#2C5A38;--holds-fill:rgba(44,90,56,.13);--holds-edge:rgba(44,90,56,.35);
     --fails:#8B3A2F;--fails-fill:rgba(139,58,47,.10);--fails-edge:rgba(139,58,47,.24);
     --ask:#6B4C12;--ask-edge:#DB9E2A;--ask-fill:rgba(219,158,42,.13);
   }
@@ -128,13 +128,16 @@
   .dark .tab-num{color:#8FA9A2}
   .dark details[open]>.pocket-summary{background:rgba(219,158,42,.08)}
    
-  details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid #DB9E2A;margin:1.6rem 0 0}
+   
+  
+  details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid var(--rule,#C9C6BA);margin:1.6rem 0 0}
   details.note>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0 .9rem;color:#585B4F}
   details.note>summary::-webkit-details-marker{display:none}
   details.note>summary:hover,details.note>summary:focus-visible{color:#191B18}
   details.note>p{margin:0 .9rem .7rem .9rem}
-  details.note.note-fails{border-left-color:#8B3A2F}
-  details.note.note-holds{border-left-color:#3F7A4E}
+  details.note.note-fails{border-left-color:var(--fails,#8B3A2F)}
+  details.note.note-holds{border-left-color:var(--holds,#2C5A38)}
+  details.note.note-ask{border-left-color:var(--ask-edge,#DB9E2A)}
   @media print{details.note:not([open])>*{display:block!important}}
   @media print{body{background:#fff}.noprint{display:none!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
@@ -397,7 +400,8 @@
 <section id="main-content" style="padding:clamp(3rem,6vw,5rem) 0 clamp(1.6rem,3vw,2.2rem)">
   <div class="wrap">
     <p class="kick kick-teal">Learn · the idea, in plain language · about 15 minutes</p>
-    <h1 style="font-family:var(--sans);font-weight:800;font-size:clamp(2.1rem,5.6vw,3.8rem);line-height:1;letter-spacing:-.03em;margin:0 0 1.4rem;max-width:19ch">Relationships, Principles, and Limits</h1>
+    
+    <h1 style="font-family:var(--sans);font-weight:800;font-size:clamp(2.2rem,6vw,4rem);line-height:1;letter-spacing:-.03em;margin:0 0 1.4rem;max-width:19ch">Relationships, Principles, and Limits</h1>
     <p style="font-size:clamp(1.05rem,2.2vw,1.3rem);line-height:1.55;max-width:48ch;margin:0 0 1.4rem">Relational sovereignty asks what would change if relationships were understood as living systems of consent, responsibility, reciprocity, and self-determination rather than structures of possession.</p>
     <p style="max-width:52ch;margin:0 0 1.6rem;color:#3C3E38">This draft contains thirteen principles and the questions each one raises. Each carries a question you can actually ask of a relationship you are in.</p>
     <p class="legend-key"><span class="swatch s-teal"></span>Teal marks what the framework asserts. <span class="swatch s-fails"></span>Rust marks where it breaks, or where its own vocabulary gets turned on someone. <span class="swatch s-ask"></span>Ochre marks a question being put to you. Nothing on this page is signalled by colour alone. Every mark is also a word.</p>
@@ -406,16 +410,16 @@
       
       <span id="contents-sentinel" aria-hidden="true" style="display:block;height:1px"></span>
       <ul>
-        <li><a href="#principles" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>The thirteen principles</span><span class="door-d">Each with one question</span></a></li>
-        <li><a href="#forms-and-labels" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Forms &amp; labels</span><span class="door-d">To guide, not determine</span></a></li>
-        <li><a href="#scenarios" class="d-fails"><span class="door-t"><span class="swatch s-fails"></span>Seven stress tests</span><span class="door-d">Seven situations where this might fail</span></a></li>
-        <li><a href="#sexual-content" class="d-ask"><span class="door-t"><span class="swatch s-ask"></span>Intimacy & Sexuality</span><span class="door-d">Between feelings and bodies</span></a></li>
-        <li><a href="#continuity" class="d-ask"><span class="door-t"><span class="swatch s-ask"></span>Continuity of care</span><span class="door-d">Care dynamics and responsibility</span></a></li>
-        <li><a href="#adjudication" class="d-ask"><span class="door-t"><span class="swatch s-ask"></span>Adjudication</span><span class="door-d">When principles are in conflict</span></a></li>
-        <li><a href="#sovereignty-senses" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Sovereignty, four senses</span><span class="door-d">Because one definition is rarely enough</span></a></li>
+        <li><a href="#principles" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>The thirteen principles</span><span class="door-d">Thirteen, each with one question</span></a></li>
+        <li><a href="#forms-and-labels" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Forms &amp; labels</span><span class="door-d">A field, not a ladder</span></a></li>
+        <li><a href="#scenarios" class="d-fails"><span class="door-t"><span class="swatch s-fails"></span>Seven stress tests</span><span class="door-d">Seven situations, traced through, failures marked as failures</span></a></li>
+        <li><a href="#sexual-content" class="d-ask"><span class="door-t"><span class="swatch s-ask"></span>Sexual content, named plainly</span><span class="door-d">A framework about intimacy that hadn't mentioned sex</span></a></li>
+        <li><a href="#continuity" class="d-ask"><span class="door-t"><span class="swatch s-ask"></span>Continuity of care</span><span class="door-d">A clause, not a principle: 06 and 07 without a tiebreaker</span></a></li>
+        <li><a href="#adjudication" class="d-ask"><span class="door-t"><span class="swatch s-ask"></span>Adjudication</span><span class="door-d">Which principle wins, answered where it can be and left open where it can't</span></a></li>
+        <li><a href="#sovereignty-senses" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Sovereignty, four senses</span><span class="door-d">One word, four jobs</span></a></li>
         <li><a href="#opacity" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Opacity</span><span class="door-d">Principle 08, applied to this website</span></a></li>
-        <li><a href="#field-guide" class="d-fails"><span class="door-t"><span class="swatch s-fails"></span>Field guide: vocabulary as a weapon</span><span class="door-d">The 'Red Flags' of Relational Sovereignty language</span></a></li>
-        <li><a href="#not-yet-written" class="d-fails"><span class="door-t"><span class="swatch s-fails"></span>What's not written yet</span><span class="door-d">Where this all still has room to grow</span></a></li>
+        <li><a href="#field-guide" class="d-fails"><span class="door-t"><span class="swatch s-fails"></span>Field guide: vocabulary as a weapon</span><span class="door-d">This site's own vocabulary, turned around</span></a></li>
+        <li><a href="#not-yet-written" class="d-fails"><span class="door-t"><span class="swatch s-fails"></span>What's not written yet</span><span class="door-d">What's planned, not what's built</span></a></li>
       </ul>
     </nav>
     
