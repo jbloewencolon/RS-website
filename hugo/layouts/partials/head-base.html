@@ -110,6 +110,22 @@
     --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;
     --sans:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;
   }
+  /* MC-17 (Phase 20): the shell's own horizontal margin, centralised so a
+     sticky surface can widen it under a landscape notch or rounded
+     corner instead of letting content render partly under one.
+     env(safe-area-inset-*) only returns a non-zero value on a page whose
+     own <meta name="viewport"> carries viewport-fit=cover — without it
+     every browser resolves the inset to 0 and this max() is a silent
+     no-op. That attribute is per-page, not something this shared block
+     can set, so it's added only where something reads the inset it
+     unlocks: today, archive/index.html's sticky .filterbar alone.
+     Defined here regardless, unconsumed by default elsewhere, on the
+     same shared-even-if-unused basis as the rest of this file (see its
+     own top comment). */
+  :root{
+    --shell-left:max(clamp(1.1rem,4vw,3rem), env(safe-area-inset-left));
+    --shell-right:max(clamp(1.1rem,4vw,3rem), env(safe-area-inset-right));
+  }
 {{- if $c.tokens }}
   /* WD-11: the semantic colour register, promoted from Learn (see
      docs/design-palette.md for the full reasoning) — teal for what the
