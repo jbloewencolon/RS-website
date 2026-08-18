@@ -116,6 +116,15 @@
   .form-error{line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem}
   .form-status{border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;background:rgba(63,122,78,.06);padding:1.6rem 1.5rem}
   .field-invalid{border-color:#8B3A2F!important}
+  
+  .pocket-summary .tab-num{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:#5A5D53;flex:0 0 auto}
+  details[open]>.pocket-summary.d-teal{background:rgba(15,42,46,.05)}
+  details[open]>.pocket-summary.d-fails{background:var(--fails-fill)}
+  details[open]>.pocket-summary.d-ask{background:var(--ask-fill)}
+  details[open]>.pocket-summary.d-holds{background:var(--holds-fill)}
+  
+  .dark .tab-num{color:#8FA9A2}
+  .dark details[open]>.pocket-summary{background:rgba(219,158,42,.08)}
    
   details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid #DB9E2A;margin:1.6rem 0 0}
   details.note>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0 .9rem;color:#585B4F}
@@ -421,8 +430,8 @@
 <section class="band" data-pocket="principles" style="padding-top:clamp(1.6rem,3vw,2.2rem)">
   <div class="wrap">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-teal">Thirteen, each with one question</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">01</span>Thirteen, each with one question</span>
         <h2 class="sec">The principles themselves.</h2>
       </summary>
       <div class="pocket-body" id="principles">
@@ -534,8 +543,8 @@
 <section class="band" data-pocket="forms-and-labels">
   <div class="wrap">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-teal">A field, not a ladder</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">02</span>A field, not a ladder</span>
         <h2 class="sec">Forms and labels, none of them the default.</h2>
       </summary>
       <div class="pocket-body" id="forms-and-labels">
@@ -566,8 +575,8 @@
 <section class="band" data-pocket="scenarios">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick kick-fails">Seven situations, traced through, failures marked as failures</span>
+    <summary class="pocket-summary d-fails">
+      <span class="kick kick-fails"><span class="tab-num">03</span>Seven situations, traced through, failures marked as failures</span>
       <h2 class="sec">What these principles are like to actually be inside.</h2>
     </summary>
     <div class="pocket-body" id="scenarios" data-matrix-wide="860">
@@ -1098,8 +1107,8 @@
   <div class="wrap">
    
    <details class="pocket">
-    <summary class="pocket-summary">
-      <span class="kick kick-ask">A framework about intimacy that hadn't mentioned sex</span>
+    <summary class="pocket-summary d-ask">
+      <span class="kick kick-ask"><span class="tab-num">04</span>A framework about intimacy that hadn't mentioned sex</span>
       <h2 class="sec">Four things named plainly, using the vocabulary already here.</h2>
     </summary>
     <div class="pocket-body" id="sexual-content">
@@ -1138,8 +1147,8 @@
 <section class="band" data-pocket="continuity">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick kick-ask">A clause, not a principle: 06 and 07 without a tiebreaker</span>
+    <summary class="pocket-summary d-ask">
+      <span class="kick kick-ask"><span class="tab-num">05</span>A clause, not a principle: 06 and 07 without a tiebreaker</span>
       <h2 class="sec">Continuity of care</h2>
     </summary>
     <div class="pocket-body" id="continuity">
@@ -1158,8 +1167,8 @@
 <section class="band" data-pocket="adjudication">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick kick-ask">Which principle wins, answered where it can be and left open where it can't</span>
+    <summary class="pocket-summary d-ask">
+      <span class="kick kick-ask"><span class="tab-num">06</span>Which principle wins, answered where it can be and left open where it can't</span>
       <h2 class="sec">Two adjudication questions, two different answers.</h2>
     </summary>
     <div class="pocket-body" id="adjudication">
@@ -1190,8 +1199,8 @@
 <section class="band" data-pocket="sovereignty-senses">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick kick-teal">One word, four jobs</span>
+    <summary class="pocket-summary d-teal">
+      <span class="kick kick-teal"><span class="tab-num">07</span>One word, four jobs</span>
       <h2 class="sec">Four things this word is doing.</h2>
     </summary>
     <div class="pocket-body" id="sovereignty-senses">
@@ -1235,8 +1244,9 @@
 <section class="dark band" data-pocket="opacity" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(1.6rem,3vw,2.2rem) 0 clamp(3rem,6vw,5rem)">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick" style="color:#DB9E2A;margin-bottom:1rem">Principle 08, applied to this website</span>
+    
+    <summary class="pocket-summary d-teal">
+      <span class="kick" style="color:#DB9E2A;margin-bottom:1rem"><span class="tab-num">08</span>Principle 08, applied to this website</span>
       <h2 class="sec" style="max-width:22ch;color:#E7E5DC">Total legibility is a form of domination.</h2>
     </summary>
     <div class="pocket-body" id="opacity">
@@ -1278,8 +1288,8 @@
 <section class="band" data-pocket="field-guide" style="padding-bottom:clamp(3rem,6vw,4.5rem)">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick kick-fails">This site's own vocabulary, turned around</span>
+    <summary class="pocket-summary d-fails">
+      <span class="kick kick-fails"><span class="tab-num">09</span>This site's own vocabulary, turned around</span>
       <h2 class="sec">How this vocabulary gets used as a weapon.</h2>
     </summary>
     <div class="pocket-body" id="field-guide">
@@ -1350,8 +1360,8 @@
 <section class="band" data-pocket="not-yet-written" style="padding-bottom:clamp(3rem,6vw,4.5rem)">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick kick-fails">What's planned, not what's built</span>
+    <summary class="pocket-summary d-fails">
+      <span class="kick kick-fails"><span class="tab-num">10</span>What's planned, not what's built</span>
       <h2 class="sec" style="max-width:22ch;margin-bottom:1rem">A conceptual map is planned. This page is what's actually written.</h2>
     </summary>
     <div class="pocket-body" id="not-yet-written">

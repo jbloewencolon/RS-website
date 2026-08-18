@@ -127,6 +127,15 @@
   .form-error{line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem}
   .form-status{border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;background:rgba(63,122,78,.06);padding:1.6rem 1.5rem}
   .field-invalid{border-color:#8B3A2F!important}
+  
+  .pocket-summary .tab-num{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:#5A5D53;flex:0 0 auto}
+  details[open]>.pocket-summary.d-teal{background:rgba(15,42,46,.05)}
+  details[open]>.pocket-summary.d-fails{background:var(--fails-fill)}
+  details[open]>.pocket-summary.d-ask{background:var(--ask-fill)}
+  details[open]>.pocket-summary.d-holds{background:var(--holds-fill)}
+  
+  .dark .tab-num{color:#8FA9A2}
+  .dark details[open]>.pocket-summary{background:rgba(219,158,42,.08)}
    
   details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid #DB9E2A;margin:1.6rem 0 0}
   details.note>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0 .9rem;color:#585B4F}

@@ -114,6 +114,15 @@
   .form-error{line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem}
   .form-status{border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;background:rgba(63,122,78,.06);padding:1.6rem 1.5rem}
   .field-invalid{border-color:#8B3A2F!important}
+  
+  .pocket-summary .tab-num{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:#5A5D53;flex:0 0 auto}
+  details[open]>.pocket-summary.d-teal{background:rgba(15,42,46,.05)}
+  details[open]>.pocket-summary.d-fails{background:var(--fails-fill)}
+  details[open]>.pocket-summary.d-ask{background:var(--ask-fill)}
+  details[open]>.pocket-summary.d-holds{background:var(--holds-fill)}
+  
+  .dark .tab-num{color:#8FA9A2}
+  .dark details[open]>.pocket-summary{background:rgba(219,158,42,.08)}
    
   details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid #DB9E2A;margin:1.6rem 0 0}
   details.note>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0 .9rem;color:#585B4F}
@@ -342,8 +351,8 @@
 <section data-pocket="substrate" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-teal">The material facts of the machine you're reading on</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">01</span>The material facts of the machine you're reading on</span>
         <h2 class="sec">The substrate</h2>
       </summary>
       <div class="pocket-body" id="substrate">
@@ -427,8 +436,8 @@
 <section data-pocket="type" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-teal">Coverage, checked not assumed</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">02</span>Coverage, checked not assumed</span>
         <h2 class="sec">Type, and why it changed</h2>
       </summary>
       <div class="pocket-body" id="type">
@@ -469,8 +478,8 @@
 <section data-pocket="crawler" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick" style="color:#DB9E2A;margin-bottom:1rem">Opacity as governance, not as a button</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick" style="color:#DB9E2A;margin-bottom:1rem"><span class="tab-num">03</span>Opacity as governance, not as a button</span>
         <h2 class="sec" style="max-width:24ch;color:#E7E5DC">What this site refuses to the crawler.</h2>
       </summary>
       <div class="pocket-body" id="crawler">
@@ -519,8 +528,8 @@
 <section data-pocket="reuse" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-teal">Terms that bind the project, not just the reader</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">04</span>Terms that bind the project, not just the reader</span>
         <h2 class="sec">Reuse terms, version 0.2</h2>
       </summary>
       <div class="pocket-body" id="reuse">
@@ -551,8 +560,8 @@
 <section data-pocket="faults" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-fails">Known and unfixed, published rather than quietly carried</span>
+      <summary class="pocket-summary d-fails">
+        <span class="kick kick-fails"><span class="tab-num">05</span>Known and unfixed, published rather than quietly carried</span>
         <h2 class="sec">The fault list</h2>
       </summary>
       <div class="pocket-body" id="faults">
@@ -609,8 +618,8 @@
 <section data-pocket="roadmap" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-ask">Named, not yet built, no dates promised</span>
+      <summary class="pocket-summary d-ask">
+        <span class="kick kick-ask"><span class="tab-num">06</span>Named, not yet built, no dates promised</span>
         <h2 class="sec">Roadmap</h2>
       </summary>
       <div class="pocket-body" id="roadmap">
@@ -770,8 +779,8 @@
 <section data-pocket="changelog" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick" style="color:#DB9E2A;margin-bottom:1rem">Change log · repair in view</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick" style="color:#DB9E2A;margin-bottom:1rem"><span class="tab-num">07</span>Change log · repair in view</span>
         <h2 class="sec" style="max-width:24ch;color:#E7E5DC">Corrections are shown, not overwritten.</h2>
       </summary>
       <div class="pocket-body" id="changelog">
@@ -785,8 +794,8 @@
 <section data-pocket="labour" style="padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-ask">Who worked on this, what's paid, and what it costs</span>
+      <summary class="pocket-summary d-ask">
+        <span class="kick kick-ask"><span class="tab-num">08</span>Who worked on this, what's paid, and what it costs</span>
         <h2 class="sec">Labour and money</h2>
       </summary>
       <div class="pocket-body" id="labour">

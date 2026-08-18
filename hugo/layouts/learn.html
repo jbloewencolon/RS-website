@@ -562,8 +562,8 @@
 <section class="band" data-pocket="principles" style="padding-top:clamp(1.6rem,3vw,2.2rem)">
   <div class="wrap">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-teal">Thirteen, each with one question</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">01</span>Thirteen, each with one question</span>
         <h2 class="sec">The principles themselves.</h2>
       </summary>
       <div class="pocket-body" id="principles">
@@ -591,8 +591,8 @@
 <section class="band" data-pocket="forms-and-labels">
   <div class="wrap">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-teal">A field, not a ladder</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">02</span>A field, not a ladder</span>
         <h2 class="sec">Forms and labels, none of them the default.</h2>
       </summary>
       <div class="pocket-body" id="forms-and-labels">
@@ -623,8 +623,8 @@
 <section class="band" data-pocket="scenarios">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick kick-fails">Seven situations, traced through, failures marked as failures</span>
+    <summary class="pocket-summary d-fails">
+      <span class="kick kick-fails"><span class="tab-num">03</span>Seven situations, traced through, failures marked as failures</span>
       <h2 class="sec">What these principles are like to actually be inside.</h2>
     </summary>
     <div class="pocket-body" id="scenarios" data-matrix-wide="{{ $matrixWide }}">
@@ -741,8 +741,8 @@
         that promise, and the extra step composes with it rather than
         against it. -->
    <details class="pocket">
-    <summary class="pocket-summary">
-      <span class="kick kick-ask">A framework about intimacy that hadn't mentioned sex</span>
+    <summary class="pocket-summary d-ask">
+      <span class="kick kick-ask"><span class="tab-num">04</span>A framework about intimacy that hadn't mentioned sex</span>
       <h2 class="sec">Four things named plainly, using the vocabulary already here.</h2>
     </summary>
     <div class="pocket-body" id="sexual-content">
@@ -790,8 +790,8 @@
 <section class="band" data-pocket="continuity">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick kick-ask">A clause, not a principle: 06 and 07 without a tiebreaker</span>
+    <summary class="pocket-summary d-ask">
+      <span class="kick kick-ask"><span class="tab-num">05</span>A clause, not a principle: 06 and 07 without a tiebreaker</span>
       <h2 class="sec">Continuity of care</h2>
     </summary>
     <div class="pocket-body" id="continuity">
@@ -810,8 +810,8 @@
 <section class="band" data-pocket="adjudication">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick kick-ask">Which principle wins, answered where it can be and left open where it can't</span>
+    <summary class="pocket-summary d-ask">
+      <span class="kick kick-ask"><span class="tab-num">06</span>Which principle wins, answered where it can be and left open where it can't</span>
       <h2 class="sec">Two adjudication questions, two different answers.</h2>
     </summary>
     <div class="pocket-body" id="adjudication">
@@ -842,8 +842,8 @@
 <section class="band" data-pocket="sovereignty-senses">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick kick-teal">One word, four jobs</span>
+    <summary class="pocket-summary d-teal">
+      <span class="kick kick-teal"><span class="tab-num">07</span>One word, four jobs</span>
       <h2 class="sec">Four things this word is doing.</h2>
     </summary>
     <div class="pocket-body" id="sovereignty-senses">
@@ -892,8 +892,17 @@
 <section class="dark band" data-pocket="opacity" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(1.6rem,3vw,2.2rem) 0 clamp(3rem,6vw,5rem)">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick" style="color:#DB9E2A;margin-bottom:1rem">Principle 08, applied to this website</span>
+    {{/* MC-19 (Phase 20): d-teal, matching this pocket's own contents-nav
+         card — the class stays the pocket's real register regardless of
+         ground. The kicker's ochre (#DB9E2A, via its own inline override
+         predating this row) isn't a different classification, it's this
+         site's one accent readable on dark teal; head-base.html's
+         .dark ... .pocket-summary rule repaints any register's tab
+         background to match on this ground, the same way it already
+         repaints the kicker, rather than this pocket claiming to be
+         "ask" content it isn't. */}}
+    <summary class="pocket-summary d-teal">
+      <span class="kick" style="color:#DB9E2A;margin-bottom:1rem"><span class="tab-num">08</span>Principle 08, applied to this website</span>
       <h2 class="sec" style="max-width:22ch;color:#E7E5DC">Total legibility is a form of domination.</h2>
     </summary>
     <div class="pocket-body" id="opacity">
@@ -917,8 +926,8 @@
 <section class="band" data-pocket="field-guide" style="padding-bottom:clamp(3rem,6vw,4.5rem)">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick kick-fails">This site's own vocabulary, turned around</span>
+    <summary class="pocket-summary d-fails">
+      <span class="kick kick-fails"><span class="tab-num">09</span>This site's own vocabulary, turned around</span>
       <h2 class="sec">How this vocabulary gets used as a weapon.</h2>
     </summary>
     <div class="pocket-body" id="field-guide">
@@ -989,8 +998,8 @@
 <section class="band" data-pocket="not-yet-written" style="padding-bottom:clamp(3rem,6vw,4.5rem)">
   <div class="wrap">
    <details class="pocket" data-collapsible>
-    <summary class="pocket-summary">
-      <span class="kick kick-fails">What's planned, not what's built</span>
+    <summary class="pocket-summary d-fails">
+      <span class="kick kick-fails"><span class="tab-num">10</span>What's planned, not what's built</span>
       <h2 class="sec" style="max-width:22ch;margin-bottom:1rem">A conceptual map is planned. This page is what's actually written.</h2>
     </summary>
     <div class="pocket-body" id="not-yet-written">
