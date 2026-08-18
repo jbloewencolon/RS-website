@@ -85,9 +85,19 @@
   }
   /* WD-08b: the arrow travels on hover/focus, matching the .arr
      treatment already used for authored arrows. inline-block is
-     required for transform to apply to a pseudo-element. */
+     required for transform to apply to a pseudo-element.
+     MC-20 (Phase 20): the :hover half moved inside @media (hover:hover)
+     and (pointer:fine) — a touchscreen has no real hover, but many
+     mobile browsers apply :hover on tap anyway and don't clear it until
+     the next tap lands somewhere else, so this arrow would jump on tap
+     and then sit shifted until an unrelated tap reset it. Gating :hover
+     itself is what stops that; the media query can't reach :focus-visible,
+     which is unconditional below and gives every keyboard/switch user
+     the same travel a mouse hover gets, regardless of pointer type. */
   a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none;display:inline-block;transition:transform .14s ease}
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before,
+  @media (hover:hover) and (pointer:fine){
+    a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before{transform:translateX(2px)}
+  }
   a[href*="#"]:not(.skip-link):not([style*="border-radius"]):focus-visible::before{transform:translateX(2px)}
   nav[aria-label="Contents"] a{border:1px solid {{ $c.navBorder | safeCSS }};border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:{{ $c.navFg | safeCSS }}}
   nav[aria-label="Contents"] a:hover{border-color:{{ $c.navHoverEdge | safeCSS }};color:{{ $c.navHoverFg | safeCSS }};background:{{ $c.navHoverBg | safeCSS }}}

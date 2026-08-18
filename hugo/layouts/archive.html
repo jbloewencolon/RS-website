@@ -143,7 +143,12 @@
      keeps the glyph out of the accessible name; transform is composited,
      no layout or repaint of the surrounding text. */
   .arr{display:inline-block;transition:transform .15s ease}
-  a:hover .arr,a:focus-visible .arr{transform:translateX(3px)}
+  {{/* MC-20 (Phase 20): :hover gated the same way and for the same
+       reason as head-base.html's own arrow-travel rule — see its
+       comment for the full reasoning. :focus-visible stays
+       unconditional. */}}
+  @media (hover:hover) and (pointer:fine){a:hover .arr{transform:translateX(3px)}}
+  a:focus-visible .arr{transform:translateX(3px)}
 
   /* AR-05/06/07: pocket navigation, the pattern IA-20/RS-049 already
      proved on Learn and Behind the Scenes — a hero grid opens one shelf

@@ -37,7 +37,9 @@
   }
    
   a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none;display:inline-block;transition:transform .14s ease}
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before,
+  @media (hover:hover) and (pointer:fine){
+    a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before{transform:translateX(2px)}
+  }
   a[href*="#"]:not(.skip-link):not([style*="border-radius"]):focus-visible::before{transform:translateX(2px)}
   nav[aria-label="Contents"] a{border:1px solid #C9C6BA;border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:#585B4F}
   nav[aria-label="Contents"] a:hover{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
