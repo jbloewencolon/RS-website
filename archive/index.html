@@ -51,7 +51,9 @@
   }
    
   a[href*="#"]:not(.skip-link):not([style*="border-radius"])::before{content:"→ ";text-decoration:none;display:inline-block;transition:transform .14s ease}
-  a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before,
+  @media (hover:hover) and (pointer:fine){
+    a[href*="#"]:not(.skip-link):not([style*="border-radius"]):hover::before{transform:translateX(2px)}
+  }
   a[href*="#"]:not(.skip-link):not([style*="border-radius"]):focus-visible::before{transform:translateX(2px)}
   nav[aria-label="Contents"] a{border:1px solid #C9C6BA;border-radius:2px;padding:.3rem .7rem;text-decoration:none;color:#585B4F}
   nav[aria-label="Contents"] a:hover{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
@@ -189,7 +191,9 @@
   .venn-scroll::after{content:"";position:absolute;top:0;right:0;bottom:.5rem;width:32px;background:linear-gradient(to right,rgba(231,229,220,0),#E7E5DC 90%);pointer-events:none}
    
   .arr{display:inline-block;transition:transform .15s ease}
-  a:hover .arr,a:focus-visible .arr{transform:translateX(3px)}
+  
+  @media (hover:hover) and (pointer:fine){a:hover .arr{transform:translateX(3px)}}
+  a:focus-visible .arr{transform:translateX(3px)}
 
    
   .kick{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:none;margin:0 0 .5rem;color:#5A5D53}
