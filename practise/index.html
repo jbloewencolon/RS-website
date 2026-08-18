@@ -298,7 +298,24 @@
               <input type="text" value="{{ filename }}" onChange="{{ setFilename }}" style="width:100%;background:#EFEEE7;border:1px solid #C9C6BA;border-radius:2px;padding:.6rem .65rem;min-height:44px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;color:#191B18">
             </label>
             <button type="button" onClick="{{ doExport }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:#0F2A2E;color:#E7E5DC;border:none;padding:.75rem 1rem;min-height:44px;cursor:pointer;border-radius:2px">Save to a file</button>
+            {{/* MC-16 (Phase 20): only drawn when the browser actually
+                 offers a share sheet — the same "a control that cannot
+                 work should not be drawn" rule [data-open-all] already
+                 follows on this page. Never automatic: this fires only
+                 from a direct click on this button, same as export
+                 always has, and the file it hands off is identical to
+                 what "Save to a file" writes — one export path, two
+                 ways to receive it. */}}
+            <sc-if value="{{ canShare }}" hint-placeholder-val="{{ false }}">
+            <button type="button" onClick="{{ doShare }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:transparent;color:#0F2A2E;border:1px solid #C9C6BA;padding:.75rem 1rem;min-height:44px;cursor:pointer;border-radius:2px">Share the file</button>
+            </sc-if>
           </div>
+          <sc-if value="{{ canShare }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:.7rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;line-height:1.6;color:#5A5D53">"Share the file" hands it to your device's own share sheet — where it goes after that is whatever you pick there, not something this page controls or can promise stays private.</p>
+          </sc-if>
+          <sc-if value="{{ shareStatus }}" hint-placeholder-val="{{ false }}">
+          <p role="status" aria-live="polite" style="margin:.6rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;color:#585B4F">{{ shareStatus }}</p>
+          </sc-if>
         </div>
 
         <div style="margin-top:1rem">
@@ -550,11 +567,22 @@ class Component extends DCLogic {
   // resuming across sessions works only by re-importing a file the user
   // chose to save, never by silently persisting to the device — the same
   // risk as an export, without the warning that makes it a choice.
-  state = { who: "", picks: {}, notes: {}, stage: "safety", filename: this.defaultFilename(), importError: "", endingsStage: "closed", endingsAudit: {}, resetArmed: false };
+  state = { who: "", picks: {}, notes: {}, stage: "safety", filename: this.defaultFilename(), importError: "", endingsStage: "closed", endingsAudit: {}, resetArmed: false, shareStatus: "" };
 
   defaultFilename() {
     const d = new Date().toISOString().slice(0, 10);
     return "notes-" + d + ".json";
+  }
+
+  // MC-16 (Phase 20): one construction of the export data, used by both
+  // the download button (doExport) and the share button (doShare) —
+  // the two are different delivery mechanisms for the identical file,
+  // not two independent export paths that could drift apart.
+  mapFile() {
+    const data = { v: 1, who: this.state.who, picks: this.state.picks, notes: this.state.notes };
+    let name = (this.state.filename || "").trim() || this.defaultFilename();
+    if (!/\.json$/i.test(name)) name += ".json";
+    return { name, blob: new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }) };
   }
 
   domainList = [
@@ -703,11 +731,8 @@ class Component extends DCLogic {
       // warning sits directly above this control rather than in a
       // dismissible tooltip a person could close and forget.
       doExport: () => {
-        const data = { v: 1, who: this.state.who, picks: this.state.picks, notes: this.state.notes };
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+        const { name, blob } = this.mapFile();
         const url = URL.createObjectURL(blob);
-        let name = (this.state.filename || "").trim() || this.defaultFilename();
-        if (!/\.json$/i.test(name)) name += ".json";
         const a = document.createElement("a");
         a.href = url;
         a.download = name;
@@ -715,6 +740,30 @@ class Component extends DCLogic {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+      },
+      // Only drawn when navigator.share exists (canShare below), and
+      // even then only ever runs from this direct click — never
+      // automatically, never as a fallback for the download button,
+      // which stays available either way. canShare(files:) support
+      // varies more than share() itself, so that check happens here,
+      // at the moment there's a real File to test, rather than at
+      // render time where there's nothing yet to ask about.
+      canShare: typeof navigator !== "undefined" && typeof navigator.share === "function",
+      shareStatus: this.state.shareStatus,
+      doShare: () => {
+        const { name, blob } = this.mapFile();
+        const file = new File([blob], name, { type: "application/json" });
+        const share = () => navigator.share({ files: [file], title: name })
+          .then(() => this.setState({ shareStatus: "" }))
+          .catch((err) => {
+            if (err && err.name === "AbortError") return; // reader cancelled the share sheet — not an error
+            this.setState({ shareStatus: "Sharing didn't go through. Use “Save to a file” instead." });
+          });
+        if (typeof navigator.canShare === "function" && !navigator.canShare({ files: [file] })) {
+          this.setState({ shareStatus: "This browser can't share a file this way. Use “Save to a file” instead." });
+          return;
+        }
+        share();
       },
       // No localStorage anywhere in this file. Resuming across sessions
       // works only by re-importing a file the user chose to save — the
@@ -795,5 +844,6 @@ class Component extends DCLogic {
 }
 </script>
 <script src="/notes.js"></script>
+<script src="/practise-keyboard.js"></script>
 </body>
 </html>
