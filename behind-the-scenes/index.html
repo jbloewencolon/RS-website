@@ -93,21 +93,36 @@
   .dark :focus-visible{outline-color:#DB9E2A}
    
   .action,.action-utility,.nav-link,.disclosure,.form-error{font-family:var(--mono);font-size:14px}
-  .action,.action-utility,.nav-link,.disclosure{text-transform:uppercase;min-height:44px;display:inline-flex;align-items:center;border-radius:2px}
-  .action,.action-utility{cursor:pointer;letter-spacing:.05em}
+  .action,.action-utility,.nav-link,.disclosure{text-transform:uppercase;min-height:44px;align-items:center;border-radius:2px}
+  
+  .action,.action-utility,.nav-link{display:inline-flex}
+  .disclosure{display:flex}
+  
+  .action,.action-utility,.disclosure{cursor:pointer;letter-spacing:.05em}
   .action{background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem}
   .action[disabled]{cursor:default;opacity:.55}
   .action-utility{background:transparent;color:#585B4F;border:1px solid #C9C6BA;padding:.6rem .8rem}
   .action-utility:hover,.action-utility[aria-pressed="true"],.action-utility.is-active{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
-  .nav-link,.disclosure{color:#585B4F;letter-spacing:.04em;padding:.4rem 0}
-  .nav-link{text-decoration:none}
+  .nav-link,.disclosure{color:#585B4F;padding:.4rem 0}
+  .nav-link{text-decoration:none;letter-spacing:.04em}
   .nav-link:hover,.disclosure:hover{color:#2C5A38}
-  .nav-link[aria-current]{color:#191B18;text-decoration:underline;text-underline-offset:5px}
-  .disclosure{cursor:pointer}
+  
+  .nav-link[aria-current]{color:#366943;text-decoration:underline;text-underline-offset:4px}
+  
+  .dark .nav-link{color:#8FA9A2}
    
   .form-error{line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem}
   .form-status{border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;background:rgba(63,122,78,.06);padding:1.6rem 1.5rem}
   .field-invalid{border-color:#8B3A2F!important}
+  
+  .pocket-summary .tab-num{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:#5A5D53;flex:0 0 auto}
+  details[open]>.pocket-summary.d-teal{background:rgba(15,42,46,.05)}
+  details[open]>.pocket-summary.d-fails{background:var(--fails-fill)}
+  details[open]>.pocket-summary.d-ask{background:var(--ask-fill)}
+  details[open]>.pocket-summary.d-holds{background:var(--holds-fill)}
+  
+  .dark .tab-num{color:#8FA9A2}
+  .dark details[open]>.pocket-summary{background:rgba(219,158,42,.08)}
    
   details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid #DB9E2A;margin:1.6rem 0 0}
   details.note>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0 .9rem;color:#585B4F}
@@ -162,7 +177,8 @@
   nav[aria-label="Contents"] a:hover .door-t{color:#2C5A38}
   nav[aria-label="Contents"] a[aria-current]{background:rgba(63,122,78,.13);border-color:rgba(44,90,56,.35)}
   nav[aria-label="Contents"] a[aria-current]::after{content:"Open ▾";font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#2C5A38;margin-top:auto;padding-top:.5rem}
-  [data-open-all]{display:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.07em;text-transform:uppercase;background:none;color:#0F2A2E;border:1px solid #C9C6BA;border-radius:2px;padding:.45rem .8rem;min-height:44px;cursor:pointer;white-space:nowrap}
+  
+  [data-open-all]{display:none;color:#0F2A2E;padding:.45rem .8rem;white-space:nowrap}
   [data-open-all].is-ready{display:inline-flex;align-items:center}
   [data-open-all]:hover{border-color:#2C5A38;background:rgba(63,122,78,.13);color:#2C5A38}
   .pocket{border:none;background:none;margin:0}
@@ -197,27 +213,27 @@
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="/" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
     <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
-      <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-      <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-      <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-      <a href="/practise/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-      <a href="/archive/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
-      <a href="/contribute/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-      <a href="/resources/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
-      <a href="/behind-the-scenes/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
+      <a href="/manifesto/" class="nav-link">Manifesto</a>
+      <a href="/invitation/" class="nav-link">Invitation</a>
+      <a href="/learn/" class="nav-link">Learn</a>
+      <a href="/practise/" class="nav-link">Practise</a>
+      <a href="/archive/" class="nav-link">Archive</a>
+      <a href="/contribute/" class="nav-link">Contribute</a>
+      <a href="/resources/" class="nav-link">Resources</a>
+      <a href="/behind-the-scenes/" aria-current="page" class="nav-link">Behind the Scenes</a>
     </nav>
     <details class="nav-toggle">
       <summary>Menu</summary>
       
       <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
-        <a href="/behind-the-scenes/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
-        <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-        <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-        <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-        <a href="/practise/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-        <a href="/archive/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
-        <a href="/contribute/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-        <a href="/resources/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
+        <a href="/behind-the-scenes/" aria-current="page" class="nav-link">Behind the Scenes</a>
+        <a href="/manifesto/" class="nav-link">Manifesto</a>
+        <a href="/invitation/" class="nav-link">Invitation</a>
+        <a href="/learn/" class="nav-link">Learn</a>
+        <a href="/practise/" class="nav-link">Practise</a>
+        <a href="/archive/" class="nav-link">Archive</a>
+        <a href="/contribute/" class="nav-link">Contribute</a>
+        <a href="/resources/" class="nav-link">Resources</a>
       </div>
     </details>
   </div>
@@ -285,7 +301,7 @@
         <li><a href="#labour" class="d-ask"><span class="door-t"><span class="swatch s-ask"></span>Labour &amp; money</span><span class="door-d">Who worked on this, what's paid, and what it costs</span></a></li>
       </ul>
     </nav>
-    <button type="button" data-open-all aria-pressed="false" style="margin-top:1.2rem" aria-controls="substrate type crawler reuse faults roadmap changelog labour">Open every section</button>
+    <button type="button" data-open-all aria-pressed="false" class="action-utility" style="margin-top:1.2rem" aria-controls="substrate type crawler reuse faults roadmap changelog labour">Open every section</button>
   </div>
 </section>
 
@@ -335,14 +351,14 @@
 <section data-pocket="substrate" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-teal">The material facts of the machine you're reading on</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">01</span>The material facts of the machine you're reading on</span>
         <h2 class="sec">The substrate</h2>
       </summary>
       <div class="pocket-body" id="substrate">
         <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">A land acknowledgement in a footer is decoration. What follows is known, as far as it currently is.</p>
         <details>
-          <summary style="cursor:pointer;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:#585B4F;min-height:44px;display:flex;align-items:center;padding:.2rem 0">Show the 13 substrate fields</summary>
+          <summary class="disclosure" style="padding:.2rem 0">Show the 13 substrate fields</summary>
           <dl style="margin:1.2rem 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1.2rem 2.4rem">
             
             <div style="border-top:2px solid #8B3A2F;padding-top:.7rem">
@@ -357,7 +373,7 @@
             
             <div style="border-top:2px solid #6B4C12;padding-top:.7rem">
               <dt style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6B4C12;margin:0 0 .35rem">Page weight</dt>
-              <dd style="margin:0;font-size:16px;line-height:1.5">Ranges from about 21 KB (the Invitation) to about 139 KB (the Archive) per page, uncompressed HTML: no images, no icon fonts, no video. Three pages (Home, Practise, Contribute) additionally load a shared ~70 KB script once per browser session, cached rather than re-downloaded on every page view. This figure has drifted stale twice before: first a flat &#34;under 60 KB&#34; claim outgrown by the site&#39;s own content, then a range that drifted 10&#43; KB out of date as pages kept changing after it was written. It is now checked in the build&#39;s own test suite (checkPageWeight in scripts/check-pages.mjs) against every shipped file&#39;s actual size, so a future edit that moves this number without updating the words here fails the build instead of quietly becoming untrue a third time. It rose by about 2 KB per page in August 2026, when the CSS every page had been carrying its own copy of was extracted into one shared block: that block now also holds a set of control styles the pages have not yet been switched over to, so for the moment each page ships a little more than it uses. Switching them over removes the per-element styling those replace. A further ~1 KB per page went into the same shared block in August 2026 for the botanical layer&#39;s stroke, growth and print rules. The Archive figure rose again in August 2026 with two additions: the groups became pockets with their own hero grid (AR-05/06/07), and the botanical layer shipped (BM-06) — together these account for the rise from 131 KB to 137 KB. A further ~1.6 KB went into that same page in August 2026 (MC-15, Phase 20): a two-sided fade cue on the filter chip row, a hidden-until-needed empty-state message with a clear-filters action, and the JS that shows it, scrolls a hard-narrowed result back into view, and keeps the pressed chip visible in its own scrolling row — 137 KB to 139 KB. This page&#39;s own weight rose by about 3.3 KB in August 2026 (BM-04): one hardcoded composition — a stem and six buds, no flowers, no new colour — proving the mechanism before any shared recipe table is built. It draws once, on scroll, from a dedicated one-page script, botanical-trial.js (about 1.2 KB, cached like every other root-level script here, not counted in the shared ~70 KB figure below since only this page loads it).</dd>
+              <dd style="margin:0;font-size:16px;line-height:1.5">Ranges from about 19 KB (the Invitation) to about 137 KB (the Archive) per page, uncompressed HTML: no images, no icon fonts, no video. Three pages (Home, Practise, Contribute) additionally load a shared ~70 KB script once per browser session, cached rather than re-downloaded on every page view. This figure has drifted stale twice before: first a flat &#34;under 60 KB&#34; claim outgrown by the site&#39;s own content, then a range that drifted 10&#43; KB out of date as pages kept changing after it was written. It is now checked in the build&#39;s own test suite (checkPageWeight in scripts/check-pages.mjs) against every shipped file&#39;s actual size, so a future edit that moves this number without updating the words here fails the build instead of quietly becoming untrue a third time. It rose by about 2 KB per page in August 2026, when the CSS every page had been carrying its own copy of was extracted into one shared block: that block now also holds a set of control styles the pages have not yet been switched over to, so for the moment each page ships a little more than it uses. Switching them over removes the per-element styling those replace. A further ~1 KB per page went into the same shared block in August 2026 for the botanical layer&#39;s stroke, growth and print rules. The Archive figure rose again in August 2026 with two additions: the groups became pockets with their own hero grid (AR-05/06/07), and the botanical layer shipped (BM-06) — together these account for the rise from 131 KB to 137 KB. A further ~1.6 KB went into that same page in August 2026 (MC-15, Phase 20): a two-sided fade cue on the filter chip row, a hidden-until-needed empty-state message with a clear-filters action, and the JS that shows it, scrolls a hard-narrowed result back into view, and keeps the pressed chip visible in its own scrolling row — 137 KB to 139 KB. This page&#39;s own weight rose by about 3.3 KB in August 2026 (BM-04): one hardcoded composition — a stem and six buds, no flowers, no new colour — proving the mechanism before any shared recipe table is built. It draws once, on scroll, from a dedicated one-page script, botanical-trial.js (about 1.2 KB, cached like every other root-level script here, not counted in the shared ~70 KB figure below since only this page loads it). The switch-over promised two entries up finally happened in August 2026 (MC-14, Phase 20): every page&#39;s own inline button, nav-link, disclosure and form-message styling was replaced with the shared .action/.action-utility/.nav-link/.disclosure/.form-* classes that shared block had been carrying unused since they were written, dropping every page below its previous weight — including Archive, which lost more to this than MC-15 had added, landing at 137 KB net rather than a fourth rise, and Invitation, down from 21 KB to 19 KB with no content change at all, just its print button and companion link no longer spelling out the same nine declarations inline that every other page&#39;s version of the same two controls also used to.</dd>
             </div>
             
             <div style="border-top:2px solid #366943;padding-top:.7rem">
@@ -420,8 +436,8 @@
 <section data-pocket="type" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-teal">Coverage, checked not assumed</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">02</span>Coverage, checked not assumed</span>
         <h2 class="sec">Type, and why it changed</h2>
       </summary>
       <div class="pocket-body" id="type">
@@ -462,8 +478,8 @@
 <section data-pocket="crawler" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick" style="color:#DB9E2A;margin-bottom:1rem">Opacity as governance, not as a button</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick" style="color:#DB9E2A;margin-bottom:1rem"><span class="tab-num">03</span>Opacity as governance, not as a button</span>
         <h2 class="sec" style="max-width:24ch;color:#E7E5DC">What this site refuses to the crawler.</h2>
       </summary>
       <div class="pocket-body" id="crawler">
@@ -512,8 +528,8 @@
 <section data-pocket="reuse" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-teal">Terms that bind the project, not just the reader</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">04</span>Terms that bind the project, not just the reader</span>
         <h2 class="sec">Reuse terms, version 0.2</h2>
       </summary>
       <div class="pocket-body" id="reuse">
@@ -544,8 +560,8 @@
 <section data-pocket="faults" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-fails">Known and unfixed, published rather than quietly carried</span>
+      <summary class="pocket-summary d-fails">
+        <span class="kick kick-fails"><span class="tab-num">05</span>Known and unfixed, published rather than quietly carried</span>
         <h2 class="sec">The fault list</h2>
       </summary>
       <div class="pocket-body" id="faults">
@@ -602,8 +618,8 @@
 <section data-pocket="roadmap" style="padding:0 0 clamp(2.5rem,5vw,3.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-ask">Named, not yet built, no dates promised</span>
+      <summary class="pocket-summary d-ask">
+        <span class="kick kick-ask"><span class="tab-num">06</span>Named, not yet built, no dates promised</span>
         <h2 class="sec">Roadmap</h2>
       </summary>
       <div class="pocket-body" id="roadmap">
@@ -763,8 +779,8 @@
 <section data-pocket="changelog" class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick" style="color:#DB9E2A;margin-bottom:1rem">Change log · repair in view</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick" style="color:#DB9E2A;margin-bottom:1rem"><span class="tab-num">07</span>Change log · repair in view</span>
         <h2 class="sec" style="max-width:24ch;color:#E7E5DC">Corrections are shown, not overwritten.</h2>
       </summary>
       <div class="pocket-body" id="changelog">
@@ -778,8 +794,8 @@
 <section data-pocket="labour" style="padding:clamp(3rem,6vw,4.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick kick-ask">Who worked on this, what's paid, and what it costs</span>
+      <summary class="pocket-summary d-ask">
+        <span class="kick kick-ask"><span class="tab-num">08</span>Who worked on this, what's paid, and what it costs</span>
         <h2 class="sec">Labour and money</h2>
       </summary>
       <div class="pocket-body" id="labour">
@@ -817,14 +833,14 @@
     <div style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:44ch">v0.2 · no fonts, scripts, or requests from third parties · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
-      <a href="/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>
-      <a href="/manifesto/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-      <a href="/invitation/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-      <a href="/learn/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-      <a href="/practise/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-      <a href="/archive/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
-      <a href="/contribute/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-      <a href="/resources/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
+      <a href="/" class="nav-link">Home</a>
+      <a href="/manifesto/" class="nav-link">Manifesto</a>
+      <a href="/invitation/" class="nav-link">Invitation</a>
+      <a href="/learn/" class="nav-link">Learn</a>
+      <a href="/practise/" class="nav-link">Practise</a>
+      <a href="/archive/" class="nav-link">Archive</a>
+      <a href="/contribute/" class="nav-link">Contribute</a>
+      <a href="/resources/" class="nav-link">Resources</a>
     </nav>
     </div>
   </div>
