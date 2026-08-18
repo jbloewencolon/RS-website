@@ -94,17 +94,23 @@
   .dark :focus-visible{outline-color:#DB9E2A}
    
   .action,.action-utility,.nav-link,.disclosure,.form-error{font-family:var(--mono);font-size:14px}
-  .action,.action-utility,.nav-link,.disclosure{text-transform:uppercase;min-height:44px;display:inline-flex;align-items:center;border-radius:2px}
-  .action,.action-utility{cursor:pointer;letter-spacing:.05em}
+  .action,.action-utility,.nav-link,.disclosure{text-transform:uppercase;min-height:44px;align-items:center;border-radius:2px}
+  
+  .action,.action-utility,.nav-link{display:inline-flex}
+  .disclosure{display:flex}
+  
+  .action,.action-utility,.disclosure{cursor:pointer;letter-spacing:.05em}
   .action{background:#0F2A2E;color:#E7E5DC;border:none;padding:.85rem 1.2rem}
   .action[disabled]{cursor:default;opacity:.55}
   .action-utility{background:transparent;color:#585B4F;border:1px solid #C9C6BA;padding:.6rem .8rem}
   .action-utility:hover,.action-utility[aria-pressed="true"],.action-utility.is-active{border-color:#3F7A4E;color:#2C5A38;background:rgba(63,122,78,.08)}
-  .nav-link,.disclosure{color:#585B4F;letter-spacing:.04em;padding:.4rem 0}
-  .nav-link{text-decoration:none}
+  .nav-link,.disclosure{color:#585B4F;padding:.4rem 0}
+  .nav-link{text-decoration:none;letter-spacing:.04em}
   .nav-link:hover,.disclosure:hover{color:#2C5A38}
-  .nav-link[aria-current]{color:#191B18;text-decoration:underline;text-underline-offset:5px}
-  .disclosure{cursor:pointer}
+  
+  .nav-link[aria-current]{color:#366943;text-decoration:underline;text-underline-offset:4px}
+  
+  .dark .nav-link{color:#8FA9A2}
    
   .form-error{line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem}
   .form-status{border:1px solid #3F7A4E;border-left:4px solid #3F7A4E;background:rgba(63,122,78,.06);padding:1.6rem 1.5rem}
@@ -144,7 +150,7 @@
 
 <style>
    
-  [data-filter]{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.03em;padding:.6rem .8rem;min-height:44px;cursor:pointer;border-radius:2px;border:1px solid #C9C6BA;background:transparent;color:#585B4F}
+  
   [data-filter].is-active{border-color:#3F7A4E;background:rgba(63,122,78,.1);color:#2C5A38}
   [data-empty-filter].is-visible{display:block!important}
    
@@ -188,7 +194,8 @@
   .door-t{font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1rem;line-height:1.25;letter-spacing:-.01em}
   .door-d{font-size:11.5px;line-height:1.45;color:#5A5D53}
   .door-n{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;color:#585B4F}
-  [data-open-all]{display:none;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.05em;text-transform:uppercase;background:none;color:#0F2A2E;border:1px solid #C9C6BA;border-radius:2px;padding:.45rem .8rem;min-height:44px;cursor:pointer;white-space:nowrap}
+  
+  [data-open-all]{display:none;color:#0F2A2E;padding:.45rem .8rem;white-space:nowrap}
   [data-open-all].is-ready{display:inline-flex;align-items:center}
   [data-open-all]:hover{border-color:#2C5A38;background:rgba(63,122,78,.08);color:#2C5A38}
   .pocket{border:none;background:none;margin:0}
@@ -216,27 +223,27 @@
   <div style="max-width:1120px;margin:0 auto;padding:1rem clamp(1.1rem,4vw,3rem);display:flex;flex-wrap:wrap;gap:1.2rem 2rem;align-items:baseline;justify-content:space-between">
     <a href="/" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:#191B18;text-decoration:none">Relational Sovereignty</a>
     <nav id="primary-nav" aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
-      <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-      <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-      <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-      <a href="/practise/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-      <a href="/archive/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
-      <a href="/contribute/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-      <a href="/resources/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
-      <a href="/behind-the-scenes/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
+      <a href="/manifesto/" class="nav-link">Manifesto</a>
+      <a href="/invitation/" class="nav-link">Invitation</a>
+      <a href="/learn/" class="nav-link">Learn</a>
+      <a href="/practise/" class="nav-link">Practise</a>
+      <a href="/archive/" aria-current="page" class="nav-link">Archive</a>
+      <a href="/contribute/" class="nav-link">Contribute</a>
+      <a href="/resources/" class="nav-link">Resources</a>
+      <a href="/behind-the-scenes/" class="nav-link">Behind the Scenes</a>
     </nav>
     <details class="nav-toggle">
       <summary>Menu</summary>
       
       <div style="display:flex;flex-wrap:wrap;gap:1.1rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;letter-spacing:.04em;text-transform:uppercase">
-        <a href="/archive/" aria-current="page" style="color:#366943;text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Archive</a>
-        <a href="/manifesto/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-        <a href="/invitation/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-        <a href="/learn/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-        <a href="/practise/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-        <a href="/contribute/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-        <a href="/resources/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
-        <a href="/behind-the-scenes/" style="color:#585B4F;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
+        <a href="/archive/" aria-current="page" class="nav-link">Archive</a>
+        <a href="/manifesto/" class="nav-link">Manifesto</a>
+        <a href="/invitation/" class="nav-link">Invitation</a>
+        <a href="/learn/" class="nav-link">Learn</a>
+        <a href="/practise/" class="nav-link">Practise</a>
+        <a href="/contribute/" class="nav-link">Contribute</a>
+        <a href="/resources/" class="nav-link">Resources</a>
+        <a href="/behind-the-scenes/" class="nav-link">Behind the Scenes</a>
       </div>
     </details>
   </div>
@@ -276,7 +283,7 @@
     <p style="margin:1rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px">
       <a href="#fastest-route" style="display:inline-flex;align-items:center;min-height:44px;margin-right:1.5rem">The fastest honest route in</a><a href="#absence" style="display:inline-flex;align-items:center;min-height:44px">Absence &amp; incompleteness</a>
     </p>
-    <button type="button" data-open-all aria-pressed="false" style="margin-top:.6rem" aria-controls="relational-sovereignty--indigenous-relational-freedom decolonization-possession-land-kinship-intimacy possession-the-person-and-kinship-made-void relation-opacity-refusal-survivance relational-autonomy-interdependence-care bodies-regulation-and-what-happens-before-words hierarchy-custom-commitments-possession accountability-repair-transformative-justice love-eros-and-why-any-of-this-is-worth-doing ">Open every shelf</button>
+    <button type="button" data-open-all aria-pressed="false" class="action-utility" style="margin-top:.6rem" aria-controls="relational-sovereignty--indigenous-relational-freedom decolonization-possession-land-kinship-intimacy possession-the-person-and-kinship-made-void relation-opacity-refusal-survivance relational-autonomy-interdependence-care bodies-regulation-and-what-happens-before-words hierarchy-custom-commitments-possession accountability-repair-transformative-justice love-eros-and-why-any-of-this-is-worth-doing ">Open every shelf</button>
   </div>
 </section>
 
@@ -286,19 +293,19 @@
     <div class="chips" style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.4rem">
       <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#585B4F;margin-right:.4rem">Filter</span>
       
-      <button type="button" data-filter="all" aria-pressed="true" class="is-active">everything</button>
+      <button type="button" data-filter="all" aria-pressed="true" class="action-utility is-active" style="text-transform:none;letter-spacing:.03em">everything</button>
       
-      <button type="button" data-filter="start" aria-pressed="false">★ a first route</button>
+      <button type="button" data-filter="start" aria-pressed="false" class="action-utility" style="text-transform:none;letter-spacing:.03em">★ a first route</button>
       
-      <button type="button" data-filter="free" aria-pressed="false">free to read</button>
+      <button type="button" data-filter="free" aria-pressed="false" class="action-utility" style="text-transform:none;letter-spacing:.03em">free to read</button>
       
-      <button type="button" data-filter="book" aria-pressed="false">books</button>
+      <button type="button" data-filter="book" aria-pressed="false" class="action-utility" style="text-transform:none;letter-spacing:.03em">books</button>
       
-      <button type="button" data-filter="article" aria-pressed="false">articles</button>
+      <button type="button" data-filter="article" aria-pressed="false" class="action-utility" style="text-transform:none;letter-spacing:.03em">articles</button>
       
-      <button type="button" data-filter="toolkit" aria-pressed="false">toolkits</button>
+      <button type="button" data-filter="toolkit" aria-pressed="false" class="action-utility" style="text-transform:none;letter-spacing:.03em">toolkits</button>
       
-      <button type="button" data-filter="counter" aria-pressed="false">we have no answer to this</button>
+      <button type="button" data-filter="counter" aria-pressed="false" class="action-utility" style="text-transform:none;letter-spacing:.03em">we have no answer to this</button>
       
     </div>
     
@@ -306,7 +313,7 @@
     
     <p id="filter-status" role="status" aria-live="polite" style="margin:0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11.5px;color:#5A5D53">Showing all 60 entries</p>
     
-    <p data-empty-filter style="display:none;margin:.5rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#8B3A2F;border-left:2px solid #8B3A2F;padding:.3rem 0 .3rem .9rem">Nothing on this shelf matches that filter. <button type="button" data-clear-filters style="font-family:inherit;font-size:inherit;color:#2C5A38;text-decoration:underline;background:none;border:none;padding:0;cursor:pointer;min-height:44px">Show everything</button></p>
+    <p data-empty-filter class="form-error" style="display:none;margin:.5rem 0 0">Nothing on this shelf matches that filter. <button type="button" data-clear-filters style="font-family:inherit;font-size:inherit;color:#2C5A38;text-decoration:underline;background:none;border:none;padding:0;cursor:pointer;min-height:44px">Show everything</button></p>
   </div>
 </div>
 <section class="noprint" style="padding:0 0 1.6rem">
@@ -1346,14 +1353,14 @@
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
     <p style="margin:0;max-width:46ch">v0.2 · every note provisional, awaiting paid Indigenous review · corrections are shown, not overwritten · <a href="/contribute/" style="color:#DB9E2A">send one</a> · <a href="/behind-the-scenes/" style="color:#8FA9A2">what changed</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
-      <a href="/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Home</a>
-      <a href="/manifesto/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Manifesto</a>
-      <a href="/invitation/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Invitation</a>
-      <a href="/learn/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Learn</a>
-      <a href="/practise/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Practise</a>
-      <a href="/contribute/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Contribute</a>
-      <a href="/resources/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Resources</a>
-      <a href="/behind-the-scenes/" style="color:#8FA9A2;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;padding:.4rem 0">Behind the Scenes</a>
+      <a href="/" class="nav-link">Home</a>
+      <a href="/manifesto/" class="nav-link">Manifesto</a>
+      <a href="/invitation/" class="nav-link">Invitation</a>
+      <a href="/learn/" class="nav-link">Learn</a>
+      <a href="/practise/" class="nav-link">Practise</a>
+      <a href="/contribute/" class="nav-link">Contribute</a>
+      <a href="/resources/" class="nav-link">Resources</a>
+      <a href="/behind-the-scenes/" class="nav-link">Behind the Scenes</a>
     </nav>
   </div>
 </footer>
