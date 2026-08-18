@@ -42,6 +42,36 @@
 {{ partial "head-base.html" dict }}
 <style>
   @media print{details:not([open])>*{display:block!important}}
+  {{/* DC-05/DC-06 (Phase 21): the category <summary> used to be
+       display:flex;justify-content:space-between across three items —
+       the native disclosure marker, the h2, and the count/scope span —
+       so the h2's left edge moved with the length of the meta text
+       beside it (measured: a 116px swing across three consecutive
+       headings, none landing at the page's own 44px content edge).
+       Adopting the .pocket/.pocket-summary pattern already shared by
+       Learn/Archive/Behind the Scenes fixes it structurally rather than
+       by tuning the flex row: display:block, native marker hidden, the
+       count/scope kicker stacked above the h2 instead of beside it, so
+       every title shares one left edge regardless of its neighbours'
+       text length. Base rules duplicated from behindthescenes.html
+       (IA-10c's own note: what one page needs and others don't stays in
+       that page's <style> — .pocket's structural rules were never
+       promoted to head-base.html, only MC-19's register-tint additions
+       were). No register class (.d-teal etc.) on the summary itself:
+       per FLAG-14 (2026-08-16, Archive), these categories are the same
+       kind of thing — a directory on a different subject — not eleven
+       different epistemic claims, so colour-coding them by register
+       would be exactly the decoration design-palette.md warns against.
+       The one exception is legal-aid's kicker, below, which is ochre
+       for a different and specific reason: its own scope field says so. */}}
+  .pocket{border:none;background:none;margin:0}
+  .pocket-summary{cursor:pointer;list-style:none;display:block;padding:.3rem 0}
+  .pocket-summary::-webkit-details-marker{display:none}
+  .pocket-summary .kick{margin-bottom:.5rem}
+  .pocket-summary:hover .sec{color:#2C5A38}
+  .pocket-body{padding-top:.4rem}
+  .pocket-body[id]{scroll-margin-top:2.5rem}
+  .kick{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:none;margin:0 0 .5rem;color:#5A5D53}
 </style>
 </head>
 <body>
@@ -81,8 +111,13 @@
 <main>
 <section id="main-content" style="padding:clamp(3rem,6vw,4.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center"><span style="width:7px;height:7px;border-radius:50%;background:#366943;display:inline-block"></span> plain HTML · no script on this page · allowed to every crawler</p>
-    <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.1rem,5.6vw,3.8rem);line-height:1;letter-spacing:-.03em;margin:0 0 1.4rem;max-width:15ch">Resources</h1>
+    {{/* DC-12 (Phase 21): see index.html's identical comment — the ● dot
+         was one of four undocumented kicker treatments and orphaned onto
+         its own line at 390px. Dropped in favour of the plain-text
+         treatment six of the other eight pages already used. */}}
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">plain HTML · no script on this page · allowed to every crawler</p>
+    {{/* DC-10 (Phase 21): editorial tier — see learn.html's identical comment. */}}
+    <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(2.2rem,6vw,4rem);line-height:1;letter-spacing:-.03em;margin:0 0 1.4rem;max-width:15ch">Resources</h1>
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:52ch;margin:0 0 1.2rem">If a page on this site asked whether you're safe, or asked you to reflect on a relationship in writing, this is where it was pointing. It also stands on its own. You don't need a reason to be here.</p>
     <p style="max-width:56ch;margin:0 0 1.6rem;color:#3C3E38">This list is partial, and partial in a particular direction. Most of it is directories and national networks rather than single organisations, because directories are maintained by people whose job it is and single groups are not, and directories are prioritised because they can update local contacts; verification dates remain visible. This edition lacks province-, territory-, and locality-specific coverage; everything below is national (Canada) or international in scope. If you are somewhere else, the international entries and the directories are the better starting point.</p>
     <details class="note note-holds" style="margin:0;max-width:58ch"><summary>⌖ Privacy</summary><p>nothing you click here is recorded by this site. There is no analytics, no outbound-link tracking, and no record of who visits this page. What happens after you leave for another organisation's site falls under the other organisation's privacy and safety practices; check them when doing so is safe.</p></details>
@@ -136,23 +171,21 @@
     {{ $last := sub (len hugo.Data.resources.categories) 1 }}
     {{ range $i, $_ := hugo.Data.resources.categories }}
     {{ if .entries }}
-    <details{{ if .open }} open{{ end }} style="margin:{{ if eq $i $last }}0{{ else }}0 0 2rem{{ end }};padding-top:1.6rem;border-top:1px solid #C9C6BA">
-      <summary style="cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
-        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0;min-width:0">{{ .title }}</h2>
-        {{/* The count is nowrap; the scope note is not. Holding both under
-             one nowrap ran the longest scope 26px past a 375px viewport (81px
-             at 320px), where it was clipped rather than wrapped and the
-             reader simply lost the end of the sentence. min-width:0 is what
-             lets this flex item shrink far enough for its text to wrap at
-             all — a flex item defaults to min-width:auto and refuses.
-             MC-05 (Phase 20): the title beside it was the same flex-child
-             shape and had the same default — confirmed overflowing at
-             320px/200% text — so it gets the identical fix, not a second
-             one-off. */}}
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#585B4F;min-width:0"><span style="white-space:nowrap">{{ len .entries }} {{ if eq (len .entries) 1 }}entry{{ else }}entries{{ end }}</span> · {{ .scope }}</span>
+    <details class="pocket" data-collapsible{{ if .open }} open{{ end }} style="margin:{{ if eq $i $last }}0{{ else }}0 0 2rem{{ end }};padding-top:1.6rem;border-top:1px solid #C9C6BA">
+      <summary class="pocket-summary">
+        {{/* DC-07 (Phase 21): every scope note here is neutral except
+             legal-aid's, which is the one category whose own data says
+             "thin coverage, stated honestly" — a real "named but not
+             built" claim, the same job ochre already does on the empty
+             branch below, not a register applied to content that isn't
+             making that claim. Doubled by the word, per design-
+             palette.md's governing rule: the kicker text says "thin
+             coverage" whether or not the colour is visible. */}}
+        <span class="kick"{{ if eq .id "legal-aid" }} style="color:#6B4C12"{{ end }}>{{ len .entries }} {{ if eq (len .entries) 1 }}entry{{ else }}entries{{ end }} · {{ .scope }}</span>
+        <h2 class="sec" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0">{{ .title }}</h2>
       </summary>
       {{/* id sits on this wrapper, not on <details> itself: a fragment link to an id on <details> never auto-opens it, but a link to an id on a descendant does (HTML living standard's reveal algorithm) — this is what makes the "Choose what you need" jump menu actually open the target section instead of just scrolling to a closed one. */}}
-      <div id="{{ .id }}">
+      <div class="pocket-body" id="{{ .id }}">
         <div style="display:grid;gap:1.2rem;max-width:820px;margin-top:1.2rem">
           {{ range .entries }}
           <div>
@@ -180,12 +213,13 @@
          the colour the rest of the site uses for the same claim. The
          wording carries it independently — .scope reads "Not yet built"
          and the paragraph below says why — so nothing here depends on
-         seeing the hue. */}}
+         seeing the hue. DC-05 (Phase 21): restructured from the same
+         flex;justify-content:space-between the populated branch had,
+         onto the identical stacked kick/h2 layout above it, for the
+         same reason — one left edge regardless of scope text length. */}}
     <div id="{{ .id }}" style="margin:{{ if eq $i $last }}0{{ else }}0 0 2rem{{ end }};padding-top:1.6rem;border-top:1px dashed #DB9E2A">
-      <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;min-height:44px">
-        <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0;color:#585B4F;min-width:0">{{ .title }}</h2>
-        <span style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:13px;color:#6B4C12;white-space:nowrap">{{ .scope }}</span>
-      </div>
+      <span class="kick" style="color:#6B4C12">{{ .scope }}</span>
+      <h2 class="sec" style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1.4rem;margin:0;color:#585B4F">{{ .title }}</h2>
       {{ if eq .id "mutual-aid" }}
       <div style="margin-top:1.2rem">
         <p style="max-width:56ch;margin:0;color:#3C3E38">This category is genuinely empty, not thin. Mutual aid groups form and dissolve faster than one unpaid maintainer can verify, and a dead contact given to someone in crisis is worse than an honest absence. It stays on the <a href="/behind-the-scenes/">fault list</a> until there's a stable, paid-staff directory to point to instead of individual groups.</p>
@@ -198,11 +232,20 @@
   </div>
 </section>
 
-<section style="padding:0 0 clamp(3rem,6vw,4.5rem)">
+{{/* DC-08 (Phase 21): every dark band on the site scales with a page's
+     own analytical weight — Behind the Scenes 9, Archive 4, Learn 3 —
+     and Resources carried none across its five sections, so nothing but
+     the (until this pass, broken) left edge gave the page any rhythm.
+     One band, on the closing assertion, matches Resources' own shorter
+     length rather than importing another page's cadence: this paragraph
+     is the framework asserting its own verification practice — teal's
+     job — the same register Archive's and Behind the Scenes' closing
+     bands already carry for the same kind of claim. */}}
+<section class="dark" style="background:#0F2A2E;color:#DDE4DC;padding:clamp(2.5rem,5vw,3.5rem) 0">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <div style="border-top:1px solid #C9C6BA;padding-top:2rem;max-width:640px">
-      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#366943;margin:0 0 .8rem">Nothing here is endorsed</p>
-      <p style="margin:0 0 1rem;font-size:17px;line-height:1.55">Every entry above exists, and was checked against the organisation's own site on the date shown. That's the only claim being made. If one of them is wrong, out of date, or you know a directory that should replace a gap on this page, <a href="/contribute/">say so</a> and it gets fixed in the open: struck, not silently deleted, the same as everything else on this site's <a href="/behind-the-scenes/">change log</a>.</p>
+    <div style="max-width:640px">
+      <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#DB9E2A;margin:0 0 .8rem">Nothing here is endorsed</p>
+      <p style="margin:0 0 1rem;font-size:17px;line-height:1.55">Every entry above exists, and was checked against the organisation's own site on the date shown. That's the only claim being made. If one of them is wrong, out of date, or you know a directory that should replace a gap on this page, <a href="/contribute/" style="color:#DB9E2A">say so</a> and it gets fixed in the open: struck, not silently deleted, the same as everything else on this site's <a href="/behind-the-scenes/" style="color:#DB9E2A">change log</a>.</p>
     </div>
   </div>
 </section>
@@ -211,7 +254,10 @@
 
 <footer class="dark" style="background:#0F2A2E;color:#8FA9A2;padding:clamp(2rem,4vw,3rem) 0;border-top:1px solid #2A4C4C">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem);font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;line-height:1.7;display:flex;flex-wrap:wrap;gap:1rem 3rem;justify-content:space-between">
-    <p style="margin:0;max-width:44ch">v0.3 · this page is plain HTML, no script, no third-party requests · <a href="/behind-the-scenes/" style="color:#DB9E2A">what changed</a> · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
+    {{/* DC-09 (Phase 21): the other eight routes, including Home's own
+         hero kicker, all say v0.2 — this was the only page still on
+         v0.3, with nothing in the changelog to justify the difference. */}}
+    <p style="margin:0;max-width:44ch">v0.2 · this page is plain HTML, no script, no third-party requests · <a href="/behind-the-scenes/" style="color:#DB9E2A">what changed</a> · <a href="/robots.txt" style="color:#8FA9A2">crawler policy</a></p>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:1.1rem">
       <a href="/" class="nav-link">Home</a>
       <a href="/manifesto/" class="nav-link">Manifesto</a>

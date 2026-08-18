@@ -150,7 +150,7 @@
   :root{
     --paper:#E7E5DC;--paper-2:#EFEEE7;--ink:#191B18;--ink-2:#3C3E38;--ink-3:#585B4F;--rule:#C9C6BA;
     --teal:#0F2A2E;--teal-2:#2A4C4C;--sage:#8FA9A2;
-    --holds:#2C5A38;--holds-fill:rgba(63,122,78,.13);--holds-edge:rgba(44,90,56,.35);
+    --holds:#2C5A38;--holds-fill:rgba(44,90,56,.13);--holds-edge:rgba(44,90,56,.35);
     --fails:#8B3A2F;--fails-fill:rgba(139,58,47,.10);--fails-edge:rgba(139,58,47,.24);
     --ask:#6B4C12;--ask-edge:#DB9E2A;--ask-fill:rgba(219,158,42,.13);
   }
@@ -297,6 +297,19 @@
        order. */}}
   .dark .tab-num{color:#8FA9A2}
   .dark details[open]>.pocket-summary{background:rgba(219,158,42,.08)}
+  /* DC-01/DC-C1 (Phase 21): the green family has four members in the
+     shipped build, not the two docs/design-palette.md records — this base
+     block's own $c dict already names the other two (navHoverEdge #3F7A4E,
+     the brighter edge shown on .action-utility/.nav-link hover; navCurrent
+     #366943, the mono-label shade for aria-current and status kickers like
+     "received"/"End of page"). Both are deliberate, systematic, and load-
+     bearing across every interactive control on the site — replacing them
+     with the resting #2C5A38 would delete real hover/current-state
+     affordance, the opposite of a "no intended visual change" pass. The
+     one place a hover shade had actually leaked into a *resting* state was
+     .note-holds below, fixed here; --holds-fill is corrected to agree with
+     --holds for the same reason. See docs/design-palette.md's green-family
+     note for the full four-shade record. */
   /* The ⌖ marginal notes. Closed by default, showing only the glyph and a
      short label taken verbatim from each note's own leading clause — no
      copy is written here. A click opens and holds one via native
@@ -309,13 +322,23 @@
      inline style, same as before — dark-ground pages need a lighter value
      than light-ground ones, and there is no single token that is correct
      on both without Manifesto's "tokens" flag being on. */
-  details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid #DB9E2A;margin:1.6rem 0 0}
+  {{/* DC-03 (Phase 21): the default used to be ochre — the "ask" register
+       colour — so every note not explicitly marked .note-fails/.note-holds
+       rendered as a question put to the reader whether or not it was one.
+       Checked against all thirteen bare .note instances shipped today:
+       every one is a caveat, a prohibition, or context, never a question,
+       and several already carry a manual color:#73968D override on their
+       text for exactly that reason without the border ever matching. None
+       need the ask treatment, so none gained .note-ask here — it exists
+       for the next note that genuinely is one. */}}
+  details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid var(--rule,#C9C6BA);margin:1.6rem 0 0}
   details.note>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0 .9rem;color:#585B4F}
   details.note>summary::-webkit-details-marker{display:none}
   details.note>summary:hover,details.note>summary:focus-visible{color:#191B18}
   details.note>p{margin:0 .9rem .7rem .9rem}
-  details.note.note-fails{border-left-color:#8B3A2F}
-  details.note.note-holds{border-left-color:#3F7A4E}
+  details.note.note-fails{border-left-color:var(--fails,#8B3A2F)}
+  details.note.note-holds{border-left-color:var(--holds,#2C5A38)}
+  details.note.note-ask{border-left-color:var(--ask-edge,#DB9E2A)}
   @media print{details.note:not([open])>*{display:block!important}}
   @media print{body{background:#fff}.noprint{display:none!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}

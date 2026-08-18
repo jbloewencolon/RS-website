@@ -119,7 +119,7 @@
   :root{
     --paper:#E7E5DC;--paper-2:#EFEEE7;--ink:#191B18;--ink-2:#3C3E38;--ink-3:#585B4F;--rule:#C9C6BA;
     --teal:#0F2A2E;--teal-2:#2A4C4C;--sage:#8FA9A2;
-    --holds:#2C5A38;--holds-fill:rgba(63,122,78,.13);--holds-edge:rgba(44,90,56,.35);
+    --holds:#2C5A38;--holds-fill:rgba(44,90,56,.13);--holds-edge:rgba(44,90,56,.35);
     --fails:#8B3A2F;--fails-fill:rgba(139,58,47,.10);--fails-edge:rgba(139,58,47,.24);
     --ask:#6B4C12;--ask-edge:#DB9E2A;--ask-fill:rgba(219,158,42,.13);
   }
@@ -164,13 +164,16 @@
   .dark .tab-num{color:#8FA9A2}
   .dark details[open]>.pocket-summary{background:rgba(219,158,42,.08)}
    
-  details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid #DB9E2A;margin:1.6rem 0 0}
+   
+  
+  details.note{max-width:62ch;font-family:var(--mono);font-size:12.5px;line-height:1.6;border-left:2px solid var(--rule,#C9C6BA);margin:1.6rem 0 0}
   details.note>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0 .9rem;color:#585B4F}
   details.note>summary::-webkit-details-marker{display:none}
   details.note>summary:hover,details.note>summary:focus-visible{color:#191B18}
   details.note>p{margin:0 .9rem .7rem .9rem}
-  details.note.note-fails{border-left-color:#8B3A2F}
-  details.note.note-holds{border-left-color:#3F7A4E}
+  details.note.note-fails{border-left-color:var(--fails,#8B3A2F)}
+  details.note.note-holds{border-left-color:var(--holds,#2C5A38)}
+  details.note.note-ask{border-left-color:var(--ask-edge,#DB9E2A)}
   @media print{details.note:not([open])>*{display:block!important}}
   @media print{body{background:#fff}.noprint{display:none!important}}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
@@ -195,7 +198,17 @@
   @media print{.bo-layer{display:none}}
 
   /* base:end */
-  @media (max-width:700px){.drift-wrap{opacity:.3}}
+  /* 21.3 (Phase 21): was opacity:.3, which still rendered visibly
+     behind the h1 at 390px — measured, and the exact failure
+     ux-audit-2026-08-08 flagged ("the drift SVG... sitting behind the
+     headline"). The botanical layer (docs/understory-visual-system.md
+     §4) already hides its own gutter marks with display:none below
+     760px for the reason written out there: "a faint thing behind a
+     headline is still behind the headline." Drift predates that rule
+     and never got it. This is the narrow fix only — retiring drift
+     entirely is BM's own Phase 1 and stays blocked on BM-01/02/03
+     (Phase 12), which this does not resolve or depend on. */
+  @media (max-width:760px){.drift-wrap{display:none}}
   /* WD-17, promoted to the resting state. The six doors' kicker colour
      already carried the register claim (teal = what the framework
      asserts, green = built and working now, ochre = asks something of
@@ -270,7 +283,17 @@
 <section id="main-content" style="position:relative;overflow:hidden;padding:clamp(2.2rem,5vw,3.5rem) 0 clamp(2rem,4vw,3rem)">
   <div class="drift-wrap" style="position:absolute;inset:-14% -8% auto auto;pointer-events:none;z-index:0">{{ drift }}</div>
   <div style="position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.4rem;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center"><span style="width:7px;height:7px;border-radius:50%;background:#3F7A4E;display:inline-block"></span> v0.2 · a commons under construction · about 4 minutes to read this page</p>
+    <!-- DC-12 (Phase 21): the ● dot was one of four kicker treatments in
+         circulation (dot, Learn's teal rule, coloured text, plain text)
+         with no documented reason for which page got which, and it
+         orphaned onto its own line above the kicker text at 390px. Learn's
+         rule stays — design-palette.md names it as the register system's
+         own kicker, not page decoration — but the dot had no such record,
+         and six of the other eight pages already used plain text with no
+         mark at all. Conforming to that majority, not inventing a ninth
+         treatment, is the lower-risk fix and removes the wrap bug as a
+         side effect. -->
+    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.4rem">v0.2 · a commons under construction · about 4 minutes to read this page</p>
     <h1 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(1.55rem,6.4vw,4.4rem);line-height:1;letter-spacing:-.035em;margin:0 0 1.6rem;max-width:20ch">FREEDOM WITHIN<br>RELATIONSHIP, NOT<br>FROM IT.<br><span style="display:inline-block;margin-top:.2em;font-size:.72em">NO OWNERS.<br>NO OBJECTS.</span></h1>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.6rem 3rem;align-items:start">
       <p style="font-size:clamp(1.1rem,2.3vw,1.35rem);line-height:1.5;max-width:42ch;margin:0">Relational sovereignty asks how we can build relationships that protect self-determination while recognizing interdependence, care, responsibility, and the living worlds to which we belong.</p>
