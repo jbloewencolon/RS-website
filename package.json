@@ -14,7 +14,7 @@
     "test:runtime-handoff": "node scripts/test-runtime-handoff.mjs"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.9.1",
+    "@axe-core/playwright": "^4.13.0",
     "html-validate": "^11.6.2",
     "playwright": "^1.47.0"
   }
