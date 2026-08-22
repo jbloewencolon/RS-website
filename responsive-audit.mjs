@@ -13,23 +13,14 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
+import { ROUTES, urlPath } from "./scripts/site-routes.mjs";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 
 // The same nine real routes scripts/check-pages.mjs checks (its `pages`
 // array, minus glyph-check.html — a standalone diagnostic harness with no
 // page identity worth screenshotting here).
-const pages = [
-  "index.html",
-  "manifesto/",
-  "invitation/",
-  "learn/",
-  "practise/",
-  "archive/",
-  "contribute/",
-  "behind-the-scenes/",
-  "resources/",
-];
+const pages = ROUTES.map((r) => (r.slug ? urlPath(r) : "index.html"));
 
 const VIEWPORTS = [
   { name: "mobile-320", width: 320, height: 568 }, // smallest common phone width
