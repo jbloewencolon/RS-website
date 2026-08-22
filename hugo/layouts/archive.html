@@ -150,26 +150,69 @@
   @media (hover:hover) and (pointer:fine){a:hover .arr{transform:translateX(3px)}}
   a:focus-visible .arr{transform:translateX(3px)}
 
-  /* AR-05/06/07: pocket navigation, the pattern IA-20/RS-049 already
-     proved on Learn and Behind the Scenes — a hero grid opens one shelf
-     at a time instead of a long scroll. nav[aria-label="Contents"]'s base
-     border/hover/transition already ship from head-base.html.
-     Deliberately hue-free, unlike Learn's and BTS's grids: those pages
-     have sections that genuinely differ in register (asserted / failed /
-     named-but-unbuilt); Archive's nine groups don't — they're all the
-     same kind of thing, a reading list on a different subject — so
-     colour-coding them would be exactly the decoration design-palette.md
-     warns against (FLAG-14, decided 2026-08-16: hue-free only). The grid
-     boxes get the same neutral rule-edge language as the entry cards
-     below (AR-09), not a register. */
-  .kick{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:none;margin:0 0 .5rem;color:#5A5D53}
+  {{/* AR-05/06/07: pocket navigation, the pattern IA-20/RS-049 already
+       proved on Learn and Behind the Scenes — a hero grid opens one
+       shelf at a time instead of a long scroll. nav[aria-label="Contents"]'s
+       base border/hover/transition already ship from head-base.html.
+
+       MC-19 (Phase 20), 2026-08-22: this grid — and each shelf's own
+       kicker/tab below — now carries a register, reversing FLAG-14
+       (2026-08-16) by direct author instruction after a built,
+       screenshotted side-by-side. FLAG-14's original ruling — the shelf
+       motif itself (bottom rule, wood-grain trial, AR-09/11) is
+       structural, not chromatic — is unchanged; what's reversed is only
+       its later extension to whether a shelf's own header may carry
+       semantic colour. hugo/data/archive.yaml's own header comment has
+       the full per-shelf reasoning; archived.tasks.md's FLAG-14 entry
+       has the fuller history. Resources' own hue-free categories
+       (resources.html) were reasoned independently, by analogy, and are
+       untouched by this — a decision about Archive specifically, not a
+       re-run of Resources' own call. */}}
+  .kick{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:none;margin:0 0 .5rem;display:flex;align-items:center;gap:.65rem;color:#5A5D53}
+  .kick::before{content:"";flex:0 0 auto;width:2.2rem;height:3px;background:#C9C6BA}
+  .kick-teal{color:var(--teal)}.kick-teal::before{background:var(--teal)}
+  .kick-fails{color:var(--fails)}.kick-fails::before{background:var(--fails)}
+  .kick-holds{color:var(--holds)}.kick-holds::before{background:var(--holds)}
+  .tab-num{font-weight:600;flex:0 0 auto}
   h2.sec{font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0}
+  .swatch{display:inline-block;width:.62rem;height:.62rem;flex:0 0 auto;border-radius:1px;margin-right:.5rem;vertical-align:baseline}
+  {{/* MC-22 (Phase 20): under forced-colors mode (Windows High Contrast),
+       the browser strips background-color from a plain span with no
+       border, so a swatch with nothing but a fill goes fully invisible —
+       confirmed by running this page under Chromium's forced-colors
+       emulation, not assumed. The register word beside it still carries
+       the meaning (WCAG 1.4.1 was never actually violated), but the dot
+       shouldn't render as a gap. One border, shown only in this mode so
+       nothing changes for anyone else. Same fix applied to Learn's and
+       Behind the Scenes' identical rule — this gap predates Archive's
+       own swatch and isn't specific to it. */}}
+  @media (forced-colors:active){.swatch{border:1px solid CanvasText}}
+  .s-teal{background:var(--teal)}.s-fails{background:var(--fails)}.s-holds{background:var(--holds)}
+  .legend-key{max-width:66ch;margin:1.1rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.7;color:#585B4F}
   nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px}
-  nav[aria-label="Contents"] a{display:flex;flex-direction:column;gap:.35rem;height:100%;box-sizing:border-box;border:1px solid #C9C6BA;border-left:3px solid #C9C6BA;border-radius:2px;padding:.8rem .9rem;text-decoration:none;color:#191B18;min-height:44px}
-  nav[aria-label="Contents"] a:hover{border-left-color:#2C5A38}
-  nav[aria-label="Contents"] a:hover .door-t{color:#2C5A38}
-  nav[aria-label="Contents"] a[aria-current]{background:rgba(63,122,78,.08);border-color:rgba(44,90,56,.3);border-left-color:#2C5A38}
-  nav[aria-label="Contents"] a[aria-current]::after{content:"Open ▾";font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#2C5A38;margin-top:auto;padding-top:.3rem}
+  nav[aria-label="Contents"] a{display:flex;flex-direction:column;gap:.35rem;height:100%;box-sizing:border-box;border:1px solid #C9C6BA;border-left:3px solid #C9C6BA;border-radius:2px;padding:.8rem .9rem;text-decoration:none;color:#191B18;min-height:44px;transition:border-color .14s ease,background-color .14s ease}
+  {{/* The register reads on the left edge at rest — the same edge AR-09
+       already gives each entry card below, just at shelf-group scale —
+       doubled by the swatch beside each title and by .legend-key's own
+       words. Colour is never the sole carrier. Declared before the
+       generic :hover/[aria-current] rules below so those still win at
+       equal specificity, later in the cascade — same order Learn uses
+       for its own version of this. */}}
+  nav[aria-label="Contents"] .d-teal{border-left-color:var(--teal)}
+  nav[aria-label="Contents"] .d-fails{border-left-color:var(--fails)}
+  nav[aria-label="Contents"] .d-holds{border-left-color:var(--holds)}
+  nav[aria-label="Contents"] .d-teal:hover,nav[aria-label="Contents"] .d-teal:focus-visible{border-left-color:var(--teal)}
+  nav[aria-label="Contents"] .d-fails:hover,nav[aria-label="Contents"] .d-fails:focus-visible{border-left-color:var(--fails)}
+  nav[aria-label="Contents"] .d-holds:hover,nav[aria-label="Contents"] .d-holds:focus-visible{border-left-color:var(--holds)}
+  nav[aria-label="Contents"] a:hover .door-t{color:var(--holds)}
+  {{/* Which shelf is open. aria-current is what assistive technology
+       reads; the "Open ▾" badge is the sighted equivalent of the same
+       fact. Declared after the register rules above so the open state's
+       uniform treatment wins over any one shelf's own register colour —
+       "you are here" always reads the same regardless of which shelf it
+       is, matching Learn's identical choice for the identical reason. */}}
+  nav[aria-label="Contents"] a[aria-current]{background:var(--holds-fill);border-color:var(--holds-edge);border-left-color:var(--holds)}
+  nav[aria-label="Contents"] a[aria-current]::after{content:"Open ▾";font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--holds);margin-top:auto;padding-top:.3rem}
   .door-t{font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1rem;line-height:1.25;letter-spacing:-.01em}
   .door-d{font-size:11.5px;line-height:1.45;color:#5A5D53}
   .door-n{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;color:#585B4F}
@@ -262,10 +305,11 @@
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">No single source contains this whole framework. It is assembled from Indigenous political thought, feminist relational autonomy, disability justice, care ethics, and transformative-justice practice, each with its own authors, nations, and arguments.</p>
     <p style="max-width:52ch;margin:0 0 1.4rem;color:#3C3E38">Every entry links away from here, to the author, the publisher, or the open-access copy. Where no stable public link exists, the holder is named instead of a guess. This site is a door; its success is how quickly you stop needing it.</p>
     <details class="note" style="max-width:58ch"><summary>⌖ Indigenous relationality, sovereignty, refusal, and survivance are not a generic radical style.</summary><p>These traditions are nation-specific, and borrowing them as atmosphere reproduces colonial extraction even when it calls itself rebellion. Every note below is provisional and awaiting paid Indigenous review.</p></details>
+    <p class="legend-key"><span class="swatch s-teal"></span>Teal marks what the framework asserts. <span class="swatch s-fails"></span>Rust marks where its own vocabulary runs out, or gets turned back on itself. <span class="swatch s-holds"></span>Green marks a principle this site treats as real and built, not just claimed. Nothing below is signalled by colour alone. Every mark is also a word.</p>
     <nav aria-label="Contents" style="margin-top:1.5rem">
       <ul>
         {{ range hugo.Data.archive.groups }}
-        <li><a href="#{{ .title | anchorize }}"><span class="door-t">{{ .title }}</span><span class="door-d">{{ .note }}</span><span class="door-n">{{ len .items }} {{ if eq (len .items) 1 }}entry{{ else }}entries{{ end }}</span></a></li>
+        <li><a href="#{{ .title | anchorize }}" class="d-{{ .register }}"><span class="door-t"><span class="swatch s-{{ .register }}"></span>{{ .title }}</span><span class="door-d">{{ .note }}</span><span class="door-n">{{ len .items }} {{ if eq (len .items) 1 }}entry{{ else }}entries{{ end }}</span></a></li>
         {{ end }}
       </ul>
     </nav>
@@ -311,17 +355,17 @@
   </div>
 </div>
 
-{{ range hugo.Data.archive.groups }}
-<section data-pocket="{{ .title | anchorize }}" data-group style="padding:0 0 1.8rem">
+{{ range $i, $g := hugo.Data.archive.groups }}
+<section data-pocket="{{ $g.title | anchorize }}" data-group style="padding:0 0 1.8rem">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick">{{ .note }}</span>
-        <h2 class="sec">{{ .title }} <span data-count class="shelf-count">{{ len .items }}</span></h2>
+      <summary class="pocket-summary d-{{ $g.register }}">
+        <span class="kick kick-{{ $g.register }}"><span class="tab-num">{{ printf "%02d" (add $i 1) }}</span>{{ $g.note }}</span>
+        <h2 class="sec">{{ $g.title }} <span data-count class="shelf-count">{{ len $g.items }}</span></h2>
       </summary>
-      <div class="pocket-body" id="{{ .title | anchorize }}">
-        <div class="shelf-grid{{ if eq .title "Relational sovereignty & Indigenous relational freedom" }} shelf-wood-trial{{ end }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
-          {{ range .items }}
+      <div class="pocket-body" id="{{ $g.title | anchorize }}">
+        <div class="shelf-grid{{ if eq $g.title "Relational sovereignty & Indigenous relational freedom" }} shelf-wood-trial{{ end }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.4rem;margin-top:1.2rem;padding-bottom:1.6rem">
+          {{ range $g.items }}
           {{/* WD-12: teal, not the site's #2B4C9B hyperlink blue, for the
                default register. Blue means "this is a link" on every page,
                and each of these cards contains a real one — the same hue

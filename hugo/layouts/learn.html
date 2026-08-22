@@ -156,6 +156,14 @@
      Each carries a question" — and in the grid's own "Seven stress
      tests", so they restated the hero rather than adding to it.) */
   .swatch{display:inline-block;width:.62rem;height:.62rem;flex:0 0 auto;border-radius:1px;margin-right:.5rem;vertical-align:baseline}
+  {{/* MC-22 (Phase 20): a background-only span with no border goes fully
+       invisible under forced-colors mode (Windows High Contrast) —
+       confirmed by running this page under Chromium's forced-colors
+       emulation. The register word beside each swatch still carries the
+       meaning, so this is a legibility fix, not a WCAG 1.4.1 fix; shown
+       only in this mode so nothing else changes. Same rule added to
+       Archive's and Behind the Scenes' identical .swatch. */}}
+  @media (forced-colors:active){.swatch{border:1px solid CanvasText}}
   .s-teal{background:var(--teal)}.s-fails{background:var(--fails)}.s-ask{background:var(--ask-edge)}
   .legend-key{max-width:66ch;margin:1.1rem 0 0;font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--ink-3)}
 
