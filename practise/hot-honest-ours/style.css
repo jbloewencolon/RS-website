@@ -216,6 +216,8 @@ main { padding-bottom: 4rem; }
 .btn-primary:hover { background: var(--teal-2); }
 .btn-secondary { background: transparent; color: var(--ink-3); border: 1px solid var(--rule); }
 .btn-secondary:hover { border-color: var(--ink-3); color: var(--ink); }
+.btn-primary[disabled], .btn-secondary[disabled] { cursor: default; opacity: .5; }
+.btn-primary[disabled]:hover { background: var(--teal); }
 
 /* ---- questions & consent rows ---- */
 .round-heading {
@@ -233,6 +235,25 @@ main { padding-bottom: 4rem; }
 .question-row { padding: 1rem 0; border-bottom: 1px dotted var(--rule); }
 .question-row .q-label { font-weight: 700; font-family: var(--sans); font-size: 1rem; margin-bottom: .5rem; }
 .question-row.emphasis { border: 2px solid var(--ask-edge); background: var(--ask-fill); border-radius: 3px; padding: 1rem 1.1rem; }
+.question-row.is-lowest { border-left: 3px solid var(--ask-edge); padding-left: .8rem; }
+
+/* ---- choose your way in ---- */
+.mode-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); margin: 1.4rem 0; }
+.mode-card {
+  text-align: left;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 1.1rem 1.2rem;
+  background: var(--paper);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+.mode-card:hover { border-color: var(--teal); }
+.mode-card .mode-title { font-family: var(--sans); font-weight: 700; font-size: 1.05rem; }
+.mode-card .mode-length { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.mode-card .mode-desc { font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
 
 fieldset { border: none; margin: 0; padding: 0; }
 legend { padding: 0; font-weight: 700; font-family: var(--sans); font-size: 1rem; margin-bottom: .5rem; }

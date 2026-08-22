@@ -285,6 +285,23 @@ export const ACCESS_QUESTIONS = [
   { id: "access.easier", type: "text", neverShareable: true, label: "Would speech, text, writing, a walk, a break, or a support person make this easier?" },
 ];
 
+// The Fridge Five (HHO-14, UX spec §6.17/§4.1) -- a standalone mode, not
+// part of the twelve-round worksheet: it never enters `state.answers`,
+// is never offered a consent control, never enters the file, and never
+// reaches the comparison engine. The five category labels and the
+// five-point scale's shape ("never -> always") are the spec's own §1.3
+// terminology-table entry, verbatim. The reading shown after all five
+// are answered (index.html's #fridge-reading) is quoted directly from
+// the spec's own §3.3 and §6.17.
+export const FRIDGE_SCALE = ["NEVER", "RARELY", "SOMETIMES", "OFTEN", "ALWAYS"];
+export const FRIDGE_FIVE = [
+  { id: "fridge.noticed", label: "Noticed" },
+  { id: "fridge.taken", label: "Taken as I am" },
+  { id: "fridge.thanked", label: "Thanked" },
+  { id: "fridge.warmth", label: "Warmth" },
+  { id: "fridge.free", label: "Left free" },
+];
+
 // Captions for the compare-results grid tables (spec §8.4b). Keyed by
 // the same string every dense-group question above sets as its `group`.
 export const GRID_GROUP_TITLES = {
