@@ -65,7 +65,7 @@ export function compare(mineFile, theirsFile) {
     if (mineVisible === undefined && theirsVisible === undefined) continue; // nothing to show; row omitted entirely
 
     const row = {
-      id: q.id, label: q.label, round: q.round, type: q.type,
+      id: q.id, label: q.label, round: q.round, type: q.type, group: q.group,
       mine: mineVisible, mineCondition, theirs: theirsVisible, theirsCondition,
     };
 
