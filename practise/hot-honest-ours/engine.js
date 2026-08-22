@@ -42,25 +42,32 @@ export function compare(mineFile, theirsFile) {
     // equality check below -- no digest, nothing to derive (spec 5.2,
     // 8.3). Once both files are decrypted, a matching value is simply
     // known; there is no "confirmed but unknown" case to degrade to.
-    let mineVisible = mineEntry && mineEntry.m === "r" ? mineEntry.v : undefined;
-    let theirsVisible = theirsEntry && theirsEntry.m === "r" ? theirsEntry.v : undefined;
+    // A condition/note travels with its value under the same visibility
+    // rule -- it is never shown if the value itself isn't (spec 6.2's
+    // "c" rides on the same entry as "v").
+    let mineVisible, mineCondition, theirsVisible, theirsCondition;
+    if (mineEntry && mineEntry.m === "r") { mineVisible = mineEntry.v; mineCondition = mineEntry.c; }
+    if (theirsEntry && theirsEntry.m === "r") { theirsVisible = theirsEntry.v; theirsCondition = theirsEntry.c; }
 
     if (mineEntry && mineEntry.m === "k") {
       const otherValue = theirsEntry ? theirsEntry.v : undefined;
       if (otherValue !== undefined && canonical(mineEntry.v) === canonical(otherValue)) {
-        mineVisible = mineEntry.v;
+        mineVisible = mineEntry.v; mineCondition = mineEntry.c;
       }
     }
     if (theirsEntry && theirsEntry.m === "k") {
       const otherValue = mineEntry ? mineEntry.v : undefined;
       if (otherValue !== undefined && canonical(theirsEntry.v) === canonical(otherValue)) {
-        theirsVisible = theirsEntry.v;
+        theirsVisible = theirsEntry.v; theirsCondition = theirsEntry.c;
       }
     }
 
     if (mineVisible === undefined && theirsVisible === undefined) continue; // nothing to show; row omitted entirely
 
-    const row = { id: q.id, label: q.label, round: q.round, type: q.type, mine: mineVisible, theirs: theirsVisible };
+    const row = {
+      id: q.id, label: q.label, round: q.round, type: q.type,
+      mine: mineVisible, mineCondition, theirs: theirsVisible, theirsCondition,
+    };
 
     if (q.type === "text") {
       groups.text.push(row);
