@@ -65,7 +65,13 @@ const GROUND = {
 // *target* a second time rather than the stub itself.
 const redirectStubs = ROUTES.map((r) => ({ path: r.dcStub, target: `/${urlPath(r)}` }));
 
-const MIME = { ".html": "text/html", ".js": "application/javascript" };
+// .css: every page but Hot, Honest, Ours (HHO-11) inlines its <style>
+// block, so this local server never had to serve a real stylesheet file
+// until that page's own check was added — without the right Content-Type,
+// a browser silently refuses to apply an external stylesheet at all,
+// which is exactly what happened here (found via a genuinely unstyled
+// page's touch targets measuring at raw browser-default sizes).
+const MIME = { ".html": "text/html", ".js": "application/javascript", ".css": "text/css" };
 // Phone width for the second accessibility pass on every page — narrow
 // enough that anything with a fixed min-width actually overflows.
 const NARROW_WIDTH = 375;
@@ -614,6 +620,92 @@ function checkTokens() {
   return 0;
 }
 
+// HHO-11: a standalone check for practise/hot-honest-ours/, run directly
+// rather than folded into the `pages`/GROUND loop above. That page
+// deliberately shares neither head-base.html's ground-colour convention
+// nor the rest of the site's CSP (spec §9.2 — its own hardened
+// `default-src 'none'` CSP, no shared base block), so it would have no
+// GROUND[pg] entry — and the main loop only runs checkMobile()'s
+// reflow/target-size pass when one exists, so silently joining `pages`
+// would skip that pass rather than exempt it on purpose. Runs the same
+// checks the main loop runs (HTML validity, axe at desktop and phone
+// width, reflow/target-size), plus a CSP-violation listener the main
+// loop has no equivalent of, since this page's isolation is the point.
+async function checkHotHonestOurs(browser, htmlValidate, base) {
+  const pg = "practise/hot-honest-ours/";
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  const consoleErrors = [];
+  page.on("console", (msg) => { if (msg.type() === "error") consoleErrors.push(msg.text()); });
+  page.on("pageerror", (err) => consoleErrors.push(`pageerror: ${err.message}`));
+  await page.addInitScript(() => {
+    document.addEventListener("securitypolicyviolation", (e) => {
+      window.__csp = window.__csp || [];
+      window.__csp.push(`${e.violatedDirective} :: ${e.blockedURI}`);
+    });
+  });
+
+  const resp = await page.goto(base + pg, { waitUntil: "load", timeout: 30000 });
+  await page.waitForTimeout(500);
+
+  const pageProblems = [];
+  if (!resp || resp.status() !== 200) pageProblems.push(`HTTP ${resp ? resp.status() : "no response"}`);
+  if (consoleErrors.length) pageProblems.push(...consoleErrors.map((e) => `console error: ${e}`));
+  const cspViolations = await page.evaluate(() => window.__csp || []);
+  if (cspViolations.length) pageProblems.push(...cspViolations.map((v) => `CSP violation: ${v}`));
+
+  const html = await page.content();
+  const validation = await htmlValidate.validateString(html);
+  if (!validation.valid) {
+    for (const result of validation.results) {
+      for (const msg of result.messages) {
+        // attribute-empty-style is a confirmed false positive here, not a
+        // real defect: this page's source writes every boolean attribute
+        // correctly (bare `hidden`, bare `download`), but a browser's own
+        // outerHTML serialization always round-trips a boolean attribute
+        // as `attr=""` — verified directly against html-validate in
+        // isolation (`<div hidden>` passes; the same element's own
+        // `page.content()` output, `<div hidden="">`, is what trips this
+        // rule). No other page on this site uses a real `hidden`/boolean
+        // attribute (they use `style="display:none"` instead), which is
+        // why this exact interaction never surfaced in the main loop above.
+        if (msg.ruleId === "attribute-empty-style") continue;
+        pageProblems.push(`html-validate [${msg.ruleId}] line ${msg.line}: ${msg.message}`);
+      }
+    }
+  }
+
+  const axeResults = await new AxeBuilder({ page }).analyze();
+  const seenAtDesktop = new Set();
+  for (const v of axeResults.violations) {
+    seenAtDesktop.add(v.id);
+    pageProblems.push(`axe [${v.impact}] ${v.id}: ${v.help} (${v.nodes.length} node(s))`);
+  }
+
+  // Second axe pass at phone width, same reasoning as the main loop's
+  // identical pass above (SUGGEST-08).
+  await page.setViewportSize({ width: NARROW_WIDTH, height: 800 });
+  await page.waitForTimeout(300);
+  const axeNarrow = await new AxeBuilder({ page }).analyze();
+  for (const v of axeNarrow.violations) {
+    if (seenAtDesktop.has(v.id)) continue;
+    pageProblems.push(`axe @${NARROW_WIDTH}px [${v.impact}] ${v.id}: ${v.help} (${v.nodes.length} node(s))`);
+  }
+
+  const mobileProblems = await checkMobile(page, { width: NARROW_WIDTH, height: 800 });
+  pageProblems.push(...mobileProblems);
+
+  if (pageProblems.length) {
+    console.log(`\n✗ ${pg} — ${pageProblems.length} problem(s)`);
+    for (const p of pageProblems) console.log(`    ${p}`);
+  } else {
+    console.log(`✓ ${pg}`);
+  }
+
+  await context.close();
+  return pageProblems.length;
+}
+
 async function main() {
   const server = await serve();
   const { port } = server.address();
@@ -626,6 +718,7 @@ async function main() {
   problems += await checkRedirectStubs(base);
   problems += await checkPageWeight();
   problems += await checkSiteArtifact(browser);
+  problems += await checkHotHonestOurs(browser, htmlValidate, base);
 
   for (const pg of pages) {
     const context = await browser.newContext();
