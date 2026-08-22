@@ -195,11 +195,11 @@ async function checkMobile(page, restoreViewport) {
   return problems;
 }
 
-function serve() {
+function serve(dir = root) {
   return new Promise((resolve) => {
     const server = http.createServer((req, res) => {
       const reqPath = decodeURIComponent(req.url.split("?")[0]);
-      let filePath = path.join(root, reqPath === "/" ? "/index.html" : reqPath);
+      let filePath = path.join(dir, reqPath === "/" ? "/index.html" : reqPath);
       // Mimic GitHub Pages' directory-index resolution: /manifesto/ (or
       // /manifesto) serves manifesto/index.html. Without this, every
       // pretty-URL page in `pages` above would 404 against this local
@@ -288,6 +288,65 @@ function checkPrerender() {
     }
   }
   if (!problems) console.log("✓ _site/ prerender intact");
+  return problems;
+}
+
+// Every other check in this file serves from the repo root, which is
+// exactly why notes.js/practise-keyboard.js/botanical-trial.js could sit
+// missing from scripts/prerender.mjs's COPY_AS_IS list, referenced by
+// real pages' own <script src>, and 404 in production for as long as
+// they did (found 2026-08-22, from a build/deploy review handed to this
+// session): the repo root always has every file, so nothing here could
+// ever see a file the deploy artifact doesn't. This check serves _site/
+// itself and watches real navigation responses for a 404 on the same
+// origin — deliberately not a hand-rolled HTML-attribute parser plus a
+// path resolver, which would have to reimplement (and could get wrong)
+// exactly the URL resolution a browser already does correctly: root- vs
+// document-relative paths, query strings, fragments, percent-encoding.
+// A live `page.goto()` also naturally covers every local subresource a
+// page load actually requests — script/link/img/font — not only the
+// <script src>/<link rel=stylesheet|preload|modulepreload> categories a
+// static parse would be scoped to, and naturally excludes <a href> (a
+// page load never requests a link's target) and remote origins (their
+// responses never share the local server's own origin string).
+async function checkSiteArtifact(browser) {
+  const siteDir = path.join(root, "_site");
+  if (!fs.existsSync(siteDir)) {
+    console.log("• _site/ not built — skipping artifact subresource check (run `npm run build` first)");
+    return 0;
+  }
+  const server = await serve(siteDir);
+  const { port } = server.address();
+  const base = `http://127.0.0.1:${port}/`;
+  let problems = 0;
+  try {
+    for (const pg of pages) {
+      const context = await browser.newContext();
+      const page = await context.newPage();
+      const missing = new Set();
+      page.on("response", (r) => {
+        if (r.status() === 404 && r.url().startsWith(base)) missing.add(r.url().slice(base.length - 1));
+      });
+      // "load", not "networkidle" — Home and Contribute load the real
+      // Turnstile widget (IA-03), which keeps background network activity
+      // going indefinitely, same reason main()'s own page loop below uses
+      // "load". Turnstile's own requests go to challenges.cloudflare.com,
+      // a different origin, so they can never match the base-URL filter
+      // above and need no special-casing here the way main() needs for
+      // its own, unrelated console-error check.
+      await page.goto(base + pg, { waitUntil: "load", timeout: 30000 });
+      await page.waitForTimeout(800);
+      await context.close();
+      if (missing.size) {
+        console.log(`\n✗ _site/${pg} — ${missing.size} missing local subresource(s), 404 in the actual deploy artifact:`);
+        for (const m of missing) console.log(`    ${m}`);
+        problems += missing.size;
+      }
+    }
+  } finally {
+    server.close();
+  }
+  if (!problems) console.log("✓ _site/ artifact: every local subresource a real page load requests actually exists");
   return problems;
 }
 
@@ -594,6 +653,7 @@ async function main() {
   let problems = checkPrerender() + checkHugoPagesInSync() + checkBaseInSync() + checkTokens() + checkSupportJsOrigins();
   problems += await checkRedirectStubs(base);
   problems += await checkPageWeight();
+  problems += await checkSiteArtifact(browser);
 
   for (const pg of pages) {
     const context = await browser.newContext();

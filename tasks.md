@@ -490,7 +490,7 @@ not defer):
 
 | ID | Question | Blocks | Status |
 |---|---|---|---|
-| **FLAG-15** | Should GitHub branch protection on `main` require the `Check pages` status check before a merge is allowed? Real CI has correctly caught every hand-edit-drift and reflow bug this phase found — it just never blocked anything from merging. Would have caught `bdb7b3a` (the manifesto drift) at the PR stage instead of after. | Nothing downstream; a repository-settings change with real workflow consequences, needs the account owner's call | ⬜ Needs author input — see Phase 22's own entry in `completed.tasks.md` for the full case |
+| ~~**FLAG-15**~~ | ~~Should GitHub branch protection on `main` require the `Check pages` status check before a merge is allowed?~~ | — | 🟢 **Resolved 2026-08-22 — enabled.** The account owner confirmed branch protection on `main` now requires the `html-and-a11y` check to pass before a merge. |
 
 ## Parked / backlog
 
