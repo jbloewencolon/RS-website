@@ -290,7 +290,7 @@
           <p style="margin:0 0 1.4rem">
             <a href="{{ noteMailto }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;display:inline-flex;align-items:center;min-height:44px;min-width:0;overflow-wrap:anywhere">Email this note to relationalsovereignty@gmail.com →</a>
           </p>
-          <div ref="{{ turnstileRef }}" style="margin:0 0 1.2rem;min-height:65px"></div>
+          <div ref="{{ turnstileRef }}" style="margin:0 0 1.2rem;min-height:65px;max-width:100%"></div>
           <sc-if value="{{ turnstileFailed }}" hint-placeholder-val="{{ false }}">
             <p role="status" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #C9C6BA;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem">The verification above didn't load — a content blocker or network issue can do that. Use the "Email this note" link above instead.</p>
           </sc-if>
@@ -410,6 +410,14 @@ class Component extends DCLogic {
       if (!window.turnstile || this._turnstileId != null) return;
       this._turnstileId = window.turnstile.render(el, {
         sitekey: Component.TURNSTILE_SITE_KEY,
+        // "flexible" scales the widget to its container's width instead
+        // of Turnstile's fixed ~300px default, which doesn't shrink on
+        // its own and overflowed the 320px shell (found in real CI,
+        // where Turnstile actually loads -- this sandbox's network path
+        // to challenges.cloudflare.com is blocked, so the widget never
+        // renders here and the overflow was invisible to every local
+        // check this session ran).
+        size: "flexible",
         callback: (token) => this.setState({ turnstileToken: token }),
         "expired-callback": () => this.setState({ turnstileToken: "" }),
         // A widget that rendered and then failed (not one that simply

@@ -198,15 +198,32 @@
   @media (hover:hover) and (pointer:fine){a:hover .arr{transform:translateX(3px)}}
   a:focus-visible .arr{transform:translateX(3px)}
 
-   
-  .kick{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:none;margin:0 0 .5rem;color:#5A5D53}
+  
+  .kick{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;text-transform:none;margin:0 0 .5rem;display:flex;align-items:center;gap:.65rem;color:#5A5D53}
+  .kick::before{content:"";flex:0 0 auto;width:2.2rem;height:3px;background:#C9C6BA}
+  .kick-teal{color:var(--teal)}.kick-teal::before{background:var(--teal)}
+  .kick-fails{color:var(--fails)}.kick-fails::before{background:var(--fails)}
+  .kick-holds{color:var(--holds)}.kick-holds::before{background:var(--holds)}
+  .tab-num{font-weight:600;flex:0 0 auto}
   h2.sec{font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0}
+  .swatch{display:inline-block;width:.62rem;height:.62rem;flex:0 0 auto;border-radius:1px;margin-right:.5rem;vertical-align:baseline}
+  
+  @media (forced-colors:active){.swatch{border:1px solid CanvasText}}
+  .s-teal{background:var(--teal)}.s-fails{background:var(--fails)}.s-holds{background:var(--holds)}
+  .legend-key{max-width:66ch;margin:1.1rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.7;color:#585B4F}
   nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px}
-  nav[aria-label="Contents"] a{display:flex;flex-direction:column;gap:.35rem;height:100%;box-sizing:border-box;border:1px solid #C9C6BA;border-left:3px solid #C9C6BA;border-radius:2px;padding:.8rem .9rem;text-decoration:none;color:#191B18;min-height:44px}
-  nav[aria-label="Contents"] a:hover{border-left-color:#2C5A38}
-  nav[aria-label="Contents"] a:hover .door-t{color:#2C5A38}
-  nav[aria-label="Contents"] a[aria-current]{background:rgba(63,122,78,.08);border-color:rgba(44,90,56,.3);border-left-color:#2C5A38}
-  nav[aria-label="Contents"] a[aria-current]::after{content:"Open ▾";font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#2C5A38;margin-top:auto;padding-top:.3rem}
+  nav[aria-label="Contents"] a{display:flex;flex-direction:column;gap:.35rem;height:100%;box-sizing:border-box;border:1px solid #C9C6BA;border-left:3px solid #C9C6BA;border-radius:2px;padding:.8rem .9rem;text-decoration:none;color:#191B18;min-height:44px;transition:border-color .14s ease,background-color .14s ease}
+  
+  nav[aria-label="Contents"] .d-teal{border-left-color:var(--teal)}
+  nav[aria-label="Contents"] .d-fails{border-left-color:var(--fails)}
+  nav[aria-label="Contents"] .d-holds{border-left-color:var(--holds)}
+  nav[aria-label="Contents"] .d-teal:hover,nav[aria-label="Contents"] .d-teal:focus-visible{border-left-color:var(--teal)}
+  nav[aria-label="Contents"] .d-fails:hover,nav[aria-label="Contents"] .d-fails:focus-visible{border-left-color:var(--fails)}
+  nav[aria-label="Contents"] .d-holds:hover,nav[aria-label="Contents"] .d-holds:focus-visible{border-left-color:var(--holds)}
+  nav[aria-label="Contents"] a:hover .door-t{color:var(--holds)}
+  
+  nav[aria-label="Contents"] a[aria-current]{background:var(--holds-fill);border-color:var(--holds-edge);border-left-color:var(--holds)}
+  nav[aria-label="Contents"] a[aria-current]::after{content:"Open ▾";font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--holds);margin-top:auto;padding-top:.3rem}
   .door-t{font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:1rem;line-height:1.25;letter-spacing:-.01em}
   .door-d{font-size:11.5px;line-height:1.45;color:#5A5D53}
   .door-n{font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:11px;color:#585B4F}
@@ -233,6 +250,7 @@
 </style>
 </head>
 <body>
+<p style="display:none">GENERATED FILE — do not hand-edit. Hugo strips HTML comments from its own output, so a comment-based warning here would be invisible; this is a real, hidden element instead, for exactly that reason. Edit hugo/layouts/archive.html (or hugo/data/archive.yaml), then run `npm run build:hugo`. A hand-edit here is silently overwritten by the next build — see tasks.md for a case where that cost a real content edit on a sibling page.</p>
 
 <a href="#main-content" class="skip-link">Skip to content</a>
 <header class="noprint" style="border-bottom:1px solid #C9C6BA">
@@ -273,26 +291,27 @@
     <p style="font-size:clamp(1.05rem,2.2vw,1.28rem);line-height:1.55;max-width:48ch;margin:0 0 1.2rem">No single source contains this whole framework. It is assembled from Indigenous political thought, feminist relational autonomy, disability justice, care ethics, and transformative-justice practice, each with its own authors, nations, and arguments.</p>
     <p style="max-width:52ch;margin:0 0 1.4rem;color:#3C3E38">Every entry links away from here, to the author, the publisher, or the open-access copy. Where no stable public link exists, the holder is named instead of a guess. This site is a door; its success is how quickly you stop needing it.</p>
     <details class="note" style="max-width:58ch"><summary>⌖ Indigenous relationality, sovereignty, refusal, and survivance are not a generic radical style.</summary><p>These traditions are nation-specific, and borrowing them as atmosphere reproduces colonial extraction even when it calls itself rebellion. Every note below is provisional and awaiting paid Indigenous review.</p></details>
+    <p class="legend-key"><span class="swatch s-teal"></span>Teal marks what the framework asserts. <span class="swatch s-fails"></span>Rust marks where its own vocabulary runs out, or gets turned back on itself. <span class="swatch s-holds"></span>Green marks a principle this site treats as real and built, not just claimed. Nothing below is signalled by colour alone. Every mark is also a word.</p>
     <nav aria-label="Contents" style="margin-top:1.5rem">
       <ul>
         
-        <li><a href="#relational-sovereignty--indigenous-relational-freedom"><span class="door-t">Relational sovereignty &amp; Indigenous relational freedom</span><span class="door-d">The most direct foundations for the term itself.</span><span class="door-n">8 entries</span></a></li>
+        <li><a href="#relational-sovereignty--indigenous-relational-freedom" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Relational sovereignty &amp; Indigenous relational freedom</span><span class="door-d">The most direct foundations for the term itself.</span><span class="door-n">8 entries</span></a></li>
         
-        <li><a href="#decolonization-possession-land-kinship-intimacy"><span class="door-t">Decolonization, possession, land, kinship, intimacy</span><span class="door-d">Including the limit on how far this vocabulary can be stretched.</span><span class="door-n">11 entries</span></a></li>
+        <li><a href="#decolonization-possession-land-kinship-intimacy" class="d-fails"><span class="door-t"><span class="swatch s-fails"></span>Decolonization, possession, land, kinship, intimacy</span><span class="door-d">Including the limit on how far this vocabulary can be stretched.</span><span class="door-n">11 entries</span></a></li>
         
-        <li><a href="#possession-the-person-and-kinship-made-void"><span class="door-t">Possession, the person, and kinship made void</span><span class="door-d">A second genealogy of ownership, with its own mechanism and its own afterlife.</span><span class="door-n">4 entries</span></a></li>
+        <li><a href="#possession-the-person-and-kinship-made-void" class="d-fails"><span class="door-t"><span class="swatch s-fails"></span>Possession, the person, and kinship made void</span><span class="door-d">A second genealogy of ownership, with its own mechanism and its own afterlife.</span><span class="door-n">4 entries</span></a></li>
         
-        <li><a href="#relation-opacity-refusal-survivance"><span class="door-t">Relation, opacity, refusal, survivance</span><span class="door-d">Where the right to remain unlegible comes from.</span><span class="door-n">5 entries</span></a></li>
+        <li><a href="#relation-opacity-refusal-survivance" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Relation, opacity, refusal, survivance</span><span class="door-d">Where the right to remain unlegible comes from.</span><span class="door-n">5 entries</span></a></li>
         
-        <li><a href="#relational-autonomy-interdependence-care"><span class="door-t">Relational autonomy, interdependence, care</span><span class="door-d">Autonomy does not require isolation or self-sufficiency.</span><span class="door-n">11 entries</span></a></li>
+        <li><a href="#relational-autonomy-interdependence-care" class="d-holds"><span class="door-t"><span class="swatch s-holds"></span>Relational autonomy, interdependence, care</span><span class="door-d">Autonomy does not require isolation or self-sufficiency.</span><span class="door-n">11 entries</span></a></li>
         
-        <li><a href="#bodies-regulation-and-what-happens-before-words"><span class="door-t">Bodies, regulation, and what happens before words</span><span class="door-d">The framework asks you to notice. This is about the noticing.</span><span class="door-n">1 entry</span></a></li>
+        <li><a href="#bodies-regulation-and-what-happens-before-words" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Bodies, regulation, and what happens before words</span><span class="door-d">The framework asks you to notice. This is about the noticing.</span><span class="door-n">1 entry</span></a></li>
         
-        <li><a href="#hierarchy-custom-commitments-possession"><span class="door-t">Hierarchy, custom commitments, possession</span><span class="door-d">Why ranking relationships by category fails, and how control actually operates.</span><span class="door-n">9 entries</span></a></li>
+        <li><a href="#hierarchy-custom-commitments-possession" class="d-fails"><span class="door-t"><span class="swatch s-fails"></span>Hierarchy, custom commitments, possession</span><span class="door-d">Why ranking relationships by category fails, and how control actually operates.</span><span class="door-n">9 entries</span></a></li>
         
-        <li><a href="#accountability-repair-transformative-justice"><span class="door-t">Accountability, repair, transformative justice</span><span class="door-d">What happens after harm, without relying on punishment or disposal.</span><span class="door-n">6 entries</span></a></li>
+        <li><a href="#accountability-repair-transformative-justice" class="d-holds"><span class="door-t"><span class="swatch s-holds"></span>Accountability, repair, transformative justice</span><span class="door-d">What happens after harm, without relying on punishment or disposal.</span><span class="door-n">6 entries</span></a></li>
         
-        <li><a href="#love-eros-and-why-any-of-this-is-worth-doing"><span class="door-t">Love, eros, and why any of this is worth doing</span><span class="door-d">The framework asks what to refuse. This is the shelf for what it&#39;s for.</span><span class="door-n">5 entries</span></a></li>
+        <li><a href="#love-eros-and-why-any-of-this-is-worth-doing" class="d-teal"><span class="door-t"><span class="swatch s-teal"></span>Love, eros, and why any of this is worth doing</span><span class="door-d">The framework asks what to refuse. This is the shelf for what it&#39;s for.</span><span class="door-n">5 entries</span></a></li>
         
       </ul>
     </nav>
@@ -334,8 +353,8 @@
 <section data-pocket="relational-sovereignty--indigenous-relational-freedom" data-group style="padding:0 0 1.8rem">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick">The most direct foundations for the term itself.</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">01</span>The most direct foundations for the term itself.</span>
         <h2 class="sec">Relational sovereignty &amp; Indigenous relational freedom <span data-count class="shelf-count">8</span></h2>
       </summary>
       <div class="pocket-body" id="relational-sovereignty--indigenous-relational-freedom">
@@ -454,8 +473,8 @@
 <section data-pocket="decolonization-possession-land-kinship-intimacy" data-group style="padding:0 0 1.8rem">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick">Including the limit on how far this vocabulary can be stretched.</span>
+      <summary class="pocket-summary d-fails">
+        <span class="kick kick-fails"><span class="tab-num">02</span>Including the limit on how far this vocabulary can be stretched.</span>
         <h2 class="sec">Decolonization, possession, land, kinship, intimacy <span data-count class="shelf-count">11</span></h2>
       </summary>
       <div class="pocket-body" id="decolonization-possession-land-kinship-intimacy">
@@ -613,8 +632,8 @@
 <section data-pocket="possession-the-person-and-kinship-made-void" data-group style="padding:0 0 1.8rem">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick">A second genealogy of ownership, with its own mechanism and its own afterlife.</span>
+      <summary class="pocket-summary d-fails">
+        <span class="kick kick-fails"><span class="tab-num">03</span>A second genealogy of ownership, with its own mechanism and its own afterlife.</span>
         <h2 class="sec">Possession, the person, and kinship made void <span data-count class="shelf-count">4</span></h2>
       </summary>
       <div class="pocket-body" id="possession-the-person-and-kinship-made-void">
@@ -681,8 +700,8 @@
 <section data-pocket="relation-opacity-refusal-survivance" data-group style="padding:0 0 1.8rem">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick">Where the right to remain unlegible comes from.</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">04</span>Where the right to remain unlegible comes from.</span>
         <h2 class="sec">Relation, opacity, refusal, survivance <span data-count class="shelf-count">5</span></h2>
       </summary>
       <div class="pocket-body" id="relation-opacity-refusal-survivance">
@@ -762,8 +781,8 @@
 <section data-pocket="relational-autonomy-interdependence-care" data-group style="padding:0 0 1.8rem">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick">Autonomy does not require isolation or self-sufficiency.</span>
+      <summary class="pocket-summary d-holds">
+        <span class="kick kick-holds"><span class="tab-num">05</span>Autonomy does not require isolation or self-sufficiency.</span>
         <h2 class="sec">Relational autonomy, interdependence, care <span data-count class="shelf-count">11</span></h2>
       </summary>
       <div class="pocket-body" id="relational-autonomy-interdependence-care">
@@ -921,8 +940,8 @@
 <section data-pocket="bodies-regulation-and-what-happens-before-words" data-group style="padding:0 0 1.8rem">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick">The framework asks you to notice. This is about the noticing.</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">06</span>The framework asks you to notice. This is about the noticing.</span>
         <h2 class="sec">Bodies, regulation, and what happens before words <span data-count class="shelf-count">1</span></h2>
       </summary>
       <div class="pocket-body" id="bodies-regulation-and-what-happens-before-words">
@@ -950,8 +969,8 @@
 <section data-pocket="hierarchy-custom-commitments-possession" data-group style="padding:0 0 1.8rem">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick">Why ranking relationships by category fails, and how control actually operates.</span>
+      <summary class="pocket-summary d-fails">
+        <span class="kick kick-fails"><span class="tab-num">07</span>Why ranking relationships by category fails, and how control actually operates.</span>
         <h2 class="sec">Hierarchy, custom commitments, possession <span data-count class="shelf-count">9</span></h2>
       </summary>
       <div class="pocket-body" id="hierarchy-custom-commitments-possession">
@@ -1083,8 +1102,8 @@
 <section data-pocket="accountability-repair-transformative-justice" data-group style="padding:0 0 1.8rem">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick">What happens after harm, without relying on punishment or disposal.</span>
+      <summary class="pocket-summary d-holds">
+        <span class="kick kick-holds"><span class="tab-num">08</span>What happens after harm, without relying on punishment or disposal.</span>
         <h2 class="sec">Accountability, repair, transformative justice <span data-count class="shelf-count">6</span></h2>
       </summary>
       <div class="pocket-body" id="accountability-repair-transformative-justice">
@@ -1177,8 +1196,8 @@
 <section data-pocket="love-eros-and-why-any-of-this-is-worth-doing" data-group style="padding:0 0 1.8rem">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
     <details class="pocket" data-collapsible>
-      <summary class="pocket-summary">
-        <span class="kick">The framework asks what to refuse. This is the shelf for what it&#39;s for.</span>
+      <summary class="pocket-summary d-teal">
+        <span class="kick kick-teal"><span class="tab-num">09</span>The framework asks what to refuse. This is the shelf for what it&#39;s for.</span>
         <h2 class="sec">Love, eros, and why any of this is worth doing <span data-count class="shelf-count">5</span></h2>
       </summary>
       <div class="pocket-body" id="love-eros-and-why-any-of-this-is-worth-doing">
