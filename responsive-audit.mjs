@@ -12,8 +12,8 @@ import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { chromium } from "playwright";
 import { ROUTES, urlPath } from "./scripts/site-routes.mjs";
+import { launchChromium } from "./scripts/find-chromium.mjs";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 
@@ -54,21 +54,11 @@ function serve() {
   });
 }
 
-function findChromium() {
-  const candidates = [
-    process.env.PLAYWRIGHT_CHROMIUM_PATH,
-    "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
-  ].filter(Boolean);
-  for (const c of candidates) if (fs.existsSync(c)) return c;
-  return undefined; // let Playwright resolve its own install
-}
-
 async function main() {
   const server = await serve();
   const { port } = server.address();
   const base = `http://127.0.0.1:${port}/`;
-  const executablePath = findChromium();
-  const browser = await chromium.launch(executablePath ? { executablePath } : {});
+  const browser = await launchChromium();
 
   const screenshotDir = path.join(root, "audit-screenshots");
   fs.mkdirSync(screenshotDir, { recursive: true });

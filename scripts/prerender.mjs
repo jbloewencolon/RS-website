@@ -30,8 +30,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
-import { chromium } from "playwright";
 import { ROUTES, filePath } from "./site-routes.mjs";
+import { launchChromium } from "./find-chromium.mjs";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const outDir = path.join(root, "_site");
@@ -79,12 +79,6 @@ function serve(dir) {
   });
 }
 
-function findChromium() {
-  const candidates = [process.env.PLAYWRIGHT_CHROMIUM_PATH, "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"].filter(Boolean);
-  for (const c of candidates) if (fs.existsSync(c)) return c;
-  return undefined;
-}
-
 const HEAD_INJECT = `<style>x-dc{display:none}</style>
 <link rel="preload" as="script" href="/vendor/react.production.min.js" crossorigin="anonymous">
 <link rel="preload" as="script" href="/vendor/react-dom.production.min.js" crossorigin="anonymous">
@@ -96,8 +90,7 @@ async function main() {
 
   const server = await serve(root);
   const { port } = server.address();
-  const executablePath = findChromium();
-  const browser = await chromium.launch(executablePath ? { executablePath } : {});
+  const browser = await launchChromium();
 
   let failures = 0;
 

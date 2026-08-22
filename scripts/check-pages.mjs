@@ -17,12 +17,12 @@ import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { chromium } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
 import { HtmlValidate } from "html-validate";
 import { buildHugo, HUGO_PAGES } from "./build-hugo.mjs";
 import { sync as syncBase, TARGETS as BASE_TARGETS } from "./sync-base.mjs";
 import { ROUTES, urlPath } from "./site-routes.mjs";
+import { launchChromium } from "./find-chromium.mjs";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const htmlValidateConfig = JSON.parse(fs.readFileSync(path.join(root, ".htmlvalidate.json"), "utf8"));
@@ -232,17 +232,6 @@ function checkRedirectStubs(base) {
       return problems.length;
     })
   ).then((counts) => counts.reduce((a, b) => a + b, 0));
-}
-
-function findChromium() {
-  // Prefer a system/CI-installed Chromium; Playwright's own downloaded
-  // build is the fallback for local dev after `npx playwright install`.
-  const candidates = [
-    process.env.PLAYWRIGHT_CHROMIUM_PATH,
-    "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
-  ].filter(Boolean);
-  for (const c of candidates) if (fs.existsSync(c)) return c;
-  return undefined; // let Playwright resolve its own install
 }
 
 // The deployed pages must carry their content as real HTML, not only as
@@ -630,8 +619,7 @@ async function main() {
   const { port } = server.address();
   const base = `http://127.0.0.1:${port}/`;
 
-  const executablePath = findChromium();
-  const browser = await chromium.launch(executablePath ? { executablePath } : {});
+  const browser = await launchChromium();
   const htmlValidate = new HtmlValidate(htmlValidateConfig);
 
   let problems = checkPrerender() + checkHugoPagesInSync() + checkBaseInSync() + checkTokens() + checkSupportJsOrigins();
