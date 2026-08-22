@@ -379,6 +379,37 @@ textarea { resize: vertical; min-height: 3.6rem; }
 .result-card .rc-val { font-family: var(--mono); font-size: 14px; }
 .result-card .rc-note { font-family: var(--body); font-style: italic; font-size: 14px; color: var(--ink-3); margin: .3rem 0 0; }
 
+/* dense same-scale groups: a table, not a card per row (spec §8.4b) */
+.grid-table { width: 100%; border-collapse: collapse; border: 1px solid var(--rule); border-radius: 3px; margin-bottom: .6rem; }
+.grid-table caption { caption-side: top; text-align: left; font-weight: 700; font-family: var(--sans); padding: .7rem 1rem; background: var(--paper); border-bottom: 1px solid var(--rule); }
+.grid-table th, .grid-table td { padding: .6rem .8rem; text-align: left; vertical-align: top; border-bottom: 1px dotted var(--rule); }
+.grid-table thead th { font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); border-bottom: 1px solid var(--rule); }
+.grid-table tbody th { font-family: var(--sans); font-weight: 700; font-size: 15px; }
+.grid-table tbody tr:last-child th, .grid-table tbody tr:last-child td { border-bottom: none; }
+.grid-table.is-boundary { border-color: var(--fails); }
+.grid-table.is-boundary caption { background: var(--fails-fill); }
+.grid-chip { display: inline-block; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: .3rem .55rem; border-radius: 2px; background: var(--paper-2); border: 1px solid var(--rule); color: var(--ink-2); }
+.grid-chip.is-empty { font-weight: 400; text-transform: none; color: var(--ink-3); background: transparent; border-style: dashed; }
+.grid-note { font-family: var(--body); font-style: italic; font-size: 13px; color: var(--ink-3); margin: .3rem 0 0; }
+
+/* Below 700px (spec §8.4b): the two value columns move under the label
+   instead of shrinking below a 44px target. The <thead> is hidden the
+   visually-hidden way (clipped, not display:none) so its column labels
+   stay in the accessibility tree; explicit role= attributes on every
+   table part (set in app.js) keep the table structure legible to a
+   screen reader even though display is no longer table/row/cell here. */
+@media (max-width: 699px) {
+  .grid-table thead {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap; border: 0; padding: 0; margin: -1px;
+  }
+  .grid-table, .grid-table tbody, .grid-table tr, .grid-table th, .grid-table td { display: block; width: 100%; }
+  .grid-table tbody tr { padding: .6rem 0; }
+  .grid-table tbody tr:not(:last-child) { border-bottom: 1px dotted var(--rule); }
+  .grid-table tbody th, .grid-table tbody td { border-bottom: none; padding: .15rem 0; }
+  .grid-table tbody th { padding-top: 0; }
+}
+
 @media (max-width: 640px) {
   .consent-control { flex-direction: column; }
   .consent-btn { border-right: none; border-bottom: 1px solid var(--rule); }

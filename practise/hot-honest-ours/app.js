@@ -7,7 +7,7 @@
 // loses the draft. That is the deliberate, safest default; nothing here
 // writes to localStorage, sessionStorage, or indexedDB.
 
-import { QUESTIONS, ACCESS_QUESTIONS, QUESTIONNAIRE_VERSION, SCALE_OPTIONS, BUFFET_OPTIONS, allowsMatchOnly } from "./questions.js";
+import { QUESTIONS, ACCESS_QUESTIONS, QUESTIONNAIRE_VERSION, SCALE_OPTIONS, BUFFET_OPTIONS, GRID_GROUP_TITLES, allowsMatchOnly } from "./questions.js";
 import { encryptToFile, decryptFile, ShareFileError } from "./crypto.js";
 import { compare, counts } from "./engine.js";
 
@@ -301,6 +301,7 @@ function renderConsentList() {
     }
     const row = document.createElement("div");
     row.className = "question-row";
+    row.dataset.qid = q.id;
     const label = document.createElement("p");
     label.className = "q-label";
     label.textContent = q.label;
@@ -563,20 +564,7 @@ function renderResults() {
     const h = document.createElement("h2");
     h.textContent = name + " -- " + note;
     section.appendChild(h);
-    rows.forEach((row) => {
-      const card = document.createElement("div");
-      card.className = "result-card" + (key === "boundary" ? " is-boundary" : "");
-      const label = document.createElement("p");
-      label.className = "rc-label";
-      label.textContent = row.label;
-      card.appendChild(label);
-      const values = document.createElement("div");
-      values.className = "rc-values";
-      values.appendChild(oneValue("Me", row.mine, row.mineCondition));
-      values.appendChild(oneValue("Them", row.theirs, row.theirsCondition));
-      card.appendChild(values);
-      section.appendChild(card);
-    });
+    appendRows(section, rows, key === "boundary");
     host.appendChild(section);
   });
 
@@ -587,24 +575,114 @@ function renderResults() {
     const h = document.createElement("h2");
     h.textContent = "Read side by side -- these were never going to match";
     section.appendChild(h);
-    groups.text.forEach((row) => {
-      const card = document.createElement("div");
-      card.className = "result-card";
-      const label = document.createElement("p");
-      label.className = "rc-label";
-      label.textContent = row.label;
-      card.appendChild(label);
-      const values = document.createElement("div");
-      values.className = "rc-values";
-      values.appendChild(oneValue("Me", row.mine, row.mineCondition));
-      values.appendChild(oneValue("Them", row.theirs, row.theirsCondition));
-      card.appendChild(values);
-      section.appendChild(card);
-    });
+    appendRows(section, groups.text, false);
     host.appendChild(section);
   }
 
   document.getElementById("tile-empty").hidden = anyShown;
+}
+
+// Spec §8.4b: dense same-scale runs (the Want Menu, Bandwidth Check, the
+// Buffet) render as one grid table instead of one card per question.
+// A run is a question's own `group` id (set in questions.js); because
+// each dense array occupies contiguous positions in QUESTIONS and every
+// tier bucket preserves that order (engine.js walks QUESTIONS once),
+// same-group rows that land in one tier are already contiguous here --
+// no separate bucketing pass is needed, just a walk collecting runs.
+function appendRows(section, rows, isBoundary) {
+  let i = 0;
+  while (i < rows.length) {
+    const row = rows[i];
+    if (row.group) {
+      let j = i + 1;
+      while (j < rows.length && rows[j].group === row.group) j++;
+      section.appendChild(gridTable(row.group, rows.slice(i, j), isBoundary));
+      i = j;
+    } else {
+      section.appendChild(resultCard(row, isBoundary));
+      i++;
+    }
+  }
+}
+
+function resultCard(row, isBoundary) {
+  const card = document.createElement("div");
+  card.className = "result-card" + (isBoundary ? " is-boundary" : "");
+  const label = document.createElement("p");
+  label.className = "rc-label";
+  label.textContent = row.label;
+  card.appendChild(label);
+  const values = document.createElement("div");
+  values.className = "rc-values";
+  values.appendChild(oneValue("Me", row.mine, row.mineCondition));
+  values.appendChild(oneValue("Them", row.theirs, row.theirsCondition));
+  card.appendChild(values);
+  return card;
+}
+
+// A real <table> with row headers (spec §11.1's 1.3.1: "a table
+// structure with row headers, not a grid of divs"), not divs styled to
+// look like one. Roles are set explicitly alongside the native table
+// elements because the narrow-viewport layout (style.css) overrides
+// `display` on table/tr/th/td to stack each row -- which can otherwise
+// strip a browser's implicit table semantics -- so the accessible tree
+// stays a table regardless of which CSS layout is currently active.
+function gridTable(groupId, rows, isBoundary) {
+  const wrap = document.createElement("table");
+  wrap.className = "grid-table" + (isBoundary ? " is-boundary" : "");
+  wrap.setAttribute("role", "table");
+
+  const caption = document.createElement("caption");
+  caption.textContent = GRID_GROUP_TITLES[groupId] || groupId;
+  wrap.appendChild(caption);
+
+  const thead = document.createElement("thead");
+  thead.setAttribute("role", "rowgroup");
+  const headRow = document.createElement("tr");
+  headRow.setAttribute("role", "row");
+  ["Question", "Me", "Them"].forEach((text) => {
+    const th = document.createElement("th");
+    th.scope = "col";
+    th.setAttribute("role", "columnheader");
+    th.textContent = text;
+    headRow.appendChild(th);
+  });
+  thead.appendChild(headRow);
+  wrap.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+  tbody.setAttribute("role", "rowgroup");
+  rows.forEach((row) => {
+    const tr = document.createElement("tr");
+    tr.setAttribute("role", "row");
+    const rowHead = document.createElement("th");
+    rowHead.scope = "row";
+    rowHead.setAttribute("role", "rowheader");
+    rowHead.textContent = row.label;
+    tr.appendChild(rowHead);
+    tr.appendChild(gridCell(row.mine, row.mineCondition));
+    tr.appendChild(gridCell(row.theirs, row.theirsCondition));
+    tbody.appendChild(tr);
+  });
+  wrap.appendChild(tbody);
+
+  return wrap;
+}
+
+function gridCell(val, condition) {
+  const td = document.createElement("td");
+  td.setAttribute("role", "cell");
+  const chip = document.createElement("span");
+  chip.className = "grid-chip" + (val === undefined ? " is-empty" : "");
+  chip.textContent = val === undefined ? "not shared" : fmtValue(val);
+  td.appendChild(chip);
+  if (val !== undefined && condition) {
+    const note = document.createElement("p");
+    note.className = "grid-note";
+    note.textContent = condition;
+    td.appendChild(note);
+  }
+  return td;
 }
 
 function oneValue(who, val, condition) {

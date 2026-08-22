@@ -53,6 +53,9 @@ const ACCESS_MARK = ["NOT TODAY", "THIN", "ENOUGH"];
 // neverShareable: excluded from the door's consent screen entirely --
 //   always private, no control offered (spec 5.5: "never shareable in
 //   any state")
+// group: marks a question as part of a dense same-scale run (spec
+//   §8.4b) so the compare-results screen (HHO-09) renders it as one row
+//   in a shared grid table instead of its own card. See GRID_GROUP_TITLES.
 export const QUESTIONS = [
   // ---------------- Round 1 -- What are we playing with? ----------------
   {
@@ -77,6 +80,7 @@ export const QUESTIONS = [
     .map((label, i) => ({
       id: "r2.closeness." + i, round: "R2 · The Want Menu", type: "mark", options: CLOSENESS,
       label, help: i === 0 ? "Kinds of closeness -- these do not come as a bundle deal." : undefined,
+      group: "r2closeness",
     })),
   ...[
     "Flirting, affection, cuddling", "Kissing and erotic touch", "Sex or genital contact",
@@ -86,6 +90,7 @@ export const QUESTIONS = [
   ].map((label, i) => ({
     id: "r2.play." + i, round: "R2 · The Want Menu", type: "scale", label, note: true,
     help: i === 0 ? "An answer to a category is not consent to every activity inside it. “Yes to impact” is not “yes to anything with a handle.”" : undefined,
+    group: "r2play",
   })),
   { id: "r2.assumed", round: "R2 · The Want Menu", type: "text", label: "Which of these did I assume came free with one of the others?" },
 
@@ -128,6 +133,7 @@ export const QUESTIONS = [
     .map((label, i) => ({
       id: "r5.cap." + i, round: "R5 · Bandwidth Check", type: "mark", options: CAP, label,
       help: i === 0 ? "Hot is not the same as sustainable. Not what you'd love to give -- what you can give on a bad Wednesday." : undefined,
+      group: "r5cap",
     })),
   { id: "r5.nights", round: "R5 · Bandwidth Check", type: "number", min: 0, max: 31, label: "Nights per month I can realistically show up" },
   { id: "r5.text.mine", round: "R5 · Bandwidth Check", type: "choice", label: "Text energy", options: ["CONSTANT", "A FEW A DAY", "WHEN THERE'S SOMETHING TO SAY", "I AM A SLOW CORRESPONDENT AND ALWAYS WILL BE"] },
@@ -182,6 +188,7 @@ export const QUESTIONS = [
   ].map((label, i) => ({
     id: "r10." + i, round: "R10 · The Buffet", type: "buffet", label,
     help: i === 0 ? "More is not deeper. Escalating isn't the same as caring more." : undefined,
+    group: "r10buffet",
   })),
 
   // ---------------- Round 11 -- When It Breaks ----------------
@@ -220,6 +227,15 @@ export const ACCESS_QUESTIONS = [
   { id: "access.6", type: "mark", options: ACCESS_MARK, label: "Freedom to say no", neverShareable: true },
   { id: "access.easier", type: "text", neverShareable: true, label: "Would speech, text, writing, a walk, a break, or a support person make this easier?" },
 ];
+
+// Captions for the compare-results grid tables (spec §8.4b). Keyed by
+// the same string every dense-group question above sets as its `group`.
+export const GRID_GROUP_TITLES = {
+  r2closeness: "The Want Menu — kinds of closeness",
+  r2play: "The Want Menu — activities",
+  r5cap: "Bandwidth Check",
+  r10buffet: "The Buffet",
+};
 
 export function questionById(id) {
   return QUESTIONS.find((q) => q.id === id) || ACCESS_QUESTIONS.find((q) => q.id === id);

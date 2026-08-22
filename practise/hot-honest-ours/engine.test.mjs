@@ -18,6 +18,7 @@ function run() {
     );
     assert.equal(g.matched.length, 1);
     assert.equal(g.boundary.length, 0);
+    assert.equal(g.matched[0].group, "r2play", "a dense-group question's row must carry its group id for HHO-09's grid tables");
   }
   console.log("ok: two reveals, same non-NO value -> matched");
 
@@ -113,6 +114,17 @@ function run() {
     assert.equal(g.matched.length, 1, "numeric match-only must work under the simplified (non-digest) design");
   }
   console.log("ok: match-only on a numeric stepper works (no digest to be weak over a small domain)");
+
+  // A question outside any dense group carries no group id -- it must
+  // render as its own card, not get pulled into someone else's grid table.
+  {
+    const g = compare(
+      file({ "r5.nights": { m: "r", v: 4 } }),
+      file({ "r5.nights": { m: "r", v: 4 } })
+    );
+    assert.equal(g.matched[0].group, undefined);
+  }
+  console.log("ok: a question with no dense group carries no group id");
 }
 
 run();
