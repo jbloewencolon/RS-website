@@ -316,6 +316,12 @@ textarea { resize: vertical; min-height: 3.6rem; }
 .q-help { font-size: 14.5px; color: var(--ink-3); margin: -.3rem 0 .6rem; font-style: italic; }
 .note-label { margin-top: .5rem; }
 
+/* Round 9's term/meaning pairs -- a real <dl>, not a table standing in for one. */
+.reference-list { margin: .8rem 0 0; display: flex; flex-direction: column; gap: .6rem; }
+.reference-list > div { display: flex; flex-wrap: wrap; gap: .3rem 1rem; align-items: baseline; }
+.reference-list dt { font-family: var(--sans); font-weight: 700; margin: 0; min-width: 7ch; }
+.reference-list dd { margin: 0; color: var(--ink-2); }
+
 /* ---- passphrase ---- */
 .passphrase-display {
   font-family: var(--mono);

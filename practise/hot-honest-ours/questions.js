@@ -216,6 +216,26 @@ export const QUESTIONS = [
     label: "Administrative & logistical care", help: "Appointments, forms, benefits, insurance, advocacy, interpretation.",
   },
 
+  // ---------------- Round 9 -- Three Words People Use Interchangeably
+  // and Shouldn't (HHO-26) ----------------
+  // Reference only, no input, matching the source worksheet -- it has no
+  // blanks to fill in either. Built from this spec's own §1.3 terminology
+  // table (the one place these three fixed meanings are recorded in this
+  // repo), not the original worksheet's exact wording for this round's
+  // own screen, which was never saved anywhere in this repo (author
+  // call, tasks.md HHO-26, 2026-08-22). If the exact source text
+  // surfaces later, replace `terms` below with it verbatim.
+  {
+    id: "r9.words", round: "R9 · Three Words People Use Interchangeably and Shouldn't", type: "reference",
+    label: "Boundary, agreement, rule",
+    help: "Interchangeable words. This round exists because they are not.",
+    terms: [
+      ["Boundary", "what I do"],
+      ["Agreement", "what we chose"],
+      ["Rule", "an attempt to control"],
+    ],
+  },
+
   // ---------------- Round 10 -- The Buffet ----------------
   ...[
     "Being exclusive", "Calling it something out loud", "Meeting friends", "Meeting family", "Holidays",

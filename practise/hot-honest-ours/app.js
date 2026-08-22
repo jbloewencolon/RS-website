@@ -268,11 +268,47 @@ function renderQuestions() {
       host.appendChild(h);
       lastRound = q.round;
     }
-    host.appendChild(renderQuestionRow(q, "question-list"));
+    host.appendChild(q.type === "reference" ? renderReferenceRow(q) : renderQuestionRow(q, "question-list"));
   });
   host.scrollTop = scroll;
 }
 rerenderHostFns["question-list"] = renderQuestions;
+
+// Round 9 (HHO-26): reference-only content, no form control of any kind,
+// so it doesn't belong inside renderQuestionRow()'s <fieldset>/<legend>
+// (a fieldset implies controls are coming). Never answerable, so it
+// never appears in the consent list, the file, or the comparison engine
+// -- all three already skip a question whose state.answers entry is
+// empty, and this type has no way to ever set one.
+function renderReferenceRow(q) {
+  const row = document.createElement("div");
+  row.className = "question-row";
+  const label = document.createElement("p");
+  label.className = "q-label";
+  label.textContent = q.label;
+  row.appendChild(label);
+  if (q.help) {
+    const help = document.createElement("p");
+    help.className = "q-help";
+    help.textContent = q.help;
+    row.appendChild(help);
+  }
+  if (q.terms) {
+    const dl = document.createElement("dl");
+    dl.className = "reference-list";
+    q.terms.forEach(([term, meaning]) => {
+      const group = document.createElement("div");
+      const dt = document.createElement("dt");
+      dt.textContent = term;
+      const dd = document.createElement("dd");
+      dd.textContent = meaning;
+      group.append(dt, dd);
+      dl.appendChild(group);
+    });
+    row.appendChild(dl);
+  }
+  return row;
+}
 
 function renderAccessQuestions() {
   const host = document.getElementById("access-list");
