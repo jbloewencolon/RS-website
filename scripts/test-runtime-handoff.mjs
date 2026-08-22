@@ -31,7 +31,7 @@ import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { chromium } from "playwright";
+import { launchChromium } from "./find-chromium.mjs";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const siteDir = path.join(root, "_site");
@@ -56,12 +56,6 @@ function serve(dir) {
     });
     server.listen(0, "127.0.0.1", () => resolve(server));
   });
-}
-
-function findChromium() {
-  const candidates = [process.env.PLAYWRIGHT_CHROMIUM_PATH, "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"].filter(Boolean);
-  for (const c of candidates) if (fs.existsSync(c)) return c;
-  return undefined;
 }
 
 async function maskLocators(page) {
@@ -195,8 +189,7 @@ async function main() {
   const { port } = server.address();
   testPage.baseUrl = `http://127.0.0.1:${port}`;
 
-  const executablePath = findChromium();
-  const browser = await chromium.launch(executablePath ? { executablePath } : {});
+  const browser = await launchChromium();
 
   let failures = 0;
   for (const pg of PAGES) {

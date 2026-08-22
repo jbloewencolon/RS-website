@@ -290,7 +290,21 @@
           <p style="margin:0 0 1.4rem">
             <a href="{{ noteMailto }}" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px;display:inline-flex;align-items:center;min-height:44px;min-width:0;overflow-wrap:anywhere">Email this note to relationalsovereignty@gmail.com →</a>
           </p>
-          <div ref="{{ turnstileRef }}" style="margin:0 0 1.2rem;min-height:65px;max-width:100%"></div>
+          <!-- Cloudflare's own docs put a hard 300px minimum width on
+               "flexible" size (confirmed 2026-08-22, real CI logs -- the
+               size:"flexible" render option below reduced nothing, same
+               344px/387px overflow before and after it shipped) -- no CSS
+               or render option makes the widget itself narrower than
+               that. Below 300px of available width the widget has to
+               overflow something; making that something this wrapper's
+               own scrollbar, not the document, is the same WCAG 1.4.10
+               pattern already used for Learn's stress matrix and
+               Archive's filter chips (both scripts/check-pages.mjs's
+               reflow check and 1.4.10 itself treat a horizontally-
+               scrollable component as compliant, unlike page-level reflow). -->
+          <div style="overflow-x:auto;margin:0 0 1.2rem" tabindex="0" role="group" aria-label="Verification widget">
+            <div ref="{{ turnstileRef }}" style="min-height:65px;min-width:300px"></div>
+          </div>
           <sc-if value="{{ turnstileFailed }}" hint-placeholder-val="{{ false }}">
             <p role="status" style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#585B4F;border-left:2px solid #C9C6BA;padding:.3rem 0 .3rem .9rem;margin:-.4rem 0 1.3rem">The verification above didn't load — a content blocker or network issue can do that. Use the "Email this note" link above instead.</p>
           </sc-if>

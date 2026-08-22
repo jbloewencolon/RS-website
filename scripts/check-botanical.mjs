@@ -1,11 +1,11 @@
 // Phase 0 verification: exercise /botanical.js end to end against the
 // real built pages. Phase 0 wires no page up, so the mechanism is proven
 // here with a throwaway recipe rather than shipped untested.
-import { chromium } from "playwright";
 import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { launchChromium } from "./find-chromium.mjs";
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const TYPES = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css" };
@@ -41,7 +41,7 @@ const MARK = {
 const results = [];
 const check = (name, pass, detail) => { results.push({ name, pass, detail }); };
 
-const browser = await chromium.launch();
+const browser = await launchChromium();
 
 /* 1 — default page state: nothing injected, because no recipe is wired */
 {

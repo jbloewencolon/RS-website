@@ -17,11 +17,12 @@ import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { chromium } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
 import { HtmlValidate } from "html-validate";
 import { buildHugo, HUGO_PAGES } from "./build-hugo.mjs";
 import { sync as syncBase, TARGETS as BASE_TARGETS } from "./sync-base.mjs";
+import { ROUTES, urlPath } from "./site-routes.mjs";
+import { launchChromium } from "./find-chromium.mjs";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const htmlValidateConfig = JSON.parse(fs.readFileSync(path.join(root, ".htmlvalidate.json"), "utf8"));
@@ -29,19 +30,12 @@ const htmlValidateConfig = JSON.parse(fs.readFileSync(path.join(root, ".htmlvali
 // (manifesto/index.html served at /manifesto/, etc.) — checked by that
 // URL, not the file path, so this test exercises the same resolution a
 // real visitor's browser does (see serve()'s directory-index handling
-// below), not just "does this file happen to contain valid HTML."
-const pages = [
-  "index.html",
-  "manifesto/",
-  "invitation/",
-  "learn/",
-  "practise/",
-  "archive/",
-  "contribute/",
-  "behind-the-scenes/",
-  "resources/",
-  "glyph-check.html",
-];
+// below), not just "does this file happen to contain valid HTML." Home
+// is "index.html", not urlPath("")'s bare "" — this loop navigates to
+// `base + pg` directly, and base already ends in "/". glyph-check.html
+// is a standalone diagnostic harness, not one of site-routes.mjs's own
+// nine routes, so it's appended here rather than folded into that file.
+const pages = [...ROUTES.map((r) => (r.slug ? urlPath(r) : "index.html")), "glyph-check.html"];
 
 // The ground colour each page's shared base block is supposed to paint
 // (partials/head-base.html: `body{background:...}`). Asserted live, per
@@ -69,17 +63,7 @@ const GROUND = {
 // and navigating to one in a real browser context immediately follows it,
 // so a page.goto() here would silently end up testing the redirect
 // *target* a second time rather than the stub itself.
-const redirectStubs = [
-  { path: "Home.dc.html", target: "/" },
-  { path: "Manifesto.dc.html", target: "/manifesto/" },
-  { path: "Invitation.dc.html", target: "/invitation/" },
-  { path: "Learn.dc.html", target: "/learn/" },
-  { path: "Archive.dc.html", target: "/archive/" },
-  { path: "Resources.dc.html", target: "/resources/" },
-  { path: "BehindTheScenes.dc.html", target: "/behind-the-scenes/" },
-  { path: "Practise.dc.html", target: "/practise/" },
-  { path: "Contribute.dc.html", target: "/contribute/" },
-];
+const redirectStubs = ROUTES.map((r) => ({ path: r.dcStub, target: `/${urlPath(r)}` }));
 
 const MIME = { ".html": "text/html", ".js": "application/javascript" };
 // Phone width for the second accessibility pass on every page — narrow
@@ -248,17 +232,6 @@ function checkRedirectStubs(base) {
       return problems.length;
     })
   ).then((counts) => counts.reduce((a, b) => a + b, 0));
-}
-
-function findChromium() {
-  // Prefer a system/CI-installed Chromium; Playwright's own downloaded
-  // build is the fallback for local dev after `npx playwright install`.
-  const candidates = [
-    process.env.PLAYWRIGHT_CHROMIUM_PATH,
-    "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
-  ].filter(Boolean);
-  for (const c of candidates) if (fs.existsSync(c)) return c;
-  return undefined; // let Playwright resolve its own install
 }
 
 // The deployed pages must carry their content as real HTML, not only as
@@ -646,8 +619,7 @@ async function main() {
   const { port } = server.address();
   const base = `http://127.0.0.1:${port}/`;
 
-  const executablePath = findChromium();
-  const browser = await chromium.launch(executablePath ? { executablePath } : {});
+  const browser = await launchChromium();
   const htmlValidate = new HtmlValidate(htmlValidateConfig);
 
   let problems = checkPrerender() + checkHugoPagesInSync() + checkBaseInSync() + checkTokens() + checkSupportJsOrigins();

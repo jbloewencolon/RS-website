@@ -12,24 +12,15 @@ import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { chromium } from "playwright";
+import { ROUTES, urlPath } from "./scripts/site-routes.mjs";
+import { launchChromium } from "./scripts/find-chromium.mjs";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 
 // The same nine real routes scripts/check-pages.mjs checks (its `pages`
 // array, minus glyph-check.html — a standalone diagnostic harness with no
 // page identity worth screenshotting here).
-const pages = [
-  "index.html",
-  "manifesto/",
-  "invitation/",
-  "learn/",
-  "practise/",
-  "archive/",
-  "contribute/",
-  "behind-the-scenes/",
-  "resources/",
-];
+const pages = ROUTES.map((r) => (r.slug ? urlPath(r) : "index.html"));
 
 const VIEWPORTS = [
   { name: "mobile-320", width: 320, height: 568 }, // smallest common phone width
@@ -63,21 +54,11 @@ function serve() {
   });
 }
 
-function findChromium() {
-  const candidates = [
-    process.env.PLAYWRIGHT_CHROMIUM_PATH,
-    "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
-  ].filter(Boolean);
-  for (const c of candidates) if (fs.existsSync(c)) return c;
-  return undefined; // let Playwright resolve its own install
-}
-
 async function main() {
   const server = await serve();
   const { port } = server.address();
   const base = `http://127.0.0.1:${port}/`;
-  const executablePath = findChromium();
-  const browser = await chromium.launch(executablePath ? { executablePath } : {});
+  const browser = await launchChromium();
 
   const screenshotDir = path.join(root, "audit-screenshots");
   fs.mkdirSync(screenshotDir, { recursive: true });
