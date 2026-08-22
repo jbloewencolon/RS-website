@@ -155,6 +155,19 @@ the register system — its own design pass. Note two of the five already use of
 values (`#7D5915`, the pre-WD-05 ochre, and `#2B4C9B`, the link blue), so this would also
 fold in the last of the FLAG-07 ochre cleanup.
 
+**Resolved, 2026-08-22.** Hot, Honest, Ours (Phase 23) gave this exact question a second,
+sharper instance before it was ever settled here: its comparison screen's "Boundary" tier —
+tiles, cards, and grid tables alike — uses the identical rust register, now grouping a
+*settled* limit in the same visual class as "Collision," an active disagreement, despite the
+tier's own copy insisting it is "Settled. Not a topic for negotiation." Put to the author
+directly rather than decided unilaterally (`tasks.md`'s HHO-19), given the choice turns on
+reading the site's own established colour semantics against a case this project's
+conventions don't settle by themselves. **Author's call: keep rust, both places.** Read it as
+this site's "safety surface" register — a hard limit is one of several things on Practise
+that warrants that register, alongside the export/save warning and the reset-armed state
+below — not literally "the framework failed." No colour change to either the old map's scale
+or the new tool's Boundary tier.
+
 ### The Practise rust carve-out (settled, informs WD-29)
 
 §3.15 said "safety gate is rust — and nothing else on the page is," treating every other
