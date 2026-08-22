@@ -39,7 +39,7 @@ const SELF_ORIGIN = "https://relationalsovereignty.com";
 // as flat root-level *.dc.html files — those flat paths still exist,
 // but only as redirect stubs, which are worth scanning too (they're
 // real HTML, just minimal).
-const PRETTY_URL_DIRS = ["manifesto", "invitation", "learn", "archive", "resources", "behind-the-scenes", "practise", "contribute"];
+const PRETTY_URL_DIRS = ["manifesto", "invitation", "learn", "archive", "resources", "behind-the-scenes", "practise", "contribute", "practise/hot-honest-ours"];
 
 const PAGES = [
   ...fs

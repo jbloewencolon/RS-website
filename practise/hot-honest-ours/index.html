@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hot, Honest, Ours: Relational Sovereignty</title>
+<meta name="description" content="A private, local-first check-in and comparison tool. Nothing you type is sent anywhere; sharing happens through an encrypted file you send yourself.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://relationalsovereignty.com/practise/hot-honest-ours/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2A2E'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23E7E5DC' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+<!--
+  Privacy sandbox CSP (docs/spec/hot-honest-ours-privacy-architecture.md
+  §9.3): no unsafe-eval (no dc-runtime here -- see §9.2, four independent
+  reasons support.js can't be used on this route), no unsafe-inline on
+  scripts or styles (every rule lives in style.css; every handler is
+  wired with addEventListener, none in markup), connect-src 'none' (this
+  page has no legitimate reason to make a network request of any kind
+  once loaded -- see §9.4 for exactly what that does and doesn't
+  guarantee). frame-ancestors cannot be expressed in a meta tag; the
+  interim mitigation is framebust.js, loaded first, below.
+-->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; manifest-src 'none'; upgrade-insecure-requests">
+<link rel="stylesheet" href="./style.css">
+<script src="./framebust.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to the tool</a>
+<div id="live" role="status" aria-live="polite" class="sr-only"></div>
+
+<header class="room-header">
+  <div class="room-header-row">
+    <p class="room-name">Hot, Honest, Ours</p>
+    <div class="signal-control" role="radiogroup" aria-label="How this is going right now" id="signal-control">
+      <button type="button" class="signal-btn" data-signal="green" aria-pressed="true">Green</button>
+      <button type="button" class="signal-btn" data-signal="yellow" aria-pressed="false">Yellow</button>
+      <button type="button" class="signal-btn" data-signal="red" aria-pressed="false">Red</button>
+      <button type="button" class="signal-btn" data-signal="pause" aria-pressed="false">Pause</button>
+    </div>
+    <button type="button" class="btn-nav" data-action="go-compare">Compare</button>
+    <button type="button" class="leave-now" id="leave-now">Leave now</button>
+  </div>
+  <p class="room-position" id="room-position">Answer the questions</p>
+</header>
+
+<main id="main">
+
+  <section class="screen" data-screen="signal-red" hidden>
+    <div class="shell narrow">
+      <h1 class="stop-word">STOP</h1>
+      <p class="stop-line">A yes can become a no. A no needs no defense.</p>
+      <div class="actions">
+        <button type="button" class="btn-primary" data-action="signal-continue">Come back to it</button>
+        <button type="button" class="btn-secondary" data-action="close-door">Close the door</button>
+        <a class="btn-secondary" href="/resources/">Resources</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" data-screen="signal-pause" hidden>
+    <div class="shell narrow">
+      <h1 class="stop-word">PAUSE</h1>
+      <p class="stop-line">Time, quiet, water, food, regulation, or a different way of communicating. No timer is running. Nothing resumes on its own.</p>
+      <div class="actions">
+        <button type="button" class="btn-primary" data-action="signal-continue">I'm back</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" data-screen="answer">
+    <div class="shell">
+      <p class="eyebrow">Practise · Hot, Honest, Ours</p>
+      <h1>Answer these on your own first</h1>
+      <p class="lede">This is a working subset of the full check-in, enough to try sharing and comparing. Nothing here is sent anywhere or saved unless you choose to.</p>
+      <div id="question-list"></div>
+      <div class="actions">
+        <button type="button" class="btn-primary" data-action="go-share">Share some of this with someone</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" data-screen="share-choose" hidden>
+    <div class="shell">
+      <p class="eyebrow">Share · step 1 of 3</p>
+      <h1>Choose what to share</h1>
+      <p class="lede">Three settings, per question. The default is <strong>Keep private</strong> — you are starting from nothing shared and adding to it, not the other way round.</p>
+      <div class="callout callout-ask">
+        <strong>"Only if they said it too" is a courtesy, not a lock.</strong>
+        It stops the app from showing them your answer. Someone with your
+        passphrase who reads the file directly instead could still see
+        it — if something must stay hidden from this person, choose
+        <strong>Keep private</strong>.
+      </div>
+      <div id="consent-list"></div>
+      <div class="actions">
+        <button type="button" class="btn-primary" data-action="go-review">Review what will leave</button>
+        <button type="button" class="btn-secondary" data-action="go-answer">Back to the questions</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" data-screen="share-review" hidden>
+    <div class="shell">
+      <p class="eyebrow">Share · step 2 of 3</p>
+      <h1>This is what goes in the file</h1>
+      <p class="lede">Read it. This is the actual content, not a summary. Everything not on this list stays on this device.</p>
+      <div id="review-list"></div>
+      <p class="fine-print">After this screen the file exists as an object in the world. You can delete your copy; you cannot delete theirs.</p>
+      <div class="actions">
+        <button type="button" class="btn-primary" data-action="go-protect">Protect this file</button>
+        <button type="button" class="btn-secondary" data-action="go-choose">Change what I'm sharing</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" data-screen="share-protect" hidden>
+    <div class="shell narrow">
+      <p class="eyebrow">Share · step 3 of 3</p>
+      <h1>Your passphrase</h1>
+      <p id="protect-status" class="lede">Making your file&hellip;</p>
+      <p class="passphrase-display" id="passphrase-display" hidden></p>
+      <p class="fine-print">Five words, made just now by this browser. It is the only thing that opens your file, and it is not stored anywhere — not by us, not on this device, not inside the file. If you lose it, the file is scrap and you make a new one.</p>
+      <div class="callout callout-fails">
+        <strong>Send the file and the passphrase separately.</strong>
+        File by email, passphrase by Signal. File by AirDrop, passphrase
+        said out loud. If both travel in the same conversation, anyone
+        who reads that conversation has your answers.
+      </div>
+      <div id="file-ready" hidden>
+        <a class="btn-primary" id="download-link" download>Save the file</a>
+        <button type="button" class="btn-secondary" id="copy-passphrase">Copy the passphrase</button>
+        <p id="copy-status" class="fine-print" role="status" aria-live="polite"></p>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn-secondary" data-action="go-review">Back</button>
+        <button type="button" class="btn-secondary" data-action="go-answer">Done — back to my answers</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" data-screen="compare-open">
+    <div class="shell">
+      <p class="eyebrow">Compare</p>
+      <h1>Compare</h1>
+      <p class="lede">Open both files here. They are read by this browser, on this device, and nothing about them is sent anywhere — this page has no way to send anything, by design.</p>
+
+      <div class="compare-grid">
+        <div class="compare-col">
+          <label class="field-label" for="file-mine">My answers</label>
+          <input type="file" id="file-mine" accept=".hho,application/json,.json,text/plain">
+          <label class="field-label" for="pass-mine">My passphrase</label>
+          <input type="text" id="pass-mine" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="five words">
+        </div>
+        <div class="compare-col">
+          <label class="field-label" for="file-theirs">Their answers</label>
+          <input type="file" id="file-theirs" accept=".hho,application/json,.json,text/plain">
+          <label class="field-label" for="pass-theirs">Their passphrase</label>
+          <input type="text" id="pass-theirs" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="five words">
+        </div>
+      </div>
+
+      <details class="paste-fallback">
+        <summary>Paste a file instead</summary>
+        <div class="paste-grid">
+          <div>
+            <label class="field-label" for="paste-mine">My file's text</label>
+            <textarea id="paste-mine" rows="3"></textarea>
+          </div>
+          <div>
+            <label class="field-label" for="paste-theirs">Their file's text</label>
+            <textarea id="paste-theirs" rows="3"></textarea>
+          </div>
+        </div>
+      </details>
+
+      <p id="compare-error" class="form-error" role="alert" hidden></p>
+      <p class="fine-print">Everything you open here lives in this tab and nowhere else. Close the page and it is gone.</p>
+      <div class="actions">
+        <button type="button" class="btn-primary" id="run-compare">Compare</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" data-screen="compare-results" hidden>
+    <div class="shell">
+      <p class="eyebrow">Compare</p>
+      <h1>What you can both see</h1>
+      <p class="lede">Five groups. Nothing here is a total, a percentage, or a verdict, and the order is the order of the check-in, not "best first".</p>
+
+      <div class="tile-row" id="tile-row"></div>
+      <p id="tile-empty" class="fine-print" hidden>Nothing in this pile. Try another tile.</p>
+
+      <div id="results-groups"></div>
+
+      <div class="callout callout-holds">
+        Start at the boundaries. Understand, don't sell. A hard limit is
+        never up for debate.
+      </div>
+      <div class="actions">
+        <button type="button" class="btn-secondary" id="close-clear">Close and clear</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script type="module" src="./app.js"></script>
+</body>
+</html>

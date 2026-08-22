@@ -1,6 +1,7 @@
 # Relational Sovereignty — Active Tasks
 
 **Last reconciled:** 2026-08-22
+**Sources:** `docs/spec/base-work-order.md`, `docs/spec/addendum-a.md`, `docs/spec/decision-record-d1-d15.md` (authoritative on every `[DECISION]`/`D#` item), `docs/spec/warm-register-review-v2.md`, the author-supplied `Web Design Spec — v0.3` (Phase 9), a `Website Cache & Clickjacking Security Audit` (Phase 10, not in this repo), `docs/audits/heuristic-audit-2026-08-13.md` (Phase 11), an author-supplied review of the runtime handoff (Phase 13, not in this repo), an author-supplied mobile conversion audit (Phase 20, `docs/audits/mobile-conversion-audit-2026-08-17.md`), a self-directed cross-page design consistency audit (Phase 21, `docs/audits/design-consistency-audit-2026-08-17.md`), two self-directed specs replacing the Consent Domains Map (Phase 22, `docs/spec/hot-honest-ours.md` and `docs/spec/hot-honest-ours-privacy-architecture.md`), plus a full read of the shipped code. Each phase below names its own source; verification results, corrections, and rejected-as-written recommendations for shipped/resolved phases live in `archived.tasks.md`, not repeated here.
 **Sources:** `docs/spec/base-work-order.md`, `docs/spec/addendum-a.md`, `docs/spec/decision-record-d1-d15.md` (authoritative on every `[DECISION]`/`D#` item), `docs/spec/warm-register-review-v2.md`, the author-supplied `Web Design Spec — v0.3` (Phase 9), a `Website Cache & Clickjacking Security Audit` (Phase 10, not in this repo), `docs/audits/heuristic-audit-2026-08-13.md` (Phase 11), an author-supplied review of the runtime handoff (Phase 13, not in this repo), an author-supplied mobile conversion audit (Phase 20, `docs/audits/mobile-conversion-audit-2026-08-17.md`), a self-directed cross-page design consistency audit (Phase 21, `docs/audits/design-consistency-audit-2026-08-17.md`), a self-directed build-pipeline investigation (Phase 22), plus a full read of the shipped code. Each phase below names its own source; verification results, corrections, and rejected-as-written recommendations for shipped/resolved phases live in `archived.tasks.md`, not repeated here.
 **Companion files:** `completed.tasks.md` — shipped work, one dated `~~was:~~ now:` entry per task. `archived.tasks.md` — rejected proposals, parked work, resolved decisions, and the detailed reasoning behind closed phases. This file holds **open work only, one line per task where possible.**
 
@@ -12,7 +13,7 @@
 
 ## How to use this file
 
-- Every task keeps its source ID (`RS-0xx`) so it can be cross-referenced against `docs/spec/`. IDs with no spec origin: `SUGGEST-` (raised during codebase familiarization), `FLAG-` (a gap or contradiction needing author input), `HUGO2-` (Phase 5), `UX-` (Phase 6, audit's own numbering), `SEO-` (Phase 7), `BUG-` (Phase 8), `WD-` (Phase 9, spec's own `§3.n` numbering), `SEC-` (Phase 10, `SEC-0n.x` — the ordering is itself the finding), `BM-` (Phase 12), `RT-` (Phase 13), `AR-` (Phase 14), `IA-` (Phase 11), `LA-` (Phase 15), `AC-` (Phases 16/17/19), `MC-` (Phase 20, mobile conversion audit; `MC-C1`–`MC-C20` are corrections found while planning or implementing, not tasks), `DC-` (Phase 21, design consistency audit). See each phase's header for the fuller story if it isn't obvious from context.
+- Every task keeps its source ID (`RS-0xx`) so it can be cross-referenced against `docs/spec/`. IDs with no spec origin: `SUGGEST-` (raised during codebase familiarization), `FLAG-` (a gap or contradiction needing author input), `HUGO2-` (Phase 5), `UX-` (Phase 6, audit's own numbering), `SEO-` (Phase 7), `BUG-` (Phase 8), `WD-` (Phase 9, spec's own `§3.n` numbering), `SEC-` (Phase 10, `SEC-0n.x` — the ordering is itself the finding), `BM-` (Phase 12), `RT-` (Phase 13), `AR-` (Phase 14), `IA-` (Phase 11), `LA-` (Phase 15), `AC-` (Phases 16/17/19), `MC-` (Phase 20, mobile conversion audit; `MC-C1`–`MC-C20` are corrections found while planning or implementing, not tasks), `DC-` (Phase 21, design consistency audit), `HHO-` (Phase 22, Hot, Honest, Ours redesign). See each phase's header for the fuller story if it isn't obvious from context.
 - Tags: `[DEV]` buildable now · `[COPY]` blocked on author-approved text · `[VERIFY]` requires checking a live source before publish — never guess a URL, number, or DOI · `[DECISION]` blocked on a human call.
 - Phases mirror the Decision Record's "Consolidated build order" (Cycles 1–4), with Phase 0 for blockers and later phases added as new work arrived.
 - **Draft copy lives in `docs/spec/`, not here.**
@@ -389,6 +390,102 @@ The audit's own §9 rejections are adopted as written and moved to the Rejected 
 
 ## Phase 21 — Design consistency audit (self-supplied, 2026-08-17) `shipped — see completed.tasks.md`
 
+## Phase 22 — Hot, Honest, Ours: local-first redesign (self-directed, 2026-08-22)
+
+*(Source: two new specs, `docs/spec/hot-honest-ours.md` (UX/interaction —
+replaces the Consent Domains Map with a twelve-round private "room" off
+`/practise/`) and `docs/spec/hot-honest-ours-privacy-architecture.md`
+(the sharing/comparison layer — local files, per-question consent,
+client-side encryption, no server ever holding an answer). IDs below are
+`HHO-nn`, assigned here, no prior spec origin. Continues an idea already
+named twice in this project's own history and never built:
+`archived.tasks.md`'s "Treating the Consent Domains Map as a session with
+connective tissue rather than a page" and its sequencing note that
+Practise should ship last because it holds "the RS-001 safety gate,
+Consent Domains Map, endings tool" — the room concept in the new UX spec
+is that idea, finally specified.)*
+
+**Sequencing note, matching HUGO2-03's own instinct:** build the
+mechanism (share/compare/crypto) before the full twelve-round content —
+the mechanism is what's genuinely new and highest-risk; the content is
+mostly transcription of the source worksheet, already drafted verbatim
+throughout the UX spec.
+
+**A correction made and recorded during planning, not after shipping.**
+The privacy-architecture spec's first draft specified cryptography sized
+for a resourced, technically sophisticated adversary — dual derived keys,
+a keyed digest for the "match only" consent state, whole-payload padding
+to hide file size. Held against the actual site (relationship and kink
+negotiation content, no accounts, no money, a small team with no
+dedicated security engineer), most of that was solving a threat this
+product doesn't face, at real cost to build and maintain. §0.1 of that
+document (dated 2026-08-22) descopes it, with each cut recorded and
+reasoned rather than silently dropped — including one place the original
+draft had overclaimed a protection padding never actually provided (see
+its §10.1 item 1). **Read that document's §0.1 before starting any
+HHO-0n row below** — it changes several of them from what an earlier
+version of this phase would have said.
+
+### Already done
+
+| ID | Task | Tags | Files | Effort |
+|---|---|---|---|---|
+| **HHO-01** | Guard against `support.js` regenerating with a CDN React/ReactDOM. Related to, but narrower than, the long-parked **SUGGEST-03** below — SUGGEST-03 asks whether the dormant Babel/unpkg path should be removed entirely; this guards the *other* two CDN constants against silent regression, decision-free either way. | `[DEV]` | `scripts/check-pages.mjs` | S | Shipped — see `completed.tasks.md`. |
+| **HHO-02–08, HHO-10** | The mechanism: crypto module, EFF wordlist + passphrase generator, the three-state consent model with the boundary override, the simplified `.hho` envelope/payload, the share flow screens, the compare flow screens (two independent passphrases), the comparison engine (boundary axis + tier axis), and the sandbox CSP with JS framebusting. All verified live in a real browser across two independent contexts, plus `crypto.test.mjs` and `engine.test.mjs` (`npm run test:hho`). | `[DEV]` | `practise/hot-honest-ours/*` | — | Shipped — see `completed.tasks.md` for what was verified and two real bugs (a keyboard-focus loss on every re-render, a CSS specificity collision) found and fixed during that verification, not before it. |
+
+### Mechanism — remaining
+
+| ID | Task | Tags | Files | Effort | Notes |
+|---|---|---|---|---|---|
+| **HHO-09 (residual)** | Comparison results UI shipped with cards + triage tiles + boundary-first ordering + the closing line, per spec §8.1's keep/change/reject list applied to the supplied `Compare_Sheet.dc.html`. **Not yet built:** the grid layout for dense same-scale groups (Want Menu / Buffet, once HHO-12 lands enough of them to need it), ordinal dot-plots with text equivalents, and demo mode — all three are explicitly "Should Have — cards work meanwhile" in the spec's own §14 roadmap, so shipping without them isn't a gap against that roadmap. | `[DEV]` | `practise/hot-honest-ours/{app.js,style.css}` | M | |
+| **HHO-11 (residual)** | Route wiring: `scripts/check-origins.mjs` done (shipped). **Not done:** `responsive-audit.mjs` entry (mobile/reflow CI coverage for this route); a standalone accessibility check for this route, since `scripts/check-pages.mjs`'s shared `pages`/`GROUND` list assumes the site's `head-base.html` ground-colour convention, which this page deliberately doesn't share. `scripts/prerender.mjs` and `scripts/sync-base.mjs` are **not applicable** — this page has no dc-runtime template to prerender and doesn't use the shared base CSS block, both by design (spec §9.2). | `[DEV]` | `responsive-audit.mjs`, a new check | S | |
+
+### Content — the twelve rounds
+
+| ID | Task | Tags | Files | Effort | Notes |
+|---|---|---|---|---|---|
+| **HHO-12** | The room: door (what this is / safety five / access check / choose your way in) and all twelve rounds, per UX spec §4–§6. Content is the source worksheet verbatim throughout. `questions.js` currently holds nine representative questions (one of each answer type, enough to prove the mechanism); this task replaces that set with the real twelve rounds rather than appending to it — the representative IDs may not survive, since spec §6.3 only promises permanence for IDs shipped as the real content. | `[DEV]` `[COPY]` | `practise/hot-honest-ours/questions.js`, `index.html`, `app.js` | L | Largest single item in this phase. Sequenced after the mechanism (HHO-02–11, now shipped) per HUGO2-03's own "do the stateful, highest-risk part with the mechanism proven first" instinct. |
+| **HHO-13** | Carry-over group in Round 8: the five Consent Domains Map domains the worksheet doesn't otherwise cover (location sharing, passwords & devices, shared property, cultural knowledge, administrative/logistical care) — UX spec §13.2's coverage table, using the map's own names, hints, and five-option scale. | `[DEV]` `[COPY]` | same | S | **Do not drop cultural knowledge** — RS-028's anti-appropriation guardrail rests on it being asked. |
+| **HHO-14** | 60-second check-in, fridge five, and the shuffle as standalone modes reachable from the door — UX spec §6.16–6.18. | `[DEV]` `[COPY]` | same | M | |
+
+### Site integration and cleanup
+
+| ID | Task | Tags | Files | Effort | Notes |
+|---|---|---|---|---|---|
+| **HHO-15** | `/practise/index.html` tool-01 card: replace the Consent Domains Map card with the Hot, Honest, Ours card — copy drafted verbatim in `docs/spec/hot-honest-ours.md` §8.1 — update the contents nav link, keep `#consent-map` resolving to the new card. | `[DEV]` `[COPY]` | `practise/index.html` | S | |
+| **HHO-16** | Move the shipped Consent Domains Map to `/practise/consent-domains-map/`, kept one release cycle per UX spec §13.1, then removed with a `completed.tasks.md` entry once that cycle ends. | `[DEV]` | new path, `practise/index.html` | S | |
+| **HHO-17** | `index.html` roadmap line ("The Consent Domains Map" under Open now) updated to "Hot, Honest, and Ours". | `[DEV]` `[COPY]` | `index.html` | S | One-line change, listed separately because it's easy to forget. |
+| **HHO-18** | **IA-11 update.** Learn's one-contextual-primary-action link currently targets the Consent Domains Map; retarget to Hot, Honest, Ours once HHO-15/16 ship. | `[DEV]` | `hugo/layouts/learn.html` | S | Cross-reference: IA-11, Phase 11. |
+| **HHO-19** | **WD-29 revisit.** WD-29 deferred recolouring the old map's "no" answer away from rust (the "framework fails" register) against thesis 09's "Refusal is a relational act." The new design's boundary presentation (spec §8.2, §8.4f — boundaries sort first, render as "settled," never as a failure state) may resolve this on its own rather than needing a colour change. Confirm once HHO-09 ships whether WD-29 can close or still needs its own fix. | `[DECISION]` | — | S | Cross-reference only; no new work assumed. |
+| **HHO-20** | **HUGO2-03 scope note.** That task's file list ("the domain map, endings tool") needs updating once Hot, Honest, Ours replaces the map — don't let the Hugo migration template a page that no longer exists. | `[DECISION]` | `hugo/layouts/practise.html` (when HUGO2-03 is picked up) | — | Note only; HUGO2-03 itself is unstarted. |
+| **HHO-21** | `/practise/`'s privacy paragraph ("nothing is stored") — **no change needed while V1 ships tier 0 only** (memory, nothing persisted). Revisit this row the moment tier 1 or 2 (HHO-24 below) is approved; the replacement copy is already drafted, UX spec §13.4. | `[DECISION]` | `practise/index.html` | — | Tracks a decision, not a build. |
+
+### Open decisions (defaults recorded, not yet confirmed by the author)
+
+| ID | Question | Default already recommended | Status |
+|---|---|---|---|
+| **HHO-22** | Path under `/practise/` vs. a separate `ours.` subdomain. | Path, for V1 — spec §9.1. Revisit if HHO-24 ships tier 2. | 🟡 Author leaning toward path; not yet a final call. |
+| **HHO-23** | Cloudflare proxy timing (unlocks `frame-ancestors`/`Permissions-Policy`/COOP site-wide, not just for this feature — same proxy FLAG-02/SEC-03 already need). | Deferred; JS framebusting (HHO-10) covers the one header gap with real severity here. | 🟡 Deferred by design, not abandoned — see FLAG-02's own resolution. |
+| **HHO-24** | Storage tiers beyond memory-only (`sessionStorage`, encrypted IndexedDB). | Tier 0 (memory only) for V1 — keeps `/practise/`'s existing privacy sentence true with no copy change. | 🟡 Open; a real usability cost (a reload loses an in-progress session) traded against keeping the current promise unchanged. |
+| **HHO-25** | Whether the map's carried-over five domains (HHO-13) still need RS-040's citation question answered, or whether folding them into a new tool resets that question. | No independent recommendation — same blocker as RS-040 (FLAG-03-adjacent, needs the author's memory). | 🟡 Inherits RS-040, doesn't resolve it. |
+
+### Deferred, not rejected
+
+Recorded here per this project's own convention of naming a deferral so it
+isn't silently reproposed, distinct from the outright rejections in
+`docs/spec/hot-honest-ours-privacy-architecture.md` §0.1/§12 (temporary
+server uploads, WebRTC, raw-payload URL fragments — those are **reject**,
+not defer):
+
+- The offline single-file build and published per-release hashes (privacy
+  spec §12.1) — real value, better fit for an audience that needs to not
+  trust any server, which isn't primarily this one.
+- ECDH pairing and ready-to-compare QR handshake (privacy spec §12.3) —
+  Version 2 material, worth it only once the file-based V1 has real usage
+  to learn from.
+- A re-comparison flow ("we did this three months ago, what changed") —
+  needs nothing new beyond the stable question-ID scheme HHO-05 already
+  requires, but is new product surface, not part of this phase.
 ## Phase 22 — Build pipeline integrity (self-directed, 2026-08-22) `shipped — see completed.tasks.md`
 
 | ID | Question | Blocks | Status |
@@ -513,6 +610,8 @@ Applies to every page, every release — from `docs/spec/base-work-order.md` §7
 - `docs/spec/README.md` — how the docs relate
 - `docs/audits/ux-audit-2026-08-08.html`, `docs/audits/heuristic-audit-2026-08-13.md`, `docs/audits/voice-audit-2026-08-15.md`, `docs/audits/language-audit-2026-08-16.md` — the audits behind Phases 6, 11, 11.3's COPY-03, and 15
 - `docs/audits/mobile-conversion-audit-2026-08-17.md`, `docs/audits/design-consistency-audit-2026-08-17.md` — the audits behind Phases 20 and 21
+- `docs/spec/hot-honest-ours.md` — Phase 22's UX/interaction spec: the room, the door, all twelve rounds, screen-by-screen, verbatim source copy throughout
+- `docs/spec/hot-honest-ours-privacy-architecture.md` — Phase 22's sharing/comparison/crypto spec; supersedes the UX spec at its own §7.9 and §9.3–9.5; its own §0.1 (2026-08-22) records a right-sizing pass that cut cryptography the site's actual threat model didn't call for — read it before touching any HHO- row
 - `docs/external/seo-aeo-spec-2026-08-08.md`, `docs/external/botanical-motion-system-2026-08-15.dc.html` — external specs behind Phases 7 and 12, kept verbatim; per-item disposition lives in this file and `archived.tasks.md`, not the source files
 - `docs/spec/cloudflare-headers.md` — the exact Transform Rules for SEC-03.1–03.4, ready to apply once the Cloudflare proxy is live
 - `README.md` — which of the nine routes are Hugo sources, which are hand-authored `dc-runtime` pages, and how `head-base.html` reaches all nine (added during Phase 20's component migration, MC-14)

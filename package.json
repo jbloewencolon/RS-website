@@ -11,7 +11,8 @@
     "check:origins": "node scripts/check-origins.mjs",
     "check:responsive": "node responsive-audit.mjs",
     "check:botanical": "node scripts/check-botanical.mjs",
-    "test:runtime-handoff": "node scripts/test-runtime-handoff.mjs"
+    "test:runtime-handoff": "node scripts/test-runtime-handoff.mjs",
+    "test:hho": "node practise/hot-honest-ours/crypto.test.mjs && node practise/hot-honest-ours/engine.test.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
