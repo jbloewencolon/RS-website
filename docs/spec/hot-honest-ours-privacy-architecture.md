@@ -1155,11 +1155,45 @@ beside it.
 
 ### 9.2 Script policy
 
-- **No dc-runtime.** `support.js` compiles `<script type="text/x-dc">`
-  through `new Function()`, which is why every x-dc page ships
-  `script-src 'self' 'unsafe-eval'`. The sandbox is hand-written vanilla
-  JavaScript in one or two same-origin files, and ships **no
-  `unsafe-eval`**. This is a hard requirement, not a preference.
+- **No dc-runtime.** Four independent reasons, from reading the shipped
+  `support.js` end to end:
+
+  1. **`unsafe-eval` is structural, not incidental.** `evalDcLogic`
+     (`support.js:893`) compiles each page's `<script type="text/x-dc">`
+     body with `new Function(...)`, and it is the *only* path by which
+     page logic is loaded — one call site, `support.js:1769`. There is no
+     precompiled entry point to opt into, so no page using this runtime
+     can drop `'unsafe-eval'`. A second `new Function` at
+     `support.js:1282` compiles modules fetched by the `x-import` loader,
+     optionally through Babel.
+  2. **A dormant CDN dependency.** `BABEL_URL`
+     (`support.js:1211`) points at `unpkg.com`, injected as a
+     `<script>` by `ensureBabel()` when a JSX `x-import` is used. This
+     site never triggers it and `script-src 'self'` would block it, but
+     it is a third-party script source compiled into the runtime.
+  3. **A boot-time self-fetch.** `support.js:159` runs
+     `fetch(location.href)` on every boot unless `window.__resources` is
+     set — and no page in this repo sets it. It is same-origin, allowed
+     by the site's `connect-src 'self'`, and its failure is swallowed, so
+     under the sandbox's `connect-src 'none'` it would be blocked
+     harmlessly. It still means the runtime's normal operation includes a
+     network request the sandbox has no use for.
+  4. **A wildcard `postMessage` to a framing parent.** `support.js:1922`
+     and `:1451` post boot metadata and design-mode messages to
+     `window.parent` with target origin `"*"`, guarded only by
+     `window.parent === window`. No answer content goes through it today,
+     but it is an outbound channel to whoever frames the page, `connect-src`
+     does not govern it, and `frame-ancestors` cannot currently be set
+     (§9.3).
+
+  The sandbox is therefore hand-written vanilla JavaScript in one or two
+  same-origin files, with **no `unsafe-eval`**. This is a hard
+  requirement, not a preference.
+
+  *One thing the runtime does not do:* it touches no storage API of any
+  kind — no `localStorage`, `sessionStorage`, `indexedDB`, or cookies.
+  The site's storage posture is entirely a property of its pages, and
+  §9.6's tiers are not fighting the runtime for control of it.
 - **No React, no vendor bundle, no npm runtime dependency.** The repo's
   `vendor/react*.js` exists for the dc-runtime and is not needed here.
 - **No `innerHTML` in the comparison path.** `textContent` only.
@@ -1175,6 +1209,41 @@ beside it.
   user can verify what they were served. Subresource Integrity does not
   help against the origin itself; publishing hashes and shipping the
   offline copy (§12.1) is what does.
+
+### 9.2a The shipped `support.js` is a patched build — keep it that way
+
+Worth recording because it is invisible from the repository and would be
+easy to undo.
+
+`support.js` carries the header *"GENERATED from `dc-runtime/src/*.ts` —
+do not edit"*, and the toolchain that generates it lives outside this
+repository. The copy that ships here is **not** the stock upstream build:
+
+| Constant | Shipped in this repo | Upstream build |
+|---|---|---|
+| `REACT_URL` | `/vendor/react.production.min.js` | `https://unpkg.com/react@18.3.1/umd/react.production.min.js` |
+| `REACT_DOM_URL` | `/vendor/react-dom.production.min.js` | `https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js` |
+| `BABEL_URL` | `https://unpkg.com/@babel/standalone@7.29.0/babel.min.js` | same |
+
+The SRI hashes are identical in both, so the vendored files are
+byte-for-byte the unpkg artifacts and `integrity` still validates — a
+neat arrangement, and an easy one to lose.
+
+**The failure mode.** Regenerating `support.js` from upstream without
+re-applying the local-path change would point every interactive page at
+`unpkg.com`. Under the site's own `script-src 'self'` those loads are
+blocked, so Home, Practise and Contribute would break outright rather
+than quietly acquiring a CDN — the right failure direction, and still a
+site-wide outage. If the CSP were ever relaxed, the same regeneration
+would instead silently add a third-party script, with the user's IP and
+a referrer, to the three pages that carry interactive tools.
+
+**Recommendation.** Add a check to `scripts/check-pages.mjs` asserting
+that `support.js` contains no `unpkg.com` URL other than `BABEL_URL`, and
+that `REACT_URL` and `REACT_DOM_URL` are same-origin paths. It is three
+lines, and it converts an invisible manual patch into a build failure.
+Consider also vendoring Babel and patching `BABEL_URL`, or confirming
+that no page uses a JSX `x-import` and that none ever will.
 
 ### 9.3 CSP and headers
 
@@ -1330,7 +1399,7 @@ Rules that follow:
 | **Hosting or CDN compromise** | Same as above | Same as above | Same. GitHub Pages and Cloudflare are both in the trusted path |
 | **Third-party script** | Full read of answers and passphrase | None loaded; `default-src 'none'`; `check-origins.mjs` fails the build | Turnstile exists elsewhere on the site — a copy-paste of a page template could import it. Add a test that asserts its absence |
 | **XSS on the sandbox origin** | Full read of drafts, live answers, passphrase | Separate origin; no `unsafe-eval`; no `unsafe-inline` styles; no `innerHTML`; render from the local questionnaire, never from the file (§6.4) | Navigation-based exfil is not blockable by CSP (§9.4) |
-| **Supply chain** | Full | No runtime npm dependency; no CDN; hand-written source in-repo | `support.js` is generated by a toolchain outside this repository — which is precisely why the sandbox does not use it |
+| **Supply chain** | Full | No runtime npm dependency; no CDN; hand-written source in-repo | `support.js` is generated by a toolchain outside this repository, and the shipped build differs from the upstream one — it has been pointed at `/vendor/react*.js` where upstream points at `unpkg.com` (§9.2a). A future regeneration that loses that patch would silently reintroduce a CDN on Home, Practise and Contribute. Precisely why the sandbox does not use it |
 | **Intercepted `.hho` in transit** | Ciphertext only | AES-256-GCM; 64.6-bit generated passphrase; separate channel | Total loss if the passphrase went through the same conversation. The UI fights this; it cannot prevent it |
 | **Accidentally forwarded attachment** | Ciphertext | Encrypted; neutral filename; padded size | The recipient learns a file exists. If they also have the passphrase, everything |
 | **Maliciously modified `.hho`** | Confusion, or attempted injection | GCM tag rejects any change; strict schema validation; UI built from the local questionnaire; `textContent` only | A tampered file fails to open. Denial of service only |
