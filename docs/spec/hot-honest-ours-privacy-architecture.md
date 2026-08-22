@@ -22,7 +22,7 @@ the reasons are in the sections named.
 | # | Brief says | This spec says | Why | § |
 |---|---|---|---|---|
 | 1 | Match Only hides the answer unless comparison rules permit | **Match Only is a courtesy layer, not a security boundary,** and the UI must say so | Any match oracle over a 5-value answer domain leaks the answer in at most 5 queries. This is information-theoretic, not an implementation gap. | 5.4 |
-| 2 | Private means "not in the package in usable form" | **Private means the answer is not in the package at all,** and every question is padded so withheld and unanswered are indistinguishable | "Not usable" still leaks *which* questions you hid — often the whole story | 5.3, 6.5 |
+| 2 | Private means "not in the package in usable form" | **Private means the answer is not in the package at all** — no key present, indistinguishable from a question never reached | "Not usable" still leaks *which* questions you hid — often the whole story. (An earlier draft of this document also padded the file to hide the total; §0.1 corrected that, once it was clear padding didn't defend against the reader who actually matters — see §10.1 item 1) | 5.3, 6.5 |
 | 3 | `Alex-Hot-Honest-Ours.share` | **Neutral default filename, `.hho` extension,** label inside the ciphertext | The filename is the most-leaked field in the entire design: download history, mail attachment lists, cloud backup indexes, lock-screen notifications | 6.6 |
 | 4 | Example passphrase `violet-river-candle-piano` | **Five words from the EFF long list (7 776 words), app-generated, never user-chosen** | Word *count* is not the variable people get wrong — list size is. Four words from a 1 024-word list is ~40 bits, crackable against PBKDF2 in about a fortnight on a modest GPU rig | 7.3 |
 | 5 | V1.5: encrypted payload in a URL fragment | **Reject.** Use QR for the *passphrase*, never the payload | Chrome and Firefox history sync uploads full URLs, fragment included, to vendor servers and to every other signed-in device | 12.2 |
@@ -42,16 +42,53 @@ Two findings are specific to this repository and gate the work:
   cannot express `frame-ancestors`, `Cache-Control`,
   `Cross-Origin-Opener-Policy`, or `Permissions-Policy`.
   `docs/spec/cloudflare-headers.md` is written and unapplied, blocked on
-  a nameserver change only the domain operator can make. **That change is
-  a Must-Have prerequisite, not a later hardening pass.** (§9.3)
+  a nameserver change only the domain operator can make. **Deferred, not
+  blocking** — see the right-sizing pass below. (§9.3)
+
+### 0.1 A right-sizing pass, 2026-08-22 — descoped after review
+
+Everything above describes changes from the *brief*. This section
+describes a second pass, made after building the first version of this
+spec and then holding it against the actual site: relationship and kink
+negotiation content, no accounts, no money, run by a small team with no
+dedicated security engineer to maintain complexity indefinitely.
+
+The first draft of this document specified cryptography sized for a
+sophisticated, resourced adversary doing offline analysis of an
+intercepted file — HKDF-split dual keys, a keyed HMAC digest for
+Match Only, per-question padding stubs, whole-payload bucket padding,
+and a `pair` check value to keep two independently-derived match keys in
+sync. None of that matches the actual threat: two partners exchanging a
+file directly. **Cut, with reasons, not by half-measures:**
+
+| # | First draft had | Cut to | Why |
+|---|---|---|---|
+| 1 | Match Only stored as a keyed HMAC digest, needing its own derived key | Match Only stores the plain value, same as Reveal, just not surfaced by the UI unless both sides match | §5.4 already concluded Match Only is "a courtesy, not a lock" — five possible answers, five guesses either way. Building real cryptography to protect a guarantee already admitted to be weak wasn't earning its complexity. See the correction in §10.1 item 1 below: the digest never actually stopped a coercive partner from counting withheld answers either, since anyone with the passphrase can already read the decrypted JSON |
+| 2 | A `pair` check value, and a requirement that both partners use the *same* passphrase | Each file is independently encrypted under its own author's own generated passphrase. Comparison needs both passphrases, not one shared one | Only existed to make two independently-computed HMAC digests agree. With no digest, there's nothing that needs to agree, and a whole confusing failure mode ("these files were made with different passphrases") disappears along with it |
+| 3 | Per-question padding stubs plus whole-payload padding to fixed size buckets (4/8/16/32/64 KiB) | Neither. The payload lists only shared questions; everything else is simply absent | Bucket padding defended against someone *without* the passphrase inferring share-volume from ciphertext size — a narrow, sophisticated threat. It did nothing for a partner *with* the passphrase, who can just count entries after decrypting regardless of padding (§10.1 item 1's correction). Not worth the engineering for the threat it actually stopped |
+| 4 | `CompressionStream` before padding, with an identity fallback | Dropped | Payloads here are a few KB either way. Compression saves bytes nobody will notice, while adding a Safari-version fallback to test and maintain |
+| 5 | HKDF-SHA-256 splitting one derived secret into a file key and a match key | One PBKDF2-derived key, used directly | Existed only to serve the digest scheme in row 1. No digest, no need to split |
+| 6 | Cloudflare proxy as a Must-Have V1 prerequisite | Deferred. JS framebusting as the cheap interim mitigation for the one header-gap that has real teeth here (clickjacking) | The other two unavailable headers (`Permissions-Policy`, COOP) protect against things this page doesn't do — invoking a camera/mic API, opening windows. Real severity for this specific page is low; the nameserver change can wait |
+| 7 | A separate origin (`ours.` subdomain) as the default recommendation | A path under `/practise/` as the default; a subdomain becomes worth it later if storage tiers 1/2 ship or the site's dynamic surface grows | The storage-isolation argument only matters once something is stored at rest. V1 defaults to memory-only (tier 0), so there's nothing to isolate yet |
+| 8 | Offline single-file build + published per-release hashes, "Should Have" | Moved to Later, maybe never | Real trust-minimization value for someone who needs to not trust *any* server — a narrower need than this project's actual audience |
+
+**What did not change, and should not:** basic file encryption (cheap,
+defends against the mundane and common case of a plaintext file sitting
+in an old email or a phone backup); the consent model's product
+decisions (private-by-default, no global reveal-all, no receipts, the
+boundary override); neutral filenames; every accessibility and
+emotional-safety requirement. None of that was expensive, and most of it
+is what makes this a good relationship tool rather than a security demo.
+The simplified cryptographic flow is in §7; the simplified file format is
+in §6; the one place the cut has a real, named cost is §10.1 item 1.
 
 ---
 
 ## 1. Executive recommendation
 
-Build **Version 1 as local files plus in-browser comparison**, on a
-separate origin, in hand-written JavaScript with no runtime dependencies,
-under a CSP with no `unsafe-eval` and `connect-src 'none'`.
+Build **Version 1 as local files plus in-browser comparison**, on a path
+under the existing site, in hand-written JavaScript with no runtime
+dependencies, under a CSP with no `unsafe-eval` and `connect-src 'none'`.
 
 Answers stay in the tab. Each person picks, per question, one of three
 consent states — **Reveal**, **Match Only**, **Private** — sees a
@@ -69,17 +106,25 @@ as "the app won't show them" and never as "they can't find out"; **Private**
 is the only real boundary. **A URL fragment is not a private channel**,
 because browser sync ships history to vendor servers. And **"we never
 receive your answers" is true but incomplete**: users are trusting the
-JavaScript we serve on each load, so the honest promise pairs it with a
-published build hash and a downloadable offline copy.
+JavaScript we serve on each load. That trust is real and is named on
+screen (§16); it is not solved with a published hash and an offline copy
+in V1 — that machinery is deferred (§0.1) as disproportionate to what
+this specific product needs to ship.
 
 Defer temporary uploads indefinitely — they reinstate the arrow this
 design exists to delete. Treat WebRTC as unlikely rather than planned:
 it discloses each partner's IP address to the other, which for part of
 this audience is the disclosure that matters most.
 
-The prerequisite is unglamorous. Until the domain is proxied and can send
-real response headers, the sandbox cannot be framed-protected or
-`Permissions-Policy`-restricted. Do that first.
+**One right-sizing pass already happened.** The first draft of this
+document specified cryptography sized for a resourced adversary doing
+offline analysis of an intercepted file — dual derived keys, a keyed
+digest for Match Only, padding to hide file size. §0.1 cuts all of it:
+none of it defended against the threat that's actually live here (a
+partner who has the passphrase, which is every intended recipient), and
+all of it cost real engineering to build and maintain. What's left is
+plain AES-256-GCM under one PBKDF2-derived key, per file. Cheap, and
+correctly scoped.
 
 ### 1.2 The four approaches, re-rated
 
@@ -90,7 +135,7 @@ The brief's ratings, with my changes in bold and the reasoning after.
 | Server accounts / database | **★** (was ★★) | **★★★** (was ★★★★★) | ★★★★ | Reject as foundation |
 | Temporary encrypted uploads | **★★★½** | ★★★★ | **★★★★** (was ★★★) | **Defer indefinitely** (was "possible later") |
 | Peer-to-peer WebRTC | **★★★** (was ★★★★½) | **★★★** (was ★★★★) | ★★★★★ | Unlikely, not planned |
-| **Local files + browser comparison** | **★★★★½** (was ★★★★★) | **★★★** (was ★★★★) | **★★★** (was ★★) | **Version 1** |
+| **Local files + browser comparison** | **★★★★½** (was ★★★★★) | **★★★★** (was ★★★★) | **★★** (was ★★) | **Version 1** |
 
 - **Accounts are not ★★★★★ UX for this content.** They are excellent UX
   for a to-do app. Here they add an email address in an inbox, a
@@ -113,11 +158,17 @@ The brief's ratings, with my changes in bold and the reasoning after.
   about should not have their approximate location handed over as a side
   effect. ★★★.
 - **Local files are ★★★★½, not ★★★★★.** The half star is the code we
-  serve (§10, row 1). UX is ★★★ because passing a file and a passphrase
-  between two phones is genuinely fiddly, and pretending otherwise sets
-  the build up to under-invest in exactly the screens that will fail.
-  Complexity is ★★★: Web Crypto is easy, but versioning, validation,
-  the consent model, and the mismatch cases are not.
+  serve (§10, row 1). UX is ★★★★, not ★★★: passing a file and a
+  passphrase between two phones is genuinely fiddly (that part of the
+  original rating stands), but the right-sizing pass (§0.1) removed the
+  forced-shared-passphrase convention — each file now carries its own
+  passphrase, which turns out to be the *more* natural mental model
+  ("the passphrase that came with this file"), not a harder one.
+  Complexity drops to ★★, from ★★★: Web Crypto with one key is a day's
+  work; the digest scheme, the padding, and the passphrase-agreement
+  failure mode this replaces were the actual complexity, and they're
+  gone. Versioning, validation and the consent model remain real work,
+  just less of it.
 
 ---
 
@@ -414,8 +465,9 @@ not write it down, make the file again.*
 > anything, by design.
 >
 > **My answers** [ Open a file ]
+> **My passphrase** [ five words ]
 > **Their answers** [ Open a file ]
-> **Passphrase** [ five words ]
+> **Their passphrase** [ five words ]
 
 **Primary** `Compare` (disabled until both files and a passphrase are
 present) · **Secondary** `Paste a file instead`
@@ -430,12 +482,17 @@ present) · **Secondary** `Paste a file instead`
   someone who cannot get an attachment out of Signal on iOS can open it
   in Notes and paste. This escape hatch is not a nicety; on mobile it is
   the difference between the product working and not.
-- One passphrase field, not two: the recommended flow is one shared
-  passphrase for the pair, this time. If the files were made with
-  different passphrases, a second field appears after the first failure.
-- Input normalisation before key derivation, specified once so both
-  sides agree: **NFKC, lowercase, trim, collapse any run of
-  whitespace/hyphen/underscore to a single hyphen.** Set
+- **Two passphrase fields, not one.** Each file was encrypted under its
+  own passphrase, generated when that file was made (§7.4) — there is no
+  "shared" passphrase to coordinate. "My passphrase" is whatever this
+  device's own draft used, or what you wrote down when you made your
+  file; "their passphrase" is whatever they sent along with their file.
+  This is simpler than it sounds in practice: the passphrase travels
+  *with* its file, as a pair, so there's nothing to remember to keep in
+  sync.
+- Input normalisation, so autocorrect and stray whitespace don't turn a
+  correct passphrase into a wrong one: **NFKC, lowercase, trim, collapse
+  any run of whitespace/hyphen/underscore to a single hyphen.** Set
   `autocapitalize="off" autocorrect="off" spellcheck="false"`.
 
 **Error states**
@@ -528,54 +585,94 @@ as known to the partner.
 
 | State | In the file | Partner's device can derive |
 |---|---|---|
-| **Private** (default) | A fixed-size padded stub, identical to an unanswered question | Nothing. Cannot distinguish private from unanswered |
-| **Match Only** | A 128-bit keyed digest of the answer, no value | Whether their own answer produces the same digest — and, with five candidate answers, the answer itself if they try all five |
+| **Private** (default) | Nothing — the question simply has no entry, indistinguishable from one you never reached | Nothing |
+| **Match Only** | The plain answer value, same as Reveal, tagged so the app knows not to show it unless both sides match | The value, if they open the decrypted file directly instead of going through the compare screen. This is the whole reason the state is a courtesy, not a lock (§5.4) |
 | **Reveal** | The answer value, plus conditions text if any | The answer |
 
-### 5.2 Why Match Only ships a digest rather than the value
+### 5.2 Why Match Only doesn't need its own cryptography
 
-The brief's model puts the answer in the package and asks the receiving
-client not to display it. That makes the whole guarantee a UI convention:
-open the decrypted JSON, or the devtools console, and the answer is
-there.
+An earlier draft of this design shipped Match Only as a keyed HMAC digest
+of the answer rather than the plain value, on the theory that it should
+resist inspection even by someone who bypasses the compare screen and
+reads the decrypted file directly.
 
-Shipping `HMAC-SHA-256(matchKey, qid ‖ value)` truncated to 128 bits
-raises the floor. A partner who reads the file sees a digest. A partner
-who opens devtools sees a digest. Only a partner who writes five lines
-of code recovers the answer.
+That protection didn't actually hold up, and the reasoning is worth
+keeping on record rather than quietly dropping: **decrypting the file at
+all already requires the passphrase**, which means the only person who
+can reach that plaintext is the intended recipient — or someone who
+obtained the passphrase from them, which no digest scheme changes
+anything about. The digest raised the bar from "read the JSON" to "write
+five lines of code to try five guesses" — a real but small difference,
+bought at the cost of a second derived key, a keyed-digest computation,
+and a cross-file agreement problem (the file that used to be §5.8).
 
-### 5.3 Why Private means absent, and why absence is padded
+So Match Only now stores the plain value, exactly like Reveal, differing
+only in a tag telling the app's own UI not to surface it unless the
+partner's file independently matches. The comparison engine reads both
+decrypted files locally and checks equality directly (§8.3) — no digest,
+no second key, and it can always show the actual matched value once both
+sides agree, rather than the earlier design's fallback message for when
+neither device happened to hold the plaintext already.
 
-If private answers are simply omitted, the receiving client can list the
-questions that are missing — and *which* questions someone withheld is
-frequently more revealing than the answers themselves. It also makes the
-file size a function of how much was shared, so an intercepted or
-forwarded file leaks volume before it leaks anything else.
+### 5.3 Why Private means absent — and a correction to how far that goes
 
-Therefore: **the payload contains one entry per question in the
-questionnaire, always**, private and unanswered entries are byte-identical
-stubs, and the serialised payload is padded to a fixed bucket
-(4 / 8 / 16 / 32 / 64 KiB) before encryption. A file's size then tells an
-observer which bucket it is in and nothing more.
+Private questions are simply omitted from the payload. A question you
+kept private and a question you never reached render identically,
+because there is nothing in the file to tell them apart — the same
+absent key, for either reason.
+
+**An earlier draft went further, and overclaimed what it bought.** It
+had every payload list *every* question in the questionnaire, always,
+with private and unanswered ones represented as identical stub entries,
+then padded the whole serialised payload to a fixed size bucket before
+encryption — specifically framed as making the file "unable to answer"
+how many questions were withheld, which mattered for the coercion case
+in §10.1.
+
+That framing doesn't survive scrutiny. Padding hides file size from
+someone who does **not** have the passphrase. It does nothing at all for
+a partner who **does** — the exact person §10.1 is actually worried
+about — because once they decrypt the file, they can trivially count
+private questions by asking "how many questions does the current
+questionnaire have, minus how many keys are in this object" regardless
+of whether those omitted questions were ever explicitly stubbed or
+padded. The stub-and-pad scheme was solving a problem it didn't actually
+solve for its stated audience, at real implementation cost. Cut. See
+§10.1 item 1 for what the honest mitigation actually is (there mostly
+isn't one, and the copy says so).
+
+What padding *did* legitimately do — hide roughly how much was shared
+from someone without the passphrase, inspecting an intercepted or
+forwarded file from outside — is a real but narrow property, worth
+naming as a residual, accepted gap (§10.2) rather than engineering
+around for this project's actual audience.
 
 ### 5.4 The limit, stated so it can be printed
 
-> **"Only if they said it too" is not a lock.** There are five possible
-> answers to most questions here. Someone who wants your answer and is
-> willing to write a little code can try all five against the file and
-> find out. The setting stops the app from showing them. It does not stop
-> a person who is determined to know.
+> **"Only if they said it too" is not a lock.** The answer is in the
+> file, in plain form. The app's own screens won't show it to them unless
+> your answers match — but the file could always be read outside those
+> screens by anyone who has your passphrase, and that's every intended
+> recipient.
 >
 > **"Keep private" is the one that actually holds.** That answer is not
 > in the file in any form.
 
 No amount of engineering removes this, and it is worth being precise
-about why: any mechanism that lets B ask "does A's answer equal *X*?"
-answers the question in at most five attempts when there are five
-possible answers. Interactive protocols (oblivious pseudorandom
-functions, garbled circuits) do not fix it either — B can lie about their
-own input and re-run. The leak is a property of small answer domains, not
-of the file format.
+about why, because a version of this design *did* try: an earlier draft
+shipped a keyed digest instead of the plain value, so a bystander reading
+the raw file saw a hash instead of an answer. It didn't change anything
+for the person this section is actually about. Anyone with the
+passphrase can decrypt the file and, in the case of the digest, simply
+try the handful of possible answers against it — five tries for a
+five-value question. Interactive protocols (oblivious pseudorandom
+functions, garbled circuits) don't fix this either — the same person can
+lie about their own input and re-run. The leak is a property of small
+answer domains and of *having the passphrase at all*, not of how the
+value happens to be encoded in the file. Encoding it as a digest bought
+one extra step for a very specific, unlikely attacker (someone who has
+the passphrase but skips the compare screen and inspects the JSON by
+hand) at the cost of real complexity, which is why §0.1 cut it.
 
 **Product consequence:** Match Only is positioned as *"the app won't put
 you on the spot"* — a way to avoid being the one who said it first — and
@@ -586,17 +683,21 @@ never as confidentiality. Private carries the confidentiality claim alone.
 | Answer type | Reveal | Match Only | Private |
 |---|---|---|---|
 | Closed scale (yes / maybe / no / not yet / braver) | ✔ | ✔ | ✔ |
-| Chip multi-select (aftercare, relationship shapes) | ✔ | ✔ — digest over the sorted, canonicalised set | ✔ |
-| Numeric stepper (nights per month) | ✔ | ✖ — a match test over 0–31 is a 31-query lookup, which is worse than useless | ✔ |
+| Chip multi-select (aftercare, relationship shapes) | ✔ | ✔ — canonicalised (sorted, casefolded) before comparing, so re-ordering the same set isn't read as a difference | ✔ |
+| Numeric stepper (nights per month) | ✔ | ✔ — plain integer equality, once decrypted | ✔ |
 | **Free text** (conditions, limits, Round 12) | ✔ | **✖** | ✔ |
 | Signal / access check | ✖ — never shared at all | ✖ | always |
 
-Free text cannot be match-tested (two people never write the same
-sentence), and its entropy makes it identifying, so it takes two states
-only. The access check and the signal are **never shareable in any
-state** — they are about the user's own capacity in the moment, and a
-partner who can see "freedom to say no: thin" has been handed a
-diagnostic they should not have.
+**Free text is the one type match-only genuinely can't serve** — two
+people essentially never write the identical sentence, so offering it
+would just always render as "not shared," which is worse than not
+offering the control at all. Now that match-only is plain equality
+rather than a digest, the numeric stepper restriction from an earlier
+draft (aimed at a small-domain digest being weak) no longer applies —
+there's no digest to be weak. The access check and the signal are
+**never shareable in any state** — they are about the user's own
+capacity in the moment, and a partner who can see "freedom to say no:
+thin" has been handed a diagnostic they should not have.
 
 ### 5.6 The boundary override
 
@@ -631,14 +732,13 @@ both consent maps regardless of whose device it runs on.
 | 4 | R | R | same, not NO | **Aligned** | yes | yes |
 | 5 | R | R | differ, neither NO | **Worth discussing** | yes | yes |
 | 6 | R | R | either is NO | **Boundary** | yes | yes |
-| 7 | R | M | digest matches A's value | **Both said yes** | yes | yes (derived) |
-| 8 | R | M | no digest match | Not shared, one-sided | yes | no |
+| 7 | R | M | values equal | **Both said yes** | yes | yes |
+| 8 | R | M | values differ | Not shared, one-sided | yes | no |
 | 9 | R (NO) | M | any | **Boundary** | yes | no |
-| 10 | M | M | digests equal | **Both said yes** | value shown if locally known, else "you both picked the same answer" | same |
-| 11 | M | M | digests differ | Not shared | no | no |
+| 10 | M | M | values equal | **Both said yes** | yes — always, once both files are decrypted the value is simply known | same |
+| 11 | M | M | values differ | Not shared | no | no |
 | 12 | M | P | — | Not shared | no | no |
 | 13 | any | any | question absent from one questionnaire version | Not compared | — | — |
-| 14 | any | any | files made with different passphrases | Not compared (M rows only); R rows still work | — | — |
 
 Rows 3, 11 and 12 render **identically** — that is the point. A partner
 cannot tell "she kept this private" from "she used match-only and we
@@ -650,23 +750,20 @@ pressure:
 > They shared this one and you didn't. That is allowed, and it is not a
 > debt.
 
-### 5.8 Different passphrases
+### 5.8 Two independent passphrases, not one shared one
 
-Match digests are computed under a key derived from the shared
-passphrase (§7.4). Two files made with different passphrases produce
-match keys that never agree, which would silently render every
-match-only row as "not shared" — a failure indistinguishable from working
-correctly.
+An earlier draft required both partners to use the *same* passphrase, so
+that two independently-computed match digests would agree — and needed a
+`pair` check value inside each file just to detect when that convention
+was violated, plus a dedicated error screen for when it was.
 
-Each file therefore carries a `pair` check value inside its ciphertext:
-`HMAC-SHA-256(matchKey, "hho-pair-v1")`, truncated to 128 bits. If the
-two files disagree, the results screen says so plainly:
-
-> These two files were made with different passphrases, so the
-> "only if they said it too" answers can't be checked against each other.
-> Everything either of you set to "show them my answer" is compared
-> normally below. To get the rest, one of you can make a new file using
-> the other's passphrase.
+Once Match Only stopped being a digest (§5.2), that whole requirement
+evaporated. **Each file is encrypted under its own author's own
+generated passphrase, full stop.** Comparing two files just means
+decrypting each with its own passphrase — two fields on the compare
+screen (§4.6), not one — and then comparing the plaintexts directly.
+There is nothing left that needs the two passphrases to agree, so there
+is no failure mode where they don't.
 
 ---
 
@@ -700,26 +797,31 @@ how much was shared.
   "q":     "hho-2026.08",
   "day":   "2026-08-22",
   "label": "me",
-  "pair":  "<b64u, 16 bytes>",
   "a": {
     "r2.play.4": { "m": "r", "v": "YES", "c": "with warning, not on my back" },
-    "r2.play.5": { "m": "k", "d": "<b64u, 16 bytes>" },
-    "r2.play.6": { "m": "p" },
-    "…": "one entry for every question in questionnaire q"
-  },
-  "pad": "<b64u random, to the bucket boundary>"
+    "r2.play.5": { "m": "k", "v": "MAYBE" },
+    "…": "one entry per question you set to reveal or match-only — nothing else"
+  }
 }
 ```
 
-- `m` — mode: `r` reveal, `k` match-only (keyed digest), `p` private or
-  unanswered. **`p` entries are byte-identical** whatever the reason.
+Deliberately the whole thing — no `pair` field, no `pad` field, no
+digest. An earlier draft always listed every question in the current
+questionnaire, tagging unshared ones with an explicit `{"m":"p"}` stub,
+then padded the serialised result to a fixed size bucket, both aimed at
+hiding how much was shared. §5.3 explains why that was cut: it protected
+against someone *without* the passphrase, and did nothing for the
+person §10.1 actually worries about, who can decrypt the file and count
+entries either way.
+
+- `m` — mode: `r` reveal, `k` match-only. Both carry the plain value in
+  `v`; the tag only tells the app's own UI whether to show it
+  unconditionally or only on a match.
+- **A private or unanswered question has no key in `a` at all.** Nothing
+  distinguishes the two, because there's nothing there to distinguish.
 - `q` lives inside the ciphertext, not the envelope, so the questionnaire
   edition is not readable without the passphrase. Envelope `v` is enough
   to reject a format from the future.
-- `pair` — `HMAC-SHA-256(matchKey, "hho-pair-v1")[0..15]`. Detects two
-  files made under different passphrases (§5.8).
-- `pad` — random bytes bringing the serialised payload to the next bucket
-  of 4 / 8 / 16 / 32 / 64 KiB.
 
 ### 6.3 Versioning
 
@@ -770,8 +872,8 @@ Flagged because each was plausible and each leaks.
 | Time of day | *When* you filled this in is revealing. `day` granularity only, and `day` is itself optional |
 | Any stable participant ID | Would let two files from the same person, months apart, be linked |
 | Device, browser, OS, screen size, locale, timezone | No purpose here |
-| Which questions were answered, in the envelope | Inside the ciphertext, and padded |
-| A count of private answers | Nowhere, in any form. §10, coercion |
+| Which questions were answered, in the envelope | Inside the ciphertext; the envelope is a constant shape regardless of content |
+| A count of private answers, anywhere in the app's own UI or output | Never surfaced by the product. It **is** computable by anyone who decrypts the file and knows the current question count — see the honest correction in §10.1 item 1 |
 | The questionnaire edition, in the envelope | Inside the ciphertext |
 | Geolocation, IP, anything network-derived | The page cannot obtain these under §9 |
 
@@ -800,45 +902,52 @@ notification, and in whatever backs the phone up.
 ```
 answers (in tab)
    │
-   ├─ consent filter ─────── reveal → value ; match → digest ; private → stub
+   ├─ consent filter ─────── reveal or match-only → value ; private → omitted entirely
    │
-   ├─ canonicalise ───────── sets sorted; scale values from a fixed vocabulary;
-   │                         NFC on text; JSON with sorted keys, no whitespace
+   ├─ serialise ──────────── ordinary JSON; canonical form is the comparison
+   │                         engine's concern (§8.3), not the crypto's
    │
-   ├─ compress ───────────── CompressionStream('deflate-raw') where available;
-   │                         identity where not, flagged in the payload
+   ├─ derive ─────────────── key = PBKDF2-HMAC-SHA256(passphrase, salt, 600 000, 32B)
    │
-   ├─ pad ────────────────── random bytes to the next 4/8/16/32/64 KiB bucket
-   │
-   ├─ derive ─────────────── root = PBKDF2-HMAC-SHA256(pass, pairSalt, 600 000, 32B)
-   │                         fileKey  = HKDF-SHA256(root, salt=fileSalt, info="file-v1")
-   │                         matchKey = HKDF-SHA256(root, salt=∅,        info="match-v1")
-   │
-   ├─ encrypt ────────────── AES-256-GCM(fileKey, iv=random 12B, aad=canonical envelope)
+   ├─ encrypt ────────────── AES-256-GCM(key, iv=random 12B, aad=canonical envelope)
    │
    └─ .hho file  ─────────►  private exchange  ─────────►  partner
                                                               │
                                      open file ───────────────┤
-                                     same derivation ─────────┤
+                                     derive from THEIR passphrase, THIS file's salt
                                      decrypt + verify tag ────┤
                                      validate (§6.4) ─────────┤
                                      compare (§8) ────────────┘
 ```
+
+An earlier draft had a longer chain here — canonicalise, compress, pad,
+derive two purpose-separated keys via HKDF. §0.1 cuts compression and
+padding outright (not worth it at this payload size, for this threat),
+and folds the two derived keys into one, since nothing left needs a
+second one. What canonicalisation buys — making sure a re-ordered
+multi-select doesn't read as a different answer — is a comparison-engine
+correctness fix, not a cryptographic one, and lives in §8.3 instead.
 
 ### 7.2 Primitives, and why each
 
 | Step | Choice | Reasoning |
 |---|---|---|
 | KDF | PBKDF2-HMAC-SHA-256, 600 000 iterations | The only password KDF in Web Crypto. 600 000 is the current OWASP figure for this construction. Argon2id is better and needs WASM plus `wasm-unsafe-eval` in the CSP — reopening an eval-shaped hole and adding a binary blob to a repo whose premise is "what ships is what's in the repo". The `kdf` object exists so this can be migrated |
-| Key split | HKDF-SHA-256 | One expensive derivation, two purpose-separated keys |
 | Cipher | AES-256-GCM, 96-bit random IV | Authenticated. Tamper and corruption detection come free — no separate checksum |
 | AAD | Canonical envelope | Header substitution is detected |
-| Match digest | HMAC-SHA-256 truncated to 128 bits | Keyed, so an interceptor cannot test guesses even if they somehow read the plaintext payload |
-| Randomness | `crypto.getRandomValues` | Salt, IV, padding, passphrase |
-| Compression | `CompressionStream('deflate-raw')` | Chrome 80+, Firefox 113+, Safari 16.4+. Before padding, so the bucket still hides the true size. CRIME-style compression oracles do not apply: there is no adaptive attacker-chosen plaintext here |
+| Randomness | `crypto.getRandomValues` | Salt, IV, passphrase words |
 
-**IV reuse:** each file gets a fresh random IV and a fresh `fileSalt`, so
-no `(key, IV)` pair recurs. State it in code and test it.
+**IV reuse:** each file gets a fresh random IV and a fresh salt, so no
+`(key, IV)` pair recurs. State it in code and test it.
+
+**Why the strong KDF parameters survive the simplification, even though
+the threat model doesn't obviously demand them:** unlike the machinery
+cut above, iteration count and passphrase length cost nothing extra to
+implement — a bigger number in a constant, and a longer wordlist that
+takes the same code to draw from. There's no reason to weaken something
+that free. What was cut was complexity that took real engineering to
+build and maintain for a threat this product doesn't face; a config
+constant isn't that.
 
 ### 7.3 The passphrase
 
@@ -865,33 +974,35 @@ them fall in hours — and offering the option means most people take it.
 
 ### 7.4 Key management — the actual recommendation
 
-**One passphrase per pair, per round of this, generated by whoever goes
-first, moved through a different channel from the file.**
+**One passphrase per file, generated at the moment that file is made,
+moved through a different channel from the file itself.**
 
-- Simplest correct mental model: *one passphrase for the two of you, this
-  time.* Both files use it, so match digests agree (§5.8) and there is
-  one thing to remember instead of two.
-- **Different channel** is the rule that carries the weight. File by
-  email, passphrase by Signal. File by AirDrop, passphrase spoken. If
-  both go through the same conversation, anyone with that conversation
-  has everything, and the encryption has bought nothing but a little
-  latency.
+- Simplest correct mental model: *the passphrase belongs to this file,
+  the way a key belongs to a lock.* There is no coordination step where
+  two people have to agree to use the same phrase — each just generates
+  one when they make their own file, and passes it along with that file
+  (through a different channel; see below). §5.8 has the fuller
+  reasoning for why this replaced an earlier shared-passphrase design.
+- **Different channel from the file** is the rule that carries the
+  weight, and it's unchanged by any of this. File by email, passphrase
+  by Signal. File by AirDrop, passphrase spoken. If both go through the
+  same conversation, anyone with that conversation has everything, and
+  the encryption has bought nothing but a little latency.
 - **The app never transmits, stores, or derives-and-caches the
   passphrase.** It is in a variable and in the DOM until the screen is
   left. No `localStorage`, no `sessionStorage`, no `autocomplete`.
 - **Recovery: none.** Lose it and the file is scrap; the answers are
   still in the tab or the draft, so a new file costs a minute. Stated on
   screen (§4.4) rather than discovered.
-- Normalisation before derivation, so both sides agree:
-  **NFKC → lowercase → trim → collapse runs of whitespace, hyphen, and
-  underscore to a single hyphen.** Specified here because a mismatch here
-  is indistinguishable from a wrong passphrase.
-- `pairSalt = SHA-256("hho-pair-v1" ‖ normalisedPassphrase)`. Deterministic
-  so both sides derive the same `matchKey` from different files. Because
-  the passphrase itself carries 64.6 bits from a CSPRNG, a deterministic
-  salt costs nothing against precomputation — there is no useful rainbow
-  table over that space. Noted explicitly so a reviewer does not read it
-  as an oversight.
+- Light normalisation on input, so autocorrect and stray whitespace
+  don't turn a correctly-remembered passphrase into an apparently wrong
+  one: **NFKC → lowercase → trim → collapse runs of whitespace, hyphen,
+  and underscore to a single hyphen.** This is a UX convenience now, not
+  a correctness requirement — there's no second party's derivation that
+  has to agree with this one.
+- The salt lives in the envelope (§6.1), fresh and random per file. With
+  no cross-file agreement needed, there's no reason for it to be
+  anything other than random.
 
 ### 7.5 What the crypto does and does not do
 
@@ -975,9 +1086,9 @@ sheet, with the consent layer added.
 |---|---|
 | **Collision** | Both shared, one is positive-pole and the other is negative-pole |
 | **Different** | Both shared, values differ, poles not opposed |
-| **Matched** | Both shared and equal, or a mutual match-only digest hit |
+| **Matched** | Both shared and equal, including a mutual match-only hit |
 | **Only one of us** | Exactly one side is visible in the comparison |
-| **Not compared** | Neither visible, or the question exists in only one questionnaire edition, or a match-only pair under mismatched passphrases |
+| **Not compared** | Neither visible, or the question exists in only one questionnaire edition |
 
 Poles use the sheet's own vocabulary lists, with `BRAVER`, `MAYBE`,
 `OPEN`, `SOMEWHERE` and every free-text value neutral:
@@ -1010,23 +1121,23 @@ For each question ID **in the local questionnaire, in worksheet order**:
 
    visible(file, qid):
      entry ← file.a[qid]
-     if entry is absent or entry.m = "p"  → NOT VISIBLE
+     if entry is absent                   → NOT VISIBLE
      if entry.m = "r"                     → VISIBLE, value = entry.v
      if entry.m = "k"                     → deferred to step 3
 
 2  if qid unknown to one edition          → Not compared (version notice)
    if neither visible and no k on either  → omit the row entirely
 
-3  match-only resolution
-   if pairCheck mismatch                  → Not compared, once, with §5.8 banner
-   k vs r   : digest(other.value) = d ?   → both VISIBLE with that value
-                                    else  → the k side is NOT VISIBLE
-   k vs k   : d₁ = d₂ ?                   → Matched. Show the value if this
-                                            device holds it (own draft or own
-                                            reveal); otherwise render
-                                            "you both picked the same answer"
-                                    else  → both NOT VISIBLE
-   k vs none:                             → the k side is NOT VISIBLE
+3  match-only resolution — plain equality, both files already decrypted
+   k vs r   : canonical(mine) = canonical(theirs) ?
+                                    → both VISIBLE with that value
+                                    else → the k side is NOT VISIBLE
+   k vs k   : canonical(mine) = canonical(theirs) ?
+                                    → Matched, value shown — both sides
+                                      hold the plaintext once decrypted,
+                                      so there is no "value unknown" case
+                                    else → both NOT VISIBLE
+   k vs none:                      → the k side is NOT VISIBLE
 
 4  boundary ← (mine visible and pole(mine) = NEG)
              or (theirs visible and pole(theirs) = NEG)
@@ -1036,11 +1147,21 @@ For each question ID **in the local questionnaire, in worksheet order**:
 6  free text → no tier, no badge, group (e)
 ```
 
+An earlier draft's step 3 compared keyed digests rather than plaintext,
+which meant a mutual match-only hit couldn't always show the actual
+value — only that one existed — and needed a fallback message ("you both
+picked the same answer") for when neither device already held it. With
+Match Only storing the plain value (§5.2), that fallback is gone: once
+both files are decrypted, the value is simply known, no matter which
+device is running the comparison.
+
 **Canonicalisation before comparison** — the supplied `tierOf` compares
 `fmt()` output, so `['dating','play partners']` and
 `['play partners','dating']` score `differ` though they are the same
-answer. Sort sets, trim, casefold, and compare the canonical form. The
-same canonical form feeds the match digest, or the two will disagree.
+answer. Sort sets, trim, casefold, and compare the canonical form. This
+is a plain correctness fix for the comparison engine, not a
+cryptographic requirement — nothing here needs to agree across two
+independently-encrypted files the way a digest would have.
 
 **Symmetry.** The engine applies *both* consent maps regardless of whose
 device it runs on, so both people see the identical sheet. Your own
@@ -1112,7 +1233,6 @@ test the rendering without real data.
 | Answer option retired | Migration map translates it; if none, the row is Not compared | *"They answered with an option this version no longer has."* |
 | ID retired | Not compared, listed under the notice | — |
 | Envelope `v` higher than this build | Refuse the file, do not attempt to parse | §4.6 |
-| `pair` mismatch | Reveal rows compare normally; match-only rows Not compared | §5.8 |
 | Tampered or corrupt | Decryption fails at the GCM tag | §4.6 |
 
 The mismatch count is about *editions*, not about withholding, and the
@@ -1125,33 +1245,37 @@ could be read as "they didn't share".
 
 ### 9.1 Where it lives
 
-**Recommendation: a separate origin.** `ours.relationalsovereignty.com`,
-serving only the room, the share flow, and the compare page.
+**Recommendation for V1: a path under the existing site,
+`/practise/hot-honest-ours/`.** Revisit a separate origin
+(`ours.relationalsovereignty.com`) if storage tiers 1/2 ship (§9.6) or
+the site's dynamic surface grows enough that same-origin blast radius
+starts to matter.
 
-| | Separate origin | Path under the main site |
+| | Path under the main site | Separate origin |
 |---|---|---|
-| Storage isolation | ✔ IndexedDB, localStorage and sessionStorage are per-origin. An XSS anywhere on the main site cannot read them | ✖ One XSS on any of ten pages reaches the drafts |
-| Independent CSP | ✔ Trivially, per host | ~ Possible per page, but easy to lose in a copy-paste |
-| Blast radius | ✔ Contains the Turnstile widget and the Worker endpoint that Home and Contribute legitimately need | ✖ Same origin as both |
-| DNS / history footprint | ✖ **A distinct hostname is a distinct DNS query**, visible to a resolver, an ISP, or a household router — and a distinct entry in history and in sync | ✔ The main domain is already resolved; no new lookup |
-| Cost | Certificate, DNS record, a second deploy target | None |
+| Storage isolation | ✖ One XSS on any of ten pages reaches the drafts | ✔ IndexedDB, localStorage and sessionStorage are per-origin. An XSS anywhere on the main site cannot read them |
+| Independent CSP | ~ Possible per page, but easy to lose in a copy-paste | ✔ Trivially, per host |
+| Blast radius | ✖ Same origin as Turnstile and the Worker endpoint | ✔ Contains both away from the sandbox |
+| DNS / history footprint | ✔ The main domain is already resolved; no new lookup | ✖ A distinct hostname is a distinct DNS query, visible to a resolver, an ISP, or a household router — and a distinct entry in history and in sync |
+| Cost | None | Certificate, DNS record, a second deploy target |
 
-The DNS row is the one that gives pause, and it is why the hostname must
-not describe itself. **`private.` is exactly the wrong prefix** — a
-hostname that announces "something is being hidden here" is worse than
-neutral in the household-router threat. `ours.` is unremarkable and
-matches the product name.
+**Why the path wins for V1, having reconsidered it (§0.1):** the storage
+isolation argument is real, but it only matters once something is stored
+at rest. V1's default is tier 0 — memory only, nothing written to disk —
+so there is nothing yet for a same-origin XSS to reach. Paying for a
+subdomain to isolate storage that doesn't exist gets the sequencing
+backwards. If tier 2 (encrypted IndexedDB) ships later, revisit this: at
+that point the isolation argument earns its DNS cost.
 
-On balance the storage isolation wins: it is the only property a path
-cannot provide, and it is the one that matters if the Contribute form or
-the archive filter ever has a bug. Where the operator will not take on a
-second host, `/practise/hot-honest-ours/` is acceptable **provided the
-draft is encrypted at rest** (§9.6), which removes most of the storage
-argument.
+If a subdomain is ever used, the hostname must not describe itself —
+**`private.` is exactly the wrong prefix**, a hostname that announces
+"something is being hidden here" is worse than neutral in the
+household-router threat. `ours.` is unremarkable and matches the product
+name.
 
-Either way: **the domain must be proxied so real response headers can be
-sent** (§9.3). That is the actual prerequisite; the hostname is a detail
-beside it.
+Real response headers (`frame-ancestors`, `Permissions-Policy`, COOP)
+need the domain proxied through Cloudflare, which is genuinely useful and
+genuinely deferred (§0.1, §9.3) — not required to ship V1.
 
 ### 9.2 Script policy
 
@@ -1289,9 +1413,22 @@ therefore **absent today**:
 `X-Frame-Options: DENY` is already specified in the Cloudflare document
 and covers the framing case for older agents once the proxy is live.
 
-**Treat the proxy as Must-Have for V1**, not as later hardening. Shipping
-a sensitive sandbox that cannot be frame-protected is a worse trade than
-shipping a month later.
+**Defer the proxy; add JS framebusting now instead.** Reconsidered in
+§0.1: of the four missing headers, only `frame-ancestors`'s threat
+(clickjacking) has real teeth against a page that neither opens windows
+nor requests camera/microphone/geolocation — which this one doesn't.
+Ship a same-origin script that breaks out of a frame:
+
+```js
+if (top !== self) { try { top.location = self.location; } catch (_) {} }
+```
+
+This is real protection against an ordinary embedding page and it costs
+nothing — no infra change, no nameserver migration. It is bypassable by
+an attacker using a sandboxed iframe without `allow-top-navigation`,
+which `frame-ancestors` would still stop; that gap is accepted for V1
+and closes whenever the Cloudflare proxy (already planned for the whole
+site, `docs/spec/cloudflare-headers.md`) actually happens.
 
 **No `report-uri` / `report-to` on the sandbox.** A violation report is
 itself a network request, and a report for a blocked navigation carries
@@ -1401,9 +1538,9 @@ Rules that follow:
 | **XSS on the sandbox origin** | Full read of drafts, live answers, passphrase | Separate origin; no `unsafe-eval`; no `unsafe-inline` styles; no `innerHTML`; render from the local questionnaire, never from the file (§6.4) | Navigation-based exfil is not blockable by CSP (§9.4) |
 | **Supply chain** | Full | No runtime npm dependency; no CDN; hand-written source in-repo | `support.js` is generated by a toolchain outside this repository, and the shipped build differs from the upstream one — it has been pointed at `/vendor/react*.js` where upstream points at `unpkg.com` (§9.2a). A future regeneration that loses that patch would silently reintroduce a CDN on Home, Practise and Contribute. Precisely why the sandbox does not use it |
 | **Intercepted `.hho` in transit** | Ciphertext only | AES-256-GCM; 64.6-bit generated passphrase; separate channel | Total loss if the passphrase went through the same conversation. The UI fights this; it cannot prevent it |
-| **Accidentally forwarded attachment** | Ciphertext | Encrypted; neutral filename; padded size | The recipient learns a file exists. If they also have the passphrase, everything |
+| **Accidentally forwarded attachment** | Ciphertext | Encrypted; neutral filename | The recipient learns a file exists, and roughly how much was shared from its size. If they also have the passphrase, everything |
 | **Maliciously modified `.hho`** | Confusion, or attempted injection | GCM tag rejects any change; strict schema validation; UI built from the local questionnaire; `textContent` only | A tampered file fails to open. Denial of service only |
-| **Metadata leakage** | Timing, volume, identity, edition | Padding to buckets; day-granular and optional timestamp; neutral filename; no stable participant ID; question list and edition inside the ciphertext | Filename if renamed by the user; file existence; server access logs (§9.5) |
+| **Metadata leakage** | Timing, volume, identity, edition | Day-granular and optional timestamp; neutral filename; no stable participant ID; questionnaire edition inside the ciphertext | File size loosely tracks how much was shared — an accepted trade-off after §0.1 cut padding, which didn't defend the case that mattered anyway (§10.1 item 1). Filename if renamed by the user; file existence; server access logs (§9.5) |
 | **Stolen or unlocked device** | Draft answers | Tier 0 default; tier 2 encrypted at rest; Leave now; two-press erase | Tier 1 with the tab open is readable. OS disk encryption is out of scope and should be recommended, not simulated |
 | **Compromised partner device** | Everything shared | None possible | **You cannot un-share.** The largest residual risk in the design, and it must be said on screen (§4.3) rather than buried here |
 | **Coercive partner: "show me everything"** | Total, and the person is in the room | Nothing cryptographic helps | See §10.1 — the mitigations are product decisions, not controls |
@@ -1419,12 +1556,23 @@ The scenario is a partner who wants to see what was withheld, and who is
 in a position to insist. Cryptography is irrelevant here; product
 decisions are not. Each of these is a specific, testable requirement.
 
-1. **No count of withheld answers anywhere** — not in the UI, not in the
-   file, not in the comparison, not in a print. A number is a lever: *"it
-   says you kept nine back."* §5.3's padding makes the file itself
-   unable to answer the question.
+1. **No count of withheld answers anywhere in the app's own UI, comparison,
+   or print output.** A number is a lever: *"it says you kept nine back."*
+   **Correction, made while re-examining this for §0.1:** an earlier draft
+   claimed padding made the file itself "unable to answer the question."
+   That was an overclaim. Padding hides file size from someone *without*
+   the passphrase; it does nothing against the person this item is
+   actually about, who has the passphrase, decrypts the file, and can
+   trivially compute `(current question count) − (keys present)`
+   regardless of any padding scheme. **The honest mitigation is narrower
+   than the original draft claimed:** the count is never displayed by the
+   product in ordinary use. Someone who decrypts the file and inspects it
+   directly with devtools can still derive it — no version of this
+   design, padded or not, stops that, because it requires having the
+   passphrase in the first place.
 2. **Private and unanswered are indistinguishable**, in the file and on
-   screen (truth table rows 3, 11, 12).
+   screen (truth table rows 3, 11, 12) — this one holds regardless of
+   padding, because there's simply no key present for either case.
 3. **No global "share everything."** Per-round reveal only, with a second
    press. A one-tap total disclosure is a one-demand total disclosure.
 4. **Default is Private on every question.** Sharing is something you
@@ -1450,7 +1598,9 @@ third party, because none run; the file against tampering.
 
 **Reduces:** casual discovery on a shared device; accidental
 over-disclosure, through the pre-flight review and the Private default;
-volume and timing inference, through padding.
+casual (not determined) inference of share-volume by someone without the
+passphrase, through the encrypted file simply existing as an opaque
+object rather than readable JSON.
 
 **Cannot touch:** anyone who has the passphrase; a compromised device at
 either end; a browser extension; coercion; the fact that a shared answer
@@ -1576,45 +1726,58 @@ review; generated five-word passphrase; `.hho` file; open-two-files
 comparison with the four-tier sheet; demo mode; print; erase.
 
 **Dependencies.** Web Crypto (`crypto.subtle`) — universal in secure
-contexts since Safari 11 / Chrome 37 / Firefox 34. `CompressionStream`
-with an identity fallback (Safari 16.4+). File input and `<a download>`.
-`navigator.share` where present. **And the Cloudflare proxy**, for
-headers (§9.3).
+contexts since Safari 11 / Chrome 37 / Firefox 34. File input and
+`<a download>`. `navigator.share` where present. **No Cloudflare
+dependency for V1** — deferred per §0.1; JS framebusting covers the one
+header-shaped gap worth covering in the meantime (§9.3).
 
 **Risks.** iOS file handling (§11.3). Passphrase loss — mitigated by the
 answers still being in the tab. Users sending the passphrase alongside
 the file — the one risk the product cannot engineer away.
 
-**Complexity.** Medium. Crypto is a day; the consent model, the padding
-and canonicalisation rules, validation, version mismatch, and the sheet
-are the work.
+**Complexity.** Low. Crypto is well under a day now that it's one key
+and one cipher call — the consent model, validation, version mismatch,
+and the comparison sheet are the actual work. §0.1 removed what used to
+make this Medium: dual-key derivation, a digest scheme, padding, and
+compression.
 
 **Include** — it is the only design in which the operator holds nothing.
 
-**Ship alongside it: the offline copy.** A single self-contained HTML
-file, downloadable, that runs the whole thing from `file://` with no
-network at all. It is the honest answer to "you are trusting the code
-they serve you", and for a static site it is nearly free. Two caveats to
-verify before promising it: `crypto.subtle` requires a secure context,
-and `file://` is treated as one in Chrome and Firefox but should be
-tested in Safari; and browser storage on `file://` is inconsistent, so
-the offline copy is compare-only, memory-only.
+**Deferred, not shipped with V1: the offline copy.** A single
+self-contained HTML file, downloadable, that would run the whole thing
+from `file://` with no network at all — the honest answer to "you are
+trusting the code they serve you." Genuinely valuable, and genuinely a
+better fit for an audience that needs to not trust *any* server, which
+isn't the primary audience here (§0.1). Revisit if that changes. If it's
+ever built: `crypto.subtle` requires a secure context, and `file://`
+qualifies in Chrome and Firefox but needs testing in Safari; browser
+storage on `file://` is inconsistent, so it would have to be
+compare-only, memory-only.
 
 ### 12.2 Version 1.5 — private link / QR — **reject as specified**
 
 Encoding the payload into `example.com/compare#DATA` fails on three
 independent grounds.
 
-**Size.** A realistic payload — 200 questions, deflate-compressed, padded
-to an 8 KiB bucket, base64url — is roughly 5 500–11 000 characters.
-Browsers would hold it. Messaging apps, mail clients and link-shortening
-middleware routinely mangle or truncate URLs past ~2 000 characters.
+**Size.** The V1 payload only lists shared answers (§6.2, §0.1) rather
+than an earlier draft's every-question-padded design, so a realistic
+share — 20–40 answered questions, uncompressed, base64url — comes to
+roughly 2–4 KB of characters, smaller than the earlier estimate this
+section originally used. Browsers would hold it either way. Messaging
+apps, mail clients and link-shortening middleware still routinely mangle
+or truncate URLs past ~2 000 characters, so even the smaller payload
+sits at or past that ceiling for a normal session, and grows past it
+quickly as more is shared.
 
-**QR cannot carry it.** QR version 40 tops out at 2 953 bytes in byte
-mode, and reliable phone-camera scanning in ordinary light needs roughly
-version 25–30 at error-correction M — about **1 000–1 500 bytes**. The
-payload is 4–8× too large. Shrinking the questionnaire to fit would be
-the tail wagging the dog.
+**QR is tighter, but still the wrong idea.** QR version 40 tops out at
+2 953 bytes in byte mode, and reliable phone-camera scanning in ordinary
+light needs roughly version 25–30 at error-correction M — about
+**1 000–1 500 bytes**. A small share might now technically fit where the
+padded design's 4–8× oversize never could — but chasing that fit would
+mean either capping how much a person can share to keep the code
+scannable, or accepting an unreliable scan on a fuller one. Not worth
+building for a payload size that's an accident of how much was shared
+this time.
 
 **Fragments are not private.** They are correctly not sent in the HTTP
 request — and then they are: **Chrome and Firefox history sync upload
@@ -1702,11 +1865,12 @@ connecting, and the file path must remain the default.
 ## 13. Architecture
 
 ```
-                        ┌──────────────────────────────────┐
-                        │  ours.relationalsovereignty.com  │
-                        │  static files, no database       │
-                        └───────────────┬──────────────────┘
-                                        │
+                    ┌──────────────────────────────────────┐
+                    │  relationalsovereignty.com            │
+                    │  /practise/hot-honest-ours/           │
+                    │  static files, no database            │
+                    └───────────────┬────────────────────────┘
+                                    │
                       HTML · CSS · JS · wordlist         ← code down.
                       (nothing goes up)                     Access logs see
                                         │                   an IP and a time,
@@ -1724,7 +1888,8 @@ connecting, and the file path must remain the default.
    ║        │              ║                 ║        │              ║
    ║ pre-flight review     ║                 ║ pre-flight review     ║
    ║        │              ║                 ║        │              ║
-   ║ pad → compress →      ║                 ║ pad → compress →      ║
+   ║ own generated         ║                 ║ own generated         ║
+   ║ passphrase →          ║                 ║ passphrase →          ║
    ║ PBKDF2 → AES-256-GCM  ║                 ║ PBKDF2 → AES-256-GCM  ║
    ║        │              ║                 ║        │              ║
    ║   2026-08-22.hho      ║                 ║   2026-08-22.hho      ║
@@ -1735,17 +1900,20 @@ connecting, and the file path must remain the default.
                 │  Signal · AirDrop · email · USB · SD  │
                 └───────────────────┬───────────────────┘
                                     │
-                    passphrase, separately ─ spoken, or a different app
+        each passphrase travels with its own file, separately from it —
+              no coordination needed between the two of them
                                     │
                                     ▼
                   ╔═════════════════════════════════════╗
                   ║  COMPARE  · either device, in a tab ║
                   ╠═════════════════════════════════════╣
                   ║  open my answers   (file or draft)  ║
+                  ║  my passphrase                      ║
                   ║  open their answers        (file)   ║
-                  ║  passphrase                         ║
+                  ║  their passphrase                   ║
                   ║             ↓                       ║
-                  ║  derive · decrypt · verify tag      ║
+                  ║  derive · decrypt · verify tag,     ║
+                  ║  independently, per file            ║
                   ║             ↓                       ║
                   ║  apply BOTH consent maps            ║
                   ║             ↓                       ║
@@ -1782,9 +1950,10 @@ holds. **Later** is genuinely later.
 
 | Item | Priority |
 |---|---|
-| Domain proxied through Cloudflare so response headers can be set (`docs/spec/cloudflare-headers.md`) | **Must Have** |
-| `ours.` subdomain, certificate, deploy target | **Should Have** — a path under `/practise/` is acceptable with §9.6's at-rest encryption |
-| Decision recorded on storage tiers 1 and 2, since `/practise/`'s "nothing is stored" copy depends on it (UX spec §13.4) | **Must Have** |
+| JS framebusting on the sandbox page (§9.3) | **Must Have** — free, ships with the page itself |
+| Decision recorded on storage tiers 1 and 2, since `/practise/`'s "nothing is stored" copy depends on it (UX spec §13.4) | **Must Have** — V1 default is tier 0, which needs no copy change; this only blocks if 1 or 2 ships |
+| Domain proxied through Cloudflare so response headers can be set (`docs/spec/cloudflare-headers.md`) | **Later** — deferred per §0.1, not a V1 blocker |
+| `ours.` subdomain, certificate, deploy target | **Later** — path under `/practise/` is the V1 default (§9.1) |
 
 ### Frontend components
 
@@ -1807,25 +1976,26 @@ holds. **Later** is genuinely later.
 | Item | Priority |
 |---|---|
 | Stable, permanent question IDs; retired-ID list | **Must Have** |
-| Canonical serialisation (sorted keys, sorted sets, NFC, fixed vocabularies) | **Must Have** |
-| `.hho` envelope + payload per §6 | **Must Have** |
-| Padding to buckets | **Must Have** — it is the mitigation for §10.1's count lever |
+| Light canonicalisation for the comparison engine (sorted sets, casefold) | **Must Have** — a correctness fix, not a crypto requirement (§8.3) |
+| `.hho` envelope + payload per §6 (no padding, no per-question stubs) | **Must Have** |
 | Answer-option migration map | **Should Have** — needed the first time a vocabulary changes |
-| Type restrictions (no match-only on free text or steppers) | **Must Have** |
+| Type restrictions (no match-only on free text) | **Must Have** |
 
 ### Cryptography
 
 | Item | Priority |
 |---|---|
-| PBKDF2 600 000 → HKDF split → AES-256-GCM with envelope AAD | **Must Have** |
-| EFF long wordlist (7 776), 5-word generation from `getRandomValues` | **Must Have** |
-| Passphrase normalisation (NFKC, lowercase, separator collapse) | **Must Have** |
-| Match digest, HMAC-SHA-256 truncated to 128 bits | **Must Have** |
-| `pair` check value and its mismatch banner | **Must Have** — without it, mismatched passphrases fail silently |
+| PBKDF2 600 000 → AES-256-GCM with envelope AAD, one key | **Must Have** |
+| EFF long wordlist (7 776), 5-word generation from `getRandomValues`, per file | **Must Have** |
+| Light passphrase normalisation (NFKC, lowercase, separator collapse) | **Should Have** — UX convenience now, not a correctness requirement |
 | Key derivation off the main thread | **Should Have** |
-| `CompressionStream` with identity fallback | **Should Have** |
 | Argon2id migration path via the `kdf` object | **Later** |
 | ECDH pairing | **Later** — §12.3 |
+
+**Cut entirely in the §0.1 right-sizing pass, not merely deprioritised:**
+HKDF key-splitting, the Match Only HMAC digest, the `pair` check value
+and its mismatch banner, bucket padding, and `CompressionStream`. None of
+these appear anywhere in the shipped V1 design.
 
 ### Comparison engine
 
@@ -1844,8 +2014,8 @@ holds. **Later** is genuinely later.
 |---|---|
 | Tier 0 memory default; comparison memory-only; `pagehide` clear | **Must Have** |
 | `URL.revokeObjectURL` after download | **Must Have** |
-| Tier 1 `sessionStorage` | **Should Have** |
-| Tier 2 IndexedDB, AES-GCM at rest, 30-day stamp | **Should Have** |
+| Tier 1 `sessionStorage` | **Later** — pending the decision this file's Prerequisites row tracks |
+| Tier 2 IndexedDB, AES-GCM at rest, 30-day stamp | **Later** — same, and revisit §9.1's origin recommendation if it ships |
 | Storage-failure downgrade to tier 0, announced | **Must Have** if any tier above 0 ships |
 
 ### Security configuration
@@ -1855,36 +2025,36 @@ holds. **Later** is genuinely later.
 | Meta CSP per §9.3, including `connect-src 'none'` and no `unsafe-eval` | **Must Have** |
 | All styling in an external stylesheet (no `'unsafe-inline'`) | **Must Have** |
 | No dc-runtime, no React, no third-party anything | **Must Have** |
-| Response headers once proxied: `frame-ancestors`, `Permissions-Policy`, COOP, `Referrer-Policy: no-referrer` | **Must Have** |
-| Per-release SHA-256 hashes published | **Should Have** |
-| Offline single-file build | **Should Have** |
+| JS framebusting (`if (top !== self) ...`) | **Must Have** — the V1 substitute for `frame-ancestors` (§9.3) |
 | `webrtc 'block'` (Chromium-only, harmless elsewhere) | **Should Have** |
+| Response headers once proxied: `frame-ancestors`, `Permissions-Policy`, COOP, `Referrer-Policy: no-referrer` | **Later** — with the Cloudflare proxy (§0.1) |
+| Per-release SHA-256 hashes published | **Later** — with the offline build |
+| Offline single-file build | **Later** — §12.1 |
 | `<iframe sandbox>` navigation containment | **Later** — prototype first (§9.4) |
 
 ### Testing
 
 | Item | Priority |
 |---|---|
-| Truth-table test: all 14 rows of §5.7, asserted | **Must Have** |
-| Round-trip: encrypt → decrypt → identical payload | **Must Have** |
+| Truth-table test: all 13 rows of §5.7, asserted | **Must Have** |
+| Round-trip: encrypt → decrypt → identical payload, per file, own passphrase | **Must Have** |
 | Tamper test: flip one ciphertext byte, assert refusal | **Must Have** |
-| **Assert no network**: a test that fails if any code path calls `fetch`, `XHR`, `sendBeacon`, `WebSocket`, or sets `location` | **Must Have** |
-| Assert padded files of differing content are byte-identical in length | **Must Have** |
-| Assert private and unanswered entries are byte-identical | **Must Have** |
+| **Assert no network**: a test that fails if any code path calls `fetch`, `XHR`, `sendBeacon`, `WebSocket`, or navigates to a non-same-origin URL (the framebusting script's same-origin `top.location` reassignment is the one intentional, allowed exception) | **Must Have** |
+| Assert a private or unanswered question has no key in the payload at all | **Must Have** |
 | Assert no page in the sandbox loads a cross-origin subresource (extend `check-origins.mjs`) | **Must Have** |
 | Assert Turnstile is absent from the sandbox | **Must Have** |
 | Version-mismatch fixtures: older `q`, retired ID, retired option, future `v` | **Should Have** |
-| Different-passphrase fixture asserting the `pair` banner | **Should Have** |
+| Different-passphrase-per-file fixture: confirm each decrypts independently and comparison still works with no shared-passphrase requirement | **Should Have** |
 
 ### Browser compatibility
 
 | Item | Priority |
 |---|---|
-| Safari/iOS: file picker, `<a download>`, `navigator.share`, `CompressionStream` fallback, 7-day storage cap | **Must Have** |
+| Safari/iOS: file picker, `<a download>`, `navigator.share` | **Must Have** |
 | Firefox: no File System Access API — confirm the `<input type="file">` path is the only one | **Must Have** |
 | Android Chrome: share sheet, PBKDF2 timing on a low-end device | **Must Have** |
-| Private/incognito storage failure path in all three | **Must Have** |
-| `file://` secure-context check for the offline build | **Should Have** |
+| Private/incognito storage failure path in all three | **Must Have** — relevant even at tier 0, since a failed write must still downgrade cleanly if tiers 1/2 ship later |
+| `file://` secure-context check | **Later** — only needed if the offline build (§12.1) is revisited |
 
 ### Accessibility
 
@@ -1937,10 +2107,17 @@ so the reasoning is auditable rather than implied.
 ### 15.2 Privacy advocate — what metadata survives?
 
 1. **Which questions were withheld.** The brief's "not in the package in
-   usable form" would have leaked it. Changed to absent-plus-padding, and
-   private became byte-identical to unanswered (§5.3).
-2. **File size as a proxy for how much was shared.** Closed by bucket
-   padding (§5.3).
+   usable form" would have leaked it. Fixed by making private simply
+   absent — indistinguishable from unanswered, because there's no key
+   present for either (§5.3). An earlier draft of *this* document also
+   padded the file to hide the total count; §0.1 corrected that claim
+   once it became clear padding never actually stopped the person who
+   matters (someone with the passphrase), only someone without one.
+2. **File size as a rough proxy for how much was shared.** Not closed —
+   accepted as a residual, low-severity gap after §0.1 cut bucket
+   padding, which cost real engineering to defend a threat (someone
+   *without* the passphrase inferring share-volume from ciphertext size)
+   this project's actual audience doesn't need defended against (§10.2).
 3. **The filename.** The brief's `Alex-Hot-Honest-Ours.share` puts a name
    and the product into download history, attachment lists and phone
    backups. Changed to a neutral default (§6.6). This one is easy to
@@ -1952,16 +2129,23 @@ so the reasoning is auditable rather than implied.
    the same person months apart cannot be tied together (§6.5).
 6. **The questionnaire edition** moved inside the ciphertext (§6.2).
 7. **Server access logs.** Cannot be removed for a hosted page. Named in
-   §9.5 rather than omitted, and it is one of the two reasons the offline
-   copy exists.
+   §9.5 rather than omitted. The offline copy that would fully answer
+   this is deferred (§0.1) as disproportionate to this project's actual
+   audience — worth revisiting if that audience changes.
 
 ### 15.3 Coercion — can this be used to pressure someone?
 
 This read changed the product more than any other.
 
 1. **A count of withheld answers is a lever.** *"It says you kept nine
-   back."* Removed everywhere, and made unanswerable by the file itself
-   through padding (§10.1).
+   back."* Removed everywhere the product itself surfaces a count — the
+   UI, the comparison, every print. **Not, on reflection, unanswerable
+   from the raw file**, which an earlier draft of this document claimed
+   padding achieved. It didn't: anyone with the passphrase can decrypt
+   and count regardless of padding, and this coercion scenario always
+   assumes the partner has the passphrase. §5.3 and §10.1 item 1 both
+   carry this correction, made during the same review that produced
+   §0.1's broader right-sizing pass.
 2. **A one-tap "share everything" is a one-demand total disclosure.**
    Removed; per-round only, with a second press (§4.2).
 3. **The default was going to be Reveal**, because it makes the demo look
@@ -1970,12 +2154,16 @@ This read changed the product more than any other.
    that gets added in a later sprint as a courtesy. Ruled out permanently
    (§4.8, §10.1) — in a coercive relationship a read receipt is a
    compliance monitor.
-5. **Match Only cannot survive a determined partner.** Five candidate
-   answers means five guesses. This is not a bug to fix; it is a property
-   of small answer domains. It changed the copy from a guarantee to a
-   courtesy and made Private the only claim we make (§5.4). If one thing
-   in this document is worth a second reviewer, it is that sentence,
-   because it is the one users will rely on.
+5. **Match Only cannot survive a determined partner.** In this design's
+   current, simplified form (§5.2), it doesn't even take guessing — the
+   value is plaintext once decrypted, just not surfaced by the app's own
+   screens. An earlier draft used a keyed digest instead, which raised
+   the bar to "five guesses" rather than "zero." Either way, this is not
+   a bug to fix; it's a property of the person already holding the
+   passphrase. It changed the copy from a guarantee to a courtesy and
+   made Private the only claim we make (§5.4). If one thing in this
+   document is worth a second reviewer, it is that sentence, because it
+   is the one users will rely on.
 6. **A duress or decoy mode** was considered and rejected with reasons
    (§10.1 item 6) rather than left unmentioned.
 7. **A hidden hard limit.** Match Only on a `NO` could make a limit
@@ -1989,9 +2177,13 @@ This read changed the product more than any other.
    hand-off, broad `accept`, and the paste-text fallback — which was
    promoted from nicety to **Must Have** by this read (§11.3).
 2. **A file, a passphrase, two devices and two directions** is a lot of
-   state to hold. Mitigated by one shared passphrase per pair rather than
-   one per file (§7.4), and by "my answers" defaulting to the draft
-   already in the tab.
+   state to hold. An earlier draft made this worse by requiring both
+   partners to coordinate on one *shared* passphrase — a real
+   synchronization burden on top of everything else. §0.1 removed that
+   requirement: each file now carries its own passphrase, generated when
+   it's made, so there's nothing to coordinate — "the passphrase that
+   came with this file" is the whole mental model (§7.4). Also mitigated
+   by "my answers" defaulting to the draft already in the tab.
 3. **Autocorrect versus five uncommon words.** Mitigated by
    normalisation and by turning off the platform's help (§11.3). Without
    the normaliser this fails constantly and presents as "wrong
@@ -2013,11 +2205,13 @@ This read changed the product more than any other.
 3. **`<a download>` on iOS Safari** behaves unlike everywhere else.
    `navigator.share` where available, and the site's existing
    "don't draw a control that cannot work" rule (§4.5).
-4. **`CompressionStream`.** Safari 16.4+. Needs an identity fallback, and
-   the payload must record which was used (§7.1).
+4. **`CompressionStream`.** Was in the crypto chain to shrink the payload
+   before padding. Cut along with padding (§0.1) — payloads here are a
+   few KB regardless, so there was nothing worth compressing, and one
+   fewer browser-version fallback to maintain.
 5. **`crypto.subtle` on `file://`.** Requires a secure context; `file://`
-   qualifies in Chrome and Firefox and needs testing in Safari. The
-   offline build is not promised until that is checked (§12.1).
+   qualifies in Chrome and Firefox and needs testing in Safari. Only
+   relevant if the offline build (§12.1) is revisited — deferred for now.
 6. **IndexedDB in private browsing** throws or silently discards, and
    Safari evicts after seven days. Both handled and both stated in the
    copy rather than papered over (§9.6).
@@ -2026,12 +2220,16 @@ This read changed the product more than any other.
    thing that is invisible until someone tests the back button (§9.6).
 8. **Comparing arrays by `join()`** — the supplied sheet's `tierOf` would
    score two identical multi-selects as `differ` if the chips were picked
-   in a different order. Canonicalise before comparing, and use the same
-   canonical form for the match digest or the two disagree (§8.3).
-9. **Match-only values are not present on either device.** A mutual
-   match-only hit can be confirmed without either side holding the value.
-   Handled with a graceful degradation that is arguably the more correct
-   rendering anyway: *"you both picked the same answer"* (§8.3 step 3).
+   in a different order. Canonicalise before comparing (§8.3) — still
+   needed after §0.1, just now purely for comparison correctness rather
+   than also needing to feed a match digest.
+9. **A problem that turned out not to exist once simplified.** An earlier
+   draft's match-only digest meant a mutual hit could be *confirmed*
+   without either device holding the actual value, needing a fallback
+   render ("you both picked the same answer"). Storing the plain value
+   instead (§5.2) removes the problem outright — once both files are
+   decrypted, the value is simply known, so there's no degraded case left
+   to design for.
 
 ---
 
@@ -2058,14 +2256,14 @@ The claim in the brief, revised where it overstates.
 > and closing the page erases what was worked out.
 >
 > **What we cannot promise.** You are trusting the code this page serves
-> you each time you load it — the source is public and every release's
-> checksum is published, and there is a copy you can download and run
-> with no network at all. Our host records that a device asked for this
-> page and when, as every web server does. "Only if they said it too"
-> stops the app from showing your answer; it will not stop a determined
-> and technical person from working it out, because there are only a few
-> possible answers — if something must stay hidden from this person,
-> keep it private. And once you share something, you cannot take it back.
+> you each time you load it — the source is public, so anyone can check
+> what it does. Our host records that a device asked for this page and
+> when, as every web server does. "Only if they said it too" stops the
+> app from showing your answer; it will not stop someone who has your
+> passphrase and looks at the file directly instead — if something must
+> stay hidden from that person, keep it private, which really isn't in
+> the file at all. And once you share something, you cannot take it
+> back.
 
 Every sentence in that block is traceable to a control in this document.
 Nothing in it says "secure", "anonymous", "zero-knowledge", or "we can't
