@@ -174,6 +174,13 @@ main { padding-bottom: 4rem; }
 }
 .stop-line { font-size: 1.1rem; }
 
+.how-to-play { list-style: none; counter-reset: step; margin: 0 0 1.4rem; padding: 0; display: flex; flex-direction: column; gap: .8rem; }
+.how-to-play li { counter-increment: step; position: relative; padding-left: 2.2rem; }
+.how-to-play li::before { content: counter(step); position: absolute; left: 0; top: 0; font-family: var(--sans); font-weight: 800; color: var(--ask-text); }
+.plain-list { list-style: none; margin: 0 0 1.4rem; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
+.plain-list li { padding-left: 1.1rem; position: relative; }
+.plain-list li::before { content: "·"; position: absolute; left: 0; color: var(--ink-3); font-weight: 700; }
+
 /* ---- callouts ---- */
 .callout {
   border: 1px solid var(--rule);
@@ -301,9 +308,13 @@ textarea { resize: vertical; min-height: 3.6rem; }
 
 /* ---- review list ---- */
 .review-row { display: flex; justify-content: space-between; gap: 1rem; padding: .8rem 0; border-bottom: 1px dotted var(--rule); }
+.review-row p { margin: 0; }
 .review-row .r-label { font-weight: 700; font-family: var(--sans); }
 .review-row .r-value { font-family: var(--mono); font-size: 14px; color: var(--ink-2); text-align: right; }
 .review-row .r-tag { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ask-text); }
+
+.q-help { font-size: 14.5px; color: var(--ink-3); margin: -.3rem 0 .6rem; font-style: italic; }
+.note-label { margin-top: .5rem; }
 
 /* ---- passphrase ---- */
 .passphrase-display {
@@ -366,6 +377,7 @@ textarea { resize: vertical; min-height: 3.6rem; }
 .result-card .rc-col { border-left: 3px solid var(--rule); padding-left: .7rem; }
 .result-card .rc-who { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
 .result-card .rc-val { font-family: var(--mono); font-size: 14px; }
+.result-card .rc-note { font-family: var(--body); font-style: italic; font-size: 14px; color: var(--ink-3); margin: .3rem 0 0; }
 
 @media (max-width: 640px) {
   .consent-control { flex-direction: column; }

@@ -7,18 +7,24 @@
 // loses the draft. That is the deliberate, safest default; nothing here
 // writes to localStorage, sessionStorage, or indexedDB.
 
-import { QUESTIONS, SCALE_OPTIONS, BUFFET_OPTIONS, allowsMatchOnly } from "./questions.js";
+import { QUESTIONS, ACCESS_QUESTIONS, QUESTIONNAIRE_VERSION, SCALE_OPTIONS, BUFFET_OPTIONS, allowsMatchOnly } from "./questions.js";
 import { encryptToFile, decryptFile, ShareFileError } from "./crypto.js";
 import { compare, counts } from "./engine.js";
 
 const state = {
   answers: {},   // qid -> value (string | string[] | number)
+  notes: {},     // qid -> free-text condition/note, travels as the same entry's "c" (spec §6.2)
   consent: {},   // qid -> "p" | "k" | "r"  (default: "p", private)
   signal: "green",
   passphraseInFlight: "",
   compareGroups: null,
   activeTile: null,
+  door: "cover", // "cover" | "safety" | "access" | null (null = through the door)
 };
+
+function isEmpty(v) {
+  return v === undefined || v === "" || (Array.isArray(v) && v.length === 0);
+}
 
 const live = document.getElementById("live");
 function announce(text) {
@@ -42,6 +48,9 @@ function showScreen(name) {
     heading.focus();
   }
   const positions = {
+    "door-cover": "Before you go in",
+    "door-safety": "A moment first",
+    "door-access": "Access check",
     answer: "Answer the questions",
     "share-choose": "Sharing · choose",
     "share-review": "Sharing · review",
@@ -57,6 +66,9 @@ document.body.addEventListener("click", (e) => {
   const el = e.target.closest("[data-action]");
   if (!el) return;
   const action = el.dataset.action;
+  if (action === "door-to-safety") { showScreen("door-safety"); return; }
+  if (action === "door-to-access") { renderAccessQuestions(); showScreen("door-access"); return; }
+  if (action === "door-to-answer") { showScreen("answer"); return; }
   if (action === "go-answer") { showScreen("answer"); return; }
   if (action === "go-compare") { showScreen("compare-open"); return; }
   if (action === "go-share") { renderConsentList(); showScreen("share-choose"); return; }
@@ -95,6 +107,7 @@ document.getElementById("signal-control").addEventListener("click", (e) => {
 
 function leaveNow() {
   state.answers = {};
+  state.notes = {};
   state.consent = {};
   state.compareGroups = null;
   document.title = "Relational Sovereignty";
@@ -135,7 +148,7 @@ function rerenderPreservingFocus(hostId, renderFn) {
   }
 }
 
-function optionRow(qid, options, current, multi) {
+function optionRow(qid, options, current, multi, onChange) {
   const wrap = document.createElement("div");
   wrap.className = "option-row";
   wrap.setAttribute("role", multi ? "group" : "radiogroup");
@@ -157,12 +170,90 @@ function optionRow(qid, options, current, multi) {
       } else {
         state.answers[qid] = state.answers[qid] === opt ? undefined : opt;
       }
-      rerenderPreservingFocus("question-list", renderQuestions);
+      onChange();
     });
     wrap.appendChild(btn);
   });
   return wrap;
 }
+
+// Builds one question's fieldset (label, optional help text, the input
+// control for its type, and an optional paired note field). Shared by
+// the main round-grouped list and the flat access-check screen.
+function renderQuestionRow(q, rerenderHost) {
+  const row = document.createElement("div");
+  row.className = "question-row" + (q.emphasis ? " emphasis" : "");
+
+  const fs = document.createElement("fieldset");
+  const legend = document.createElement("legend");
+  legend.textContent = q.label;
+  fs.appendChild(legend);
+  if (q.help) {
+    const help = document.createElement("p");
+    help.className = "q-help";
+    help.textContent = q.help;
+    fs.appendChild(help);
+  }
+
+  const rerender = () => rerenderPreservingFocus(rerenderHost, () => rerenderHostFns[rerenderHost]());
+
+  if (q.type === "scale") {
+    fs.appendChild(optionRow(q.id, SCALE_OPTIONS, state.answers[q.id], false, rerender));
+  } else if (q.type === "buffet") {
+    fs.appendChild(optionRow(q.id, BUFFET_OPTIONS, state.answers[q.id], false, rerender));
+  } else if (q.type === "mark" || q.type === "choice") {
+    fs.appendChild(optionRow(q.id, q.options.map((o) => o.toUpperCase()), state.answers[q.id], false, rerender));
+  } else if (q.type === "chips") {
+    fs.appendChild(optionRow(q.id, q.options, state.answers[q.id], true, rerender));
+  } else if (q.type === "number") {
+    const stepper = document.createElement("div");
+    stepper.className = "number-stepper";
+    const dec = document.createElement("button");
+    dec.type = "button"; dec.textContent = "−"; dec.setAttribute("aria-label", "One fewer");
+    dec.dataset.focusKey = q.id + "|dec";
+    const out = document.createElement("output");
+    out.textContent = state.answers[q.id] || 0;
+    const inc = document.createElement("button");
+    inc.type = "button"; inc.textContent = "+"; inc.setAttribute("aria-label", "One more");
+    inc.dataset.focusKey = q.id + "|inc";
+    dec.addEventListener("click", () => {
+      state.answers[q.id] = Math.max(q.min, (state.answers[q.id] || 0) - 1);
+      rerender();
+    });
+    inc.addEventListener("click", () => {
+      state.answers[q.id] = Math.min(q.max, (state.answers[q.id] || 0) + 1);
+      rerender();
+    });
+    stepper.append(dec, out, inc);
+    fs.appendChild(stepper);
+  } else if (q.type === "text") {
+    const ta = document.createElement("textarea");
+    ta.value = state.answers[q.id] || "";
+    if (q.placeholder) ta.placeholder = q.placeholder;
+    ta.setAttribute("aria-label", q.label);
+    ta.addEventListener("input", () => { state.answers[q.id] = ta.value; });
+    fs.appendChild(ta);
+  }
+
+  if (q.note) {
+    const noteLabel = document.createElement("label");
+    noteLabel.className = "field-label note-label";
+    noteLabel.textContent = "Conditions, examples, notes";
+    const noteTa = document.createElement("textarea");
+    noteTa.rows = 1;
+    noteTa.value = state.notes[q.id] || "";
+    noteTa.setAttribute("aria-label", "Conditions, examples, notes for: " + q.label);
+    noteTa.addEventListener("input", () => { state.notes[q.id] = noteTa.value; });
+    fs.append(noteLabel, noteTa);
+  }
+
+  row.appendChild(fs);
+  return row;
+}
+
+// registered per-host render functions, so a control's own change
+// handler can trigger the right re-render without a closure per screen
+const rerenderHostFns = {};
 
 function renderQuestions() {
   const host = document.getElementById("question-list");
@@ -177,56 +268,19 @@ function renderQuestions() {
       host.appendChild(h);
       lastRound = q.round;
     }
-    const row = document.createElement("div");
-    row.className = "question-row" + (q.emphasis ? " emphasis" : "");
-
-    const fs = document.createElement("fieldset");
-    const legend = document.createElement("legend");
-    legend.textContent = q.label;
-    fs.appendChild(legend);
-
-    if (q.type === "scale") {
-      fs.appendChild(optionRow(q.id, SCALE_OPTIONS, state.answers[q.id], false));
-    } else if (q.type === "buffet") {
-      fs.appendChild(optionRow(q.id, BUFFET_OPTIONS, state.answers[q.id], false));
-    } else if (q.type === "mark") {
-      fs.appendChild(optionRow(q.id, q.options.map((o) => o.toUpperCase()), state.answers[q.id], false));
-    } else if (q.type === "chips") {
-      fs.appendChild(optionRow(q.id, q.options, state.answers[q.id], true));
-    } else if (q.type === "number") {
-      const stepper = document.createElement("div");
-      stepper.className = "number-stepper";
-      const dec = document.createElement("button");
-      dec.type = "button"; dec.textContent = "−"; dec.setAttribute("aria-label", "One fewer");
-      dec.dataset.focusKey = q.id + "|dec";
-      const out = document.createElement("output");
-      out.textContent = state.answers[q.id] || 0;
-      const inc = document.createElement("button");
-      inc.type = "button"; inc.textContent = "+"; inc.setAttribute("aria-label", "One more");
-      inc.dataset.focusKey = q.id + "|inc";
-      dec.addEventListener("click", () => {
-        state.answers[q.id] = Math.max(q.min, (state.answers[q.id] || 0) - 1);
-        rerenderPreservingFocus("question-list", renderQuestions);
-      });
-      inc.addEventListener("click", () => {
-        state.answers[q.id] = Math.min(q.max, (state.answers[q.id] || 0) + 1);
-        rerenderPreservingFocus("question-list", renderQuestions);
-      });
-      stepper.append(dec, out, inc);
-      fs.appendChild(stepper);
-    } else if (q.type === "text") {
-      const ta = document.createElement("textarea");
-      ta.value = state.answers[q.id] || "";
-      ta.setAttribute("aria-label", q.label);
-      ta.addEventListener("input", () => { state.answers[q.id] = ta.value; });
-      fs.appendChild(ta);
-    }
-
-    row.appendChild(fs);
-    host.appendChild(row);
+    host.appendChild(renderQuestionRow(q, "question-list"));
   });
   host.scrollTop = scroll;
 }
+rerenderHostFns["question-list"] = renderQuestions;
+
+function renderAccessQuestions() {
+  const host = document.getElementById("access-list");
+  if (!host) return;
+  host.innerHTML = "";
+  ACCESS_QUESTIONS.forEach((q) => host.appendChild(renderQuestionRow(q, "access-list")));
+}
+rerenderHostFns["access-list"] = renderAccessQuestions;
 
 // ---------- consent (choose what to share) ----------
 
@@ -235,8 +289,9 @@ function renderConsentList() {
   host.innerHTML = "";
   let lastRound = null;
   QUESTIONS.forEach((q) => {
+    if (q.neverShareable) return; // spec §5.5: never offered in any state, no control at all
     const v = state.answers[q.id];
-    if (v === undefined || v === "" || (Array.isArray(v) && v.length === 0)) return; // nothing to set a consent choice about yet
+    if (isEmpty(v)) return; // nothing to set a consent choice about yet
     if (q.round !== lastRound) {
       const h = document.createElement("p");
       h.className = "round-heading";
@@ -305,10 +360,11 @@ function renderReview() {
   host.innerHTML = "";
   let shown = 0;
   QUESTIONS.forEach((q) => {
+    if (q.neverShareable) return; // defense in depth: consentOf() would already read "p" for these
     const mode = consentOf(q.id);
     if (mode === "p") return;
     const v = state.answers[q.id];
-    if (v === undefined || v === "" || (Array.isArray(v) && v.length === 0)) return;
+    if (isEmpty(v)) return;
     shown++;
     const row = document.createElement("div");
     row.className = "review-row";
@@ -316,16 +372,13 @@ function renderReview() {
     const label = document.createElement("p");
     label.className = "r-label";
     label.textContent = q.label;
-    label.style.margin = "0";
     const tag = document.createElement("p");
     tag.className = "r-tag";
-    tag.style.margin = "0";
     tag.textContent = mode === "k" ? "only if they said it too" : "shown";
     left.append(label, tag);
     const right = document.createElement("p");
     right.className = "r-value";
-    right.style.margin = "0";
-    right.textContent = fmtValue(v);
+    right.textContent = fmtValue(v) + (state.notes[q.id] ? " (" + state.notes[q.id] + ")" : "");
     row.append(left, right);
     host.appendChild(row);
   });
@@ -346,13 +399,17 @@ function renderReview() {
 function buildPayload() {
   const a = {};
   QUESTIONS.forEach((q) => {
+    if (q.neverShareable) return; // hard skip, defense in depth -- never in the file regardless of any consent entry
     const mode = consentOf(q.id);
     if (mode === "p") return;
     const v = state.answers[q.id];
-    if (v === undefined || v === "" || (Array.isArray(v) && v.length === 0)) return;
-    a[q.id] = { m: mode, v };
+    if (isEmpty(v)) return;
+    const entry = { m: mode, v };
+    const note = state.notes[q.id];
+    if (note) entry.c = note;
+    a[q.id] = entry;
   });
-  return { q: "hho-2026.08", label: "me", a };
+  return { q: QUESTIONNAIRE_VERSION, label: "me", a };
 }
 
 let objectUrl = null;
@@ -515,8 +572,8 @@ function renderResults() {
       card.appendChild(label);
       const values = document.createElement("div");
       values.className = "rc-values";
-      values.appendChild(oneValue("Me", row.mine));
-      values.appendChild(oneValue("Them", row.theirs));
+      values.appendChild(oneValue("Me", row.mine, row.mineCondition));
+      values.appendChild(oneValue("Them", row.theirs, row.theirsCondition));
       card.appendChild(values);
       section.appendChild(card);
     });
@@ -539,8 +596,8 @@ function renderResults() {
       card.appendChild(label);
       const values = document.createElement("div");
       values.className = "rc-values";
-      values.appendChild(oneValue("Me", row.mine));
-      values.appendChild(oneValue("Them", row.theirs));
+      values.appendChild(oneValue("Me", row.mine, row.mineCondition));
+      values.appendChild(oneValue("Them", row.theirs, row.theirsCondition));
       card.appendChild(values);
       section.appendChild(card);
     });
@@ -550,7 +607,7 @@ function renderResults() {
   document.getElementById("tile-empty").hidden = anyShown;
 }
 
-function oneValue(who, val) {
+function oneValue(who, val, condition) {
   const col = document.createElement("div");
   col.className = "rc-col";
   const label = document.createElement("p");
@@ -560,6 +617,12 @@ function oneValue(who, val) {
   value.className = "rc-val";
   value.textContent = val === undefined ? "not shared" : fmtValue(val);
   col.append(label, value);
+  if (val !== undefined && condition) {
+    const note = document.createElement("p");
+    note.className = "rc-note";
+    note.textContent = condition;
+    col.appendChild(note);
+  }
   return col;
 }
 
@@ -579,4 +642,4 @@ document.getElementById("close-clear").addEventListener("click", () => {
 // ---------- boot ----------
 
 renderQuestions();
-showScreen("answer");
+showScreen("door-cover");
