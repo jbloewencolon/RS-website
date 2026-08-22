@@ -5,6 +5,41 @@
 # find). Every field transcribed verbatim from the prior JS `data` array
 # — do not "clean up" wording here without checking it against the
 # archive's own why/use copy, which is deliberately exact.
+#
+# MC-19 (Phase 20), 2026-08-22: each group below carries a `register`
+# field — teal/fails/holds, one of the site's four (ochre unused here;
+# see below) — reversing FLAG-14 (2026-08-16) by direct author
+# instruction after a side-by-side comparison. FLAG-14's original,
+# narrower ruling — the shelf motif itself (the bottom rule, the
+# wood-grain trial) stays structural, not chromatic — is unchanged and
+# untouched by this; what's reversed is its later extension to whether
+# a shelf's own kicker/tab may carry semantic register colour. See
+# `archived.tasks.md`'s FLAG-14 entry for the full history and
+# `docs/design-palette.md` for what each register means.
+#
+# Each register was judged against the shelf's own `note` line above —
+# not the individual items, which keep their own existing per-tag edge
+# (start/free/counter) unchanged — using design-palette.md's four
+# definitions:
+#   teal  (1,4,6,9)  — what the framework asserts: foundational
+#                       vocabulary (1, 4) or a stated practice/affirmation
+#                       (6, 9), none of them naming a limit.
+#   fails (2,3,7)     — where the framework's own vocabulary runs out or
+#                       gets turned back on itself. Each of these three
+#                       notes says so directly ("the limit on how far this
+#                       vocabulary can be stretched"; a second genealogy
+#                       with items pointing at an unresolved gap — see
+#                       Phase 3's COPY-01 — half its items tagged
+#                       `counter`; "why ranking... fails, and how control
+#                       actually operates").
+#   holds (5,8)       — a principle the framework treats as real and
+#                       built, not just claimed: interdependence/care (5)
+#                       and the Repair Protocol's own practice (8, see
+#                       RS-029/RS-039).
+# No shelf reads as ochre (a claim named but not built, or a question put
+# to the reader) — that register describes the site's own infrastructure
+# claims, not a citation list about someone else's work, so zero use here
+# is a finding, not an omission to fix.
 filters:
   - value: "all"
     label: "everything"
@@ -24,6 +59,7 @@ filters:
 groups:
   - title: "Relational sovereignty & Indigenous relational freedom"
     note: "The most direct foundations for the term itself."
+    register: "teal"
     items:
       - title: "Replacing Exclusive Sovereignty with a Relational Sovereignty"
         by: "Matthew Wildcat"
@@ -84,6 +120,7 @@ groups:
 
   - title: "Decolonization, possession, land, kinship, intimacy"
     note: "Including the limit on how far this vocabulary can be stretched."
+    register: "fails"
     items:
       - title: "Caretaking Relations, Not American Dreaming"
         by: "Kim TallBear (Sisseton-Wahpeton Oyate)"
@@ -165,6 +202,7 @@ groups:
 
   - title: "Possession, the person, and kinship made void"
     note: "A second genealogy of ownership, with its own mechanism and its own afterlife."
+    register: "fails"
     items:
       - title: "Mama's Baby, Papa's Maybe: An American Grammar Book"
         by: "Hortense Spillers"
@@ -197,6 +235,7 @@ groups:
 
   - title: "Relation, opacity, refusal, survivance"
     note: "Where the right to remain unlegible comes from."
+    register: "teal"
     items:
       - title: "Poetics of Relation"
         by: "Édouard Glissant, trans. Betsy Wing"
@@ -236,6 +275,7 @@ groups:
 
   - title: "Relational autonomy, interdependence, care"
     note: "Autonomy does not require isolation or self-sufficiency."
+    register: "holds"
     items:
       - title: "Relational Autonomy: Feminist Perspectives on Autonomy, Agency, and the Social Self"
         by: "Catriona Mackenzie and Natalie Stoljar, eds."
@@ -317,6 +357,7 @@ groups:
 
   - title: "Bodies, regulation, and what happens before words"
     note: "The framework asks you to notice. This is about the noticing."
+    register: "teal"
     items:
       - title: "My Grandmother's Hands: Racialized Trauma and the Pathway to Mending Our Hearts and Bodies"
         by: "Resmaa Menakem"
@@ -328,6 +369,7 @@ groups:
 
   - title: "Hierarchy, custom commitments, possession"
     note: "Why ranking relationships by category fails, and how control actually operates."
+    register: "fails"
     items:
       - title: "The Short Instructional Manifesto for Relationship Anarchy"
         by: "Andie Nordgren"
@@ -395,6 +437,7 @@ groups:
 
   - title: "Accountability, repair, transformative justice"
     note: "What happens after harm, without relying on punishment or disposal."
+    register: "holds"
     items:
       - title: "Toolkit: A Practical Guide to Stop Interpersonal Violence"
         by: "Creative Interventions"
@@ -441,6 +484,7 @@ groups:
 
   - title: "Love, eros, and why any of this is worth doing"
     note: "The framework asks what to refuse. This is the shelf for what it's for."
+    register: "teal"
     items:
       - title: "Uses of the Erotic: The Erotic as Power"
         by: "Audre Lorde"

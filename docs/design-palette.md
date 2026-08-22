@@ -98,9 +98,21 @@ Not yet done — these are recommendations, not commitments:
    against. FLAG-14 itself was decided about Archive specifically; this
    is the same reasoning reapplied to a sibling page, not a re-run of
    that decision.
-4. **Archive** — the filter chips are the natural place for teal, and the
+4. **Archive** — ~~the filter chips are the natural place for teal, and the
    "on the shelf" entries that the site argues *against* could carry the
-   rust edge the Learn page gives to its own limits.
+   rust edge the Learn page gives to its own limits~~ **done, at the shelf
+   level.** MC-19 (Phase 20, 2026-08-22) gave each of the nine shelf
+   groups a register — teal, fails, or holds, judged against that
+   shelf's own `note` line — as a coloured rule and tab number on its
+   kicker, doubled by a swatch on the contents grid and a `.legend-key`
+   line. This reverses `FLAG-14`'s later reading (not its original
+   ruling on the shelf *motif* — the bottom rule, the wood-grain trial —
+   which stays structural, not chromatic); see `archived.tasks.md`'s
+   FLAG-14 entry for the full history and `hugo/data/archive.yaml`'s
+   header comment for the per-shelf reasoning. The filter chips and the
+   per-item edges (start/free/counter) this item originally named are
+   untouched — this shipped at the shelf-group level only, the layer
+   FLAG-14 actually governed.
 5. **Manifesto** — deliberately left alone. It is the one page whose
    register is rhetorical rather than analytical, and a coding system
    that means "this is a claim / this is a limit" would flatten it.
