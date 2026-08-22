@@ -176,6 +176,17 @@
   .tab-num{font-weight:600;flex:0 0 auto}
   h2.sec{font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.1;letter-spacing:-.02em;margin:0}
   .swatch{display:inline-block;width:.62rem;height:.62rem;flex:0 0 auto;border-radius:1px;margin-right:.5rem;vertical-align:baseline}
+  {{/* MC-22 (Phase 20): under forced-colors mode (Windows High Contrast),
+       the browser strips background-color from a plain span with no
+       border, so a swatch with nothing but a fill goes fully invisible —
+       confirmed by running this page under Chromium's forced-colors
+       emulation, not assumed. The register word beside it still carries
+       the meaning (WCAG 1.4.1 was never actually violated), but the dot
+       shouldn't render as a gap. One border, shown only in this mode so
+       nothing changes for anyone else. Same fix applied to Learn's and
+       Behind the Scenes' identical rule — this gap predates Archive's
+       own swatch and isn't specific to it. */}}
+  @media (forced-colors:active){.swatch{border:1px solid CanvasText}}
   .s-teal{background:var(--teal)}.s-fails{background:var(--fails)}.s-holds{background:var(--holds)}
   .legend-key{max-width:66ch;margin:1.1rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.7;color:#585B4F}
   nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:.6rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px}
