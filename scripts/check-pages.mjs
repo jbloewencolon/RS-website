@@ -513,6 +513,41 @@ const ALLOWED_HEX = new Set([
 // Hugo writes to behind-the-scenes/index.html.
 const HUGO_LAYOUT_FILES = ["manifesto", "invitation", "learn", "archive", "resources", "behindthescenes"];
 
+// support.js is generated outside this repository (see its own "GENERATED
+// from dc-runtime/src/*.ts — do not edit" header) and the shipped copy is a
+// patched build: REACT_URL/REACT_DOM_URL are repointed at same-origin
+// /vendor/ files where the upstream build points at unpkg.com (identical
+// SRI hashes either way — see docs/spec/hot-honest-ours-privacy-architecture.md
+// §9.2a). A future regeneration that drops that patch would silently
+// reintroduce a CDN dependency on every page this runtime serves. BABEL_URL
+// is intentionally left pointing at unpkg — nothing on this site triggers a
+// JSX x-import, and script-src 'self' blocks the load if that ever changes,
+// so it is not asserted here.
+function checkSupportJsOrigins() {
+  const p = path.join(root, "support.js");
+  if (!fs.existsSync(p)) {
+    console.log("• support.js origin check skipped — file not found");
+    return 0;
+  }
+  const src = fs.readFileSync(p, "utf8");
+  const reactUrl = src.match(/var REACT_URL = "([^"]+)"/);
+  const reactDomUrl = src.match(/var REACT_DOM_URL = "([^"]+)"/);
+  const problems = [];
+  for (const [name, m] of [["REACT_URL", reactUrl], ["REACT_DOM_URL", reactDomUrl]]) {
+    if (!m) { problems.push(`${name} not found in support.js — has the runtime's cdn.ts shape changed?`); continue; }
+    if (!m[1].startsWith("/vendor/")) problems.push(`${name} is "${m[1]}" — expected a same-origin /vendor/ path`);
+  }
+  if (problems.length) {
+    console.log(`\n✗ support.js origins — ${problems.length} problem(s)`);
+    for (const msg of problems) console.log(`    ${msg}`);
+    console.log(`    Fix: re-apply the /vendor/ patch after regenerating support.js from`);
+    console.log(`    dc-runtime, or update this check if the intended origin changed.`);
+    return problems.length;
+  }
+  console.log("✓ support.js origins (React/ReactDOM pinned to /vendor/, not a CDN)");
+  return 0;
+}
+
 function checkTokens() {
   const files = [
     "index.html",
@@ -556,7 +591,7 @@ async function main() {
   const browser = await chromium.launch(executablePath ? { executablePath } : {});
   const htmlValidate = new HtmlValidate(htmlValidateConfig);
 
-  let problems = checkPrerender() + checkHugoPagesInSync() + checkBaseInSync() + checkTokens();
+  let problems = checkPrerender() + checkHugoPagesInSync() + checkBaseInSync() + checkTokens() + checkSupportJsOrigins();
   problems += await checkRedirectStubs(base);
   problems += await checkPageWeight();
 
