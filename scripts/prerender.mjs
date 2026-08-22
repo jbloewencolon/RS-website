@@ -30,30 +30,36 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
-import { chromium } from "playwright";
+import { ROUTES, filePath } from "./site-routes.mjs";
+import { launchChromium } from "./find-chromium.mjs";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const outDir = path.join(root, "_site");
 
-const PAGES = [
-  "index.html",
-  "practise/index.html",
-  "contribute/index.html",
-];
+// The three hand-authored dc-runtime pages (site-routes.mjs's `hugo:
+// false` routes) — the only ones needing a real render pass, since their
+// visible copy lives in JS arrays and only becomes HTML once React runs.
+const PAGES = ROUTES.filter((r) => !r.hugo).map(filePath);
 // Pages Hugo generates (see hugo/README.md and RS-004) are already plain
 // HTML with no <x-dc> runtime to render — they're copied as-is, same as
 // resources/index.html. The nine *.dc.html entries are BUG-03's redirect
 // stubs, left at the old flat paths so an already-indexed or bookmarked
 // link still lands somewhere real; they're plain static HTML too.
-// Home.dc.html (WD-26) joined this list rather than PAGES above: the
-// homepage's real content now lives only in index.html, and Home.dc.html
-// is a thin soft-redirect to "/" like the other eight, not a second
-// x-dc runtime page to render.
+// notes.js/practise-keyboard.js/botanical-trial.js: found missing from
+// this list 2026-08-22 — every real page's own <script src> already
+// pointed at them, but they were never copied into _site/, the exact
+// artifact deploy.yml uploads to GitHub Pages. Confirmed live: a real
+// `npm run build` + `ls _site/` shows all three 404ing in production
+// (dev testing never catches this — the local server serves from the
+// repo root, where the files always did exist). Never caught by
+// check-pages.mjs either, which also serves from the repo root, not
+// _site/ — see checkPrerender()'s own comment for what it actually
+// covers and doesn't.
 const COPY_AS_IS = [
   "glyph-check.html", "glyph-check.js",
-  "resources/index.html", "manifesto/index.html", "invitation/index.html", "learn/index.html", "behind-the-scenes/index.html", "archive/index.html",
-  "Home.dc.html", "Manifesto.dc.html", "Invitation.dc.html", "Learn.dc.html", "Archive.dc.html", "Resources.dc.html", "BehindTheScenes.dc.html", "Practise.dc.html", "Contribute.dc.html",
-  "archive-filter.js", "print.js", "sections.js", "reveal.js", "support.js", "robots.txt", "CNAME", "LICENSE",
+  ...ROUTES.filter((r) => r.hugo).map(filePath),
+  ...ROUTES.map((r) => r.dcStub),
+  "archive-filter.js", "print.js", "sections.js", "reveal.js", "support.js", "notes.js", "practise-keyboard.js", "botanical-trial.js", "robots.txt", "CNAME", "LICENSE",
 ];
 
 const MIME = { ".html": "text/html", ".js": "application/javascript", ".txt": "text/plain" };
@@ -73,12 +79,6 @@ function serve(dir) {
   });
 }
 
-function findChromium() {
-  const candidates = [process.env.PLAYWRIGHT_CHROMIUM_PATH, "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"].filter(Boolean);
-  for (const c of candidates) if (fs.existsSync(c)) return c;
-  return undefined;
-}
-
 const HEAD_INJECT = `<style>x-dc{display:none}</style>
 <link rel="preload" as="script" href="/vendor/react.production.min.js" crossorigin="anonymous">
 <link rel="preload" as="script" href="/vendor/react-dom.production.min.js" crossorigin="anonymous">
@@ -90,8 +90,7 @@ async function main() {
 
   const server = await serve(root);
   const { port } = server.address();
-  const executablePath = findChromium();
-  const browser = await chromium.launch(executablePath ? { executablePath } : {});
+  const browser = await launchChromium();
 
   let failures = 0;
 

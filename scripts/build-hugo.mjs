@@ -13,25 +13,21 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { sync as syncBase } from "./sync-base.mjs";
+import { ROUTES, filePath } from "./site-routes.mjs";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const hugoDir = path.join(root, "hugo");
 const publicDir = path.join(hugoDir, "public");
 
-// Every page Hugo is currently responsible for. Add an entry here only
-// once it has a real content/layout pair in hugo/ — see completed.tasks.md
-// for which pages have migrated so far. `path` is relative to both
-// hugo/public/ (Hugo's output) and the repo root (where it's committed) —
-// pretty URLs (BUG-03) mean the two now always match exactly, since each
-// page's `url:` front matter is the single source of truth for both.
-export const HUGO_PAGES = [
-  { name: "Manifesto", path: "manifesto/index.html" },
-  { name: "Invitation", path: "invitation/index.html" },
-  { name: "Learn", path: "learn/index.html" },
-  { name: "BehindTheScenes", path: "behind-the-scenes/index.html" },
-  { name: "Archive", path: "archive/index.html" },
-  { name: "Resources", path: "resources/index.html" },
-];
+// Every page Hugo is currently responsible for — the `hugo: true` subset
+// of scripts/site-routes.mjs's own ROUTES. Add an entry there (not here)
+// once a page has a real content/layout pair in hugo/ — see
+// completed.tasks.md for which pages have migrated so far. `path` is
+// relative to both hugo/public/ (Hugo's output) and the repo root (where
+// it's committed) — pretty URLs (BUG-03) mean the two now always match
+// exactly, since each page's `url:` front matter is the single source of
+// truth for both.
+export const HUGO_PAGES = ROUTES.filter((r) => r.hugo).map((r) => ({ name: r.name, path: filePath(r) }));
 
 function findHugo() {
   try {
