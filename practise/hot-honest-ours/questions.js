@@ -45,6 +45,12 @@ const CLOSENESS = ["NOT FOR ME", "OPEN", "WANT"];
 const SIDE = ["ME", "MOSTLY ME", "EVEN", "MOSTLY THEM", "THEM"];
 const CARE = ["touch", "space", "water or snack", "praise", "quiet", "practical care", "debrief later", "ride home", "message tomorrow"];
 const ACCESS_MARK = ["NOT TODAY", "THIN", "ENOUGH"];
+// The Consent Domains Map's own five-option scale (practise/index.html's
+// `options`), carried over verbatim rather than folded into SCALE_OPTIONS
+// above -- HHO-13, UX spec §13.2. "NO" is kept as its own bare word (not
+// "NO, DECLINED" or similar) so POLE below still recognises it as a
+// boundary the same way every other scale's "NO" does.
+const CARRYOVER = ["YES, FREELY", "YES, WITH CONDITIONS", "NOT YET, ASK ME", "NO", "MINE TO WITHHOLD"];
 
 // type: "scale" | "buffet" | "mark" | "chips" | "choice" | "text" | "number"
 // help: optional explanatory line rendered under the question label
@@ -178,6 +184,37 @@ export const QUESTIONS = [
   { id: "r8p.freedom", round: "R8 · The Group Chat", type: "mark", options: SIDE, label: "Who has more freedom to say no, leave, host, travel, spend, or be publicly recognised?" },
   { id: "r8p.risk", round: "R8 · The Group Chat", type: "mark", options: SIDE, label: "Who carries more risk from stigma, racism, homophobia, transphobia, disability, immigration status, work, housing, or family?" },
   { id: "r8p.equal", round: "R8 · The Group Chat", type: "choice", options: ["NO", "SOMEWHERE", "YES, WE ARE"], emphasis: true, label: "Are we calling something equal when the consequences aren't equal?" },
+
+  // ---------------- Round 8 carry-over -- five domains from the site's
+  // earlier Consent Domains Map that this worksheet doesn't otherwise
+  // cover (HHO-13, UX spec §13.2). A distinct `round` string (rather than
+  // reusing "R8 · The Group Chat") so the shared round-heading renderer
+  // gives this group its own labelled divider -- "using the map's own
+  // names... presented under the map's own framing, and labelled as
+  // carried over, so the provenance is legible" (spec §6.11). Do not drop
+  // cultural knowledge: RS-028's anti-appropriation guardrail rests on it
+  // being asked.
+  {
+    id: "r8.carry.location", round: "R8 · The Group Chat (carried over)", type: "mark", options: CARRYOVER, note: true,
+    label: "Location sharing",
+    help: "Carried over from the site's earlier Consent Domains Map -- five domains that worksheet doesn't otherwise ask about, in the map's own five-option scale: live tracking, check-ins, arrival times.",
+  },
+  {
+    id: "r8.carry.devices", round: "R8 · The Group Chat (carried over)", type: "mark", options: CARRYOVER, note: true,
+    label: "Passwords & devices", help: "Phones, accounts, unlocked screens.",
+  },
+  {
+    id: "r8.carry.property", round: "R8 · The Group Chat (carried over)", type: "mark", options: CARRYOVER, note: true,
+    label: "Shared property", help: "Keys, vehicles, tools, the home itself.",
+  },
+  {
+    id: "r8.carry.culture", round: "R8 · The Group Chat (carried over)", type: "mark", options: CARRYOVER, note: true,
+    label: "Cultural knowledge", help: "Teachings, language, ceremony, protocol.",
+  },
+  {
+    id: "r8.carry.admin", round: "R8 · The Group Chat (carried over)", type: "mark", options: CARRYOVER, note: true,
+    label: "Administrative & logistical care", help: "Appointments, forms, benefits, insurance, advocacy, interpretation.",
+  },
 
   // ---------------- Round 10 -- The Buffet ----------------
   ...[
