@@ -2,6 +2,11 @@
 
 **Status:** proposed. Nothing here is built yet.
 **Audience:** whoever implements the replacement for the Consent Domains Map.
+**Superseded in part:** §7.9 (compare transports) and §9.3–9.5 (storage
+tiers, other people's data) are replaced by
+`docs/spec/hot-honest-ours-privacy-architecture.md`, which specifies the
+encrypted `.hho` share file, the three-state consent model, and the local
+comparison engine. Everything else here stands.
 **Sources:** `hothonestandoursv2_1.md` (the worksheet, authoritative for content),
 `Hot_Honest_and_Ours.dc.html` (a working prototype, authoritative for
 *intent* and nothing else), the shipped Consent Domains Map
