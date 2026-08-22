@@ -49,11 +49,21 @@ const PAGES = [
 // homepage's real content now lives only in index.html, and Home.dc.html
 // is a thin soft-redirect to "/" like the other eight, not a second
 // x-dc runtime page to render.
+// notes.js/practise-keyboard.js/botanical-trial.js: found missing from
+// this list 2026-08-22 — every real page's own <script src> already
+// pointed at them, but they were never copied into _site/, the exact
+// artifact deploy.yml uploads to GitHub Pages. Confirmed live: a real
+// `npm run build` + `ls _site/` shows all three 404ing in production
+// (dev testing never catches this — the local server serves from the
+// repo root, where the files always did exist). Never caught by
+// check-pages.mjs either, which also serves from the repo root, not
+// _site/ — see checkPrerender()'s own comment for what it actually
+// covers and doesn't.
 const COPY_AS_IS = [
   "glyph-check.html", "glyph-check.js",
   "resources/index.html", "manifesto/index.html", "invitation/index.html", "learn/index.html", "behind-the-scenes/index.html", "archive/index.html",
   "Home.dc.html", "Manifesto.dc.html", "Invitation.dc.html", "Learn.dc.html", "Archive.dc.html", "Resources.dc.html", "BehindTheScenes.dc.html", "Practise.dc.html", "Contribute.dc.html",
-  "archive-filter.js", "print.js", "sections.js", "reveal.js", "support.js", "robots.txt", "CNAME", "LICENSE",
+  "archive-filter.js", "print.js", "sections.js", "reveal.js", "support.js", "notes.js", "practise-keyboard.js", "botanical-trial.js", "robots.txt", "CNAME", "LICENSE",
 ];
 
 const MIME = { ".html": "text/html", ".js": "application/javascript", ".txt": "text/plain" };
