@@ -12,6 +12,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { ROUTES } from "./site-routes.mjs";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 
@@ -39,7 +40,14 @@ const SELF_ORIGIN = "https://relationalsovereignty.com";
 // as flat root-level *.dc.html files — those flat paths still exist,
 // but only as redirect stubs, which are worth scanning too (they're
 // real HTML, just minimal).
-const PRETTY_URL_DIRS = ["manifesto", "invitation", "learn", "archive", "resources", "behind-the-scenes", "practise", "contribute", "practise/hot-honest-ours"];
+// "practise/hot-honest-ours" isn't one of site-routes.mjs's own nine
+// public routes — a self-contained static app nested under Practise
+// (its own index.html/app.js/etc.), not part of the dc-runtime render
+// pipeline or the page-level checks the other three route-list
+// consumers care about. Appended here, locally, rather than folded into
+// the shared manifest for a route that only this file's origin scan
+// needs to know about.
+const PRETTY_URL_DIRS = [...ROUTES.filter((r) => r.slug).map((r) => r.slug), "practise/hot-honest-ours"];
 
 const PAGES = [
   ...fs

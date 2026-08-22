@@ -45,6 +45,17 @@ jobs:
           sudo mv /tmp/hugo /usr/local/bin/hugo
           hugo version
 
+      # Builds _site/, the exact artifact deploy.yml uploads to GitHub
+      # Pages (scripts/prerender.mjs's own COPY_AS_IS allowlist). Added
+      # 2026-08-22, the same day checkSiteArtifact() was added to
+      # scripts/check-pages.mjs: without this step, that check always
+      # finds _site/ absent here and silently skips itself ("_site/ not
+      # built"), on every real CI run, forever — the one environment it
+      # actually exists to protect. Confirmed by reading this workflow
+      # against scripts/prerender.mjs, not assumed.
+      - name: Build _site/
+        run: npm run build
+
       - name: HTML validation + accessibility (axe-core) check
         run: npm run check
 
