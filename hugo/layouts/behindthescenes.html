@@ -59,6 +59,14 @@
   .kick-ask{color:#6B4C12}.kick-ask::before{background:#DB9E2A}
   h2.sec{font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;font-size:clamp(1.3rem,2.8vw,1.7rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 1.2rem}
   .swatch{display:inline-block;width:.62rem;height:.62rem;flex:0 0 auto;border-radius:1px;margin-right:.5rem;vertical-align:baseline}
+  {{/* MC-22 (Phase 20): a background-only span with no border goes fully
+       invisible under forced-colors mode (Windows High Contrast) —
+       confirmed by running this page under Chromium's forced-colors
+       emulation. The register word beside each swatch still carries the
+       meaning, so this is a legibility fix, not a WCAG 1.4.1 fix; shown
+       only in this mode so nothing else changes. Same rule added to
+       Archive's and Learn's identical .swatch. */}}
+  @media (forced-colors:active){.swatch{border:1px solid CanvasText}}
   .s-teal{background:#0F2A2E}.s-fails{background:#8B3A2F}.s-ask{background:#DB9E2A}
   .legend-key{max-width:66ch;margin:1.1rem 0 0;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.7;color:#585B4F}
   nav[aria-label="Contents"] ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,248px),1fr));gap:.7rem;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:14px}
@@ -133,6 +141,7 @@
 </style>
 </head>
 <body>
+<p style="display:none">GENERATED FILE — do not hand-edit. Hugo strips HTML comments from its own output, so a comment-based warning here would be invisible; this is a real, hidden element instead, for exactly that reason. Edit hugo/layouts/behindthescenes.html (or hugo/data/substrate.yaml etc.), then run `npm run build:hugo`. A hand-edit here is silently overwritten by the next build — see tasks.md for a case where that cost a real content edit on a sibling page.</p>
 
 <a href="#main-content" class="skip-link">Skip to content</a>
 <header style="border-bottom:1px solid #C9C6BA">

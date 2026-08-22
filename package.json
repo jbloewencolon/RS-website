@@ -15,7 +15,7 @@
     "test:hho": "node practise/hot-honest-ours/crypto.test.mjs && node practise/hot-honest-ours/engine.test.mjs"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.9.1",
+    "@axe-core/playwright": "^4.13.0",
     "html-validate": "^11.6.2",
     "playwright": "^1.47.0"
   }

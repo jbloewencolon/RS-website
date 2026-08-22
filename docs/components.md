@@ -27,29 +27,52 @@ expandable heading. Resources' own instance carries **no register class**
 deliberate divergence from Learn/Behind the Scenes' pockets, not an
 oversight — see "Hue-free directories," below.
 
-## Hue-free directories (extends FLAG-14)
+## Hue-free directories, and where that stopped being Archive (extends FLAG-14)
 
-`tasks.md`'s FLAG-14 (2026-08-16) settled a specific question — should
-Archive's nine shelf groups carry register colour — with a general answer:
-a set of same-kind entries differing only in *subject*, not in
+`tasks.md`'s FLAG-14 (2026-08-16) originally settled a specific question —
+should Archive's nine shelf groups carry register colour — with a general
+answer: a set of same-kind entries differing only in *subject*, not in
 *epistemic claim*, should stay hue-free. Colour-coding them would be
 decoration standing in for a distinction the content doesn't actually make.
 
-Resources' eleven categories are the same shape (crisis lines, housing,
-legal aid — a directory on a different subject each time, not eleven
-different claims about what's true), so Phase 21 applied the same
-reasoning without waiting for a second FLAG to be filed: the category
-`.pocket`s ship hue-free. The one exception is principled, not
-decorative — legal-aid's kicker is ochre because its own `scope` field in
-`hugo/data/resources.yaml` says "Canada: thin coverage, stated honestly."
-That's ochre's actual registered job (a claim that something is named but
-not fully built), attached to the one category that makes the claim, not a
-register applied to content that isn't making it. See
-`docs/design-palette.md` § "Where it should go next," item 3.
+**That general answer no longer holds for Archive itself.** MC-19 (Phase
+20, 2026-08-22) built the coloured version anyway, sent a real side-by-side
+(hue-free against coloured) rather than deciding unilaterally, and the
+author's call was to hue-code the nine shelves — each now carries a
+`teal`/`fails`/`holds` register, judged against its own `note` line against
+`docs/design-palette.md`'s four definitions (full reasoning in
+`hugo/data/archive.yaml`'s header comment; the reversal itself is recorded
+in `archived.tasks.md`'s FLAG-14 entry, kept beside the original ruling
+rather than overwriting it). What's *unchanged*: the shelf **motif** —
+the bottom rule, the wood-grain trial — is still structural, not
+chromatic; FLAG-14's ruling on that specific question was never in
+question and was never asked about. What changed is narrower: whether a
+shelf's own kicker may carry semantic colour, which is a different
+question FLAG-14 had come to be read as also covering by the time MC-19
+was scoped.
 
-If a future page ships another same-kind list — a third shelf, a second
-directory — read this section before deciding whether it needs colour.
-The default is no.
+**Resources' eleven categories are still hue-free, and this doesn't change
+that.** Phase 21 applied FLAG-14's *original* reasoning to Resources by
+analogy, not by delegation — Resources' hue-free categories were reasoned
+through independently on their own shape (crisis lines, housing, legal
+aid — a directory on a different subject each time, not eleven different
+claims about what's true) and stand on that reasoning regardless of what
+Archive later did with its own version of the same question. The one
+exception on Resources is still principled, not decorative — legal-aid's
+kicker is ochre because its own `scope` field in `hugo/data/resources.yaml`
+says "Canada: thin coverage, stated honestly." That's ochre's actual
+registered job (a claim that something is named but not fully built),
+attached to the one category that makes the claim, not a register applied
+to content that isn't making it. See `docs/design-palette.md` § "Where it
+should go next," items 3 and 4.
+
+If a future page ships another same-kind list — a second directory, a
+third shelf — read this section before deciding whether it needs colour,
+and read it as two separate precedents, not one: Resources' categories
+argue for hue-free; Archive's shelves, once judged directly against their
+own content, argued the other way. The default is still no, but "the
+same kind of thing" is a claim to check against the actual content, not
+a label to apply on sight — that's exactly what changed Archive's answer.
 
 ## Ground alternation scales with density (DC-16)
 
