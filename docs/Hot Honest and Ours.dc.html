@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type='text/javascript' nonce='wIUPuXXebHjDr35GN8Lseg==' src='https://claude.ai/XxF9rZ_aHk7dC8ulg0qrTtwLIRwMoT_OXiRtsMMQsKixMngI3Dtj6WFBVZtgLxZIcxk6eeUYclEVVTt0jNMVPssTK10u9R2v6u1iSuEE1anCRvmA1c0Wefc18N4zmkXAL3de1gOVKE905OCdCY7_x0V06sxswjytZNRMoZNTlp0zO5623ozV3w4lpwDmRM2ahl5tJ8k2OR3hUDqpMmtK-8CX80PeGRugXX5LQiNK24Q4_XmB5O-QMZaynp1sFvput5voMWCmu4u9XmkMmFKYhtwUISNSkx5ZTl9QyneEnwahTL8pPxjCbMt-HqkdZ6v_GICy5eRWPiRNxzNO7tXTza7WipcKtezT7dauwdxsuoOPhijM0h7P1y1-k0bhzVZ-ZIr95GGQAi1etS5wJqt_JNGNv-eNKmo0zNzpVzcSRHRNAA2qQuyl3EbypeOc7aQ7t9Rd3x4uP3kfiCXczNca6m5xDCarJS_kinB20ayHpJBVtZmb2eum0kiBq7OFwwIH-6N2KxKa1YNuluUlRbfzg_kjIIdRjOE3_MtY7MpnA-6gT3alOq7h0SpcW--NO_lA-ulpk8SFc10BzUkl'></script><script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="omelette-owns-print" content="1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Courier+Prime:ital,wght@0,400;0,700;1,400&amp;family=Caveat:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#e9e3d4;}
+  *{box-sizing:border-box;}
+  a{color:#1f4ede;text-decoration:underline;text-underline-offset:2px;}
+  a:hover{color:#ff3d7f;}
+  [contenteditable]{outline:none;}
+  ::selection{background:#ff3d7f;color:#fff;}
+  @keyframes wob{0%,100%{transform:rotate(-1.4deg)}50%{transform:rotate(1.2deg)}}
+  @page{size:letter;margin:0.55in;}
+  @media print{
+    html,body{background:#fff!important;}
+    [data-noprint]{display:none!important;}
+    [data-screen]{display:block!important;max-width:none!important;padding:0!important;break-after:page;page-break-after:always;}
+    [data-screen]:last-of-type{break-after:auto;page-break-after:auto;}
+    body[data-print="card"] [data-screen]:not([data-card]){display:none!important;}
+    [contenteditable]{border-bottom:1px solid #9a948a!important;}
+    body[data-blank="1"] [contenteditable]{color:transparent!important;}
+    .keep{break-inside:avoid;page-break-inside:avoid;}
+  }
+</style>
+</helmet>
+
+<div ref="{{ rootRef }}" style="position:relative;min-height:100vh;background:#e9e3d4;color:#16151a;padding:0 0 120px;font-family:&#39;Courier Prime&#39;,ui-monospace,monospace;">
+
+<div data-noprint="1" aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;z-index:60;opacity:0.22;mix-blend-mode:multiply;background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgba(0,0,0,.07) 0 1px,transparent 1px 4px);"></div>
+
+<div data-noprint="1" style="position:sticky;top:0;z-index:50;background:#16151a;color:#f5f1e6;border-bottom:3px solid #ff3d7f;">
+  <div style="max-width:980px;margin:0 auto;padding:9px 14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+    <div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:14px;letter-spacing:-0.01em;text-transform:uppercase;">Hot, Honest &amp; Ours</div>
+    <div ref="{{ progRef }}" style="font-size:11px;letter-spacing:.14em;color:#ff8fb5;">0 FILLED</div>
+    <div style="flex:1;min-width:40px;height:8px;border:1px solid #6b6659;background:#26242a;">
+      <div ref="{{ barRef }}" style="height:100%;width:0%;background:#ff3d7f;transition:width .25s;"></div>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+      <button onclick="{{ togglePlay }}" ref="{{ playRef }}" style="font:700 10px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.1em;padding:7px 9px;border:2px solid #f5f1e6;background:transparent;color:#f5f1e6;cursor:pointer;text-transform:uppercase;" style-hover="background:#ff3d7f;border-color:#ff3d7f;">▶ Play mode</button>
+      <button onclick="{{ toggleIO }}" style="font:700 10px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.1em;padding:7px 9px;border:2px solid #f5f1e6;background:transparent;color:#f5f1e6;cursor:pointer;text-transform:uppercase;" style-hover="background:#1f4ede;border-color:#1f4ede;">⇄ Swap</button>
+      <button onclick="{{ printAll }}" style="font:700 10px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.1em;padding:7px 9px;border:2px solid #f5f1e6;background:transparent;color:#f5f1e6;cursor:pointer;text-transform:uppercase;" style-hover="background:#ff3d7f;border-color:#ff3d7f;">⎙ Whole thing</button>
+      <button onclick="{{ printCard }}" style="font:700 10px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.1em;padding:7px 9px;border:2px solid #f5f1e6;background:transparent;color:#f5f1e6;cursor:pointer;text-transform:uppercase;" style-hover="background:#ff3d7f;border-color:#ff3d7f;">⎙ Fridge card</button>
+    </div>
+  </div>
+  <div ref="{{ railRef }}" style="max-width:980px;margin:0 auto;padding:0 14px 9px;display:flex;gap:5px;overflow-x:auto;"></div>
+</div>
+
+<div data-noprint="1" ref="{{ ioRef }}" style="display:none;position:sticky;top:0;z-index:49;background:#1f4ede;color:#fff;border-bottom:3px solid #16151a;">
+  <div style="max-width:980px;margin:0 auto;padding:16px 14px;display:grid;gap:10px;">
+    <div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:18px;text-transform:uppercase;">Hand it over</div>
+    <p style="margin:0;font-size:13px;line-height:1.5;max-width:70ch;">Nothing here leaves this page on its own. Copy your code, send it however you two normally send things, and they paste it into their copy. Then hit Compare.</p>
+    <div style="display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">
+      <div style="display:grid;gap:6px;">
+        <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;">1 · My code</div>
+        <textarea ref="{{ outRef }}" readonly="readonly" style="width:100%;height:88px;font:400 11px/1.4 &#39;Courier Prime&#39;,monospace;padding:8px;border:2px solid #16151a;background:#f5f1e6;color:#16151a;resize:vertical;"></textarea>
+        <button onclick="{{ makeCode }}" style="font:700 11px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.1em;padding:9px;border:2px solid #16151a;background:#ff3d7f;color:#fff;cursor:pointer;text-transform:uppercase;">Generate + select</button>
+      </div>
+      <div style="display:grid;gap:6px;">
+        <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;">2 · Their code</div>
+        <textarea ref="{{ inRef }}" style="width:100%;height:88px;font:400 11px/1.4 &#39;Courier Prime&#39;,monospace;padding:8px;border:2px solid #16151a;background:#f5f1e6;color:#16151a;resize:vertical;"></textarea>
+        <button onclick="{{ importCode }}" style="font:700 11px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.1em;padding:9px;border:2px solid #16151a;background:#f5f1e6;color:#16151a;cursor:pointer;text-transform:uppercase;">Import theirs</button>
+      </div>
+    </div>
+    <div ref="{{ ioMsgRef }}" style="font-size:12px;font-style:italic;min-height:16px;"></div>
+  </div>
+</div>
+
+<div style="max-width:980px;margin:0 auto;padding:26px 16px 0;">
+
+<section data-screen="0" data-title="Cover" data-screen-label="Cover" style="display:none;">
+  <div style="position:relative;border:4px solid #16151a;background:#f5f1e6;padding:34px 26px 28px;box-shadow:10px 10px 0 #1f4ede;">
+    <div style="position:absolute;top:-16px;left:34px;transform:rotate(-2deg);background:rgba(214,196,150,.85);border-left:1px dashed rgba(0,0,0,.25);border-right:1px dashed rgba(0,0,0,.25);padding:6px 26px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#5a5346;">consenting adults only</div>
+    <div style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#ff3d7f;margin-bottom:10px;">v2 · a worksheet with teeth</div>
+    <h1 style="font:400 clamp(44px,9vw,104px)/0.86 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;letter-spacing:-0.035em;margin:0 0 14px;">Hot,<br>Honest,<br><span style="color:#ff3d7f;">and Ours</span></h1>
+    <p style="font-family:&#39;Caveat&#39;,cursive;font-size:26px;line-height:1.15;margin:0 0 18px;transform:rotate(-1deg);max-width:34ch;">A playful whole-relationship and kink check-in.</p>
+    <p style="font:700 17px/1.4 &#39;Courier Prime&#39;,monospace;margin:0 0 22px;text-transform:uppercase;letter-spacing:.02em;">Less mind-reading. More asking. Better mischief.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <div style="border:2px solid #16151a;padding:8px 12px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;background:#fff;"><b>10 min</b> alone</div>
+      <div style="border:2px solid #16151a;padding:8px 12px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;background:#fff;"><b>30 min</b> together</div>
+      <div style="border:2px solid #16151a;padding:8px 12px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;background:#fff;"><b>1 plan</b> for now</div>
+      <div style="border:2px solid #16151a;padding:8px 12px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;background:#fff;"><b>repeat</b> when things change</div>
+    </div>
+  </div>
+
+  <div class="keep" style="margin-top:26px;border:4px solid #ff3d7f;background:#16151a;color:#f5f1e6;padding:24px;transform:rotate(-0.6deg);">
+    <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff8fb5;margin-bottom:10px;">The golden rule</div>
+    <p style="font:400 clamp(20px,3.4vw,34px)/1.15 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:0 0 12px;">A yes can become a no. A no needs no defense. A maybe is not a yes.</p>
+    <p style="margin:0;font-size:15px;line-height:1.5;">Spicy, soft, silly, serious, or all four. Name what's real.</p>
+  </div>
+
+  <div class="keep" style="margin-top:26px;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));">
+    <div style="border:3px solid #16151a;background:#fff;padding:16px;"><div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:30px;color:#ff3d7f;line-height:1;">1</div><p style="margin:6px 0 0;font-size:14px;line-height:1.5;"><b>Answer alone first.</b> Contradictions allowed. Anything you'd be embarrassed to write down — write it down. That's the one.</p></div>
+    <div style="border:3px solid #16151a;background:#fff;padding:16px;"><div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:30px;color:#ff3d7f;line-height:1;">2</div><p style="margin:6px 0 0;font-size:14px;line-height:1.5;"><b>Compare without selling.</b> Your job is to understand, not to win a yes.</p></div>
+    <div style="border:3px solid #16151a;background:#fff;padding:16px;"><div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:30px;color:#ff3d7f;line-height:1;">3</div><p style="margin:6px 0 0;font-size:14px;line-height:1.5;"><b>Name the gaps.</b> A difference can be workable, uncertain, or a real incompatibility. All three are fine to say out loud.</p></div>
+    <div style="border:3px solid #16151a;background:#fff;padding:16px;"><div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:30px;color:#ff3d7f;line-height:1;">4</div><p style="margin:6px 0 0;font-size:14px;line-height:1.5;"><b>Only choose what's true now.</b> Redo it after a new partner, a new scene, a fight, a health change, or a capacity shift.</p></div>
+  </div>
+</section>
+
+<section data-screen="1" data-title="Two dials" data-screen-label="Two dials" style="display:none;">
+  <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff3d7f;">Two dials</div>
+  <h2 style="font:400 clamp(30px,6vw,58px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:6px 0 18px;letter-spacing:-0.03em;">The signal</h2>
+  <p style="font-size:15px;line-height:1.55;margin:0 0 16px;max-width:62ch;">How the conversation or the scene is going, right now. Tap where you are.</p>
+  <div style="display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));">
+    <button data-k="signal.now" data-v="GREEN" data-label="Signal right now" style="text-align:left;border:3px solid #16151a;background:#fff;padding:16px;cursor:pointer;font-family:&#39;Courier Prime&#39;,monospace;"><span style="display:inline-block;width:16px;height:16px;background:#2f8f4e;border:2px solid #16151a;vertical-align:-3px;"></span> <b style="letter-spacing:.1em;">GREEN</b><div style="font-size:13px;margin-top:6px;">Comfortable, keep going</div></button>
+    <button data-k="signal.now" data-v="YELLOW" style="text-align:left;border:3px solid #16151a;background:#fff;padding:16px;cursor:pointer;font-family:&#39;Courier Prime&#39;,monospace;"><span style="display:inline-block;width:16px;height:16px;background:#e8bf24;border:2px solid #16151a;vertical-align:-3px;"></span> <b style="letter-spacing:.1em;">YELLOW</b><div style="font-size:13px;margin-top:6px;">Slow down, check in, change something</div></button>
+    <button data-k="signal.now" data-v="RED" style="text-align:left;border:3px solid #16151a;background:#fff;padding:16px;cursor:pointer;font-family:&#39;Courier Prime&#39;,monospace;"><span style="display:inline-block;width:16px;height:16px;background:#d0342c;border:2px solid #16151a;vertical-align:-3px;"></span> <b style="letter-spacing:.1em;">RED</b><div style="font-size:13px;margin-top:6px;">Stop now</div></button>
+    <button data-k="signal.now" data-v="PAUSE" style="text-align:left;border:3px solid #16151a;background:#fff;padding:16px;cursor:pointer;font-family:&#39;Courier Prime&#39;,monospace;"><span style="display:inline-block;width:16px;height:16px;background:#1f4ede;border:2px solid #16151a;vertical-align:-3px;"></span> <b style="letter-spacing:.1em;">PAUSE</b><div style="font-size:13px;margin-top:6px;">I need time, quiet, water, food, regulation, or a different way of communicating</div></button>
+  </div>
+  <p style="font-family:&#39;Caveat&#39;,cursive;font-size:24px;margin:14px 0 30px;transform:rotate(-0.8deg);color:#1f4ede;">PAUSE is the one people forget to build, and it's the one that prevents most reds.</p>
+
+  <h2 style="font:400 clamp(30px,6vw,58px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:0 0 16px;letter-spacing:-0.03em;">The answer</h2>
+  <div class="keep" style="display:grid;gap:0;border:3px solid #16151a;background:#fff;">
+    <div style="padding:14px 16px;border-bottom:2px dotted #16151a;"><b style="font-size:16px;letter-spacing:.1em;">YES</b> · want it, ask me anytime</div>
+    <div style="padding:14px 16px;border-bottom:2px dotted #16151a;"><b style="font-size:16px;letter-spacing:.1em;">NO</b> · not now, not later, don't ask</div>
+    <div style="padding:14px 16px;border-bottom:2px dotted #16151a;"><b style="font-size:16px;letter-spacing:.1em;">MAYBE</b> · curious, nervous, talk first</div>
+    <div style="padding:14px 16px;border-bottom:2px dotted #16151a;"><b style="font-size:16px;letter-spacing:.1em;">NOT YET</b> · a yes with a timer. Say roughly when.</div>
+    <div style="padding:14px 16px;background:#ffe6ef;"><b style="font-size:16px;letter-spacing:.1em;">ASK ME AGAIN WHEN I'M BRAVER</b> · you want it, you're scared, you'd like someone to hold the door open without pushing</div>
+  </div>
+</section>
+
+<section data-screen="2" data-title="Access check" data-screen-label="Access check" style="display:none;">
+  <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff3d7f;">Before you start</div>
+  <h2 style="font:400 clamp(30px,6vw,58px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:6px 0 18px;letter-spacing:-0.03em;">Access check</h2>
+  <p style="font-size:16px;line-height:1.6;margin:0 0 14px;max-width:64ch;">Do we have enough <b>privacy, time, energy, sobriety, sensory comfort, emotional steadiness, and freedom to say no</b>?</p>
+  <p style="font-size:13px;line-height:1.5;margin:0 0 10px;color:#4a463d;font-style:italic;">Not a tick-list — "enough" is the question. Mark each one.</p>
+  <div ref="{{ accessRows }}" style="border-top:3px solid #16151a;margin-bottom:18px;"></div>
+  <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6b6659;margin-bottom:4px;">Would speech, text, writing, a walk, a break, or a support person make this easier?</div>
+  <div data-k="access.easier" data-label="What would make this easier" contenteditable="true" style="min-height:38px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;line-height:1.4;"></div>
+  <p style="font-size:15px;line-height:1.6;margin:18px 0 0;max-width:64ch;">If the answer is no, the honest move is to reschedule. A negotiation you can't safely say no inside of isn't a negotiation.</p>
+  <div class="keep" style="margin-top:20px;border:3px solid #16151a;background:#16151a;color:#f5f1e6;padding:18px;">
+    <div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#ff8fb5;margin-bottom:8px;">Safety note</div>
+    <p style="margin:0;font-size:15px;line-height:1.55;">If honesty here could get you punished, outed, cut off financially, evicted, hurt, or retaliated against — this worksheet is not enough. Prioritise safety and outside support first.</p>
+  </div>
+</section>
+
+<section data-screen="3" data-title="R1 · Playing with" data-screen-label="Round 1" style="display:none;">
+  <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff3d7f;">Round 1</div>
+  <h2 style="font:400 clamp(30px,6vw,58px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:6px 0 12px;letter-spacing:-0.03em;">What are we playing with?</h2>
+  <p style="font-family:&#39;Caveat&#39;,cursive;font-size:24px;margin:0 0 14px;transform:rotate(-0.5deg);">Name the vibe before the vibe starts naming you.</p>
+  <p style="font-size:15px;line-height:1.55;margin:0 0 16px;max-width:64ch;">Labels are optional. Shared meaning isn't. Tick as many as fit, or invent better ones.</p>
+  <div ref="{{ r1Chips }}" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;"></div>
+  <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6b6659;margin-bottom:4px;">Something else</div>
+  <div data-k="r1.else" data-label="Something else" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div>
+
+  <div style="margin-top:26px;display:grid;gap:16px;">
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">What I hope to <i>feel</i> here</div><div data-k="r1.feel" data-label="What I hope to feel" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">What I want more of</div><div data-k="r1.more" data-label="What I want more of" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">What I can genuinely offer</div><div data-k="r1.offer" data-label="What I can genuinely offer" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">What I cannot promise</div><div data-k="r1.cannot" data-label="What I cannot promise" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div style="border:3px solid #ff3d7f;padding:12px;background:#ffe6ef;"><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;">What I'm assuming but have never asked</div><div data-k="r1.assume" data-label="What I&#39;m assuming but never asked" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">What would make this stop working for me</div><div data-k="r1.stop" data-label="What would make this stop working" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+  </div>
+  <div class="keep" style="margin-top:22px;border-left:6px solid #1f4ede;padding:10px 0 10px 14px;font-style:italic;font-size:15px;line-height:1.55;max-width:64ch;">Try this sentence: "I like what we're doing. I want to understand what it means to each of us, without shoving it into a preset shape."</div>
+</section>
+
+<section data-screen="4" data-title="R2 · Want Menu" data-screen-label="Round 2" style="display:none;">
+  <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff3d7f;">Round 2</div>
+  <h2 style="font:400 clamp(30px,6vw,58px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:6px 0 12px;letter-spacing:-0.03em;">The Want Menu</h2>
+  <p style="font-size:15px;line-height:1.55;margin:0 0 14px;max-width:64ch;">Every answer is useful. Mark one per row, then add conditions and examples.</p>
+  <div class="keep" style="border:3px solid #16151a;background:#16151a;color:#f5f1e6;padding:14px 16px;margin-bottom:20px;font-size:15px;line-height:1.5;"><b>An answer to a category is not consent to every activity inside it.</b> "Yes to impact" is not "yes to anything with a handle."</div>
+
+  <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;">Kinds of closeness — these do not come as a bundle deal</div>
+  <div ref="{{ r2Close }}" style="border-top:3px solid #16151a;margin-bottom:26px;"></div>
+
+  <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;">Kinds of play</div>
+  <div ref="{{ r2Rows }}" style="border-top:3px solid #16151a;"></div>
+
+  <div class="keep" style="margin-top:22px;border:3px solid #ff3d7f;background:#fff;padding:16px;">
+    <div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:15px;text-transform:uppercase;margin-bottom:8px;">The question that saves everyone six months</div>
+    <p style="margin:0 0 8px;font-size:15px;line-height:1.5;">Which of these did you <i>assume</i> came free with one of the others?</p>
+    <div data-k="r2.assumed" data-label="What I assumed came free" contenteditable="true" style="min-height:46px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div>
+  </div>
+  <p style="font-family:&#39;Caveat&#39;,cursive;font-size:24px;margin:18px 0 0;color:#1f4ede;transform:rotate(-0.6deg);">Desire is an invitation to talk. It is not a claim on anyone's body, time, attention, or other relationships.</p>
+</section>
+
+<section data-screen="5" data-title="R3 · Power" data-screen-label="Round 3" style="display:none;">
+  <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff3d7f;">Round 3</div>
+  <h2 style="font:400 clamp(30px,6vw,58px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:6px 0 12px;letter-spacing:-0.03em;">Power, roles, and permission</h2>
+  <p style="font-family:&#39;Caveat&#39;,cursive;font-size:24px;margin:0 0 16px;">Kink gets hotter when the permission is specific.</p>
+  <div class="keep" style="border:3px solid #16151a;background:#16151a;color:#f5f1e6;padding:16px;margin-bottom:22px;font-size:15px;line-height:1.55;"><b>No blanket consent.</b> Arousal is not consent. A role is not unlimited permission. Submission is not ownership. <b style="color:#ff8fb5;">Dominance is not exemption from care.</b></div>
+  <div style="display:grid;gap:16px;">
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">Scene, or ongoing dynamic?</div><div ref="{{ r3Scope }}" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;"></div><div data-k="r3.scope.note" data-label="Scene or dynamic — notes" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;margin-top:8px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">Roles, titles, honorifics, words we want — and words we don't</div><div data-k="r3.words" data-label="Roles and words" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">Power we're choosing to exchange</div><div data-k="r3.exchange" data-label="Power exchanged" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div style="border:3px solid #ff3d7f;padding:12px;background:#ffe6ef;"><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;">Power that stays fully mine, always</div><div data-k="r3.mine" data-label="Power that stays mine" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">Slow, stop, and nonverbal signals (including one for when you can't speak)</div><div data-k="r3.signals" data-label="Slow / stop / nonverbal signals" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">Marks, pain, fear, or injury risk</div><div data-k="r3.risk" data-label="Marks, pain, risk" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">Skills, gear checks, or learning needed before we do this</div><div data-k="r3.skills" data-label="Skills and gear needed" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">What must never happen in public or in front of others</div><div data-k="r3.public" data-label="Never in public" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+  </div>
+
+  <div style="margin-top:28px;font-family:&#39;Archivo Black&#39;,sans-serif;font-size:18px;text-transform:uppercase;">Limits come in three flavours</div>
+  <div style="display:grid;gap:14px;margin-top:12px;">
+    <div style="border:3px solid #16151a;background:#fff;padding:14px;"><b style="letter-spacing:.1em;">HARD</b> — non-negotiable, in play <i>and</i> in the relationship. No means no, not "convince me."<div data-k="r3.hard" data-label="Hard limits" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;margin-top:8px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div style="border:3px solid #16151a;background:#fff;padding:14px;"><b style="letter-spacing:.1em;">SOFT</b> — no for now; maybe with the right person, mood, or amount of warning.<div data-k="r3.soft" data-label="Soft limits" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;margin-top:8px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div style="border:3px solid #16151a;background:#fff;padding:14px;"><b style="letter-spacing:.1em;">SQUISHY</b> — yes in a scene, absolutely not in the kitchen on a Sunday. Or the reverse: lots of intensity in daily life, very little in play. This category is real and almost nobody names it.<div data-k="r3.squishy" data-label="Squishy limits" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;margin-top:8px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+  </div>
+  <div class="keep" style="margin-top:22px;border:4px dashed #1f4ede;padding:16px;background:#eaefff;">
+    <p style="margin:0 0 6px;font-size:15px;line-height:1.55;"><b>Write at least two <i>relationship</i> hard limits.</b> Everyone can list their kink limits. Almost nobody has written down the other kind. <i>Don't turn up unannounced. Don't discuss me with your ex. Don't out me to anyone, ever.</i></p>
+    <div data-k="r3.relhard" data-label="Relationship hard limits" contenteditable="true" style="min-height:46px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div>
+  </div>
+  <p style="font-size:15px;line-height:1.55;margin:16px 0 0;max-width:64ch;">Wanting something doesn't make it safe or currently feasible. High-risk activities need actual knowledge, preparation, and an emergency plan.</p>
+</section>
+
+<section data-screen="6" data-title="R4 · Bodies" data-screen-label="Round 4" style="display:none;">
+  <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff3d7f;">Round 4</div>
+  <h2 style="font:400 clamp(30px,6vw,58px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:6px 0 12px;letter-spacing:-0.03em;">Bodies, barriers, access</h2>
+  <p style="font-family:&#39;Caveat&#39;,cursive;font-size:24px;margin:0 0 18px;">Sexy information is the information people need in order to choose freely.</p>
+  <div ref="{{ r4Fields }}" style="display:grid;gap:16px;"></div>
+  <div class="keep" style="margin-top:22px;border:3px solid #16151a;background:#16151a;color:#f5f1e6;padding:16px;font-size:15px;line-height:1.55;"><b style="color:#ff8fb5;">Privacy counts.</b> Don't share health information, scene details, images, or someone else's story without their specific consent.</div>
+</section>
+
+<section data-screen="7" data-title="R5 · Bandwidth" data-screen-label="Round 5" style="display:none;">
+  <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff3d7f;">Round 5</div>
+  <h2 style="font:400 clamp(30px,6vw,58px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:6px 0 12px;letter-spacing:-0.03em;">Bandwidth check</h2>
+  <p style="font-size:15px;line-height:1.55;margin:0 0 18px;max-width:64ch;"><i>Hot is not the same as sustainable.</i> Not what you'd love to give — what you can give on a bad Wednesday.</p>
+  <div ref="{{ r5Rows }}" style="border-top:3px solid #16151a;"></div>
+  <div style="margin-top:24px;display:grid;gap:16px;">
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">Nights per month I can realistically show up</div><div ref="{{ r5Nights }}" style="margin-top:8px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">Text energy — mine, and what I want back</div><div ref="{{ r5Text }}" style="margin-top:8px;border-top:3px solid #16151a;"></div><div data-k="r5.textnote" data-label="Text energy — notes" contenteditable="true" style="min-height:30px;border-bottom:2px dashed #16151a;padding:6px 2px;margin-top:10px;font-family:&#39;Caveat&#39;,cursive;font-size:20px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">Alone time I need to stay a functional human</div><div ref="{{ r5Alone }}" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">What already has a claim on me: partners, kids, work, illness, thesis, band, cat with medical needs</div><div data-k="r5.claims" data-label="What already has a claim on me" contenteditable="true" style="min-height:46px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+  </div>
+  <div class="keep" style="margin-top:24px;display:grid;gap:10px;">
+    <div style="border:3px solid #16151a;background:#fff;padding:14px;font-size:15px;line-height:1.5;text-decoration:line-through;text-decoration-color:#d0342c;text-decoration-thickness:3px;">"If you wanted me, you'd make it happen."</div>
+    <div style="border:3px solid #2f8f4e;background:#eaf6ee;padding:14px;font-size:15px;line-height:1.5;">"What can you offer without harming yourself or your other responsibilities — and what meaning are we each giving that amount?"</div>
+  </div>
+  <p style="font-family:&#39;Caveat&#39;,cursive;font-size:24px;margin:18px 0 0;color:#1f4ede;">If your Round 2 wants exceed your Round 5 numbers, don't fix the numbers. That's the honest bit.</p>
+</section>
+
+<section data-screen="8" data-title="R6 · Stop words" data-screen-label="Round 6" style="display:none;">
+  <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff3d7f;">Round 6</div>
+  <h2 style="font:400 clamp(30px,6vw,58px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:6px 0 12px;letter-spacing:-0.03em;">Stop words for a Tuesday afternoon</h2>
+  <p style="font-size:15px;line-height:1.55;margin:0 0 18px;max-width:64ch;">You have a system for stopping a scene. Do you have one for stopping a <i>conversation</i>? Use the same four signals. Agree now:</p>
+  <div style="display:grid;gap:16px;">
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">Our yellow word for a hard conversation</div><div data-k="r6.yellow" data-label="Yellow word" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">What actually happens on a red or a PAUSE — where do we go, who reaches out first, <b>and when do we come back?</b></div><div data-k="r6.redplan" data-label="Red / PAUSE plan" contenteditable="true" style="min-height:46px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+  </div>
+  <p style="font-size:15px;line-height:1.55;margin:14px 0 0;max-width:64ch;">Either person can call it. Not just whoever's more upset. Always either.</p>
+
+  <div style="margin-top:28px;font-family:&#39;Archivo Black&#39;,sans-serif;font-size:20px;text-transform:uppercase;">Aftercare isn't only for scenes</div>
+  <p style="font-size:15px;line-height:1.55;margin:6px 0 12px;">It's for hard talks, meeting the family, and the Sunday you leave.</p>
+  <p style="font-size:13px;line-height:1.5;margin:0 0 12px;color:#4a463d;font-style:italic;">Same menu, three different moments. What you need after a scene is rarely what you need after a fight.</p>
+  <div ref="{{ r6Care }}" style="display:grid;gap:14px;margin-bottom:18px;"></div>
+  <div style="display:grid;gap:16px;">
+    <div style="border:3px solid #ff3d7f;padding:12px;background:#ffe6ef;"><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;">Reverse aftercare: what do I need to <i>give</i> to feel finished? <span style="font-weight:400;text-transform:none;letter-spacing:0;font-style:italic;">Tops need this too and rarely get asked.</span></div><div data-k="r6.reverse" data-label="Reverse aftercare" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+  </div>
+
+  <div style="margin-top:28px;font-family:&#39;Archivo Black&#39;,sans-serif;font-size:20px;text-transform:uppercase;">Drop happens</div>
+  <p style="font-size:15px;line-height:1.55;margin:6px 0 14px;max-width:64ch;">Sub drop, top drop, and the one nobody names — the crash three months in when the sparkles wear off and you meet an actual person with opinions about the dishwasher.</p>
+  <div style="display:grid;gap:16px;">
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">How does drop show up in me? (Tearful, snappy, distant, convinced everyone hates me, deep-cleaning at midnight)</div><div data-k="r6.drop" data-label="How drop shows up" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">What do I need in it — and what should you <i>not</i> do?</div><div data-k="r6.dropneed" data-label="What I need in drop" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">Agree on a tell: how will we know it's drop and not a real problem with us?</div><div data-k="r6.tell" data-label="Our tell for drop" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">My move when I'm certain everything is perfect forever <span style="text-transform:none;letter-spacing:0;font-style:italic;">(NRE is a drug and it signs contracts you can't afford.)</span></div><div data-k="r6.nre" data-label="My move in NRE" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+  </div>
+</section>
+
+<section data-screen="9" data-title="R7 · Loud feelings" data-screen-label="Round 7" style="display:none;">
+  <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff3d7f;">Round 7</div>
+  <h2 style="font:400 clamp(30px,6vw,58px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:6px 0 12px;letter-spacing:-0.03em;">When feelings get loud</h2>
+  <p style="font-family:&#39;Caveat&#39;,cursive;font-size:24px;margin:0 0 18px;">Care for the feeling. Get curious about the story. Don't hand it the steering wheel.</p>
+  <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;">The four-part untangle</div>
+  <div style="display:grid;gap:0;border:3px solid #16151a;background:#fff;">
+    <div style="padding:12px 14px;border-bottom:2px dotted #16151a;"><b>EVENT</b> — what happened, one sentence, no guessing at motives<div data-k="r7.event" data-label="Event" contenteditable="true" style="min-height:32px;border-bottom:2px dashed #16151a;padding:4px 2px;margin-top:6px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div style="padding:12px 14px;border-bottom:2px dotted #16151a;"><b>STORY</b> — what meaning did I give it?<div data-k="r7.story" data-label="Story" contenteditable="true" style="min-height:32px;border-bottom:2px dashed #16151a;padding:4px 2px;margin-top:6px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div style="padding:12px 14px;border-bottom:2px dotted #16151a;"><b>FEELING / NEED</b> — what hurts, scares me, or matters here?<div data-k="r7.feeling" data-label="Feeling / need" contenteditable="true" style="min-height:32px;border-bottom:2px dashed #16151a;padding:4px 2px;margin-top:6px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div style="padding:12px 14px;"><b>REQUEST</b> — what specific, consensual change or reassurance am I asking for?<div data-k="r7.request" data-label="Request" contenteditable="true" style="min-height:32px;border-bottom:2px dashed #16151a;padding:4px 2px;margin-top:6px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+  </div>
+
+  <div style="margin-top:26px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;">Three questions for jealousy</div>
+  <div style="display:grid;gap:16px;">
+    <div><div style="font-size:14px;line-height:1.5;">Is this a <b>broken agreement</b>, a fear, a scarcity story, exclusion, lost status, or unequal power? <i>(If it's the first one, skip to Round 11. That's repair, not feelings-work.)</i></div><div data-k="r7.j1" data-label="Jealousy: which is it" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:14px;line-height:1.5;">What reassurance is actually available without controlling another person's body or relationships?</div><div data-k="r7.j2" data-label="Available reassurance" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:14px;line-height:1.5;">What needs to change — and what feeling needs care <i>without</i> changing the agreement?</div><div data-k="r7.j3" data-label="What changes, what needs care" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+  </div>
+  <div class="keep" style="margin-top:22px;border:3px solid #16151a;background:#16151a;color:#f5f1e6;padding:18px;font-family:&#39;Archivo Black&#39;,sans-serif;font-size:clamp(17px,2.6vw,26px);line-height:1.15;text-transform:uppercase;">A feeling deserves care. It does not automatically justify a rule.</div>
+</section>
+
+<section data-screen="10" data-title="R8 · Group chat" data-screen-label="Round 8" style="display:none;">
+  <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff3d7f;">Round 8</div>
+  <h2 style="font:400 clamp(30px,6vw,58px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:6px 0 12px;letter-spacing:-0.03em;">The group chat</h2>
+  <p style="font-family:&#39;Caveat&#39;,cursive;font-size:24px;margin:0 0 18px;">Other people exist, and their consent and privacy matter too.</p>
+  <div ref="{{ r8Fields }}" style="display:grid;gap:16px;"></div>
+  <div style="margin-top:26px;font-family:&#39;Archivo Black&#39;,sans-serif;font-size:18px;text-transform:uppercase;">Quick power check</div>
+  <div ref="{{ r8Power }}" style="display:grid;gap:16px;margin-top:12px;"></div>
+</section>
+
+<section data-screen="11" data-title="R9 · Three words" data-screen-label="Round 9" style="display:none;">
+  <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff3d7f;">Round 9</div>
+  <h2 style="font:400 clamp(30px,6vw,58px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:6px 0 16px;letter-spacing:-0.03em;">Three words people use interchangeably and shouldn't</h2>
+  <div style="display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));">
+    <div style="border:3px solid #16151a;background:#fff;padding:16px;"><div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:20px;text-transform:uppercase;color:#2f8f4e;">Boundary</div><p style="margin:8px 0 0;font-size:15px;line-height:1.5;">What <i>I</i> will do to take care of myself</p></div>
+    <div style="border:3px solid #16151a;background:#fff;padding:16px;"><div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:20px;text-transform:uppercase;color:#1f4ede;">Agreement</div><p style="margin:8px 0 0;font-size:15px;line-height:1.5;">What all involved people explicitly chose</p></div>
+    <div style="border:3px solid #16151a;background:#fff;padding:16px;"><div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:20px;text-transform:uppercase;color:#d0342c;">Rule</div><p style="margin:8px 0 0;font-size:15px;line-height:1.5;">An attempt to control another person's behaviour. Ask who benefits, who pays, and whether the consent is real</p></div>
+  </div>
+  <p style="font-size:16px;line-height:1.6;margin:20px 0 14px;max-width:64ch;">Most fights labelled "boundary violations" are actually rules nobody agreed to. Sort yours.</p>
+  <div style="display:grid;gap:16px;">
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">Mine that are actually boundaries</div><div data-k="r9.boundary" data-label="My boundaries" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">Ours that are actually agreements</div><div data-k="r9.agreement" data-label="Our agreements" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">Ones that are rules — who benefits, who pays?</div><div data-k="r9.rule" data-label="Rules — who benefits, who pays" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+  </div>
+</section>
+
+<section data-screen="12" data-title="R10 · The buffet" data-screen-label="Round 10" style="display:none;">
+  <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff3d7f;">Round 10</div>
+  <h2 style="font:400 clamp(30px,6vw,58px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:6px 0 6px;letter-spacing:-0.03em;">The buffet</h2>
+  <p style="font-family:&#39;Caveat&#39;,cursive;font-size:22px;margin:0 0 16px;color:#1f4ede;">formerly: the escalator</p>
+  <p style="font-size:15px;line-height:1.55;margin:0 0 16px;">Four answers each. No explaining yet.</p>
+  <div ref="{{ r10Rows }}" style="border-top:3px solid #16151a;"></div>
+  <div class="keep" style="margin-top:22px;border:4px solid #16151a;background:#ff3d7f;color:#fff;padding:18px;transform:rotate(-0.5deg);">
+    <div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:clamp(18px,3vw,28px);text-transform:uppercase;line-height:1.05;">Rule of the buffet: more is not deeper.</div>
+    <p style="margin:10px 0 0;font-size:15px;line-height:1.5;">Escalating isn't the same as caring more. Some of the most committed relationships on earth involve separate flats and no labels.</p>
+  </div>
+  <p style="font-size:15px;line-height:1.55;margin:16px 0 6px;max-width:64ch;">For each <b>yes</b>: which of the fridge five are you expecting it to deliver — and is there a cheaper way to get that one?</p>
+  <div ref="{{ r10Fridge }}" style="display:flex;gap:6px;flex-wrap:wrap;margin:10px 0;"></div>
+  <div data-k="r10.fridge" data-label="What each yes is expected to deliver" contenteditable="true" style="min-height:46px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div>
+</section>
+
+<section data-screen="13" data-title="R11 · When it breaks" data-screen-label="Round 11" style="display:none;">
+  <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff3d7f;">Round 11</div>
+  <h2 style="font:400 clamp(30px,6vw,58px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:6px 0 12px;letter-spacing:-0.03em;">When it breaks</h2>
+  <p style="font-family:&#39;Caveat&#39;,cursive;font-size:24px;margin:0 0 18px;">An apology is the opening move. Changed behaviour is the follow-through.</p>
+  <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;">When I'm hurt I — which one am I?</div>
+  <div ref="{{ r11Hurt }}" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px;"></div>
+  <div ref="{{ r11Fields }}" style="display:grid;gap:16px;"></div>
+  <div class="keep" style="margin-top:22px;border:3px solid #16151a;background:#16151a;color:#f5f1e6;padding:18px;font-size:15px;line-height:1.55;"><b style="color:#ff8fb5;">Forgiveness, reconciliation, continued play, and continued relationship are four separate choices.</b> You can make any combination of them.</div>
+</section>
+
+<section data-screen="14" data-title="R12 · Write it down" data-card="1" data-screen-label="Round 12" style="display:none;">
+  <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff3d7f;">Round 12</div>
+  <h2 style="font:400 clamp(30px,6vw,58px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:6px 0 12px;letter-spacing:-0.03em;">Write it down</h2>
+  <p style="font-family:&#39;Caveat&#39;,cursive;font-size:24px;margin:0 0 18px;">Only write what everyone is actually choosing.</p>
+  <div style="border:4px solid #16151a;background:#f5f1e6;padding:20px;box-shadow:8px 8px 0 #ff3d7f;display:grid;gap:16px;">
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;">We are choosing</div><div data-k="r12.choosing" data-label="We are choosing" contenteditable="true" style="min-height:38px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;">We are not choosing</div><div data-k="r12.notchoosing" data-label="We are not choosing" contenteditable="true" style="min-height:38px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;">This means</div><div data-k="r12.means" data-label="This means" contenteditable="true" style="min-height:38px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;">This does not mean</div><div data-k="r12.notmeans" data-label="This does not mean" contenteditable="true" style="min-height:38px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;">People and conditions affected</div><div data-k="r12.affected" data-label="People and conditions affected" contenteditable="true" style="min-height:38px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;">How either of us can pause or change consent</div><div data-k="r12.pause" data-label="How to pause or change consent" contenteditable="true" style="min-height:38px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;">Review date, or the thing that triggers a review</div><div data-k="r12.review" data-label="Review date or trigger" contenteditable="true" style="min-height:38px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+  </div>
+  <p style="font-size:15px;line-height:1.55;margin:18px 0 0;max-width:64ch;">An agreement doesn't guarantee an outcome. It's a shared record of what's true now, and a process for when the truth changes.</p>
+</section>
+
+<section data-screen="15" data-title="60-second check-in" data-card="1" data-screen-label="60-second check-in" style="display:none;">
+  <div style="border:4px solid #16151a;background:#fff;padding:22px;">
+    <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff3d7f;">Fridge card</div>
+    <h2 style="font:400 clamp(28px,5.4vw,50px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:6px 0 8px;letter-spacing:-0.03em;">The 60-second check-in</h2>
+    <p style="font-style:italic;font-size:14px;margin:0 0 18px;">Before a date, a scene, a sleepover, a hard conversation, or a change of plan.</p>
+    <div ref="{{ checkRows }}" style="display:grid;gap:12px;"></div>
+    <div style="margin-top:18px;display:grid;gap:14px;">
+      <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">Has anything changed? Is anyone else affected? Are we still inside our agreements?</div><div data-k="ci.changed" data-label="What&#39;s changed / who&#39;s affected" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+      <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;">What do I need before, during, after? What's our stop or pause signal? When do we check in again?</div><div data-k="ci.needs" data-label="Needs, signals, next check-in" contenteditable="true" style="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:&#39;Caveat&#39;,cursive;font-size:22px;"></div></div>
+    </div>
+    <div style="margin-top:20px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;">Verdict</div>
+    <div ref="{{ verdict }}" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
+  </div>
+</section>
+
+<section data-screen="16" data-title="Fridge five" data-screen-label="Fridge Five" style="display:none;">
+  <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff3d7f;">The whole thing, not just today</div>
+  <h2 style="font:400 clamp(30px,6vw,58px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:6px 0 18px;letter-spacing:-0.03em;">The Fridge Five</h2>
+  <div ref="{{ fridgeRows }}" style="display:grid;gap:10px;"></div>
+  <p style="font-size:15px;line-height:1.6;margin:20px 0 0;max-width:64ch;">Five yeses: you're in something good. Five noes: you already knew. Mixed is most people — and <i>which</i> ones are missing tells you exactly what conversation to have next.</p>
+</section>
+
+<section data-screen="17" data-title="Three games" data-screen-label="Three games" style="display:none;">
+  <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff3d7f;">So this is less like paperwork</div>
+  <h2 style="font:400 clamp(30px,6vw,58px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:6px 0 18px;letter-spacing:-0.03em;">Three games</h2>
+  <div style="display:grid;gap:14px;">
+    <div style="border:3px solid #16151a;background:#fff;padding:16px;"><div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:18px;text-transform:uppercase;">The Green Flag Round</div><p style="margin:8px 0 0;font-size:15px;line-height:1.5;">Before anything hard, each name three specific things the other did recently that were genuinely great. Not softening the blow — evidence you're negotiating with someone you like.</p></div>
+    <div style="border:3px solid #16151a;background:#fff;padding:16px;"><div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:18px;text-transform:uppercase;">Two Truths and a Limit</div><p style="margin:8px 0 0;font-size:15px;line-height:1.5;">Say two things you want and one you absolutely don't. The other guesses which is which. The wrong guesses are the useful part.</p></div>
+    <div style="border:3px solid #16151a;background:#fff;padding:16px;"><div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:18px;text-transform:uppercase;">The Re-Order</div><p style="margin:8px 0 0;font-size:15px;line-height:1.5;">Once a season, pull the menu out and see what's changed. Everything is renegotiable except a hard limit and a red. Put it in the calendar or it will never happen.</p></div>
+  </div>
+  <div data-noprint="1" class="keep" style="margin-top:24px;border:4px dashed #1f4ede;background:#eaefff;padding:20px;">
+    <div style="font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#1f4ede;">Spin the deck</div>
+    <div ref="{{ spinOut }}" style="font-family:&#39;Caveat&#39;,cursive;font-size:clamp(24px,4vw,38px);line-height:1.15;margin:10px 0 14px;min-height:60px;">Hit the button. Answer out loud. No editing.</div>
+    <button onclick="{{ spin }}" style="font:700 12px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.14em;padding:14px 18px;border:3px solid #16151a;background:#ff3d7f;color:#fff;cursor:pointer;text-transform:uppercase;box-shadow:4px 4px 0 #16151a;" style-hover="background:#16151a;">⚡ Deal me a prompt</button>
+  </div>
+</section>
+
+<section data-screen="18" data-title="Compare" data-screen-label="Compare" style="display:none;">
+  <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff3d7f;">Side by side</div>
+  <h2 style="font:400 clamp(30px,6vw,58px)/0.94 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:6px 0 12px;letter-spacing:-0.03em;">Compare</h2>
+  <p style="font-size:15px;line-height:1.55;margin:0 0 16px;max-width:64ch;">Import their code from the <b>Swap</b> drawer up top, then read down. Differences are flagged — a flag is a conversation, not a verdict.</p>
+  <div data-noprint="1" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;align-items:center;">
+    <button onclick="{{ openCompare }}" style="font:700 12px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.14em;padding:15px 20px;border:3px solid #16151a;background:#1f4ede;color:#fff;cursor:pointer;text-transform:uppercase;box-shadow:5px 5px 0 #16151a;" style-hover="background:#ff3d7f;">↗ Open the compare sheet</button>
+    <div ref="{{ cmpStatus }}" style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#6b6659;"></div>
+  </div>
+  <div class="keep" style="border:4px solid #16151a;background:#fff;padding:20px;display:grid;gap:14px;">
+    <div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:18px;text-transform:uppercase;">The compare sheet sorts it for you</div>
+    <div style="display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));">
+      <div style="border-left:6px solid #d0342c;padding-left:10px;"><b style="letter-spacing:.06em;">COLLISIONS</b><div style="font-size:13px;line-height:1.45;margin-top:4px;">One of us said yes, the other said no. Start here.</div></div>
+      <div style="border-left:6px solid #ff3d7f;padding-left:10px;"><b style="letter-spacing:.06em;">DIFFERENT</b><div style="font-size:13px;line-height:1.45;margin-top:4px;">Not the same answer. Usually workable, always worth a sentence.</div></div>
+      <div style="border-left:6px solid #1f4ede;padding-left:10px;"><b style="letter-spacing:.06em;">ONE OF US</b><div style="font-size:13px;line-height:1.45;margin-top:4px;">Only one of you answered. The blank is the question.</div></div>
+      <div style="border-left:6px solid #2f8f4e;padding-left:10px;"><b style="letter-spacing:.06em;">MATCHED</b><div style="font-size:13px;line-height:1.45;margin-top:4px;">Same page. Read these out loud anyway, they're the fun ones.</div></div>
+    </div>
+  </div>
+</section>
+
+<section data-screen="19" data-title="Closing" data-screen-label="Closing" style="display:none;">
+  <div style="border:4px solid #16151a;background:#16151a;color:#f5f1e6;padding:28px;">
+    <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff8fb5;">Closing line</div>
+    <p style="font:400 clamp(20px,3.6vw,38px)/1.12 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:12px 0 0;">This is what I want. This is what I can offer. This is what I'm not agreeing to. This is what I'm still discovering.</p>
+  </div>
+  <p style="font-size:13px;line-height:1.6;margin:24px 0 0;font-style:italic;max-width:70ch;color:#4a463d;">A compact companion to the Being the Relationship Map. The signals, limits, aftercare, and drop language come from kink negotiation practice. The no-default-escalator idea comes from relationship anarchy. The boundary/agreement/rule distinction is standard in non-monogamy practice and does more work than any other three lines here. The Fridge Five are David Richo's five A's — attention, acceptance, appreciation, affection, allowing — with the therapy voice taken off (How to Be an Adult in Relationships, Shambhala, 2021).</p>
+  <p style="font-size:13px;line-height:1.6;margin:14px 0 0;font-style:italic;max-width:70ch;color:#4a463d;">Hard limits and reds are never up for debate. Not a scorecard, not a contract, and not a substitute for medical, legal, therapeutic, or crisis support.</p>
+  <div data-noprint="1" style="margin-top:26px;display:flex;gap:8px;flex-wrap:wrap;">
+    <button onclick="{{ printAll }}" style="font:700 11px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.12em;padding:13px 16px;border:3px solid #16151a;background:#ff3d7f;color:#fff;cursor:pointer;text-transform:uppercase;box-shadow:4px 4px 0 #16151a;">⎙ Print the whole thing</button>
+    <button onclick="{{ printCard }}" style="font:700 11px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.12em;padding:13px 16px;border:3px solid #16151a;background:#faf7ef;color:#16151a;cursor:pointer;text-transform:uppercase;">⎙ Print the fridge card</button>
+    <button onclick="{{ wipe }}" style="font:700 11px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.12em;padding:13px 16px;border:3px solid #d0342c;background:transparent;color:#d0342c;cursor:pointer;text-transform:uppercase;">Erase my answers</button>
+  </div>
+</section>
+
+</div>
+
+<div data-noprint="1" style="position:fixed;left:0;right:0;bottom:0;z-index:55;background:#f5f1e6;border-top:3px solid #16151a;">
+  <div style="max-width:980px;margin:0 auto;padding:10px 14px;display:flex;align-items:center;gap:10px;">
+    <button onclick="{{ prev }}" style="font:700 11px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.12em;padding:13px 16px;border:3px solid #16151a;background:#f5f1e6;cursor:pointer;text-transform:uppercase;" style-hover="background:#16151a;color:#f5f1e6;">← Back</button>
+    <div ref="{{ crumbRef }}" style="flex:1;text-align:center;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#6b6659;"></div>
+    <button onclick="{{ next }}" style="font:700 11px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.12em;padding:13px 20px;border:3px solid #16151a;background:#ff3d7f;color:#fff;cursor:pointer;text-transform:uppercase;box-shadow:4px 4px 0 #16151a;" style-hover="background:#16151a;">Next →</button>
+  </div>
+</div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&#34;printBlank&#34;:{&#34;editor&#34;:&#34;boolean&#34;,&#34;default&#34;:false,&#34;tsType&#34;:&#34;boolean&#34;,&#34;section&#34;:&#34;Print&#34;},&#34;fieldStyle&#34;:{&#34;editor&#34;:&#34;enum&#34;,&#34;options&#34;:[&#34;handwriting&#34;,&#34;typewriter&#34;],&#34;default&#34;:&#34;handwriting&#34;,&#34;tsType&#34;:&#34;string&#34;,&#34;section&#34;:&#34;Fields&#34;},&#34;autosave&#34;:{&#34;editor&#34;:&#34;boolean&#34;,&#34;default&#34;:true,&#34;tsType&#34;:&#34;boolean&#34;,&#34;section&#34;:&#34;Fields&#34;}}">
+const SELF='hho.v2.self', PART='hho.v2.partner';
+const ANS=['YES','MAYBE','NO','NOT YET','BRAVER'];
+const FIELD="min-height:34px;border-bottom:2px dashed #16151a;padding:6px 2px;font-family:'Caveat',cursive;font-size:22px;line-height:1.35;";
+const LBL="font-size:12px;letter-spacing:.14em;text-transform:uppercase;";
+const CHIP="font:700 11px/1 'Courier Prime',monospace;padding:9px 10px;border:2px solid #16151a;background:#faf7ef;cursor:pointer;letter-spacing:.06em;text-transform:uppercase;";
+
+class Component extends DCLogic {
+  state = { rows: [], diffOnly: false };
+  refs = {};
+  screen = 0;
+
+  ref(n){ return (el) => { this.refs[n] = el; }; }
+
+  renderVals(){
+    const r = this.refs;
+    return {
+      rootRef: this.ref('root'), progRef: this.ref('prog'), barRef: this.ref('bar'),
+      railRef: this.ref('rail'), crumbRef: this.ref('crumb'), playRef: this.ref('play'),
+      ioRef: this.ref('io'), outRef: this.ref('out'), inRef: this.ref('in'), ioMsgRef: this.ref('ioMsg'),
+      r1Chips: this.ref('r1Chips'), r2Close: this.ref('r2Close'), r2Rows: this.ref('r2Rows'),
+      r4Fields: this.ref('r4Fields'), r5Rows: this.ref('r5Rows'), r5Text: this.ref('r5Text'),
+      accessRows: this.ref('accessRows'), r3Scope: this.ref('r3Scope'), r5Nights: this.ref('r5Nights'),
+      r5Alone: this.ref('r5Alone'), r10Fridge: this.ref('r10Fridge'),
+      r6Care: this.ref('r6Care'), r8Fields: this.ref('r8Fields'), r8Power: this.ref('r8Power'),
+      r10Rows: this.ref('r10Rows'), r11Hurt: this.ref('r11Hurt'), r11Fields: this.ref('r11Fields'),
+      checkRows: this.ref('checkRows'), fridgeRows: this.ref('fridgeRows'), verdict: this.ref('verdict'),
+      spinOut: this.ref('spinOut'), cmpStatus: this.ref('cmpStatus'),
+      openCompare: () => this.openCompare(),
+      next: () => this.go(this.screen + 1),
+      prev: () => this.go(this.screen - 1),
+      togglePlay: () => this.togglePlay(),
+      toggleIO: () => { const io = this.refs.io; io.style.display = io.style.display === 'none' ? 'block' : 'none'; },
+      makeCode: () => this.makeCode(),
+      importCode: () => this.importCode(),
+      printAll: () => this.print('all'),
+      printCard: () => this.print('card'),
+      spin: () => this.spin(),
+      wipe: () => this.wipe()
+    };
+  }
+
+  // ---------- build repetitive markup ----------
+  chipRow(host, key, items, multi, label){
+    if(!host) return;
+    const lab = label ? ' data-label="'+String(label).replace(/"/g,'&quot;')+'"' : '';
+    host.innerHTML = items.map(t => '<button data-k="'+key+'"'+(multi?' data-multi="1"':'')+lab+' data-v="'+t.replace(/"/g,'&quot;')+'" style="'+CHIP+'">'+(multi?'☐ ':'')+t+'</button>').join('');
+  }
+  fieldList(host, key, items){
+    if(!host) return;
+    host.innerHTML = items.map((t,i) => '<div><div style="'+LBL+'">'+t+'</div><div data-k="'+key+'.'+i+'" data-label="'+t.replace(/<[^>]+>/g,'').replace(/"/g,'&quot;')+'" contenteditable="true" style="'+FIELD+'"></div></div>').join('');
+  }
+  esc(s){ return String(s).replace(/"/g,'&quot;'); }
+
+  btn(key, v, extra){
+    return '<button data-k="'+key+'" data-v="'+this.esc(v)+'"'+(extra||'')+' style="font:700 10px/1 \'Courier Prime\',monospace;padding:7px 8px;border:2px solid #16151a;background:#faf7ef;cursor:pointer;letter-spacing:.05em;text-transform:uppercase;">'+v+'</button>';
+  }
+
+  // list: [{key,label,opts,note,flag}]
+  rowSet(host, list, append){
+    if(!host) return;
+    const html = list.map(row => {
+      const btns = row.opts.map(o => this.btn(row.key, o)).join('')
+        + (row.flag ? '<span style="width:10px;"></span>' + this.btn(row.key+'.flag', row.flag, ' data-multi="1" data-label="'+this.esc(row.label + ' — ' + row.flag.toLowerCase())+'"') : '');
+      const note = row.note ? '<div style="grid-column:1/-1;"><div data-k="'+row.key+'.note" data-label="'+this.esc(row.label)+' — notes" contenteditable="true" style="'+FIELD+'font-size:19px;min-height:28px;"></div></div>' : '';
+      return '<div style="border-bottom:2px dotted #16151a;padding:12px 0;display:grid;gap:8px;grid-template-columns:minmax(150px,1.1fr) auto;align-items:start;">'
+        + '<div data-k="'+row.key+'" data-label="'+this.esc(row.label)+'" style="font-size:14px;line-height:1.35;font-weight:700;display:none;"></div>'
+        + '<div style="font-size:14px;line-height:1.35;font-weight:700;">'+row.label+'</div>'
+        + '<div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;align-items:center;">'+btns+'</div>'
+        + note + '</div>';
+    }).join('');
+    if(append) host.insertAdjacentHTML('beforeend', html); else host.innerHTML = html;
+  }
+
+  markRows(host, key, items, opts, noteLabel, flag){
+    this.rowSet(host, items.map((t,i) => ({ key: key+'.'+i, label: t, opts, note: !!noteLabel, flag })));
+  }
+
+  stepper(host, key, unit){
+    if(!host) return;
+    const b = 'font:700 18px/1 \'Courier Prime\',monospace;width:44px;height:44px;border:3px solid #16151a;background:#faf7ef;cursor:pointer;';
+    host.innerHTML = '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">'
+      + '<button data-step="-1" data-numk="'+key+'" style="'+b+'">−</button>'
+      + '<div data-num="'+key+'" style="font-family:\'Archivo Black\',sans-serif;font-size:36px;min-width:64px;text-align:center;line-height:1;">0</div>'
+      + '<button data-step="1" data-numk="'+key+'" style="'+b+'">+</button>'
+      + '<span style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6b6659;">'+unit+'</span>'
+      + '<span data-k="'+key+'" data-label="Nights per month" style="display:none;"></span></div>';
+  }
+
+  componentDidMount(){
+    try { this.data = JSON.parse(localStorage.getItem(SELF) || '{}'); } catch(e){ this.data = {}; }
+    try { this.partner = JSON.parse(localStorage.getItem(PART) || 'null'); } catch(e){ this.partner = null; }
+    const r = this.refs;
+
+    this.chipRow(r.r1Chips,'r1.shape',['flirting / exploring','dating','friends with benefits','play partners','sex partners','power exchange or D/s','non-monogamous','polyamorous','relationship anarchist','nesting, co-parenting, caregiving','undefined on purpose'],true,'What we are playing with');
+    this.markRows(r.accessRows,'access',['Privacy','Time','Energy','Sobriety','Sensory comfort','Emotional steadiness','Freedom to say no'],['ENOUGH','THIN','NOT TODAY'],false);
+    this.chipRow(r.r3Scope,'r3.scope',['a scene','an ongoing dynamic','both'],false,'Scene or ongoing dynamic');
+    this.markRows(r.r2Close,'r2.closeness',['romantic','sexual','kinky','emotional','intellectual','domestic','social','creative','physical-but-not-sexual','caretaking','adventure','ritual/spiritual','just delightful company'],['WANT','OPEN','NOT FOR ME'],false);
+    this.markRows(r.r2Rows,'r2.play',['Flirting, affection, cuddling','Kissing and erotic touch','Sex or genital contact','Power play or D/s','Restraint, impact, sensation','Role-play, dirty talk, degradation or praise','Toys, gear, clothing, props','Group, public-ish, or watched','Photos, video, sexting, saved messages','Dates, romance, labels, sleepovers'],ANS,true);
+    this.fieldList(r.r4Fields,'r4',['Touch, body areas, or language to avoid','Pain, mobility, disability, sensory, or positioning needs','Allergies, skin reactions, medications, health factors','STI testing, results, and what we each expect disclosed','Barriers, contraception, pregnancy possibility, fluid exchange','Substances, sobriety, and capacity to consent','Cleaning, hygiene, toys, gear','What changes any of the above — and how fast we tell each other']);
+    this.markRows(r.r5Rows,'r5.cap',['time','emotional energy','money and transport','privacy and space','physical health','sensory and communication access','caregiving, parenting, work','relationship bandwidth'],['PLENTY','SOME','THIN','NONE'],false,'CHANGES OFTEN');
+    this.stepper(r.r5Nights,'r5.nights','nights / month');
+    this.chipRow(r.r5Alone,'r5.alone',['an evening a week','a couple of nights a week','most nights','whole days','more than I like to admit'],false,'Alone time I need');
+    const TE = ['CONSTANT','A FEW A DAY','WHEN THERE IS SOMETHING','SLOW BURN'];
+    this.rowSet(r.r5Text, [
+      { key:'r5.text.mine', label:'Mine, honestly', opts:TE },
+      { key:'r5.text.want', label:'What I want back from you', opts:TE },
+      { key:'r5.text.floor', label:'Silence I read as distance', opts:['HOURS','A DAY','A FEW DAYS','I don\'t'] }
+    ]);
+    const CARE = ['touch','space','water or snack','praise','quiet','practical care','debrief later','ride home','message tomorrow'];
+    r.r6Care.innerHTML = '';
+    [['scene','After a scene'],['talk','After a hard conversation'],['home','After you go home']].forEach(pair => {
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'border:3px solid #16151a;background:#fff;padding:14px;display:grid;gap:8px;';
+      wrap.innerHTML = '<div style="'+LBL+'font-weight:700;">'+pair[1]+', I need</div>'
+        + '<div style="display:flex;gap:6px;flex-wrap:wrap;">'
+        + CARE.map(t => '<button data-k="r6.care.'+pair[0]+'" data-multi="1" data-v="'+t+'" data-label="'+pair[1]+' — aftercare" style="'+CHIP+'">☐ '+t+'</button>').join('')
+        + '</div><div data-k="r6.care.'+pair[0]+'.note" data-label="'+pair[1]+' — in my own words" contenteditable="true" style="'+FIELD+'font-size:20px;min-height:30px;"></div>';
+      r.r6Care.appendChild(wrap);
+    });
+    this.fieldList(r.r8Fields,'r8',['Who else is affected by what we decide here?','What must other partners know in order to consent to their own lives?','What information belongs to someone else and isn\'t ours to share?','Existing agreements, hierarchies, vetoes, dependencies — and did the people inside them agree to them?','How do we tell each other about new partners or new feelings?','What happens at shared events, spaces, and communities?','What can be public, private, posted, tagged, photographed, named?']);
+    const SIDE = ['ME','MOSTLY ME','EVEN','MOSTLY THEM','THEM'];
+    this.rowSet(r.r8Power, [
+      { key:'r8p.freedom', label:'Freedom to say no, leave, host, travel, spend, or be publicly recognised', opts:SIDE, note:true },
+      { key:'r8p.risk', label:'Risk carried from stigma, racism, homophobia, transphobia, disability, immigration status, work, housing, or family', opts:SIDE, note:true },
+      { key:'r8p.equal', label:'Are we calling something equal when the consequences aren\'t equal?', opts:['NO','SOMEWHERE','YES, WE ARE'], note:true }
+    ]);
+    this.markRows(r.r10Rows,'r10',['Being exclusive','Calling it something out loud','Meeting friends','Meeting family','Holidays','Living together','Money mixed together','Marriage','Kids','Planning past next year','A collar, a title, a formal dynamic','Kink outside of scenes — protocol, rituals, daily rules','Being someone\'s emergency contact'],['YES','NO','MAYBE','NOT YET'],false);
+    this.chipRow(r.r11Hurt,'r11.hurt',['go quiet','get sharp','need to fix it now','disappear for a day'],false,"When I'm hurt I");
+    this.fieldList(r.r11Fields,'r11',['An apology only lands for me if it includes','What repair looks like here, as a behaviour, not a feeling','What happens if someone breaks an agreement — decided before someone breaks an agreement','When we bring in outside support','What would make continuing unsafe or unworkable','Who\'s more likely to get their way in a fight, and why? (Money, housing, who loves whom more, who\'s more scared of being left.)']);
+    this.rowSet(r.checkRows, [
+      { key:'ci.want', label:'Do I still want this?', opts:['YES','MAYBE','NO','UNSURE'] },
+      { key:'ci.today', label:'Can I actually do this today?', opts:['YES','PARTLY','NO','UNSURE'] }
+    ]);
+    this.markRows(r.fridgeRows,'ff',['Am I noticed here?','Am I taken as I am?','Am I thanked?','Am I shown warmth, in the way I actually need it?','Am I left free to be who I am?'],['NEVER','RARELY','SOMETIMES','OFTEN','ALWAYS'],false);
+    this.chipRow(r.verdict,'ci.verdict',['GOOD TO GO','SLOW DOWN','PAUSE','RENEGOTIATE','STOP'],false,'Check-in verdict');
+    this.chipRow(r.r10Fridge,'r10.expect',['attention','acceptance','appreciation','affection','allowing'],true,'What each yes is expected to deliver');
+
+    this.applyFieldStyle();
+    this.restore();
+    this.saveSchema();
+    this.buildRail();
+    this.go(0);
+
+    const root = this.refs.root;
+    root.addEventListener('input', (e) => {
+      const el = e.target.closest && e.target.closest('[data-k]');
+      if(el && el.isContentEditable){ this.data[el.dataset.k] = el.textContent.trim(); this.save(); }
+    });
+    root.addEventListener('click', (e) => {
+      const st = e.target.closest && e.target.closest('button[data-step]');
+      if(st){
+        const k = st.dataset.numk;
+        const cur = typeof this.data[k] === 'number' ? this.data[k] : 0;
+        this.data[k] = Math.max(0, Math.min(31, cur + parseInt(st.dataset.step,10)));
+        this.save(); this.paintNum(k); return;
+      }
+      const b = e.target.closest && e.target.closest('button[data-k][data-v]');
+      if(!b) return;
+      const k = b.dataset.k, v = b.dataset.v;
+      if(b.dataset.multi === '1'){
+        const cur = Array.isArray(this.data[k]) ? this.data[k].slice() : [];
+        const i = cur.indexOf(v);
+        if(i >= 0) cur.splice(i,1); else cur.push(v);
+        this.data[k] = cur;
+      } else {
+        this.data[k] = this.data[k] === v ? '' : v;
+      }
+      this.save(); this.paintGroup(k);
+    });
+  }
+
+  applyFieldStyle(){
+    if((this.props.fieldStyle || 'handwriting') === 'handwriting') return;
+    this.refs.root.querySelectorAll('[contenteditable]').forEach(el => {
+      el.style.fontFamily = "'Courier Prime', monospace"; el.style.fontSize = '15px';
+    });
+  }
+
+  save(){
+    if(this.props.autosave === false) return;
+    try { localStorage.setItem(SELF, JSON.stringify(this.data)); } catch(e){}
+    this.updateProgress();
+  }
+
+  restore(){
+    const root = this.refs.root;
+    root.querySelectorAll('[contenteditable][data-k]').forEach(el => {
+      const v = this.data[el.dataset.k];
+      if(typeof v === 'string' && v) el.textContent = v;
+    });
+    const keys = new Set();
+    root.querySelectorAll('button[data-k][data-v]').forEach(b => keys.add(b.dataset.k));
+    keys.forEach(k => this.paintGroup(k));
+    root.querySelectorAll('[data-num]').forEach(el => this.paintNum(el.dataset.num));
+    this.updateProgress();
+  }
+
+  paintNum(k){
+    const el = this.refs.root.querySelector('[data-num="'+k+'"]');
+    if(el) el.textContent = typeof this.data[k] === 'number' ? this.data[k] : 0;
+  }
+
+  paintGroup(k){
+    const v = this.data[k];
+    this.refs.root.querySelectorAll('button[data-k="'+k+'"][data-v]').forEach(b => {
+      const on = Array.isArray(v) ? v.indexOf(b.dataset.v) >= 0 : v === b.dataset.v;
+      b.style.background = on ? '#16151a' : '#faf7ef';
+      b.style.color = on ? '#f5f1e6' : '#16151a';
+      b.style.borderColor = on ? '#ff3d7f' : '#16151a';
+      if(b.dataset.multi === '1') b.textContent = (on ? '☒ ' : '☐ ') + b.dataset.v;
+    });
+  }
+
+  allKeys(){
+    const out = [];
+    this.refs.root.querySelectorAll('[data-k]').forEach(el => {
+      const k = el.dataset.k;
+      if(out.indexOf(k) < 0) out.push(k);
+    });
+    return out;
+  }
+
+  labelFor(k){
+    const el = this.refs.root.querySelector('[data-k="'+k+'"][data-label]') || this.refs.root.querySelector('[data-k="'+k+'"]');
+    if(el && el.dataset.label) return el.dataset.label;
+    const row = el && el.closest('[style*="grid-template-columns"]');
+    if(row){ const first = row.firstElementChild; if(first && first.textContent.trim()) return first.textContent.trim(); }
+    return k;
+  }
+
+  filled(v){
+    if(Array.isArray(v)) return v.length > 0;
+    if(typeof v === 'number') return v > 0;
+    return !!(v && String(v).trim());
+  }
+
+  updateProgress(){
+    const keys = this.allKeys();
+    const done = keys.filter(k => this.filled(this.data[k])).length;
+    if(this.refs.prog) this.refs.prog.textContent = done + ' / ' + keys.length + ' FILLED';
+    if(this.refs.bar) this.refs.bar.style.width = Math.round(done / Math.max(keys.length,1) * 100) + '%';
+  }
+
+  sections(){ return Array.from(this.refs.root.querySelectorAll('[data-screen]')); }
+
+  buildRail(){
+    const rail = this.refs.rail;
+    rail.innerHTML = this.sections().map((s,i) =>
+      '<button data-jump="'+i+'" style="flex:0 0 auto;font:700 10px/1 \'Courier Prime\',monospace;letter-spacing:.08em;padding:6px 8px;border:2px solid #6b6659;background:transparent;color:#cfc9bb;cursor:pointer;text-transform:uppercase;white-space:nowrap;">'+s.dataset.title+'</button>'
+    ).join('');
+    rail.addEventListener('click', e => {
+      const b = e.target.closest('button[data-jump]');
+      if(b) this.go(parseInt(b.dataset.jump,10));
+    });
+  }
+
+  go(i){
+    const secs = this.sections();
+    const n = Math.max(0, Math.min(secs.length - 1, i));
+    this.screen = n;
+    secs.forEach((s,j) => { s.style.display = j === n ? 'block' : 'none'; });
+    Array.from(this.refs.rail.children).forEach((b,j) => {
+      b.style.background = j === n ? '#ff3d7f' : 'transparent';
+      b.style.color = j === n ? '#fff' : '#cfc9bb';
+      b.style.borderColor = j === n ? '#ff3d7f' : '#6b6659';
+    });
+    if(this.refs.crumb) this.refs.crumb.textContent = (n+1) + ' / ' + secs.length + ' · ' + secs[n].dataset.title;
+    if(n === 18) this.updateStatus();
+    window.scrollTo(0,0);
+  }
+
+  togglePlay(){
+    this.play = !this.play;
+    this.refs.rail.style.display = this.play ? 'none' : 'flex';
+    this.refs.play.textContent = this.play ? '■ Free roam' : '▶ Play mode';
+    this.refs.play.style.background = this.play ? '#ff3d7f' : 'transparent';
+    this.refs.play.style.borderColor = this.play ? '#ff3d7f' : '#f5f1e6';
+    if(this.play) this.go(0);
+  }
+
+  makeCode(){
+    const payload = { v: 2, at: new Date().toISOString(), a: this.data };
+    const code = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+    this.refs.out.value = code;
+    this.refs.out.focus(); this.refs.out.select();
+    try { document.execCommand('copy'); this.refs.ioMsg.textContent = 'Copied. Send it however you two send things.'; }
+    catch(e){ this.refs.ioMsg.textContent = 'Select and copy the code above.'; }
+  }
+
+  importCode(){
+    const raw = (this.refs.in.value || '').trim();
+    if(!raw){ this.refs.ioMsg.textContent = 'Paste their code first.'; return; }
+    try {
+      const obj = JSON.parse(decodeURIComponent(escape(atob(raw))));
+      this.partner = obj.a || {};
+      localStorage.setItem(PART, JSON.stringify(this.partner));
+      this.refs.ioMsg.textContent = 'Got them. Head to Compare.';
+      this.updateStatus();
+    } catch(e){ this.refs.ioMsg.textContent = "That code didn't parse. Copy the whole thing, no line breaks lost."; }
+  }
+
+  fmt(v){
+    if(Array.isArray(v)) return v.join(', ');
+    if(typeof v === 'number') return String(v);
+    return v || '—';
+  }
+
+  saveSchema(){
+    const list = [];
+    this.allKeys().forEach(k => {
+      const el = this.refs.root.querySelector('[data-k="'+k+'"]');
+      const sec = el && el.closest('[data-screen]');
+      list.push({ k, label: this.labelFor(k), sec: sec ? sec.dataset.title : '' });
+    });
+    try { localStorage.setItem('hho.v2.schema', JSON.stringify(list)); } catch(e){}
+  }
+
+  updateStatus(){
+    const el = this.refs.cmpStatus;
+    if(!el) return;
+    const n = this.partner ? Object.keys(this.partner).filter(k => this.filled(this.partner[k])).length : 0;
+    el.textContent = n ? n + ' of their answers loaded' : 'No partner code imported yet';
+    el.style.color = n ? '#2f8f4e' : '#6b6659';
+  }
+
+  openCompare(){
+    this.saveSchema();
+    window.open('Compare Sheet.dc.html', 'hho-compare', 'width=1100,height=920');
+  }
+
+  spin(){
+    const prompts = [
+      'Green flag: name one specific thing they did in the last week that you actually liked.',
+      'Green flag: what did they do that you never asked for and never told them you noticed?',
+      'Green flag: what makes them easy to negotiate with?',
+      'Two truths and a limit: two things you want, one you absolutely do not. Go.',
+      'Two truths and a limit: make one of the truths something you have never said out loud.',
+      'Two truths and a limit: guess theirs first, then be wrong about it usefully.',
+      'Re-order: which answer on your menu changed since the last time you filled this in?',
+      'Re-order: which hard limit has stayed a hard limit — and does the other person know it is one?',
+      'Re-order: pick a maybe. Is it a maybe because of the thing, or the timing, or the person?',
+      'Say the assumption you have never asked about. Out loud. Right now.',
+      'Which of the fridge five is thinnest this month?',
+      'What would you want asked of you, that nobody thinks to ask?'
+    ];
+    const el = this.refs.spinOut;
+    el.textContent = prompts[Math.floor(Math.random() * prompts.length)];
+    el.style.animation = 'none'; void el.offsetWidth; el.style.animation = 'wob .4s ease';
+  }
+
+  print(mode){
+    document.body.dataset.print = mode;
+    document.body.dataset.blank = this.props.printBlank ? '1' : '0';
+    setTimeout(() => window.print(), 60);
+  }
+
+  wipe(){
+    if(!window.confirm('Erase every answer in this copy? This cannot be undone.')) return;
+    this.data = {};
+    try { localStorage.removeItem(SELF); } catch(e){}
+    this.refs.root.querySelectorAll('[contenteditable][data-k]').forEach(el => { el.textContent = ''; });
+    const keys = new Set();
+    this.refs.root.querySelectorAll('button[data-k][data-v]').forEach(b => keys.add(b.dataset.k));
+    keys.forEach(k => this.paintGroup(k));
+    this.refs.root.querySelectorAll('[data-num]').forEach(el => this.paintNum(el.dataset.num));
+    this.updateProgress();
+  }
+}
+</script>
+</body>
+</html>

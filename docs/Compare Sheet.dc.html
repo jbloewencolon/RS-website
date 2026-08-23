@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type='text/javascript' nonce='Ymubzoi2MsfJh9H0YJyKlQ==' src='https://claude.ai/EsmxC-1IIEg8OsPw31ji_qQVhsxvDKg2zrZJQUOlmKGPRSmyCGb0NFxKerOr7nv31jaZbXw-xeLrL7Mht0cCiL8L34pPweW8jhJY89KgmvNDA8OwSSgvJxnFjhSlvwT4K7nHd-2egPPxqEgdWLylk0uVj4sTT-aVCjL7Qfbp5tpE1eZMiT6o4wccufMr-6ekY2XidvakqkI97TcIWn7IRnou3g9bPHQW0_6z7KlX28VwlqkMvq8akrA0SgXP9qjLwjDiO6CTSnW9k4ecZPRK_xf6q37ASjX1QcIC8vrd246v56VrlvJ08MTZ5VuQV6bBSoZDZ8bCHcM7NrJbHZk-u4sWJA8jVuRFfeEWoDluKOkF12KqM3nkwgNW_wqXSsWd4LqiP9028qd8TNXKJIYCs_vT0HQpoNQJ7nPUH4sgqSMjZjeKMXmYc2UO7lKYz3O03elFFJXvc4h1EDKPD5p9YanU3LGwb-R9va22aamrQuXcxqABaRMekBzQhgI2pdJOLJoLIniuKl-lsxbrMdYBAo51keIqWpDgeEw6OBE_qUaA_MQOoItLsYWq-bJamJm2rw'></script><script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="omelette-owns-print" content="1">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Courier+Prime:ital,wght@0,400;0,700;1,400&amp;family=Caveat:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#16151a;}
+  *{box-sizing:border-box;}
+  a{color:#ff3d7f;}
+  a:hover{color:#fff;}
+  @page{size:letter;margin:0.5in;}
+  @media print{
+    html,body{background:#fff!important;}
+    [data-noprint]{display:none!important;}
+    .card{break-inside:avoid;page-break-inside:avoid;}
+  }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#e9e3d4;color:#16151a;font-family:&#39;Courier Prime&#39;,ui-monospace,monospace;padding-bottom:60px;">
+
+<div data-noprint="1" aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;z-index:60;opacity:0.2;mix-blend-mode:multiply;background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0 1px,transparent 1px 3px);"></div>
+
+<div style="background:#16151a;color:#f5f1e6;border-bottom:5px solid #ff3d7f;">
+  <div style="max-width:1000px;margin:0 auto;padding:26px 18px 22px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;">
+      <div style="flex:1 1 100%;">
+        <div style="font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:#ff8fb5;">Hot, Honest &amp; Ours</div>
+        <h1 style="font:400 clamp(34px,6.4vw,68px)/0.95 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;letter-spacing:-0.035em;margin:10px 0 0;">The compare<br>sheet</h1>
+      </div>
+      <div data-noprint="1" style="display:flex;gap:6px;flex-wrap:wrap;">
+        <button onclick="{{ toggleDemo }}" style="font:700 10px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.12em;padding:10px 12px;border:2px solid #ff3d7f;background:{{ demoBg }};color:{{ demoFg }};cursor:pointer;text-transform:uppercase;">◆ Demo data</button>
+        <button onclick="{{ reload }}" style="font:700 10px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.12em;padding:10px 12px;border:2px solid #f5f1e6;background:transparent;color:#f5f1e6;cursor:pointer;text-transform:uppercase;" style-hover="background:#1f4ede;border-color:#1f4ede;">↻ Reload</button>
+        <button onclick="{{ doPrint }}" style="font:700 10px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.12em;padding:10px 12px;border:2px solid #f5f1e6;background:transparent;color:#f5f1e6;cursor:pointer;text-transform:uppercase;" style-hover="background:#ff3d7f;border-color:#ff3d7f;">⎙ Print</button>
+      </div>
+    </div>
+    <p style="font-family:&#39;Caveat&#39;,cursive;font-size:26px;line-height:1.1;margin:16px 0 0;color:#ffd9e5;max-width:36ch;">A flag is a conversation, not a verdict.</p>
+  </div>
+</div>
+
+<div style="max-width:1000px;margin:0 auto;padding:18px;">
+
+  <sc-if value="{{ ready }}" hint-placeholder-val="{{ true }}">
+    <div style="display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:16px;">
+      <button onclick="{{ setCollide }}" style="text-align:left;border:4px solid #16151a;background:#ffd9d6;padding:14px;cursor:pointer;font-family:&#39;Courier Prime&#39;,monospace;box-shadow:{{ shCollide }};">
+        <div style="font:400 clamp(30px,5vw,52px)/1 &#39;Archivo Black&#39;,sans-serif;color:#d0342c;">{{ nCollide }}</div>
+        <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin-top:6px;color:#16151a;">Collisions</div>
+      </button>
+      <button onclick="{{ setDiffer }}" style="text-align:left;border:4px solid #16151a;background:#ffe6ef;padding:14px;cursor:pointer;font-family:&#39;Courier Prime&#39;,monospace;box-shadow:{{ shDiffer }};">
+        <div style="font:400 clamp(30px,5vw,52px)/1 &#39;Archivo Black&#39;,sans-serif;color:#ff3d7f;">{{ nDiffer }}</div>
+        <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin-top:6px;color:#16151a;">Different</div>
+      </button>
+      <button onclick="{{ setSolo }}" style="text-align:left;border:4px solid #16151a;background:#eaefff;padding:14px;cursor:pointer;font-family:&#39;Courier Prime&#39;,monospace;box-shadow:{{ shSolo }};">
+        <div style="font:400 clamp(30px,5vw,52px)/1 &#39;Archivo Black&#39;,sans-serif;color:#1f4ede;">{{ nSolo }}</div>
+        <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin-top:6px;color:#16151a;">Only one of us</div>
+      </button>
+      <button onclick="{{ setMatch }}" style="text-align:left;border:4px solid #16151a;background:#e4f2e8;padding:14px;cursor:pointer;font-family:&#39;Courier Prime&#39;,monospace;box-shadow:{{ shMatch }};">
+        <div style="font:400 clamp(30px,5vw,52px)/1 &#39;Archivo Black&#39;,sans-serif;color:#2f8f4e;">{{ nMatch }}</div>
+        <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin-top:6px;color:#16151a;">Matched</div>
+      </button>
+    </div>
+
+    <div data-noprint="1" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:20px;">
+      <button onclick="{{ setAll }}" style="font:700 10px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.12em;padding:10px 12px;border:2px solid #16151a;background:#faf7ef;color:#16151a;cursor:pointer;text-transform:uppercase;">Show everything</button>
+      <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#6b6659;">Now showing: {{ filterName }}</div>
+    </div>
+
+    <sc-if value="{{ isDemo }}" hint-placeholder-val="{{ false }}">
+      <div data-noprint="1" style="border:3px solid #ff3d7f;background:#ffe6ef;padding:12px 14px;margin-bottom:18px;font-size:13px;line-height:1.5;"><b>Demo data.</b> Two invented people, so you can see the sheet full. Nothing here is saved and your own answers are untouched — hit the button again to go back.</div>
+    </sc-if>
+
+    <div class="card" style="border:4px solid #16151a;background:#fff;padding:18px;margin-bottom:22px;">
+      <div style="font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#6b6659;margin-bottom:10px;">Where the two of you land</div>
+      <div style="display:flex;height:44px;border:3px solid #16151a;overflow:hidden;">
+        <sc-for list="{{ align }}" as="seg" hint-placeholder-count="4">
+          <div style="width:{{ seg.pct }};background:{{ seg.color }};color:{{ seg.fg }};display:flex;align-items:center;justify-content:center;font:700 11px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.06em;overflow:hidden;">{{ seg.n }}</div>
+        </sc-for>
+      </div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;">
+        <sc-for list="{{ align }}" as="seg" hint-placeholder-count="4">
+          <div style="display:flex;align-items:center;gap:6px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;"><span style="width:12px;height:12px;border:2px solid #16151a;background:{{ seg.color }};"></span>{{ seg.name }}</div>
+        </sc-for>
+      </div>
+    </div>
+
+    <sc-for list="{{ grids }}" as="grid" hint-placeholder-count="2">
+      <div class="card" style="border:4px solid #16151a;background:#fff;padding:18px;margin-bottom:18px;">
+        <div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:16px;text-transform:uppercase;margin-bottom:4px;">{{ grid.name }}</div>
+        <div style="font-size:12px;line-height:1.5;color:#4a463d;margin-bottom:12px;">{{ grid.note }}</div>
+        <div style="display:grid;grid-template-columns:1fr 96px 96px;gap:8px;align-items:center;border-bottom:3px solid #16151a;padding-bottom:6px;">
+          <div></div>
+          <div style="text-align:center;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#6b6659;">Me</div>
+          <div style="text-align:center;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#6b6659;">Them</div>
+        </div>
+        <sc-for list="{{ grid.rows }}" as="r" hint-placeholder-count="6">
+          <div style="display:grid;grid-template-columns:1fr 96px 96px;gap:8px;align-items:center;border-bottom:2px dotted #c9c2b1;padding:7px 0;">
+            <div style="font-size:13px;line-height:1.3;">{{ r.label }}</div>
+            <div style="border:2px solid #16151a;background:{{ r.mineBg }};color:{{ r.mineFg }};text-align:center;padding:6px 2px;font:700 9px/1.1 &#39;Courier Prime&#39;,monospace;letter-spacing:.06em;">{{ r.mine }}</div>
+            <div style="border:2px solid #16151a;background:{{ r.theirsBg }};color:{{ r.theirsFg }};text-align:center;padding:6px 2px;font:700 9px/1.1 &#39;Courier Prime&#39;,monospace;letter-spacing:.06em;">{{ r.theirs }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-for>
+
+    <sc-for list="{{ scaleGroups }}" as="sg" hint-placeholder-count="2">
+      <div class="card" style="border:4px solid #16151a;background:#fff;padding:18px;margin-bottom:18px;">
+        <div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:16px;text-transform:uppercase;margin-bottom:4px;">{{ sg.name }}</div>
+        <div style="display:flex;justify-content:space-between;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#6b6659;margin:10px 0 2px;">
+          <span>{{ sg.left }}</span><span>{{ sg.right }}</span>
+        </div>
+        <sc-for list="{{ sg.rows }}" as="r" hint-placeholder-count="5">
+          <div style="border-bottom:2px dotted #c9c2b1;padding:8px 0 12px;">
+            <div style="font-size:13px;line-height:1.3;margin-bottom:4px;">{{ r.label }}</div>
+            <div style="position:relative;height:26px;">
+              <div style="position:absolute;left:9px;right:9px;top:11px;height:4px;background:#e0dacb;"></div>
+              <div style="position:absolute;left:{{ r.gapLeft }};width:{{ r.gapWidth }};top:11px;height:4px;background:#16151a;"></div>
+              <div style="position:absolute;top:3px;left:{{ r.minePos }};width:20px;height:20px;margin-left:-10px;border:3px solid #16151a;border-radius:50%;background:#ff3d7f;"></div>
+              <div style="position:absolute;top:8px;left:{{ r.theirsPos }};width:11px;height:11px;margin-left:-5px;border:2px solid #16151a;border-radius:50%;background:#1f4ede;"></div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-for>
+
+    <sc-for list="{{ groups }}" as="group" hint-placeholder-count="3">
+      <div style="margin-bottom:26px;">
+        <div style="display:inline-block;background:rgba(214,196,150,.9);border-left:1px dashed rgba(0,0,0,.3);border-right:1px dashed rgba(0,0,0,.3);padding:7px 22px;transform:rotate(-1deg);white-space:nowrap;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#3d382e;margin-bottom:12px;">{{ group.name }}</div>
+        <div style="display:grid;gap:10px;">
+          <sc-for list="{{ group.rows }}" as="row" hint-placeholder-count="3">
+            <div class="card" style="position:relative;border:3px solid #16151a;background:{{ row.bg }};padding:14px 16px;display:grid;gap:10px;">
+              <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;">
+                <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;line-height:1.35;max-width:62ch;">{{ row.label }}</div>
+                <div style="flex:0 0 auto;font:700 9px/1 &#39;Courier Prime&#39;,monospace;letter-spacing:.16em;padding:6px 8px;border:2px solid #16151a;background:{{ row.badgeBg }};color:{{ row.badgeFg }};text-transform:uppercase;">{{ row.badge }}</div>
+              </div>
+              <div style="display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));">
+                <div style="border-left:6px solid #ff3d7f;padding-left:12px;">
+                  <div style="font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:#6b6659;">Me</div>
+                  <div style="font-family:&#39;Caveat&#39;,cursive;font-size:23px;line-height:1.25;">{{ row.mine }}</div>
+                </div>
+                <div style="border-left:6px solid #1f4ede;padding-left:12px;">
+                  <div style="font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:#6b6659;">Them</div>
+                  <div style="font-family:&#39;Caveat&#39;,cursive;font-size:23px;line-height:1.25;">{{ row.theirs }}</div>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+
+    <sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
+      <div style="border:3px dashed #6b6659;padding:34px;text-align:center;font-style:italic;color:#6b6659;">Nothing in this pile. Try another tile.</div>
+    </sc-if>
+
+    <div class="card" style="margin-top:10px;border:4px solid #16151a;background:#16151a;color:#f5f1e6;padding:22px;">
+      <div style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#ff8fb5;">How to read this</div>
+      <p style="font:400 clamp(17px,2.6vw,26px)/1.15 &#39;Archivo Black&#39;,sans-serif;text-transform:uppercase;margin:10px 0 0;">Start at the collisions. Understand, don't sell. A hard limit and a red are never up for debate.</p>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ notReady }}" hint-placeholder-val="{{ false }}">
+    <div style="border:4px dashed #16151a;background:#fff;padding:34px;text-align:center;">
+      <div style="font-family:&#39;Archivo Black&#39;,sans-serif;font-size:22px;text-transform:uppercase;margin-bottom:10px;">Nothing to compare yet</div>
+      <p style="font-size:15px;line-height:1.6;margin:0 auto;max-width:52ch;">Go back to the worksheet, open the <b>Swap</b> drawer, and import your partner's code. Then hit Reload up top.</p>
+    </div>
+  </sc-if>
+
+</div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&#34;$preview&#34;:{&#34;width&#34;:1000,&#34;height&#34;:900}}">
+const POS = ['YES','WANT','PLENTY','OFTEN','ALWAYS','ENOUGH','GOOD TO GO','CONSTANT'];
+const NEG = ['NO','NOT FOR ME','NONE','NEVER','NOT TODAY','STOP','SLOW BURN'];
+const TIER = {
+  collide: { bg:'#ffd9d6', badge:'Collision', badgeBg:'#d0342c', badgeFg:'#fff' },
+  differ:  { bg:'#ffe6ef', badge:'Different', badgeBg:'#ff3d7f', badgeFg:'#fff' },
+  solo:    { bg:'#eaefff', badge:'Only one of us', badgeBg:'#1f4ede', badgeFg:'#fff' },
+  match:   { bg:'#f7f4ea', badge:'Matched', badgeBg:'#2f8f4e', badgeFg:'#fff' }
+};
+
+const ANSC = { 'YES':['#2f8f4e','#fff'], 'WANT':['#2f8f4e','#fff'], 'MAYBE':['#e8bf24','#16151a'], 'OPEN':['#e8bf24','#16151a'],
+  'NOT YET':['#1f4ede','#fff'], 'BRAVER':['#ff3d7f','#fff'], 'NO':['#d0342c','#fff'], 'NOT FOR ME':['#d0342c','#fff'] };
+const SCALES = {
+  'r5.cap': { name:'Bandwidth on a bad Wednesday', steps:['NONE','THIN','SOME','PLENTY'], left:'none', right:'plenty' },
+  'ff': { name:'The Fridge Five', steps:['NEVER','RARELY','SOMETIMES','OFTEN','ALWAYS'], left:'never', right:'always' },
+  'r8p': { name:'Who holds what', steps:['ME','MOSTLY ME','EVEN','MOSTLY THEM','THEM'], left:'me', right:'them' }
+};
+
+class Component extends DCLogic {
+  state = { filter: 'all', data: {}, partner: null, schema: [], demo: false };
+
+  componentDidMount(){ this.load(); }
+
+  demoSet(){
+    const S = [], self = {}, part = {};
+    const add = (k, label, sec, a, b) => { S.push({ k, label, sec }); if(a !== null) self[k] = a; if(b !== null) part[k] = b; };
+    add('r1.shape','What we are playing with','R1 · Playing with',['dating','play partners','non-monogamous'],['dating','friends with benefits','non-monogamous','undefined on purpose']);
+    add('r1.assume',"What I'm assuming but never asked",'R1 · Playing with','That we are not seeing other people this month','That we both know this is not exclusive');
+    add('r1.stop','What would make this stop working','R1 · Playing with','Being the only one making plans','Feeling managed');
+    add('r3.scope','Scene or ongoing dynamic','R3 · Power','a scene','both');
+    const play = ['Flirting, affection, cuddling','Kissing and erotic touch','Sex or genital contact','Power play or D/s','Restraint, impact, sensation','Role-play, dirty talk, degradation or praise','Toys, gear, clothing, props','Group, public-ish, or watched','Photos, video, sexting, saved messages','Dates, romance, labels, sleepovers'];
+    const mineP = ['YES','YES','YES','MAYBE','YES','BRAVER','YES','NO','NO','YES'];
+    const themP = ['YES','YES','YES','YES','MAYBE','MAYBE','YES','YES','MAYBE','NOT YET'];
+    play.forEach((t,i) => add('r2.play.'+i, t, 'R2 · Want Menu', mineP[i], themP[i]));
+    add('r2.assumed','What I assumed came free','R2 · Want Menu','That sleepovers came with the sex','That kink meant we were also dating');
+    const cap = ['time','emotional energy','money and transport','privacy and space','physical health','sensory and communication access','caregiving, parenting, work','relationship bandwidth'];
+    const mineC = ['THIN','SOME','SOME','PLENTY','SOME','PLENTY','THIN','SOME'];
+    const themC = ['SOME','PLENTY','THIN','THIN','PLENTY','SOME','SOME','PLENTY'];
+    cap.forEach((t,i) => add('r5.cap.'+i, t, 'R5 · Bandwidth', mineC[i], themC[i]));
+    add('r5.cap.0.flag','time — changes often','R5 · Bandwidth',['CHANGES OFTEN'],null);
+    add('r5.nights','Nights per month','R5 · Bandwidth',4,8);
+    add('r5.text.mine','Mine, honestly','R5 · Bandwidth','A FEW A DAY','CONSTANT');
+    add('r5.text.want','What I want back from you','R5 · Bandwidth','WHEN THERE IS SOMETHING','A FEW A DAY');
+    add('r5.alone','Alone time I need','R5 · Bandwidth','most nights','an evening a week');
+    add('r6.care.scene','After a scene — aftercare','R6 · Stop words',['touch','water or snack','quiet'],['debrief later','praise','message tomorrow']);
+    add('r6.care.talk','After a hard conversation — aftercare','R6 · Stop words',['space','message tomorrow'],['touch','debrief later']);
+    add('r6.yellow','Yellow word','R6 · Stop words','pancakes','pancakes');
+    add('r6.drop','How drop shows up','R6 · Stop words','Snappy, then deep-cleaning at midnight','Convinced everyone hates me');
+    add('r8p.freedom','Freedom to say no, leave, host, travel, spend, or be publicly recognised','R8 · Group chat','MOSTLY THEM','EVEN');
+    add('r8p.risk','Risk carried from stigma, racism, homophobia, transphobia, disability, immigration status, work, housing, or family','R8 · Group chat','ME','MOSTLY ME');
+    add('r8p.equal',"Are we calling something equal when the consequences aren't equal?",'R8 · Group chat','YES, WE ARE','SOMEWHERE');
+    const buf = ['Being exclusive','Calling it something out loud','Meeting friends','Meeting family','Holidays','Living together','Money mixed together','Marriage','Kids','Planning past next year','A collar, a title, a formal dynamic','Kink outside of scenes — protocol, rituals, daily rules',"Being someone's emergency contact"];
+    const mineB = ['NO','MAYBE','YES','NO','MAYBE','NO','NO','NO','NO','NOT YET','MAYBE','YES','YES'];
+    const themB = ['YES','YES','YES','YES','YES','NOT YET','YES','MAYBE','NO','YES','NO','MAYBE','YES'];
+    buf.forEach((t,i) => add('r10.'+i, t, 'R10 · The buffet', mineB[i], themB[i]));
+    const ff = ['Am I noticed here?','Am I taken as I am?','Am I thanked?','Am I shown warmth, in the way I actually need it?','Am I left free to be who I am?'];
+    const mineF = ['OFTEN','ALWAYS','SOMETIMES','RARELY','ALWAYS'];
+    const themF = ['ALWAYS','OFTEN','OFTEN','SOMETIMES','OFTEN'];
+    ff.forEach((t,i) => add('ff.'+i, t, 'Fridge five', mineF[i], themF[i]));
+    add('r12.choosing','We are choosing','R12 · Write it down','Weekends, kink, no labels yet','Weekends, kink, and telling my friends about you');
+    add('r12.review','Review date or trigger','R12 · Write it down','First Sunday in October','October, or if either of us starts seeing someone new');
+    add('ci.want','Do I still want this?','60-second check-in','YES','YES');
+    add('ci.today','Can I actually do this today?','60-second check-in','PARTLY','YES');
+    add('ci.verdict','Check-in verdict','60-second check-in','SLOW DOWN','GOOD TO GO');
+    return { schema: S, self, partner: part };
+  }
+
+  load(){
+    const get = (k, d) => { try { return JSON.parse(localStorage.getItem(k) || d); } catch(e){ return JSON.parse(d); } };
+    this.setState({
+      data: get('hho.v2.self', '{}'),
+      partner: get('hho.v2.partner', 'null'),
+      schema: get('hho.v2.schema', '[]')
+    });
+  }
+
+  filled(v){
+    if(Array.isArray(v)) return v.length > 0;
+    if(typeof v === 'number') return v > 0;
+    return !!(v && String(v).trim());
+  }
+
+  fmt(v){
+    if(Array.isArray(v)) return v.join(', ');
+    if(typeof v === 'number') return String(v);
+    return this.filled(v) ? String(v) : '—';
+  }
+
+  pole(v){
+    const s = String(Array.isArray(v) ? v[0] : v || '').trim().toUpperCase();
+    if(POS.indexOf(s) >= 0) return 1;
+    if(NEG.indexOf(s) >= 0) return -1;
+    return 0;
+  }
+
+  tierOf(mine, theirs){
+    const a = this.filled(mine), b = this.filled(theirs);
+    if(a && !b) return 'solo';
+    if(b && !a) return 'solo';
+    const pa = this.pole(mine), pb = this.pole(theirs);
+    if(pa * pb === -1) return 'collide';
+    return this.fmt(mine).toLowerCase() === this.fmt(theirs).toLowerCase() ? 'match' : 'differ';
+  }
+
+  source(){
+    if(this.state.demo){ const d = this.demoSet(); return { data: d.self, p: d.partner, schema: d.schema }; }
+    const data = this.state.data || {}, p = this.state.partner || {};
+    let schema = this.state.schema;
+    if(!schema || !schema.length) schema = this.fallbackSchema(data, p);
+    return { data, p, schema };
+  }
+
+  // The worksheet writes a label map; if this page was opened on its own, invent one from the keys.
+  fallbackSchema(data, p){
+    const SEC = { r1:'R1 · Playing with', r2:'R2 · Want Menu', r3:'R3 · Power', r4:'R4 · Bodies', r5:'R5 · Bandwidth',
+      r6:'R6 · Stop words', r7:'R7 · Loud feelings', r8:'R8 · Group chat', r8p:'R8 · Group chat', r9:'R9 · Three words',
+      r10:'R10 · The buffet', r11:'R11 · When it breaks', r12:'R12 · Write it down', ci:'60-second check-in',
+      ff:'Fridge five', access:'Access check', signal:'Two dials' };
+    const keys = [];
+    [data, p].forEach(o => Object.keys(o || {}).forEach(k => { if(keys.indexOf(k) < 0) keys.push(k); }));
+    return keys.sort().map(k => {
+      const head = k.split('.')[0];
+      return { k, label: k, sec: SEC[head] || 'Elsewhere' };
+    });
+  }
+
+  build(){
+    const { filter } = this.state;
+    const src = this.source();
+    const data = src.data, p = src.p, schema = src.schema;
+    const counts = { collide:0, differ:0, solo:0, match:0 };
+    const bySec = [];
+    const index = {};
+    schema.forEach(item => {
+      const mine = data[item.k], theirs = p[item.k];
+      if(!this.filled(mine) && !this.filled(theirs)) return;
+      const tier = this.tierOf(mine, theirs);
+      counts[tier]++;
+      if(filter !== 'all' && filter !== tier) return;
+      const t = TIER[tier];
+      const row = {
+        label: item.label, mine: this.fmt(mine), theirs: this.fmt(theirs),
+        bg: t.bg, badge: t.badge, badgeBg: t.badgeBg, badgeFg: t.badgeFg
+      };
+      const name = item.sec || 'Elsewhere';
+      if(!index[name]){ index[name] = { name, rows: [] }; bySec.push(index[name]); }
+      index[name].rows.push(row);
+    });
+    return { groups: bySec, counts };
+  }
+
+  sh(name){ return this.state.filter === name ? '0 0 0 4px #16151a inset' : '5px 5px 0 #16151a'; }
+
+  cell(v){
+    const s = String(Array.isArray(v) ? v[0] : (v == null ? '' : v)).trim().toUpperCase();
+    const c = ANSC[s];
+    return { t: s || '—', bg: c ? c[0] : '#efeade', fg: c ? c[1] : '#8d8677' };
+  }
+
+  gridFor(name, note, prefix, schema, data, p){
+    const rows = schema.filter(i => i.k.indexOf(prefix) === 0 && !/\.(note|flag)$/.test(i.k))
+      .filter(i => this.filled(data[i.k]) || this.filled(p[i.k]))
+      .map(i => {
+        const a = this.cell(data[i.k]), b = this.cell(p[i.k]);
+        return { label: i.label, mine: a.t, mineBg: a.bg, mineFg: a.fg, theirs: b.t, theirsBg: b.bg, theirsFg: b.fg };
+      });
+    return rows.length ? { name, note, rows } : null;
+  }
+
+  scaleFor(prefix, schema, data, p){
+    const cfg = SCALES[prefix];
+    const steps = cfg.steps;
+    const pos = (v) => {
+      const s = String(Array.isArray(v) ? v[0] : (v == null ? '' : v)).trim().toUpperCase();
+      const i = steps.indexOf(s);
+      return i < 0 ? null : i / (steps.length - 1);
+    };
+    const rows = [];
+    schema.filter(i => i.k.indexOf(prefix + '.') === 0 && !/\.(note|flag)$/.test(i.k)).forEach(i => {
+      const a = pos(data[i.k]), b = pos(p[i.k]);
+      if(a === null || b === null) return;
+      const lo = Math.min(a,b), hi = Math.max(a,b);
+      rows.push({
+        label: i.label,
+        minePos: 'calc(9px + (100% - 18px) * ' + a + ')',
+        theirsPos: 'calc(9px + (100% - 18px) * ' + b + ')',
+        gapLeft: 'calc(9px + (100% - 18px) * ' + lo + ')',
+        gapWidth: 'calc((100% - 18px) * ' + (hi - lo) + ')'
+      });
+    });
+    return rows.length ? { name: cfg.name, left: cfg.left, right: cfg.right, rows } : null;
+  }
+
+  viz(schema, data, p){
+    const grids = [
+      this.gridFor('The Want Menu, side by side', 'Green is a yes, amber a maybe, blue a not-yet, pink an ask-me-again-when-I\'m-braver, red a no.', 'r2.play.', schema, data, p),
+      this.gridFor('The buffet', 'More is not deeper. Read the mismatched rows, not the count.', 'r10.', schema, data, p)
+    ].filter(Boolean);
+    const scaleGroups = ['r5.cap','ff','r8p'].map(k => this.scaleFor(k, schema, data, p)).filter(Boolean);
+    return { grids, scaleGroups };
+  }
+
+  renderVals(){
+    const { groups, counts } = this.build();
+    const src = this.source();
+    const ready = this.state.demo || (!!this.state.partner && src.schema.length > 0);
+    const names = { all:'everything', collide:'collisions', differ:'differences', solo:'one-sided answers', match:'matches' };
+    const pick = (f) => () => this.setState({ filter: this.state.filter === f ? 'all' : f });
+    const total = counts.collide + counts.differ + counts.solo + counts.match || 1;
+    const seg = (name, n, color, fg) => ({ name, n, color, fg: fg || '#fff', pct: (n / total * 100) + '%' });
+    const v = ready ? this.viz(src.schema, src.data, src.p) : { grids: [], scaleGroups: [] };
+    return {
+      groups, ready, notReady: !ready, empty: ready && groups.length === 0,
+      grids: v.grids, scaleGroups: v.scaleGroups,
+      align: [ seg('Collisions', counts.collide, '#d0342c'), seg('Different', counts.differ, '#ff3d7f'),
+               seg('Only one of us', counts.solo, '#1f4ede'), seg('Matched', counts.match, '#2f8f4e') ],
+      isDemo: this.state.demo,
+      demoBg: this.state.demo ? '#ff3d7f' : 'transparent',
+      demoFg: this.state.demo ? '#fff' : '#ff8fb5',
+      toggleDemo: () => this.setState(s => ({ demo: !s.demo, filter: 'all' })),
+      nCollide: counts.collide, nDiffer: counts.differ, nSolo: counts.solo, nMatch: counts.match,
+      shCollide: this.sh('collide'), shDiffer: this.sh('differ'), shSolo: this.sh('solo'), shMatch: this.sh('match'),
+      filterName: names[this.state.filter],
+      setAll: () => this.setState({ filter: 'all' }),
+      setCollide: pick('collide'), setDiffer: pick('differ'), setSolo: pick('solo'), setMatch: pick('match'),
+      reload: () => this.load(),
+      doPrint: () => window.print()
+    };
+  }
+}
+</script>
+</body>
+</html>
