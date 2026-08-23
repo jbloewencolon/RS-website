@@ -175,6 +175,27 @@ async function main() {
     fs.copyFileSync(path.join(root, "sitemap.xml"), path.join(outDir, "sitemap.xml"));
   }
 
+  // practise/hot-honest-ours/ is the one self-contained static app on the
+  // site (README.md's "no build step touches them; the file in the repo
+  // is what ships") — but "no build step" means no transform, not no
+  // copy: _site/ is the only thing deploy.yml uploads, so a file that
+  // never lands here 404s live regardless of what the repo root has.
+  // Missed entirely until now, the same way notes.js/practise-keyboard.js/
+  // botanical-trial.js were missed before it (see COPY_AS_IS's comment
+  // above) — and worse, silently: those three were <script src>
+  // references checkSiteArtifact() could have caught had it run against
+  // this page, but this route isn't in site-routes.mjs's nine public
+  // routes so checkSiteArtifact() never visits it, and every other check
+  // serves from the repo root (which always has the file) rather than
+  // _site/. Confirmed 404ing on the live domain while _site/ built clean.
+  // Excludes the two *.test.mjs files: dev-only, run by `npm run
+  // test:hho`, never referenced by index.html, dead weight in the
+  // deployed artifact.
+  fs.cpSync(path.join(root, "practise", "hot-honest-ours"), path.join(outDir, "practise", "hot-honest-ours"), {
+    recursive: true,
+    filter: (src) => !src.endsWith(".test.mjs"),
+  });
+
   // SEC-04.4: stamps the build with the commit it was built from, so
   // deploy.yml can fetch this back through the live domain after
   // deploying and fail loudly if the two don't match — a cancelled or

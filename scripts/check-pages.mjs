@@ -270,6 +270,35 @@ function checkPrerender() {
   return problems;
 }
 
+// practise/hot-honest-ours/ is not one of site-routes.mjs's nine public
+// routes, so it is invisible to every other _site/ check here: pages
+// (checkSiteArtifact's own list) never includes it, and it has no
+// prerendered #dc-root for checkPrerender() above to look for. That
+// blind spot is exactly how it shipped 404ing on the live domain for as
+// long as it did — prerender.mjs never copied the directory into
+// _site/, and nothing checking _site/ ever looked for it there either.
+// This is the narrowest possible guard against that regression: real
+// file existence, not a content check (checkHotHonestOurs() below
+// already exercises the route's actual behaviour, just against the repo
+// root rather than the deploy artifact).
+function checkSiteHasHotHonestOurs() {
+  const siteDir = path.join(root, "_site");
+  if (!fs.existsSync(siteDir)) {
+    console.log("• _site/ not built — skipping Hot, Honest, Ours artifact check");
+    return 0;
+  }
+  const dir = path.join(siteDir, "practise", "hot-honest-ours");
+  const required = ["index.html", "app.js", "style.css", "questions.js", "engine.js", "crypto.js", "demo.js", "wordlist.js", "framebust.js"];
+  const missing = required.filter((f) => !fs.existsSync(path.join(dir, f)));
+  if (missing.length) {
+    console.log(`\n✗ _site/practise/hot-honest-ours/ — missing from the deploy artifact: ${missing.join(", ")}`);
+    console.log(`    Fix: scripts/prerender.mjs must copy practise/hot-honest-ours/ into _site/.`);
+    return missing.length;
+  }
+  console.log("✓ _site/practise/hot-honest-ours/ present in the deploy artifact");
+  return 0;
+}
+
 // Every other check in this file serves from the repo root, which is
 // exactly why notes.js/practise-keyboard.js/botanical-trial.js could sit
 // missing from scripts/prerender.mjs's COPY_AS_IS list, referenced by
@@ -725,7 +754,8 @@ async function main() {
   const browser = await launchChromium();
   const htmlValidate = new HtmlValidate(htmlValidateConfig);
 
-  let problems = checkPrerender() + checkHugoPagesInSync() + checkBaseInSync() + checkTokens() + checkSupportJsOrigins();
+  let problems =
+    checkPrerender() + checkHugoPagesInSync() + checkBaseInSync() + checkTokens() + checkSupportJsOrigins() + checkSiteHasHotHonestOurs();
   problems += await checkRedirectStubs(base);
   problems += await checkPageWeight();
   problems += await checkSiteArtifact(browser);

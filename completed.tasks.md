@@ -21,6 +21,18 @@ follow-up items spun out, verification results, etc.
 
 ---
 
+### HHO-30 — the room 404ed live: prerender.mjs never copied it into `_site/`
+**Shipped:** 2026-08-23 · **Commit/PR:** (pending)
+
+~~was: `/practise/hot-honest-ours/` 404ed on the live domain — `scripts/prerender.mjs` builds `_site/` (the exact artifact `deploy.yml` uploads to GitHub Pages) from two sources only, the three hand-authored dc-runtime pages it prerenders and a fixed `COPY_AS_IS` file list, and the whole `practise/hot-honest-ours/` directory was in neither. Every check ran against the repo root instead, which always has the file, so `npm run check` stayed green the entire time this was broken~~
+now: `scripts/prerender.mjs` recursively copies `practise/hot-honest-ours/` into `_site/practise/hot-honest-ours/` after the `vendor/` copy, excluding the two `*.test.mjs` files (dev-only, run by `npm run test:hho`, never referenced by `index.html`); `scripts/check-pages.mjs` gains `checkSiteHasHotHonestOurs()`, asserting the nine files the page actually needs exist in `_site/` once it's built, wired into `main()` alongside the other `_site/`-scoped checks
+
+Notes:
+- **Found by the reader, not by CI.** The user hit a real 404 opening the tool right after HHO-28 shipped; `npm run check` had reported clean on every prior run. Verified live before diagnosing: `curl` against `relationalsovereignty.com/practise/hot-honest-ours/` returned 404 while `/deployed-commit.txt` confirmed the domain *was* serving the latest commit — ruling out a stale deploy and pointing at the build itself.
+- **Same blind spot as the 2026-08-22 `notes.js`/`practise-keyboard.js`/`botanical-trial.js` fix, one layer worse.** Those were `<script src>` references `checkSiteArtifact()` could have caught had it visited the referencing page; this route isn't one of `site-routes.mjs`'s nine public routes, so `checkSiteArtifact()`'s own page list never includes it, and it's reached only via `<a href>`, which that check deliberately excludes (a page load never requests a link's target). The dedicated `checkHotHonestOurs()` check exists and passed throughout, because its server serves the repo root, not `_site/`.
+- **Reproduced locally before fixing, and confirmed after:** `rm -rf _site && npm run build` showed `_site/practise/` containing only `index.html` beforehand; after the fix, all nine required files plus `fonts/`. Screenshotted the tool loading from a server pointed at `_site/` itself (not the repo root) to confirm the actual deploy artifact renders correctly, fonts included.
+- Landed directly against `main` rather than through review — a live-site 404 on a just-shipped route, with the fix isolated to two build/check scripts and verified against the real deploy artifact.
+
 ### HHO-28 + HHO-09 — the room rebuilt as the source zine, and the compare sheet finished
 **Shipped:** 2026-08-23 · **Commit/PR:** (pending)
 
