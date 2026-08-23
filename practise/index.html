@@ -183,6 +183,36 @@
      no spaces — had nothing stopping it from overflowing its row at
      200% text zoom, confirmed measured on this page. */
   .sc-interp{overflow-wrap:anywhere}
+
+  /* The Hot, Honest, Ours door, restyled to preview the room it opens
+     (docs/Hot Honest and Ours.dc.html). This is the one section of the
+     site that deliberately leaves the understory palette: the room
+     behind it is a different building now, and a door that looks like
+     every other section is a door that lies about where it goes. The
+     three faces are the same self-hosted files that route uses --
+     same-origin, no third party, see practise/hot-honest-ours/fonts/. */
+  @font-face{font-family:'Archivo Black';font-style:normal;font-weight:400;font-display:swap;src:url(/practise/hot-honest-ours/fonts/archivo-black-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+  @font-face{font-family:'Courier Prime';font-style:normal;font-weight:400;font-display:swap;src:url(/practise/hot-honest-ours/fonts/courier-prime-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+  @font-face{font-family:'Courier Prime';font-style:normal;font-weight:700;font-display:swap;src:url(/practise/hot-honest-ours/fonts/courier-prime-700-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+  @font-face{font-family:'Caveat';font-style:normal;font-weight:500 700;font-display:swap;src:url(/practise/hot-honest-ours/fonts/caveat-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
+  #hot-honest-ours{background:#E9E3D4;color:#16151A;font-family:'Courier Prime',ui-monospace,'SF Mono',Menlo,Consolas,monospace}
+  .hho-panel{position:relative;max-width:760px;border:4px solid #16151A;background:#FFFFFF;padding:34px 26px 28px;box-shadow:10px 10px 0 #1F4EDE}
+  .hho-tape{position:absolute;top:-16px;left:34px;max-width:calc(100% - 48px);background:rgba(214,196,150,.9);border-left:1px dashed rgba(0,0,0,.25);border-right:1px dashed rgba(0,0,0,.25);padding:6px 20px;transform:rotate(-2deg);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#5A5346;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .hho-title{font-family:'Archivo Black','Helvetica Neue',Impact,sans-serif;font-weight:400;font-size:clamp(2rem,6vw,3.4rem);line-height:.9;letter-spacing:-.035em;text-transform:uppercase;margin:0 0 14px;max-width:none;color:#16151A}
+  .hho-title span{color:#FF3D7F}
+  .hho-scrawl{font-family:'Caveat','Segoe Script',cursive;font-weight:500;font-size:26px;line-height:1.15;margin:0 0 12px;max-width:34ch;transform:rotate(-.8deg)}
+  .hho-stamp{font-weight:700;font-size:16px;line-height:1.4;text-transform:uppercase;letter-spacing:.02em;margin:0 0 18px;max-width:none}
+  #hot-honest-ours .hho-body{font-size:15px;line-height:1.55;color:#4A463D;max-width:60ch}
+  #hot-honest-ours .action{display:inline-flex;align-items:center;min-height:44px;border:2px solid #16151A;border-radius:0;background:#C90044;color:#FFFFFF;font-family:'Courier Prime',ui-monospace,Menlo,monospace;font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:13px 16px;text-decoration:none}
+  #hot-honest-ours .action:hover{background:#16151A;border-color:#FF3D7F;color:#FFFFFF}
+  #hot-honest-ours .disclosure{font-family:'Courier Prime',ui-monospace,Menlo,monospace;font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#C90044}
+  #hot-honest-ours details p{color:#4A463D}
+  @media (max-width:420px){
+    .hho-panel{padding:24px 16px 20px;box-shadow:6px 6px 0 #1F4EDE}
+    .hho-tape{left:14px;letter-spacing:.14em;padding:6px 12px}
+    .hho-scrawl,.hho-tape{transform:none}
+  }
 </style>
 </helmet>
 
@@ -556,22 +586,25 @@
   </div>
 </section>
 
-<section id="hot-honest-ours" style="padding:clamp(3rem,6vw,4.5rem) 0;border-top:1px solid #C9C6BA;scroll-margin-top:1rem">
+<section id="hot-honest-ours" style="padding:clamp(3.4rem,6vw,5rem) 0;border-top:4px solid #16151A;scroll-margin-top:1rem">
   <div style="max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)">
-    <p style="font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#585B4F;margin:0 0 1.2rem">Practise · tool 02 of 09 · one minute, or thirty</p>
-    <h2 style="font-family:ui-sans-serif,system-ui,'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 1rem;max-width:20ch">Hot, Honest, and Ours</h2>
-    <p style="max-width:52ch;margin:0 0 .8rem;font-size:16.5px;line-height:1.55">A whole-relationship and kink check-in, for consenting adults. Less mind-reading. More asking. Better mischief.</p>
-    <p style="max-width:52ch;margin:0 0 1.6rem;color:#3C3E38">It opens in a space of its own: this site's header, navigation and footer are not in there with you, and nothing you put in it is kept unless you say so. Sexually explicit throughout.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:.8rem;margin-bottom:1.6rem">
-      <a href="/practise/hot-honest-ours/" class="action">Open the door</a>
-    </div>
-    <details style="max-width:640px">
-      <summary class="disclosure">What's inside, first</summary>
-      <div style="padding-top:.6rem">
-        <p style="margin:0 0 .8rem;font-size:15.5px;line-height:1.55;color:#3C3E38">A short safety check first — the same three questions this page's other tools open with, plus one more specific to how explicit this one gets. Then rounds covering: what you're playing with, the want menu, power and permission, bodies and access (this round is never shared, however much of the rest you choose to reveal), bandwidth, stop words for a hard conversation, feelings running loud, the group chat, the buffet of relationship escalations, repair, and writing down what you decided.</p>
-        <p style="margin:0;font-size:15.5px;line-height:1.55;color:#3C3E38">Answer as much or as little as you want. Sharing any of it with someone else is a separate, later choice — nothing is sent anywhere until you actively export a file and hand it to them yourself.</p>
+    <div class="hho-panel">
+      <p class="hho-tape">Practise · tool 02 of 09 · one minute, or thirty</p>
+      <h2 class="hho-title">Hot, Honest,<br><span>and Ours</span></h2>
+      <p class="hho-scrawl">A whole-relationship and kink check-in, for consenting adults.</p>
+      <p class="hho-stamp">Less mind-reading. More asking. Better mischief.</p>
+      <p class="hho-body" style="margin:0 0 1.6rem">It opens in a space of its own: this site's header, navigation and footer are not in there with you, and nothing you put in it is kept unless you say so. Sexually explicit throughout.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:.8rem;margin-bottom:1.6rem">
+        <a href="/practise/hot-honest-ours/" class="action">Open the door</a>
       </div>
-    </details>
+      <details style="max-width:640px">
+        <summary class="disclosure">What's inside, first</summary>
+        <div style="padding-top:.6rem">
+          <p class="hho-body" style="margin:0 0 .8rem">A short safety check first — the same three questions this page's other tools open with, plus one more specific to how explicit this one gets. Then rounds covering: what you're playing with, the want menu, power and permission, bodies and access (this round is never shared, however much of the rest you choose to reveal), bandwidth, stop words for a hard conversation, feelings running loud, the group chat, the buffet of relationship escalations, repair, and writing down what you decided.</p>
+          <p class="hho-body" style="margin:0">Answer as much or as little as you want. Sharing any of it with someone else is a separate, later choice — nothing is sent anywhere until you actively export a file and hand it to them yourself.</p>
+        </div>
+      </details>
+    </div>
   </div>
 </section>
 

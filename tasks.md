@@ -19,7 +19,7 @@ Tags: `[DEV]` buildable · `[COPY]` needs approved text · `[VERIFY]` needs live
 | **IA-13** | Group global navigation under understand, act, consult, and project labels. | `[DEV]` | — |
 | **IA-14** | Add compact Manifesto and Behind the Scenes indexes; finish Archive filter feedback and metadata hierarchy. | `[DEV]` | Review shipped AR-04/AR-11 first |
 | **UX-20** | Use the shared component layer to address unused desktop space without filling deliberate reading-page negative space. | `[DEV]` | IA-11, IA-12 |
-| **HHO-09** | Add accessible ordinal dot plots and a demo mode to comparison results. | `[DEV]` | — |
+| **HHO-29** | Decide what the Collisions tier is for, now that `engine.js` routes every pole collision to Boundary before the tier is read and the tile is structurally always zero. | `[DEV]` `[DECISION]` | — |
 
 ## Needs author input
 

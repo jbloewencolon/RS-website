@@ -1301,6 +1301,41 @@ can still add.
 
 ## 12. Visual design direction
 
+> **Reversed, 2026-08-23.** Everything in this section below this note is
+> superseded. The author's call was to rebuild the room as a faithful
+> reproduction of the source zine rather than a translation of it, and
+> `/practise/hot-honest-ours/` now ships that: the source's cream ground,
+> hot pink, cobalt, hard black rules, offset shadows, paper grain,
+> masking-tape section flags, and all three of its faces. **R-22 and R-23
+> are both withdrawn.** The single door section on `/practise/` was
+> restyled to match, so the door no longer promises a room that isn't
+> there; nothing else on the site changed.
+>
+> What survives from the reasoning below is the constraint list, not the
+> conclusion drawn from it, and each constraint was met rather than
+> worked around:
+>
+> - **Webfonts (§12.3, R-22).** Archivo Black, Courier Prime and Caveat
+>   are self-hosted as subsetted `woff2` under the route
+>   (`practise/hot-honest-ours/fonts/`, ~217 KB, all three SIL OFL).
+>   `font-src 'self'` already allowed this; what §12.3 actually ruled out
+>   was `fonts.googleapis.com`, and that stays ruled out — the room still
+>   makes no network request once loaded.
+> - **Palette (§12.2).** `checkTokens()` reads page markup, so it never
+>   saw this route's `style.css`. The door's values are in `ALLOWED_HEX`
+>   and the whole palette is written up in `docs/design-palette.md` under
+>   "The room's own palette", which is what §12.2 was protecting.
+> - **Rotation and contrast (§12.4, R-23).** The rotations are small
+>   (≤2°) and drop out below 380px and in print, where a rotated block's
+>   bounding box is what pushes past the viewport. Four colours move
+>   lightness — never hue — to clear the contrast gate; they are tabulated
+>   in `docs/design-palette.md`. The route passes axe at desktop and
+>   375px, the 24px touch-target floor, and reflow at 320/390px and 200%
+>   text, the same gate it passed before.
+>
+> §12.5 still holds and is worth re-reading: the signal swatch is still
+> the only colour on this site a reader sets themselves.
+
 ### 12.1 The brief
 
 Two registers have to meet. The site is warm, grave, papery, serif,
@@ -1685,8 +1720,8 @@ Every decision not settled by the source material, numbered for review.
 | R-19 | Tier 1 (`sessionStorage`) exists | 9.3 | high |
 | R-20 | 30-day expiry on tier 2 | 9.3 | low |
 | R-21 | Esc closes overlays first; Esc-Esc leaves | 10.3 | low |
-| R-22 | No webfonts; serif for user text | 12.3 | high |
-| R-23 | No grain, rotation, or hard shadows | 12.4 | medium |
+| R-22 | ~~No webfonts; serif for user text~~ **Withdrawn 2026-08-23** — self-hosted, no third party; Caveat carries user text | 12.3 | high |
+| R-23 | ~~No grain, rotation, or hard shadows~~ **Withdrawn 2026-08-23** — all three shipped, bounded for reflow and print | 12.4 | medium |
 | R-24 | Classes for the eleven components, inline styles for one-offs | 14.3 | high |
 | R-25 | Import an existing map file into the room | 14.5 | low |
 
