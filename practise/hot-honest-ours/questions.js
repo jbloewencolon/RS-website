@@ -302,6 +302,54 @@ export const FRIDGE_FIVE = [
   { id: "fridge.free", label: "Left free" },
 ];
 
+// The 60-second check-in (HHO-14/HHO-27, UX spec §6.16/§4.1) -- another
+// standalone mode, same rule as the Fridge Five: never enters
+// `state.answers`, no consent control, never in the file, never in the
+// comparison engine. The spec describes this mode's shape (2 scale rows,
+// 4 writing fields, 2 yes/no-ish rows, a five-way verdict) and the
+// verdict row's own five words verbatim, but not the eight questions
+// themselves -- that wording was never saved anywhere in this repo
+// (same gap as HHO-26, but with no terminology-table fallback this
+// time). Author call, 2026-08-22: draft new questions in the room's own
+// voice rather than hold the mode open. These eight are house-authored,
+// not transcribed from any source -- replace them if the original
+// prototype's wording ever surfaces.
+export const CHECKIN = [
+  { id: "checkin.planned", type: "scale", label: "Up for what we already planned?" },
+  { id: "checkin.further", type: "scale", label: "Up for going further than last time, if it comes up?" },
+  { id: "checkin.privacy", type: "choice", options: ["YES", "NO"], label: "Enough time and privacy for this?" },
+  { id: "checkin.clear", type: "choice", options: ["YES", "NO"], label: "Clear-headed enough to consent right now -- no substances or exhaustion in the way?" },
+  { id: "checkin.more", type: "text", label: "One thing you want more of tonight" },
+  { id: "checkin.off", type: "text", label: "One thing that's off the table tonight, even if it usually isn't" },
+  { id: "checkin.new", type: "text", label: "Anything new since last time -- body, mood, meds, life" },
+  { id: "checkin.signal", type: "text", label: "A word or signal for slow down or stop, if it's different from your usual one tonight" },
+];
+// Verbatim, spec §6.16. Selecting STOP or PAUSE puts the header signal
+// to match and hands off to that signal's own existing screen -- which
+// already offers to close the door, so nothing new was built for that.
+export const CHECKIN_VERDICT = ["GOOD TO GO", "SLOW DOWN", "PAUSE", "RENEGOTIATE", "STOP"];
+
+// The shuffle (HHO-14/HHO-27, UX spec §6.18/§4.1) -- one prompt drawn at
+// a time from twelve, grouped by three named games. The three game
+// names are the spec's own, verbatim; the twelve prompts under them are
+// not -- same gap and same author call as CHECKIN above. Nothing here
+// is ever recorded: there is no input control on this screen at all,
+// only a draw button and a card to read.
+export const SHUFFLE = [
+  { game: "Green Flag Round", text: "Name one thing they do that makes you feel safe to be honest." },
+  { game: "Green Flag Round", text: "Name one moment recently that felt easy, not effortful." },
+  { game: "Green Flag Round", text: "Name a green flag you almost didn't notice, because it's just how they are." },
+  { game: "Green Flag Round", text: "Name one way they've gotten better at this with you, specifically." },
+  { game: "Two Truths and a Limit", text: "Two things you want more of. One thing you don't." },
+  { game: "Two Truths and a Limit", text: "Two things that turn you on. One thing that doesn't, even if people assume it would." },
+  { game: "Two Truths and a Limit", text: "Two things you're proud of in this. One thing you're still working on." },
+  { game: "Two Truths and a Limit", text: "Two things you'd tell a friend about this. One thing you'd only tell a therapist." },
+  { game: "The Re-Order", text: "Pick one agreement you made months ago. Does it still fit, or did you just never revisit it?" },
+  { game: "The Re-Order", text: "If you rebuilt this from scratch today, what would you do differently?" },
+  { game: "The Re-Order", text: "What's one \"rule\" you're both just following out of habit now?" },
+  { game: "The Re-Order", text: "What's something that used to matter a lot that matters less now -- and does that need saying out loud?" },
+];
+
 // Captions for the compare-results grid tables (spec §8.4b). Keyed by
 // the same string every dense-group question above sets as its `group`.
 export const GRID_GROUP_TITLES = {
