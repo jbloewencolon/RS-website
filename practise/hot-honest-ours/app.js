@@ -7,7 +7,8 @@
 // loses the draft. That is the deliberate, safest default; nothing here
 // writes to localStorage, sessionStorage, or indexedDB.
 
-import { QUESTIONS, ACCESS_QUESTIONS, QUESTIONNAIRE_VERSION, SCALE_OPTIONS, BUFFET_OPTIONS, GRID_GROUP_TITLES, FRIDGE_FIVE, FRIDGE_SCALE, CHECKIN, CHECKIN_VERDICT, SHUFFLE, allowsMatchOnly } from "./questions.js";
+import { QUESTIONS, ACCESS_QUESTIONS, QUESTIONNAIRE_VERSION, SCALE_OPTIONS, BUFFET_OPTIONS, GRID_GROUP_TITLES, SCALE_GROUPS, FRIDGE_FIVE, FRIDGE_SCALE, CHECKIN, CHECKIN_VERDICT, SHUFFLE, allowsMatchOnly } from "./questions.js";
+import { demoPayloads } from "./demo.js";
 import { encryptToFile, decryptFile, ShareFileError } from "./crypto.js";
 import { compare, counts } from "./engine.js";
 
@@ -24,6 +25,7 @@ const state = {
   checkin: {},   // qid -> value; a standalone mode (HHO-27), reset fresh on every entry
   checkinReturnTo: "door-choose", // which screen "Back" returns to -- the door, or wherever the header opened it from
   shuffleLastIndex: null, // avoids drawing the same card twice in a row
+  demo: false,   // the compare screen is showing two invented people, not a real pair of files
 };
 
 function isEmpty(v) {
@@ -40,14 +42,35 @@ function consentOf(qid) {
   return state.consent[qid] || "p";
 }
 
+// ---------- the header's filled count ----------
+// The source header carries "N FILLED" and a bar. Counted over the
+// worksheet only: the access check, the Fridge Five and the check-in are
+// separate modes that never enter a shared file, so they never move it.
+
+const ANSWERABLE = QUESTIONS.filter((q) => q.type !== "reference");
+
+// Geometry that has to be computed at runtime -- the dot plots and the
+// alignment bar -- is written through the CSSOM setter (`el.style.width
+// = ...`), never `setAttribute("style", ...)`. Under this page's CSP the
+// two are not equivalent: style-src has no 'unsafe-inline', which blocks
+// the attribute write (verified: it raises a style-src-attr violation
+// and the declaration is dropped) but not the CSSOM property, which CSP
+// does not govern. The bar below needs neither -- a native <progress>
+// takes its fill from an attribute.
+function updateProgress() {
+  const filled = ANSWERABLE.filter((q) => !isEmpty(state.answers[q.id]) || !isEmpty(state.notes[q.id])).length;
+  document.getElementById("room-filled").textContent = filled + " filled";
+  document.getElementById("room-bar").value = Math.round((filled / ANSWERABLE.length) * 100);
+}
+
 // ---------- screens ----------
 
-function showScreen(name) {
+function showScreen(name, { focusHeading = true } = {}) {
   document.querySelectorAll(".screen").forEach((s) => {
     s.hidden = s.dataset.screen !== name;
   });
   const heading = document.querySelector(`.screen[data-screen="${name}"] h1`);
-  if (heading) {
+  if (heading && focusHeading) {
     heading.setAttribute("tabindex", "-1");
     heading.focus();
   }
@@ -204,17 +227,42 @@ function optionRow(qid, options, store, multi, onChange) {
   return wrap;
 }
 
-// Builds one question's fieldset (label, optional help text, the input
+// The fixed-scale rows -- the Want Menu, the Bandwidth Check, the
+// Buffet, the access check, the Fridge Five -- are the source's dense
+// `rowSet`: label on the left, chips on the right, a 2px dotted rule
+// between. A <legend> is not a grid item in any engine, so a
+// <fieldset> cannot produce that layout; those rows use role="group"
+// plus aria-labelledby, which is the same grouping in the accessibility
+// tree with a layout box the design can use. Everything else keeps
+// fieldset/legend.
+const DENSE_TYPES = new Set(["mark", "scale", "buffet"]);
+
+// Builds one question's group (label, optional help text, the input
 // control for its type, and an optional paired note field). Shared by
 // the main round-grouped list and the flat access-check screen.
 function renderQuestionRow(q, rerenderHost) {
+  const dense = DENSE_TYPES.has(q.type);
   const row = document.createElement("div");
-  row.className = "question-row" + (q.emphasis ? " emphasis" : "");
+  row.className = "question-row" + (q.emphasis ? " emphasis" : "") + (dense ? " row-dense" : "");
 
-  const fs = document.createElement("fieldset");
-  const legend = document.createElement("legend");
-  legend.textContent = q.label;
-  fs.appendChild(legend);
+  let fs;
+  if (dense) {
+    const labelId = "lbl-" + q.id.replace(/[^A-Za-z0-9]/g, "-");
+    fs = document.createElement("div");
+    fs.className = "q-group";
+    fs.setAttribute("role", "group");
+    fs.setAttribute("aria-labelledby", labelId);
+    const label = document.createElement("p");
+    label.className = "q-label";
+    label.id = labelId;
+    label.textContent = q.label;
+    fs.appendChild(label);
+  } else {
+    fs = document.createElement("fieldset");
+    const legend = document.createElement("legend");
+    legend.textContent = q.label;
+    fs.appendChild(legend);
+  }
   if (q.help) {
     const help = document.createElement("p");
     help.className = "q-help";
@@ -255,6 +303,7 @@ function renderQuestionRow(q, rerenderHost) {
     fs.appendChild(stepper);
   } else if (q.type === "text") {
     const ta = document.createElement("textarea");
+    ta.rows = 1;
     ta.value = state.answers[q.id] || "";
     if (q.placeholder) ta.placeholder = q.placeholder;
     ta.setAttribute("aria-label", q.label);
@@ -298,8 +347,15 @@ function renderQuestions() {
     host.appendChild(q.type === "reference" ? renderReferenceRow(q) : renderQuestionRow(q, "question-list"));
   });
   host.scrollTop = scroll;
+  updateProgress();
 }
 rerenderHostFns["question-list"] = renderQuestions;
+
+// Chip and stepper changes re-render their list, which recounts; typing
+// does not, so the count follows the text fields from here.
+document.addEventListener("input", (e) => {
+  if (e.target.matches("#question-list textarea, #question-list input")) updateProgress();
+});
 
 // Round 9 (HHO-26): reference-only content, no form control of any kind,
 // so it doesn't belong inside renderQuestionRow()'s <fieldset>/<legend>
@@ -706,6 +762,28 @@ const TIER_META = [
   ["solo", "Only one of us", "One of you shared this, the other didn't -- for any reason. A blank row is not a yes."],
 ];
 
+// The badge on each row card, from the source sheet's own TIER table.
+// Free text carries none: running "what I'm assuming but have never
+// asked" through string equality would badge two answers that were never
+// supposed to match (spec §8.4e).
+const TIER_BADGE = {
+  boundary: "Boundary",
+  collision: "Collision",
+  differ: "Different",
+  matched: "Matched",
+  solo: "Only one of us",
+};
+
+// The source sheet's ANSC map: the colour an answer chip carries in a
+// dense grid. Anything not listed -- the bandwidth, side and carry-over
+// scales -- stays the neutral chip, exactly as the sheet leaves it.
+const ANSWER_SLUG = {
+  "YES": "yes", "WANT": "want",
+  "MAYBE": "maybe", "OPEN": "open",
+  "NOT YET": "not-yet", "BRAVER": "braver",
+  "NO": "no", "NOT FOR ME": "no",
+};
+
 function renderResults() {
   const groups = state.compareGroups;
   const c = counts(groups);
@@ -733,6 +811,8 @@ function renderResults() {
     tileRow.appendChild(btn);
   });
 
+  renderLanding(c);
+
   const host = document.getElementById("results-groups");
   host.innerHTML = "";
   let anyShown = false;
@@ -742,59 +822,129 @@ function renderResults() {
     const rows = groups[key];
     if (!rows.length) return;
     anyShown = true;
-    const section = document.createElement("div");
-    section.className = "result-group";
-    const h = document.createElement("h2");
-    h.textContent = name + " -- " + note;
-    section.appendChild(h);
-    appendRows(section, rows, key === "boundary");
-    host.appendChild(section);
+    host.appendChild(resultSection(key, name, note, rows));
   });
 
-  if (groups.text.length && (!state.activeTile)) {
+  if (groups.text.length && !state.activeTile) {
     anyShown = true;
-    const section = document.createElement("div");
-    section.className = "result-group";
-    const h = document.createElement("h2");
-    h.textContent = "Read side by side -- these were never going to match";
-    section.appendChild(h);
-    appendRows(section, groups.text, false);
-    host.appendChild(section);
+    host.appendChild(resultSection("text", "Read side by side", "These were never going to match.", groups.text));
   }
 
   document.getElementById("tile-empty").hidden = anyShown;
 }
 
+// The tier name goes on a strip of masking tape, the way the source
+// labels a section; the sentence underneath it is the room talking, and
+// would not fit on the tape or read as a label if it did.
+function resultSection(key, name, note, rows) {
+  const section = document.createElement("div");
+  section.className = "result-group";
+  const h = document.createElement("h2");
+  h.textContent = name;
+  const p = document.createElement("p");
+  p.className = "group-note";
+  p.textContent = note;
+  section.append(h, p);
+  appendRows(section, rows, key === "boundary", key);
+  return section;
+}
+
+// "Where the two of you land" -- the source sheet's proportional bar.
+// It is a picture of the same five counts the tiles carry, so the bar
+// itself is one labelled image and the legend below repeats every count
+// as text; nothing is available only in the graphic.
+function renderLanding(c) {
+  const host = document.getElementById("landing");
+  host.innerHTML = "";
+  const segs = TIER_META.map(([key, name]) => ({ key, name, n: c[key] }));
+  const total = segs.reduce((a, b) => a + b.n, 0);
+  if (!total) { host.hidden = true; return; }
+  host.hidden = false;
+
+  const head = document.createElement("p");
+  head.className = "landing-head";
+  head.textContent = "Where the two of you land";
+
+  const readout = segs.map((s) => s.n + " " + s.name.toLowerCase()).join(" · ");
+
+  const bar = document.createElement("div");
+  bar.className = "landing-bar";
+  bar.setAttribute("role", "img");
+  bar.setAttribute("aria-label", readout);
+  segs.forEach((s) => {
+    if (!s.n) return;
+    const seg = document.createElement("span");
+    seg.className = "seg-" + s.key;
+    seg.setAttribute("aria-hidden", "true");
+    seg.style.width = (s.n / total) * 100 + "%";
+    seg.textContent = s.n;
+    bar.appendChild(seg);
+  });
+
+  const legend = document.createElement("ul");
+  legend.className = "landing-legend";
+  segs.forEach((s) => {
+    const li = document.createElement("li");
+    const swatch = document.createElement("i");
+    swatch.className = "seg-" + s.key;
+    li.append(swatch, document.createTextNode(s.n + " " + s.name.toLowerCase()));
+    legend.appendChild(li);
+  });
+
+  const note = document.createElement("p");
+  note.className = "landing-note";
+  note.textContent = "Widths, not a score. A long green stretch and one collision is not a better relationship than the reverse -- it is a different conversation.";
+
+  host.append(head, bar, legend, note);
+}
+
 // Spec §8.4b: dense same-scale runs (the Want Menu, Bandwidth Check, the
-// Buffet) render as one grid table instead of one card per question.
-// A run is a question's own `group` id (set in questions.js); because
-// each dense array occupies contiguous positions in QUESTIONS and every
-// tier bucket preserves that order (engine.js walks QUESTIONS once),
-// same-group rows that land in one tier are already contiguous here --
-// no separate bucketing pass is needed, just a walk collecting runs.
-function appendRows(section, rows, isBoundary) {
+// Buffet, who-holds-what) render as one table instead of one card per
+// question. A run is a question's own `group` id (set in questions.js);
+// because each dense array occupies contiguous positions in QUESTIONS
+// and every tier bucket preserves that order (engine.js walks QUESTIONS
+// once), same-group rows that land in one tier are already contiguous
+// here -- no separate bucketing pass is needed, just a walk collecting
+// runs. A run whose scale is ordinal (SCALE_GROUPS) gets dot plots
+// instead of chips, because there the distance is the finding.
+function appendRows(section, rows, isBoundary, tier) {
   let i = 0;
   while (i < rows.length) {
     const row = rows[i];
     if (row.group) {
       let j = i + 1;
       while (j < rows.length && rows[j].group === row.group) j++;
-      section.appendChild(gridTable(row.group, rows.slice(i, j), isBoundary));
+      const run = rows.slice(i, j);
+      section.appendChild(
+        SCALE_GROUPS[row.group] ? scaleGroup(row.group, run, isBoundary) : gridTable(row.group, run, isBoundary)
+      );
       i = j;
     } else {
-      section.appendChild(resultCard(row, isBoundary));
+      section.appendChild(resultCard(row, isBoundary, tier));
       i++;
     }
   }
 }
 
-function resultCard(row, isBoundary) {
+function resultCard(row, isBoundary, tier) {
   const card = document.createElement("div");
   card.className = "result-card" + (isBoundary ? " is-boundary" : "");
+  card.dataset.tier = tier;
+
+  const head = document.createElement("div");
+  head.className = "rc-head";
   const label = document.createElement("p");
   label.className = "rc-label";
   label.textContent = row.label;
-  card.appendChild(label);
+  head.appendChild(label);
+  if (TIER_BADGE[tier]) {
+    const badge = document.createElement("p");
+    badge.className = "rc-badge";
+    badge.textContent = TIER_BADGE[tier];
+    head.appendChild(badge);
+  }
+  card.appendChild(head);
+
   const values = document.createElement("div");
   values.className = "rc-values";
   values.appendChild(oneValue("Me", row.mine, row.mineCondition));
@@ -843,8 +993,8 @@ function gridTable(groupId, rows, isBoundary) {
     rowHead.setAttribute("role", "rowheader");
     rowHead.textContent = row.label;
     tr.appendChild(rowHead);
-    tr.appendChild(gridCell(row.mine, row.mineCondition));
-    tr.appendChild(gridCell(row.theirs, row.theirsCondition));
+    tr.appendChild(gridCell(row.mine, row.mineCondition, "Me"));
+    tr.appendChild(gridCell(row.theirs, row.theirsCondition, "Them"));
     tbody.appendChild(tr);
   });
   wrap.appendChild(tbody);
@@ -852,12 +1002,17 @@ function gridTable(groupId, rows, isBoundary) {
   return wrap;
 }
 
-function gridCell(val, condition) {
+function gridCell(val, condition, who) {
   const td = document.createElement("td");
   td.setAttribute("role", "cell");
   const chip = document.createElement("span");
   chip.className = "grid-chip" + (val === undefined ? " is-empty" : "");
+  chip.dataset.who = who;
   chip.textContent = val === undefined ? "not shared" : fmtValue(val);
+  if (val !== undefined && !Array.isArray(val)) {
+    const slug = ANSWER_SLUG[String(val).toUpperCase()];
+    if (slug) chip.dataset.answer = slug;
+  }
   td.appendChild(chip);
   if (val !== undefined && condition) {
     const note = document.createElement("p");
@@ -866,6 +1021,125 @@ function gridCell(val, condition) {
     td.appendChild(note);
   }
   return td;
+}
+
+// The ordinal dot plot (HHO-09). Two dots on a track with the gap drawn
+// as a solid bar between them: for a scale where both answers are rungs
+// on the same ladder, the distance is the finding, and a bar states it
+// in one glance where two chips cannot.
+//
+// The plot is decoration -- aria-hidden, with no information of its own.
+// Every row is still a table row with a header and both values written
+// out, so a reader who never sees the graphic loses nothing but the
+// glance. Rows whose answer is off the scale (Bandwidth's "changes
+// often" flag) or shared by only one of you keep their text and simply
+// have less to draw.
+function scaleGroup(groupId, rows, isBoundary) {
+  const cfg = SCALE_GROUPS[groupId];
+  const title = GRID_GROUP_TITLES[groupId] || groupId;
+
+  const box = document.createElement("div");
+  box.className = "scale-group" + (isBoundary ? " is-boundary" : "");
+
+  const name = document.createElement("p");
+  name.className = "scale-name";
+  name.textContent = title;
+
+  const poles = document.createElement("p");
+  poles.className = "scale-poles";
+  const lo = document.createElement("span");
+  lo.textContent = cfg.left;
+  const hi = document.createElement("span");
+  hi.textContent = cfg.right;
+  poles.append(lo, hi);
+
+  const table = document.createElement("table");
+  table.className = "scale-table";
+  table.setAttribute("role", "table");
+  table.setAttribute("aria-label", title);
+  const tbody = document.createElement("tbody");
+  tbody.setAttribute("role", "rowgroup");
+
+  const at = (v) => {
+    if (v === undefined || Array.isArray(v)) return null;
+    const i = cfg.steps.indexOf(String(v).toUpperCase());
+    return i < 0 ? null : i / (cfg.steps.length - 1);
+  };
+  const track = (frac) => "calc(9px + (100% - 18px) * " + frac + ")";
+
+  rows.forEach((row) => {
+    const tr = document.createElement("tr");
+    tr.setAttribute("role", "row");
+
+    const rowHead = document.createElement("th");
+    rowHead.scope = "row";
+    rowHead.setAttribute("role", "rowheader");
+    rowHead.textContent = row.label;
+    tr.appendChild(rowHead);
+
+    const td = document.createElement("td");
+    td.setAttribute("role", "cell");
+
+    const values = document.createElement("span");
+    values.className = "scale-values";
+    values.textContent =
+      "Me: " + (row.mine === undefined ? "not shared" : fmtValue(row.mine)) +
+      " · Them: " + (row.theirs === undefined ? "not shared" : fmtValue(row.theirs));
+    td.appendChild(values);
+
+    const a = at(row.mine), b = at(row.theirs);
+    if (a !== null || b !== null) {
+      const plotCell = document.createElement("span");
+      plotCell.className = "scale-plot";
+      plotCell.setAttribute("aria-hidden", "true");
+      const plot = document.createElement("span");
+      plot.className = "dotplot";
+
+      const line = document.createElement("span");
+      line.className = "track";
+      plot.appendChild(line);
+
+      if (a !== null && b !== null && a !== b) {
+        const gap = document.createElement("span");
+        gap.className = "gap";
+        gap.style.left = track(Math.min(a, b));
+        gap.style.width = "calc((100% - 18px) * " + Math.abs(a - b) + ")";
+        plot.appendChild(gap);
+      }
+      if (b !== null) {
+        const theirs = document.createElement("span");
+        theirs.className = "theirs";
+        theirs.style.left = track(b);
+        plot.appendChild(theirs);
+      }
+      if (a !== null) {
+        const mine = document.createElement("span");
+        mine.className = "mine";
+        mine.style.left = track(a);
+        plot.appendChild(mine);
+      }
+      plotCell.appendChild(plot);
+      td.appendChild(plotCell);
+    }
+
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+
+  const key = document.createElement("ul");
+  key.className = "dotplot-key";
+  [["k-mine", "Me"], ["k-theirs", "Them"]].forEach(([cls, who]) => {
+    const li = document.createElement("li");
+    const dot = document.createElement("i");
+    dot.className = cls;
+    li.append(dot, document.createTextNode(who));
+    key.appendChild(li);
+  });
+
+  box.append(name, poles, table, key);
+  return box;
 }
 
 function oneValue(who, val, condition) {
@@ -887,9 +1161,42 @@ function oneValue(who, val, condition) {
   return col;
 }
 
-document.getElementById("close-clear").addEventListener("click", () => {
+// ---------- demo data ----------
+// Two invented people, so the sheet can be seen full before anything
+// real is committed to a file. Held in memory for exactly as long as the
+// toggle is on: state.answers is never read or written here, so your own
+// draft is untouched either way.
+
+function clearResults() {
   state.compareGroups = null;
   state.activeTile = null;
+  state.demo = false;
+  document.querySelectorAll(".demo-toggle").forEach((b) => b.setAttribute("aria-pressed", "false"));
+  document.getElementById("demo-banner").hidden = true;
+}
+
+document.body.addEventListener("click", (e) => {
+  if (!e.target.closest('[data-action="toggle-demo"]')) return;
+  const on = !state.demo;
+  if (on) {
+    const { mine, theirs } = demoPayloads();
+    state.demo = true;
+    state.activeTile = null;
+    state.compareGroups = compare(mine, theirs);
+    document.querySelectorAll(".demo-toggle").forEach((b) => b.setAttribute("aria-pressed", "true"));
+    document.getElementById("demo-banner").hidden = false;
+    renderResults();
+    showScreen("compare-results");
+    announce("Demo data loaded. These are two invented people; your own answers are untouched.");
+  } else {
+    clearResults();
+    showScreen("compare-open");
+    announce("Demo data cleared.");
+  }
+});
+
+document.getElementById("close-clear").addEventListener("click", () => {
+  clearResults();
   document.getElementById("file-mine").value = "";
   document.getElementById("file-theirs").value = "";
   document.getElementById("pass-mine").value = "";
@@ -903,4 +1210,4 @@ document.getElementById("close-clear").addEventListener("click", () => {
 // ---------- boot ----------
 
 renderQuestions();
-showScreen("door-cover");
+showScreen("door-cover", { focusHeading: false });

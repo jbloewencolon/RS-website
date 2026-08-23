@@ -30,6 +30,10 @@
 <header class="room-header">
   <div class="room-header-row">
     <p class="room-name">Hot, Honest, Ours</p>
+    <div class="room-progress">
+      <p class="room-filled" id="room-filled">0 filled</p>
+      <progress class="room-bar" id="room-bar" max="100" value="0" aria-label="How much of the worksheet you have filled in"></progress>
+    </div>
     <div class="signal-control" role="radiogroup" aria-label="How this is going right now" id="signal-control">
       <button type="button" class="signal-btn" data-signal="green" aria-pressed="true">Green</button>
       <button type="button" class="signal-btn" data-signal="yellow" aria-pressed="false">Yellow</button>
@@ -69,10 +73,18 @@
 
   <section class="screen" data-screen="door-cover">
     <div class="shell">
-      <p class="eyebrow">Before you go in</p>
-      <h1>Hot, Honest, and Ours</h1>
-      <p class="lede">A playful whole-relationship and kink check-in for consenting adults. Less mind-reading. More asking. Better mischief.</p>
-      <p class="fine-print">10 min alone &middot; 30 min together &middot; 1 plan for now &middot; repeat when things change</p>
+      <div class="cover-panel">
+        <p class="eyebrow tape">Before you go in</p>
+        <h1>Hot,<br>Honest,<br><span class="cover-accent">and Ours</span></h1>
+        <p class="scrawl">A playful whole-relationship and kink check-in for consenting adults.</p>
+        <p class="stamp">Less mind-reading. More asking. Better mischief.</p>
+        <ul class="stat-row">
+          <li><b>10 min</b> alone</li>
+          <li><b>30 min</b> together</li>
+          <li><b>1 plan</b> for now</li>
+          <li><b>repeat</b> when things change</li>
+        </ul>
+      </div>
       <div class="callout callout-holds">
         <strong>The golden rule.</strong> A yes can become a no. A no needs no defense. A maybe is not a yes. Spicy, soft, silly, serious, or all four. Name what's real.
       </div>
@@ -288,39 +300,42 @@
       <h1>Compare</h1>
       <p class="lede">Open both files here. They are read by this browser, on this device, and nothing about them is sent anywhere — this page has no way to send anything, by design.</p>
 
-      <div class="compare-grid">
-        <div class="compare-col">
-          <label class="field-label" for="file-mine">My answers</label>
-          <input type="file" id="file-mine" accept=".hho,application/json,.json,text/plain">
-          <label class="field-label" for="pass-mine">My passphrase</label>
-          <input type="text" id="pass-mine" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="five words">
+      <div class="compare-panel">
+        <div class="compare-grid">
+          <div class="compare-col">
+            <label class="field-label" for="file-mine">My answers</label>
+            <input type="file" id="file-mine" accept=".hho,application/json,.json,text/plain">
+            <label class="field-label" for="pass-mine">My passphrase</label>
+            <input type="text" id="pass-mine" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="five words">
+          </div>
+          <div class="compare-col">
+            <label class="field-label" for="file-theirs">Their answers</label>
+            <input type="file" id="file-theirs" accept=".hho,application/json,.json,text/plain">
+            <label class="field-label" for="pass-theirs">Their passphrase</label>
+            <input type="text" id="pass-theirs" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="five words">
+          </div>
         </div>
-        <div class="compare-col">
-          <label class="field-label" for="file-theirs">Their answers</label>
-          <input type="file" id="file-theirs" accept=".hho,application/json,.json,text/plain">
-          <label class="field-label" for="pass-theirs">Their passphrase</label>
-          <input type="text" id="pass-theirs" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="five words">
-        </div>
-      </div>
 
-      <details class="paste-fallback">
-        <summary>Paste a file instead</summary>
-        <div class="paste-grid">
-          <div>
-            <label class="field-label" for="paste-mine">My file's text</label>
-            <textarea id="paste-mine" rows="3"></textarea>
+        <details class="paste-fallback">
+          <summary>Paste a file instead</summary>
+          <div class="paste-grid">
+            <div>
+              <label class="field-label" for="paste-mine">My file's text</label>
+              <textarea id="paste-mine" rows="3"></textarea>
+            </div>
+            <div>
+              <label class="field-label" for="paste-theirs">Their file's text</label>
+              <textarea id="paste-theirs" rows="3"></textarea>
+            </div>
           </div>
-          <div>
-            <label class="field-label" for="paste-theirs">Their file's text</label>
-            <textarea id="paste-theirs" rows="3"></textarea>
-          </div>
-        </div>
-      </details>
+        </details>
+      </div>
 
       <p id="compare-error" class="form-error" role="alert" hidden></p>
       <p class="fine-print">Everything you open here lives in this tab and nowhere else. Close the page and it is gone.</p>
       <div class="actions">
         <button type="button" class="btn-primary" id="run-compare">Compare</button>
+        <button type="button" class="btn-secondary demo-toggle" data-action="toggle-demo" aria-pressed="false">&#9670; Demo data</button>
       </div>
     </div>
   </section>
@@ -331,10 +346,16 @@
       <h1>What you can both see</h1>
       <p class="lede">Five groups. Nothing here is a total, a percentage, or a verdict, and the order is the order of the check-in, not "best first".</p>
 
+      <div id="demo-banner" class="demo-banner" hidden>
+        <strong>Demo data.</strong> Two invented people, so you can see the sheet full. Nothing here is saved and your own answers are untouched &mdash; hit the button again to go back.
+      </div>
+
       <div class="tile-row" id="tile-row"></div>
-      <p id="tile-empty" class="fine-print" hidden>Nothing in this pile. Try another tile.</p>
+
+      <div class="landing" id="landing"></div>
 
       <div id="results-groups"></div>
+      <p id="tile-empty" class="empty-note" hidden>Nothing in this pile. Try another tile.</p>
 
       <div class="callout callout-holds">
         Start at the boundaries. Understand, don't sell. A hard limit is
@@ -342,6 +363,7 @@
       </div>
       <div class="actions">
         <button type="button" class="btn-secondary" id="close-clear">Close and clear</button>
+        <button type="button" class="btn-secondary demo-toggle" data-action="toggle-demo" aria-pressed="false">&#9670; Demo data</button>
       </div>
     </div>
   </section>

@@ -181,8 +181,8 @@ export const QUESTIONS = [
   { id: "r8.4", round: "R8 · The Group Chat", type: "text", label: "How do we tell each other about new partners or new feelings?" },
   { id: "r8.5", round: "R8 · The Group Chat", type: "text", label: "What happens at shared events, spaces, and communities?" },
   { id: "r8.6", round: "R8 · The Group Chat", type: "text", label: "What can be public, private, posted, tagged, photographed, named?" },
-  { id: "r8p.freedom", round: "R8 · The Group Chat", type: "mark", options: SIDE, label: "Who has more freedom to say no, leave, host, travel, spend, or be publicly recognised?" },
-  { id: "r8p.risk", round: "R8 · The Group Chat", type: "mark", options: SIDE, label: "Who carries more risk from stigma, racism, homophobia, transphobia, disability, immigration status, work, housing, or family?" },
+  { id: "r8p.freedom", round: "R8 · The Group Chat", type: "mark", options: SIDE, group: "r8pside", label: "Who has more freedom to say no, leave, host, travel, spend, or be publicly recognised?" },
+  { id: "r8p.risk", round: "R8 · The Group Chat", type: "mark", options: SIDE, group: "r8pside", label: "Who carries more risk from stigma, racism, homophobia, transphobia, disability, immigration status, work, housing, or family?" },
   { id: "r8p.equal", round: "R8 · The Group Chat", type: "choice", options: ["NO", "SOMEWHERE", "YES, WE ARE"], emphasis: true, label: "Are we calling something equal when the consequences aren't equal?" },
 
   // ---------------- Round 8 carry-over -- five domains from the site's
@@ -356,7 +356,25 @@ export const GRID_GROUP_TITLES = {
   r2closeness: "The Want Menu — kinds of closeness",
   r2play: "The Want Menu — activities",
   r5cap: "Bandwidth Check",
+  r8pside: "Who holds what",
   r10buffet: "The Buffet",
+};
+
+// The dense runs whose scale is ordinal, where the *distance* between two
+// answers is the finding rather than which category each fell in. The
+// compare screen draws these as dot plots -- two dots on a track with the
+// gap between them drawn as a solid bar -- instead of two chips
+// (HHO-09; the source compare sheet's own SCALES map).
+//
+// `steps` is the ordered scale, and an option missing from it has no
+// position: Bandwidth's "CHANGES OFTEN" is a flag folded into that
+// question's option list, not a fifth rung, so a row answered that way
+// keeps its Me/Them text and simply isn't plotted. The Fridge Five is
+// ordinal too and the source plots it, but it is a standalone mode that
+// never enters a shared file, so it can never reach this screen.
+export const SCALE_GROUPS = {
+  r5cap: { left: "none", right: "plenty", steps: ["NONE", "THIN", "SOME", "PLENTY"] },
+  r8pside: { left: "me", right: "them", steps: ["ME", "MOSTLY ME", "EVEN", "MOSTLY THEM", "THEM"] },
 };
 
 export function questionById(id) {

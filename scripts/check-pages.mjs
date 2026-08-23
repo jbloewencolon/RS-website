@@ -537,6 +537,17 @@ const ALLOWED_HEX = new Set([
   // Page-level exceptions ("Deliberate exceptions")
   "#7D5915", // Invitation's own accent, predates the register system
   "#C7D5CF", // Manifesto's dark-ground body text (its own tokens false page)
+  // The Hot, Honest, Ours door on Practise ("The room's own palette").
+  // That route is a faithful rebuild of the source zine and leaves the
+  // four registers entirely; the door section that opens it previews the
+  // room, so this handful of the room's tokens appears in Practise's
+  // markup. The room's own style.css is not scanned by this check (it is
+  // a stylesheet, not page markup) but the whole palette is documented in
+  // docs/design-palette.md so the two halves cannot drift apart.
+  "#E9E3D4", "#16151A", "#FFFFFF", "#4A463D", // ground, ink, card, secondary prose
+  "#FF3D7F", "#C90044", // the signature pink, and the darker one small text uses
+  "#1F4EDE", // cobalt: the offset shadow
+  "#5A5346", // the masking-tape flag's ink
   // Established secondary neutrals and per-page tints already in use —
   // kicker/caption ink variants, Home's per-door background washes, and the
   // #73968D muted-aside override DC-03 found on thirteen bare .note

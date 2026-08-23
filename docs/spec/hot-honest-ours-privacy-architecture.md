@@ -1044,12 +1044,17 @@ changes.
 
 **Change.**
 
-1. **Remove the proportional alignment bar** ("Where the two of you
-   land"). A stacked bar whose green segment is 60 % of the width reads
-   as *60 % compatible*, which is precisely what the source says this is
-   not. The four tiles already carry the counts, and they carry them as
-   navigation. Replace the bar with one line of text in worksheet order:
-   `3 collisions · 12 different · 5 only one of us · 22 matched`.
+1. ~~**Remove the proportional alignment bar**~~ — **reversed
+   2026-08-23, and both halves shipped.** The original objection stands
+   on its own terms: a stacked bar whose green segment is 60 % of the
+   width reads as *60 % compatible*, which is precisely what the source
+   says this is not. The author's call was to keep the source's bar
+   anyway, so it ships *with* the replacement line rather than instead of
+   it — the bar is the picture, and the legend under it spells out
+   `19 boundary · 0 collisions · 13 worth discussing · …` in worksheet
+   order, which is also the bar's `aria-label`. A sentence beneath says
+   what the widths are not. The four tiles still carry the counts as
+   navigation.
 2. **Separate *boundary* from *collision*.** In the supplied `tierOf`, a
    `MAYBE` against a `NO` scores `differ` and renders in the same pink as
    `MAYBE` against `YES`. For a consent tool that is the wrong signal: a
@@ -1065,9 +1070,15 @@ changes.
 - Reading `localStorage['hho.v2.partner']`. The partner's answers come
   from a file into memory and are never persisted (§9.6, and P2 in the
   UX spec).
-- The Google Fonts link and the `#ff3d7f` / `#1f4ede` / `#16151a`
-  palette — CSP-blocked and `checkTokens()`-failing respectively. See
-  the UX spec §12.
+- The Google Fonts link — CSP-blocked, and a page that makes no network
+  request once loaded cannot start announcing every visit to a third
+  party. Still rejected. **The `#ff3d7f` / `#1f4ede` / `#16151a` palette
+  is not** (reversed 2026-08-23): the room now ships the source's own
+  colours, and the three faces are self-hosted under the route so the
+  typography arrives without the link. `checkTokens()` reads page
+  markup, so it never covered this route's stylesheet; the palette is
+  documented in `docs/design-palette.md`. See the UX spec §12's reversal
+  note.
 - The `notReady` copy ("open the **Swap** drawer, import your partner's
   code") — replaced by the file flow.
 

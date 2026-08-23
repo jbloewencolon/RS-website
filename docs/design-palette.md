@@ -173,6 +173,62 @@ exists to not use. A future audit measuring "seven footers, two
 pages without one" should read this paragraph before filing it as a
 finding again.
 
+## The room's own palette
+
+`/practise/hot-honest-ours/` does not use the four registers at all, and
+its door on `/practise/` no longer does either. That route is a faithful
+rebuild of the source zine (`docs/Hot Honest and Ours.dc.html`,
+`docs/Compare Sheet.dc.html`), which reverses UX spec §12's earlier
+resolution — keep the site palette, get the zine energy from scale alone
+— along with its **R-22** (no webfonts) and **R-23** (no texture,
+rotation, or hard shadows). See that section for the reversal note.
+
+This is the largest deliberate departure on the site, and it is scoped:
+the room and the single door section that opens it, nothing else.
+
+| Token | Value | Doing what |
+|---|---|---|
+| ground | `#E9E3D4` | the room's cream paper |
+| ink | `#16151A` | every rule, border, and word of body copy |
+| card | `#FFFFFF` | card and panel grounds |
+| chip | `#FAF7EF` | the rest state of every chip and secondary button |
+| paper | `#F5F1E6` | type on the dark ground |
+| ink-2 / ink-3 | `#4A463D` / `#6B6557` | secondary prose, small uppercase labels |
+| rule | `#C9C2B1` | the 2px dotted row rules |
+| pink | `#FF3D7F` | the signature: borders, fills, decoration, display-size words |
+| pink-ink | `#C90044` | pink wherever it meets small text — see below |
+| pink-soft / blush / pale | `#FF8FB5` / `#FFD9E5` / `#FFE6EF` | kickers and standfirsts on the dark ground; pale pink fills |
+| cobalt | `#1F4EDE` | the second voice — "them", the offset shadow, the file drawer |
+| cobalt pale | `#EAEFFF` | the "only one of us" ground |
+| red | `#D0342C` (pale `#FFD9D6`) | collisions |
+| green | `#2F8F4E`, ink `#2D864D` (pale `#E4F2E8`) | matches |
+| amber | `#E8BF24` | a maybe |
+| rail / track | `#CFC9BB` / `#26242A` | header chrome on the dark ground |
+| tape | `rgba(214,196,150,.9)` on `#5A5346` | the masking-tape section flags |
+
+**Four values differ from the reference**, each moving lightness only and
+keeping the hue, because the reference fails the contrast gate at those
+four points and nowhere else:
+
+| Token | Reference | Here | Why |
+|---|---|---|---|
+| ink-3 | `#6B6659` | `#6B6557` | 11px labels on the cream ground were 4.47:1 |
+| pink as small text, or as a ground under white small text | `#FF3D7F` | `#C90044` | 2.63:1 and 3.37:1 against a 4.5 floor |
+| white on green badges | `#2F8F4E` | `#2D864D` | 4.07:1 against a 4.5 floor |
+| the pink count tile's ground | `#FFE6EF` | `#FFF0F5` | its own count is display text at 2.86:1 of 3 |
+
+`#FF3D7F` itself is untouched and still does everything it does in the
+source. The room's cover panel takes the card white rather than the
+reference's `#F5F1E6` for the same reason: the pink half of the title
+clears 3:1 on white and misses it on the warmer paper, and moving the
+panel is a smaller change than dulling the signature colour.
+
+`checkTokens()` in `scripts/check-pages.mjs` reads page markup, so it
+sees `practise/index.html`'s door and not `practise/hot-honest-ours/`,
+whose colour all lives in its own `style.css`. Both halves of the palette
+are listed above regardless — the door's values are in `ALLOWED_HEX`, and
+the room's are documented here so the two never drift apart.
+
 ## Ochre: one value, not two
 
 As of this pass, every use of ochre *as the semantic register* — a claim
