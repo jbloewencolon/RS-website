@@ -7,7 +7,7 @@
 // loses the draft. That is the deliberate, safest default; nothing here
 // writes to localStorage, sessionStorage, or indexedDB.
 
-import { QUESTIONS, ACCESS_QUESTIONS, QUESTIONNAIRE_VERSION, SCALE_OPTIONS, BUFFET_OPTIONS, GRID_GROUP_TITLES, FRIDGE_FIVE, FRIDGE_SCALE, allowsMatchOnly } from "./questions.js";
+import { QUESTIONS, ACCESS_QUESTIONS, QUESTIONNAIRE_VERSION, SCALE_OPTIONS, BUFFET_OPTIONS, GRID_GROUP_TITLES, FRIDGE_FIVE, FRIDGE_SCALE, CHECKIN, CHECKIN_VERDICT, SHUFFLE, allowsMatchOnly } from "./questions.js";
 import { encryptToFile, decryptFile, ShareFileError } from "./crypto.js";
 import { compare, counts } from "./engine.js";
 
@@ -21,6 +21,9 @@ const state = {
   activeTile: null,
   door: "cover", // "cover" | "safety" | "access" | null (null = through the door)
   fridge: {},    // qid -> value; a standalone mode (HHO-14), never shared, never part of `answers`
+  checkin: {},   // qid -> value; a standalone mode (HHO-27), reset fresh on every entry
+  checkinReturnTo: "door-choose", // which screen "Back" returns to -- the door, or wherever the header opened it from
+  shuffleLastIndex: null, // avoids drawing the same card twice in a row
 };
 
 function isEmpty(v) {
@@ -54,6 +57,8 @@ function showScreen(name) {
     "door-access": "Access check",
     "door-choose": "Choose your way in",
     "fridge-five": "The fridge five",
+    "sixty-seconds": "Sixty seconds",
+    shuffle: "The shuffle",
     answer: "Answer the questions",
     "share-choose": "Sharing · choose",
     "share-review": "Sharing · review",
@@ -63,6 +68,11 @@ function showScreen(name) {
   };
   document.getElementById("room-position").textContent = positions[name] || "";
   window.scrollTo(0, 0);
+}
+
+function currentScreen() {
+  const visible = document.querySelector(".screen:not([hidden])");
+  return visible ? visible.dataset.screen : "door-choose";
 }
 
 document.body.addEventListener("click", (e) => {
@@ -75,6 +85,11 @@ document.body.addEventListener("click", (e) => {
   if (action === "door-to-answer") { showScreen("answer"); return; }
   if (action === "door-to-fridge") { renderFridgeQuestions(); showScreen("fridge-five"); return; }
   if (action === "fridge-reveal") { revealFridge(); return; }
+  if (action === "door-to-checkin") { openCheckin("door-choose"); return; }
+  if (action === "header-to-checkin") { openCheckin(currentScreen()); return; }
+  if (action === "checkin-back") { showScreen(state.checkinReturnTo); return; }
+  if (action === "door-to-shuffle") { showScreen("shuffle"); return; }
+  if (action === "draw-card") { drawCard(); return; }
   if (action === "go-answer") { showScreen("answer"); return; }
   if (action === "go-compare") { showScreen("compare-open"); return; }
   if (action === "go-share") { renderConsentList(); showScreen("share-choose"); return; }
@@ -366,6 +381,88 @@ function revealFridge() {
     if (row) row.classList.toggle("is-lowest", values[i] === lowest);
   });
   document.getElementById("fridge-reading").hidden = false;
+}
+
+// ---------- the sixty-second check-in (HHO-27, standalone, never shared) ----------
+
+// Reset fresh on every entry (spec §6.16: "before a date, a scene, a
+// sleepover, a hard conversation, or a change of plan" -- a stale answer
+// from an hour ago would be actively misleading here), unlike the
+// Fridge Five, which persists for the session. `returnTo` is the door
+// when reached from there, or wherever the header opened it from.
+function openCheckin(returnTo) {
+  state.checkin = {};
+  state.checkinReturnTo = returnTo;
+  renderCheckinQuestions();
+  renderCheckinVerdict();
+  showScreen("sixty-seconds");
+}
+
+function renderCheckinQuestions() {
+  const host = document.getElementById("checkin-list");
+  host.innerHTML = "";
+  const rerender = () => rerenderPreservingFocus("checkin-list", renderCheckinQuestions);
+  CHECKIN.forEach((q) => {
+    const row = document.createElement("div");
+    row.className = "question-row";
+    row.dataset.qid = q.id;
+    const fs = document.createElement("fieldset");
+    const legend = document.createElement("legend");
+    legend.textContent = q.label;
+    fs.appendChild(legend);
+    if (q.type === "text") {
+      const ta = document.createElement("textarea");
+      ta.rows = 1;
+      ta.value = state.checkin[q.id] || "";
+      ta.setAttribute("aria-label", q.label);
+      ta.addEventListener("input", () => { state.checkin[q.id] = ta.value; });
+      fs.appendChild(ta);
+    } else {
+      fs.appendChild(optionRow(q.id, q.type === "scale" ? SCALE_OPTIONS : q.options, state.checkin, false, rerender));
+    }
+    row.appendChild(fs);
+    host.appendChild(row);
+  });
+}
+rerenderHostFns["checkin-list"] = renderCheckinQuestions;
+
+// Spec §6.16: selecting STOP or PAUSE puts the header signal to match
+// and "offers to close the door" -- setSignal() already switches to the
+// signal-red/signal-pause screen, which already carries that offer, so
+// nothing new was built for it here.
+function renderCheckinVerdict() {
+  const host = document.getElementById("checkin-verdict");
+  host.innerHTML = "";
+  host.appendChild(optionRow("checkin.verdict", CHECKIN_VERDICT, state.checkin, false, () => {
+    rerenderPreservingFocus("checkin-verdict", renderCheckinVerdict);
+    const verdict = state.checkin["checkin.verdict"];
+    if (verdict === "STOP") setSignal("red");
+    else if (verdict === "PAUSE") setSignal("pause");
+  }));
+}
+rerenderHostFns["checkin-verdict"] = renderCheckinVerdict;
+
+// ---------- the shuffle (HHO-27, standalone, nothing recorded) ----------
+
+function drawCard() {
+  let idx;
+  do {
+    idx = Math.floor(Math.random() * SHUFFLE.length);
+  } while (SHUFFLE.length > 1 && idx === state.shuffleLastIndex);
+  state.shuffleLastIndex = idx;
+  const card = SHUFFLE[idx];
+  document.getElementById("shuffle-game").textContent = card.game;
+  document.getElementById("shuffle-text").textContent = card.text;
+  const cardEl = document.getElementById("shuffle-card");
+  cardEl.hidden = false;
+  // Restart the CSS wobble even on consecutive draws (removing and
+  // re-adding the class alone wouldn't retrigger it without a reflow in
+  // between). prefers-reduced-motion is handled globally, not here --
+  // style.css's own blanket `animation: none !important` already
+  // silences this the same way it silences everything else.
+  cardEl.classList.remove("wobble");
+  void cardEl.offsetWidth;
+  cardEl.classList.add("wobble");
 }
 
 // ---------- consent (choose what to share) ----------

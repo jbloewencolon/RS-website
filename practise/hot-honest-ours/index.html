@@ -36,6 +36,7 @@
       <button type="button" class="signal-btn" data-signal="red" aria-pressed="false">Red</button>
       <button type="button" class="signal-btn" data-signal="pause" aria-pressed="false">Pause</button>
     </div>
+    <button type="button" class="btn-nav" data-action="header-to-checkin">Check-in</button>
     <button type="button" class="btn-nav" data-action="go-compare">Compare</button>
     <button type="button" class="leave-now" id="leave-now">Leave now</button>
   </div>
@@ -138,6 +139,11 @@
       <h1>How much time do you have?</h1>
       <p class="lede">The long way round is the default. The others are here whenever twelve rounds is more than you need right now.</p>
       <div class="mode-grid">
+        <button type="button" class="mode-card" data-action="door-to-checkin">
+          <span class="mode-title">Sixty seconds</span>
+          <span class="mode-length">about 1 min</span>
+          <span class="mode-desc">Eight questions and a verdict, before a date, a scene, a sleepover, a hard conversation, or a change of plan.</span>
+        </button>
         <button type="button" class="mode-card" data-action="door-to-answer">
           <span class="mode-title">The long way round</span>
           <span class="mode-length">10&ndash;30 min</span>
@@ -148,8 +154,44 @@
           <span class="mode-length">about 2 min</span>
           <span class="mode-desc">Five questions about the whole thing, and the sentence the material already supplies about what the pattern means.</span>
         </button>
+        <button type="button" class="mode-card" data-action="door-to-shuffle">
+          <span class="mode-title">The shuffle</span>
+          <span class="mode-length">open-ended</span>
+          <span class="mode-desc">Three games, drawn one prompt card at a time. Nothing is recorded, ever.</span>
+        </button>
       </div>
-      <p class="fine-print">Two more ways in -- a 60-second check-in and a shuffle of prompt cards -- are planned but not built yet.</p>
+    </div>
+  </section>
+
+  <section class="screen" data-screen="sixty-seconds" hidden>
+    <div class="shell">
+      <p class="eyebrow">Sixty seconds &middot; before you go further</p>
+      <h1>A quick check, not a form</h1>
+      <p class="lede">Nothing on this screen is recorded, shared, or added to the room's file. It's here to be used again and again, right before you need it.</p>
+      <div id="checkin-list"></div>
+      <fieldset>
+        <legend>Where are you right now?</legend>
+        <div id="checkin-verdict"></div>
+      </fieldset>
+      <div class="actions">
+        <button type="button" class="btn-secondary" data-action="checkin-back">Back</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" data-screen="shuffle" hidden>
+    <div class="shell">
+      <p class="eyebrow">The shuffle</p>
+      <h1>One card at a time</h1>
+      <p class="lede">Nothing here is recorded, ever, in any storage tier. The card is gone the moment you draw the next one.</p>
+      <div id="shuffle-card" class="shuffle-card" hidden>
+        <p class="shuffle-game" id="shuffle-game"></p>
+        <p class="shuffle-text" id="shuffle-text"></p>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn-primary" data-action="draw-card">Draw a card</button>
+        <button type="button" class="btn-secondary" data-action="door-to-choose">Back</button>
+      </div>
     </div>
   </section>
 
