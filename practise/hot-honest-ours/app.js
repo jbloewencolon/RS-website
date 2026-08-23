@@ -7,7 +7,7 @@
 // loses the draft. That is the deliberate, safest default; nothing here
 // writes to localStorage, sessionStorage, or indexedDB.
 
-import { QUESTIONS, ACCESS_QUESTIONS, QUESTIONNAIRE_VERSION, SCALE_OPTIONS, BUFFET_OPTIONS, GRID_GROUP_TITLES, allowsMatchOnly } from "./questions.js";
+import { QUESTIONS, ACCESS_QUESTIONS, QUESTIONNAIRE_VERSION, SCALE_OPTIONS, BUFFET_OPTIONS, GRID_GROUP_TITLES, FRIDGE_FIVE, FRIDGE_SCALE, allowsMatchOnly } from "./questions.js";
 import { encryptToFile, decryptFile, ShareFileError } from "./crypto.js";
 import { compare, counts } from "./engine.js";
 
@@ -20,6 +20,7 @@ const state = {
   compareGroups: null,
   activeTile: null,
   door: "cover", // "cover" | "safety" | "access" | null (null = through the door)
+  fridge: {},    // qid -> value; a standalone mode (HHO-14), never shared, never part of `answers`
 };
 
 function isEmpty(v) {
@@ -51,6 +52,8 @@ function showScreen(name) {
     "door-cover": "Before you go in",
     "door-safety": "A moment first",
     "door-access": "Access check",
+    "door-choose": "Choose your way in",
+    "fridge-five": "The fridge five",
     answer: "Answer the questions",
     "share-choose": "Sharing · choose",
     "share-review": "Sharing · review",
@@ -68,7 +71,10 @@ document.body.addEventListener("click", (e) => {
   const action = el.dataset.action;
   if (action === "door-to-safety") { showScreen("door-safety"); return; }
   if (action === "door-to-access") { renderAccessQuestions(); showScreen("door-access"); return; }
+  if (action === "door-to-choose") { showScreen("door-choose"); return; }
   if (action === "door-to-answer") { showScreen("answer"); return; }
+  if (action === "door-to-fridge") { renderFridgeQuestions(); showScreen("fridge-five"); return; }
+  if (action === "fridge-reveal") { revealFridge(); return; }
   if (action === "go-answer") { showScreen("answer"); return; }
   if (action === "go-compare") { showScreen("compare-open"); return; }
   if (action === "go-share") { renderConsentList(); showScreen("share-choose"); return; }
@@ -148,10 +154,16 @@ function rerenderPreservingFocus(hostId, renderFn) {
   }
 }
 
-function optionRow(qid, options, current, multi, onChange) {
+// `store` is the object a click reads its current value from and writes
+// its new one to (state.answers for every worksheet question; state.fridge
+// for the standalone Fridge Five, HHO-14, which must never touch
+// state.answers -- that's the only difference between an answer that can
+// end up in a shared file and one that structurally never can).
+function optionRow(qid, options, store, multi, onChange) {
   const wrap = document.createElement("div");
   wrap.className = "option-row";
   wrap.setAttribute("role", multi ? "group" : "radiogroup");
+  const current = store[qid];
   options.forEach((opt) => {
     const btn = document.createElement("button");
     btn.type = "button";
@@ -164,11 +176,11 @@ function optionRow(qid, options, current, multi, onChange) {
     btn.setAttribute("aria-pressed", String(pressed));
     btn.addEventListener("click", () => {
       if (multi) {
-        const set = new Set(Array.isArray(state.answers[qid]) ? state.answers[qid] : []);
+        const set = new Set(Array.isArray(store[qid]) ? store[qid] : []);
         if (set.has(opt)) set.delete(opt); else set.add(opt);
-        state.answers[qid] = [...set];
+        store[qid] = [...set];
       } else {
-        state.answers[qid] = state.answers[qid] === opt ? undefined : opt;
+        store[qid] = store[qid] === opt ? undefined : opt;
       }
       onChange();
     });
@@ -198,13 +210,13 @@ function renderQuestionRow(q, rerenderHost) {
   const rerender = () => rerenderPreservingFocus(rerenderHost, () => rerenderHostFns[rerenderHost]());
 
   if (q.type === "scale") {
-    fs.appendChild(optionRow(q.id, SCALE_OPTIONS, state.answers[q.id], false, rerender));
+    fs.appendChild(optionRow(q.id, SCALE_OPTIONS, state.answers, false, rerender));
   } else if (q.type === "buffet") {
-    fs.appendChild(optionRow(q.id, BUFFET_OPTIONS, state.answers[q.id], false, rerender));
+    fs.appendChild(optionRow(q.id, BUFFET_OPTIONS, state.answers, false, rerender));
   } else if (q.type === "mark" || q.type === "choice") {
-    fs.appendChild(optionRow(q.id, q.options.map((o) => o.toUpperCase()), state.answers[q.id], false, rerender));
+    fs.appendChild(optionRow(q.id, q.options.map((o) => o.toUpperCase()), state.answers, false, rerender));
   } else if (q.type === "chips") {
-    fs.appendChild(optionRow(q.id, q.options, state.answers[q.id], true, rerender));
+    fs.appendChild(optionRow(q.id, q.options, state.answers, true, rerender));
   } else if (q.type === "number") {
     const stepper = document.createElement("div");
     stepper.className = "number-stepper";
@@ -268,11 +280,47 @@ function renderQuestions() {
       host.appendChild(h);
       lastRound = q.round;
     }
-    host.appendChild(renderQuestionRow(q, "question-list"));
+    host.appendChild(q.type === "reference" ? renderReferenceRow(q) : renderQuestionRow(q, "question-list"));
   });
   host.scrollTop = scroll;
 }
 rerenderHostFns["question-list"] = renderQuestions;
+
+// Round 9 (HHO-26): reference-only content, no form control of any kind,
+// so it doesn't belong inside renderQuestionRow()'s <fieldset>/<legend>
+// (a fieldset implies controls are coming). Never answerable, so it
+// never appears in the consent list, the file, or the comparison engine
+// -- all three already skip a question whose state.answers entry is
+// empty, and this type has no way to ever set one.
+function renderReferenceRow(q) {
+  const row = document.createElement("div");
+  row.className = "question-row";
+  const label = document.createElement("p");
+  label.className = "q-label";
+  label.textContent = q.label;
+  row.appendChild(label);
+  if (q.help) {
+    const help = document.createElement("p");
+    help.className = "q-help";
+    help.textContent = q.help;
+    row.appendChild(help);
+  }
+  if (q.terms) {
+    const dl = document.createElement("dl");
+    dl.className = "reference-list";
+    q.terms.forEach(([term, meaning]) => {
+      const group = document.createElement("div");
+      const dt = document.createElement("dt");
+      dt.textContent = term;
+      const dd = document.createElement("dd");
+      dd.textContent = meaning;
+      group.append(dt, dd);
+      dl.appendChild(group);
+    });
+    row.appendChild(dl);
+  }
+  return row;
+}
 
 function renderAccessQuestions() {
   const host = document.getElementById("access-list");
@@ -281,6 +329,44 @@ function renderAccessQuestions() {
   ACCESS_QUESTIONS.forEach((q) => host.appendChild(renderQuestionRow(q, "access-list")));
 }
 rerenderHostFns["access-list"] = renderAccessQuestions;
+
+// ---------- the fridge five (HHO-14, standalone, never shared) ----------
+
+function renderFridgeQuestions() {
+  const host = document.getElementById("fridge-list");
+  host.innerHTML = "";
+  FRIDGE_FIVE.forEach((q) => {
+    const row = document.createElement("div");
+    row.className = "question-row";
+    row.dataset.qid = q.id;
+    const fs = document.createElement("fieldset");
+    const legend = document.createElement("legend");
+    legend.textContent = q.label;
+    fs.appendChild(legend);
+    fs.appendChild(optionRow(q.id, FRIDGE_SCALE, state.fridge, false, () => {
+      rerenderPreservingFocus("fridge-list", renderFridgeQuestions);
+    }));
+    row.appendChild(fs);
+    host.appendChild(row);
+  });
+  document.getElementById("fridge-reveal").disabled = !FRIDGE_FIVE.every((q) => state.fridge[q.id] !== undefined);
+}
+rerenderHostFns["fridge-list"] = renderFridgeQuestions;
+
+// R-16 (spec §6.17): the room may highlight whichever row(s) sit at the
+// lowest-marked value, but must not count them, label the pattern, or
+// add words -- a CSS class on the row, nothing rendered as text. The
+// reading itself is the source's own sentence, quoted in full and
+// unpersonalised (index.html's #fridge-reading), not generated here.
+function revealFridge() {
+  const values = FRIDGE_FIVE.map((q) => FRIDGE_SCALE.indexOf(state.fridge[q.id]));
+  const lowest = Math.min(...values);
+  FRIDGE_FIVE.forEach((q, i) => {
+    const row = document.querySelector(`#fridge-list [data-qid="${q.id}"]`);
+    if (row) row.classList.toggle("is-lowest", values[i] === lowest);
+  });
+  document.getElementById("fridge-reading").hidden = false;
+}
 
 // ---------- consent (choose what to share) ----------
 

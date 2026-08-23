@@ -93,7 +93,7 @@
     <div class="shell">
       <p class="eyebrow">Before you open this</p>
       <h1>A moment first</h1>
-      <p class="lede">This tool asks you to describe a relationship in writing. For most people that is useful. For some people it is not safe, and the difference is not always obvious from inside. This one is more explicit than the map that used to be here, which makes the question of who might read over your shoulder, or through your device, a live one.</p>
+      <p class="lede">This tool asks you to describe a relationship in writing. For most people that is useful. For some people it is not safe, and the difference is not always obvious from inside. This one is more explicit than the Consent Domains Map elsewhere on this page, which makes the question of who might read over your shoulder, or through your device, a live one.</p>
       <p>Sit with these for a moment. There is no score and no answer to give anyone.</p>
       <ul class="plain-list">
         <li>When you disagree, what happens afterwards?</li>
@@ -125,9 +125,46 @@
       </div>
       <p>If the answer is no, the honest move is to reschedule. A negotiation you can't safely say no inside of isn't a negotiation.</p>
       <div class="actions">
-        <button type="button" class="btn-primary" data-action="door-to-answer">I'm in</button>
-        <button type="button" class="btn-secondary" data-action="door-to-answer">Skip this</button>
+        <button type="button" class="btn-primary" data-action="door-to-choose">I'm in</button>
+        <button type="button" class="btn-secondary" data-action="door-to-choose">Skip this</button>
         <a class="btn-secondary" href="/resources/">Resources</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" data-screen="door-choose" hidden>
+    <div class="shell">
+      <p class="eyebrow">Choose your way in</p>
+      <h1>How much time do you have?</h1>
+      <p class="lede">The long way round is the default. The others are here whenever twelve rounds is more than you need right now.</p>
+      <div class="mode-grid">
+        <button type="button" class="mode-card" data-action="door-to-answer">
+          <span class="mode-title">The long way round</span>
+          <span class="mode-length">10&ndash;30 min</span>
+          <span class="mode-desc">The full pass. Free navigation, resumable, blank-tolerant.</span>
+        </button>
+        <button type="button" class="mode-card" data-action="door-to-fridge">
+          <span class="mode-title">The fridge five</span>
+          <span class="mode-length">about 2 min</span>
+          <span class="mode-desc">Five questions about the whole thing, and the sentence the material already supplies about what the pattern means.</span>
+        </button>
+      </div>
+      <p class="fine-print">Two more ways in -- a 60-second check-in and a shuffle of prompt cards -- are planned but not built yet.</p>
+    </div>
+  </section>
+
+  <section class="screen" data-screen="fridge-five" hidden>
+    <div class="shell">
+      <p class="eyebrow">The fridge five &middot; about 2 minutes</p>
+      <h1>Five questions about the whole thing</h1>
+      <p class="lede">Never to always. Nothing on this screen is recorded, shared, or added to the room's file -- this is a private gut check, separate from the twelve rounds.</p>
+      <div id="fridge-list"></div>
+      <div class="actions">
+        <button type="button" class="btn-primary" id="fridge-reveal" data-action="fridge-reveal" disabled>What this means</button>
+        <button type="button" class="btn-secondary" data-action="door-to-choose">Back</button>
+      </div>
+      <div id="fridge-reading" hidden>
+        <p class="callout callout-holds">Five yeses: you're in something good. Five noes: you already knew. Mixed is most people &mdash; and which ones are missing tells you exactly what conversation to have next.</p>
       </div>
     </div>
   </section>
@@ -192,7 +229,7 @@
         who reads that conversation has your answers.
       </div>
       <div id="file-ready" hidden>
-        <a class="btn-primary" id="download-link" download>Save the file</a>
+        <a class="btn-primary" id="download-link" href="#" download>Save the file</a>
         <button type="button" class="btn-secondary" id="copy-passphrase">Copy the passphrase</button>
         <p id="copy-status" class="fine-print" role="status" aria-live="polite"></p>
       </div>

@@ -19,8 +19,11 @@ const root = path.dirname(fileURLToPath(import.meta.url));
 
 // The same nine real routes scripts/check-pages.mjs checks (its `pages`
 // array, minus glyph-check.html — a standalone diagnostic harness with no
-// page identity worth screenshotting here).
-const pages = ROUTES.map((r) => (r.slug ? urlPath(r) : "index.html"));
+// page identity worth screenshotting here), plus Hot, Honest, Ours
+// (HHO-11) — not one of site-routes.mjs's nine (it has no dc-runtime stub
+// and isn't Hugo output, so it doesn't belong in that shared manifest),
+// appended here the same way glyph-check.html is appended in check-pages.mjs.
+const pages = [...ROUTES.map((r) => (r.slug ? urlPath(r) : "index.html")), "practise/hot-honest-ours/"];
 
 const VIEWPORTS = [
   { name: "mobile-320", width: 320, height: 568 }, // smallest common phone width
@@ -31,7 +34,9 @@ const VIEWPORTS = [
   { name: "desktop-1920", width: 1920, height: 1080 },
 ];
 
-const MIME = { ".html": "text/html", ".js": "application/javascript" };
+// .css: see the identical fix and comment in scripts/check-pages.mjs --
+// this file's serve() is a separate copy of the same local test server.
+const MIME = { ".html": "text/html", ".js": "application/javascript", ".css": "text/css" };
 
 function serve() {
   return new Promise((resolve) => {
@@ -83,7 +88,7 @@ async function main() {
       }
       await page.waitForTimeout(600);
 
-      const shotName = `${(pg === "index.html" ? "home" : pg.replace(/\/$/, ""))}-${vp.name}.png`;
+      const shotName = `${(pg === "index.html" ? "home" : pg.replace(/\/$/, "").replace(/\//g, "-"))}-${vp.name}.png`;
       await page.screenshot({ path: path.join(screenshotDir, shotName), fullPage: false });
       console.log(`✓ ${pg} @ ${vp.name} (${resp ? resp.status() : "?"})`);
 
