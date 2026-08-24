@@ -46,11 +46,19 @@ const SIDE = ["ME", "MOSTLY ME", "EVEN", "MOSTLY THEM", "THEM"];
 const CARE = ["touch", "space", "water or snack", "praise", "quiet", "practical care", "debrief later", "ride home", "message tomorrow"];
 const ACCESS_MARK = ["NOT TODAY", "THIN", "ENOUGH"];
 // The Consent Domains Map's own five-option scale (practise/index.html's
-// `options`), carried over verbatim rather than folded into SCALE_OPTIONS
-// above -- HHO-13, UX spec §13.2. "NO" is kept as its own bare word (not
-// "NO, DECLINED" or similar) so POLE below still recognises it as a
-// boundary the same way every other scale's "NO" does.
-const CARRYOVER = ["YES, FREELY", "YES, WITH CONDITIONS", "NOT YET, ASK ME", "NO", "MINE TO WITHHOLD"];
+// `options`), carried over from HHO-13 / UX spec §13.2. "NO" is kept as
+// its own bare word (not "NO, DECLINED" or similar) so POLE below still
+// recognises it as a boundary the same way every other scale's "NO" does.
+//
+// One departure from the map's wording, on the author's instruction
+// (2026-08-23): its fifth option read "mine to withhold". Withholding
+// names the act by its effect on the other person -- it frames keeping
+// something private as a thing being done *to* them, which is the
+// opposite of what this option is for. "Mine to keep" says the same
+// thing from the inside. The map's own copy is unchanged; only this
+// tool's carried-over copy moves. Explained in full by the reference
+// key rendered above the carry-over group.
+const CARRYOVER = ["YES, FREELY", "YES, WITH CONDITIONS", "NOT YET, ASK ME", "NO", "MINE TO KEEP"];
 
 // type: "scale" | "buffet" | "mark" | "chips" | "choice" | "text" | "number"
 // help: optional explanatory line rendered under the question label
@@ -77,7 +85,12 @@ export const QUESTIONS = [
   { id: "r1.more", round: "R1 · What are we playing with?", type: "text", label: "What I want more of" },
   { id: "r1.offer", round: "R1 · What are we playing with?", type: "text", label: "What I can genuinely offer" },
   { id: "r1.cannot", round: "R1 · What are we playing with?", type: "text", label: "What I cannot promise" },
-  { id: "r1.assume", round: "R1 · What are we playing with?", type: "text", emphasis: true, label: "What I'm assuming but have never asked" },
+  {
+    id: "r1.assume", round: "R1 · What are we playing with?", type: "text", emphasis: true,
+    label: "What I'm assuming but have never asked",
+    help: "The ones that only surface when they're broken. That we're exclusive. That you'd tell me if you slept with someone. That I can text you at 2am when I'm falling apart. That you'll be at my sister's wedding. That this ends if either of us falls in love with someone else. That neither of us is saving to move away.",
+    placeholder: "I've been assuming...",
+  },
   { id: "r1.stop", round: "R1 · What are we playing with?", type: "text", label: "What would make this stop working for me" },
 
   // ---------------- Round 2 -- The Want Menu ----------------
@@ -88,6 +101,23 @@ export const QUESTIONS = [
       label, help: i === 0 ? "Kinds of closeness -- these do not come as a bundle deal." : undefined,
       group: "r2closeness",
     })),
+  // A key for the five answers, placed where that scale first appears.
+  // Reference only -- no control, never answerable, never in the file
+  // (same mechanism as Round 9). "NOT YET" and "BRAVER" are the two the
+  // source never defines and readers reliably conflate: one is about
+  // timing, the other is about nerve.
+  {
+    id: "r2.scale.key", round: "R2 · The Want Menu", type: "reference",
+    label: "The five answers",
+    help: "Each of these is a real answer. None of them needs a reason.",
+    terms: [
+      ["Yes", "I want this, as written"],
+      ["Maybe", "Depends -- on the day, the mood, the person, the details"],
+      ["No", "Not this. A no needs no defense, and it doesn't expire into a yes"],
+      ["Not yet", "Not now, but the door isn't closed. Ask me again later"],
+      ["Braver", "I want it and it scares me. Not a yes yet -- an invitation to go slowly, together"],
+    ],
+  },
   ...[
     "Flirting, affection, cuddling", "Kissing and erotic touch", "Sex or genital contact",
     "Power play or D/s", "Restraint, impact, sensation", "Role-play, dirty talk, degradation or praise",
@@ -161,17 +191,30 @@ export const QUESTIONS = [
   { id: "r6.drop.nre", round: "R6 · Stop Words for a Tuesday Afternoon", type: "text", label: "What's my move when I'm certain everything is perfect forever?", help: "NRE is a drug and it signs contracts you can't afford." },
 
   // ---------------- Round 7 -- When Feelings Get Loud ----------------
-  { id: "r7.event", round: "R7 · When Feelings Get Loud", type: "text", label: "Event", help: "What happened -- one sentence, no guessing at motives." },
-  { id: "r7.story", round: "R7 · When Feelings Get Loud", type: "text", label: "Story", help: "What meaning did I give it?" },
-  { id: "r7.feeling", round: "R7 · When Feelings Get Loud", type: "text", label: "Feeling / need", help: "What hurts, scares me, or matters here?" },
-  { id: "r7.request", round: "R7 · When Feelings Get Loud", type: "text", label: "Request", help: "What specific, consensual change or reassurance am I asking for?" },
+  // `mode: "event"` lifts these seven out of the linear worksheet and
+  // onto their own screen, reachable from the door and the header
+  // (author's instruction, 2026-08-23). Every other round is an
+  // inventory of a relationship in general; this one is a reaction to a
+  // specific thing that just happened, and it asks "what happened?" of
+  // someone who, on a first pass, has had nothing happen. Left in-line
+  // it reads as a question you've failed to answer.
+  //
+  // It stays in QUESTIONS rather than becoming a private mode like the
+  // Fridge Five, because unlike those it is *meant* to be shared -- the
+  // whole point of Request is that the other person hears it. So the
+  // consent list, the file and the comparison engine still pick these up
+  // exactly as before; only where they render changes.
+  { id: "r7.event", round: "R7 · When Feelings Get Loud", mode: "event", type: "text", label: "Event", help: "What happened -- one sentence, no guessing at motives." },
+  { id: "r7.story", round: "R7 · When Feelings Get Loud", mode: "event", type: "text", label: "Story", help: "What meaning did I give it?" },
+  { id: "r7.feeling", round: "R7 · When Feelings Get Loud", mode: "event", type: "text", label: "Feeling / need", help: "What hurts, scares me, or matters here?" },
+  { id: "r7.request", round: "R7 · When Feelings Get Loud", mode: "event", type: "text", label: "Request", help: "What specific, consensual change or reassurance am I asking for?" },
   {
-    id: "r7.jealousy", round: "R7 · When Feelings Get Loud", type: "choice",
+    id: "r7.jealousy", round: "R7 · When Feelings Get Loud", mode: "event", type: "choice",
     label: "Is this a...", options: ["broken agreement", "a fear", "a scarcity story", "exclusion", "lost status", "unequal power"],
     help: "If it's a broken agreement, that's repair (Round 11), not feelings-work.",
   },
-  { id: "r7.reassurance", round: "R7 · When Feelings Get Loud", type: "text", label: "What reassurance is actually available without controlling another person's body or relationships?" },
-  { id: "r7.change", round: "R7 · When Feelings Get Loud", type: "text", label: "What needs to change -- and what feeling needs care without changing the agreement?" },
+  { id: "r7.reassurance", round: "R7 · When Feelings Get Loud", mode: "event", type: "text", label: "What reassurance is actually available without controlling another person's body or relationships?" },
+  { id: "r7.change", round: "R7 · When Feelings Get Loud", mode: "event", type: "text", label: "What needs to change -- and what feeling needs care without changing the agreement?" },
 
   // ---------------- Round 8 -- The Group Chat ----------------
   { id: "r8.0", round: "R8 · The Group Chat", type: "text", label: "Who else is affected by what we decide here?" },
@@ -183,7 +226,15 @@ export const QUESTIONS = [
   { id: "r8.6", round: "R8 · The Group Chat", type: "text", label: "What can be public, private, posted, tagged, photographed, named?" },
   { id: "r8p.freedom", round: "R8 · The Group Chat", type: "mark", options: SIDE, group: "r8pside", label: "Who has more freedom to say no, leave, host, travel, spend, or be publicly recognised?" },
   { id: "r8p.risk", round: "R8 · The Group Chat", type: "mark", options: SIDE, group: "r8pside", label: "Who carries more risk from stigma, racism, homophobia, transphobia, disability, immigration status, work, housing, or family?" },
-  { id: "r8p.equal", round: "R8 · The Group Chat", type: "choice", options: ["NO", "SOMEWHERE", "YES, WE ARE"], emphasis: true, label: "Are we calling something equal when the consequences aren't equal?" },
+  // Reference only, deliberately: this one is not answerable. A three-way
+  // pick lets it be closed with a tap and filed away, which is the one
+  // thing it must not allow -- it's a question to keep sitting open
+  // against the two power rows above it, not a box to tick.
+  {
+    id: "r8p.equal", round: "R8 · The Group Chat", type: "reference", emphasis: true,
+    label: "Are we calling something equal when the consequences aren't equal?",
+    help: "No answer to give here. Read it against your two marks above, and leave it open.",
+  },
 
   // ---------------- Round 8 carry-over -- five domains from the site's
   // earlier Consent Domains Map that this worksheet doesn't otherwise
@@ -194,6 +245,18 @@ export const QUESTIONS = [
   // carried over, so the provenance is legible" (spec §6.11). Do not drop
   // cultural knowledge: RS-028's anti-appropriation guardrail rests on it
   // being asked.
+  {
+    id: "r8.carry.key", round: "R8 · The Group Chat (carried over)", type: "reference",
+    label: "The five answers here",
+    help: "A different scale from the rest of the worksheet -- these five come from the site's earlier Consent Domains Map, and access is the thing being asked about.",
+    terms: [
+      ["Yes, freely", "Open access. You don't need to check first"],
+      ["Yes, with conditions", "Yes, and the conditions are part of the yes. Write them in the note"],
+      ["Not yet, ask me", "Not standing permission. Ask each time, and the answer may differ each time"],
+      ["No", "Not this one. Settled, not a starting position"],
+      ["Mine to keep", "Mine, and staying mine. Not a refusal aimed at you and not something you're owed an account of -- some things are simply a person's own."],
+    ],
+  },
   {
     id: "r8.carry.location", round: "R8 · The Group Chat (carried over)", type: "mark", options: CARRYOVER, note: true,
     label: "Location sharing",
@@ -242,6 +305,13 @@ export const QUESTIONS = [
     "Living together", "Money mixed together", "Marriage", "Kids", "Planning past next year",
     "A collar, a title, a formal dynamic", "Kink outside of scenes -- protocol, rituals, daily rules",
     "Being someone's emergency contact",
+    // Appended, not inserted next to "Being exclusive", because these ids
+    // are positional and permanent once shipped (§6.3) -- and because the
+    // round carries no order by design, so the end of the list means
+    // nothing. Its own row rather than only the NO on "being exclusive":
+    // a yes to openness is a want, where a no to exclusivity is a refusal,
+    // and the two are not the same thing to say.
+    "Being open",
   ].map((label, i) => ({
     id: "r10." + i, round: "R10 · The Buffet", type: "buffet", label,
     help: i === 0 ? "More is not deeper. Escalating isn't the same as caring more." : undefined,

@@ -24,6 +24,7 @@ const state = {
   fridge: {},    // qid -> value; a standalone mode (HHO-14), never shared, never part of `answers`
   checkin: {},   // qid -> value; a standalone mode (HHO-27), reset fresh on every entry
   checkinReturnTo: "door-choose", // which screen "Back" returns to -- the door, or wherever the header opened it from
+  eventReturnTo: "door-choose",   // same, for Round 7's event instrument
   shuffleLastIndex: null, // avoids drawing the same card twice in a row
   demo: false,   // the compare screen is showing two invented people, not a real pair of files
 };
@@ -46,8 +47,12 @@ function consentOf(qid) {
 // The source header carries "N FILLED" and a bar. Counted over the
 // worksheet only: the access check, the Fridge Five and the check-in are
 // separate modes that never enter a shared file, so they never move it.
+// Round 7's event instrument is excluded too, on different grounds -- it
+// *does* enter the file, but it lives on its own screen now, and seven
+// permanently-unfilled rows for a screen you may never open would make
+// the bar read as a deficit rather than a position.
 
-const ANSWERABLE = QUESTIONS.filter((q) => q.type !== "reference");
+const ANSWERABLE = QUESTIONS.filter((q) => q.type !== "reference" && !q.mode);
 
 // Geometry that has to be computed at runtime -- the dot plots and the
 // alignment bar -- is written through the CSSOM setter (`el.style.width
@@ -81,6 +86,7 @@ function showScreen(name, { focusHeading = true } = {}) {
     "door-choose": "Choose your way in",
     "fridge-five": "The fridge five",
     "sixty-seconds": "Sixty seconds",
+    event: "Something happened",
     shuffle: "The shuffle",
     answer: "Answer the questions",
     "share-choose": "Sharing · choose",
@@ -111,6 +117,9 @@ document.body.addEventListener("click", (e) => {
   if (action === "door-to-checkin") { openCheckin("door-choose"); return; }
   if (action === "header-to-checkin") { openCheckin(currentScreen()); return; }
   if (action === "checkin-back") { showScreen(state.checkinReturnTo); return; }
+  if (action === "door-to-event") { renderEventQuestions(); state.eventReturnTo = "door-choose"; showScreen("event"); return; }
+  if (action === "header-to-event") { renderEventQuestions(); state.eventReturnTo = currentScreen(); showScreen("event"); return; }
+  if (action === "event-back") { showScreen(state.eventReturnTo || "door-choose"); return; }
   if (action === "door-to-shuffle") { showScreen("shuffle"); return; }
   if (action === "draw-card") { drawCard(); return; }
   if (action === "go-answer") { showScreen("answer"); return; }
@@ -331,12 +340,15 @@ function renderQuestionRow(q, rerenderHost) {
 // handler can trigger the right re-render without a closure per screen
 const rerenderHostFns = {};
 
-function renderQuestions() {
-  const host = document.getElementById("question-list");
+// Renders a run of questions into a host, with a round heading whenever
+// the round changes. Shared by the worksheet and the event screen so the
+// two can't drift apart.
+function renderQuestionList(hostId, list) {
+  const host = document.getElementById(hostId);
   const scroll = host.scrollTop;
   host.innerHTML = "";
   let lastRound = null;
-  QUESTIONS.forEach((q) => {
+  list.forEach((q) => {
     if (q.round !== lastRound) {
       const h = document.createElement("p");
       h.className = "round-heading";
@@ -344,17 +356,33 @@ function renderQuestions() {
       host.appendChild(h);
       lastRound = q.round;
     }
-    host.appendChild(q.type === "reference" ? renderReferenceRow(q) : renderQuestionRow(q, "question-list"));
+    host.appendChild(q.type === "reference" ? renderReferenceRow(q) : renderQuestionRow(q, hostId));
   });
   host.scrollTop = scroll;
+}
+
+// The long way round: everything without a `mode`. A question carrying
+// one belongs to a screen of its own (currently only Round 7's event
+// instrument) and is rendered there instead.
+const WORKSHEET = QUESTIONS.filter((q) => !q.mode);
+const EVENT_QUESTIONS = QUESTIONS.filter((q) => q.mode === "event");
+
+function renderQuestions() {
+  renderQuestionList("question-list", WORKSHEET);
   updateProgress();
 }
 rerenderHostFns["question-list"] = renderQuestions;
 
+function renderEventQuestions() {
+  renderQuestionList("event-list", EVENT_QUESTIONS);
+  updateProgress();
+}
+rerenderHostFns["event-list"] = renderEventQuestions;
+
 // Chip and stepper changes re-render their list, which recounts; typing
 // does not, so the count follows the text fields from here.
 document.addEventListener("input", (e) => {
-  if (e.target.matches("#question-list textarea, #question-list input")) updateProgress();
+  if (e.target.matches("#question-list textarea, #question-list input, #event-list textarea, #event-list input")) updateProgress();
 });
 
 // Round 9 (HHO-26): reference-only content, no form control of any kind,
@@ -365,7 +393,7 @@ document.addEventListener("input", (e) => {
 // empty, and this type has no way to ever set one.
 function renderReferenceRow(q) {
   const row = document.createElement("div");
-  row.className = "question-row";
+  row.className = "question-row" + (q.emphasis ? " emphasis" : "");
   const label = document.createElement("p");
   label.className = "q-label";
   label.textContent = q.label;

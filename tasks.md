@@ -37,7 +37,6 @@ Tags: `[DEV]` buildable · `[COPY]` needs approved text · `[VERIFY]` needs live
 | **IA-18** | Decide whether the embedded field guide remains a preview or becomes a pointer. | `[DECISION]` | Printable field-guide route |
 | **BM-01–03** | Decide whether to continue the botanical system, choose its palette policy, and confirm Manifesto's exemption. | `[DECISION]` | BM-06–14 |
 | **AR-13** | Keep or revert the greyscale wood-grain shelf trial. | `[DECISION]` | — |
-| **HHO-27** | Supply the original 60-second check-in and shuffle copy, or authorize new house-authored prompts. | `[COPY]` `[DECISION]` | HHO-14 residual |
 
 ## Manual and operator work
 
@@ -68,4 +67,3 @@ These remain open but require a real trigger; they are not implementation-ready.
 | **RS-029** | Finish the Repair Protocol behind a safety gate. | A community exists to support pods/stewards and approved copy exists |
 | **IA-19** | Give the stress-test matrix a separate printable route. | Usage evidence shows repeated consultation |
 | **BM-06–14** | Build and verify the botanical motion system. | BM-01–03 approved |
-| **HHO-14** | Add the 60-second check-in and shuffle modes. | HHO-27 resolved |
