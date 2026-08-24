@@ -40,7 +40,9 @@
       <button type="button" class="signal-btn" data-signal="red" aria-pressed="false">Red</button>
       <button type="button" class="signal-btn" data-signal="pause" aria-pressed="false">Pause</button>
     </div>
+    <button type="button" class="btn-nav" id="paging-toggle" data-action="toggle-paging" aria-pressed="false">One at a time</button>
     <button type="button" class="btn-nav" data-action="header-to-checkin">Check-in</button>
+    <button type="button" class="btn-nav" data-action="header-to-event">Untangle</button>
     <button type="button" class="btn-nav" data-action="go-compare">Compare</button>
     <button type="button" class="leave-now" id="leave-now">Leave now</button>
   </div>
@@ -106,7 +108,7 @@
     <div class="shell">
       <p class="eyebrow">Before you open this</p>
       <h1>A moment first</h1>
-      <p class="lede">This tool asks you to describe a relationship in writing. For most people that is useful. For some people it is not safe, and the difference is not always obvious from inside. This one is more explicit than the Consent Domains Map, the site's earlier tool, which makes the question of who might read over your shoulder, or through your device, a live one.</p>
+      <p class="lede">This tool asks you to describe a relationship in writing. For most people that is useful. For some people it is not safe, and the difference is not always obvious from inside.</p>
       <p>Sit with these for a moment. There is no score and no answer to give anyone.</p>
       <ul class="plain-list">
         <li>When you disagree, what happens afterwards?</li>
@@ -166,11 +168,29 @@
           <span class="mode-length">about 2 min</span>
           <span class="mode-desc">Five questions about the whole thing, and the sentence the material already supplies about what the pattern means.</span>
         </button>
+        <button type="button" class="mode-card" data-action="door-to-event">
+          <span class="mode-title">Something happened</span>
+          <span class="mode-length">about 5 min</span>
+          <span class="mode-desc">Untangle one specific thing: what happened, the story you told about it, and what you're actually asking for.</span>
+        </button>
         <button type="button" class="mode-card" data-action="door-to-shuffle">
           <span class="mode-title">The shuffle</span>
           <span class="mode-length">open-ended</span>
           <span class="mode-desc">Three games, drawn one prompt card at a time. Nothing is recorded, ever.</span>
         </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" data-screen="event" hidden>
+    <div class="shell">
+      <p class="eyebrow">Something happened &middot; about 5 minutes</p>
+      <h1>One thing at a time</h1>
+      <p class="lede">For when a specific thing has happened and the feelings are loud. Separate from the twelve rounds, because those ask what a relationship is like in general and this asks about one evening.</p>
+      <p class="fine">These do travel in a shared file if you choose to share them &mdash; unlike the check-in or the fridge five. That's deliberate: a request only works if the other person hears it.</p>
+      <div id="event-list"></div>
+      <div class="actions">
+        <button type="button" class="btn-secondary" data-action="event-back">Back</button>
       </div>
     </div>
   </section>
@@ -229,7 +249,12 @@
       <h1>Answer these on your own first</h1>
       <p class="lede">Working alone, in your own words. Nothing here is sent anywhere or saved unless you choose to.</p>
       <div id="question-list"></div>
-      <div class="actions">
+      <nav class="round-nav" id="round-nav" aria-label="Move between rounds" hidden>
+        <button type="button" class="btn-secondary" data-action="round-back">&larr; Back</button>
+        <button type="button" class="btn-secondary" id="round-skip" data-action="round-skip">Skip this round</button>
+        <button type="button" class="btn-primary" id="round-next" data-action="round-next">Next round &rarr;</button>
+      </nav>
+      <div class="actions" id="answer-actions">
         <button type="button" class="btn-primary" data-action="go-share">Share some of this with someone</button>
       </div>
     </div>

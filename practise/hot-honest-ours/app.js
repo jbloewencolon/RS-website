@@ -24,6 +24,7 @@ const state = {
   fridge: {},    // qid -> value; a standalone mode (HHO-14), never shared, never part of `answers`
   checkin: {},   // qid -> value; a standalone mode (HHO-27), reset fresh on every entry
   checkinReturnTo: "door-choose", // which screen "Back" returns to -- the door, or wherever the header opened it from
+  eventReturnTo: "door-choose",   // same, for Round 7's event instrument
   shuffleLastIndex: null, // avoids drawing the same card twice in a row
   demo: false,   // the compare screen is showing two invented people, not a real pair of files
 };
@@ -46,8 +47,12 @@ function consentOf(qid) {
 // The source header carries "N FILLED" and a bar. Counted over the
 // worksheet only: the access check, the Fridge Five and the check-in are
 // separate modes that never enter a shared file, so they never move it.
+// Round 7's event instrument is excluded too, on different grounds -- it
+// *does* enter the file, but it lives on its own screen now, and seven
+// permanently-unfilled rows for a screen you may never open would make
+// the bar read as a deficit rather than a position.
 
-const ANSWERABLE = QUESTIONS.filter((q) => q.type !== "reference");
+const ANSWERABLE = QUESTIONS.filter((q) => q.type !== "reference" && !q.mode);
 
 // Geometry that has to be computed at runtime -- the dot plots and the
 // alignment bar -- is written through the CSSOM setter (`el.style.width
@@ -74,23 +79,35 @@ function showScreen(name, { focusHeading = true } = {}) {
     heading.setAttribute("tabindex", "-1");
     heading.focus();
   }
-  const positions = {
-    "door-cover": "Before you go in",
-    "door-safety": "A moment first",
-    "door-access": "Access check",
-    "door-choose": "Choose your way in",
-    "fridge-five": "The fridge five",
-    "sixty-seconds": "Sixty seconds",
-    shuffle: "The shuffle",
-    answer: "Answer the questions",
-    "share-choose": "Sharing · choose",
-    "share-review": "Sharing · review",
-    "share-protect": "Sharing · protect",
-    "compare-open": "Compare",
-    "compare-results": "Compare · results",
-  };
-  document.getElementById("room-position").textContent = positions[name] || "";
+  document.getElementById("room-position").textContent = positionLabel(name);
   window.scrollTo(0, 0);
+}
+
+const POSITIONS = {
+  "door-cover": "Before you go in",
+  "door-safety": "A moment first",
+  "door-access": "Access check",
+  "door-choose": "Choose your way in",
+  "fridge-five": "The fridge five",
+  "sixty-seconds": "Sixty seconds",
+  event: "Something happened",
+  shuffle: "The shuffle",
+  answer: "Answer the questions",
+  "share-choose": "Sharing · choose",
+  "share-review": "Sharing · review",
+  "share-protect": "Sharing · protect",
+  "compare-open": "Compare",
+  "compare-results": "Compare · results",
+};
+
+// §7.11: paged, the position reads "Round 4 of 12 · Bodies, barriers,
+// access" and nothing else -- no percentage, no count of filled fields.
+function positionLabel(name) {
+  if (name === "answer" && state.paged) {
+    const r = ROUNDS[state.roundIndex];
+    return `Round ${state.roundIndex + 1} of ${ROUNDS.length} · ${roundTail(r.name)}`;
+  }
+  return POSITIONS[name] || "";
 }
 
 function currentScreen() {
@@ -111,6 +128,12 @@ document.body.addEventListener("click", (e) => {
   if (action === "door-to-checkin") { openCheckin("door-choose"); return; }
   if (action === "header-to-checkin") { openCheckin(currentScreen()); return; }
   if (action === "checkin-back") { showScreen(state.checkinReturnTo); return; }
+  if (action === "round-next" || action === "round-skip") { goToRound(state.roundIndex + 1); return; }
+  if (action === "round-back") { goToRound(state.roundIndex - 1); return; }
+  if (action === "toggle-paging") { setPaging(!state.paged); return; }
+  if (action === "door-to-event") { renderEventQuestions(); state.eventReturnTo = "door-choose"; showScreen("event"); return; }
+  if (action === "header-to-event") { renderEventQuestions(); state.eventReturnTo = currentScreen(); showScreen("event"); return; }
+  if (action === "event-back") { showScreen(state.eventReturnTo || "door-choose"); return; }
   if (action === "door-to-shuffle") { showScreen("shuffle"); return; }
   if (action === "draw-card") { drawCard(); return; }
   if (action === "go-answer") { showScreen("answer"); return; }
@@ -331,12 +354,15 @@ function renderQuestionRow(q, rerenderHost) {
 // handler can trigger the right re-render without a closure per screen
 const rerenderHostFns = {};
 
-function renderQuestions() {
-  const host = document.getElementById("question-list");
+// Renders a run of questions into a host, with a round heading whenever
+// the round changes. Shared by the worksheet and the event screen so the
+// two can't drift apart.
+function renderQuestionList(hostId, list) {
+  const host = document.getElementById(hostId);
   const scroll = host.scrollTop;
   host.innerHTML = "";
   let lastRound = null;
-  QUESTIONS.forEach((q) => {
+  list.forEach((q) => {
     if (q.round !== lastRound) {
       const h = document.createElement("p");
       h.className = "round-heading";
@@ -344,17 +370,114 @@ function renderQuestions() {
       host.appendChild(h);
       lastRound = q.round;
     }
-    host.appendChild(q.type === "reference" ? renderReferenceRow(q) : renderQuestionRow(q, "question-list"));
+    host.appendChild(q.type === "reference" ? renderReferenceRow(q) : renderQuestionRow(q, hostId));
   });
   host.scrollTop = scroll;
+}
+
+// The long way round: everything without a `mode`. A question carrying
+// one belongs to a screen of its own (currently only Round 7's event
+// instrument) and is rendered there instead.
+const WORKSHEET = QUESTIONS.filter((q) => !q.mode);
+const EVENT_QUESTIONS = QUESTIONS.filter((q) => q.mode === "event");
+
+// The worksheet grouped into its rounds, in order -- the unit "one at a
+// time" pages through (spec §4.4).
+const ROUNDS = [];
+WORKSHEET.forEach((q) => {
+  const last = ROUNDS[ROUNDS.length - 1];
+  if (last && last.name === q.round) last.questions.push(q);
+  else ROUNDS.push({ name: q.round, questions: [q] });
+});
+
+// "One at a time" is the spec's own affordance (§4.4: "offered, not
+// imposed ... leaves only back/next"), defaulted on below 700px because
+// the continuous worksheet is ~29 screens of scroll at 375px. It is a
+// default, not a lock: the header toggle works in both directions at
+// any width, and once a reader touches it their choice stands for the
+// session -- a resize never yanks them between modes mid-answer.
+state.paged = window.matchMedia("(max-width: 699px)").matches;
+state.roundIndex = 0;
+
+// "R4 · Bodies, Barriers, Access" -> "Bodies, barriers, access", so the
+// position line reads as §7.11 specifies rather than repeating "R4".
+function roundTail(name) {
+  const tail = name.replace(/^R\d+\s*·\s*/, "");
+  return tail.charAt(0) + tail.slice(1).toLowerCase();
+}
+
+function renderQuestions() {
+  const nav = document.getElementById("round-nav");
+  const actions = document.getElementById("answer-actions");
+
+  if (!state.paged) {
+    renderQuestionList("question-list", WORKSHEET);
+    nav.hidden = true;
+    actions.hidden = false;
+    updateProgress();
+    return;
+  }
+
+  state.roundIndex = Math.max(0, Math.min(state.roundIndex, ROUNDS.length - 1));
+  const round = ROUNDS[state.roundIndex];
+  renderQuestionList("question-list", round.questions);
+
+  // Skip is only offered while the round is genuinely untouched --
+  // otherwise it would sit next to Next doing the identical thing under
+  // a different word. Nothing is recorded either way: a skipped round
+  // and an unvisited one are both simply blank (§4.4, §7.11).
+  const touched = round.questions.some(
+    (q) => !isEmpty(state.answers[q.id]) || !isEmpty(state.notes[q.id])
+  );
+  const last = state.roundIndex === ROUNDS.length - 1;
+  document.getElementById("round-skip").hidden = touched || last;
+  document.getElementById("round-next").hidden = last;
+  nav.hidden = false;
+  actions.hidden = !last;
+
   updateProgress();
 }
 rerenderHostFns["question-list"] = renderQuestions;
 
+// Paging moves the reader somewhere new, so it has to move focus and say
+// so -- otherwise a screen-reader user is silently left at the old
+// position with different content under it.
+function goToRound(i, { announceMove = true } = {}) {
+  state.roundIndex = Math.max(0, Math.min(i, ROUNDS.length - 1));
+  renderQuestions();
+  document.getElementById("room-position").textContent = positionLabel("answer");
+  const heading = document.querySelector("#question-list .round-heading");
+  if (heading) {
+    heading.setAttribute("tabindex", "-1");
+    heading.focus();
+  }
+  window.scrollTo(0, 0);
+  if (announceMove) {
+    announce(`Round ${state.roundIndex + 1} of ${ROUNDS.length}. ${roundTail(ROUNDS[state.roundIndex].name)}`);
+  }
+}
+
+function setPaging(on) {
+  state.paged = on;
+  const btn = document.getElementById("paging-toggle");
+  btn.setAttribute("aria-pressed", String(on));
+  btn.textContent = on ? "Show all twelve" : "One at a time";
+  renderQuestions();
+  if (currentScreen() === "answer") {
+    document.getElementById("room-position").textContent = positionLabel("answer");
+  }
+}
+
+function renderEventQuestions() {
+  renderQuestionList("event-list", EVENT_QUESTIONS);
+  updateProgress();
+}
+rerenderHostFns["event-list"] = renderEventQuestions;
+
 // Chip and stepper changes re-render their list, which recounts; typing
 // does not, so the count follows the text fields from here.
 document.addEventListener("input", (e) => {
-  if (e.target.matches("#question-list textarea, #question-list input")) updateProgress();
+  if (e.target.matches("#question-list textarea, #question-list input, #event-list textarea, #event-list input")) updateProgress();
 });
 
 // Round 9 (HHO-26): reference-only content, no form control of any kind,
@@ -365,7 +488,7 @@ document.addEventListener("input", (e) => {
 // empty, and this type has no way to ever set one.
 function renderReferenceRow(q) {
   const row = document.createElement("div");
-  row.className = "question-row";
+  row.className = "question-row" + (q.emphasis ? " emphasis" : "");
   const label = document.createElement("p");
   label.className = "q-label";
   label.textContent = q.label;
@@ -1209,5 +1332,5 @@ document.getElementById("close-clear").addEventListener("click", () => {
 
 // ---------- boot ----------
 
-renderQuestions();
+setPaging(state.paged); // renders the worksheet and labels the toggle to match
 showScreen("door-cover", { focusHeading: false });
