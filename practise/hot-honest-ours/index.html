@@ -40,6 +40,7 @@
       <button type="button" class="signal-btn" data-signal="red" aria-pressed="false">Red</button>
       <button type="button" class="signal-btn" data-signal="pause" aria-pressed="false">Pause</button>
     </div>
+    <button type="button" class="btn-nav" id="paging-toggle" data-action="toggle-paging" aria-pressed="false">One at a time</button>
     <button type="button" class="btn-nav" data-action="header-to-checkin">Check-in</button>
     <button type="button" class="btn-nav" data-action="header-to-event">Untangle</button>
     <button type="button" class="btn-nav" data-action="go-compare">Compare</button>
@@ -248,7 +249,12 @@
       <h1>Answer these on your own first</h1>
       <p class="lede">Working alone, in your own words. Nothing here is sent anywhere or saved unless you choose to.</p>
       <div id="question-list"></div>
-      <div class="actions">
+      <nav class="round-nav" id="round-nav" aria-label="Move between rounds" hidden>
+        <button type="button" class="btn-secondary" data-action="round-back">&larr; Back</button>
+        <button type="button" class="btn-secondary" id="round-skip" data-action="round-skip">Skip this round</button>
+        <button type="button" class="btn-primary" id="round-next" data-action="round-next">Next round &rarr;</button>
+      </nav>
+      <div class="actions" id="answer-actions">
         <button type="button" class="btn-primary" data-action="go-share">Share some of this with someone</button>
       </div>
     </div>
