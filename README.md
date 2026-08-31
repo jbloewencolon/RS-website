@@ -36,4 +36,12 @@ Run `build:hugo` and `sync:base` after any change to `hugo/layouts/partials/head
 
 ## Further reading
 
-`docs/web-design.md`, `docs/design-palette.md`, and `docs/understory-visual-system.md` cover the design system this source map deliberately doesn't repeat. `tasks.md` and `completed.tasks.md` track planned and shipped work, including the corrections filed against earlier plans once real behaviour was checked against them.
+`docs/design-system.md` is the consolidated design system extracted from this
+repository — principles, tokens, components, voice, and the decolonial and
+accessibility rules that govern them, each tagged observed, inferred, or
+proposed. It builds on rather than replaces `docs/web-design.md`,
+`docs/design-palette.md`, `docs/components.md`, and
+`docs/understory-visual-system.md`, which stay authoritative on their own
+subjects and which this source map deliberately doesn't repeat.
+
+`tasks.md` and `completed.tasks.md` track planned and shipped work, including the corrections filed against earlier plans once real behaviour was checked against them.
